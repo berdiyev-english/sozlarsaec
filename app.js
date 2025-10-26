@@ -8,7 +8,7 @@ class EnglishWordsApp {
     this.wordStats = {};
     this.weeklyProgress = [];
     this.currentMode = 'flashcards';
-    this.currentPractice = 'scheduled';
+    this.currentPractice = 'scheduled'; 
     this.currentReviewIndex = 0;
     this.showFilter = 'all';
     this.gameQuizIntervals = {}; // {containerId: {warningTimeoutId, quizTimeoutId}}
@@ -410,6 +410,10 @@ class EnglishWordsApp {
     // Support button
     const supportBtn = document.getElementById('supportBtn');
     if (supportBtn) supportBtn.addEventListener('click', () => this.showSupportModal());
+    
+       // Info button
+const infoBtn = document.getElementById('infoBtn');
+if (infoBtn) infoBtn.addEventListener('click', () => this.showInfoModal());
 
     // Navigation buttons
     document.querySelectorAll('.nav-item').forEach(btn => {
@@ -528,7 +532,7 @@ class EnglishWordsApp {
       console.error('Error saving data:', e);
     }
   }
-
+  
   // =========
   // Theme
   // =========
@@ -554,7 +558,7 @@ class EnglishWordsApp {
         <h2 style="margin-bottom:15px;color:var(--text-primary);">❤️ Поддержать проект</h2>
         <p style="margin-bottom:15px;color:var(--text-secondary);">Это бесплатный сервис без рекламы, который создан с любовью к изучению английского языка. Проект может развиваться и существовать благодаря вашим донатам.</p>
         <p style="margin-bottom:15px;color:var(--text-secondary);">Если вам понравилось наше приложение и оно помогает вам учить английский, не забудьте поддержать разработку!</p>
-        <p style="margin-bottom:20px;color:var(--text-secondary);"><strong>Об авторе:</strong><br>Приложение создано на основе методики Абдуррахима Бердиева. Прибыль от донатов идет на развитие и улучшение функционала приложения. </p>
+        <p style="margin-bottom:20px;color:var(--text-secondary);"><strong>Об авторе:</strong><br>Приложение создано на основе методики Абдуррахима Бердиева.  Прибыль от донатов идет на развитие и улучшение функционала приложения.</p>
         <a href="https://pay.cloudtips.ru/p/8f56d7d3" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-block;margin-right:10px;margin-bottom:10px;">
           <i class="fas fa-heart"></i> Поддержать проект
         </a>
@@ -566,6 +570,87 @@ class EnglishWordsApp {
     });
     document.body.appendChild(modal);
   }
+  
+    // =========
+  // Info
+  // =========
+  
+showInfoModal() {
+  const modal = document.createElement('div');
+  modal.className = 'info-modal';
+  modal.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;';
+  modal.innerHTML = `
+    <div class="info-modal-content" style="background:var(--bg-primary);border-radius:16px;padding:30px;max-width:800px;width:100%;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <h2 style="margin:0;color:var(--text-primary);">О приложении</h2>
+        <button onclick="this.closest('.info-modal').remove()" style="background:transparent;border:none;font-size:24px;cursor:pointer;color:var(--text-secondary);width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.2s;">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="about-content">
+        <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;">
+          <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;">
+            <i class="fas fa-graduation-cap" style="color:white;"></i>
+          </div>
+          <h3 style="margin-bottom:8px;color:var(--text-primary);">Изучение по уровням</h3>
+          <p style="color:var(--text-secondary);margin:0;">Структурированное изучение английских слов от начального до продвинутого уровня (A1–C2)</p>
+        </div>
+        
+        <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;">
+          <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;">
+            <i class="fas fa-volume-up" style="color:white;"></i>
+          </div>
+          <h3 style="margin-bottom:8px;color:var(--text-primary);">Произношение</h3>
+          <p style="color:var(--text-secondary);margin:0;">Прослушивание правильного произношения слов (британский и американский акценты)</p>
+        </div>
+        
+        <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;">
+          <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;">
+            <i class="fas fa-gamepad" style="color:white;"></i>
+          </div>
+          <h3 style="margin-bottom:8px;color:var(--text-primary);">Учите английские слова играя в игры</h3>
+          <p style="color:var(--text-secondary);margin:0;">Играйте в разные увлекательные игры! Спустя время у вас будет появляться quiz, на который нужно ответить правильно, чтобы продолжить играть. Это помогает закрепить изученные слова в игровой форме.</p>
+        </div>
+        
+        <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;">
+          <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;">
+            <i class="fas fa-laugh-beam" style="color:white;"></i>
+          </div>
+          <h3 style="margin-bottom:8px;color:var(--text-primary);">Позитивная атмосфера обучения</h3>
+          <p style="color:var(--text-secondary);margin:0;">В приложении добавлены смешные картинки и мемы, чтобы атмосфера изучения английских слов была позитивной, интересной и мотивирующей!</p>
+        </div>
+        
+        <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;">
+          <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;">
+            <i class="fas fa-chart-line" style="color:white;"></i>
+          </div>
+          <h3 style="margin-bottom:8px;color:var(--text-primary);">Отслеживание прогресса</h3>
+          <p style="color:var(--text-secondary);margin:0;">Учет изученных слов и прогресс по уровням</p>
+        </div>
+        
+        <div class="author-info" style="background:var(--bg-secondary);padding:20px;border-radius:12px;border-left:4px solid #7c3aed;">
+          <h3 style="margin-bottom:8px;color:var(--text-primary);">Об авторе методики</h3>
+          <p style="color:var(--text-secondary);margin-bottom:12px;">Приложение создано на основе методики <strong>Абдуррахима Бердиева</strong>.</p>
+          <a href="https://berdiyev-eng.ru" target="_blank" class="author-link btn btn-primary" style="text-decoration:none;display:inline-block;">
+            <i class="fas fa-external-link-alt"></i> Узнать больше об авторе
+          </a>
+        </div>
+      </div>
+      
+      <div style="margin-top:20px;text-align:center;">
+        <button class="btn btn-secondary" onclick="this.closest('.info-modal').remove()">Закрыть</button>
+      </div>
+    </div>
+  `;
+  
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.remove();
+  });
+  
+  document.body.appendChild(modal);
+}
+
 
   // =========
   // Sections
@@ -733,8 +818,8 @@ class EnglishWordsApp {
     const btn = document.createElement('button');
     btn.id = 'autoDictLevelsBtn';
     btn.className = 'btn btn-primary';
-    btn.style.cssText = 'width:100%;font-weight:800;';
-    btn.textContent = 'АВТОПОДБОР СЛОВАРЯ 🚀';
+    btn.style.cssText = 'width:100%;font-weight:700;';
+    btn.textContent = 'ПОДОБРАТЬ СЛОВАРЬ ПОД ТЕБЯ 🚀';
     btn.addEventListener('click', () => this.showAutoDictionaryTest());
 
     levelsSection.insertAdjacentElement('afterbegin', bar);
@@ -1723,7 +1808,7 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
     const btn = document.createElement('button');
     btn.id = 'motivationBtn';
     btn.className = 'btn btn-primary';
-    btn.textContent = 'ЕЖЕДНЕВНАЯ МОТИВАЦИЯ 💪';
+    btn.textContent = 'ПОЛУЧИТЬ ЗАРЯД МОТИВАЦИИ 💪';
     btn.style.cssText = 'font-weight:700;margin-bottom:14px;';
     btn.addEventListener('click', () => this.showMotivationPopup());
 
@@ -2695,5 +2780,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   EnglishWordsApp.injectStylesOnce();
   window.app = new EnglishWordsApp();
-
 });
