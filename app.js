@@ -485,19 +485,19 @@ if (infoBtn) infoBtn.addEventListener('click', () => this.showInfoModal());
 
     // Game buttons
     const surfBtn = document.getElementById('surfStartBtn');
-    if (surfBtn) surfBtn.addEventListener('click', () => this.showQuizGateForGame('Subway Surfers', 'subway.html'));
+    if (surfBtn) surfBtn.addEventListener('click', () => this.showQuizGateForGame('Racing', 'subway.html'));
 
     const doodleBtn = document.getElementById('doodleStartBtn');
-    if (doodleBtn) doodleBtn.addEventListener('click', () => this.showQuizGateForGame('Doodle Jump', 'doodle-jump.html'));
+    if (doodleBtn) doodleBtn.addEventListener('click', () => this.showQuizGateForGame('Flying Bird', 'doodle-jump.html'));
 
     const game2048Btn = document.getElementById('game2048StartBtn');
     if (game2048Btn) game2048Btn.addEventListener('click', () => this.showQuizGateForGame('2048', '2048.html'));
 
     const rocketBtn = document.getElementById('rocketStartBtn');
-    if (rocketBtn) rocketBtn.addEventListener('click', () => this.showQuizGateForGame('Rocket Soccer Derby', 'rocket-soccer.html'));
+    if (rocketBtn) rocketBtn.addEventListener('click', () => this.showQuizGateForGame('match 3', 'rocket-soccer.html'));
 
     const catalogBtn = document.getElementById('catalogStartBtn');
-    if (catalogBtn) catalogBtn.addEventListener('click', () => this.showCatalogGame());
+    if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('dash', 'dash.html'));
 
     this.updateLevelCounts();
     this.insertAutoDictionaryButtonInLevels(); // ensure visible initially if on levels
@@ -2784,4 +2784,5 @@ document.addEventListener('DOMContentLoaded', () => {
   EnglishWordsApp.injectStylesOnce();
   window.app = new EnglishWordsApp();
 });
+
 
