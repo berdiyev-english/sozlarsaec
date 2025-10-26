@@ -655,7 +655,10 @@ showInfoModal() {
   // =========
   // Sections
   // =========
-  switchSection(section) {
+switchSection(section) {
+    // строкa для прокрутки вверх
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     this.currentSection = section;
 
     this.stopCurrentAudio();
@@ -2781,3 +2784,4 @@ document.addEventListener('DOMContentLoaded', () => {
   EnglishWordsApp.injectStylesOnce();
   window.app = new EnglishWordsApp();
 });
+
