@@ -554,7 +554,7 @@ class EnglishWordsApp {
         <h2 style="margin-bottom:15px;color:var(--text-primary);">❤️ Поддержать проект</h2>
         <p style="margin-bottom:15px;color:var(--text-secondary);">Это бесплатный сервис без рекламы, который создан с любовью к изучению английского языка. Проект может развиваться и существовать благодаря вашим донатам.</p>
         <p style="margin-bottom:15px;color:var(--text-secondary);">Если вам понравилось наше приложение и оно помогает вам учить английский, не забудьте поддержать разработку!</p>
-        <p style="margin-bottom:20px;color:var(--text-secondary);"><strong>Об авторе:</strong><br>Приложение создано на основе методики Абдуррахима Бердиева. Вся прибыль от донатов идет на развитие и улучшение функционала приложения.</p>
+        <p style="margin-bottom:20px;color:var(--text-secondary);"><strong>Об авторе:</strong><br>Приложение создано на основе методики Абдуррахима Бердиева. Прибыль от донатов идет на развитие и улучшение функционала приложения. </p>
         <a href="https://pay.cloudtips.ru/p/8f56d7d3" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-block;margin-right:10px;margin-bottom:10px;">
           <i class="fas fa-heart"></i> Поддержать проект
         </a>
@@ -2695,4 +2695,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   EnglishWordsApp.injectStylesOnce();
   window.app = new EnglishWordsApp();
+
 });
