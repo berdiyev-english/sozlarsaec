@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Be-Words</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+    * { 
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    html {
+      height: 100%;
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-family: 'Press Start 2P', cursive;
+      user-select: none;
+      -webkit-user-select: none;
+      background: #70c5ce;
+      overflow: hidden;
+      overscroll-behavior: none;
+      touch-action: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    /* Контейнер приложения - фиксированный на 100% без viewport units */
+    .app {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+
+    /* Шапка */
+    header {
+      position: relative;
+      width: 100%;
+      max-width: 431px;
+      padding: 10px 12px 12px;
+      flex: 0 0 auto;
+      z-index: 10;
+    }
+
+    .score-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: rgba(94, 226, 112, 0.9);
+      border-radius: 8px;
+      font-size: 12px;
+      padding-right: 70px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      line-height: 1.2;
+      height: 32px;
+    }
+
+    /* Сцена игры */
+    .stage {
+      position: relative;
+      width: 100%;
+      max-width: 431px;
+      flex: 1 1 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      contain: strict;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: 768px;
+      margin: 0 auto;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
+      touch-action: none;
+      background: #000;
+      transform: translateZ(0);
+      will-change: transform;
+      object-fit: contain;
+    }
+
+    /* Кнопка паузы */
+    .pause-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 20;
+      width: 50px;
+      height: 50px;
+      background: rgba(255,255,255,0.9);
+      border: 3px solid #000;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      touch-action: manipulation;
+      transition: transform .08s ease, filter .2s ease;
+      -webkit-touch-callout: none;
+    }
+    .pause-btn:active { transform: scale(0.95); }
+    .pause-btn[disabled] { opacity: .6; filter: grayscale(.3); cursor: default; }
+
+    /* Оверлеи */
+    .pause-overlay,
+    .start-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .pause-overlay.active { display: flex; z-index: 15; }
+    .start-overlay.active { display: flex; z-index: 16; }
+
+    .menu-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      border: 5px solid #000;
+      max-width: 80%;
+      touch-action: manipulation;
+    }
+    .menu-box h2 {
+      margin: 0 0 20px;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+    .menu-box p {
+      margin: 0 0 18px;
+      font-size: 12px;
+      color: #222;
+      opacity: 0.8;
+      line-height: 1.4;
+    }
+    .menu-box button {
+      font-family: 'Press Start 2P', cursive;
+      padding: 15px 30px;
+      font-size: 16px;
+      background: #5EE270;
+      border: 3px solid #000;
+      border-radius: 8px;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-touch-callout: none;
+    }
+    .menu-box button:active { transform: scale(0.95); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="score-container">
+        <div id="bestScore">Best : 0</div>
+        <div id="currentScore">Current : 0</div>
+      </div>
+      <button class="pause-btn" id="pauseBtn" title="P / Esc" aria-label="Pause">⏸</button>
+    </header>
+
+    <div class="stage" id="stage">
+      <canvas id="canvas" width="431" height="768"></canvas>
+
+      <!-- Оверлей старта -->
+      <div class="start-overlay active" id="startOverlay">
+        <div class="menu-box">
+          <h2>Bewords</h2>
+          <p>Нажмите на старт</p>
+          <button id="startBtn">START</button>
+        </div>
+      </div>
+
+      <!-- Оверлей паузы -->
+      <div class="pause-overlay" id="pauseOverlay">
+        <div class="menu-box">
+          <h2>PAUSED</h2>
+          <button id="resumeBtn">RESUME</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Предотвращаем любую прокрутку и zoom в iframe
+    document.addEventListener('touchmove', (e) => {
+      if (e.target === document.body || e.target === canvas) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    document.addEventListener('gesturestart', (e) => e.preventDefault());
+    document.addEventListener('gesturechange', (e) => e.preventDefault());
+    document.addEventListener('gestureend', (e) => e.preventDefault());
+
+    // Фиксируем размер при ресайзе окна/iframe
+    function fixViewport() {
+      const app = document.querySelector('.app');
+      const vh = window.innerHeight;
+      app.style.height = vh + 'px';
+    }
+    
+    window.addEventListener('resize', fixViewport);
+    window.addEventListener('orientationchange', fixViewport);
+    fixViewport();
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d', { alpha: false });
+    const img = new Image();
+    img.src = "https://i.ibb.co/Q9yv5Jk/flappy-bird-set.png";
+
+    // Состояние игры
+    let gamePlaying = false;
+    let paused = false;
+
+    // Физика
+    const size = [51, 36];
+    const GRAVITY = 2000;
+    const JUMP_VELOCITY = -600;
+    const MAX_FALL_SPEED = 900;
+    const SPEED = 220;
+    const PIPE_WIDTH = 78;
+    const GAP_Y = 260;
+    const H_GAP = GAP_Y + PIPE_WIDTH;
+    const birdX = Math.round(canvas.width * 0.18);
+
+    // Переменные
+    let lastTime = 0;
+    let bgOffset = 0;
+    let bestScore = 0;
+    let currentScore = 0;
+
+    // Птица
+    let bird = { x: birdX, y: 0, vy: 0 };
+
+    // Трубы
+    let pipes = [];
+
+    // DOM
+    const pauseBtn = document.getElementById('pauseBtn');
+    const pauseOverlay = document.getElementById('pauseOverlay');
+    const resumeBtn = document.getElementById('resumeBtn');
+    const startOverlay = document.getElementById('startOverlay');
+    const startBtn = document.getElementById('startBtn');
+
+    const pipeLoc = () => {
+      const minTop = PIPE_WIDTH;
+      const maxTop = canvas.height - (GAP_Y + PIPE_WIDTH);
+      return Math.floor(Math.random() * (maxTop - minTop) + minTop);
+    };
+
+    const setupState = () => {
+      currentScore = 0;
+      bgOffset = 0;
+      bird = { x: birdX, y: (canvas.height / 2) - (size[1] / 2), vy: 0 };
+      pipes = Array.from({ length: 3 }, (_, i) => ({
+        x: canvas.width + i * (H_GAP),
+        y: pipeLoc(),
+        scored: false
+      }));
+    };
+
+    const updateHUD = () => {
+      document.getElementById('bestScore').textContent = `Best : ${bestScore}`;
+      document.getElementById('currentScore').textContent = `Current : ${currentScore}`;
+      pauseBtn.disabled = !gamePlaying;
+      pauseBtn.textContent = paused ? '▶' : '⏸';
+    };
+
+    const showStartOverlay = () => {
+      startOverlay.classList.add('active');
+    };
+    const hideStartOverlay = () => {
+      startOverlay.classList.remove('active');
+    };
+
+    const startGame = () => {
+      setupState();
+      gamePlaying = true;
+      paused = false;
+      hideStartOverlay();
+      lastTime = performance.now();
+      updateHUD();
+    };
+
+    const drawBackground = () => {
+      const off = Math.floor(bgOffset);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height, -off + canvas.width, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height, -off, 0, canvas.width, canvas.height);
+    };
+
+    const drawPipes = () => {
+      for (const p of pipes) {
+        ctx.drawImage(img, 432, 588 - p.y, PIPE_WIDTH, p.y, Math.floor(p.x), 0, PIPE_WIDTH, p.y);
+        const bottomH = canvas.height - p.y + GAP_Y;
+        ctx.drawImage(img, 432 + PIPE_WIDTH, 108, PIPE_WIDTH, bottomH, Math.floor(p.x), p.y + GAP_Y, PIPE_WIDTH, bottomH);
+      }
+    };
+
+    const drawBird = (time) => {
+      const wingFrame = Math.floor(((time / 1000) * 12) % 3);
+      const spriteY = wingFrame * size[1];
+      const tilt = Math.max(-0.6, Math.min(0.9, bird.vy / MAX_FALL_SPEED)) * 0.9;
+
+      ctx.save();
+      ctx.translate(bird.x + size[0] / 2, bird.y + size[1] / 2);
+      ctx.rotate(tilt);
+      ctx.drawImage(img, 432, spriteY, size[0], size[1], -size[0] / 2, -size[1] / 2, size[0], size[1]);
+      ctx.restore();
+    };
+
+    const checkCollisions = () => {
+      for (const p of pipes) {
+        const inX = bird.x < p.x + PIPE_WIDTH && bird.x + size[0] > p.x;
+        if (inX) {
+          const hitTop = bird.y < p.y;
+          const hitBottom = (bird.y + size[1]) > (p.y + GAP_Y);
+          if (hitTop || hitBottom) return true;
+        }
+      }
+      if (bird.y >= canvas.height - size[1] - 1) return true;
+      if (bird.y <= 0) return true;
+      return false;
+    };
+
+    const flap = () => {
+      if (!gamePlaying) {
+        startGame();
+        bird.vy = JUMP_VELOCITY;
+      } else if (!paused) {
+        bird.vy = JUMP_VELOCITY;
+      }
+      updateHUD();
+    };
+
+    const togglePause = () => {
+      if (!gamePlaying) return;
+      paused = !paused;
+      pauseOverlay.classList.toggle('active', paused);
+      lastTime = performance.now();
+      updateHUD();
+    };
+
+    function onGameOver() {
+      gamePlaying = false;
+      paused = false;
+      showStartOverlay();
+      updateHUD();
+    }
+
+    function render(time) {
+      if (!lastTime) lastTime = time;
+      let dt = (time - lastTime) / 1000;
+      if (dt > 0.033) dt = 0.033;
+      lastTime = time;
+
+      if (gamePlaying && !paused) {
+        bgOffset = (bgOffset + (SPEED * 0.5) * dt) % canvas.width;
+
+        for (const p of pipes) {
+          p.x -= SPEED * dt;
+          if (!p.scored && p.x + PIPE_WIDTH < bird.x) {
+            p.scored = true;
+            currentScore++;
+            bestScore = Math.max(bestScore, currentScore);
+          }
+        }
+
+        if (pipes[0].x < -PIPE_WIDTH) {
+          const lastX = pipes[pipes.length - 1].x;
+          pipes = [...pipes.slice(1), { x: lastX + H_GAP, y: pipeLoc(), scored: false }];
+        }
+
+        bird.vy = Math.min(bird.vy + GRAVITY * dt, MAX_FALL_SPEED);
+        bird.y = Math.min(Math.max(bird.y + bird.vy * dt, 0), canvas.height - size[1]);
+
+        if (checkCollisions()) {
+          onGameOver();
+        }
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawBackground();
+      drawPipes();
+      drawBird(time);
+
+      updateHUD();
+      requestAnimationFrame(render);
+    }
+
+    // События
+    pauseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      togglePause();
+    });
+
+    resumeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!gamePlaying) return;
+      paused = false;
+      pauseOverlay.classList.remove('active');
+      lastTime = performance.now();
+      updateHUD();
+    });
+
+    startBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!gamePlaying) startGame();
+    });
+
+    canvas.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      flap();
+    }, { passive: false });
+
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' || e.code === 'ArrowUp') {
+        e.preventDefault();
+        if (!gamePlaying) {
+          startGame();
+        } else {
+          flap();
+        }
+      } else if (e.code === 'KeyP' || e.code === 'Escape') {
+        e.preventDefault();
+        togglePause();
+      }
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (gamePlaying && !paused) {
+          paused = true;
+          pauseOverlay.classList.add('active');
+          updateHUD();
+        }
+      }
+      lastTime = performance.now();
+    });
+
+    // Запуск
+    setupState();
+    img.onload = () => {
+      fixViewport();
+      requestAnimationFrame(render);
+    };
+  </script>
+</body>
+</html>
