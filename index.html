@@ -4,104 +4,98 @@
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#6366f1">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Bewords ">
+  <meta name="apple-mobile-web-app-title" content="Bewords">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="apple-touch-icon" href="/icon-192.png">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> BeWords - Изучение английских слов</title>
-<link rel="stylesheet" href="styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  /* AI Chat Iframe Styles */
-  .ai-chat-container {
-    width: 100%;
-    height: calc(100vh - 200px);
-    min-height: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .ai-chat-iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background: var(--bg-secondary);
-  }
-  
-  .ai-chat-description {
-    background: var(--bg-secondary);
-    padding: 1rem;
-    border-radius: 12px;
-    border-left: 4px solid var(--accent-primary);
-    margin-bottom: 1rem;
-  }
-  
-  .ai-chat-description h3 {
-    margin: 0 0 0.5rem 0;
-    color: var(--text-primary);
-    font-size: 1.1rem;
-  }
-  
-  .ai-chat-description p {
-    margin: 0;
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-  
-  /* Info button in header */
-  .info-btn {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    color: var(--text-primary);
-  }
-  
-  .info-btn:hover {
-    background: var(--accent-primary);
-    color: white;
-    transform: translateY(-2px);
-  }
-  
-  /* Mobile adaptations */
-  @media (max-width: 768px) {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeWords - Изучение английских слов</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* AI Chat Iframe Styles */
     .ai-chat-container {
-      height: calc(100vh - 180px);
-      min-height: 400px;
+      width: 100%;
+      height: calc(100vh - 200px);
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
-    
+    .ai-chat-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      background: var(--bg-secondary);
+    }
     .ai-chat-description {
-      padding: 0.75rem;
+      background: var(--bg-secondary);
+      padding: 1rem;
+      border-radius: 12px;
+      border-left: 4px solid var(--accent-primary);
+      margin-bottom: 1rem;
     }
-    
     .ai-chat-description h3 {
-      font-size: 1rem;
+      margin: 0 0 0.5rem 0;
+      color: var(--text-primary);
+      font-size: 1.1rem;
     }
-    
     .ai-chat-description p {
-      font-size: 0.9rem;
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
     }
-  }
-  
-  @media (max-width: 480px) {
-    .ai-chat-container {
-      height: calc(100vh - 160px);
-      min-height: 350px;
+
+    /* Header */
+    .info-btn, .theme-toggle { display: none !important; }
+    .settings-btn {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s ease; color: var(--text-primary);
     }
-  }
-</style>
+    .settings-btn:hover { background: var(--accent-primary); color: #fff; transform: translateY(-2px); }
+
+    /* Keep bulk header visible */
+    .words-header {
+      position: sticky;
+      top: 64px; /* смещение под фиксированную шапку, подстройте под ваш header */
+      z-index: 5;
+      background: var(--bg-primary);
+    }
+
+    /* Buttons text in word cards */
+    .action-text-btn {
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+    .action-text-btn.add { border-color: #10b981; color: #10b981; background: #ecfdf5; }
+    .action-text-btn.remove { border-color: #ef4444; color: #ef4444; background: #fee2e2; }
+    .action-text-btn:hover { filter: brightness(0.98); }
+
+    /* Mobile adaptations */
+    @media (max-width: 768px) {
+      .ai-chat-container { height: calc(100vh - 180px); min-height: 400px; }
+      .ai-chat-description { padding: 0.75rem; }
+      .ai-chat-description h3 { font-size: 1rem; }
+      .ai-chat-description p { font-size: 0.9rem; }
+    }
+    @media (max-width: 480px) {
+      .ai-chat-container { height: calc(100vh - 160px); min-height: 350px; }
+    }
+  </style>
 </head>
 <body>
 <div class="app-container">
@@ -109,21 +103,18 @@
     <div class="header-content">
       <h1 class="app-title">Bewords</h1>
       <div class="header-actions">
-        <button class="info-btn" id="infoBtn" data-testid="info-btn" title="О приложении">
-          <i class="fas fa-info-circle"></i>
-        </button>
         <button class="support-btn" id="supportBtn" data-testid="support-btn" title="Поддержать проект">
           <i class="fas fa-heart"></i>
         </button>
-        <button class="theme-toggle" id="themeToggle" data-testid="theme-toggle">
-          <i class="fas fa-moon"></i>
+        <button class="settings-btn" id="settingsBtn" data-testid="settings-btn" title="Настройки">
+          <i class="fas fa-cog"></i>
         </button>
       </div>
     </div>
   </header>
 
   <main class="main-content">
-    <!-- Levels + Categories (теперь первая и активная по умолчанию) -->
+    <!-- Levels + Categories -->
     <section id="levels" class="content-section active">
       <div class="section-header">
         <h2>Слова по уровням</h2>
@@ -208,11 +199,8 @@
           </button>
           <h3 id="currentLevelTitle">Слова</h3>
           <div class="level-bulk-actions">
-            <button id="addAllLevelBtn" class="action-btn add-btn" title="Добавить все" data-testid="add-all-level-btn" onclick="window.app && app.addAllLevelWords()">
-              <i class="fas fa-plus"></i>
-            </button>
-            <button id="removeAllLevelBtn" class="action-btn remove-btn" title="Удалить все" data-testid="remove-all-level-btn" onclick="window.app && app.removeAllLevelWords()">
-              <i class="fas fa-trash"></i>
+            <button id="bulkToggleBtn" class="action-text-btn add" data-testid="bulk-toggle-btn" title="Добавить все">
+              Добавить все
             </button>
           </div>
         </div>
@@ -228,19 +216,17 @@
       </div>
 
       <p class="mode-help">
-        Всего доступно 2 режима обучения :<br>
-        <br>
+        Всего доступно 2 режима обучения :<br><br>
         1) Запланировано - система сама составляет вам интервал повторения<br>
-        2) Бесконечно - практика без ограничений <br>
-        <br>
+        2) Бесконечно - практика без ограничений <br><br>
         * Флешкарточки — показывается слово и перевод; ответ скрыт до нажатия.<br>
         * Quiz — одно слово и 4 варианта; правильное слово произносится после ответа.<br>
       </p>
 
       <div class="toggles-row">
         <div class="mode-toggle" role="tablist" aria-label="study mode">
-          <button class="mode-btn active" data-mode="flashcards" id="modeFlashcards" data-testid="mode-flashcards">Флешкарточки</button>
-          <button class="mode-btn" data-mode="quiz" id="modeQuiz" data-testid="mode-quiz">Quiz</button>
+          <button class="mode-btn active" data-mode="quiz" id="modeQuiz" data-testid="mode-quiz">Quiz</button>
+          <button class="mode-btn" data-mode="flashcards" id="modeFlashcards" data-testid="mode-flashcards">Флешкарточки</button>
           <button class="mode-btn" data-mode="list" id="modeList" data-testid="mode-list">Список слов</button>
         </div>
         <div class="practice-toggle" role="tablist" aria-label="practice mode">
@@ -297,12 +283,9 @@
       <div class="add-word-form" id="bulkAddForm">
         <h3 style="margin-bottom:8px;">Массовое добавление</h3>
         <p class="mode-help" id="bulkHelp" data-testid="bulk-help">
-          Наше приложение поддерживает массовое добавление слов и фраз<br>
-          <br>
-          Каждое английское слово / фразу вводите с новой строки<br>
-          <br>
-          Перевод слова указывается через "-" <br>
-          <br>
+          Наше приложение поддерживает массовое добавление слов и фраз<br><br>
+          Каждое английское слово / фразу вводите с новой строки<br><br>
+          Перевод слова указывается через "-" <br><br>
           Примеры: <br>
           go - идти, ходить, ехать<br>
           table - стол<br>
@@ -356,19 +339,15 @@
       <div class="section-header">
         <h2>Игры</h2>
       </div>
-      
+
       <p class="mode-help">
-        Играйте в игры и изучайте слова в Английском<br>
-        <br>
-        Каждые 5 минут игры вам нужно будет правильно ответить на quiz из 4 слов , чтобы продолжить играть<br>
-        <br>
-        Таким образом за час вы повторите 48 слов просто играя в игры<br>
-        <br>
+        Играйте в игры и изучайте слова в Английском<br><br>
+        Каждые 5 минут игры вам нужно будет правильно ответить на quiz из 4 слов , чтобы продолжить играть<br><br>
+        Таким образом за час вы повторите 48 слов просто играя в игры<br><br>
         Новая эра обучения началась с "Bewords"<br>
       </p>
 
       <div class="games-grid">
-        <!-- SUBWAY SURFERS -->
         <div class="game-card">
           <img src="race.jpg" alt="Subway Surfers" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
@@ -378,7 +357,6 @@
           </div>
         </div>
 
-        <!-- DOODLE JUMP -->
         <div class="game-card">
           <img src="bird.jpg" alt="Doodle Jump" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
@@ -388,7 +366,6 @@
           </div>
         </div>
 
-        <!-- 2048 -->
         <div class="game-card">
           <img src="2048.jpg" alt="2048" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
@@ -398,7 +375,6 @@
           </div>
         </div>
 
-        <!-- ROCKET SOCCER DERBY -->
         <div class="game-card">
           <img src="match3.jpg" alt="Rocket Soccer Derby" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
@@ -408,7 +384,6 @@
           </div>
         </div>
 
-        <!-- CATALOG -->
         <div class="game-card">
           <img src="dash.jpg" alt="Каталог игр" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
@@ -420,24 +395,24 @@
       </div>
     </section>
 
-    <!-- AI Chat (исправленная секция) -->
+    <!-- AI Chat -->
     <section id="ai-chat" class="content-section">
       <div class="section-header">
         <h2>AI Chat</h2>
       </div>
-      
+
       <div class="ai-chat-description">
         <h3>Ваш персональный AI-помощник для изучения английского</h3>
         <p>Задавайте вопросы, практикуйте разговорный английский, получайте объяснения грамматики и помощь с переводом. AI-учитель доступен 24/7 и всегда готов помочь!</p>
       </div>
-      
+
       <div class="ai-chat-container">
-        <iframe 
-          src="https://www.yeschat.ai/i/gpts-2OToO9hERt-English-Teacher" 
+        <iframe
+          id="aiChatFrame"
+          src="https://www.yeschat.ai/i/gpts-2OToO9hERt-English-Teacher"
           class="ai-chat-iframe"
           title="AI English Teacher"
-          allow="microphone"
-          loading="lazy">
+          allow="microphone">
         </iframe>
       </div>
     </section>
@@ -469,9 +444,13 @@
 
 <script src="oxford_words_data.js"></script>
 <script src="app.js"></script>
-
+<script>
+  // Service Worker registration (image caching)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+    });
+  }
+</script>
 </body>
 </html>
-
-
-
