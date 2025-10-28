@@ -101,31 +101,76 @@ class EnglishWordsApp {
     } catch {}
   }
   // MP3 play that resolves when playback finishes (no overlap)
-  playMp3Url(url) {
+playMp3Url(url) {
     const p = new Promise((resolve, reject) => {
       try {
         this.stopCurrentAudio();
-        const audio = new Audio(url);
+        
+        // Создаем аудио с предзагрузкой
+        const audio = new Audio();
+        audio.preload = 'auto';
+        audio.volume = 1.0;
+        
         this.currentAudio = audio;
 
         let endedOrFailed = false;
         const cleanup = () => {
           if (endedOrFailed) return;
           endedOrFailed = true;
-          try { audio.onended = null; audio.onerror = null; audio.oncanplaythrough = null; } catch {}
+          try { 
+            audio.onended = null; 
+            audio.onerror = null; 
+            audio.oncanplaythrough = null;
+            audio.onloadeddata = null;
+          } catch {}
+        };
+
+        // Добавляем обработчик загрузки данных
+        audio.onloadeddata = () => {
+          // Разблокируем контекст если нужно
+          if (this.audioCtx && this.audioCtx.state === 'suspended') {
+            this.audioCtx.resume().catch(() => {});
+          }
         };
 
         audio.oncanplaythrough = () => {
-          audio.play().catch(err => { cleanup(); reject(err); });
+          // Небольшая задержка для стабильности на мобильных
+          setTimeout(() => {
+            audio.play().then(() => {
+              // Успешно начали воспроизведение
+            }).catch(err => { 
+              cleanup(); 
+              reject(err); 
+            });
+          }, 50);
         };
-        audio.onended = () => { cleanup(); resolve(true); };
-        audio.onerror = () => { cleanup(); reject(new Error('Audio error')); };
+        
+        audio.onended = () => { 
+          cleanup(); 
+          resolve(true); 
+        };
+        
+        audio.onerror = () => { 
+          cleanup(); 
+          reject(new Error('Audio error')); 
+        };
 
+        // Устанавливаем src после всех обработчиков
+        audio.src = url;
+        audio.load();
+
+        // Увеличиваем таймаут для мобильных устройств
         setTimeout(() => {
-          if (!endedOrFailed && audio && !audio.paused) return;
-          if (!endedOrFailed) { try { audio.pause(); } catch {} cleanup(); reject(new Error('Audio timeout')); }
-        }, 15000);
-      } catch (e) { reject(e); }
+          if (!endedOrFailed) { 
+            try { audio.pause(); } catch {} 
+            cleanup(); 
+            reject(new Error('Audio timeout')); 
+          }
+        }, 20000);
+        
+      } catch (e) { 
+        reject(e); 
+      }
     });
 
     this.currentAudioPromise = p.finally(() => {
@@ -133,7 +178,7 @@ class EnglishWordsApp {
     });
 
     return p;
-  }
+}
 
   async ensureVoicesLoaded(timeoutMs = 1500) {
     if (!('speechSynthesis' in window)) return;
@@ -299,7 +344,6 @@ class EnglishWordsApp {
         const section = e.currentTarget.getAttribute('data-section');
         if (section) {
           this.switchSection(section);
-          if (section === 'levels') this.insertAutoDictionaryButtonInLevels();
         }
       });
     });
@@ -377,7 +421,6 @@ class EnglishWordsApp {
     if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('dash', 'dash.html'));
 
     this.updateLevelCounts();
-    this.insertAutoDictionaryButtonInLevels();
     // Ensure Quiz active by default in UI
     const btnQuiz = document.getElementById('modeQuiz');
     if (btnQuiz) { document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active')); btnQuiz.classList.add('active'); }
@@ -449,63 +492,63 @@ showFirstRunTour() {
         document.querySelectorAll('.bottom-nav .nav-item').forEach(b => b.classList.remove('nav-highlight'));
     };
 
-const slides = [
-    {
-        key: 'welcome',
-        title: 'Добро пожаловать!',
-        image: "/hello.png",
-        html: `
-            <div style="text-align:left;color:var(--text-primary);line-height:1.55;font-size:15px;">
-                <div style="font-weight:800;margin-bottom:8px;">Добро пожаловать в лучшее приложение для повышения словарного запаса!</div>
-                <p style="margin:0 0 8px 0;">Bewords.ru — приложение, созданное одним человеком, чтобы у вас было всё для удобного изучения.</p>
-                <p style="margin:0 0 8px 0;">Приложение полностью бесплатное и без рекламы. Если понравится — поделитесь с друзьями или поддержите донатом через кнопку «♥».</p>
-            </div>
-        `,
-        spotlight: null
-    },
-    {
-        key: 'levels',
-        title: 'Уровни',
-        image: "/1.gif", // первая GIF анимация
-        html: `<p>Здесь вы можете добавлять слова в свой словарь для изучения — из уровней и тематических категорий.</p>`,
-        spotlight: 'levels'
-    },
-    {
-        key: 'learning',
-        title: 'Изучаю',
-        image: "/2.gif", 
-        html: `<p>Практикуйте слова в 2 режимах: <strong>Quiz</strong> и <strong>Flashcards</strong>. Система учитывает интервалы повторения.</p>`,
-        spotlight: 'learning'
-    },
-    {
-        key: 'new-words',
-        title: 'Новые',
-        image: "/3.gif",
-        html: `<p>Добавляйте свои слова и фразы. После добавления они сразу попадут в ваш словарь.</p>`,
-        spotlight: 'new-words'
-    },
-    {
-        key: 'progress',
-        title: 'Прогресс',
-        image: "/4.gif",
-        html: `<p>Отслеживайте прогресс: сколько повторений вы сделали и как продвигаетесь по уровням.</p>`,
-        spotlight: 'progress'
-    },
-    {
-        key: 'games',
-        title: 'Игры',
-        image: "/5.gif",
-        html: `<p>Играйте и одновременно учите слова. Чтобы запустить игру, ответьте правильно 3 раза в quiz.</p>`,
-        spotlight: 'games'
-    },
-    {
-        key: 'ai-chat',
-        title: "AI Chat",
-        image: '/6.gif',
-        html: `<p>Спросите у бота на основе ChatGPT любой вопрос по английскому — доступен 24/7.</p>`,
-        spotlight: 'ai-chat'
-    }
-];
+    const slides = [
+        {
+            key: 'welcome',
+            title: 'Добро пожаловать!',
+            image: 'hello.png',
+            html: `
+                <div style="text-align:left;color:var(--text-primary);line-height:1.55;font-size:15px;">
+                    <div style="font-weight:800;margin-bottom:8px;">Добро пожаловать в лучшее приложение для повышения словарного запаса!</div>
+                    <p style="margin:0 0 8px 0;">Bewords.ru — приложение, созданное одним человеком, чтобы у вас было всё для удобного изучения.</p>
+                    <p style="margin:0 0 8px 0;">Приложение полностью бесплатное и без рекламы. Если понравится — поделитесь с друзьями или поддержите донатом через кнопку «♥».</p>
+                </div>
+            `,
+            spotlight: null
+        },
+        {
+            key: 'levels',
+            title: 'Уровни',
+            image: '1.gif',
+            html: `<p>Здесь вы можете добавлять слова в свой словарь для изучения — из уровней и тематических категорий.</p>`,
+            spotlight: 'levels'
+        },
+        {
+            key: 'learning',
+            title: 'Изучаю',
+            image: '2.gif',
+            html: `<p>Практикуйте слова в 2 режимах: <strong>Quiz</strong> и <strong>Flashcards</strong>. Система учитывает интервалы повторения.</p>`,
+            spotlight: 'learning'
+        },
+        {
+            key: 'new-words',
+            title: 'Новые',
+            image: '3.gif',
+            html: `<p>Добавляйте свои слова и фразы. После добавления они сразу попадут в ваш словарь.</p>`,
+            spotlight: 'new-words'
+        },
+        {
+            key: 'progress',
+            title: 'Прогресс',
+            image: '4.gif',
+            html: `<p>Отслеживайте прогресс: сколько повторений вы сделали и как продвигаетесь по уровням.</p>`,
+            spotlight: 'progress'
+        },
+        {
+            key: 'games',
+            title: 'Игры',
+            image: '5.gif',
+            html: `<p>Играйте и одновременно учите слова. Чтобы запустить игру, ответьте правильно 3 раза в quiz.</p>`,
+            spotlight: 'games'
+        },
+        {
+            key: 'ai-chat',
+            title: 'AI Chat',
+            image: '6.gif',
+            html: `<p>Спросите у бота на основе ChatGPT любой вопрос по английскому — доступен 24/7.</p>`,
+            spotlight: 'ai-chat'
+        }
+    ];
 
     let index = 0;
     const overlay = document.createElement('div');
@@ -513,7 +556,7 @@ const slides = [
     overlay.style.cssText = 'position:fixed;inset:0;z-index:1000005;background:rgba(0,0,0,.85);display:flex;align-items:flex-end;justify-content:center;';
 
     const panel = document.createElement('div');
-    panel.style.cssText = 'width:100%;background:var(--bg-primary);border-top-left-radius:16px;border-top-right-radius:16px;box-shadow:0 -8px 30px rgba(0,0,0,.25);padding:16px 16px 12px 16px;max-height:70vh;overflow-y:auto;';
+    panel.style.cssText = 'width:100%;background:var(--bg-primary);border-top-left-radius:16px;border-top-right-radius:16px;box-shadow:0 -8px 30px rgba(0,0,0,.25);padding:16px 16px 12px 16px;max-height:85vh;overflow-y:auto;';
     overlay.appendChild(panel);
 
     let startX = 0;
@@ -539,6 +582,7 @@ const slides = [
                 <div style="font-weight:900;color:var(--text-primary);font-size:18px;">${s.title}</div>
                 <div style="display:flex;gap:6px;">${slides.map((_, i) => `<span style="width:8px;height:8px;border-radius:50%;background:${i === index ? '#6366f1' : '#cbd5e1'};display:inline-block;"></span>`).join('')}</div>
             </div>
+            ${s.image ? `<div style="text-align:center;margin:12px 0;"><img src="/${s.image}" alt="${s.title}" style="max-width:100%;height:auto;max-height:200px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>` : ''}
             <div style="color:var(--text-secondary);">${s.html}</div>
             <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px;">
                 <button class="btn btn-secondary" ${index === 0 ? 'disabled' : ''} data-tour="prev">Назад</button>
@@ -578,6 +622,7 @@ const slides = [
     document.body.appendChild(overlay);
     render();
 }
+
 
   // Preload AI chat iframe eagerly (no lazy)
   preloadAiChat() {
@@ -817,8 +862,9 @@ openAboutInSettings(btnEl) {
   // =========
   // Sections
   // =========
-  switchSection(section) {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+switchSection(section) {
+    // Простой скролл без анимации для мобильных
+    window.scrollTo(0, 0);
 
     this.currentSection = section;
     this.stopCurrentAudio();
@@ -833,24 +879,34 @@ openAboutInSettings(btnEl) {
 
     if (section === 'levels') {
       this.backToLevels();
-      this.insertAutoDictionaryButtonInLevels();
+      // Убираем вставку кнопки автословаря из levels
     }
     if (section === 'learning') {
-      // Ensure Quiz active when entering learning
       this.currentMode = 'quiz';
       const btnQuiz = document.getElementById('modeQuiz');
-      if (btnQuiz) { document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active')); btnQuiz.classList.add('active'); }
+      if (btnQuiz) { 
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active')); 
+        btnQuiz.classList.add('active'); 
+      }
       this.renderLearningSection();
     }
     if (section === 'progress') this.renderProgress();
     if (section === 'new-words') {
       const newLevelSel = document.getElementById('newLevel');
-      if (newLevelSel) { const grp = newLevelSel.closest('.form-group') || newLevelSel.parentElement; if (grp) grp.style.display = 'none'; else newLevelSel.style.display = 'none'; }
+      if (newLevelSel) { 
+        const grp = newLevelSel.closest('.form-group') || newLevelSel.parentElement; 
+        if (grp) grp.style.display = 'none'; 
+        else newLevelSel.style.display = 'none'; 
+      }
       const bulkLevelSel = document.getElementById('bulkLevel');
-      if (bulkLevelSel) { const grp2 = bulkLevelSel.closest('.form-group') || bulkLevelSel.parentElement; if (grp2) grp2.style.display = 'none'; else bulkLevelSel.style.display = 'none'; }
+      if (bulkLevelSel) { 
+        const grp2 = bulkLevelSel.closest('.form-group') || bulkLevelSel.parentElement; 
+        if (grp2) grp2.style.display = 'none'; 
+        else bulkLevelSel.style.display = 'none'; 
+      }
       this.renderCustomWords();
     }
-  }
+}
 
   // =========
   // Levels & Categories
@@ -879,7 +935,7 @@ openAboutInSettings(btnEl) {
     if (addedCard) addedCard.textContent = `${this.customWords.length} слов`;
   }
 
-  showLevelWords(level) {
+showLevelWords(level) {
     this.stopCurrentAudio();
     this.currentLevel = level;
     this.currentCategory = null;
@@ -899,15 +955,15 @@ openAboutInSettings(btnEl) {
 
     this.updateBulkToggleButton();
 
+    // Упрощенный скролл без анимации
     if (container) {
       setTimeout(() => {
-        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setTimeout(() => { window.scrollBy({ top: -100, left: 0, behavior: 'auto' }); }, 120);
+        window.scrollTo(0, container.offsetTop - 100);
       }, 50);
     }
-  }
+}
 
-  showCategoryWords(category) {
+showCategoryWords(category) {
     this.stopCurrentAudio();
     this.currentCategory = category;
     this.currentLevel = null;
@@ -934,13 +990,13 @@ openAboutInSettings(btnEl) {
 
     this.updateBulkToggleButton();
 
+    // Упрощенный скролл без анимации
     if (container) {
       setTimeout(() => {
-        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setTimeout(() => { window.scrollBy({ top: -100, left: 0, behavior: 'auto' }); }, 120);
+        window.scrollTo(0, container.offsetTop - 100);
       }, 50);
     }
-  }
+}
 
   showAddedWordsCategory() {
     this.stopCurrentAudio();
@@ -981,24 +1037,7 @@ openAboutInSettings(btnEl) {
  // =========
   // Auto Dictionary (Levels page) — NEW TEST UI
   // =========
-  insertAutoDictionaryButtonInLevels() {
-    const levelsSection = document.getElementById('levels');
-    if (!levelsSection) return;
-    if (levelsSection.querySelector('#autoDictLevelsBtn')) return;
 
-    const bar = document.createElement('div');
-    bar.style.cssText = 'width:100%;display:flex;justify-content:center;margin-bottom:12px;';
-
-    const btn = document.createElement('button');
-    btn.id = 'autoDictLevelsBtn';
-    btn.className = 'btn btn-primary';
-    btn.style.cssText = 'width:100%;font-weight:700;';
-    btn.textContent = 'ПОДОБРАТЬ СЛОВАРЬ ПОД ТЕБЯ 🚀';
-    btn.addEventListener('click', () => this.showAutoDictionaryTest());
-
-    levelsSection.insertAdjacentElement('afterbegin', bar);
-    bar.appendChild(btn);
-  }
 
 showAutoDictionaryTest() {
   // Build overlay container styled per provided design
@@ -1964,7 +2003,7 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
   // =========
   // Learning UI
   // =========
-  renderLearningSection() {
+renderLearningSection() {
     const container = document.getElementById('learningWordsList');
     const countEl = document.getElementById('learningCount');
     if (!container) return;
@@ -1978,7 +2017,7 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
           <h3>Добавьте слова из "Списка слов" , чтобы практиковаться</h3>
         </div>
       `;
-      this.insertMotivationButton(container);
+      this.insertAutoDictionaryButtonInLearning(container);
       return;
     }
 
@@ -1990,8 +2029,22 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
       this.renderWordsList();
     }
 
-    this.insertMotivationButton(container);
-  }
+    this.insertAutoDictionaryButtonInLearning(container);
+}
+
+insertAutoDictionaryButtonInLearning(containerEl) {
+    if (!containerEl) return;
+    if (containerEl.querySelector('#autoDictLearningBtn')) return;
+
+    const btn = document.createElement('button');
+    btn.id = 'autoDictLearningBtn';
+    btn.className = 'btn btn-primary';
+    btn.textContent = 'ПОДОБРАТЬ СЛОВАРЬ ПОД ТЕБЯ 🚀';
+    btn.style.cssText = 'font-weight:700;margin-bottom:14px;width:100%;';
+    btn.addEventListener('click', () => this.showAutoDictionaryTest());
+
+    containerEl.insertAdjacentElement('afterbegin', btn);
+}
 
   // =========
   // Motivation UI (popup)
@@ -3164,5 +3217,3 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
-
-
