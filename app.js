@@ -453,7 +453,7 @@ const slides = [
     {
         key: 'welcome',
         title: 'Добро пожаловать!',
-        image: '/hello.png', // статичная картинка для первого слайда
+        image: "/hello.png", style="width:180px;height:auto;object-fit:contain;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.2);" />
         html: `
             <div style="text-align:left;color:var(--text-primary);line-height:1.55;font-size:15px;">
                 <div style="font-weight:800;margin-bottom:8px;">Добро пожаловать в лучшее приложение для повышения словарного запаса!</div>
@@ -466,41 +466,41 @@ const slides = [
     {
         key: 'levels',
         title: 'Уровни',
-        image: '/1.gif', // первая GIF анимация
+        image: "/1.gif", // первая GIF анимация
         html: `<p>Здесь вы можете добавлять слова в свой словарь для изучения — из уровней и тематических категорий.</p>`,
         spotlight: 'levels'
     },
     {
         key: 'learning',
         title: 'Изучаю',
-        image: '/2.gif',
+        image: "/2.gif", 
         html: `<p>Практикуйте слова в 2 режимах: <strong>Quiz</strong> и <strong>Flashcards</strong>. Система учитывает интервалы повторения.</p>`,
         spotlight: 'learning'
     },
     {
         key: 'new-words',
         title: 'Новые',
-        image: '/3.gif',
+        image: "/3.gif",
         html: `<p>Добавляйте свои слова и фразы. После добавления они сразу попадут в ваш словарь.</p>`,
         spotlight: 'new-words'
     },
     {
         key: 'progress',
         title: 'Прогресс',
-        image: '/4.gif',
+        image: "/4.gif",
         html: `<p>Отслеживайте прогресс: сколько повторений вы сделали и как продвигаетесь по уровням.</p>`,
         spotlight: 'progress'
     },
     {
         key: 'games',
         title: 'Игры',
-        image: '/5.gif',
+        image: "/5.gif",
         html: `<p>Играйте и одновременно учите слова. Чтобы запустить игру, ответьте правильно 3 раза в quiz.</p>`,
         spotlight: 'games'
     },
     {
         key: 'ai-chat',
-        title: 'AI Chat',
+        title: "AI Chat",
         image: '/6.gif',
         html: `<p>Спросите у бота на основе ChatGPT любой вопрос по английскому — доступен 24/7.</p>`,
         spotlight: 'ai-chat'
@@ -3164,3 +3164,4 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+
