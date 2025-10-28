@@ -101,7 +101,7 @@
 <div class="app-container">
   <header class="app-header">
     <div class="header-content">
-      <h1 class="app-title">Bewords</h1>
+      <h1 class="app-title">BeWords.ru </h1>
       <div class="header-actions">
         <button class="support-btn" id="supportBtn" data-testid="support-btn" title="Поддержать проект">
           <i class="fas fa-heart"></i>
@@ -285,11 +285,7 @@
         <p class="mode-help" id="bulkHelp" data-testid="bulk-help">
           Наше приложение поддерживает массовое добавление слов и фраз<br><br>
           Каждое английское слово / фразу вводите с новой строки<br><br>
-          Перевод слова указывается через "-" <br><br>
-          Примеры: <br>
-          go - идти, ходить, ехать<br>
-          table - стол<br>
-          run - бежать, запускать, управлять<br>
+          Перевод указывается через "-" <br><br>
         </p>
         <div class="form-group">
           <label for="bulkLevel">Уровень для всех слов</label>
@@ -306,7 +302,7 @@
         </div>
         <div class="form-group">
           <label for="bulkTextarea">Вставьте строки</label>
-          <textarea id="bulkTextarea" rows="6" placeholder="go - идти, ехать, ходить&#10;table - стол&#10;run - бежать, запускать" data-testid="bulk-textarea" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);border-radius:var(--radius-md);background:var(--bg-primary);color:var(--text-primary);"></textarea>
+          <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;go - идти, ехать, ходить&#10;table - стол&#10;run - бежать, запускать" data-testid="bulk-textarea" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);border-radius:var(--radius-md);background:var(--bg-primary);color:var(--text-primary);"></textarea>
         </div>
         <button class="add-word-btn" id="bulkAddBtn" data-testid="bulk-add-btn">
           <i class="fas fa-file-import"></i>
@@ -341,7 +337,8 @@
       </div>
 
       <p class="mode-help">
-        Играйте в игры и изучайте слова в Английском<br><br>
+        Играйте в игры и изучайте слова в Английском.<br><br>
+        Чтобы запустить игру нужно правильно решить quiz.<br><br>
         Каждые 5 минут игры вам нужно будет правильно ответить на quiz из 4 слов , чтобы продолжить играть<br><br>
         Таким образом за час вы повторите 48 слов просто играя в игры<br><br>
         Новая эра обучения началась с "Bewords"<br>
@@ -352,7 +349,7 @@
           <img src="race.jpg" alt="Subway Surfers" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
             <h3>Racing</h3>
-            <p>Уворачивайся от трафика. Чтобы начать — ответь правильно на 3 слова.</p>
+            <p>Уворачивайся от трафика. </p>
             <button class="btn btn-primary" id="surfStartBtn" data-testid="surf-start-btn">Старт</button>
           </div>
         </div>
@@ -397,12 +394,8 @@
 
     <!-- AI Chat -->
     <section id="ai-chat" class="content-section">
-      <div class="section-header">
-        <h2>AI Chat</h2>
-      </div>
-
       <div class="ai-chat-description">
-        <h3>Ваш персональный AI-помощник для изучения английского</h3>
+        <h3>Ваш персональный AI-помощник для изучения английского на базе Chat GPT</h3>
         <p>Задавайте вопросы, практикуйте разговорный английский, получайте объяснения грамматики и помощь с переводом. AI-учитель доступен 24/7 и всегда готов помочь!</p>
       </div>
 
@@ -420,13 +413,13 @@
 
   <nav class="bottom-nav" id="bottomNav">
     <button class="nav-item active" type="button" data-section="levels" data-testid="nav-levels" onclick="window.app && app.switchSection('levels')">
-      <i class="fas fa-layer-group"></i><span>Уровни</span>
+      <i class="fas fa-layer-group"></i><span>Списки слов</span>
     </button>
     <button class="nav-item" type="button" data-section="learning" data-testid="nav-learning" onclick="window.app && app.switchSection('learning')">
       <i class="fas fa-book-reader"></i><span>Изучаю</span>
     </button>
     <button class="nav-item" type="button" data-section="new-words" data-testid="nav-new-words" onclick="window.app && app.switchSection('new-words')">
-      <i class="fas fa-plus"></i><span>Новые</span>
+      <i class="fas fa-plus"></i><span>Загрузить</span>
     </button>
     <button class="nav-item" type="button" data-section="progress" data-testid="nav-progress" onclick="window.app && app.switchSection('progress')">
       <i class="fas fa-chart-line"></i><span>Прогресс</span>
@@ -435,7 +428,7 @@
       <i class="fas fa-gamepad"></i><span>Игры</span>
     </button>
     <button class="nav-item" type="button" data-section="ai-chat" data-testid="nav-ai-chat" onclick="window.app && app.switchSection('ai-chat')">
-      <i class="fas fa-robot"></i><span>AI Chat</span>
+      <i class="fas fa-robot"></i><span>ИИ бот</span>
     </button>
   </nav>
 </div>
