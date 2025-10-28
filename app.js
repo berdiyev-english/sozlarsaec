@@ -90,50 +90,80 @@ class EnglishWordsApp {
   }
   stopCurrentAudio() {
     try {
-      if (this.currentAudio) {
-        this.currentAudio.pause();
-        this.currentAudio.src = '';
-        this.currentAudio = null;
-      }
+if (this.currentAudio) {
+  try { this.currentAudio.pause(); } catch {}
+  // не трогаем src
+  this.currentAudio = null;
+}
       if (window && window.speechSynthesis) {
         window.speechSynthesis.cancel();
       }
     } catch {}
   }
+  
+  scrollToElTop(el, offset = 96) {
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const top = rect.top + window.pageYOffset - offset;
+  window.scrollTo({ top, behavior: 'smooth' });
+}
+
+prepareSharedAudio() {
+  if (this.sharedAudio) return this.sharedAudio;
+  const a = new Audio();
+  a.preload = 'auto';
+  a.setAttribute('playsinline', '');
+  a.autoplay = false;
+  this.sharedAudio = a;
+  return a;
+}
+
   // MP3 play that resolves when playback finishes (no overlap)
-  playMp3Url(url) {
-    const p = new Promise((resolve, reject) => {
-      try {
-        this.stopCurrentAudio();
-        const audio = new Audio(url);
-        this.currentAudio = audio;
+playMp3Url(url) {
+  const a = this.prepareSharedAudio();
+  const p = new Promise((resolve, reject) => {
+    try {
+      this.stopCurrentAudio();
+      this.currentAudio = a;
 
-        let endedOrFailed = false;
-        const cleanup = () => {
-          if (endedOrFailed) return;
-          endedOrFailed = true;
-          try { audio.onended = null; audio.onerror = null; audio.oncanplaythrough = null; } catch {}
-        };
+      let settled = false;
+      const cleanup = () => {
+        if (settled) return;
+        settled = true;
+        try {
+          a.onended = null;
+          a.onerror = null;
+          a.oncanplaythrough = null;
+        } catch {}
+      };
 
-        audio.oncanplaythrough = () => {
-          audio.play().catch(err => { cleanup(); reject(err); });
-        };
-        audio.onended = () => { cleanup(); resolve(true); };
-        audio.onerror = () => { cleanup(); reject(new Error('Audio error')); };
+      a.oncanplaythrough = () => {
+        a.play().then(() => { cleanup(); resolve(true); }).catch(err => { cleanup(); reject(err); });
+      };
+      a.onended = () => { cleanup(); resolve(true); };
+      a.onerror = () => { cleanup(); reject(new Error('Audio error')); };
 
-        setTimeout(() => {
-          if (!endedOrFailed && audio && !audio.paused) return;
-          if (!endedOrFailed) { try { audio.pause(); } catch {} cleanup(); reject(new Error('Audio timeout')); }
-        }, 15000);
-      } catch (e) { reject(e); }
-    });
+      if (a.src !== url) { a.src = url; }
+      a.load();
 
-    this.currentAudioPromise = p.finally(() => {
-      if (this.currentAudioPromise === p) this.currentAudioPromise = null;
-    });
+      const isIOSStandalone = (window.navigator.standalone === true) || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+      const timeoutMs = isIOSStandalone ? 7000 : 15000;
 
-    return p;
-  }
+      setTimeout(() => {
+        if (!settled && a.paused) {
+          try { a.pause(); } catch {}
+          cleanup();
+          reject(new Error('Audio timeout'));
+        }
+      }, timeoutMs);
+    } catch (e) { reject(e); }
+  });
+
+  this.currentAudioPromise = p.finally(() => {
+    if (this.currentAudioPromise === p) this.currentAudioPromise = null;
+  });
+  return p;
+}
 
   async ensureVoicesLoaded(timeoutMs = 1500) {
     if (!('speechSynthesis' in window)) return;
@@ -299,7 +329,6 @@ class EnglishWordsApp {
         const section = e.currentTarget.getAttribute('data-section');
         if (section) {
           this.switchSection(section);
-          if (section === 'levels') this.insertAutoDictionaryButtonInLevels();
         }
       });
     });
@@ -377,7 +406,6 @@ class EnglishWordsApp {
     if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('dash', 'dash.html'));
 
     this.updateLevelCounts();
-    this.insertAutoDictionaryButtonInLevels();
     // Ensure Quiz active by default in UI
     const btnQuiz = document.getElementById('modeQuiz');
     if (btnQuiz) { document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active')); btnQuiz.classList.add('active'); }
@@ -402,32 +430,39 @@ maybeShowDailyMotivation() {
 }
 
   // Unlock audio on first user gesture (PWA fix)
-  installAudioUnlocker() {
-    const unlock = async () => {
-      try {
-        const AC = window.AudioContext || window.webkitAudioContext;
-        if (AC) {
-          if (!this.audioCtx) this.audioCtx = new AC();
-          if (this.audioCtx.state !== 'running') await this.audioCtx.resume();
+installAudioUnlocker() {
+  const unlock = async () => {
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) {
+        if (!this.audioCtx) this.audioCtx = new AC();
+        if (this.audioCtx.state !== 'running') await this.audioCtx.resume();
 
-          // short silent oscillator to satisfy gesture requirement
-          const o = this.audioCtx.createOscillator();
-          const g = this.audioCtx.createGain();
-          g.gain.value = 0.0001;
-          o.connect(g).connect(this.audioCtx.destination);
-          o.start(0);
-          o.stop(this.audioCtx.currentTime + 0.05);
-        }
-        if ('speechSynthesis' in window) {
-          try { window.speechSynthesis.cancel(); } catch {}
-        }
+        // short silent oscillator to satisfy gesture requirement
+        const o = this.audioCtx.createOscillator();
+        const g = this.audioCtx.createGain();
+        g.gain.value = 0.0001;
+        o.connect(g).connect(this.audioCtx.destination);
+        o.start(0);
+        o.stop(this.audioCtx.currentTime + 0.05);
+      }
+      if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch {}
+      }
+      
+      try {
+        const a = this.prepareSharedAudio();
+        a.src = a.src || '';
+        a.load();
       } catch {}
-      document.removeEventListener('touchstart', unlock, true);
-      document.removeEventListener('click', unlock, true);
-    };
-    document.addEventListener('touchstart', unlock, true);
-    document.addEventListener('click', unlock, true);
-  }
+      
+    } catch {}
+    document.removeEventListener('touchstart', unlock, true);
+    document.removeEventListener('click', unlock, true);
+  };
+  document.addEventListener('touchstart', unlock, true);
+  document.addEventListener('click', unlock, true);
+}
   
 maybeRunFirstTour() {
     try {
@@ -449,59 +484,63 @@ showFirstRunTour() {
         document.querySelectorAll('.bottom-nav .nav-item').forEach(b => b.classList.remove('nav-highlight'));
     };
 
-    const slides = [
-        {
-            key: 'welcome',
-            title: 'Добро пожаловать!',
-            html: `
-                <div style="display:flex;flex-direction:column;align-items:center;gap:14px;">
-                    <img src="/hello.png" alt="hello" style="width:180px;height:auto;object-fit:contain;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.2);" />
-                    <div style="text-align:left;color:var(--text-primary);line-height:1.55;font-size:15px;">
-                        <div style="font-weight:800;margin-bottom:8px;">Добро пожаловать в лучшее приложение для повышения словарного запаса!</div>
-                        <p style="margin:0 0 8px 0;">Bewords.ru — приложение, созданное одним человеком, чтобы у вас было всё для удобного изучения.</p>
-                        <p style="margin:0 0 8px 0;">Приложение полностью бесплатное и без рекламы. Если понравится — поделитесь с друзьями или поддержите донатом через кнопку «♥».</p>
-                    </div>
-                </div>
-            `,
-            spotlight: null
-        },
-        {
-            key: 'levels',
-            title: 'Уровни',
-            html: `<p>Здесь вы можете добавлять слова в свой словарь для изучения — из уровней и тематических категорий.</p>`,
-            spotlight: 'levels'
-        },
-        {
-            key: 'learning',
-            title: 'Изучаю',
-            html: `<p>Практикуйте слова в 2 режимах: <strong>Quiz</strong> и <strong>Flashcards</strong>. Система учитывает интервалы повторения.</p>`,
-            spotlight: 'learning'
-        },
-        {
-            key: 'new-words',
-            title: 'Новые',
-            html: `<p>Добавляйте свои слова и фразы. После добавления они сразу попадут в ваш словарь.</p>`,
-            spotlight: 'new-words'
-        },
-        {
-            key: 'progress',
-            title: 'Прогресс',
-            html: `<p>Отслеживайте прогресс: сколько повторений вы сделали и как продвигаетесь по уровням.</p>`,
-            spotlight: 'progress'
-        },
-        {
-            key: 'games',
-            title: 'Игры',
-            html: `<p>Играйте и одновременно учите слова. Чтобы запустить игру, ответьте правильно 3 раза в quiz.</p>`,
-            spotlight: 'games'
-        },
-        {
-            key: 'ai-chat',
-            title: 'AI Chat',
-            html: `<p>Спросите у бота на основе ChatGPT любой вопрос по английскому — доступен 24/7.</p>`,
-            spotlight: 'ai-chat'
-        }
-    ];
+const slides = [
+    {
+        key: 'welcome',
+        title: 'Добро пожаловать!',
+        image: '/hello.png', // статичная картинка для первого слайда
+        html: `
+            <div style="text-align:left;color:var(--text-primary);line-height:1.55;font-size:15px;">
+                <div style="font-weight:800;margin-bottom:8px;">Добро пожаловать в лучшее приложение для повышения словарного запаса!</div>
+                <p style="margin:0 0 8px 0;">Bewords.ru — приложение, созданное одним человеком, чтобы у вас было всё для удобного изучения.</p>
+                <p style="margin:0 0 8px 0;">Приложение полностью бесплатное и без рекламы. Если понравится — поделитесь с друзьями или поддержите донатом через кнопку «♥».</p>
+            </div>
+        `,
+        spotlight: null
+    },
+    {
+        key: 'levels',
+        title: 'Уровни',
+        image: '/gifs/1.gif', // первая GIF анимация
+        html: `<p>Здесь вы можете добавлять слова в свой словарь для изучения — из уровней и тематических категорий.</p>`,
+        spotlight: 'levels'
+    },
+    {
+        key: 'learning',
+        title: 'Изучаю',
+        image: '/gifs/2.gif',
+        html: `<p>Практикуйте слова в 2 режимах: <strong>Quiz</strong> и <strong>Flashcards</strong>. Система учитывает интервалы повторения.</p>`,
+        spotlight: 'learning'
+    },
+    {
+        key: 'new-words',
+        title: 'Новые',
+        image: '/gifs/3.gif',
+        html: `<p>Добавляйте свои слова и фразы. После добавления они сразу попадут в ваш словарь.</p>`,
+        spotlight: 'new-words'
+    },
+    {
+        key: 'progress',
+        title: 'Прогресс',
+        image: '/gifs/4.gif',
+        html: `<p>Отслеживайте прогресс: сколько повторений вы сделали и как продвигаетесь по уровням.</p>`,
+        spotlight: 'progress'
+    },
+    {
+        key: 'games',
+        title: 'Игры',
+        image: '/gifs/5.gif',
+        html: `<p>Играйте и одновременно учите слова. Чтобы запустить игру, ответьте правильно 3 раза в quiz.</p>`,
+        spotlight: 'games'
+    },
+    {
+        key: 'ai-chat',
+        title: 'AI Chat',
+        image: '/gifs/6.gif',
+        html: `<p>Спросите у бота на основе ChatGPT любой вопрос по английскому — доступен 24/7.</p>`,
+        spotlight: 'ai-chat'
+    }
+];
 
     let index = 0;
     const overlay = document.createElement('div');
@@ -631,8 +670,9 @@ showFirstRunTour() {
       <div class="support-modal-content" style="background:var(--bg-primary);border-radius:16px;padding:30px;max-width:500px;width:100%;box-shadow:var(--shadow-lg);">
         <h2 style="margin-bottom:15px;color:var(--text-primary);">❤️ Поддержать проект</h2>
         <p style="margin-bottom:15px;color:var(--text-secondary);">Это бесплатный сервис без рекламы, который создан с любовью к изучению английского языка. Проект может развиваться и существовать благодаря вашим донатам.</p>
-        <p style="margin-bottom:15px;color:var(--text-secondary);">Если вам понравилось наше приложение и оно помогает вам учить английский, не забудьте поддержать разработку!</p>
-        <p style="margin-bottom:20px;color:var(--text-secondary);"><strong>Об авторе:</strong><br>Приложение создано на основе методики Абдуррахима Бердиева.  Прибыль от донатов идет на развитие и улучшение функционала приложения.</p>
+        <p style="margin-bottom:15px;color:var(--text-secondary);">Если вам понравилось мое приложение и оно помогает вам учить английский, не забудьте поддержать разработку!</p>
+           <p style="margin-bottom:15px;color:var(--text-secondary);">Прибыль от донатов идет на развитие и улучшение функционала приложения!</p>
+        <p style="margin-bottom:20px;color:var(--text-secondary);"><strong>Об авторе:</strong><br>Приложение создано Бердиевым Абдуррахимом - Аспирантом педагогических наук</p> 
         <a href="https://pay.cloudtips.ru/p/8f56d7d3" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-block;margin-right:10px;margin-bottom:10px;">
           <i class="fas fa-heart"></i> Поддержать проект
         </a>
@@ -813,7 +853,7 @@ openAboutInSettings(btnEl) {
   // Sections
   // =========
   switchSection(section) {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);
 
     this.currentSection = section;
     this.stopCurrentAudio();
@@ -828,7 +868,6 @@ openAboutInSettings(btnEl) {
 
     if (section === 'levels') {
       this.backToLevels();
-      this.insertAutoDictionaryButtonInLevels();
     }
     if (section === 'learning') {
       // Ensure Quiz active when entering learning
@@ -894,12 +933,9 @@ openAboutInSettings(btnEl) {
 
     this.updateBulkToggleButton();
 
-    if (container) {
-      setTimeout(() => {
-        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setTimeout(() => { window.scrollBy({ top: -100, left: 0, behavior: 'auto' }); }, 120);
-      }, 50);
-    }
+if (container) {
+  setTimeout(() => this.scrollToElTop(container, 96), 50);
+}
   }
 
   showCategoryWords(category) {
@@ -929,12 +965,9 @@ openAboutInSettings(btnEl) {
 
     this.updateBulkToggleButton();
 
-    if (container) {
-      setTimeout(() => {
-        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setTimeout(() => { window.scrollBy({ top: -100, left: 0, behavior: 'auto' }); }, 120);
-      }, 50);
-    }
+if (container) {
+  setTimeout(() => this.scrollToElTop(container, 96), 50);
+}
   }
 
   showAddedWordsCategory() {
@@ -957,12 +990,9 @@ openAboutInSettings(btnEl) {
 
     this.updateBulkToggleButton();
 
-    if (container) {
-      setTimeout(() => {
-        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setTimeout(() => { window.scrollBy({ top: -100, left: 0, behavior: 'auto' }); }, 120);
-      }, 50);
-    }
+if (container) {
+  setTimeout(() => this.scrollToElTop(container, 96), 50);
+}
   }
 
   backToLevels() {
@@ -1559,8 +1589,8 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
 
     const source = this.currentLevel || this.currentCategory;
     if (!source || source === 'ADDED') {
-      btn.textContent = 'Добавить все';
-      btn.title = 'Добавить все';
+      btn.textContent = 'Учить все';
+      btn.title = 'Учить все';
       btn.classList.remove('remove');
       btn.classList.add('add');
       btn.dataset.state = 'not-all';
@@ -1569,8 +1599,8 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
     }
     const words = oxfordWordsDatabase[source] || [];
     if (!words.length) {
-      btn.textContent = 'Добавить все';
-      btn.title = 'Добавить все';
+      btn.textContent = 'Учить все';
+      btn.title = 'Учить все';
       btn.classList.remove('remove');
       btn.classList.add('add');
       btn.dataset.state = 'not-all';
@@ -1586,8 +1616,8 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
       btn.dataset.state = 'all-added';
       btn.disabled = false;
     } else {
-      btn.textContent = 'Добавить все';
-      btn.title = 'Добавить все';
+      btn.textContent = 'Учить все';
+      btn.title = 'Учить все';
       btn.classList.remove('remove');
       btn.classList.add('add');
       btn.dataset.state = 'not-all';
@@ -1621,7 +1651,7 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
             </button>
             ${isInLearning ?
               `<button class="action-text-btn remove" data-testid="word-remove-btn" onclick="app.removeWordFromLearning('${this.safeAttr(word.word)}', '${this.safeAttr(levelOrCategory)}')" title="Удалить из изучаемых">Удалить</button>` :
-              `<button class="action-text-btn add" data-testid="word-add-btn" onclick="app.addWordToLearning('${this.safeAttr(word.word)}', '${this.safeAttr(translationText)}', '${this.safeAttr(levelOrCategory)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'})" title="Добавить в изучаемые">Добавить</button>`
+              `<button class="action-text-btn add" data-testid="word-add-btn" onclick="app.addWordToLearning('${this.safeAttr(word.word)}', '${this.safeAttr(translationText)}', '${this.safeAttr(levelOrCategory)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'})" title="Добавить в изучаемые">Учить</button>`
             }
           </div>
         </div>
@@ -1702,7 +1732,7 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
     actions.innerHTML = `
       <button class="action-btn play-btn" title="US" onclick="app.playWord('${this.safeAttr(word)}', null, 'us')"><i class="fas fa-volume-up"></i></button>
       <button class="action-btn play-btn" title="UK" onclick="app.playWord('${this.safeAttr(word)}', null, 'uk')"><i class="fas fa-headphones"></i></button>
-      <button class="action-text-btn add" data-testid="word-add-btn" onclick="app.addWordToLearning('${this.safeAttr(word)}', '${this.safeAttr(translation)}', '${this.safeAttr(level)}', null)" title="Добавить в изучаемые">Добавить</button>
+      <button class="action-text-btn add" data-testid="word-add-btn" onclick="app.addWordToLearning('${this.safeAttr(word)}', '${this.safeAttr(translation)}', '${this.safeAttr(level)}', null)" title="Добавить в изучаемые">Учить</button>
     `;
   }
 
@@ -1970,12 +2000,9 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
       container.innerHTML = `
         <div class="empty-state">
           <i class="fas fa-book-open"></i>
-          <h3>Пока нет слов для изучения</h3>
-          <p>Добавьте слова из списка по уровням или создайте новые</p>
+          <h3>Добавьте слова из "Списка слов" , чтобы практиковаться</h3>
         </div>
       `;
-      this.insertMotivationButton(container);
-      return;
     }
 
     if (this.currentMode === 'flashcards') {
@@ -1992,20 +2019,11 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
   // =========
   // Motivation UI (popup)
   // =========
-  insertMotivationButton(containerEl) {
-    if (!containerEl) return;
-    if (containerEl.querySelector('#motivationBtn')) return;
+insertMotivationButton(containerEl) { if (!containerEl) return; if (containerEl.querySelector('#autoDictLearningBtn')) return;
 
-    const btn = document.createElement('button');
-    btn.id = 'motivationBtn';
-    btn.className = 'btn btn-primary';
-    btn.textContent = 'ПОЛУЧИТЬ ЗАРЯД МОТИВАЦИИ 💪';
-    btn.style.cssText = 'font-weight:700;margin-bottom:14px;';
-    btn.setAttribute('data-testid', 'motivation-btn');
-    btn.addEventListener('click', () => this.showMotivationPopup());
+const btn = document.createElement('button'); btn.id = 'autoDictLearningBtn'; btn.className = 'btn btn-primary'; btn.textContent = 'ПОДОБРАТЬ СЛОВАРЬ ПОД ТЕБЯ 🚀'; btn.style.cssText = 'font-weight:700;margin-bottom:14px;'; btn.setAttribute('data-testid', 'auto-dict-learning-btn'); btn.addEventListener('click', () => this.showAutoDictionaryTest());
 
-    containerEl.insertAdjacentElement('afterbegin', btn);
-  }
+containerEl.insertAdjacentElement('afterbegin', btn); }
   showMotivationPopup() {
     const overlay = document.createElement('div');
     overlay.id = 'motivationOverlay';
@@ -2668,7 +2686,7 @@ renderProgress() {
   // =========
   showQuizGateForGame(gameName, gameFile) {
     if (this.learningWords.filter(w => !w.isLearned).length < 3) {
-      this.showNotification('Чтобы играть, добавьте минимум 3 слова в «Изучаю»', 'warning');
+      this.showNotification('Чтобы играть, добавьте минимум 3 слова из "списка слов" в «Изучаю»', 'warning');
       return;
     }
 
@@ -3112,7 +3130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 service-worker.js
 /* Simple image cache-first service worker for Bewords */
-const CACHE_NAME = 'bewords-images-v1';
+const CACHE_NAME = 'bewords-images-v2';
 const IMG_EXT_RE = /\.(png|jpg|jpeg|webp|gif|svg)$/i;
 
 self.addEventListener('install', (event) => {
