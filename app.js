@@ -449,59 +449,63 @@ showFirstRunTour() {
         document.querySelectorAll('.bottom-nav .nav-item').forEach(b => b.classList.remove('nav-highlight'));
     };
 
-    const slides = [
-        {
-            key: 'welcome',
-            title: 'Добро пожаловать!',
-            html: `
-                <div style="display:flex;flex-direction:column;align-items:center;gap:14px;">
-                    <img src="/hello.png" alt="hello" style="width:180px;height:auto;object-fit:contain;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.2);" />
-                    <div style="text-align:left;color:var(--text-primary);line-height:1.55;font-size:15px;">
-                        <div style="font-weight:800;margin-bottom:8px;">Добро пожаловать в лучшее приложение для повышения словарного запаса!</div>
-                        <p style="margin:0 0 8px 0;">Bewords.ru — приложение, созданное одним человеком, чтобы у вас было всё для удобного изучения.</p>
-                        <p style="margin:0 0 8px 0;">Приложение полностью бесплатное и без рекламы. Если понравится — поделитесь с друзьями или поддержите донатом через кнопку «♥».</p>
-                    </div>
-                </div>
-            `,
-            spotlight: null
-        },
-        {
-            key: 'levels',
-            title: 'Уровни',
-            html: `<p>Здесь вы можете добавлять слова в свой словарь для изучения — из уровней и тематических категорий.</p>`,
-            spotlight: 'levels'
-        },
-        {
-            key: 'learning',
-            title: 'Изучаю',
-            html: `<p>Практикуйте слова в 2 режимах: <strong>Quiz</strong> и <strong>Flashcards</strong>. Система учитывает интервалы повторения.</p>`,
-            spotlight: 'learning'
-        },
-        {
-            key: 'new-words',
-            title: 'Новые',
-            html: `<p>Добавляйте свои слова и фразы. После добавления они сразу попадут в ваш словарь.</p>`,
-            spotlight: 'new-words'
-        },
-        {
-            key: 'progress',
-            title: 'Прогресс',
-            html: `<p>Отслеживайте прогресс: сколько повторений вы сделали и как продвигаетесь по уровням.</p>`,
-            spotlight: 'progress'
-        },
-        {
-            key: 'games',
-            title: 'Игры',
-            html: `<p>Играйте и одновременно учите слова. Чтобы запустить игру, ответьте правильно 3 раза в quiz.</p>`,
-            spotlight: 'games'
-        },
-        {
-            key: 'ai-chat',
-            title: 'AI Chat',
-            html: `<p>Спросите у бота на основе ChatGPT любой вопрос по английскому — доступен 24/7.</p>`,
-            spotlight: 'ai-chat'
-        }
-    ];
+const slides = [
+    {
+        key: 'welcome',
+        title: 'Добро пожаловать!',
+        image: '/hello.png', // статичная картинка для первого слайда
+        html: `
+            <div style="text-align:left;color:var(--text-primary);line-height:1.55;font-size:15px;">
+                <div style="font-weight:800;margin-bottom:8px;">Добро пожаловать в лучшее приложение для повышения словарного запаса!</div>
+                <p style="margin:0 0 8px 0;">Bewords.ru — приложение, созданное одним человеком, чтобы у вас было всё для удобного изучения.</p>
+                <p style="margin:0 0 8px 0;">Приложение полностью бесплатное и без рекламы. Если понравится — поделитесь с друзьями или поддержите донатом через кнопку «♥».</p>
+            </div>
+        `,
+        spotlight: null
+    },
+    {
+        key: 'levels',
+        title: 'Уровни',
+        image: '/1.gif', // первая GIF анимация
+        html: `<p>Здесь вы можете добавлять слова в свой словарь для изучения — из уровней и тематических категорий.</p>`,
+        spotlight: 'levels'
+    },
+    {
+        key: 'learning',
+        title: 'Изучаю',
+        image: '/2.gif',
+        html: `<p>Практикуйте слова в 2 режимах: <strong>Quiz</strong> и <strong>Flashcards</strong>. Система учитывает интервалы повторения.</p>`,
+        spotlight: 'learning'
+    },
+    {
+        key: 'new-words',
+        title: 'Новые',
+        image: '/3.gif',
+        html: `<p>Добавляйте свои слова и фразы. После добавления они сразу попадут в ваш словарь.</p>`,
+        spotlight: 'new-words'
+    },
+    {
+        key: 'progress',
+        title: 'Прогресс',
+        image: '/4.gif',
+        html: `<p>Отслеживайте прогресс: сколько повторений вы сделали и как продвигаетесь по уровням.</p>`,
+        spotlight: 'progress'
+    },
+    {
+        key: 'games',
+        title: 'Игры',
+        image: '/5.gif',
+        html: `<p>Играйте и одновременно учите слова. Чтобы запустить игру, ответьте правильно 3 раза в quiz.</p>`,
+        spotlight: 'games'
+    },
+    {
+        key: 'ai-chat',
+        title: 'AI Chat',
+        image: '/6.gif',
+        html: `<p>Спросите у бота на основе ChatGPT любой вопрос по английскому — доступен 24/7.</p>`,
+        spotlight: 'ai-chat'
+    }
+];
 
     let index = 0;
     const overlay = document.createElement('div');
@@ -631,8 +635,9 @@ showFirstRunTour() {
       <div class="support-modal-content" style="background:var(--bg-primary);border-radius:16px;padding:30px;max-width:500px;width:100%;box-shadow:var(--shadow-lg);">
         <h2 style="margin-bottom:15px;color:var(--text-primary);">❤️ Поддержать проект</h2>
         <p style="margin-bottom:15px;color:var(--text-secondary);">Это бесплатный сервис без рекламы, который создан с любовью к изучению английского языка. Проект может развиваться и существовать благодаря вашим донатам.</p>
-        <p style="margin-bottom:15px;color:var(--text-secondary);">Если вам понравилось наше приложение и оно помогает вам учить английский, не забудьте поддержать разработку!</p>
-        <p style="margin-bottom:20px;color:var(--text-secondary);"><strong>Об авторе:</strong><br>Приложение создано на основе методики Абдуррахима Бердиева.  Прибыль от донатов идет на развитие и улучшение функционала приложения.</p>
+        <p style="margin-bottom:15px;color:var(--text-secondary);">Если вам понравилось мое приложение и оно помогает вам учить английский, не забудьте поддержать разработку!</p>
+           <p style="margin-bottom:15px;color:var(--text-secondary);">Прибыль от донатов идет на развитие и улучшение функционала приложения!</p>
+        <p style="margin-bottom:20px;color:var(--text-secondary);"><strong>Об авторе:</strong><br>Приложение создано Бердиевым Абдуррахимом - Аспирантом педагогических наук</p> 
         <a href="https://pay.cloudtips.ru/p/8f56d7d3" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-block;margin-right:10px;margin-bottom:10px;">
           <i class="fas fa-heart"></i> Поддержать проект
         </a>
@@ -1559,8 +1564,8 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
 
     const source = this.currentLevel || this.currentCategory;
     if (!source || source === 'ADDED') {
-      btn.textContent = 'Добавить все';
-      btn.title = 'Добавить все';
+      btn.textContent = 'Учить все';
+      btn.title = 'Учить все';
       btn.classList.remove('remove');
       btn.classList.add('add');
       btn.dataset.state = 'not-all';
@@ -1569,8 +1574,8 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
     }
     const words = oxfordWordsDatabase[source] || [];
     if (!words.length) {
-      btn.textContent = 'Добавить все';
-      btn.title = 'Добавить все';
+      btn.textContent = 'Учить все';
+      btn.title = 'Учить все';
       btn.classList.remove('remove');
       btn.classList.add('add');
       btn.dataset.state = 'not-all';
@@ -1586,8 +1591,8 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
       btn.dataset.state = 'all-added';
       btn.disabled = false;
     } else {
-      btn.textContent = 'Добавить все';
-      btn.title = 'Добавить все';
+      btn.textContent = 'Учить все';
+      btn.title = 'Учить все';
       btn.classList.remove('remove');
       btn.classList.add('add');
       btn.dataset.state = 'not-all';
@@ -1621,7 +1626,7 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
             </button>
             ${isInLearning ?
               `<button class="action-text-btn remove" data-testid="word-remove-btn" onclick="app.removeWordFromLearning('${this.safeAttr(word.word)}', '${this.safeAttr(levelOrCategory)}')" title="Удалить из изучаемых">Удалить</button>` :
-              `<button class="action-text-btn add" data-testid="word-add-btn" onclick="app.addWordToLearning('${this.safeAttr(word.word)}', '${this.safeAttr(translationText)}', '${this.safeAttr(levelOrCategory)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'})" title="Добавить в изучаемые">Добавить</button>`
+              `<button class="action-text-btn add" data-testid="word-add-btn" onclick="app.addWordToLearning('${this.safeAttr(word.word)}', '${this.safeAttr(translationText)}', '${this.safeAttr(levelOrCategory)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'})" title="Добавить в изучаемые">Учить</button>`
             }
           </div>
         </div>
@@ -1702,7 +1707,7 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
     actions.innerHTML = `
       <button class="action-btn play-btn" title="US" onclick="app.playWord('${this.safeAttr(word)}', null, 'us')"><i class="fas fa-volume-up"></i></button>
       <button class="action-btn play-btn" title="UK" onclick="app.playWord('${this.safeAttr(word)}', null, 'uk')"><i class="fas fa-headphones"></i></button>
-      <button class="action-text-btn add" data-testid="word-add-btn" onclick="app.addWordToLearning('${this.safeAttr(word)}', '${this.safeAttr(translation)}', '${this.safeAttr(level)}', null)" title="Добавить в изучаемые">Добавить</button>
+      <button class="action-text-btn add" data-testid="word-add-btn" onclick="app.addWordToLearning('${this.safeAttr(word)}', '${this.safeAttr(translation)}', '${this.safeAttr(level)}', null)" title="Добавить в изучаемые">Учить</button>
     `;
   }
 
@@ -1970,8 +1975,7 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
       container.innerHTML = `
         <div class="empty-state">
           <i class="fas fa-book-open"></i>
-          <h3>Пока нет слов для изучения</h3>
-          <p>Добавьте слова из списка по уровням или создайте новые</p>
+          <h3>Добавьте слова из "Списка слов" , чтобы практиковаться</h3>
         </div>
       `;
       this.insertMotivationButton(container);
@@ -2668,7 +2672,7 @@ renderProgress() {
   // =========
   showQuizGateForGame(gameName, gameFile) {
     if (this.learningWords.filter(w => !w.isLearned).length < 3) {
-      this.showNotification('Чтобы играть, добавьте минимум 3 слова в «Изучаю»', 'warning');
+      this.showNotification('Чтобы играть, добавьте минимум 3 слова из "списка слов" в «Изучаю»', 'warning');
       return;
     }
 
@@ -3112,7 +3116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 service-worker.js
 /* Simple image cache-first service worker for Bewords */
-const CACHE_NAME = 'bewords-images-v1';
+const CACHE_NAME = 'bewords-images-v2';
 const IMG_EXT_RE = /\.(png|jpg|jpeg|webp|gif|svg)$/i;
 
 self.addEventListener('install', (event) => {
