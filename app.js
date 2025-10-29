@@ -445,32 +445,65 @@ maybeShowDailyMotivation() {
 }
 
   // Unlock audio on first user gesture (PWA fix)
-  installAudioUnlocker() {
+installAudioUnlocker() {
+    let unlocked = false;
+    
     const unlock = async () => {
-      try {
-        const AC = window.AudioContext || window.webkitAudioContext;
-        if (AC) {
-          if (!this.audioCtx) this.audioCtx = new AC();
-          if (this.audioCtx.state !== 'running') await this.audioCtx.resume();
-
-          // short silent oscillator to satisfy gesture requirement
-          const o = this.audioCtx.createOscillator();
-          const g = this.audioCtx.createGain();
-          g.gain.value = 0.0001;
-          o.connect(g).connect(this.audioCtx.destination);
-          o.start(0);
-          o.stop(this.audioCtx.currentTime + 0.05);
+        if (unlocked) return;
+        
+        try {
+            // Создаем или восстанавливаем AudioContext
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if (AC) {
+                if (!this.audioCtx) {
+                    this.audioCtx = new AC();
+                }
+                if (this.audioCtx.state === 'suspended') {
+                    await this.audioCtx.resume();
+                }
+                
+                // Создаем пустой буфер для полной разблокировки
+                const buffer = this.audioCtx.createBuffer(1, 1, 22050);
+                const source = this.audioCtx.createBufferSource();
+                source.buffer = buffer;
+                source.connect(this.audioCtx.destination);
+                source.start(0);
+            }
+            
+            // Проигрываем беззвучное аудио для разблокировки HTML5 Audio
+            const silentAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
+            silentAudio.volume = 0.1;
+            await silentAudio.play().catch(() => {});
+            
+            // Разблокировка speechSynthesis
+            if ('speechSynthesis' in window) {
+                try { 
+                    window.speechSynthesis.cancel(); 
+                } catch {}
+            }
+            
+            unlocked = true;
+            console.log('Audio context unlocked successfully');
+            
+        } catch (e) {
+            console.warn('Audio unlock partial success:', e);
         }
-        if ('speechSynthesis' in window) {
-          try { window.speechSynthesis.cancel(); } catch {}
+        
+        // Удаляем слушатели после разблокировки
+        if (unlocked) {
+            document.removeEventListener('touchstart', unlock, true);
+            document.removeEventListener('touchend', unlock, true);
+            document.removeEventListener('click', unlock, true);
+            document.removeEventListener('pointerdown', unlock, true);
         }
-      } catch {}
-      document.removeEventListener('touchstart', unlock, true);
-      document.removeEventListener('click', unlock, true);
     };
+    
+    // Вешаем на множество событий для лучшей совместимости с iOS
     document.addEventListener('touchstart', unlock, true);
+    document.addEventListener('touchend', unlock, true);
     document.addEventListener('click', unlock, true);
-  }
+    document.addEventListener('pointerdown', unlock, true);
+}
   
 maybeRunFirstTour() {
     try {
