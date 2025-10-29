@@ -905,7 +905,7 @@ const oxfordWordsDatabase = {
   { "word": "abroad", "translation": "за границей; за границу", "category": "adverbs", "pos": "adv." },
   { "word": "accept", "translation": "принимать; соглашаться (с чем-то)", "category": "verbs", "pos": "v." },
   { "word": "accident", "translation": "несчастный случай; авария", "category": "nouns", "pos": "n." },
-  { "word": "according to", "translation": "согласно; по (чьим-либо данным/мнению)", "category": "prepositions", "pos": "prep." },
+  { "word": "according", "translation": "согласно; по (чьим-либо данным/мнению)", "category": "prepositions", "pos": "prep." },
   { "word": "achieve", "translation": "достигать; добиваться", "category": "verbs", "pos": "v." },
   { "word": "act", "translation": "действовать; играть (роль)", "category": "verbs", "pos": "v." },
   { "word": "active", "translation": "активный", "category": "adjectives", "pos": "adj." },
@@ -5544,7 +5544,7 @@ const oxfordWordsDatabase = {
     {
       "word": "get",
       "translation": "получать",
-      "forms": ["get", "got", "got/gotten"],
+      "forms": ["get", "got", "gotten"],
       "pos": "v."
     },
     {
@@ -5869,11 +5869,6 @@ const oxfordWordsDatabase = {
     {
       "word": "give up",
       "translation": "сдаваться, прекращать",
-      "pos": "phrasal verb"
-    },
-    {
-      "word": "take off",
-      "translation": "снимать, улетать",
       "pos": "phrasal verb"
     },
     {
