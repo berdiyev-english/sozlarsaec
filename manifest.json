@@ -4,7 +4,7 @@
   "description": "Инновационная платформа для изучения английских слов через игры",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#6366f1",
   "theme_color": "#6366f1",
   "orientation": "portrait",
   "categories": ["education", "games"],
