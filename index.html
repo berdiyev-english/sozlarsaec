@@ -1,106 +1,15 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- Основные SEO meta теги -->
-  <title>BeWords - Изучение английских слов через игры | Бесплатное приложение</title>
-  <meta name="description" content="BeWords - инновационная платформа для изучения английского языка через игры. 6000+ слов по уровням A1-C2, AI-помощник на базе ChatGPT, интерактивные игры и умные карточки. Учите английский весело и эффективно!">
-  <meta name="keywords" content="английский язык, изучение английского, английские слова, flashcards, quiz, английский онлайн, учить английский бесплатно, английский для начинающих, AI учитель, ChatGPT английский, игры на английском">
-  <meta name="author" content="BeWords Team">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://bewords.ru/">
-  
-  <!-- Favicon - используем только icon-192.png -->
-  <link rel="icon" type="image/png" href="/icon-192.png">
-  <link rel="shortcut icon" type="image/png" href="/icon-192.png">
-  
-  <!-- Apple Touch Icon -->
-  <link rel="apple-touch-icon" href="/icon-192.png">
-  
-  <!-- Microsoft Tile -->
-  <meta name="msapplication-TileColor" content="#6366f1">
-  <meta name="msapplication-TileImage" content="/icon-192.png">
-  
-  <!-- Open Graph meta теги для социальных сетей -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://bewords.ru/">
-  <meta property="og:title" content="BeWords - Изучай английский через игры">
-  <meta property="og:description" content="Революционный способ изучения английского языка. 6000+ слов, AI-помощник, интерактивные игры. Начни учить английский весело и эффективно!">
-  <meta property="og:image" content="https://bewords.ru/icon-192.png">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="192">
-  <meta property="og:image:height" content="192">
-  <meta property="og:site_name" content="BeWords">
-  <meta property="og:locale" content="ru_RU">
-  
-  <!-- Twitter Card meta теги -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:url" content="https://bewords.ru/">
-  <meta name="twitter:title" content="BeWords - Изучай английский через игры">
-  <meta name="twitter:description" content="6000+ слов по уровням, AI-помощник на базе ChatGPT, игры и умные карточки. Учи английский эффективно!">
-  <meta name="twitter:image" content="https://bewords.ru/icon-192.png">
-  
-  <!-- PWA meta теги -->
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#6366f1">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="BeWords">
+  <meta name="apple-mobile-web-app-title" content="Bewords">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="BeWords">
-  
-  <!-- Дополнительные SEO meta теги -->
-  <meta name="language" content="Russian">
-  <meta name="revisit-after" content="7 days">
-  <meta name="rating" content="general">
-  
-  <!-- Структурированные данные Schema.org -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "BeWords",
-    "description": "Инновационная платформа для изучения английского языка через игры",
-    "url": "https://bewords.ru",
-    "applicationCategory": "EducationalApplication",
-    "operatingSystem": "Any",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "RUB"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "ratingCount": "1250",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "author": {
-      "@type": "Organization",
-      "name": "BeWords Team",
-      "url": "https://bewords.ru"
-    },
-    "featureList": [
-      "6000+ английских слов по уровням A1-C2",
-      "AI-помощник на базе ChatGPT",
-      "Интерактивные обучающие игры",
-      "Умные флешкарточки",
-      "Quiz с произношением",
-      "Отслеживание прогресса",
-      "Бесплатное использование"
-    ]
-  }
-  </script>
-  
-  <!-- Предзагрузка важных ресурсов -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  
-  <!-- Стили -->
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeWords - Изучение английских слов</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -268,7 +177,7 @@
           <div class="level-stats"><span class="word-count">0 слов</span></div>
         </div>
         <div class="level-card" data-category="PHRASAL_VERBS" data-testid="category-card-phrasal">
-          <div class="level-badge advanced">Phrasal Verbs</div>
+          <div class="level-badge beginner">Phrasal Verbs</div>
           <h3>Фразовые глаголы</h3>
           <p>Частые фразовые глаголы</p>
           <div class="level-stats"><span class="word-count">0 слов</span></div>
@@ -277,6 +186,12 @@
           <div class="level-badge proficiency">Idioms</div>
           <h3>Идиомы</h3>
           <p>Разговорные выражения</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+         <div class="level-card" data-category="MEDICAL" data-testid="category-card-medical">
+          <div class="level-badge elementary">Medical</div>
+          <h3>Медицинский английский</h3>
+          <p>База для всех</p>
           <div class="level-stats"><span class="word-count">0 слов</span></div>
         </div>
       </div>
@@ -374,7 +289,7 @@
       <div class="add-word-form" id="bulkAddForm">
         <h3 style="margin-bottom:8px;">Массовое добавление</h3>
         <p class="mode-help" id="bulkHelp" data-testid="bulk-help">
-          Мое приложение поддерживает массовое добавление слов и фраз<br><br>
+          Наше приложение поддерживает массовое добавление слов и фраз<br><br>
           Каждое английское слово / фразу вводите с новой строки<br><br>
           Перевод указывается через "-" <br><br>
         </p>
@@ -538,5 +453,3 @@
 </script>
 </body>
 </html>
-
-
