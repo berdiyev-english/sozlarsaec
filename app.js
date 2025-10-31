@@ -322,7 +322,7 @@ async getPrimaryImageUrl(wordObj) {
 
 getFallbackImageUrl() {
   const randomNum = Math.floor(Math.random() * 100) + 1;
-  return `/${n}.jpg`;
+  return `/${randomNum}.jpg`;
 }
 
 handleMotivationImageError(img) {
@@ -3555,5 +3555,6 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+
 
 
