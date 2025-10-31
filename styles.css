@@ -581,3 +581,22 @@ body {
   background: var(--bg-secondary);
   color: var(--text-primary);
 }
+/* Медицинские изображения */
+.medical-image {
+  object-fit: contain !important;
+  background: white !important;
+}
+
+/* Для всех изображений с Servier Medical Art */
+img[data-image-source*="Servier"] {
+  object-fit: contain !important;
+  background: white !important;
+}
+
+/* Адаптивная высота для медицинских изображений */
+.word-card[data-level="MEDICAL"] img,
+.flashcard[data-level="MEDICAL"] img,
+.quiz-container[data-level="MEDICAL"] img {
+  object-fit: contain !important;
+  background: white !important;
+}
