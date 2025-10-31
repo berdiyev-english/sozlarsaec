@@ -322,7 +322,7 @@ async getPrimaryImageUrl(wordObj) {
 
 getFallbackImageUrl() {
   const randomNum = Math.floor(Math.random() * 100) + 1;
-  return `${n}.jpg`;
+  return `/${n}.jpg`;
 }
 
 handleMotivationImageError(img) {
@@ -336,7 +336,7 @@ async handleImageError(imgEl) {
   // Если уже пробовали fallback
   if (imgEl.dataset.fallbackTried) {
     imgEl.onerror = null;
-    imgEl.src = 'nophoto.jpg';
+    imgEl.src = '/nophoto.jpg';
     return;
   }
   
@@ -2444,7 +2444,7 @@ insertAutoDictionaryButtonInLearning(containerEl) {
 
     container.innerHTML = `
       <div class="flashcard" data-testid="flashcard">
-        <img src="nophoto.jpg" alt="flashcard" class="flashcard-image" data-loading="true">
+        <img src="/nophoto.jpg" alt="flashcard" class="flashcard-image" data-loading="true">
         <div class="flashcard-body">
           <h3 class="flashcard-title">
             ${displayWord}
@@ -2579,7 +2579,7 @@ insertAutoDictionaryButtonInLearning(containerEl) {
 
     container.innerHTML = `
       <div class="quiz-container" data-testid="quiz-container">
-         <img src="nophoto.jpg" alt="quiz" class="quiz-image" data-loading="true">
+         <img src="/nophoto.jpg" alt="quiz" class="quiz-image" data-loading="true">
     <span class="word-level" style="display:none">${word.level}</span>
         <div class="quiz-question">
           ${questionText}
@@ -3555,4 +3555,5 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+
 
