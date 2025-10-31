@@ -322,13 +322,13 @@ async getPrimaryImageUrl(wordObj) {
 
 getFallbackImageUrl() {
   const randomNum = Math.floor(Math.random() * 100) + 1;
-  return `https://britlex.ru/images/${randomNum}.jpg`;
+  return `${n}.jpg`;
 }
 
 handleMotivationImageError(img) {
   const index = parseInt(img.dataset.index || '1');
   const fallbackIndex = ((index % 61) || 61);
-  img.src = `motivation/m${fallbackIndex}.jpg`;
+  img.src = `/m${fallbackIndex}.jpg`;
 }
 
 // Упрощенный handleImageError
@@ -2401,7 +2401,7 @@ insertAutoDictionaryButtonInLearning(containerEl) {
 
     const img = document.createElement('img');
     img.alt = 'motivation';
-    img.src = `motivation/m${n}.jpg`;
+    img.src = `/m${n}.jpg`;
     img.setAttribute('data-index', String(n));
     img.style.cssText = 'max-width:100%;max-height:70vh;height:auto;object-fit:contain;display:block;border-radius:10px;';
     img.onerror = () => this.handleMotivationImageError(img);
@@ -3555,3 +3555,4 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+
