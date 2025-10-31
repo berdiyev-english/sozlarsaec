@@ -13,6 +13,7 @@ class EnglishWordsApp {
     this.showFilter = 'all';
     this.gameQuizIntervals = {};
     this.audioCtx = null;
+    this.initMedicalImageCache();
 
     // runtime flags
     this.lastFlashcardFrontWasRussian = false;
@@ -300,29 +301,295 @@ playMp3Url(url) {
   // =========================
   // Image helpers
   // =========================
-  getPrimaryImageUrl(wordObj) {
-    const base = (this.getBaseEnglish(wordObj) || '').toLowerCase().trim();
-    return `https://britlex.ru/images/${encodeURIComponent(base)}.jpg`;
+
+// Главный метод получения URL изображения
+async getPrimaryImageUrl(wordObj) {
+  // Проверяем, является ли это медицинской категорией
+  if (wordObj.level === 'MEDICAL' || wordObj.category === 'MEDICAL') {
+    // Сразу пытаемся получить медицинское изображение
+    const medicalImage = await this.getMedicalImageUrl(wordObj);
+    if (medicalImage && medicalImage.url) {
+      return medicalImage.url;
+    }
+    // Если не нашли медицинское изображение, возвращаем fallback
+    return this.getFallbackImageUrl();
   }
-  getFallbackImageUrl() {
-    const n = Math.floor(Math.random() * 100) + 1;
-    return `${n}.jpg`;
+  
+  // Для остальных категорий используем существующую логику
+  const base = (this.getBaseEnglish(wordObj) || '').toLowerCase().trim();
+  return `https://britlex.ru/images/${encodeURIComponent(base)}.jpg`;
+}
+
+getFallbackImageUrl() {
+  const randomNum = Math.floor(Math.random() * 100) + 1;
+  return `https://britlex.ru/images/${randomNum}.jpg`;
+}
+
+handleMotivationImageError(img) {
+  const index = parseInt(img.dataset.index || '1');
+  const fallbackIndex = ((index % 61) || 61);
+  img.src = `motivation/m${fallbackIndex}.jpg`;
+}
+
+// Упрощенный handleImageError
+async handleImageError(imgEl) {
+  // Если уже пробовали fallback
+  if (imgEl.dataset.fallbackTried) {
+    imgEl.onerror = null;
+    imgEl.src = 'nophoto.jpg';
+    return;
   }
-  handleImageError(imgEl) {
-    if (!imgEl.dataset.fallbackTried) { imgEl.dataset.fallbackTried = '1'; imgEl.src = this.getFallbackImageUrl(); return; }
-    imgEl.onerror = null; imgEl.src = 'nophoto.jpg';
+  
+  
+  
+  // Пытаемся найти контекст слова
+  const card = imgEl.closest('.word-card, .flashcard, .quiz-container');
+  if (card) {
+    const level = card.querySelector('.word-level')?.textContent?.trim();
+    const wordText = card.querySelector('.word-text, .flashcard-title, .quiz-question')?.textContent?.trim();
+    
+    // Если это медицинское слово, пробуем еще раз
+    if (level === 'MEDICAL') {
+      const wordObj = this.findWordObject(wordText, level);
+      if (wordObj) {
+        const medicalImage = await this.getMedicalImageUrl(wordObj);
+        if (medicalImage && medicalImage.url && medicalImage.url !== imgEl.src) {
+          imgEl.src = medicalImage.url;
+          imgEl.dataset.imageSource = medicalImage.source;
+          imgEl.classList.add('medical-image');
+          return;
+        }
+      }
+    }
   }
-  handleMotivationImageError(imgEl) {
-    if (!imgEl.dataset.step) { imgEl.dataset.step = '1'; const current = imgEl.dataset.index || '1'; imgEl.src = `m${current}.jpg`; return; }
-    else { imgEl.onerror = null; imgEl.src = 'nophoto.jpg'; }
+  
+  // Используем fallback
+  imgEl.dataset.fallbackTried = '1';
+  imgEl.src = this.getFallbackImageUrl();
+}
+
+// Упрощенный поиск объекта слова
+findWordObject(wordText, level) {
+  if (!wordText) return null;
+  
+  // Очищаем текст от лишних символов
+  const cleanText = wordText.trim().toLowerCase();
+  
+  // Ищем в learningWords
+  let found = this.learningWords.find(w => {
+    const wordLower = (w.word || '').toLowerCase();
+    const englishLower = (this.getEnglishDisplay(w) || '').toLowerCase();
+    return (wordLower === cleanText || englishLower === cleanText) && 
+           (!level || w.level === level);
+  });
+  
+  if (found) return found;
+  
+  // Ищем в базе данных
+  if (level && oxfordWordsDatabase[level]) {
+    found = oxfordWordsDatabase[level].find(w => {
+      const wordLower = (w.word || '').toLowerCase();
+      const englishLower = (this.getEnglishDisplay(w) || '').toLowerCase();
+      return wordLower === cleanText || englishLower === cleanText;
+    });
   }
+  
+  return found;
+}
+
+// Упрощенный метод получения медицинского изображения
+async getMedicalImageUrl(wordObj) {
+  if (!wordObj) return null;
+  
+  this.initMedicalImageCache();
+  
+  const word = (this.getBaseEnglish(wordObj) || wordObj.word || '').toLowerCase().trim();
+  const cacheKey = `medical_${word}`;
+  
+  // Проверяем кеш
+  if (this.medicalImageCache.has(cacheKey)) {
+    return this.medicalImageCache.get(cacheKey);
+  }
+  
+  // Прямое соответствие для известных медицинских терминов
+  const directMedicalImages = {
+    'heart': 'https://smart.servier.com/wp-content/uploads/2016/10/coeur.png',
+    'brain': 'https://smart.servier.com/wp-content/uploads/2016/10/cerveau.png',
+    'lungs': 'https://smart.servier.com/wp-content/uploads/2016/10/poumon_01.png',
+    'liver': 'https://smart.servier.com/wp-content/uploads/2016/10/foie.png',
+    'kidney': 'https://smart.servier.com/wp-content/uploads/2016/10/rein.png',
+    'stomach': 'https://smart.servier.com/wp-content/uploads/2016/10/estomac.png',
+    'eye': 'https://smart.servier.com/wp-content/uploads/2016/10/oeil.png',
+    'spine': 'https://smart.servier.com/wp-content/uploads/2016/10/colonne_01.png',
+    'large intestine': 'https://smart.servier.com/wp-content/uploads/2016/10/gros_intestin.png',
+    'small intestine': 'https://smart.servier.com/wp-content/uploads/2016/10/intestin_grele.png',
+    'pancreas': 'https://smart.servier.com/wp-content/uploads/2016/10/pancreas.png',
+    'skull': 'https://smart.servier.com/wp-content/uploads/2016/10/crane_01.png',
+    'tooth': 'https://smart.servier.com/wp-content/uploads/2016/10/dent.png',
+    'neuron': 'https://smart.servier.com/wp-content/uploads/2016/10/neurone.png',
+    'dna': 'https://smart.servier.com/wp-content/uploads/2016/10/adn.png',
+    'blood': 'https://smart.servier.com/wp-content/uploads/2016/10/sang.png',
+    'bone': 'https://smart.servier.com/wp-content/uploads/2016/10/os.png',
+    'muscle': 'https://smart.servier.com/wp-content/uploads/2016/10/muscle.png',
+    'nerve': 'https://smart.servier.com/wp-content/uploads/2016/10/nerf.png',
+    'artery': 'https://smart.servier.com/wp-content/uploads/2016/10/artere.png',
+    'vein': 'https://smart.servier.com/wp-content/uploads/2016/10/veine.png',
+    'skeleton': 'https://smart.servier.com/wp-content/uploads/2016/10/squelette.png',
+    'cell': 'https://smart.servier.com/wp-content/uploads/2016/10/cellule.png',
+    'bacteria': 'https://smart.servier.com/wp-content/uploads/2016/10/bacterie.png',
+    'virus': 'https://smart.servier.com/wp-content/uploads/2016/10/virus.png'
+  };
+  
+  // Проверяем прямое соответствие
+  if (directMedicalImages[word]) {
+    const imageUrl = directMedicalImages[word];
+    const available = await this.checkImageAvailability(imageUrl);
+    
+    if (available) {
+      const result = { url: imageUrl, source: 'Servier Medical Art' };
+      this.medicalImageCache.set(cacheKey, result);
+      this.saveMedicalImageCache();
+      return result;
+    }
+  }
+  
+  // Пробуем варианты написания
+  const searchTerms = this.prepareMedicalSearchTerms(word);
+  
+  for (const term of searchTerms) {
+    const urls = [
+      `https://smart.servier.com/wp-content/uploads/2016/10/${term}.png`,
+      `https://smart.servier.com/wp-content/uploads/2017/01/${term}.png`,
+    ];
+    
+    for (const url of urls) {
+      const available = await this.checkImageAvailability(url);
+      if (available) {
+        const result = { url: url, source: 'Servier Medical Art' };
+        this.medicalImageCache.set(cacheKey, result);
+        this.saveMedicalImageCache();
+        return result;
+      }
+    }
+  }
+  
+  // Возвращаем null если не нашли
+  return null;
+}
+
+// Упрощенная проверка доступности изображения
+checkImageAvailability(url, timeout = 3000) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    let timeoutId;
+    
+    const cleanup = () => {
+      clearTimeout(timeoutId);
+      img.onload = null;
+      img.onerror = null;
+    };
+    
+    img.onload = () => {
+      cleanup();
+      resolve(true);
+    };
+    
+    img.onerror = () => {
+      cleanup();
+      resolve(false);
+    };
+    
+    timeoutId = setTimeout(() => {
+      cleanup();
+      resolve(false);
+    }, timeout);
+    
+    img.src = url;
+  });
+}
+
+// Упрощенная подготовка поисковых терминов
+prepareMedicalSearchTerms(word) {
+  const terms = [];
+  const base = word.toLowerCase().trim();
+  
+  // Базовый термин
+  terms.push(base);
+  
+  // Варианты с подчеркиванием и дефисом
+  if (base.includes(' ')) {
+    terms.push(base.replace(/\s+/g, '_'));
+    terms.push(base.replace(/\s+/g, '-'));
+  }
+  
+  // Французские эквиваленты для Servier
+  const frenchMap = {
+    'heart': 'coeur',
+    'brain': 'cerveau',
+    'lungs': 'poumon',
+    'liver': 'foie',
+    'kidney': 'rein',
+    'stomach': 'estomac',
+    'eye': 'oeil',
+    'spine': 'colonne',
+    'large intestine': 'gros_intestin',
+    'small intestine': 'intestin_grele',
+    'pancreas': 'pancreas',
+    'skull': 'crane',
+    'tooth': 'dent',
+    'neuron': 'neurone',
+    'dna': 'adn',
+    'blood': 'sang',
+    'bone': 'os',
+    'muscle': 'muscle',
+    'nerve': 'nerf',
+    'artery': 'artere',
+    'vein': 'veine'
+  };
+  
+  if (frenchMap[base]) {
+    terms.push(frenchMap[base]);
+  }
+  
+  return terms;
+}
+
+// Инициализация кеша
+initMedicalImageCache() {
+  if (!this.medicalImageCache) {
+    this.medicalImageCache = new Map();
+    try {
+      const saved = localStorage.getItem('medicalImageCache');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        Object.entries(parsed).forEach(([key, value]) => {
+          this.medicalImageCache.set(key, value);
+        });
+      }
+    } catch (e) {
+      console.warn('Failed to load medical image cache:', e);
+    }
+  }
+}
+
+// Сохранение кеша
+saveMedicalImageCache() {
+  try {
+    const cacheObj = {};
+    this.medicalImageCache.forEach((value, key) => {
+      cacheObj[key] = value;
+    });
+    localStorage.setItem('medicalImageCache', JSON.stringify(cacheObj));
+  } catch (e) {
+    console.warn('Failed to save medical image cache:', e);
+  }
+}
 
   // =========================
   // Initialize UI and events
   // =========================
+
   initializeUI() {
-    // Hide PREPOSITIONS everywhere
-    document.querySelectorAll('[data-category="PREPOSITIONS"]').forEach(el => { el.style.display = 'none'; });
 
     // Hide level selectors in "New words" section
     const newLevelSel = document.getElementById('newLevel');
@@ -963,6 +1230,14 @@ switchSection(section) {
     const idioms = oxfordWordsDatabase['IDIOMS'] || [];
     const idiomsCard = document.querySelector('[data-category="IDIOMS"] .word-count');
     if (idiomsCard) idiomsCard.textContent = `${idioms.length} слов`;
+    
+    const prepositions = oxfordWordsDatabase['PREPOSITIONS'] || [];
+    const prepositionsCard = document.querySelector('[data-category="PREPOSITIONS"] .word-count');
+    if (prepositionsCard) prepositionsCard.textContent = `${prepositions.length} слов`;
+    
+    const medical = oxfordWordsDatabase['MEDICAL'] || [];
+    const medicalCard = document.querySelector('[data-category="MEDICAL"] .word-count');
+    if (medicalCard) medicalCard.textContent = `${medical.length} слов`;
 
     const addedCard = document.querySelector('[data-category="ADDED"] .word-count');
     if (addedCard) addedCard.textContent = `${this.customWords.length} слов`;
@@ -1012,6 +1287,7 @@ showCategoryWords(category) {
       category === 'IRREGULARS' ? 'Неправильные глаголы' :
       category === 'PHRASAL_VERBS' ? 'Фразовые глаголы' :
       category === 'IDIOMS' ? 'Идиомы' :
+      category === 'MEDICAL' ? 'Медицинский английский' :
       'Категория';
 
     if (title) title.textContent = `${categoryName} - ${words.length} слов`;
@@ -2168,7 +2444,7 @@ insertAutoDictionaryButtonInLearning(containerEl) {
 
     container.innerHTML = `
       <div class="flashcard" data-testid="flashcard">
-        <img src="${primaryImg}" alt="flashcard" class="flashcard-image" onerror="app.handleImageError(this)">
+        <img src="nophoto.jpg" alt="flashcard" class="flashcard-image" data-loading="true">
         <div class="flashcard-body">
           <h3 class="flashcard-title">
             ${displayWord}
@@ -2203,6 +2479,18 @@ insertAutoDictionaryButtonInLearning(containerEl) {
         Карточка ${this.currentReviewIndex + 1} из ${wordsToReview.length}
       </div>
     `;
+    
+    this.getPrimaryImageUrl(word).then(imageUrl => {
+  const img = container.querySelector('.flashcard-image');
+  if (img) {
+    img.src = imageUrl;
+    img.onerror = () => this.handleImageError(img);
+    img.removeAttribute('data-loading');
+    if (word.level === 'MEDICAL') {
+      img.classList.add('medical-image');
+  }
+  }
+});
 
     if (!this.lastFlashcardFrontWasRussian && !this.suppressAutoSpeakOnce && this.currentSection === 'learning' && this.shouldAutoPronounce(word)) {
       setTimeout(() => {
@@ -2291,7 +2579,8 @@ insertAutoDictionaryButtonInLearning(containerEl) {
 
     container.innerHTML = `
       <div class="quiz-container" data-testid="quiz-container">
-        <img src="${primaryImg}" alt="quiz" class="quiz-image" onerror="app.handleImageError(this)">
+         <img src="nophoto.jpg" alt="quiz" class="quiz-image" data-loading="true">
+    <span class="word-level" style="display:none">${word.level}</span>
         <div class="quiz-question">
           ${questionText}
           <span class="sound-actions" style="margin-left:8px;">
@@ -2325,6 +2614,18 @@ insertAutoDictionaryButtonInLearning(containerEl) {
         </div>
       </div>
     `;
+    
+    this.getPrimaryImageUrl(word).then(imageUrl => {
+  const img = container.querySelector('.quiz-image');
+  if (img) {
+    img.src = imageUrl;
+    img.onerror = () => this.handleImageError(img);
+    img.removeAttribute('data-loading');
+        if (word.level === 'MEDICAL') {
+      img.classList.add('medical-image');
+  }
+  }
+});
 
     if (direction === 'EN_RU' && !this.suppressAutoSpeakOnce && this.currentSection === 'learning' && this.shouldAutoPronounce(word)) {
       setTimeout(() => {
@@ -2355,7 +2656,7 @@ insertAutoDictionaryButtonInLearning(containerEl) {
 
     if (options.length < 4) {
       const allLevels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-      const allCats = ['IRREGULARS', 'PHRASAL_VERBS', 'IDIOMS'];
+      const allCats = ['IRREGULARS', 'PHRASAL_VERBS', 'IDIOMS' , 'MEDICAL'];
       for (let level of allLevels) {
         const levelWords = (oxfordWordsDatabase[level] || []);
         const shuffledLevel = this.shuffle(levelWords);
@@ -2708,7 +3009,7 @@ renderProgress() {
     const inProgress = totalWords - learnedWords;
 
     const levelProgress = {};
-    ['A1','A2','B1','B2','C1','C2','IRREGULARS','PHRASAL_VERBS','IDIOMS','ADDED'].forEach(level => {
+    ['A1','A2','B1','B2','C1','C2','IRREGULARS','PHRASAL_VERBS','IDIOMS','MEDICAL','ADDED'].forEach(level => {
         const total = this.learningWords.filter(w => w.level === level).length;
         const learned = this.learningWords.filter(w => w.level === level && w.isLearned).length;
         levelProgress[level] = { total, learned };
@@ -3223,11 +3524,15 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
-  const isImage =
-    req.destination === 'image' ||
-    IMG_EXT_RE.test(url.pathname) ||
-    url.hostname.includes('britlex.ru') ||
-    url.pathname.startsWith('/motivation/');
+  
+    const isImage =
+  req.destination === 'image' ||
+  IMG_EXT_RE.test(url.pathname) ||
+  url.hostname.includes('britlex.ru') ||
+  url.hostname.includes('smart.servier.com') ||
+  url.hostname.includes('scidraw.io') ||
+  url.pathname.includes('medical') ||
+  url.pathname.startsWith('/motivation/');
 
   // Do not cache audio or media streams
   const isAudio = req.destination === 'audio' || url.pathname.endsWith('.mp3') || url.hostname.includes('wooordhunt.ru');
