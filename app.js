@@ -22,12 +22,31 @@ class EnglishWordsApp {
     this.suppressAutoSpeakOnce = false;
 
     this.loadData();
+    this.currentMode = localStorage.getItem('currentMode') || 'quiz';
+    this.currentPractice = localStorage.getItem('currentPractice') || 'scheduled';
+    this.muted = JSON.parse(localStorage.getItem('app_muted') || 'false');
     this.initializeUI();
     this.renderProgress();
-    this.maybeShowDailyMotivation(); 
+    this.maybeShowDailyMotivation();
+    this.syncModePracticeToggles();
     this.maybeRunFirstTour(); 
     this.installAudioUnlocker();
     this.preloadAiChat();
+    this.srsConfig = {
+dailyNew: 30, // новых слов/день
+dailyReview: 150, // повторов/день (всего ответов)
+activePool: 200, // активный пул
+learningSteps: [ // фаза обучения до «выпуска» в интервалы
+10 * 60 * 1000, // 10 минут
+60 * 60 * 1000, // 1 час
+4 * 60 * 60 * 1000 // 4 часа
+],
+graduateToDays: [1, 6], // первые 2 интервальные шага (1д, 6д)
+minEase: 1.3
+};
+
+this.srsDay = this.loadSrsDay(); // дневное состояние
+this.migrateStatsSchema(); // миграция структуры wordStats
   }
 
   // =========================
@@ -85,6 +104,7 @@ class EnglishWordsApp {
     [cleaned, noSpace, firstToken].forEach(c => { if (c && !uniq.includes(c)) uniq.push(c); });
     return uniq;
   }
+  
   buildAudioUrl(wordCandidate, region = 'us') {
     const clean = (wordCandidate || '').toLowerCase();
     return `https://wooordhunt.ru/data/sound/sow/${region}/${clean}.mp3`;
@@ -103,6 +123,7 @@ class EnglishWordsApp {
   }
   // MP3 play that resolves when playback finishes (no overlap)
 playMp3Url(url) {
+  if (this.muted) return Promise.resolve(false);
     const p = new Promise((resolve, reject) => {
       try {
         this.stopCurrentAudio();
@@ -190,6 +211,23 @@ playMp3Url(url) {
       window.speechSynthesis.addEventListener('voiceschanged', handler);
     });
   }
+  
+syncModePracticeToggles() {
+  const mode = this.currentMode;
+  const practice = this.currentPractice;
+  
+  // Синхронизируем кнопки режимов
+  document.querySelectorAll('.mode-btn').forEach(b => {
+    const btnMode = b.getAttribute('data-mode');
+    b.classList.toggle('active', btnMode === mode);
+  });
+  
+  // Синхронизируем кнопки практики
+  document.querySelectorAll('.practice-btn').forEach(b => {
+    const btnPractice = b.getAttribute('data-practice');
+    b.classList.toggle('active', btnPractice === practice);
+  });
+}
   pickPreferredGoogleVoice(region = 'us') {
     if (!('speechSynthesis' in window)) return null;
     const voices = window.speechSynthesis.getVoices() || [];
@@ -217,6 +255,7 @@ playMp3Url(url) {
     return region === 'uk' ? tryPick(namePrefsUK, langCheckUK) : tryPick(namePrefsUS, langCheckUS);
   }
   async playPhraseTTS(text, region = 'us') {
+    if (this.muted) return false;
     const phrase = this.sanitizeForSpeech(text);
     if (!phrase) return false;
     if (!('speechSynthesis' in window)) return false;
@@ -645,25 +684,38 @@ saveMedicalImageCache() {
     const bulkAddBtn = document.getElementById('bulkAddBtn');
     if (bulkAddBtn) bulkAddBtn.addEventListener('click', () => this.bulkAddWords());
 
-    // Mode toggle buttons (keep order: quiz, flashcards, list)
-    document.querySelectorAll('.mode-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        this.currentMode = e.currentTarget.getAttribute('data-mode');
-        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-        e.currentTarget.classList.add('active');
-        this.renderLearningSection();
-      });
-    });
+// Mode toggle buttons (keep order: quiz, flashcards, list)
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    this.currentMode = e.currentTarget.getAttribute('data-mode');
+    localStorage.setItem('currentMode', this.currentMode);
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    e.currentTarget.classList.add('active');
+    this.suppressAutoSpeakOnce = true;
+    this.renderLearningSection();
+  });
+});
 
-    // Practice toggle buttons
-    document.querySelectorAll('.practice-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        this.currentPractice = e.currentTarget.getAttribute('data-practice');
-        document.querySelectorAll('.practice-btn').forEach(b => b.classList.remove('active'));
-        e.currentTarget.classList.add('active');
-        this.renderLearningSection();
-      });
-    });
+// Practice toggle buttons
+document.querySelectorAll('.practice-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    this.currentPractice = e.currentTarget.getAttribute('data-practice');
+    localStorage.setItem('currentPractice', this.currentPractice);
+    document.querySelectorAll('.practice-btn').forEach(b => b.classList.remove('active'));
+    e.currentTarget.classList.add('active');
+    
+    // Сбрасываем индекс при переключении режима
+    this.currentReviewIndex = 0;
+    
+    // Очищаем сессию при переключении на endless
+    if (this.currentPractice === 'endless') {
+      localStorage.removeItem('currentSession');
+    }
+    
+    this.suppressAutoSpeakOnce = true;
+    this.renderLearningSection();
+  });
+});
 
     // Bulk Toggle button (single)
     const bulkToggle = document.getElementById('bulkToggleBtn');
@@ -688,11 +740,21 @@ saveMedicalImageCache() {
     if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('dash', 'dash.html'));
 
     this.updateLevelCounts();
-    // Ensure Quiz active by default in UI
-    const btnQuiz = document.getElementById('modeQuiz');
-    if (btnQuiz) { document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active')); btnQuiz.classList.add('active'); }
+    
+    // НЕ форсируем Quiz по умолчанию, используем сохраненное значение
     this.renderLearningSection();
     this.renderCustomWords();
+    
+    // Синхронизация кнопок режимов после загрузки DOM
+    setTimeout(() => {
+      // Устанавливаем активные кнопки согласно загруженным настройкам
+      document.querySelectorAll('.mode-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-mode') === this.currentMode);
+      });
+      document.querySelectorAll('.practice-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-practice') === this.currentPractice);
+      });
+    }, 100);
   }
 
   // Daily Motivation once per day
@@ -968,6 +1030,24 @@ showFirstRunTour() {
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
   }
+  
+  toggleSound(btnEl) {
+  this.muted = !this.muted;
+  localStorage.setItem('app_muted', JSON.stringify(this.muted));
+  
+  if (btnEl) {
+    const icon = btnEl.querySelector('i');
+    if (icon) {
+      icon.className = this.muted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+    }
+    btnEl.innerHTML = `
+      <i class="fas fa-${this.muted ? 'volume-mute' : 'volume-up'}"></i> 
+      ${this.muted ? 'Включить звук' : 'Отключить звук'}
+    `;
+  }
+  
+  this.showNotification(this.muted ? 'Звук отключен' : 'Звук включен', 'info');
+}
 
   // =========
   // Support
@@ -1086,10 +1166,15 @@ showSettingsModal() {
       <div id="settingsMenu"> 
         <button class="btn btn-primary" data-testid="settings-about" style="width:100%;margin-bottom:10px;" onclick="app.openAboutInSettings(this)"><i class="fas fa-info-circle"></i> О приложении</button> 
         <button class="btn btn-primary" data-testid="settings-theme" style="width:100%;margin-bottom:10px;" onclick="app.toggleTheme()"><i class="fas fa-adjust"></i> Переключить тему</button> 
-        <button class="btn btn-primary" data-testid="settings-install" style="width:100%;" onclick="app.openInstallGuideInSettings(this)"><i class="fas fa-download"></i> Установка приложения</button> 
-      </div> 
-      <div id="installGuide" style="display:none;"></div> 
-      <div id="settingsInnerPage" style="display:none;"></div> 
+        <button class="btn btn-primary" data-testid="settings-sound" style="width:100%;margin-bottom:10px;" onclick="app.toggleSound(this)">
+          <i class="fas fa-${this.muted ? 'volume-mute' : 'volume-up'}"></i> 
+          ${this.muted ? 'Включить звук' : 'Отключить звук'}
+        </button>
+        <button class="btn btn-primary" data-testid="settings-install" style="width:100%;margin-bottom:10px;" onclick="app.openInstallGuideInSettings(this)"><i class="fas fa-download"></i> Установка приложения</button> 
+      </div>
+      <!-- Добавляем скрытые контейнеры для внутренних страниц -->
+      <div id="settingsInnerPage" style="display:none;"></div>
+      <div id="installGuide" style="display:none;"></div>
     </div>
   `; 
   modal.addEventListener('click', (e) => { 
@@ -1182,12 +1267,16 @@ switchSection(section) {
       // Убираем вставку кнопки автословаря из levels
     }
     if (section === 'learning') {
-      this.currentMode = 'quiz';
-      const btnQuiz = document.getElementById('modeQuiz');
-      if (btnQuiz) { 
-        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active')); 
-        btnQuiz.classList.add('active'); 
-      }
+      // НЕ меняем режим принудительно, оставляем текущий
+      // Только синхронизируем UI
+      setTimeout(() => {
+        document.querySelectorAll('.mode-btn').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-mode') === this.currentMode);
+        });
+        document.querySelectorAll('.practice-btn').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-practice') === this.currentPractice);
+        });
+      }, 50);
       this.renderLearningSection();
     }
     if (section === 'progress') this.renderProgress();
@@ -1401,6 +1490,12 @@ showAutoDictionaryTest() {
     #autoDictOverlay .start-screen .btn{margin-top:10px;}
     #autoDictOverlay .back-btn { position: absolute; top: 15px; left: 15px; background: #f3f4f6; color: #666; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 5px; }
     #autoDictOverlay .back-btn:hover { background: #e5e7eb; }
+    .acc-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700;}
+.acc-none{background:#e5e7eb;color:#374151;}
+.acc-good{background:#d1fae5;color:#065f46;}
+.acc-mid{background:#fef3c7;color:#92400e;}
+.acc-bad{background:#fee2e2;color:#991b1b;}
+.word-meta{margin-top:6px;color:var(--text-secondary);}
     @media (max-width:480px){
       #autoDictOverlay .container{padding:15px;}
       #autoDictOverlay h1{font-size:18px;}
@@ -1998,7 +2093,6 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
       this.learningWords.push(newWord);
       this.initializeWordStats(word);
       this.saveData();
-
       this.swapCardButtonToRemove(word, level);
       this.updateLevelCounts();
       this.updateBulkToggleButton();
@@ -2126,17 +2220,90 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
       }
     }
   }
-  initializeWordStats(word) {
-    if (!this.wordStats[word]) {
-      this.wordStats[word] = {
-        correct: 0,
-        incorrect: 0,
-        lastReview: null,
-        nextReview: Date.now(),
-        difficulty: 0
-      };
-    }
-  }
+  
+  getWordAccuracy(word) {
+  const s = this.wordStats[word];
+  if (!s || (s.correct + s.incorrect) === 0) return null;
+  const total = s.correct + s.incorrect;
+  return {
+    pct: Math.round((s.correct / total) * 100),
+    total,
+    correct: s.correct,
+    incorrect: s.incorrect
+  };
+}
+getAccuracyBadgeHtml(word) {
+  const acc = this.getWordAccuracy(word);
+  if (!acc) return '<span class="acc-badge acc-none" title="нет данных">—</span>';
+  const cls = acc.pct >= 85 ? 'acc-good' : acc.pct >= 60 ? 'acc-mid' : 'acc-bad';
+  return `<span class="acc-badge ${cls}" title="${acc.correct}/${acc.total}">${acc.pct}%</span>`;
+}
+
+initializeWordStats(word) {
+if (!this.wordStats[word]) {
+this.wordStats[word] = {
+correct: 0,
+incorrect: 0,
+lastReview: null,
+nextReview: Date.now(),
+difficulty: 0, // 0..5
+// Новые поля
+ef: 2.5, // ease factor (SM-2)
+reps: 0, // кол-во успешных повторов в фазе review
+lapses: 0, // кол-во провалов
+interval: 0, // текущий интервал в мс
+phase: 'learning', // 'learning' | 'review'
+step: 0, // шаг в learningSteps
+firstSeenAt: null,
+totalAnswers: 0,
+totalTimeMs: 0
+};
+} else {
+// Заполним недостающие (на случай старых данных)
+const s = this.wordStats[word];
+if (s.ef == null) s.ef = 2.5;
+if (s.reps == null) s.reps = 0;
+if (s.lapses == null) s.lapses = 0;
+if (s.interval == null) s.interval = 0;
+if (!s.phase) s.phase = 'learning';
+if (s.step == null) s.step = 0;
+if (s.firstSeenAt == null) s.firstSeenAt = null;
+if (s.totalAnswers == null) s.totalAnswers = 0;
+if (s.totalTimeMs == null) s.totalTimeMs = 0;
+}
+}
+
+migrateStatsSchema() {
+(this.learningWords || []).forEach(w => this.initializeWordStats(w.word));
+this.saveData();
+}
+
+loadSrsDay() {
+try {
+const today = new Date().toDateString();
+const raw = JSON.parse(localStorage.getItem('srsDayV1') || 'null');
+if (!raw || raw.date !== today) {
+const fresh = { date: today, newIntroduced: [], answered: 0 };
+localStorage.setItem('srsDayV1', JSON.stringify(fresh));
+return fresh;
+}
+return raw;
+} catch {
+const fresh = { date: new Date().toDateString(), newIntroduced: [], answered: 0 };
+localStorage.setItem('srsDayV1', JSON.stringify(fresh));
+return fresh;
+}
+}
+saveSrsDay() {
+try { localStorage.setItem('srsDayV1', JSON.stringify(this.srsDay)); } catch {}
+}
+resetSrsDayIfNeeded() {
+const today = new Date().toDateString();
+if (!this.srsDay || this.srsDay.date !== today) {
+this.srsDay = { date: today, newIntroduced: [], answered: 0 };
+this.saveSrsDay();
+}
+}
 
   // =========
   // Add words (manual and bulk) -> ADDED category
@@ -2421,6 +2588,7 @@ insertAutoDictionaryButtonInLearning(containerEl) {
   // =========
   renderFlashcards() {
     const container = document.getElementById('learningWordsList');
+    this._questionStart = Date.now(); // ????
     if (!container) return;
 
     const wordsToReview = this.getWordsToReview();
@@ -2447,7 +2615,7 @@ insertAutoDictionaryButtonInLearning(containerEl) {
         <img src="/nophoto.jpg" alt="flashcard" class="flashcard-image" data-loading="true">
         <div class="flashcard-body">
           <h3 class="flashcard-title">
-            ${displayWord}
+  ${displayWord} ${this.getAccuracyBadgeHtml(word.word)}
             <span class="sound-actions">
               <button class="mini-btn" title="US" onclick="app.playWord('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'us')"><i class="fas fa-volume-up"></i></button>
               <button class="mini-btn" title="UK" onclick="app.playWord('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'uk')"><i class="fas fa-headphones"></i></button>
@@ -2537,7 +2705,8 @@ insertAutoDictionaryButtonInLearning(containerEl) {
     const wordsToReview = this.getWordsToReview();
     const word = wordsToReview[this.currentReviewIndex % wordsToReview.length];
 
-    this.updateWordStats(word.word, correct);
+    const rt = this._questionStart ? (Date.now() - this._questionStart) : null;
+this.updateWordStats(word.word, correct, rt);
     this.recordDailyProgress();
 
     this.currentReviewIndex++;
@@ -2552,6 +2721,7 @@ insertAutoDictionaryButtonInLearning(containerEl) {
 
   renderQuiz() {
     const container = document.getElementById('learningWordsList');
+    this._questionStart = Date.now(); // ???
     if (!container) return;
 
     const wordsToReview = this.getWordsToReview();
@@ -2582,7 +2752,7 @@ insertAutoDictionaryButtonInLearning(containerEl) {
          <img src="/nophoto.jpg" alt="quiz" class="quiz-image" data-loading="true">
     <span class="word-level" style="display:none">${word.level}</span>
         <div class="quiz-question">
-          ${questionText}
+  ${questionText} ${this.getAccuracyBadgeHtml(word.word)}
           <span class="sound-actions" style="margin-left:8px;">
             <button class="mini-btn" title="US" onclick="app.quizPlayQuestion('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'us')"><i class="fas fa-volume-up"></i></button>
             <button class="mini-btn" title="UK" onclick="app.quizPlayQuestion('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'uk')"><i class="fas fa-headphones"></i></button>
@@ -2692,8 +2862,8 @@ insertAutoDictionaryButtonInLearning(containerEl) {
       if (answer === selected) { opt.classList.add(isCorrect ? 'correct' : 'wrong'); }
       if (answer === correct && !isCorrect) { opt.classList.add('correct'); }
     });
-
-    this.updateWordStats(wordToPlay, isCorrect);
+     const rt = this._questionStart ? (Date.now() - this._questionStart) : null;
+this.updateWordStats(wordToPlay, isCorrect, rt);
     this.recordDailyProgress();
 
     const wordsToReview = this.getWordsToReview();
@@ -2716,46 +2886,47 @@ insertAutoDictionaryButtonInLearning(containerEl) {
     this.renderQuiz();
   }
 
-  renderWordsList() {
-    const container = document.getElementById('learningWordsList');
-    if (!container) return;
+renderWordsList() {
+  const container = document.getElementById('learningWordsList');
+  if (!container) return;
 
-    const wordsToShow = this.currentPractice === 'endless' ? this.learningWords.filter(w => !w.isLearned) : this.getWordsToReview();
+  const wordsToShow = this.currentPractice === 'endless' ? this.learningWords.filter(w => !w.isLearned) : this.getWordsToReview();
 
-    if (wordsToShow.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <i class="fas fa-check-circle"></i>
-          <h3>Нет слов для отображения</h3>
-        </div>
-      `;
-      return;
-    }
-
-    container.innerHTML = wordsToShow.map(word => {
-      const displayWord = this.getEnglishDisplay(word);
-      return `
-        <div class="word-card ${word.isLearned ? 'learned' : ''}">
-          <div class="word-header">
-            <div class="word-text">${displayWord}</div>
-            <div class="word-actions">
-              <button class="action-btn play-btn" title="US" onclick="app.playWordFromList('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'us')">
-                <i class="fas fa-volume-up"></i>
-              </button>
-              <button class="action-btn play-btn" title="UK" onclick="app.playWordFromList('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'uk')">
-                <i class="fas fa-headphones"></i>
-              </button>
-              <button class="action-btn ${word.isLearned ? 'add-btn' : 'remove-btn'}" onclick="app.toggleWordLearned('${this.safeAttr(word.word)}')" title="${word.isLearned ? 'Вернуть в изучение' : 'Отметить выученным'}">
-                <i class="fas fa-${word.isLearned ? 'undo' : 'check'}"></i>
-              </button>
-            </div>
-          </div>
-          <div class="word-translation">${word.translation}</div>
-          <span class="word-level">${word.level}</span>
-        </div>
-      `;
-    }).join('');
+  if (wordsToShow.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-check-circle"></i>
+        <h3>Нет слов для отображения</h3>
+      </div>
+    `;
+    return;
   }
+
+  container.innerHTML = wordsToShow.map(word => {
+    const displayWord = this.getEnglishDisplay(word);
+    const accuracyBadge = this.getAccuracyBadgeHtml(word.word); // ДОБАВИЛИ ТОЧНОСТЬ
+    return `
+      <div class="word-card ${word.isLearned ? 'learned' : ''}">
+        <div class="word-header">
+          <div class="word-text">${displayWord} ${accuracyBadge}</div>
+          <div class="word-actions">
+            <button class="action-btn play-btn" title="US" onclick="app.playWordFromList('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'us')">
+              <i class="fas fa-volume-up"></i>
+            </button>
+            <button class="action-btn play-btn" title="UK" onclick="app.playWordFromList('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'uk')">
+              <i class="fas fa-headphones"></i>
+            </button>
+            <button class="action-btn ${word.isLearned ? 'add-btn' : 'remove-btn'}" onclick="app.toggleWordLearned('${this.safeAttr(word.word)}')" title="${word.isLearned ? 'Вернуть в изучение' : 'Отметить выученным'}">
+              <i class="fas fa-${word.isLearned ? 'undo' : 'check'}"></i>
+            </button>
+          </div>
+        </div>
+        <div class="word-translation">${word.translation}</div>
+        <span class="word-level">${word.level}</span>
+      </div>
+    `;
+  }).join('');
+}
   playWordFromList(word, forms, region) { this.playWord(word, forms, region || 'us'); }
   toggleWordLearned(word) {
     this.stopCurrentAudio();
@@ -2774,44 +2945,173 @@ insertAutoDictionaryButtonInLearning(containerEl) {
   // =========
   // Review logic
   // =========
-  getWordsToReview() {
-    if (this.currentPractice === 'endless') {
-      return this.learningWords.filter(w => !w.isLearned);
-    }
-    const now = Date.now();
-    return this.learningWords.filter(w => {
-      if (w.isLearned) return false;
-      const stats = this.wordStats[w.word];
-      if (!stats) return true;
-      return stats.nextReview <= now;
-    });
+getWordsToReview() {
+  if (this.currentPractice === 'endless') {
+    return this.learningWords.filter(w => !w.isLearned);
   }
-  updateWordStats(word, correct) {
-    if (!this.wordStats[word]) this.initializeWordStats(word);
-    const stats = this.wordStats[word];
-    stats.lastReview = Date.now();
 
+  // НОВАЯ ЛОГИКА для режима "запланировано" без интервалов
+  const active = this.learningWords.filter(w => !w.isLearned);
+  
+  // Получаем текущую сессию из localStorage
+  let session = JSON.parse(localStorage.getItem('currentSession') || 'null');
+  
+  // Если нет сессии или новый день - создаем новую
+  const today = new Date().toDateString();
+  if (!session || session.date !== today) {
+    session = {
+      date: today,
+      shownWords: [],
+      correctStreak: 0,
+      totalCorrect: 0
+    };
+  }
+  
+  // Базовый размер пула - 40 слов
+  let poolSize = 40;
+  
+  // Добавляем по 10 слов за каждые 10 правильных ответов в сессии
+  poolSize += Math.floor(session.totalCorrect / 10) * 10;
+  
+  // Ограничиваем максимум доступными словами
+  poolSize = Math.min(poolSize, active.length);
+  
+  // Создаем пул слов для изучения
+  let wordsPool = [];
+  
+  // Приоритет 1: Слова с низкой точностью (много ошибок)
+  const withErrors = active.filter(w => {
+    const s = this.wordStats[w.word];
+    if (!s || (s.correct + s.incorrect) === 0) return false;
+    const accuracy = s.correct / (s.correct + s.incorrect);
+    return accuracy < 0.7;
+  }).sort((a, b) => {
+    const aStats = this.wordStats[a.word];
+    const bStats = this.wordStats[b.word];
+    const aAcc = aStats.correct / (aStats.correct + aStats.incorrect);
+    const bAcc = bStats.correct / (bStats.correct + bStats.incorrect);
+    return aAcc - bAcc; // Сначала самые сложные
+  });
+  
+  // Приоритет 2: Новые слова (еще не отвечали)
+  const newWords = active.filter(w => {
+    const s = this.wordStats[w.word];
+    return !s || (s.correct + s.incorrect) === 0;
+  });
+  
+  // Приоритет 3: Слова для повторения (средняя точность)
+  const toReview = active.filter(w => {
+    const s = this.wordStats[w.word];
+    if (!s || (s.correct + s.incorrect) === 0) return false;
+    const accuracy = s.correct / (s.correct + s.incorrect);
+    return accuracy >= 0.7 && accuracy < 0.95;
+  });
+  
+  // Приоритет 4: Хорошо выученные (высокая точность)
+  const wellLearned = active.filter(w => {
+    const s = this.wordStats[w.word];
+    if (!s || (s.correct + s.incorrect) === 0) return false;
+    const accuracy = s.correct / (s.correct + s.incorrect);
+    return accuracy >= 0.95;
+  });
+  
+  // Формируем пул с приоритетами
+  const errorLimit = Math.min(20, Math.floor(poolSize * 0.3));
+  const newLimit = Math.min(15, Math.floor(poolSize * 0.3));
+  
+  wordsPool.push(...withErrors.slice(0, errorLimit));
+  
+  const remaining = poolSize - wordsPool.length;
+  if (remaining > 0) {
+    wordsPool.push(...newWords.slice(0, Math.min(newLimit, remaining)));
+  }
+  
+  const remaining2 = poolSize - wordsPool.length;
+  if (remaining2 > 0) {
+    wordsPool.push(...toReview.slice(0, remaining2));
+  }
+  
+  const remaining3 = poolSize - wordsPool.length;
+  if (remaining3 > 0) {
+    wordsPool.push(...wellLearned.slice(0, remaining3));
+  }
+  
+  // Перемешиваем для разнообразия
+  wordsPool = this.shuffle(wordsPool);
+  
+  // Сохраняем сессию
+  session.shownWords = wordsPool.map(w => w.word);
+  localStorage.setItem('currentSession', JSON.stringify(session));
+  
+  return wordsPool;
+}
+
+updateWordStats(word, correct, responseTimeMs = null) {
+  this.initializeWordStats(word);
+  const s = this.wordStats[word];
+  const now = Date.now();
+
+  s.lastReview = now;
+  s.totalAnswers = (s.totalAnswers || 0) + 1;
+  if (responseTimeMs != null) s.totalTimeMs = (s.totalTimeMs || 0) + responseTimeMs;
+
+  // Обновляем статистику правильных/неправильных ответов
+  if (correct) {
+    s.correct++;
+    s.difficulty = Math.max(0, (s.difficulty || 0) - 1);
+  } else {
+    s.incorrect++;
+    s.difficulty = Math.min(5, (s.difficulty || 0) + 1);
+    s.lapses = (s.lapses || 0) + 1;
+  }
+
+  // Обновляем сессию для режима "запланировано"
+  if (this.currentPractice === 'scheduled') {
+    let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+    const today = new Date().toDateString();
+    
+    // Проверяем, что сессия актуальна
+    if (!session.date || session.date !== today) {
+      session = {
+        date: today,
+        shownWords: [],
+        correctStreak: 0,
+        totalCorrect: 0
+      };
+    }
+    
     if (correct) {
-      stats.correct++;
-      stats.difficulty = Math.max(0, stats.difficulty - 1);
-      const intervals = [
-        1000 * 60 * 60,
-        1000 * 60 * 60 * 4,
-        1000 * 60 * 60 * 24,
-        1000 * 60 * 60 * 24 * 3,
-        1000 * 60 * 60 * 24 * 7
-      ];
-      const reviewCount = stats.correct;
-      const intervalIndex = Math.min(reviewCount - 1, intervals.length - 1);
-      stats.nextReview = Date.now() + intervals[Math.max(0, intervalIndex)];
+      session.correctStreak = (session.correctStreak || 0) + 1;
+      session.totalCorrect = (session.totalCorrect || 0) + 1;
+      
+      // Каждые 10 правильных ответов добавляем 10 слов
+      if (session.totalCorrect > 0 && session.totalCorrect % 10 === 0) {
+        this.showNotification(`Отлично! Добавлено еще 10 слов к изучению! Всего в пуле: ${40 + session.totalCorrect} слов`, 'success');
+        // Обновляем текущий список слов
+        setTimeout(() => {
+          this.suppressAutoSpeakOnce = true;
+          this.renderLearningSection();
+        }, 100);
+      }
     } else {
-      stats.incorrect++;
-      stats.difficulty = Math.min(2, stats.difficulty + 1);
-      stats.nextReview = Date.now() + (1000 * 60 * 10);
+      session.correctStreak = 0;
     }
-
-    this.saveData();
+    
+    localStorage.setItem('currentSession', JSON.stringify(session));
   }
+
+  // Простая логика для следующего показа (без интервалов)
+  s.nextReview = now; // Всегда доступно для повторения
+  s.phase = 'review'; // Все слова в фазе повторения
+  
+  // Учитываем дневной прогресс
+  this.srsDay = this.srsDay || this.loadSrsDay();
+  this.srsDay.answered = (this.srsDay.answered || 0) + 1;
+  this.saveSrsDay();
+
+  this.saveData();
+}
+
   recordDailyProgress() {
     const today = new Date().toDateString();
     const existing = this.weeklyProgress.find(p => p.date === today);
@@ -3489,6 +3789,20 @@ static injectStylesOnce() { if (document.getElementById('app-extra-styles')) ret
 .pet-bar-fill{height:100%;background:linear-gradient(90deg,#10b981,#22d3ee);}
 .pet-actions{display:flex;flex-wrap:wrap;gap:8px;}
 .pet-dead{color:#ef4444;font-weight:700;margin:8px 0;}
+/* Стили для бейджей точности */
+.acc-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.acc-none { background: #e5e7eb; color: #374151; }
+.acc-good { background: #d1fae5; color: #065f46; }
+.acc-mid { background: #fef3c7; color: #92400e; }
+.acc-bad { background: #fee2e2; color: #991b1b; }
 `; document.head.appendChild(style); }
 }
 
@@ -3532,7 +3846,7 @@ self.addEventListener('fetch', (event) => {
   url.hostname.includes('smart.servier.com') ||
   url.hostname.includes('scidraw.io') ||
   url.pathname.includes('medical') ||
-  url.pathname.startsWith('/motivation/');
+  url.pathname.startsWith('/');
 
   // Do not cache audio or media streams
   const isAudio = req.destination === 'audio' || url.pathname.endsWith('.mp3') || url.hostname.includes('wooordhunt.ru');
@@ -3555,6 +3869,3 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
-
-
-
