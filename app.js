@@ -654,23 +654,55 @@ saveMedicalImageCache() {
       });
     });
 
-    // Level cards
-    document.querySelectorAll('.level-card[data-level]').forEach(card => {
-      card.addEventListener('click', (e) => {
-        const level = e.currentTarget.getAttribute('data-level');
-        if (level) this.showLevelWords(level);
-      });
-    });
+// Level cards
+document.querySelectorAll('.level-card[data-level]').forEach(card => {
+  card.addEventListener('click', (e) => {
+    const level = e.currentTarget.getAttribute('data-level');
+    if (level) {
+      this.showLevelWords(level);
+      
+      // ДОБАВЛЕНО: Прокрутка к списку слов
+      setTimeout(() => {
+        const wordsContainer = document.querySelector('.words-container:not(.hidden)');
+        const mainContent = document.querySelector('.main-content');
+        
+        if (wordsContainer && mainContent) {
+          // Для десктопа - прокручиваем внутри .main-content
+          const offsetTop = wordsContainer.offsetTop - 20;
+          mainContent.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      }, 150); // Даем время на отрисовку слов
+    }
+  });
+});
 
-    // Category cards
-    document.querySelectorAll('.level-card[data-category]').forEach(card => {
-      card.addEventListener('click', (e) => {
-        const cat = e.currentTarget.getAttribute('data-category');
-        if (!cat) return;
-        if (cat === 'ADDED') this.showAddedWordsCategory();
-        else this.showCategoryWords(cat);
-      });
-    });
+// Category cards
+document.querySelectorAll('.level-card[data-category]').forEach(card => {
+  card.addEventListener('click', (e) => {
+    const cat = e.currentTarget.getAttribute('data-category');
+    if (!cat) return;
+    
+    if (cat === 'ADDED') this.showAddedWordsCategory();
+    else this.showCategoryWords(cat);
+    
+    // ДОБАВЛЕНО: Прокрутка к списку слов для категорий
+    setTimeout(() => {
+      const wordsContainer = document.querySelector('.words-container:not(.hidden)');
+      const mainContent = document.querySelector('.main-content');
+      
+      if (wordsContainer && mainContent) {
+        const offsetTop = wordsContainer.offsetTop - 20;
+        mainContent.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+      }
+    }, 150);
+  });
+});
 
     // Back to levels
     const backBtn = document.getElementById('backToLevels');
@@ -1059,9 +1091,9 @@ showFirstRunTour() {
     modal.innerHTML = `
       <div class="support-modal-content" style="background:var(--bg-primary);border-radius:16px;padding:30px;max-width:500px;width:100%;box-shadow:var(--shadow-lg);">
         <h2 style="margin-bottom:15px;color:var(--text-primary);">❤️ Поддержать проект</h2>
-        <p style="margin-bottom:15px;color:var(--text-secondary);">Это бесплатный сервис без рекламы, который создан с любовью к изучению английского языка. Проект может развиваться и существовать благодаря вашим донатам.</p>
-        <p style="margin-bottom:15px;color:var(--text-secondary);">Если вам понравилось мое приложение и оно помогает вам учить английский, не забудьте поддержать разработку!</p>
-           <p style="margin-bottom:15px;color:var(--text-secondary);">Прибыль от донатов идет на развитие и улучшение функционала приложения!</p>
+        <p style="margin-bottom:15px;color:var(--text-secondary);">Это бесплатный сервис без рекламы, который создан с любовью к изучению английского языка. </p>
+         <p style="margin-bottom:15px;color:var(--text-secondary);">Проект может развиваться и существовать благодаря вашим донатам.</p>
+        <p style="margin-bottom:15px;color:var(--text-secondary);">Если вам понравилось мое приложение и оно помогает вам учить английский, не забудьте помочь проекту!</p>
         <p style="margin-bottom:20px;color:var(--text-secondary);"><strong>Об авторе:</strong><br>Приложение создано Бердиевым Абдуррахимом - Аспирантом педагогических наук</p> 
         <a href="https://pay.cloudtips.ru/p/8f56d7d3" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-block;margin-right:10px;margin-bottom:10px;">
           <i class="fas fa-heart"></i> Поддержать проект
