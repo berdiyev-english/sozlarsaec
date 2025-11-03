@@ -982,6 +982,51 @@ body {
   line-height: 1.5;
 }
 
+/* Контейнер для лого и названия */
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Стили для ссылки с логотипом */
+.logo-link {
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Стили для логотипа */
+.app-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+/* Эффект при наведении */
+.logo-link:hover .app-logo {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Эффект при клике */
+.logo-link:active .app-logo {
+  transform: scale(0.95);
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 480px) {
+  .app-logo {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .logo-title {
+    gap: 8px;
+  }
+}
+
 /* Остальные стили... */
 
 /* ИСПРАВЛЕНИЕ: AI чат-бот позиционирование */
@@ -1879,3 +1924,4 @@ img[data-image-source*="Servier"],
 .hidden {
   display: none !important;
 }
+
