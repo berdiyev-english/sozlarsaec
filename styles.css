@@ -1,5 +1,5 @@
 :root {
-  /* Яркие мультяшные цвета в стиле Duolingo */
+  /* Яркие мультяшные цвета*/
   --primary-color: #58CC02;
   --primary-dark: #4CAF00;
   --secondary-color: #FFC800;
@@ -1390,14 +1390,25 @@ body {
 }
 
 .mode-help {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-weight: 500;
   background: var(--bg-secondary);
-  border: 2px solid var(--border-color);
+  border: 2px solid var(--accent-color);
   border-radius: var(--radius-lg);
-  padding: 0.625rem 0.875rem;
-  line-height: 1.5;
-  margin-bottom: 0.75rem;
+  padding: 0.875rem 2rem 0.875rem 1rem; /* Меньше отступ справа */
+  line-height: 1.6;
+  margin-bottom: 0.875rem;
+  position: relative;
+}
+
+.mode-help::before {
+  content: "💡";
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  font-size: 1rem;
+  opacity: 0.8; /* Немного прозрачная, чтобы не отвлекала */
 }
 
 /* Игровые карточки */
