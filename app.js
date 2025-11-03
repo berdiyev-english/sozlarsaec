@@ -3849,7 +3849,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 service-worker.js
 /* Simple image cache-first service worker for Bewords */
-const CACHE_NAME = 'bewords-images-v2';
+const CACHE_NAME = 'bewords-images-v3';
 const IMG_EXT_RE = /\.(png|jpg|jpeg|webp|gif|svg)$/i;
 
 self.addEventListener('install', (event) => {
@@ -3901,3 +3901,4 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+
