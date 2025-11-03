@@ -23,7 +23,7 @@
   <!-- Apple Meta Tags -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="BeWords">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   
   <!-- SEO для поисковиков и соцсетей -->
   <meta name="description" content="Инновационная платформа для изучения английских слов через игры">
@@ -124,7 +124,12 @@
 <div class="app-container">
   <header class="app-header">
     <div class="header-content">
-      <h1 class="app-title">BeWords.ru </h1>
+      <div class="logo-title">
+        <a href="/" class="logo-link" onclick="location.reload(); return false;">
+          <img src="/logo1.png" alt="BeWords" class="app-logo">
+        </a>
+        <h1 class="app-title">BeWords.ru</h1>
+      </div>
       <div class="header-actions">
         <button class="support-btn" id="supportBtn" data-testid="support-btn" title="Поддержать проект">
           <i class="fas fa-heart"></i>
@@ -476,6 +481,7 @@
 </script>
 </body>
 </html>
+
 
 
 
