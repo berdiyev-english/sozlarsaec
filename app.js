@@ -2546,9 +2546,9 @@ insertAutoDictionaryButtonInLearning(containerEl) {
 
     const btn = document.createElement('button');
     btn.id = 'autoDictLearningBtn';
-    btn.className = 'btn btn-primary';
-    btn.textContent = 'ПОДОБРАТЬ СЛОВАРЬ ПОД ТЕБЯ 🚀';
-    btn.style.cssText = 'font-weight:700;margin-bottom:14px;width:100%;';
+    btn.className = 'add-word-btn';
+    btn.textContent = 'СЛОВАРЬ ПОД ТВОЙ УРОВЕНЬ +';
+    btn.style.cssText = 'font-weight:700;margin-bottom:24px;width:100%;';
     btn.addEventListener('click', () => this.showAutoDictionaryTest());
 
     containerEl.insertAdjacentElement('afterbegin', btn);
@@ -3901,4 +3901,3 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
-
