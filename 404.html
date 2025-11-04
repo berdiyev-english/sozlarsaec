@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - BeWords | Страница потерялась</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #58CC02 0%, #89E219 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Анимированные облака на фоне */
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .cloud1 {
+            width: 100px;
+            height: 40px;
+            top: 20%;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .cloud2 {
+            width: 80px;
+            height: 35px;
+            top: 60%;
+            right: -80px;
+            animation-delay: 5s;
+            animation-duration: 25s;
+        }
+
+        .cloud3 {
+            width: 120px;
+            height: 45px;
+            top: 40%;
+            left: -120px;
+            animation-delay: 10s;
+            animation-duration: 30s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(100vw + 200px));
+            }
+        }
+
+        /* Главный контейнер */
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 50px 40px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Контейнер для изображения кота */
+        .cat-container {
+            margin: 30px 0;
+            position: relative;
+            animation: wiggle 3s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-2deg);
+            }
+            75% {
+                transform: rotate(2deg);
+            }
+        }
+
+        .cat-image {
+            width: 250px;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(88, 204, 2, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        /* Текстовые элементы */
+        h1 {
+            color: #3C3C3C;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 20px 0 10px;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        /* Кнопка возврата */
+        .home-button {
+            display: inline-block;
+            background: #58CC02;
+            color: white;
+            padding: 15px 35px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 0 #46A302;
+            position: relative;
+            top: 0;
+        }
+
+        .home-button:hover {
+            background: #46A302;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #358F01;
+        }
+
+        .home-button:active {
+            transform: translateY(4px);
+            box-shadow: none;
+        }
+
+        /* Декоративные элементы */
+        .decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(88, 204, 2, 0.1);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .decoration1 {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            right: -25px;
+        }
+
+        .decoration2 {
+            width: 30px;
+            height: 30px;
+            bottom: -15px;
+            left: -15px;
+            animation-delay: 1s;
+        }
+
+        .decoration3 {
+            width: 40px;
+            height: 40px;
+            top: 50%;
+            left: -20px;
+            animation-delay: 2s;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.6;
+            }
+        }
+
+        /* Логотип BeWords */
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Мобильная адаптация */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+            
+            .subtitle {
+                font-size: 16px;
+            }
+            
+            .cat-image {
+                width: 200px;
+            }
+            
+            .container {
+                padding: 40px 20px 30px;
+            }
+        }
+
+        /* Летающие буквы */
+        .floating-letter {
+            position: absolute;
+            font-size: 30px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.3);
+            animation: floatUp 10s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .letter1 { left: 10%; animation-delay: 0s; }
+        .letter2 { left: 30%; animation-delay: 2s; }
+        .letter3 { left: 50%; animation-delay: 4s; }
+        .letter4 { left: 70%; animation-delay: 6s; }
+        .letter5 { left: 90%; animation-delay: 8s; }
+
+        /* Дополнительные декоративные звездочки */
+        .star {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 20px;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        .star1 {
+            top: 15%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .star2 {
+            top: 25%;
+            right: 20%;
+            animation-delay: 1s;
+        }
+
+        .star3 {
+            bottom: 20%;
+            left: 10%;
+            animation-delay: 2s;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Логотип -->
+    <div class="logo">BeWords</div>
+
+    <!-- Анимированные облака -->
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+
+    <!-- Летающие буквы -->
+    <div class="floating-letter letter1">A</div>
+    <div class="floating-letter letter2">B</div>
+    <div class="floating-letter letter3">C</div>
+    <div class="floating-letter letter4">D</div>
+    <div class="floating-letter letter5">E</div>
+
+    <!-- Звездочки -->
+    <div class="star star1">✦</div>
+    <div class="star star2">✦</div>
+    <div class="star star3">✦</div>
+
+    <!-- Основной контейнер -->
+    <div class="container">
+        <!-- Декоративные элементы -->
+        <div class="decoration decoration1"></div>
+        <div class="decoration decoration2"></div>
+        <div class="decoration decoration3"></div>
+
+        <!-- Изображение кота с 404 -->
+        <div class="cat-container">
+            <img src="/404.png" alt="Кот с надписью 404" class="cat-image">
+        </div>
+
+        <!-- Текст -->
+        <h1>Упс! Кот съел эту страницу!</h1>
+        <p class="subtitle">
+            Похоже, эта страница решила выучить новый язык<br>
+            и исчезла на практику. Но не волнуйтесь!
+        </p>
+
+        <!-- Кнопка -->
+        <a href="https://bewords.ru" class="home-button">Вернуться к урокам</a>
+    </div>
+
+    <script>
+        // Добавляем интерактивность при наведении на кота
+        const catImage = document.querySelector('.cat-image');
+        if (catImage) {
+            catImage.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1) rotate(5deg)';
+            });
+            
+            catImage.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) rotate(0deg)';
+            });
+        }
+
+        // Эффект параллакса для декоративных элементов
+        document.addEventListener('mousemove', (e) => {
+            const decorations = document.querySelectorAll('.decoration');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            decorations.forEach((decoration, index) => {
+                const speed = (index + 1) * 10;
+                decoration.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+
+        // Добавляем забавный эффект при клике на кота
+        if (catImage) {
+            catImage.addEventListener('click', function() {
+                this.style.animation = 'spin 0.5s ease-out';
+                setTimeout(() => {
+                    this.style.animation = 'wiggle 3s ease-in-out infinite';
+                }, 500);
+            });
+        }
+
+        // Добавляем анимацию вращения
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
