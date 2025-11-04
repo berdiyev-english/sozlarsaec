@@ -111,6 +111,139 @@
       fill: white;
     }
 
+    /* Стили для Android контента */
+    .android-download-card {
+      text-align: center;
+      padding: 40px 30px;
+      background: linear-gradient(135deg, #e8ffd8 0%, #f0ffe8 100%);
+      border-radius: 20px;
+    }
+
+    .android-icon {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 25px;
+      background: linear-gradient(135deg, #58cc02 0%, #89e219 100%);
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: float 3s ease-in-out infinite;
+      box-shadow: 0 10px 30px rgba(88, 204, 2, 0.3);
+    }
+
+    @keyframes float {
+      0%, 100% { 
+        transform: translateY(0);
+      }
+      50% { 
+        transform: translateY(-10px);
+      }
+    }
+
+    .android-icon svg {
+      width: 70px;
+      height: 70px;
+      fill: white;
+    }
+
+    .android-title {
+      color: #333;
+      font-size: 1.8em;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .android-description {
+      color: #666;
+      font-size: 1.1em;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .download-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #58cc02 0%, #89e219 100%);
+      color: white;
+      padding: 18px 40px;
+      border-radius: 15px;
+      text-decoration: none;
+      font-size: 1.2em;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 0 #46A302;
+      border: none;
+      cursor: pointer;
+    }
+
+    .download-btn:hover {
+      background: linear-gradient(135deg, #46A302 0%, #78d412 100%);
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #358F01;
+    }
+
+    .download-btn:active {
+      transform: translateY(4px);
+      box-shadow: none;
+    }
+
+    .download-btn svg {
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    /* Инструкция по установке */
+    .install-steps {
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 2px dashed #58cc02;
+    }
+
+    .install-steps-title {
+      color: #333;
+      font-size: 1.3em;
+      font-weight: 800;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .install-step {
+      background: white;
+      border-radius: 15px;
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .install-step:hover {
+      transform: translateX(5px);
+    }
+
+    .install-step-number {
+      background: #58cc02;
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .install-step-text {
+      color: #333;
+      font-weight: 600;
+      font-size: 1em;
+    }
+
     .browser-selector {
       margin-bottom: 30px;
     }
@@ -327,6 +460,14 @@
         width: 100%;
         justify-content: center;
       }
+
+      .android-title {
+        font-size: 1.5em;
+      }
+
+      .android-description {
+        font-size: 1em;
+      }
     }
   </style>
 </head>
@@ -354,6 +495,7 @@
         </div>
       </div>
 
+      <!-- iOS контент -->
       <div id="ios-content" class="instruction-content active">
         <div class="browser-selector">
           <h3 style="color: #333; margin-bottom: 15px; text-align: center;">Выбери свой браузер:</h3>
@@ -424,55 +566,64 @@
         </div>
       </div>
 
+      <!-- Android контент -->
       <div id="android-content" class="instruction-content">
-        <div class="browser-selector">
-          <h3 style="color: #333; margin-bottom: 15px; text-align: center;">Выбери свой браузер:</h3>
-          <div class="browser-grid">
-            <div class="browser-card" onclick="selectBrowser('android', 'chrome')">
-              <div class="browser-icon">
-                <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10" fill="#4285f4"/>
-                  <circle cx="12" cy="12" r="5" fill="white"/>
-                  <circle cx="12" cy="12" r="4" fill="#4285f4"/>
-                  <path d="M12,2 L12,7" stroke="white" stroke-width="2"/>
-                  <path d="M12,12 L20.5,8" stroke="#ea4335" stroke-width="2"/>
-                  <path d="M12,12 L6,19" stroke="#34a853" stroke-width="2"/>
-                </svg>
-              </div>
-              <div class="browser-name">Chrome</div>
+        <div class="android-download-card">
+          <div class="android-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M17.6 9.48L19.44 3.3C19.55 2.95 19.33 2.59 18.96 2.5C18.62 2.38 18.26 2.61 18.14 2.96L16.26 9.21C14.93 8.8 13.5 8.58 12 8.58C10.5 8.58 9.07 8.8 7.74 9.21L5.86 2.96C5.74 2.61 5.38 2.38 5.04 2.5C4.67 2.59 4.45 2.95 4.56 3.3L6.4 9.48C2.85 11.07 0.5 14.34 0.5 18.26H23.5C23.5 14.34 21.15 11.07 17.6 9.48ZM7.5 16.76C6.95 16.76 6.5 16.31 6.5 15.76C6.5 15.21 6.95 14.76 7.5 14.76C8.05 14.76 8.5 15.21 8.5 15.76C8.5 16.31 8.05 16.76 7.5 16.76ZM16.5 16.76C15.95 16.76 15.5 16.31 15.5 15.76C15.5 15.21 15.95 14.76 16.5 14.76C17.05 14.76 17.5 15.21 17.5 15.76C17.5 16.31 17.05 16.76 16.5 16.76Z"/>
+            </svg>
+          </div>
+          
+          <h2 class="android-title">BeWords для Android</h2>
+          <p class="android-description">
+            Скачай APK-файл и установи BeWords на свой Android телефон.<br>
+            Учи слова где угодно и когда угодно! 🚀
+          </p>
+          
+          <a href="BeWords.apk" class="download-btn" download>
+            <svg viewBox="0 0 24 24" fill="white">
+              <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/>
+            </svg>
+            Скачать BeWords.apk
+          </a>
+
+          <div class="install-steps">
+            <div class="install-steps-title">📱 Как установить приложение:</div>
+            
+            <div class="install-step">
+              <div class="install-step-number">1</div>
+              <div class="install-step-text">Нажми кнопку "Скачать" и дождись загрузки APK-файла</div>
             </div>
-            <div class="browser-card" onclick="selectBrowser('android', 'yandex')">
-              <div class="browser-icon">
-                <svg viewBox="0 0 24 24">
-                  <rect x="2" y="2" width="20" height="20" rx="4" fill="#FF0000"/>
-                  <text x="12" y="17" font-family="Arial" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Я</text>
-                </svg>
-              </div>
-              <div class="browser-name">Яндекс</div>
+            
+            <div class="install-step">
+              <div class="install-step-number">2</div>
+              <div class="install-step-text">Открой файл BeWords.apk из папки "Загрузки"</div>
             </div>
-            <div class="browser-card" onclick="selectBrowser('android', 'opera')">
-              <div class="browser-icon">
-                <svg viewBox="0 0 24 24">
-                  <ellipse cx="12" cy="12" rx="9" ry="10" fill="#FF1B2D"/>
-                  <ellipse cx="12" cy="12" rx="6" ry="9" fill="white"/>
-                  <ellipse cx="12" cy="12" rx="4" ry="8" fill="#FF1B2D"/>
-                </svg>
-              </div>
-              <div class="browser-name">Opera</div>
+            
+            <div class="install-step">
+              <div class="install-step-number">3</div>
+              <div class="install-step-text">Разреши установку из неизвестных источников (если попросит)</div>
+            </div>
+            
+            <div class="install-step">
+              <div class="install-step-number">4</div>
+              <div class="install-step-text">Нажми "Установить" и дождись завершения</div>
+            </div>
+            
+            <div class="install-step">
+              <div class="install-step-number">5</div>
+              <div class="install-step-text">Запусти BeWords и начни учить слова! 🎉</div>
             </div>
           </div>
-        </div>
 
-        <div id="android-instructions">
-          <div class="no-selection">
-            <div class="mascot">
+          <div class="tip-box">
+            <div class="tip-icon">
               <svg viewBox="0 0 24 24">
-                <path d="M10,7V9H12V17H14V7H10Z"/>
-                <path d="M7,12L2,7V10L5,13V20H7V12Z"/>
-                <path d="M17,12V20H19V13L22,10V7L17,12Z"/>
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
               </svg>
             </div>
-            <p style="font-size: 1.2em; font-weight: 700;">Выбери браузер, чтобы увидеть инструкцию!</p>
+            <span><strong>Важно:</strong> Если Android блокирует установку, зайди в Настройки → Безопасность и разреши установку из этого источника</span>
           </div>
         </div>
       </div>
@@ -522,38 +673,6 @@
           ],
           tip: "Opera поддерживает установку BeWords через стандартное меню."
         }
-      },
-      android: {
-        chrome: {
-          steps: [
-            "Открой <strong>bewords.ru</strong> в Chrome",
-            "Нажми на три точки в правом верхнем углу",
-            "Выбери «Установить приложение» или «Добавить на главный экран»",
-            "Подтверди установку",
-            "BeWords появится на твоем экране! 🎯"
-          ],
-          tip: "Chrome на Android — идеальный выбор для BeWords!"
-        },
-        yandex: {
-          steps: [
-            "Открой <strong>bewords.ru</strong> в Яндекс Браузере",
-            "Нажми на меню (три точки)",
-            "Найди «Добавить на главный экран»",
-            "Введи название «BeWords»",
-            "Нажми «Добавить» — готово! 🌟"
-          ],
-          tip: "Яндекс Браузер полностью поддерживает BeWords!"
-        },
-        opera: {
-          steps: [
-            "Открой <strong>bewords.ru</strong> в Opera",
-            "Нажми на красную «O» в правом нижнем углу",
-            "Выбери «На главный экран»",
-            "Подтверди добавление",
-            "Запускай BeWords с главного экрана! 🚀"
-          ],
-          tip: "Opera отлично работает с BeWords и экономит батарею!"
-        }
       }
     };
 
@@ -574,24 +693,25 @@
       });
       document.getElementById(`${platform}-content`).classList.add('active');
       
-      // Сбрасываем выбор браузера
-      document.querySelectorAll('.browser-card').forEach(card => {
-        card.classList.remove('active');
-      });
-      
-      // Показываем заглушку
-      document.getElementById(`${platform}-instructions`).innerHTML = `
-        <div class="no-selection">
-          <div class="mascot">
-            <svg viewBox="0 0 24 24" fill="white">
-              <path d="M10,7V9H12V17H14V7H10Z"/>
-              <path d="M7,12L2,7V10L5,13V20H7V12Z"/>
-              <path d="M17,12V20H19V13L22,10V7L17,12Z"/>
-            </svg>
+      // Сбрасываем выбор браузера для iOS
+      if (platform === 'ios') {
+        document.querySelectorAll('.browser-card').forEach(card => {
+          card.classList.remove('active');
+        });
+        
+        document.getElementById('ios-instructions').innerHTML = `
+          <div class="no-selection">
+            <div class="mascot">
+              <svg viewBox="0 0 24 24" fill="white">
+                <path d="M10,7V9H12V17H14V7H10Z"/>
+                <path d="M7,12L2,7V10L5,13V20H7V12Z"/>
+                <path d="M17,12V20H19V13L22,10V7L17,12Z"/>
+              </svg>
+            </div>
+            <p style="font-size: 1.2em; font-weight: 700;">Выбери браузер, чтобы увидеть инструкцию!</p>
           </div>
-          <p style="font-size: 1.2em; font-weight: 700;">Выбери браузер, чтобы увидеть инструкцию!</p>
-        </div>
-      `;
+        `;
+      }
     }
 
     function selectBrowser(platform, browser) {
