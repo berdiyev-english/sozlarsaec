@@ -3,59 +3,636 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Инструкция по установке</title>
+  <title>Установи BeWords на телефон!</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-      margin: 20px;
-      background-color: #f0f2f5;
-      color: #333;
-    }
-    h2 {
-      border-bottom: 2px solid #007bff;
-      padding-bottom: 10px;
-      color: #007bff;
-    }
-    .instruction-block {
-      background-color: #fff;
-      border-radius: 8px;
+      font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #58cc02 0%, #89e219 100%);
+      min-height: 100vh;
       padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    .instruction-block img {
-      max-width: 100%;
-      border-radius: 8px;
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    h1 {
+      color: white;
+      font-size: 2.5em;
+      font-weight: 800;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: white;
+      font-size: 1.8em;
+      font-weight: 800;
+    }
+
+    .app-name {
+      background: white;
+      color: #58cc02;
+      padding: 5px 15px;
+      border-radius: 20px;
+      display: inline-block;
+      font-weight: 800;
       margin-top: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .platform-selector {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+    }
+
+    .platform-tabs {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .platform-tab {
+      background: #f0f0f0;
+      border: 3px solid transparent;
+      border-radius: 15px;
+      padding: 15px 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 700;
+      font-size: 1.1em;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .platform-tab:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .platform-tab.active {
+      background: linear-gradient(135deg, #58cc02 0%, #89e219 100%);
+      color: white;
+      border-color: #58cc02;
+      transform: scale(1.05);
+    }
+
+    .platform-tab svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .platform-tab.active svg {
+      fill: white;
+    }
+
+    .browser-selector {
+      margin-bottom: 30px;
+    }
+
+    .browser-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .browser-card {
+      background: #fff;
+      border: 3px solid #e0e0e0;
+      border-radius: 20px;
+      padding: 20px 15px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .browser-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      border-color: #89e219;
+    }
+
+    .browser-card.active {
+      border-color: #58cc02;
+      background: linear-gradient(135deg, #e8ffd8 0%, #f0ffe8 100%);
+    }
+
+    .browser-card.active::after {
+      content: '✓';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: #58cc02;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .browser-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .browser-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .browser-name {
+      font-weight: 700;
+      color: #333;
+      font-size: 1em;
+    }
+
+    .instruction-content {
+      display: none;
+      animation: slideIn 0.5s ease;
+    }
+
+    .instruction-content.active {
+      display: block;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .steps {
+      background: linear-gradient(135deg, #c7ff9b 0%, #b8e986 100%);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .step {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .step:hover {
+      transform: translateX(10px);
+    }
+
+    .step-number {
+      background: linear-gradient(135deg, #58cc02 0%, #89e219 100%);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2em;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      color: #333;
+      font-size: 1.05em;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .step-text strong {
+      color: #58cc02;
+      font-weight: 800;
+    }
+
+    .no-selection {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
+
+    .mascot {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #58cc02 0%, #89e219 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: wave 1s ease-in-out infinite;
+    }
+
+    .mascot svg {
+      width: 60px;
+      height: 60px;
+      fill: white;
+    }
+
+    @keyframes wave {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(10deg); }
+      75% { transform: rotate(-10deg); }
+    }
+
+    .tip-box {
+      background: linear-gradient(135deg, #ffd93d 0%, #ffed4e 100%);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+      color: #333;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .tip-icon {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tip-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: #ffd93d;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+      }
+      
+      .browser-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .platform-tabs {
+        flex-direction: column;
+      }
+      
+      .platform-tab {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="instruction-block">
-    <h2>Установка на iOS (iPhone/iPad)</h2>
-    <ol>
-      <li>Откройте сайт в браузере Safari.</li>
-      <li>Нажмите на иконку "Поделиться" (квадрат со стрелкой вверх).</li>
-      <li>Пролистайте вниз и выберите "На экран «Домой»".</li>
-      <li>Нажмите "Добавить", и иконка приложения появится на вашем рабочем столе.</li>
-    </ol>
-    <img src="img/ios_install_guide.png" alt="Инструкция для iOS">
+  <div class="container">
+    <div class="header">
+      <h1>Установи приложение!</h1>
+      <div class="app-name">BeWords.ru</div>
+    </div>
+
+    <div class="platform-selector">
+      <div class="platform-tabs">
+        <div class="platform-tab active" onclick="selectPlatform('ios')">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09997 22C7.78997 22.05 6.79997 20.68 5.95997 19.47C4.24997 17 2.93997 12.45 4.69997 9.39C5.56997 7.87 7.12997 6.91 8.81997 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/>
+          </svg>
+          <span>iPhone / iPad</span>
+        </div>
+        <div class="platform-tab" onclick="selectPlatform('android')">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.6 9.48L19.44 3.3C19.55 2.95 19.33 2.59 18.96 2.5C18.62 2.38 18.26 2.61 18.14 2.96L16.26 9.21C14.93 8.8 13.5 8.58 12 8.58C10.5 8.58 9.07 8.8 7.74 9.21L5.86 2.96C5.74 2.61 5.38 2.38 5.04 2.5C4.67 2.59 4.45 2.95 4.56 3.3L6.4 9.48C2.85 11.07 0.5 14.34 0.5 18.26H23.5C23.5 14.34 21.15 11.07 17.6 9.48ZM7.5 16.76C6.95 16.76 6.5 16.31 6.5 15.76C6.5 15.21 6.95 14.76 7.5 14.76C8.05 14.76 8.5 15.21 8.5 15.76C8.5 16.31 8.05 16.76 7.5 16.76ZM16.5 16.76C15.95 16.76 15.5 16.31 15.5 15.76C15.5 15.21 15.95 14.76 16.5 14.76C17.05 14.76 17.5 15.21 17.5 15.76C17.5 16.31 17.05 16.76 16.5 16.76Z"/>
+          </svg>
+          <span>Android</span>
+        </div>
+      </div>
+
+      <div id="ios-content" class="instruction-content active">
+        <div class="browser-selector">
+          <h3 style="color: #333; margin-bottom: 15px; text-align: center;">Выбери свой браузер:</h3>
+          <div class="browser-grid">
+            <div class="browser-card" onclick="selectBrowser('ios', 'safari')">
+              <div class="browser-icon">
+                <svg viewBox="0 0 24 24">
+                  <defs>
+                    <linearGradient id="safari-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style="stop-color:#00c9ff;stop-opacity:1" />
+                      <stop offset="100%" style="stop-color:#92fe9d;stop-opacity:1" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="12" cy="12" r="10" fill="url(#safari-gradient)"/>
+                  <circle cx="12" cy="12" r="2" fill="white"/>
+                  <line x1="12" y1="12" x2="12" y2="3" stroke="white" stroke-width="1.5"/>
+                  <line x1="12" y1="12" x2="17" y2="17" stroke="red" stroke-width="1.5"/>
+                </svg>
+              </div>
+              <div class="browser-name">Safari</div>
+            </div>
+            <div class="browser-card" onclick="selectBrowser('ios', 'chrome')">
+              <div class="browser-icon">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" fill="#4285f4"/>
+                  <circle cx="12" cy="12" r="5" fill="white"/>
+                  <circle cx="12" cy="12" r="4" fill="#4285f4"/>
+                  <path d="M12,2 L12,7" stroke="white" stroke-width="2"/>
+                  <path d="M12,12 L20.5,8" stroke="#ea4335" stroke-width="2"/>
+                  <path d="M12,12 L6,19" stroke="#34a853" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="browser-name">Chrome</div>
+            </div>
+            <div class="browser-card" onclick="selectBrowser('ios', 'yandex')">
+              <div class="browser-icon">
+                <svg viewBox="0 0 24 24">
+                  <rect x="2" y="2" width="20" height="20" rx="4" fill="#FF0000"/>
+                  <text x="12" y="17" font-family="Arial" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Я</text>
+                </svg>
+              </div>
+              <div class="browser-name">Яндекс</div>
+            </div>
+            <div class="browser-card" onclick="selectBrowser('ios', 'opera')">
+              <div class="browser-icon">
+                <svg viewBox="0 0 24 24">
+                  <ellipse cx="12" cy="12" rx="9" ry="10" fill="#FF1B2D"/>
+                  <ellipse cx="12" cy="12" rx="6" ry="9" fill="white"/>
+                  <ellipse cx="12" cy="12" rx="4" ry="8" fill="#FF1B2D"/>
+                </svg>
+              </div>
+              <div class="browser-name">Opera</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="ios-instructions">
+          <div class="no-selection">
+            <div class="mascot">
+              <svg viewBox="0 0 24 24">
+                <path d="M10,7V9H12V17H14V7H10Z"/>
+                <path d="M7,12L2,7V10L5,13V20H7V12Z"/>
+                <path d="M17,12V20H19V13L22,10V7L17,12Z"/>
+              </svg>
+            </div>
+            <p style="font-size: 1.2em; font-weight: 700;">Выбери браузер, чтобы увидеть инструкцию!</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="android-content" class="instruction-content">
+        <div class="browser-selector">
+          <h3 style="color: #333; margin-bottom: 15px; text-align: center;">Выбери свой браузер:</h3>
+          <div class="browser-grid">
+            <div class="browser-card" onclick="selectBrowser('android', 'chrome')">
+              <div class="browser-icon">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" fill="#4285f4"/>
+                  <circle cx="12" cy="12" r="5" fill="white"/>
+                  <circle cx="12" cy="12" r="4" fill="#4285f4"/>
+                  <path d="M12,2 L12,7" stroke="white" stroke-width="2"/>
+                  <path d="M12,12 L20.5,8" stroke="#ea4335" stroke-width="2"/>
+                  <path d="M12,12 L6,19" stroke="#34a853" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="browser-name">Chrome</div>
+            </div>
+            <div class="browser-card" onclick="selectBrowser('android', 'yandex')">
+              <div class="browser-icon">
+                <svg viewBox="0 0 24 24">
+                  <rect x="2" y="2" width="20" height="20" rx="4" fill="#FF0000"/>
+                  <text x="12" y="17" font-family="Arial" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Я</text>
+                </svg>
+              </div>
+              <div class="browser-name">Яндекс</div>
+            </div>
+            <div class="browser-card" onclick="selectBrowser('android', 'opera')">
+              <div class="browser-icon">
+                <svg viewBox="0 0 24 24">
+                  <ellipse cx="12" cy="12" rx="9" ry="10" fill="#FF1B2D"/>
+                  <ellipse cx="12" cy="12" rx="6" ry="9" fill="white"/>
+                  <ellipse cx="12" cy="12" rx="4" ry="8" fill="#FF1B2D"/>
+                </svg>
+              </div>
+              <div class="browser-name">Opera</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="android-instructions">
+          <div class="no-selection">
+            <div class="mascot">
+              <svg viewBox="0 0 24 24">
+                <path d="M10,7V9H12V17H14V7H10Z"/>
+                <path d="M7,12L2,7V10L5,13V20H7V12Z"/>
+                <path d="M17,12V20H19V13L22,10V7L17,12Z"/>
+              </svg>
+            </div>
+            <p style="font-size: 1.2em; font-weight: 700;">Выбери браузер, чтобы увидеть инструкцию!</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="instruction-block">
-    <h2>Установка на Android</h2>
-    <ol>
-      <li>Откройте сайт в браузере Google Chrome.</li>
-      <li>Нажмите на три точки в правом верхнем углу, чтобы открыть меню.</li>
-      <li>Выберите "Установить приложение" или "Добавить на главный экран".</li>
-      <li>Подтвердите добавление, и иконка появится на вашем рабочем столе.</li>
-    </ol>
-    <img src="img/android_install_guide.png" alt="Инструкция для Android">
-  </div>
+  <script>
+    const instructions = {
+      ios: {
+        safari: {
+          steps: [
+            "Открой <strong>bewords.ru</strong> в браузере Safari",
+            "Нажми на кнопку «Поделиться» (квадратик со стрелкой) внизу экрана",
+            "Пролистай вниз и найди «На экран Домой»",
+            "Нажми «Добавить» в правом верхнем углу",
+            "Готово! BeWords появится на твоем экране 🎉"
+          ],
+          tip: "Safari — лучший выбор для iPhone! Приложение BeWords будет работать как настоящее."
+        },
+        chrome: {
+          steps: [
+            "Открой <strong>bewords.ru</strong> в браузере Chrome",
+            "Нажми на три точки в правом нижнем углу",
+            "Выбери «Поделиться»",
+            "Найди и нажми «На экран Домой»",
+            "Подтверди добавление — и готово! 🚀"
+          ],
+          tip: "В Chrome тоже можно добавить BeWords на главный экран, но некоторые функции могут работать иначе."
+        },
+        yandex: {
+          steps: [
+            "Открой <strong>bewords.ru</strong> в Яндекс Браузере",
+            "Нажми на кнопку меню (три точки) внизу",
+            "Выбери «Поделиться»",
+            "Нажми «На экран Домой»",
+            "Добавь приложение — всё готово! ✨"
+          ],
+          tip: "Яндекс Браузер отлично работает с BeWords!"
+        },
+        opera: {
+          steps: [
+            "Открой <strong>bewords.ru</strong> в Opera",
+            "Нажми на красную «O» внизу справа",
+            "Выбери «Поделиться»",
+            "Найди «Добавить на главный экран»",
+            "Подтверди — и BeWords у тебя! 🎊"
+          ],
+          tip: "Opera поддерживает установку BeWords через стандартное меню."
+        }
+      },
+      android: {
+        chrome: {
+          steps: [
+            "Открой <strong>bewords.ru</strong> в Chrome",
+            "Нажми на три точки в правом верхнем углу",
+            "Выбери «Установить приложение» или «Добавить на главный экран»",
+            "Подтверди установку",
+            "BeWords появится на твоем экране! 🎯"
+          ],
+          tip: "Chrome на Android — идеальный выбор для BeWords!"
+        },
+        yandex: {
+          steps: [
+            "Открой <strong>bewords.ru</strong> в Яндекс Браузере",
+            "Нажми на меню (три точки)",
+            "Найди «Добавить на главный экран»",
+            "Введи название «BeWords»",
+            "Нажми «Добавить» — готово! 🌟"
+          ],
+          tip: "Яндекс Браузер полностью поддерживает BeWords!"
+        },
+        opera: {
+          steps: [
+            "Открой <strong>bewords.ru</strong> в Opera",
+            "Нажми на красную «O» в правом нижнем углу",
+            "Выбери «На главный экран»",
+            "Подтверди добавление",
+            "Запускай BeWords с главного экрана! 🚀"
+          ],
+          tip: "Opera отлично работает с BeWords и экономит батарею!"
+        }
+      }
+    };
 
-</body>
-</html>
+    let currentPlatform = 'ios';
+
+    function selectPlatform(platform) {
+      currentPlatform = platform;
+      
+      // Обновляем активную вкладку платформы
+      document.querySelectorAll('.platform-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.target.closest('.platform-tab').classList.add('active');
+      
+      // Показываем контент для выбранной платформы
+      document.querySelectorAll('.instruction-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(`${platform}-content`).classList.add('active');
+      
+      // Сбрасываем выбор браузера
+      document.querySelectorAll('.browser-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      
+      // Показываем заглушку
+      document.getElementById(`${platform}-instructions`).innerHTML = `
+        <div class="no-selection">
+          <div class="mascot">
+            <svg viewBox="0 0 24 24" fill="white">
+              <path d="M10,7V9H12V17H14V7H10Z"/>
+              <path d="M7,12L2,7V10L5,13V20H7V12Z"/>
+              <path d="M17,12V20H19V13L22,10V7L17,12Z"/>
+            </svg>
+          </div>
+          <p style="font-size: 1.2em; font-weight: 700;">Выбери браузер, чтобы увидеть инструкцию!</p>
+        </div>
+      `;
+    }
+
+    function selectBrowser(platform, browser) {
+      // Обновляем активную карточку браузера
+      const platformContent = document.getElementById(`${platform}-content`);
+      platformContent.querySelectorAll('.browser-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      event.target.closest('.browser-card').classList.add('active');
+      
+      // Показываем инструкции
+      const instruction = instructions[platform][browser];
+      let stepsHtml = '<div class="steps">';
+      
+      instruction.steps.forEach((step, index) => {
+        stepsHtml += `
+          <div class="step">
+            <div class="step-number">${index + 1}</div>
+            <div class="step-text">${step}</div>
+          </div>
+        `;
+      });
+      
+      stepsHtml += '</div>';
+      
+      if (instruction.tip) {
+        stepsHtml += `
+          <div class="tip-box">
+            <div class="tip-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              </svg>
+            </div>
+            <span>${instruction.tip}</span>
+          </div>
+        `;
+      }
+      
+      document.getElementById(`${platform}-instructions`).innerHTML = stepsHtml;
+    }
+  </script>
+
 </body>
 </html>
