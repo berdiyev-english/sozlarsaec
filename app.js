@@ -761,7 +761,7 @@ document.querySelectorAll('.practice-btn').forEach(btn => {
 
     // Game buttons
     const surfBtn = document.getElementById('surfStartBtn');
-    if (surfBtn) surfBtn.addEventListener('click', () => this.showQuizGateForGame('Racing', 'subway.html'));
+    if (surfBtn) surfBtn.addEventListener('click', () => this.showQuizGateForGame('Subway', 'subway.html'));
     const doodleBtn = document.getElementById('doodleStartBtn');
     if (doodleBtn) doodleBtn.addEventListener('click', () => this.showQuizGateForGame('Flying Bird', 'doodle-jump.html'));
     const game2048Btn = document.getElementById('game2048StartBtn');
@@ -769,7 +769,7 @@ document.querySelectorAll('.practice-btn').forEach(btn => {
     const rocketBtn = document.getElementById('rocketStartBtn');
     if (rocketBtn) rocketBtn.addEventListener('click', () => this.showQuizGateForGame('match 3', 'rocket-soccer.html'));
     const catalogBtn = document.getElementById('catalogStartBtn');
-    if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('dash', 'dash.html'));
+    if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('Dash', 'dash.html'));
 
     this.updateLevelCounts();
     
@@ -3901,4 +3901,5 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+
 
