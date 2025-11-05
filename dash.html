@@ -1,572 +1,284 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Geometry Dash Infinite</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
-  <style>
-    :root{
-      --bg: radial-gradient(1200px 800px at 50% -10%, #0a1a26 0%, #070e16 60%, #04080d 100%);
-      --panel: rgba(0,0,0,.45);
-      --panel-brd: rgba(255,255,255,.15);
-      --text: #e5f1ff;
-      --muted: #9fb6cc;
-      --accent: #00d6a1;
-      --accent-2: #4ea6e0;
-      --ground: #1d2733;
-      --block: #2e3b47;
-      --block-hi: rgba(255,255,255,0.06);
-      --grid: rgba(255,255,255,0.06);
-    }
-    html, body {
-      margin: 0; padding: 0;
-      background: var(--bg);
-      color: var(--text);
-      height: 100%;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-    }
-    .root {
-      position: fixed; inset: 0;
-      display: grid; place-items: center;
-      touch-action: none;
-    }
-    .wrap {
-      position: relative;
-      width: min(96vw, 520px);
-      aspect-ratio: 9 / 16;
-      max-height: 96vh;
-    }
-    canvas {
-      width: 100%; height: 100%; display: block;
-      border-radius: 16px;
-      background: linear-gradient(#0e1520, #0a111a);
-      box-shadow: 0 20px 60px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.06);
-      touch-action: none;
-    }
-    .hud {
-      position: absolute; left: 10px; right: 10px; top: 10px;
-      display: flex; gap: 10px; align-items: center; justify-content: space-between;
-      background: var(--panel);
-      padding: 8px 10px; border-radius: 10px;
-      backdrop-filter: blur(6px);
-      font-weight: 700; z-index: 5;
-      border: 1px solid var(--panel-brd);
-      user-select: none;
-    }
-    .hud .stat { display: flex; gap: 8px; align-items: center; }
-    .hud .val { color: var(--accent); min-width: 52px; text-align: right; }
-    .btn {
-      border: none; cursor: pointer; font-weight: 800;
-      padding: 10px 14px; border-radius: 10px;
-    }
-    .btn-primary {
-      background: var(--accent); color: #0b1220;
-    }
-    .btn-ghost {
-      background: var(--panel); color: var(--text);
-      border: 1px solid var(--panel-brd);
-      backdrop-filter: blur(6px);
-    }
-    .pause-btn {
-      width: 42px; height: 42px; border-radius: 10px;
-      display: inline-flex; align-items: center; justify-content: center;
-      font-size: 16px; line-height: 1;
-      user-select: none;
-    }
-    .overlay {
-      position: absolute; inset: 0;
-      display: none; place-items: center;
-      background: rgba(0,0,0,.45);
-      border-radius: 16px; z-index: 6;
-      text-align: center; backdrop-filter: blur(6px);
-      padding: 16px;
-    }
-    .card {
-      background: rgba(0,0,0,.55);
-      border: 1px solid var(--panel-brd);
-      border-radius: 12px; padding: 14px 16px;
-      font-weight: 800; min-width: 60%;
-      color: var(--text);
-    }
-    .muted { color: var(--muted); font-weight: 600; }
-    .help {
-      position: absolute; left: 50%; top: 50%;
-      transform: translate(-50%,-50%);
-      background: var(--panel); padding: 14px 16px; border-radius: 12px;
-      text-align: center; backdrop-filter: blur(6px);
-      font-weight: 600; max-width: 90%;
-      opacity: .95; transition: opacity .25s ease;
-      z-index: 4; user-select: none;
-      border: 1px solid var(--panel-brd);
-    }
-    .badge {
-      display: inline-block; padding: 2px 6px; border-radius: 6px;
-      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-      margin: 0 4px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Geometry Dash Lite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            position: fixed;
+            touch-action: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+        
+        iframe {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            border: none;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        /* Сообщение о повороте экрана */
+        .rotate-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 20000;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .rotate-content {
+            max-width: 300px;
+        }
+        
+        .rotate-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: rotatePhone 2s ease-in-out infinite;
+        }
+        
+        @keyframes rotatePhone {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(90deg); }
+        }
+        
+        .rotate-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .rotate-text {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+        
+        /* Показываем сообщение только в портретном режиме */
+        @media screen and (orientation: portrait) {
+            .rotate-message {
+                display: flex !important;
+            }
+            
+            iframe {
+                display: none;
+            }
+            
+            .notification {
+                display: none !important;
+            }
+        }
+        
+        /* Уведомление в стиле Duolingo */
+        .notification {
+            position: fixed;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #58CC02 0%, #89E219 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(88, 204, 2, 0.4);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 400px;
+            transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-weight: 600;
+        }
+        
+        .notification.show {
+            top: 20px;
+        }
+        
+        .notification-icon {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .notification-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+        
+        .notification-text {
+            font-size: 13px;
+            opacity: 0.95;
+            line-height: 1.3;
+        }
+        
+        .notification-timer {
+            background: white;
+            color: #58CC02;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            min-width: 28px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        
+        /* Адаптация под ландшафтный режим */
+        @media screen and (orientation: landscape) {
+            .notification {
+                max-width: 350px;
+                padding: 12px 18px;
+            }
+            
+            .notification-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+            }
+            
+            .notification-title {
+                font-size: 14px;
+            }
+            
+            .notification-text {
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="root">
-    <div class="wrap" id="game-wrap" data-testid="game-wrap">
-      <canvas id="game" data-testid="canvas"></canvas>
-
-      <div class="hud" id="hud">
-        <div class="stat">
-          <span>Дистанция</span>
-          <span class="val" id="hud-dist" data-testid="hud-distance">0 м</span>
+    <!-- Игра -->
+    <iframe 
+        id="game-frame"
+        src="https://geometry-dash-lite.io/gdl/" 
+        allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals"
+        scrolling="no"
+        frameborder="0">
+    </iframe>
+    
+    <!-- Сообщение о повороте экрана -->
+    <div class="rotate-message">
+        <div class="rotate-content">
+            <div class="rotate-icon">📱</div>
+            <div class="rotate-title">Поверните экран</div>
+            <div class="rotate-text">Для игры в Geometry Dash необходимо повернуть устройство в горизонтальный режим</div>
         </div>
-        <div class="stat">
-          <span>Рекорд</span>
-          <span class="val" id="hud-best" data-testid="hud-best">0 м</span>
-        </div>
-        <button class="btn btn-ghost pause-btn" id="pauseBtn" data-testid="pause-button" title="Пауза">⏸</button>
-      </div>
-
-      <div class="help" id="help">
-        Прыжок: тап по экрану. Удерживай — автопрыжок. <span class="badge">P</span> — пауза.
-      </div>
-
-      <div class="overlay" id="pausedOverlay" data-testid="paused-overlay">
-        <div class="card">
-          <div style="font-size:22px; margin-bottom:8px;">Пауза</div>
-          <div class="muted" style="margin-bottom:12px;">Нажмите «Продолжить», чтобы играть дальше</div>
-          <button class="btn btn-primary" id="resumeBtn" data-testid="resume-button">Продолжить</button>
-        </div>
-      </div>
-
-      <div class="overlay" id="gameoverOverlay" data-testid="gameover-overlay">
-        <div class="card">
-          <div style="font-size:22px; margin-bottom:8px;">💥 Проигрыш</div>
-          <div>Дистанция: <span id="finalDist" style="color: var(--accent);">0</span> м</div>
-          <div class="muted" style="margin:10px 0 14px;">Рекорд: <span id="finalBest" style="color: var(--accent);">0</span> м</div>
-          <button class="btn btn-primary" id="retryBtn" data-testid="retry-button">Начать заново</button>
-        </div>
-      </div>
     </div>
-  </div>
+    
+    <!-- Уведомление -->
+    <div class="notification" id="notification">
+        <div class="notification-icon">🐝</div>
+        <div class="notification-content">
+            <div class="notification-title">Время для BeWords!</div>
+            <div class="notification-text">Скоро появится быстрый тест по английскому</div>
+        </div>
+        <div class="notification-timer" id="notificationTimer">8</div>
+    </div>
 
-  <script>
-    (function() {
-      // Helpers
-      const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
-      const lerp = (a,b,t) => a + (b - a) * t;
-
-      // Elements
-      const wrap = document.getElementById('game-wrap');
-      const canvas = document.getElementById('game');
-      const ctx = canvas.getContext('2d');
-      const hudDist = document.getElementById('hud-dist');
-      const hudBest = document.getElementById('hud-best');
-      const pauseBtn = document.getElementById('pauseBtn');
-      const pausedOverlay = document.getElementById('pausedOverlay');
-      const resumeBtn = document.getElementById('resumeBtn');
-      const gameoverOverlay = document.getElementById('gameoverOverlay');
-      const retryBtn = document.getElementById('retryBtn');
-      const help = document.getElementById('help');
-
-      // DPR and resize
-      let W = 480, H = 854, dpr = Math.max(1, Math.min(2.5, window.devicePixelRatio || 1));
-      function resize() {
-        const rect = wrap.getBoundingClientRect();
-        W = Math.max(320, Math.floor(rect.width));
-        H = Math.max(480, Math.floor(rect.height));
-        dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
-        canvas.width = Math.floor(W * dpr);
-        canvas.height = Math.floor(H * dpr);
-        canvas.style.width = W + 'px';
-        canvas.style.height = H + 'px';
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        // Update ground based on new H
-        groundY = H - Math.floor(0.14 * H);
-        groundH = Math.max(20, Math.floor(0.028 * H));
-        // Reposition cube on ground if needed
-        if (cube) {
-          cube.y = groundY - cube.h;
-        }
-      }
-      window.addEventListener('resize', resize, { passive: true });
-
-      // World
-      let groundY = H - 120, groundH = 24;
-
-      // Player
-      const cube = { x: 140, y: groundY - 42, w: 42, h: 42, vy: 0, onGround: true, angle: 0 };
-
-      // Physics
-      const GRAV = 2600;
-      const JUMP_V = 720;
-      const COYOTE = 0.08;
-      const JUMP_BUFFER = 0.18;
-      let coyoteTimer = 0, jumpBufferTimer = 0, inputHeld = false;
-
-      // Speed: start same as original (320), but accelerate faster and allow higher top speed
-      let speed = 320, minSpeed = 320, maxSpeed = 900, accel = 24, M_PER_PX = 0.05;
-
-      // Progress
-      let scrollX = 0, distMeters = 0;
-      let bestMeters = parseInt(localStorage.getItem('gd_best_infinite') || '0', 10);
-
-      // Obstacles & generator
-      let obstacles = [];
-      let cursorX = 520; // start generation a bit ahead
-
-      // Control
-      let paused = false, gameOver = false, started = false;
-      let shakeT = 0, hitFlash = 0;
-
-      // Time
-      let rafId = null, prev = performance.now();
-
-      // Input handlers
-      function pressJump() {
-        if (gameOver) return;
-        inputHeld = true;
-        jumpBufferTimer = JUMP_BUFFER;
-        hideHelpSoon();
-      }
-      function releaseJump() { inputHeld = false; }
-
-      function togglePause() {
-        if (gameOver) return;
-        paused = !paused;
-        pausedOverlay.style.display = paused ? 'grid' : 'none';
-      }
-
-      // HUD init
-      function updateHUD() {
-        hudDist.textContent = distMeters + ' м';
-        hudBest.textContent = bestMeters + ' м';
-      }
-
-      // Generator utilities
-      function rnd() {
-        // Simple LCG with internal seed
-        rngSeed = (1103515245 * rngSeed + 12345) & 0x7fffffff;
-        return rngSeed / 0x7fffffff;
-      }
-      function choice(arr) { return arr[Math.floor(rnd() * arr.length)]; }
-      function space(d = 120) { cursorX += d; }
-      function makeBlock(x, w, h, yTop) { obstacles.push({ type: 'block', x, y: yTop, w, h }); }
-      function makeSpike(xLeft, baseY, w = 28, h = 34) { obstacles.push({ type: 'spike', x: xLeft, y: baseY, w, h }); }
-
-      // Patterns
-      function patSingleSpike() { space(140); makeSpike(cursorX, groundY, 30, 36); space(150); }
-      function patDoubleSpike() { space(150); makeSpike(cursorX, groundY, 28, 34); makeSpike(cursorX + 48, groundY, 28, 34); space(170); }
-      function patTripleSpike() { space(160); const w = 28, h = 34, gap = 38; makeSpike(cursorX, groundY, w, h); makeSpike(cursorX + gap, groundY, w, h); makeSpike(cursorX + gap * 2, groundY, w, h); space(200); }
-      function patBlockLow() { space(140); const bw = 160, bh = 48; makeBlock(cursorX, bw, bh, groundY - bh); space(bw + 140); }
-      function patBlockHigh() { space(160); const bw = 180, bh = 70; makeBlock(cursorX, bw, bh, groundY - bh); makeSpike(cursorX + bw - 44, groundY - bh, 26, 30); space(bw + 200); }
-      function patBlockThenSpike() { space(140); const bw = 140, bh = 52; makeBlock(cursorX, bw, bh, groundY - bh); makeSpike(cursorX + bw + 36, groundY, 28, 34); space(bw + 200); }
-      function patStairs() { space(140); const bw = 120, step = 36; makeBlock(cursorX, bw, step, groundY - step); makeBlock(cursorX + bw + 20, bw, step * 2, groundY - step * 2); makeSpike(cursorX + bw * 2 + 40, groundY, 28, 34); space(bw * 2 + 220); }
-      const patternList = [patSingleSpike, patDoubleSpike, patTripleSpike, patBlockLow, patBlockHigh, patBlockThenSpike, patStairs];
-
-      function placePattern() { choice(patternList)(); }
-
-      // Endless population
-      let rngSeed = (Math.random() * 1e9) | 0;
-      function populateAhead() {
-        // Keep at least 5000 px ahead of current scrollX
-        const ahead = scrollX + 5000;
-        while (cursorX < ahead) {
-          placePattern();
-        }
-      }
-
-      // Loop
-      function startLoop() {
-        if (started) return;
-        started = true; prev = performance.now();
-        rafId = requestAnimationFrame(loop);
-      }
-      function stopLoop() { if (rafId) cancelAnimationFrame(rafId); started = false; }
-
-      function loop(t) {
-        const dt = Math.min(0.033, (t - prev) / 1000);
-        prev = t;
-
-        if (!paused && !gameOver) update(dt);
-        render();
-
-        rafId = requestAnimationFrame(loop);
-      }
-
-      function update(dt) {
-        // Speed up faster than original
-        speed = clamp(speed + accel * dt, minSpeed, maxSpeed);
-
-        scrollX += speed * dt;
-        distMeters = Math.floor(scrollX * M_PER_PX);
-
-        // Jump handling
-        if (jumpBufferTimer > 0) jumpBufferTimer -= dt;
-        if (!cube.onGround && coyoteTimer > 0) coyoteTimer -= dt;
-        if ((cube.onGround || coyoteTimer > 0) && (inputHeld || jumpBufferTimer > 0)) {
-          doJump();
-        }
-
-        // Gravity/integration
-        const prevY = cube.y;
-        cube.vy += GRAV * dt;
-        cube.y += cube.vy * dt;
-        cube.onGround = false;
-
-        // Ground collide
-        if (cube.y + cube.h >= groundY) {
-          if (prevY + cube.h <= groundY) { // falling onto ground
-            cube.y = groundY - cube.h; cube.vy = 0; cube.onGround = true; coyoteTimer = COYOTE;
-          } else {
-            cube.y = groundY - cube.h; cube.vy = 0; cube.onGround = true; coyoteTimer = COYOTE;
-          }
-        }
-
-        // Obstacles behind cull and collisions
-        const px = cube.x, py = cube.y, pw = cube.w, ph = cube.h;
-        for (let i = obstacles.length - 1; i >= 0; i--) {
-          const o = obstacles[i];
-          const sx = o.x - scrollX;
-          if (sx + (o.w || 30) < -300) { obstacles.splice(i, 1); continue; }
-
-          if (o.type === 'block') {
-            const bx = sx, by = o.y, bw = o.w, bh = o.h;
-            if (rectOverlap(px, py, pw, ph, bx, by, bw, bh)) {
-              const prevBottom = prevY + ph; const top = by;
-              if (prevBottom <= top + 0.5 && cube.vy >= 0) {
-                // Land on top
-                cube.y = top - ph; cube.vy = 0; cube.onGround = true; coyoteTimer = COYOTE;
-              } else {
-                return onHit();
-              }
+    <script>
+        let notificationTimeout;
+        let gameInterval;
+        
+        // Функция показа уведомления
+        function showNotification() {
+            // Показываем только в ландшафтном режиме
+            if (window.innerWidth > window.innerHeight) {
+                const notification = document.getElementById('notification');
+                const timerElement = document.getElementById('notificationTimer');
+                let timeLeft = 8;
+                
+                notification.classList.add('show');
+                timerElement.textContent = '8';
+                
+                notificationTimeout = setInterval(() => {
+                    timeLeft--;
+                    timerElement.textContent = timeLeft;
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(notificationTimeout);
+                        notification.classList.remove('show');
+                        // Перезапускаем таймер для следующего показа
+                        startGameTimer();
+                    }
+                }, 1000);
+            } else {
+                // Если в портретном режиме, просто перезапускаем таймер
+                startGameTimer();
             }
-          } else if (o.type === 'spike') {
-            const tri = { x: sx, y: o.y, w: o.w, h: o.h };
-            const bl = { x: px + 4, y: py + ph - 2 };
-            const br = { x: px + pw - 4, y: py + ph - 2 };
-            const bc = { x: px + pw / 2, y: py + ph - 2 };
-            if (pointInSpike(bl, tri) || pointInSpike(br, tri) || pointInSpike(bc, tri)) {
-              return onHit();
+        }
+        
+        // Запуск таймера игры
+        function startGameTimer() {
+            clearInterval(gameInterval);
+            // Запускаем таймер на 4 минуты 50 секунд
+            gameInterval = setTimeout(() => {
+                showNotification();
+            }, 290000); // 4 минуты 50 секунд = 290000 мс
+        }
+        
+        // Запускаем таймер после загрузки страницы
+        window.addEventListener('load', () => {
+            startGameTimer();
+        });
+        
+        // Перезапуск таймера при изменении ориентации
+        window.addEventListener('orientationchange', () => {
+            if (window.innerWidth > window.innerHeight) {
+                // Если перешли в ландшафтный режим, запускаем таймер заново
+                startGameTimer();
             }
-          }
-        }
-
-        // Rotation
-        if (!cube.onGround) {
-          cube.angle += 6.0 * dt;
-          if (cube.angle > Math.PI * 2) cube.angle -= Math.PI * 2;
-        } else {
-          const snap = Math.round(cube.angle / (Math.PI / 2)) * (Math.PI / 2);
-          cube.angle = lerp(cube.angle, snap, Math.min(1, dt * 12));
-        }
-
-        // Ensure world stays populated
-        populateAhead();
-      }
-
-      function rectOverlap(ax, ay, aw, ah, bx, by, bw, bh) {
-        return !(ax + aw <= bx || ax >= bx + bw || ay + ah <= by || ay >= by + bh);
-      }
-      function pointInSpike(p, tri) {
-        const x0 = tri.x, y0 = tri.y, w = tri.w, h = tri.h;
-        if (p.x < x0 || p.x > x0 + w || p.y < y0 - h || p.y > y0) return false;
-        const ax = x0 + w / 2, ay = y0 - h;
-        const mL = -2 * h / w; const mR = 2 * h / w;
-        const yLeft = ay + mL * (p.x - ax);
-        const yRight = ay + mR * (p.x - ax);
-        return p.y >= yLeft && p.y >= yRight && p.y <= y0;
-      }
-      function doJump() { cube.vy = -JUMP_V; cube.onGround = false; coyoteTimer = 0; jumpBufferTimer = 0; }
-
-      function onHit() {
-        gameOver = true; shakeT = 0.5; hitFlash = 0.35;
-        // Save best
-        if (distMeters > bestMeters) {
-          bestMeters = distMeters;
-          localStorage.setItem('gd_best_infinite', String(bestMeters));
-        }
-        // Show overlay
-        document.getElementById('finalDist').textContent = distMeters;
-        document.getElementById('finalBest').textContent = bestMeters;
-        gameoverOverlay.style.display = 'grid';
-        pausedOverlay.style.display = 'none';
-        updateHUD();
-        stopLoop();
-      }
-
-      function restart() {
-        // Reset player and world
-        cube.x = 140; cube.h = 42; cube.w = 42;
-        cube.y = groundY - cube.h; cube.vy = 0; cube.onGround = true; cube.angle = 0;
-        paused = false; gameOver = false;
-        gameoverOverlay.style.display = 'none';
-        pausedOverlay.style.display = 'none';
-        // Reset speed (keep original start), and distance
-        speed = 320;
-        scrollX = 0; distMeters = 0;
-        // Reset generator
-        obstacles = []; rngSeed = (Math.random() * 1e9) | 0;
-        cursorX = 520;
-        populateAhead();
-        updateHUD();
-      }
-
-      function hideHelpSoon() {
-        if (!help) return;
-        if (help._hidden) return;
-        help._hidden = true;
-        setTimeout(() => { help.style.opacity = '0'; }, 350);
-        setTimeout(() => { if (help && help.parentNode) help.parentNode.removeChild(help); }, 1200);
-      }
-
-      // Rendering
-      function render() {
-        const shakeAmt = (shakeT > 0) ? (6 * Math.pow(shakeT, 0.6)) : 0;
-        const sx = (Math.random() * 2 - 1) * shakeAmt;
-        const sy = (Math.random() * 2 - 1) * shakeAmt;
-        if (shakeT > 0) shakeT -= 1 / 60;
-        if (hitFlash > 0) hitFlash -= 1 / 60;
-
-        ctx.save();
-        ctx.clearRect(0, 0, W, H);
-        ctx.translate(sx, sy);
-
-        // Parallax stripes
-        ctx.save();
-        const stripes = 8;
-        ctx.globalAlpha = 0.12;
-        ctx.strokeStyle = '#9ad1ff';
-        for (let i = 0; i <= stripes; i++) {
-          const y = (i / stripes) * H + ((scrollX * 0.2) % (H / stripes));
-          ctx.beginPath();
-          ctx.moveTo(0, y);
-          ctx.lineTo(W, y + 30);
-          ctx.stroke();
-        }
-        ctx.restore();
-
-        // Ground
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--ground') || '#1d2733';
-        ctx.fillRect(0, groundY, W, groundH);
-
-        // Grid lines below ground
-        ctx.save();
-        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--grid') || 'rgba(255,255,255,0.06)';
-        ctx.lineWidth = 1;
-        const grid = 30;
-        const off = -((scrollX * 0.6) % grid);
-        for (let x = off; x < W; x += grid) {
-          ctx.beginPath();
-          ctx.moveTo(x, groundY); ctx.lineTo(x, H); ctx.stroke();
-        }
-        ctx.restore();
-
-        // Obstacles
-        for (const o of obstacles) {
-          const x = o.x - scrollX;
-          if (x > W + 200) continue;
-          if (o.type === 'block') {
-            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--block') || '#2e3b47';
-            roundRect(ctx, x, o.y, o.w, o.h, 6); ctx.fill();
-            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--block-hi') || 'rgba(255,255,255,0.06)';
-            roundRect(ctx, x + 6, o.y + 6, o.w - 12, 10, 4); ctx.fill();
-          } else if (o.type === 'spike') {
-            drawSpike(ctx, x, o.y, o.w, o.h);
-          }
-        }
-
-        // Shadow under cube
-        const shW = cube.w * (0.9 - Math.min(0.6, Math.max(0, -cube.vy) / 900) * 0.5);
-        ctx.fillStyle = 'rgba(0,0,0,0.35)';
-        roundRect(ctx, cube.x + (cube.w - shW) / 2, groundY + 12, shW, 10, 6); ctx.fill();
-
-        // Cube
-        const cx = cube.x + cube.w / 2;
-        const cy = cube.y + cube.h / 2;
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(cube.angle);
-        const bodyGrad = ctx.createLinearGradient(-cube.w / 2, -cube.h / 2, cube.w / 2, cube.h / 2);
-        bodyGrad.addColorStop(0, '#ff8a65');
-        bodyGrad.addColorStop(1, '#ff5252');
-        ctx.fillStyle = bodyGrad;
-        roundRect(ctx, -cube.w / 2, -cube.h / 2, cube.w, cube.h, 6); ctx.fill();
-        ctx.fillStyle = '#111';
-        roundRect(ctx, -cube.w * 0.15, -cube.h * 0.15, cube.w * 0.3, cube.h * 0.3, 3); ctx.fill();
-        ctx.restore();
-
-        if (hitFlash > 0) {
-          const a = Math.max(0, Math.min(0.35, hitFlash * 1.5));
-          ctx.fillStyle = `rgba(255,0,0,${a})`;
-          ctx.fillRect(0, 0, W, H);
-        }
-
-        ctx.restore();
-
-        // Update HUD text each frame (lightweight)
-        updateHUD();
-      }
-
-      function roundRect(ctx2, x, y, w, h, r) {
-        r = Math.min(r, w / 2, h / 2);
-        ctx2.beginPath();
-        ctx2.moveTo(x + r, y);
-        ctx2.arcTo(x + w, y, x + w, y + h, r);
-        ctx2.arcTo(x + w, y + h, x, y + h, r);
-        ctx2.arcTo(x, y + h, x, y, r);
-        ctx2.arcTo(x, y, x + w, y, r);
-        ctx2.closePath();
-      }
-      function drawSpike(ctx2, x, baseY, w, h) {
-        ctx2.fillStyle = 'rgba(0,0,0,0.25)';
-        ctx2.beginPath();
-        ctx2.moveTo(x + 2, baseY + 6);
-        ctx2.lineTo(x + w - 2, baseY + 6);
-        ctx2.lineTo(x + w / 2, baseY - h + 10);
-        ctx2.closePath(); ctx2.fill();
-        const grad = ctx2.createLinearGradient(0, baseY - h, 0, baseY);
-        grad.addColorStop(0, '#8bd0ff');
-        grad.addColorStop(1, '#4ea6e0');
-        ctx2.fillStyle = grad;
-        ctx2.beginPath();
-        ctx2.moveTo(x, baseY);
-        ctx2.lineTo(x + w, baseY);
-        ctx2.lineTo(x + w / 2, baseY - h);
-        ctx2.closePath();
-        ctx2.fill();
-        ctx2.strokeStyle = 'rgba(255,255,255,0.35)';
-        ctx2.beginPath();
-        ctx2.moveTo(x + 4, baseY - 2);
-        ctx2.lineTo(x + w / 2, baseY - h + 4);
-        ctx2.lineTo(x + w - 4, baseY - 2);
-        ctx2.stroke();
-      }
-
-      // Events
-      document.addEventListener('keydown', (e) => {
-        const c = e.code;
-        if (c === 'Space' || c === 'KeyW' || c === 'ArrowUp') { e.preventDefault(); pressJump(); }
-        if (c === 'KeyP') { e.preventDefault(); togglePause(); }
-      });
-      document.addEventListener('keyup', (e) => {
-        const c = e.code;
-        if (c === 'Space' || c === 'KeyW' || c === 'ArrowUp') releaseJump();
-      });
-      canvas.addEventListener('pointerdown', () => pressJump(), { passive: true });
-      canvas.addEventListener('pointerup', () => releaseJump(), { passive: true });
-      canvas.addEventListener('touchstart', () => pressJump(), { passive: true });
-      canvas.addEventListener('touchend', () => releaseJump(), { passive: true });
-
-      pauseBtn.addEventListener('click', () => togglePause());
-      resumeBtn.addEventListener('click', () => { if (!gameOver) togglePause(); });
-      retryBtn.addEventListener('click', () => {
-        restart();
-        startLoop();
-      });
-
-      // Init
-      resize();
-      updateHUD();
-      populateAhead();
-      startLoop();
-    })();
-  </script>
+        });
+        
+        // Предотвращение скролла
+        document.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+        
+        // Предотвращение двойного тапа
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
 </body>
 </html>
