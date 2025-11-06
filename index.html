@@ -1,15 +1,38 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#6366f1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Bewords">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link rel="apple-touch-icon" href="/icon-192.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BeWords - Изучение английских слов</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  
+  <!-- Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#58CC02">
+  
+  <!-- Apple Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="BeWords">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- SEO для поисковиков и соцсетей -->
+  <meta name="description" content="Инновационная платформа для изучения английских слов через игры">
+  <meta property="og:title" content="BeWords - Изучение английских слов">
+  <meta property="og:description" content="Инновационная платформа для изучения английских слов через игры">
+  <meta property="og:image" content="https://bewords.ru/og-image.png">
+  <meta property="og:url" content="https://bewords.ru">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://bewords.ru">
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -96,12 +119,30 @@
       .ai-chat-container { height: calc(100vh - 160px); min-height: 350px; }
     }
   </style>
+  <!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=105128338', 'ym');
+
+    ym(105128338, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/105128338" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </head>
 <body>
 <div class="app-container">
   <header class="app-header">
     <div class="header-content">
-      <h1 class="app-title">BeWords.ru </h1>
+      <div class="logo-title">
+        <a href="/" class="logo-link" onclick="location.reload(); return false;">
+          <img src="/logo1.png" alt="BeWords" class="app-logo">
+        </a>
+        <h1 class="app-title">BeWords.ru</h1>
+      </div>
       <div class="header-actions">
         <button class="support-btn" id="supportBtn" data-testid="support-btn" title="Поддержать проект">
           <i class="fas fa-heart"></i>
@@ -223,8 +264,8 @@
 
       <p class="mode-help">
         Всего доступно 2 режима обучения :<br><br>
-        1) Запланировано - система сама составляет вам интервал повторения<br>
-        2) Бесконечно - практика без ограничений <br><br>
+        1) Учить - умный алгоритм будет добавлять вам слова для заучивания по немножку <br>
+        2) Повторение - повторяйте весь список слов за раз <br><br>
         * Флешкарточки — показывается слово и перевод; ответ скрыт до нажатия.<br>
         * Quiz — одно слово и 4 варианта; правильное слово произносится после ответа.<br>
       </p>
@@ -236,7 +277,7 @@
           <button class="mode-btn" data-mode="list" id="modeList" data-testid="mode-list">Список слов</button>
         </div>
         <div class="practice-toggle" role="tablist" aria-label="practice mode">
-          <button class="practice-btn active" data-practice="scheduled" id="practiceScheduled" data-testid="practice-scheduled">Заучивание</button>
+          <button class="practice-btn active" data-practice="scheduled" id="practiceScheduled" data-testid="practice-scheduled">Учить</button>
           <button class="practice-btn" data-practice="endless" id="practiceEndless" data-testid="practice-endless">Повторение</button>
         </div>
       </div>
@@ -354,8 +395,8 @@
         <div class="game-card">
           <img src="race.jpg" alt="Subway Surfers" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
-            <h3>Racing</h3>
-            <p>Уворачивайся от трафика. </p>
+            <h3>Subway Surfers</h3>
+            <p>Убегай от злого охранника. </p>
             <button class="btn btn-primary" id="surfStartBtn" data-testid="surf-start-btn">Старт</button>
           </div>
         </div>
@@ -390,7 +431,7 @@
         <div class="game-card">
           <img src="dash.jpg" alt="Каталог игр" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
-            <h3>Geo-dash</h3>
+            <h3>Geometry-dash</h3>
             <p>Знаменитая игра с прыгающем кубиком.</p>
             <button class="btn btn-primary" id="catalogStartBtn" data-testid="catalog-start-btn">Открыть</button>
           </div>
@@ -406,14 +447,13 @@
       </div>
 
       <div class="ai-chat-container">
-<iframe
-  src="https://www.yeschat.ai/i/gpts-2OToO9hERt-English-Teacher"
-  style="border:1px solid #EAEAEA"
-  width="100%"
-  height="680"
-  frameborder="0"
-  allow="microphone"
-></iframe>
+        <iframe
+          id="aiChatFrame"
+          src="https://www.yeschat.ai/i/gpts-2OToO9hERt-English-Teacher"
+          class="ai-chat-iframe"
+          title="AI English Teacher"
+          allow="microphone">
+        </iframe>
  <!-- VPN сообщение -->
     <div id="vpnMessage" class="vpn-message">
       <div class="vpn-icon">🌍</div>
@@ -446,7 +486,7 @@
       <i class="fas fa-gamepad"></i><span>Игры</span>
     </button>
     <button class="nav-item" type="button" data-section="ai-chat" data-testid="nav-ai-chat" onclick="window.app && app.switchSection('ai-chat')">
-      <i class="fas fa-robot"></i><span>ИИ бот</span>
+      <i class="fas fa-robot"></i><span>ИИ</span>
     </button>
   </nav>
 </div>
@@ -553,3 +593,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
+
+
+
+
+
