@@ -512,44 +512,53 @@ function checkIframeLoad() {
   if (!iframe || !vpnMessage) return;
   
   let loadTimeout;
-  let isLoaded = false;
+  let hasLoaded = false;
   
-  // Показываем сообщение через 5 секунд если iframe не загрузился
-  loadTimeout = setTimeout(() => {
-    if (!isLoaded) {
+  // Функция для скрытия сообщения об ошибке
+  function hideError() {
+    clearTimeout(loadTimeout);
+    hasLoaded = true;
+    iframe.classList.remove('error');
+    vpnMessage.classList.remove('show');
+  }
+  
+  // Функция для показа сообщения об ошибке
+  function showError() {
+    if (!hasLoaded) {
       iframe.classList.add('error');
       vpnMessage.classList.add('show');
     }
-  }, 2500);
+  }
   
-  // Успешная загрузка iframe
-  iframe.onload = function() {
-    isLoaded = true;
-    clearTimeout(loadTimeout);
-    iframe.classList.remove('error');
-    vpnMessage.classList.remove('show');
-    
-    // Проверяем доступность контента
-    try {
-      // Попытка получить доступ к документу iframe
-      const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-      if (!iframeDoc || iframeDoc.body.innerHTML.length < 100) {
-        throw new Error('Empty content');
+  // Слушаем событие успешной загрузки
+  iframe.addEventListener('load', function() {
+    // Даем дополнительное время для полной загрузки контента
+    setTimeout(() => {
+      // Проверяем, что iframe действительно имеет высоту (признак загруженного контента)
+      if (iframe.offsetHeight > 0) {
+        hideError();
       }
-    } catch (e) {
-      // Если кросс-доменная политика блокирует доступ, это нормально
-      // Но если контент пустой, показываем сообщение
-      console.log('AI Chat loaded but access restricted (normal for cross-origin)');
-    }
-  };
+    }, 500);
+  });
   
-  // Ошибка загрузки iframe
-  iframe.onerror = function() {
-    isLoaded = true; // Предотвращаем двойное срабатывание
-    clearTimeout(loadTimeout);
-    iframe.classList.add('error');
-    vpnMessage.classList.add('show');
-  };
+  // Слушаем событие ошибки
+  iframe.addEventListener('error', function() {
+    showError();
+  });
+  
+  // Проверка через таймаут только как запасной вариант
+  loadTimeout = setTimeout(() => {
+    // Проверяем различные признаки успешной загрузки
+    const iframeVisible = iframe.offsetHeight > 0 && iframe.offsetWidth > 0;
+    const iframeInDOM = document.body.contains(iframe);
+    
+    // Если iframe видим и находится в DOM, считаем что загрузился
+    if (iframeVisible && iframeInDOM) {
+      hideError();
+    } else {
+      showError();
+    }
+  }, 5000); // Увеличиваем время до 5 секунд для более надежной проверки
 }
 
 // Функция повторной попытки загрузки
@@ -567,32 +576,39 @@ function retryLoadingChat() {
     iframe.src = '';
     setTimeout(() => {
       iframe.src = currentSrc;
-      checkIframeLoad(); // Запускаем проверку заново
+      // Запускаем проверку заново с задержкой
+      setTimeout(checkIframeLoad, 1000);
     }, 100);
   }
 }
 
 // Запускаем проверку при переключении на вкладку AI Chat
 document.addEventListener('DOMContentLoaded', function() {
+  let aiChatChecked = false; // Флаг, чтобы проверять только один раз
+  
   const originalSwitchSection = window.app && window.app.switchSection;
   
   if (originalSwitchSection) {
     window.app.switchSection = function(section) {
       originalSwitchSection.call(window.app, section);
-      if (section === 'ai-chat') {
-        setTimeout(checkIframeLoad, 100);
+      
+      // Проверяем только при первом переходе на AI Chat
+      if (section === 'ai-chat' && !aiChatChecked) {
+        aiChatChecked = true;
+        setTimeout(checkIframeLoad, 500);
       }
     };
   }
   
-  // Также проверяем если пользователь сразу на этой вкладке
+  // Проверяем если пользователь сразу на этой вкладке
   if (document.querySelector('#ai-chat.active')) {
-    checkIframeLoad();
+    setTimeout(checkIframeLoad, 500);
   }
 });
 </script>
 </body>
 </html>
+
 
 
 
