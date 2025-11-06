@@ -1924,4 +1924,119 @@ img[data-image-source*="Servier"],
 .hidden {
   display: none !important;
 }
+/* VPN Message Duolingo-style */
+.vpn-message {
+  display: none;
+  background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+  border: 2px solid #ffb300;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 20px;
+  text-align: center;
+  animation: slideUp 0.4s ease-out;
+  box-shadow: 0 4px 12px rgba(255, 179, 0, 0.2);
+  position: relative;
+}
+
+.vpn-message.show {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.vpn-icon {
+  font-size: 48px;
+  animation: bounce 2s infinite;
+}
+
+.vpn-content {
+  flex: 1;
+  text-align: left;
+}
+
+.vpn-content h4 {
+  color: #f57c00;
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.vpn-content p {
+  color: #6b4423;
+  margin: 0 0 16px 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.vpn-retry-btn {
+  background: linear-gradient(135deg, #58cc02 0%, #4caf50 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 24px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(88, 204, 2, 0.3);
+}
+
+.vpn-retry-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(88, 204, 2, 0.4);
+}
+
+.vpn-retry-btn:active {
+  transform: translateY(0);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Hide iframe when error */
+.ai-chat-iframe.error {
+  display: none;
+}
+
+/* Mobile adaptation */
+@media (max-width: 768px) {
+  .vpn-message {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .vpn-content {
+    text-align: center;
+  }
+  
+  .vpn-icon {
+    font-size: 40px;
+  }
+  
+  .vpn-content h4 {
+    font-size: 1.1rem;
+  }
+  
+  .vpn-content p {
+    font-size: 0.95rem;
+  }
+}
 
