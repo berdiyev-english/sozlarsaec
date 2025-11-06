@@ -768,6 +768,8 @@ document.querySelectorAll('.practice-btn').forEach(btn => {
     if (game2048Btn) game2048Btn.addEventListener('click', () => this.showQuizGateForGame('2048', '2048.html'));
     const rocketBtn = document.getElementById('rocketStartBtn');
     if (rocketBtn) rocketBtn.addEventListener('click', () => this.showQuizGateForGame('match 3', 'rocket-soccer.html'));
+    const ninjaBtn = document.getElementById('ninjaStartBtn');
+    if (ninjaBtn) rocketBtn.addEventListener('click', () => this.showQuizGateForGame('ninja', 'ninja.html'));
     const catalogBtn = document.getElementById('catalogStartBtn');
     if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('Dash', 'dash.html'));
 
@@ -3901,5 +3903,6 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+
 
 
