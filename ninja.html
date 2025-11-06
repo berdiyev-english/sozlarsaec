@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Fruit-Ninja</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            position: fixed;
+            touch-action: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+        
+        iframe {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            border: none;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        /* Уведомление в стиле Duolingo */
+        .notification {
+            position: fixed;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #58CC02 0%, #89E219 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(88, 204, 2, 0.4);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 90%;
+            max-width: 400px;
+            transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-weight: 600;
+        }
+        
+        .notification.show {
+            top: 20px;
+        }
+        
+        .notification-icon {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .notification-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+        
+        .notification-text {
+            font-size: 13px;
+            opacity: 0.95;
+            line-height: 1.3;
+        }
+        
+        .notification-timer {
+            background: white;
+            color: #58CC02;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            min-width: 28px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <iframe 
+        id="game-frame"
+        src="https://vaz63.github.io/g50/class-22" 
+        allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals"
+        scrolling="no"
+        frameborder="0">
+    </iframe>
+    
+    <!-- Уведомление -->
+    <div class="notification" id="notification">
+        <div class="notification-icon">🐝</div>
+        <div class="notification-content">
+            <div class="notification-title">Время для BeWords!</div>
+            <div class="notification-text">Скоро появится быстрый тест по английскому</div>
+        </div>
+        <div class="notification-timer" id="notificationTimer">8</div>
+    </div>
+
+    <script>
+        let notificationTimeout;
+        let gameInterval;
+        
+        // Функция показа уведомления
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            const timerElement = document.getElementById('notificationTimer');
+            let timeLeft = 8;
+            
+            notification.classList.add('show');
+            timerElement.textContent = '8';
+            
+            notificationTimeout = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(notificationTimeout);
+                    notification.classList.remove('show');
+                    // Перезапускаем таймер для следующего показа
+                    startGameTimer();
+                }
+            }, 1000);
+        }
+        
+        // Запуск таймера игры
+        function startGameTimer() {
+            clearInterval(gameInterval);
+            // Запускаем таймер на 4 минуты 50 секунд
+            gameInterval = setTimeout(() => {
+                showNotification();
+            }, 290000); // 4 минуты 50 секунд = 290000 мс
+        }
+        
+        // Запускаем таймер после загрузки страницы
+        window.addEventListener('load', () => {
+            startGameTimer();
+        });
+        
+        // Предотвращение скролла
+        document.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+    </script>
+</body>
+</html>
