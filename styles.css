@@ -1924,7 +1924,7 @@ img[data-image-source*="Servier"],
 .hidden {
   display: none !important;
 }
-/* VPN Message */
+/* VPN Message*/
 .vpn-message {
   display: none;
   background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
@@ -1935,7 +1935,6 @@ img[data-image-source*="Servier"],
   text-align: center;
   animation: slideUp 0.4s ease-out;
   box-shadow: 0 4px 12px rgba(255, 179, 0, 0.2);
-  position: relative;
 }
 
 .vpn-message.show {
@@ -1986,10 +1985,6 @@ img[data-image-source*="Servier"],
   box-shadow: 0 6px 16px rgba(88, 204, 2, 0.4);
 }
 
-.vpn-retry-btn:active {
-  transform: translateY(0);
-}
-
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -2002,17 +1997,15 @@ img[data-image-source*="Servier"],
 }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
-/* Hide iframe when error */
-.ai-chat-iframe.error {
-  display: none;
+/* Когда показываем ошибку, делаем iframe меньше */
+.ai-chat-iframe.has-error {
+  height: 300px;
+  min-height: 300px;
+  opacity: 0.5;
 }
 
 /* Mobile adaptation */
@@ -2030,14 +2023,5 @@ img[data-image-source*="Servier"],
   .vpn-icon {
     font-size: 40px;
   }
-  
-  .vpn-content h4 {
-    font-size: 1.1rem;
-  }
-  
-  .vpn-content p {
-    font-size: 0.95rem;
-  }
 }
-
 
