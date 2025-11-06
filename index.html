@@ -440,30 +440,31 @@
     </section>
 
     <!-- AI Chat -->
-    <section id="ai-chat" class="content-section">
-      <div class="ai-chat-description">
-        <h3>Ваш персональный AI-помощник для изучения английского на базе Chat GPT</h3>
-        <p>Задавайте вопросы, практикуйте разговорный английский, получайте объяснения грамматики и помощь с переводом. AI-учитель доступен 24/7 и всегда готов помочь!</p>
-      </div>
+<section id="ai-chat" class="content-section">
+  <div class="ai-chat-description">
+    <h3>Ваш персональный AI-помощник для изучения английского на базе Chat GPT</h3>
+    <p>Задавайте вопросы, практикуйте разговорный английский, получайте объяснения грамматики и помощь с переводом. AI-учитель доступен 24/7 и всегда готов помочь!</p>
+  </div>
 
-      <div class="ai-chat-container">
-        <iframe
-          id="aiChatFrame"
-          src="https://www.yeschat.ai/i/gpts-2OToO9hERt-English-Teacher"
-          class="ai-chat-iframe"
-          title="AI English Teacher"
-          allow="microphone">
-        </iframe>
- <!-- VPN сообщение -->
-    <div id="vpnMessage" class="vpn-message">
-      <div class="vpn-icon">🌍</div>
-      <div class="vpn-content">
-        <h4>Упс! AI Chat временно недоступен</h4>
-        <p>Чтобы загрузить AI Chat, включите VPN</p>
-        <button class="vpn-retry-btn" onclick="retryLoadingChat()">
-          <i class="fas fa-redo"></i> Попробовать снова
-        </button>
-      </div>
+  <div class="ai-chat-container">
+    <iframe
+      id="aiChatFrame"
+      src="https://www.yeschat.ai/i/gpts-2OToO9hERt-English-Teacher"
+      class="ai-chat-iframe"
+      title="AI English Teacher"
+      allow="microphone">
+    </iframe>
+  </div>
+  
+  <!-- VPN сообщение всегда под iframe -->
+  <div id="vpnMessage" class="vpn-message">
+    <div class="vpn-icon">🌍</div>
+    <div class="vpn-content">
+      <h4>Упс! AI Chat временно недоступен</h4>
+      <p>Чтобы загрузить AI Chat, включите VPN</p>
+      <button class="vpn-retry-btn" onclick="retryLoadingChat()">
+        <i class="fas fa-redo"></i> Попробовать снова
+      </button>
     </div>
   </div>
 </section>
@@ -504,6 +505,9 @@
   }
 </script>
 <script>
+let iframeCheckInterval;
+let checkAttempts = 0;
+
 // Проверка загрузки iframe для AI Chat
 function checkIframeLoad() {
   const iframe = document.getElementById('aiChatFrame');
@@ -511,54 +515,56 @@ function checkIframeLoad() {
   
   if (!iframe || !vpnMessage) return;
   
-  let loadTimeout;
-  let hasLoaded = false;
-  
-  // Функция для скрытия сообщения об ошибке
-  function hideError() {
-    clearTimeout(loadTimeout);
-    hasLoaded = true;
-    iframe.classList.remove('error');
-    vpnMessage.classList.remove('show');
+  // Сбрасываем предыдущие проверки
+  if (iframeCheckInterval) {
+    clearInterval(iframeCheckInterval);
   }
+  checkAttempts = 0;
   
-  // Функция для показа сообщения об ошибке
-  function showError() {
-    if (!hasLoaded) {
-      iframe.classList.add('error');
-      vpnMessage.classList.add('show');
-    }
-  }
+  // Скрываем сообщение изначально
+  vpnMessage.classList.remove('show');
+  iframe.classList.remove('has-error');
   
-  // Слушаем событие успешной загрузки
-  iframe.addEventListener('load', function() {
-    // Даем дополнительное время для полной загрузки контента
-    setTimeout(() => {
-      // Проверяем, что iframe действительно имеет высоту (признак загруженного контента)
-      if (iframe.offsetHeight > 0) {
-        hideError();
-      }
-    }, 500);
-  });
-  
-  // Слушаем событие ошибки
-  iframe.addEventListener('error', function() {
-    showError();
-  });
-  
-  // Проверка через таймаут только как запасной вариант
-  loadTimeout = setTimeout(() => {
-    // Проверяем различные признаки успешной загрузки
-    const iframeVisible = iframe.offsetHeight > 0 && iframe.offsetWidth > 0;
-    const iframeInDOM = document.body.contains(iframe);
+  // Проверяем загрузку каждые 500мс
+  iframeCheckInterval = setInterval(() => {
+    checkAttempts++;
     
-    // Если iframe видим и находится в DOM, считаем что загрузился
-    if (iframeVisible && iframeInDOM) {
-      hideError();
-    } else {
-      showError();
+    // Проверяем признаки загрузки
+    const rect = iframe.getBoundingClientRect();
+    const isVisible = rect.width > 0 && rect.height > 0;
+    const hasContent = iframe.contentWindow !== null;
+    
+    // Если прошло 5 попыток (2.5 секунды) и iframe не загрузился
+    if (checkAttempts >= 5) {
+      clearInterval(iframeCheckInterval);
+      
+      // Пытаемся проверить доступность iframe
+      try {
+        // Если можем получить доступ к window, значит загрузился
+        if (iframe.contentWindow && iframe.contentWindow.location) {
+          console.log('Iframe loaded successfully');
+          vpnMessage.classList.remove('show');
+          iframe.classList.remove('has-error');
+        }
+      } catch (e) {
+        // Cross-origin блокировка - это может быть нормально для внешних iframe
+        // Проверяем по размерам
+        if (!isVisible) {
+          // Показываем сообщение об ошибке
+          console.log('Iframe failed to load - showing VPN message');
+          vpnMessage.classList.add('show');
+          iframe.classList.add('has-error');
+        }
+      }
     }
-  }, 5000); // Увеличиваем время до 5 секунд для более надежной проверки
+  }, 500);
+  
+  // Дополнительная проверка через событие error
+  iframe.onerror = function() {
+    clearInterval(iframeCheckInterval);
+    vpnMessage.classList.add('show');
+    iframe.classList.add('has-error');
+  };
 }
 
 // Функция повторной попытки загрузки
@@ -569,45 +575,56 @@ function retryLoadingChat() {
   if (iframe && vpnMessage) {
     // Скрываем сообщение
     vpnMessage.classList.remove('show');
-    iframe.classList.remove('error');
+    iframe.classList.remove('has-error');
     
     // Перезагружаем iframe
     const currentSrc = iframe.src;
-    iframe.src = '';
+    iframe.src = 'about:blank';
+    
     setTimeout(() => {
       iframe.src = currentSrc;
-      // Запускаем проверку заново с задержкой
-      setTimeout(checkIframeLoad, 1000);
+      // Запускаем проверку заново
+      setTimeout(checkIframeLoad, 100);
     }, 100);
   }
 }
 
 // Запускаем проверку при переключении на вкладку AI Chat
 document.addEventListener('DOMContentLoaded', function() {
-  let aiChatChecked = false; // Флаг, чтобы проверять только один раз
-  
-  const originalSwitchSection = window.app && window.app.switchSection;
-  
-  if (originalSwitchSection) {
-    window.app.switchSection = function(section) {
-      originalSwitchSection.call(window.app, section);
-      
-      // Проверяем только при первом переходе на AI Chat
-      if (section === 'ai-chat' && !aiChatChecked) {
-        aiChatChecked = true;
-        setTimeout(checkIframeLoad, 500);
-      }
-    };
-  }
-  
-  // Проверяем если пользователь сразу на этой вкладке
-  if (document.querySelector('#ai-chat.active')) {
-    setTimeout(checkIframeLoad, 500);
+  // Ждем загрузки приложения
+  setTimeout(() => {
+    const originalSwitchSection = window.app && window.app.switchSection;
+    
+    if (originalSwitchSection) {
+      window.app.switchSection = function(section) {
+        originalSwitchSection.call(window.app, section);
+        
+        if (section === 'ai-chat') {
+          // Запускаем проверку при каждом переходе на вкладку
+          setTimeout(checkIframeLoad, 100);
+        }
+      };
+    }
+    
+    // Проверяем если пользователь сразу на этой вкладке
+    const aiChatSection = document.querySelector('#ai-chat');
+    if (aiChatSection && aiChatSection.classList.contains('active')) {
+      checkIframeLoad();
+    }
+  }, 1000);
+});
+
+// Также запускаем проверку при загрузке страницы
+window.addEventListener('load', function() {
+  const aiChatSection = document.querySelector('#ai-chat');
+  if (aiChatSection && aiChatSection.classList.contains('active')) {
+    checkIframeLoad();
   }
 });
 </script>
 </body>
 </html>
+
 
 
 
