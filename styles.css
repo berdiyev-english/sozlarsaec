@@ -1924,7 +1924,7 @@ img[data-image-source*="Servier"],
 .hidden {
   display: none !important;
 }
-/* VPN Message Duolingo-style */
+/* VPN Message */
 .vpn-message {
   display: none;
   background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
@@ -2039,4 +2039,5 @@ img[data-image-source*="Servier"],
     font-size: 0.95rem;
   }
 }
+
 
