@@ -767,11 +767,11 @@ document.querySelectorAll('.practice-btn').forEach(btn => {
     const game2048Btn = document.getElementById('game2048StartBtn');
     if (game2048Btn) game2048Btn.addEventListener('click', () => this.showQuizGateForGame('2048', '2048.html'));
     const rocketBtn = document.getElementById('rocketStartBtn');
-    if (rocketBtn) rocketBtn.addEventListener('click', () => this.showQuizGateForGame('match 3', 'rocket-soccer.html'));
+    if (rocketBtn) rocketBtn.addEventListener('click', () => this.showQuizGateForGame('Panda', 'rocket-soccer.html'));
     const ninjaBtn = document.getElementById('ninjaStartBtn');
     if (ninjaBtn) ninjaBtn.addEventListener('click', () => this.showQuizGateForGame('ninja', 'ninja.html'));
     const catalogBtn = document.getElementById('catalogStartBtn');
-    if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('Dash', 'dash.html'));
+    if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('Geo-Dash', 'dash.html'));
 
     this.updateLevelCounts();
     
@@ -3903,6 +3903,7 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+
 
 
 
