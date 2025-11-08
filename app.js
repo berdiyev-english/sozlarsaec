@@ -892,7 +892,7 @@ showFirstRunTour() {
         {
             key: 'welcome',
             title: 'Добро пожаловать!',
-            image: 'hello.png',
+            image: 'hello.gif',
             html: `
                 <div style="text-align:left;color:var(--text-primary);line-height:1.55;font-size:15px;">
                     <div style="font-weight:800;margin-bottom:8px;">Добро пожаловать в лучшее приложение для повышения словарного запаса!</div>
@@ -3903,6 +3903,7 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+
 
 
 
