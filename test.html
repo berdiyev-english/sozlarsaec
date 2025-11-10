@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeWords - Изучение английских слов</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  
+  <!-- Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#58CC02">
+  
+  <!-- Apple Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="BeWords">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- SEO для поисковиков и соцсетей -->
+  <meta name="description" content="Инновационная платформа для изучения английских слов через игры">
+  <meta property="og:title" content="BeWords - Изучение английских слов">
+  <meta property="og:description" content="Инновационная платформа для изучения английских слов через игры">
+  <meta property="og:image" content="https://bewords.ru/og-image.png">
+  <meta property="og:url" content="https://bewords.ru">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://bewords.ru">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+  .app-install-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #58CC02 0%, #89E219 100%);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    z-index: 10000;
+    padding: 10px 15px;
+    animation: slideDown 0.3s ease-out;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: none;
+  }
+
+  .app-install-banner.show {
+    display: block;
+  }
+
+  @keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+  }
+
+  .banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .banner-close {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 24px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+
+  .banner-close:hover {
+    opacity: 1;
+  }
+
+  .banner-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+  }
+
+  .banner-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  .banner-text {
+    color: white;
+  }
+
+  .banner-text h4 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .banner-text p {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.95;
+  }
+
+  .banner-install-btn {
+    background: white;
+    color: #58CC02;
+    padding: 7px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+    margin-right: 35px;
+  }
+
+  .banner-install-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  /* Сдвигаем контент вниз когда баннер показан */
+  body.banner-shown {
+    padding-top: 65px;
+  }
+
+  body.banner-shown .app-header {
+    top: 65px;
+  }
+
+  /* Адаптив для мобильных */
+  @media (max-width: 480px) {
+    .app-install-banner {
+      padding: 8px 10px;
+    }
+    
+    .banner-icon {
+      width: 38px;
+      height: 38px;
+    }
+    
+    .banner-text h4 {
+      font-size: 13px;
+    }
+    
+    .banner-text p {
+      font-size: 11px;
+    }
+    
+    .banner-install-btn {
+      padding: 6px 14px;
+      font-size: 12px;
+    }
+
+    body.banner-shown {
+      padding-top: 58px;
+    }
+
+    body.banner-shown .app-header {
+      top: 58px;
+    }
+  }
+
+  /* Скрываем на десктопе */
+  @media (min-width: 1024px) {
+    .app-install-banner {
+      display: none !important;
+    }
+  }
+    /* AI Chat Iframe Styles */
+    .ai-chat-container {
+      width: 100%;
+      height: calc(100vh - 200px);
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .ai-chat-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      background: var(--bg-secondary);
+    }
+    .ai-chat-description {
+      background: var(--bg-secondary);
+      padding: 1rem;
+      border-radius: 12px;
+      border-left: 4px solid var(--accent-primary);
+      margin-bottom: 1rem;
+    }
+    .ai-chat-description h3 {
+      margin: 0 0 0.5rem 0;
+      color: var(--text-primary);
+      font-size: 1.1rem;
+    }
+    .ai-chat-description p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Header */
+    .info-btn, .theme-toggle { display: none !important; }
+    .settings-btn {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s ease; color: var(--text-primary);
+    }
+    .settings-btn:hover { background: var(--accent-primary); color: #fff; transform: translateY(-2px); }
+
+    /* Keep bulk header visible */
+    .words-header {
+      position: sticky;
+      top: 64px; /* смещение под фиксированную шапку, подстройте под ваш header */
+      z-index: 5;
+      background: var(--bg-primary);
+    }
+
+    /* Buttons text in word cards */
+    .action-text-btn {
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+    .action-text-btn.add { border-color: #10b981; color: #10b981; background: #ecfdf5; }
+    .action-text-btn.remove { border-color: #ef4444; color: #ef4444; background: #fee2e2; }
+    .action-text-btn:hover { filter: brightness(0.98); }
+
+    /* Mobile adaptations */
+    @media (max-width: 768px) {
+      .ai-chat-container { height: calc(100vh - 180px); min-height: 400px; }
+      .ai-chat-description { padding: 0.75rem; }
+      .ai-chat-description h3 { font-size: 1rem; }
+      .ai-chat-description p { font-size: 0.9rem; }
+    }
+    @media (max-width: 480px) {
+      .ai-chat-container { height: calc(100vh - 160px); min-height: 350px; }
+    }
+  </style>
+  <!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=105128338', 'ym');
+
+    ym(105128338, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/105128338" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</head>
+<body>
+  <!-- App Install Banner -->
+<div id="appInstallBanner" class="app-install-banner">
+  <div class="banner-content">
+    <div class="banner-info">
+      <img src="/logo1.png" alt="BeWords" class="banner-icon">
+      <div class="banner-text">
+        <h4>BeWords - Учи английский</h4>
+        <p>Установите приложение для лучшего опыта!</p>
+      </div>
+    </div>
+    <a href="#" class="banner-install-btn" id="bannerInstallBtn">
+      Установить
+    </a>
+    <button class="banner-close" onclick="closeInstallBanner()" aria-label="Закрыть">×</button>
+  </div>
+</div>
+  
+<div class="app-container">
+  <header class="app-header">
+    <div class="header-content">
+      <div class="logo-title">
+        <a href="/" class="logo-link" onclick="location.reload(); return false;">
+          <img src="/logo1.png" alt="BeWords" class="app-logo">
+        </a>
+        <h1 class="app-title">BeWords.ru</h1>
+      </div>
+      <div class="header-actions">
+        <button class="support-btn" id="supportBtn" data-testid="support-btn" title="Поддержать проект">
+          <i class="fas fa-heart"></i>
+        </button>
+        <button class="settings-btn" id="settingsBtn" data-testid="settings-btn" title="Настройки">
+          <i class="fas fa-cog"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Levels + Categories -->
+    <section id="levels" class="content-section active">
+      <div class="section-header">
+        <h2>Слова по уровням</h2>
+      </div>
+
+      <div class="levels-grid" id="levelsGrid">
+        <div class="level-card" data-level="A1" data-testid="level-card-A1" onclick="window.app && app.showLevelWords('A1')">
+          <div class="level-badge beginner">A1</div>
+          <h3>Beginner</h3>
+          <p>Базовые слова для начинающих</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-level="A2" data-testid="level-card-A2" onclick="window.app && app.showLevelWords('A2')">
+          <div class="level-badge elementary">A2</div>
+          <h3>Elementary</h3>
+          <p>Элементарный уровень</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-level="B1" data-testid="level-card-B1" onclick="window.app && app.showLevelWords('B1')">
+          <div class="level-badge intermediate">B1</div>
+          <h3>Intermediate</h3>
+          <p>Средний уровень</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-level="B2" data-testid="level-card-B2" onclick="window.app && app.showLevelWords('B2')">
+          <div class="level-badge upper-intermediate">B2</div>
+          <h3>Upper-Intermediate</h3>
+          <p>Выше среднего</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-level="C1" data-testid="level-card-C1" onclick="window.app && app.showLevelWords('C1')">
+          <div class="level-badge advanced">C1</div>
+          <h3>Advanced</h3>
+          <p>Продвинутый уровень</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-level="C2" data-testid="level-card-C2" onclick="window.app && app.showLevelWords('C2')">
+          <div class="level-badge proficiency">C2</div>
+          <h3>Proficiency</h3>
+          <p>Профессиональный уровень</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="section-header" style="margin-top:1rem;">
+        <h2>Категории</h2>
+      </div>
+      <div class="levels-grid" id="categoriesGrid">
+        <div class="level-card" data-category="IRREGULARS" data-testid="category-card-irregulars" onclick="window.app && app.showCategoryWords('IRREGULARS')">
+          <div class="level-badge advanced">Irregular Verbs</div>
+          <h3>Неправильные глаголы</h3>
+          <p>Формы глаголов</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-category="PREPOSITIONS" data-testid="category-card-prepositions">
+          <div class="level-badge elementary">Prepositions</div>
+          <h3>Предлоги</h3>
+          <p>Частые предлоги</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-category="PHRASAL_VERBS" data-testid="category-card-phrasal">
+          <div class="level-badge beginner">Phrasal Verbs</div>
+          <h3>Фразовые глаголы</h3>
+          <p>Частые фразовые глаголы</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-category="IDIOMS" data-testid="category-card-idioms">
+          <div class="level-badge proficiency">Idioms</div>
+          <h3>Идиомы</h3>
+          <p>Разговорные выражения</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+         <div class="level-card" data-category="MEDICAL" data-testid="category-card-medical">
+          <div class="level-badge elementary">Medical</div>
+          <h3>Медицинский английский</h3>
+          <p>База для всех</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+      </div>
+
+      <!-- Words List (levels or categories) -->
+      <div id="wordsContainer" class="words-container hidden">
+        <div class="words-header">
+          <button class="back-btn" id="backToLevels" data-testid="back-to-levels" onclick="window.app && app.backToLevels()">
+            <i class="fas fa-arrow-left"></i>
+            Назад
+          </button>
+          <h3 id="currentLevelTitle">Слова</h3>
+          <div class="level-bulk-actions">
+            <button id="bulkToggleBtn" class="action-text-btn add" data-testid="bulk-toggle-btn" title="Добавить все">
+              Добавить все
+            </button>
+          </div>
+        </div>
+        <div id="wordsList" class="words-list"></div>
+      </div>
+    </section>
+
+    <!-- Learning -->
+    <section id="learning" class="content-section">
+      <div class="section-header">
+        <h2>Изучаю</h2>
+        <div class="section-stats"><span id="learningCount">0 слов</span></div>
+      </div>
+
+      <p class="mode-help">
+        Всего доступно 2 режима обучения :<br><br>
+        1) Учить - умный алгоритм будет добавлять вам слова для заучивания по немножку <br>
+        2) Повторение - повторяйте весь список слов за раз <br><br>
+        * Флешкарточки — показывается слово и перевод; ответ скрыт до нажатия.<br>
+        * Quiz — одно слово и 4 варианта; правильное слово произносится после ответа.<br>
+      </p>
+
+      <div class="toggles-row">
+        <div class="mode-toggle" role="tablist" aria-label="study mode">
+          <button class="mode-btn active" data-mode="quiz" id="modeQuiz" data-testid="mode-quiz">Quiz</button>
+          <button class="mode-btn" data-mode="flashcards" id="modeFlashcards" data-testid="mode-flashcards">Флешкарточки</button>
+          <button class="mode-btn" data-mode="list" id="modeList" data-testid="mode-list">Список слов</button>
+        </div>
+        <div class="practice-toggle" role="tablist" aria-label="practice mode">
+          <button class="practice-btn active" data-practice="scheduled" id="practiceScheduled" data-testid="practice-scheduled">Учить</button>
+          <button class="practice-btn" data-practice="endless" id="practiceEndless" data-testid="practice-endless">Повторение</button>
+        </div>
+      </div>
+
+      <div id="learningWordsList" class="words-list">
+        <div class="empty-state">
+          <i class="fas fa-book-open"></i>
+          <h3>Пока нет слов для изучения</h3>
+          <p>Добавьте слова из списка по уровням или создайте новые</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- New Words -->
+    <section id="new-words" class="content-section">
+      <div class="section-header">
+        <h2>Загрузите новые слова</h2>
+      </div>
+
+     <p class="mode-help">
+        Загружайте свои собственные слова и фразы<br><br>
+        Все слова автоматически получают озвучку и фото и попадают в ваш словарь после загрузки <br><br>
+        После загрузки перейдите в пункт "Изучаю" и ваши слова уже будут ждать вас<br>
+      </p>
+      
+      <!-- Single add -->
+      <div class="add-word-form">
+        <div class="form-group">
+          <label for="newWord">Английское слово</label>
+          <input type="text" id="newWord" placeholder="Введите слово на английском" data-testid="new-word-input">
+        </div>
+        <div class="form-group">
+          <label for="newTranslation">Перевод</label>
+          <input type="text" id="newTranslation" placeholder="Введите перевод" data-testid="new-translation-input">
+        </div>
+        <div class="form-group">
+          <label for="newLevel">Уровень</label>
+          <select id="newLevel" data-testid="new-level-select">
+            <option value="A1">A1 - Beginner</option>
+            <option value="A2">A2 - Elementary</option>
+            <option value="B1">B1 - Intermediate</option>
+            <option value="B2">B2 - Upper-Intermediate</option>
+            <option value="C1">C1 - Advanced</option>
+            <option value="C2">C2 - Proficiency</option>
+            <option value="IRREGULARS">Irregular Verbs</option>
+            <option value="PREPOSITIONS">Prepositions</option>
+          </select>
+        </div>
+        <button class="add-word-btn" id="addWordBtn" data-testid="add-word-btn">
+          <i class="fas fa-plus"></i>
+          Добавить слово
+        </button>
+      </div>
+
+      <!-- Bulk add -->
+      <div class="add-word-form" id="bulkAddForm">
+        <h3 style="margin-bottom:8px;">Массовое добавление</h3>
+        <p class="mode-help" id="bulkHelp" data-testid="bulk-help">
+          Приложение поддерживает массовое добавление слов и фраз<br><br>
+          Каждое английское слово / фразу вводите с новой строки<br><br>
+          Перевод указывается через "-" <br><br>
+        </p>
+        <div class="form-group">
+          <label for="bulkLevel">Уровень для всех слов</label>
+          <select id="bulkLevel" data-testid="bulk-level-select">
+            <option value="A1">A1 - Beginner</option>
+            <option value="A2">A2 - Elementary</option>
+            <option value="B1">B1 - Intermediate</option>
+            <option value="B2">B2 - Upper-Intermediate</option>
+            <option value="C1">C1 - Advanced</option>
+            <option value="C2">C2 - Proficiency</option>
+            <option value="IRREGULARS">Irregular Verbs</option>
+            <option value="PREPOSITIONS">Prepositions</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="bulkTextarea">Вставьте строки</label>
+          <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;go - идти, ехать, ходить&#10;table - стол&#10;run - бежать, запускать" data-testid="bulk-textarea" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);border-radius:var(--radius-md);background:var(--bg-primary);color:var(--text-primary);"></textarea>
+        </div>
+        <button class="add-word-btn" id="bulkAddBtn" data-testid="bulk-add-btn">
+          <i class="fas fa-file-import"></i>
+          Добавить список
+        </button>
+      </div>
+
+      <div id="customWordsList" class="words-list">
+        <h3>Добавленные слова</h3>
+        <div id="customWords">
+          <div class="empty-state">
+            <i class="fas fa-plus-circle"></i>
+            <h3>Нет добавленных слов</h3>
+            <p>Используйте формы выше для добавления новых слов</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Progress -->
+    <section id="progress" class="content-section">
+      <div class="section-header">
+        <h2>Прогресс</h2>
+      </div>
+      <div id="progressContent" class="progress-content"></div>
+    </section>
+
+    <!-- Games -->
+    <section id="games" class="content-section">
+      <div class="section-header">
+        <h2>Игры</h2>
+      </div>
+
+      <p class="mode-help">
+        Играйте в игры и изучайте слова в Английском.<br><br>
+        Чтобы запустить игру нужно правильно решить quiz.<br><br>
+        Каждые 5 минут игры вам нужно будет правильно ответить на quiz из 4 слов , чтобы продолжить играть<br><br>
+        Таким образом за час вы повторите 48 слов просто играя в игры<br><br>
+        Новая эра обучения началась с "Bewords"<br>
+      </p>
+
+      <div class="games-grid">
+        <div class="game-card">
+          <img src="race.jpg" alt="Subway Surfers" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>Subway Surfers</h3>
+            <p>Убегай от злого охранника. </p>
+            <button class="btn btn-primary" id="surfStartBtn" data-testid="surf-start-btn">Старт</button>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <img src="bird.jpg" alt="Doodle Jump" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>Flying Bird</h3>
+            <p>Полетай за знаменитую птицу.</p>
+            <button class="btn btn-primary" id="doodleStartBtn" data-testid="doodle-start-btn">Старт</button>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <img src="2048.jpg" alt="2048" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>2048</h3>
+            <p>Классическая головоломка. Собери плитку 2048!</p>
+            <button class="btn btn-primary" id="game2048StartBtn" data-testid="2048-start-btn">Старт</button>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <img src="match3.jpg" alt="Rocket Soccer Derby" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>Daddy Panda</h3>
+            <p>Помоги папе панде спасти своих детей</p>
+            <button class="btn btn-primary" id="rocketStartBtn" data-testid="rocket-start-btn">Старт</button>
+          </div>
+        </div>
+
+          <div class="game-card">
+          <img src="ninja.jpg" alt="ninja" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>Fruit Ninja</h3>
+            <p>Режь фрукты и избегай бомб — это все, что нужно знать, чтобы начать играть в захватывающую игру Fruit Ninja!</p>
+            <button class="btn btn-primary" id="ninjaStartBtn" data-testid="ninja-start-btn">Старт</button>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <img src="dash.jpg" alt="Каталог игр" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>Geometry-dash</h3>
+            <p>Знаменитая игра с прыгающем кубиком.</p>
+            <button class="btn btn-primary" id="catalogStartBtn" data-testid="catalog-start-btn">Старт</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Chat -->
+<section id="ai-chat" class="content-section">
+  <div class="ai-chat-description">
+    <h3>Ваш персональный AI-помощник для изучения английского на базе Chat GPT</h3>
+    <p>Задавайте вопросы, практикуйте разговорный английский, получайте объяснения грамматики и помощь с переводом. AI-учитель доступен 24/7 и всегда готов помочь!</p> <br>
+    <h3>Если не отображается чат включите VPN 🌐</h3>
+  </div>
+
+  <div class="ai-chat-container">
+    <iframe
+      id="aiChatFrame"
+      src="https://www.yeschat.ai/i/gpts-2OToO9hERt-English-Teacher"
+      class="ai-chat-iframe"
+      title="AI English Teacher"
+      allow="microphone">
+    </iframe>
+  </div>
+  
+  <!-- VPN сообщение всегда под iframe -->
+  <div id="vpnMessage" class="vpn-message">
+    <div class="vpn-icon">🌍</div>
+    <div class="vpn-content">
+      <h4>Упс! AI Chat временно недоступен</h4>
+      <p>Чтобы загрузить AI Chat, включите VPN</p>
+      <button class="vpn-retry-btn" onclick="retryLoadingChat()">
+        <i class="fas fa-redo"></i> Попробовать снова
+      </button>
+    </div>
+  </div>
+</section>
+  </main>
+
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="nav-item active" type="button" data-section="levels" data-testid="nav-levels" onclick="window.app && app.switchSection('levels')">
+      <i class="fas fa-layer-group"></i><span>Списки</span>
+    </button>
+    <button class="nav-item" type="button" data-section="learning" data-testid="nav-learning" onclick="window.app && app.switchSection('learning')">
+      <i class="fas fa-book-reader"></i><span>Изучаю</span>
+    </button>
+    <button class="nav-item" type="button" data-section="new-words" data-testid="nav-new-words" onclick="window.app && app.switchSection('new-words')">
+      <i class="fas fa-plus"></i><span>Загрузить</span>
+    </button>
+    <button class="nav-item" type="button" data-section="progress" data-testid="nav-progress" onclick="window.app && app.switchSection('progress')">
+      <i class="fas fa-chart-line"></i><span>Прогресс</span>
+    </button>
+    <button class="nav-item" type="button" data-section="games" data-testid="nav-games" onclick="window.app && app.switchSection('games')">
+      <i class="fas fa-gamepad"></i><span>Игры</span>
+    </button>
+    <button class="nav-item" type="button" data-section="ai-chat" data-testid="nav-ai-chat" onclick="window.app && app.switchSection('ai-chat')">
+      <i class="fas fa-robot"></i><span>ИИ</span>
+    </button>
+  </nav>
+</div>
+
+<audio id="audioPlayer" preload="none"></audio>
+
+<script src="oxford_words_data.js"></script>
+<script src="app.js"></script>
+<script>
+  // Service Worker registration (image caching)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+    });
+  }
+</script>
+<script>
+let iframeCheckInterval;
+let checkAttempts = 0;
+
+// Проверка загрузки iframe для AI Chat
+function checkIframeLoad() {
+  const iframe = document.getElementById('aiChatFrame');
+  const vpnMessage = document.getElementById('vpnMessage');
+  
+  if (!iframe || !vpnMessage) return;
+  
+  // Сбрасываем предыдущие проверки
+  if (iframeCheckInterval) {
+    clearInterval(iframeCheckInterval);
+  }
+  checkAttempts = 0;
+  
+  // Скрываем сообщение изначально
+  vpnMessage.classList.remove('show');
+  iframe.classList.remove('has-error');
+  
+  // Проверяем загрузку каждые 500мс
+  iframeCheckInterval = setInterval(() => {
+    checkAttempts++;
+    
+    // Проверяем признаки загрузки
+    const rect = iframe.getBoundingClientRect();
+    const isVisible = rect.width > 0 && rect.height > 0;
+    const hasContent = iframe.contentWindow !== null;
+    
+    // Если прошло 5 попыток (2.5 секунды) и iframe не загрузился
+    if (checkAttempts >= 5) {
+      clearInterval(iframeCheckInterval);
+      
+      // Пытаемся проверить доступность iframe
+      try {
+        // Если можем получить доступ к window, значит загрузился
+        if (iframe.contentWindow && iframe.contentWindow.location) {
+          console.log('Iframe loaded successfully');
+          vpnMessage.classList.remove('show');
+          iframe.classList.remove('has-error');
+        }
+      } catch (e) {
+        // Cross-origin блокировка - это может быть нормально для внешних iframe
+        // Проверяем по размерам
+        if (!isVisible) {
+          // Показываем сообщение об ошибке
+          console.log('Iframe failed to load - showing VPN message');
+          vpnMessage.classList.add('show');
+          iframe.classList.add('has-error');
+        }
+      }
+    }
+  }, 500);
+  
+  // Дополнительная проверка через событие error
+  iframe.onerror = function() {
+    clearInterval(iframeCheckInterval);
+    vpnMessage.classList.add('show');
+    iframe.classList.add('has-error');
+  };
+}
+
+// Функция повторной попытки загрузки
+function retryLoadingChat() {
+  const iframe = document.getElementById('aiChatFrame');
+  const vpnMessage = document.getElementById('vpnMessage');
+  
+  if (iframe && vpnMessage) {
+    // Скрываем сообщение
+    vpnMessage.classList.remove('show');
+    iframe.classList.remove('has-error');
+    
+    // Перезагружаем iframe
+    const currentSrc = iframe.src;
+    iframe.src = 'about:blank';
+    
+    setTimeout(() => {
+      iframe.src = currentSrc;
+      // Запускаем проверку заново
+      setTimeout(checkIframeLoad, 100);
+    }, 100);
+  }
+}
+
+// Запускаем проверку при переключении на вкладку AI Chat
+document.addEventListener('DOMContentLoaded', function() {
+  // Ждем загрузки приложения
+  setTimeout(() => {
+    const originalSwitchSection = window.app && window.app.switchSection;
+    
+    if (originalSwitchSection) {
+      window.app.switchSection = function(section) {
+        originalSwitchSection.call(window.app, section);
+        
+        if (section === 'ai-chat') {
+          // Запускаем проверку при каждом переходе на вкладку
+          setTimeout(checkIframeLoad, 100);
+        }
+      };
+    }
+    
+    // Проверяем если пользователь сразу на этой вкладке
+    const aiChatSection = document.querySelector('#ai-chat');
+    if (aiChatSection && aiChatSection.classList.contains('active')) {
+      checkIframeLoad();
+    }
+  }, 1000);
+});
+
+// Также запускаем проверку при загрузке страницы
+window.addEventListener('load', function() {
+  const aiChatSection = document.querySelector('#ai-chat');
+  if (aiChatSection && aiChatSection.classList.contains('active')) {
+    checkIframeLoad();
+  }
+});
+</script>
+<script>
+// Управление баннером установки приложения
+(function() {
+  const banner = document.getElementById('appInstallBanner');
+  const installBtn = document.getElementById('bannerInstallBtn');
+  
+  // Проверяем, не был ли баннер закрыт
+  const bannerClosed = localStorage.getItem('bewordsBannerClosed');
+  const lastClosedDate = localStorage.getItem('bewordsBannerClosedDate');
+  
+  // Показываем снова через 7 дней после закрытия
+  const daysSinceClose = lastClosedDate ? 
+    (Date.now() - parseInt(lastClosedDate)) / (1000 * 60 * 60 * 24) : Infinity;
+  
+  if (bannerClosed && daysSinceClose < 7) {
+    return;
+  }
+  
+  // Определяем устройство и ОС
+  const userAgent = navigator.userAgent.toLowerCase();
+  const isIOS = /iphone|ipad|ipod/.test(userAgent);
+  const isAndroid = /android/.test(userAgent);
+  const isMobile = /mobile/.test(userAgent);
+  const isTablet = /tablet|ipad|playbook|silk/.test(userAgent);
+  
+  // Проверяем, запущено ли как PWA
+  const isStandalone = window.navigator.standalone || 
+                       window.matchMedia('(display-mode: standalone)').matches ||
+                       window.matchMedia('(display-mode: fullscreen)').matches;
+  
+  // Для Android проверяем referrer (если пришли из вашего APK)
+  const isFromApp = document.referrer.includes('android-app://');
+  
+  // Показываем баннер только на мобильных/планшетах и не в приложении
+  if ((isMobile || isTablet) && !isStandalone && !isFromApp) {
+    
+    // Настраиваем кнопку в зависимости от ОС
+    if (isIOS) {
+      // Для iOS - переход на страницу с инструкцией PWA
+      installBtn.textContent = 'Установить';
+      installBtn.href = '/iphone.html';
+      installBtn.onclick = function(e) {
+        // Отслеживание события
+        if (typeof ym !== 'undefined') {
+          ym(105128338, 'reachGoal', 'install_instructions_ios');
+        }
+        // Закрываем баннер после клика
+        setTimeout(() => {
+          closeInstallBanner();
+        }, 500);
+      };
+    } else if (isAndroid) {
+      // Для Android - переход на страницу скачивания APK
+      installBtn.textContent = 'Скачать';
+      installBtn.href = '/android.html';
+      installBtn.onclick = function(e) {
+        // Отслеживание события
+        if (typeof ym !== 'undefined') {
+          ym(105128338, 'reachGoal', 'download_app_android');
+        }
+        // Закрываем баннер после клика
+        setTimeout(() => {
+          closeInstallBanner();
+        }, 500);
+      };
+    } else {
+      // Для других устройств (например, десктоп браузеры на мобильных)
+      // Проверяем поддержку PWA
+      installBtn.textContent = 'Установить';
+      installBtn.href = '#';
+    }
+    
+    // Показываем баннер с задержкой
+    setTimeout(() => {
+      banner.classList.add('show');
+      document.body.classList.add('banner-shown');
+    }, 2000);
+  }
+  
+  // PWA установка для поддерживающих браузеров (не iOS)
+  let deferredPrompt;
+  
+  if (!isIOS) {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Если браузер поддерживает PWA установку, используем её вместо APK
+      if (banner.classList.contains('show')) {
+        installBtn.textContent = 'Установить PWA';
+        installBtn.href = '#';
+        installBtn.onclick = async function(e) {
+          e.preventDefault();
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User ${outcome} the install prompt`);
+            
+            if (outcome === 'accepted') {
+              closeInstallBanner();
+              // Отслеживание события
+              if (typeof ym !== 'undefined') {
+                ym(105128338, 'reachGoal', 'pwa_installed');
+              }
+            }
+            deferredPrompt = null;
+          }
+        };
+      }
+    });
+  }
+})();
+
+// Функция закрытия баннера
+function closeInstallBanner() {
+  const banner = document.getElementById('appInstallBanner');
+  
+  // Анимация закрытия
+  banner.style.animation = 'slideUp 0.3s ease-out';
+  
+  setTimeout(() => {
+    banner.classList.remove('show');
+    document.body.classList.remove('banner-shown');
+  }, 300);
+  
+  // Сохраняем информацию о закрытии
+  localStorage.setItem('bewordsBannerClosed', 'true');
+  localStorage.setItem('bewordsBannerClosedDate', Date.now().toString());
+  
+  // Отслеживание события
+  if (typeof ym !== 'undefined') {
+    ym(105128338, 'reachGoal', 'banner_closed');
+  }
+}
+
+// CSS анимация закрытия
+const bannerStyle = document.createElement('style');
+bannerStyle.textContent = `
+  @keyframes slideUp {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100%); }
+  }
+`;
+document.head.appendChild(bannerStyle);
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
