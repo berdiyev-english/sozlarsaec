@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -38,6 +39,160 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+  .app-install-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #58CC02 0%, #89E219 100%);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    z-index: 10000;
+    padding: 10px 15px;
+    animation: slideDown 0.3s ease-out;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: none;
+  }
+
+  .app-install-banner.show {
+    display: block;
+  }
+
+  @keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+  }
+
+  .banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .banner-close {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 24px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+
+  .banner-close:hover {
+    opacity: 1;
+  }
+
+  .banner-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+  }
+
+  .banner-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  .banner-text {
+    color: white;
+  }
+
+  .banner-text h4 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .banner-text p {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.95;
+  }
+
+  .banner-install-btn {
+    background: white;
+    color: #58CC02;
+    padding: 7px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+    margin-right: 35px;
+  }
+
+  .banner-install-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  /* Сдвигаем контент вниз когда баннер показан */
+  body.banner-shown {
+    padding-top: 50px;
+  }
+
+  body.banner-shown .app-header {
+    top: 50px;
+  }
+
+  /* Адаптив для мобильных */
+  @media (max-width: 480px) {
+    .app-install-banner {
+      padding: 8px 10px;
+    }
+    
+    .banner-icon {
+      width: 38px;
+      height: 38px;
+    }
+    
+    .banner-text h4 {
+      font-size: 13px;
+    }
+    
+    .banner-text p {
+      font-size: 11px;
+    }
+    
+    .banner-install-btn {
+      padding: 6px 14px;
+      font-size: 12px;
+    }
+
+    body.banner-shown {
+      padding-top: 20px;
+    }
+
+    body.banner-shown .app-header {
+      top: 20px;
+    }
+  }
+
+  /* Скрываем на десктопе */
+  @media (min-width: 1024px) {
+    .app-install-banner {
+      display: none !important;
+    }
+  }
     /* AI Chat Iframe Styles */
     .ai-chat-container {
       width: 100%;
@@ -134,6 +289,23 @@
 <!-- /Yandex.Metrika counter -->
 </head>
 <body>
+  <!-- App Install Banner -->
+<div id="appInstallBanner" class="app-install-banner">
+  <div class="banner-content">
+    <div class="banner-info">
+      <img src="/logo1.png" alt="BeWords" class="banner-icon">
+      <div class="banner-text">
+        <h4>BeWords - Учи английский</h4>
+        <p>Установите приложение для лучшего опыта!</p>
+      </div>
+    </div>
+    <a href="#" class="banner-install-btn" id="bannerInstallBtn">
+      Установить
+    </a>
+    <button class="banner-close" onclick="closeInstallBanner()" aria-label="Закрыть">×</button>
+  </div>
+</div>
+  
 <div class="app-container">
   <header class="app-header">
     <div class="header-content">
@@ -638,20 +810,132 @@ window.addEventListener('load', function() {
   }
 });
 </script>
+<script>
+// Управление баннером установки приложения
+(function() {
+  const banner = document.getElementById('appInstallBanner');
+  const installBtn = document.getElementById('bannerInstallBtn');
+  
+  // УБИРАЕМ проверку localStorage - баннер будет показываться каждый раз
+  
+  // Определяем устройство и ОС
+  const userAgent = navigator.userAgent.toLowerCase();
+  const isIOS = /iphone|ipad|ipod/.test(userAgent);
+  const isAndroid = /android/.test(userAgent);
+  const isMobile = /mobile/.test(userAgent);
+  const isTablet = /tablet|ipad|playbook|silk/.test(userAgent);
+  
+  // Проверяем, запущено ли как PWA
+  const isStandalone = window.navigator.standalone || 
+                       window.matchMedia('(display-mode: standalone)').matches ||
+                       window.matchMedia('(display-mode: fullscreen)').matches;
+  
+  // Для Android проверяем referrer (если пришли из вашего APK)
+  const isFromApp = document.referrer.includes('android-app://');
+  
+  // Показываем баннер только на мобильных/планшетах и не в приложении
+  if ((isMobile || isTablet) && !isStandalone && !isFromApp) {
+    
+    // Настраиваем кнопку в зависимости от ОС
+    if (isIOS) {
+      // Для iOS - переход на страницу с инструкцией PWA
+      installBtn.textContent = 'Установить';
+      installBtn.href = '/iphone.html';
+      installBtn.onclick = function(e) {
+        // Отслеживание события
+        if (typeof ym !== 'undefined') {
+          ym(105128338, 'reachGoal', 'install_instructions_ios');
+        }
+        // НЕ закрываем баннер после клика автоматически
+      };
+    } else if (isAndroid) {
+      // Для Android - переход на страницу скачивания APK
+      installBtn.textContent = 'Скачать';
+      installBtn.href = '/android.html';
+      installBtn.onclick = function(e) {
+        // Отслеживание события
+        if (typeof ym !== 'undefined') {
+          ym(105128338, 'reachGoal', 'download_app_android');
+        }
+        // НЕ закрываем баннер после клика автоматически
+      };
+    } else {
+      // Для других устройств
+      installBtn.textContent = 'Установить';
+      installBtn.href = '#';
+    }
+    
+    // Показываем баннер с задержкой
+    setTimeout(() => {
+      banner.classList.add('show');
+      document.body.classList.add('banner-shown');
+    }, 1000); // Уменьшил задержку с 2000 до 1000мс
+  }
+  
+  // PWA установка для поддерживающих браузеров (не iOS)
+  let deferredPrompt;
+  
+  if (!isIOS) {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Если браузер поддерживает PWA установку, используем её вместо APK
+      if (banner.classList.contains('show')) {
+        installBtn.textContent = 'Установить PWA';
+        installBtn.href = '#';
+        installBtn.onclick = async function(e) {
+          e.preventDefault();
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User ${outcome} the install prompt`);
+            
+            if (outcome === 'accepted') {
+              closeInstallBanner();
+              // Отслеживание события
+              if (typeof ym !== 'undefined') {
+                ym(105128338, 'reachGoal', 'pwa_installed');
+              }
+            }
+            deferredPrompt = null;
+          }
+        };
+      }
+    });
+  }
+})();
+
+// Функция закрытия баннера (только при нажатии на крестик)
+function closeInstallBanner() {
+  const banner = document.getElementById('appInstallBanner');
+  
+  // Анимация закрытия
+  banner.style.animation = 'slideUp 0.3s ease-out';
+  
+  setTimeout(() => {
+    banner.classList.remove('show');
+    document.body.classList.remove('banner-shown');
+  }, 300);
+  
+  // НЕ сохраняем информацию о закрытии в localStorage
+  
+  // Отслеживание события
+  if (typeof ym !== 'undefined') {
+    ym(105128338, 'reachGoal', 'banner_closed');
+  }
+}
+
+// CSS анимация закрытия
+const bannerStyle = document.createElement('style');
+bannerStyle.textContent = `
+  @keyframes slideUp {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100%); }
+  }
+`;
+document.head.appendChild(bannerStyle);
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
