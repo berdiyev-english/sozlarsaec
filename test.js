@@ -858,40 +858,35 @@ initializeUI() {
 
 ensureAutoDictButton() {
   try {
-    // Если кнопка уже есть — не дублируем
-    let btn = document.getElementById('autoDictStartBtn');
-    if (btn) return;
-
-    // 1) Пытаемся вставить в шапку списка слов (если уже открыт уровень/категория)
+    // Пытаемся вставить ТОЛЬКО в шапку списка слов
     const wordsHeaderHost =
       document.querySelector('#levels .words-header .level-bulk-actions') ||
       document.querySelector('#levels .words-header');
 
-    // 2) Иначе — в шапку секции "Уровни"
-    const sectionHeaderHost =
-      document.querySelector('#levels .section-header') ||
-      document.querySelector('#levels');
+    // Если список не открыт — очищаем кнопку, если вдруг осталась
+    const existWrap = document.querySelector('#levels .auto-dict-inline');
+    if (!wordsHeaderHost) {
+      if (existWrap) existWrap.remove();
+      return;
+    }
 
-    const host = wordsHeaderHost || sectionHeaderHost;
-    if (!host) return;
+    if (document.getElementById('autoDictStartBtn')) return;
 
-    // Обертка для отступов (чтобы кнопка выглядела аккуратно в хедере)
     const wrap = document.createElement('div');
     wrap.className = 'auto-dict-inline';
 
-    btn = document.createElement('button');
+    const btn = document.createElement('button');
     btn.id = 'autoDictStartBtn';
-    btn.className = 'btn auto-dict-btn'; // новая стилизованная кнопка
+    btn.className = 'btn auto-dict-btn';
     btn.innerHTML = '<i class="fas fa-magic"></i> Подобрать словарь под тебя';
     btn.addEventListener('click', () => this.showAutoDictionaryTest());
 
     wrap.appendChild(btn);
 
-    // Если нашли .level-bulk-actions — вставляем рядом с другими кнопками, иначе — в общий header
-    if (wordsHeaderHost) {
+    if (wordsHeaderHost.classList.contains('level-bulk-actions')) {
       wordsHeaderHost.insertAdjacentElement('afterbegin', wrap);
     } else {
-      host.appendChild(wrap);
+      wordsHeaderHost.appendChild(wrap);
     }
   } catch (e) {
     console.warn('ensureAutoDictButton error:', e);
@@ -1590,128 +1585,88 @@ switchSection(section) {
   }
 
 showLevelWords(level) {
-    this.stopCurrentAudio();
-    this.currentLevel = level;
-    this.currentCategory = null;
+  this.stopCurrentAudio();
+  this.currentLevel = level;
+  this.currentCategory = null;
 
-    const words = oxfordWordsDatabase[level] || [];
-    const container = document.getElementById('wordsContainer');
-    const title = document.getElementById('currentLevelTitle');
-    const wordsList = document.getElementById('wordsList');
+  const words = oxfordWordsDatabase[level] || [];
 
-    if (container) container.classList.remove('hidden');
-    if (title) title.textContent = `${level} - ${words.length} слов`;
+  // Скрываем сетку уровней и показываем контейнер со словами
+  const levelsGrid = document.querySelector('#levels .levels-grid');
+  if (levelsGrid) levelsGrid.style.display = 'none';
 
-    if (wordsList) {
-        wordsList.innerHTML = words.map(word => this.createWordCard(word, level)).join('');
-        this.attachWordCardListeners();
-    }
+  const container = document.getElementById('wordsContainer');
+  const title = document.getElementById('currentLevelTitle');
+  const wordsList = document.getElementById('wordsList');
 
-    this.updateBulkToggleButton();
+  if (container) container.classList.remove('hidden');
+  if (title) title.textContent = `${level} - ${words.length} слов`;
 
-    // ОПТИМИЗИРОВАННАЯ ПРОКРУТКА
-    if (container) {
-        // Используем requestAnimationFrame для плавности
-        requestAnimationFrame(() => {
-            // Получаем позицию элемента
-            const rect = container.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const targetY = rect.top + scrollTop - 100;
+  if (wordsList) {
+    wordsList.innerHTML = words.map(word => this.createWordCard(word, level)).join('');
+    this.attachWordCardListeners();
+  }
 
-            // Плавная прокрутка с fallback для старых браузеров
-            try {
-                window.scrollTo({
-                    top: targetY,
-                    behavior: 'smooth'
-                });
-            } catch (e) {
-                // Fallback для старых браузеров
-                this.smoothScrollTo(targetY, 300);
-            }
-        });
-    }
+  this.updateBulkToggleButton();
+
+  // Показать кнопку "словарь под тебя" в шапке списка (если нужно)
+  setTimeout(() => this.ensureAutoDictButton(), 0);
 }
 
 showCategoryWords(category) {
-    this.stopCurrentAudio();
-    this.currentCategory = category;
-    this.currentLevel = null;
+  this.stopCurrentAudio();
+  this.currentCategory = category;
+  this.currentLevel = null;
 
-    const words = oxfordWordsDatabase[category] || [];
-    const container = document.getElementById('wordsContainer');
-    const title = document.getElementById('currentLevelTitle');
-    const wordsList = document.getElementById('wordsList');
+  const words = oxfordWordsDatabase[category] || [];
 
-    if (container) container.classList.remove('hidden');
+  const levelsGrid = document.querySelector('#levels .levels-grid');
+  if (levelsGrid) levelsGrid.style.display = 'none';
 
-    const categoryName =
-        category === 'IRREGULARS' ? 'Неправильные глаголы' :
-        category === 'PHRASAL_VERBS' ? 'Фразовые глаголы' :
-        category === 'IDIOMS' ? 'Идиомы' :
-        category === 'MEDICAL' ? 'Медицинский английский' :
-        category === 'PREPOSITIONS' ? 'Предлоги' :
-        'Категория';
+  const container = document.getElementById('wordsContainer');
+  const title = document.getElementById('currentLevelTitle');
+  const wordsList = document.getElementById('wordsList');
 
-    if (title) title.textContent = `${categoryName} - ${words.length} слов`;
+  if (container) container.classList.remove('hidden');
 
-    if (wordsList) {
-        wordsList.innerHTML = words.map(word => this.createWordCard(word, category)).join('');
-        this.attachWordCardListeners();
-    }
+  const categoryName =
+    category === 'IRREGULARS' ? 'Неправильные глаголы' :
+    category === 'PHRASAL_VERBS' ? 'Фразовые глаголы' :
+    category === 'IDIOMS' ? 'Идиомы' :
+    category === 'MEDICAL' ? 'Медицинский английский' :
+    category === 'PREPOSITIONS' ? 'Предлоги' :
+    'Категория';
 
-    this.updateBulkToggleButton();
+  if (title) title.textContent = `${categoryName} - ${words.length} слов`;
 
-    // ОПТИМИЗИРОВАННАЯ ПРОКРУТКА
-    if (container) {
-        requestAnimationFrame(() => {
-            const rect = container.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const targetY = rect.top + scrollTop - 100;
+  if (wordsList) {
+    wordsList.innerHTML = words.map(word => this.createWordCard(word, category)).join('');
+    this.attachWordCardListeners();
+  }
 
-            try {
-                window.scrollTo({
-                    top: targetY,
-                    behavior: 'smooth'
-                });
-            } catch (e) {
-                this.smoothScrollTo(targetY, 300);
-            }
-        });
-    }
-}
+  this.updateBulkToggleButton();
 
-// Добавьте этот вспомогательный метод для плавной прокрутки на старых устройствах
-smoothScrollTo(targetY, duration) {
-    const startY = window.pageYOffset;
-    const difference = targetY - startY;
-    const startTime = performance.now();
-
-    const step = () => {
-        const progress = (performance.now() - startTime) / duration;
-        const amount = progress < 1 ? startY + difference * this.easeInOutQuad(progress) : targetY;
-        
-        window.scrollTo(0, amount);
-        
-        if (progress < 1) {
-            requestAnimationFrame(step);
-        }
-    };
-
-    requestAnimationFrame(step);
-}
-
-// Функция плавности анимации
-easeInOutQuad(t) {
-    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  setTimeout(() => this.ensureAutoDictButton(), 0);
 }
 
   backToLevels() {
-    this.stopCurrentAudio();
-    const container = document.getElementById('wordsContainer');
-    if (container) container.classList.add('hidden');
-    this.currentLevel = null;
-    this.currentCategory = null;
-  }
+  this.stopCurrentAudio();
+
+  // Прячем контейнер списка слов
+  const container = document.getElementById('wordsContainer');
+  if (container) container.classList.add('hidden');
+
+  // Показываем сетку уровней
+  const levelsGrid = document.querySelector('#levels .levels-grid');
+  if (levelsGrid) levelsGrid.style.display = 'grid';
+
+  this.currentLevel = null;
+  this.currentCategory = null;
+
+  // Удаляем кнопку "словарь под тебя" из списка, чтобы не висела
+  const inlineCta = document.querySelector('#levels .auto-dict-inline');
+  if (inlineCta) inlineCta.remove();
+}
 
  // =========
   // Auto Dictionary (Levels page) — NEW TEST UI
