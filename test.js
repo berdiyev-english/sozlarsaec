@@ -1594,6 +1594,36 @@ toggleLevelsIndexVisibility(showIndex) {
   });
 }
 
+jumpToTopStrict(attempts = 3) {
+  try {
+    const main = document.querySelector('.main-content');
+    const prev = main ? main.style.scrollBehavior : '';
+    if (main) main.style.scrollBehavior = 'auto';
+
+    const doScroll = () => {
+      if (main) main.scrollTop = 0;
+      // страхуемся на всякий случай
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    doScroll(); // сразу
+    let n = 1;
+    const again = () => {
+      if (n++ >= attempts) {
+        if (main) main.style.scrollBehavior = prev;
+        return;
+      }
+      requestAnimationFrame(() => {
+        doScroll();
+        setTimeout(again, 0);
+      });
+    };
+    again();
+  } catch (e) {}
+}
+
 scrollMainToTop() {
   // Прокрутка главного контейнера контента
   const main = document.querySelector('.main-content');
@@ -1615,43 +1645,34 @@ showLevelWords(level) {
   const title = document.getElementById('currentLevelTitle');
   const wordsList = document.getElementById('wordsList');
 
-  // Переключаем вид на «список» (прячем гриды и заголовки, показываем контейнер списка)
+  // Режим «список»: прячем гриды/заголовки, показываем контейнер
   if (typeof this.toggleLevelsIndexVisibility === 'function') {
     this.toggleLevelsIndexVisibility(false);
-  } else {
-    // Фолбэк, если helper не подключён
-    const levelsSection = document.getElementById('levels');
-    if (levelsSection) {
-      const grids = levelsSection.querySelectorAll('.levels-grid, .categories-grid, .level-cards, .category-cards');
-      grids.forEach(n => (n.style.display = 'none'));
-    }
-    if (container) container.classList.remove('hidden');
   }
-
   if (container) container.classList.remove('hidden');
+
   if (title) title.textContent = `${level} - ${words.length} слов`;
 
+  // Рендер карточек
   if (wordsList) {
     wordsList.innerHTML = words.map(word => this.createWordCard(word, level)).join('');
-    this.attachWordCardListeners();
+    // Быстрый делегированный обработчик (см. шаг 3)
+    if (typeof this.installWordsListDelegatedHandlers === 'function') {
+      this.installWordsListDelegatedHandlers();
+    }
+    // Если используешь старый способ — НЕ вызывай attachWordCardListeners здесь, он тяжелый
+    // this.attachWordCardListeners();
   }
 
   this.updateBulkToggleButton();
 
-  // Вставляем CTA «Подобрать словарь…» в верхний отступ над шапкой
+  // CTA «Подобрать словарь…» — в верхнем отступе
   if (typeof this.ensureAutoDictButton === 'function') {
     this.ensureAutoDictButton();
   }
 
-  // Прокручиваем к началу списка, чтобы сразу были видны кнопки «Назад / Учить все / Подобрать…»
-  requestAnimationFrame(() => {
-    if (typeof this.scrollMainToTop === 'function') {
-      this.scrollMainToTop();
-    } else {
-      const main = document.querySelector('.main-content');
-      if (main) main.scrollTop = 0; else window.scrollTo(0, 0);
-    }
-  });
+  // Жестко прокручиваем в самый верх (всегда видно кнопки)
+  requestAnimationFrame(() => this.jumpToTopStrict());
 }
 
 showCategoryWords(category) {
@@ -1664,18 +1685,9 @@ showCategoryWords(category) {
   const title = document.getElementById('currentLevelTitle');
   const wordsList = document.getElementById('wordsList');
 
-  // Переключаем вид на «список»
   if (typeof this.toggleLevelsIndexVisibility === 'function') {
     this.toggleLevelsIndexVisibility(false);
-  } else {
-    const levelsSection = document.getElementById('levels');
-    if (levelsSection) {
-      const grids = levelsSection.querySelectorAll('.levels-grid, .categories-grid, .level-cards, .category-cards');
-      grids.forEach(n => (n.style.display = 'none'));
-    }
-    if (container) container.classList.remove('hidden');
   }
-
   if (container) container.classList.remove('hidden');
 
   const categoryName =
@@ -1690,25 +1702,18 @@ showCategoryWords(category) {
 
   if (wordsList) {
     wordsList.innerHTML = words.map(word => this.createWordCard(word, category)).join('');
-    this.attachWordCardListeners();
+    if (typeof this.installWordsListDelegatedHandlers === 'function') {
+      this.installWordsListDelegatedHandlers();
+    }
+    // this.attachWordCardListeners(); // не вызываем для скорости
   }
 
   this.updateBulkToggleButton();
-
-  // CTA «Подобрать словарь…» в верхний отступ
   if (typeof this.ensureAutoDictButton === 'function') {
     this.ensureAutoDictButton();
   }
 
-  // Прокрутка в самый верх
-  requestAnimationFrame(() => {
-    if (typeof this.scrollMainToTop === 'function') {
-      this.scrollMainToTop();
-    } else {
-      const main = document.querySelector('.main-content');
-      if (main) main.scrollTop = 0; else window.scrollTo(0, 0);
-    }
-  });
+  requestAnimationFrame(() => this.jumpToTopStrict());
 }
 
 backToLevels() {
@@ -2800,6 +2805,52 @@ createWordCard(word, levelOrCategory) {
         <span class="word-level">${levelOrCategory}</span>
       </div>
     `;
+}
+
+installWordsListDelegatedHandlers() {
+  const list = document.getElementById('wordsList');
+  if (!list) return;
+  // Чтобы не навешивать повторно
+  if (list.dataset.delegated === '1') return;
+
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('.sound-us-btn, .sound-uk-btn, .word-add-btn, .word-remove-btn');
+    if (!btn) return;
+
+    // Звук US/UK
+    if (btn.classList.contains('sound-us-btn') || btn.classList.contains('sound-uk-btn')) {
+      const wordText = btn.getAttribute('data-word-text');
+      const formsStr = btn.getAttribute('data-forms');
+      let forms = null;
+      if (formsStr && formsStr !== 'null') { try { forms = JSON.parse(formsStr); } catch {} }
+      const region = btn.classList.contains('sound-uk-btn') ? 'uk' : 'us';
+      this.playWord(wordText, forms, region);
+      return;
+    }
+
+    // Добавить слово
+    if (btn.classList.contains('word-add-btn')) {
+      const wordText = btn.getAttribute('data-word-text');
+      const translation = btn.getAttribute('data-translation');
+      const level = btn.getAttribute('data-level');
+      const formsStr = btn.getAttribute('data-forms');
+      let forms = null;
+      if (formsStr && formsStr !== 'null') { try { forms = JSON.parse(formsStr); } catch {} }
+      this.addWordToLearning(wordText, translation, level, forms);
+      return;
+    }
+
+    // Удалить слово
+    if (btn.classList.contains('word-remove-btn')) {
+      const wordText = btn.getAttribute('data-word-text');
+      const level = btn.getAttribute('data-level');
+      this.removeWordFromLearning(wordText, level);
+      return;
+    }
+  });
+
+  // Пометка, что делегирование уже повешено
+  list.dataset.delegated = '1';
 }
 
 attachWordCardListeners() {
