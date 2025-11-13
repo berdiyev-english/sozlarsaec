@@ -853,6 +853,32 @@ initializeUI() {
         b.classList.toggle('active', b.getAttribute('data-practice') === this.currentPractice);
       });
     }, 100);
+    this.ensureAutoDictButton();
+}
+
+ensureAutoDictButton() {
+  try {
+    let btn = document.getElementById('autoDictStartBtn');
+    if (btn) return;
+
+    const host = document.querySelector('#levels .section-header')
+      || document.querySelector('#levels .levels-header')
+      || document.querySelector('#levels');
+
+    if (!host) return;
+
+    btn = document.createElement('button');
+    btn.id = 'autoDictStartBtn';
+    btn.className = 'btn btn-primary';
+    btn.style.cssText = 'margin:10px 0;font-weight:700;';
+    btn.innerHTML = '<i class="fas fa-magic"></i> Подобрать словарь под тебя';
+    btn.addEventListener('click', () => this.showAutoDictionaryTest());
+
+    if (host.firstChild) host.insertBefore(btn, host.firstChild);
+    else host.appendChild(btn);
+  } catch (e) {
+    console.warn('ensureAutoDictButton error:', e);
+  }
 }
 
   // Daily Motivation once per day
@@ -1465,6 +1491,7 @@ switchSection(section) {
     if (section === 'levels') {
       this.backToLevels();
       this.updateLevelCounts(); // ДОБАВИТЬ
+      setTimeout(() => this.ensureAutoDictButton(), 0);
     }
     
     if (section === 'learning') {
@@ -1548,34 +1575,6 @@ switchSection(section) {
     const addedCard = document.querySelector('[data-category="ADDED"] .word-count');
     if (addedCard) addedCard.textContent = `${this.customWords.length} слов`;
   }
-
-showLevelWords(level) {
-    this.stopCurrentAudio();
-    this.currentLevel = level;
-    this.currentCategory = null;
-
-    const words = oxfordWordsDatabase[level] || [];
-    const container = document.getElementById('wordsContainer');
-    const title = document.getElementById('currentLevelTitle');
-    const wordsList = document.getElementById('wordsList');
-
-    if (container) container.classList.remove('hidden');
-    if (title) title.textContent = `${level} - ${words.length} слов`;
-
-    if (wordsList) {
-      wordsList.innerHTML = words.map(word => this.createWordCard(word, level)).join('');
-      this.attachWordCardListeners();
-    }
-
-    this.updateBulkToggleButton();
-
-    // Упрощенный скролл без анимации
-    if (container) {
-      setTimeout(() => {
-        window.scrollTo(0, container.offsetTop - 100);
-      }, 50);
-    }
-}
 
 showLevelWords(level) {
     this.stopCurrentAudio();
@@ -1998,7 +1997,6 @@ showAutoDictionaryTest() {
   let answers = [];
   let selectedAnswer = null;
   let testQuestions = [];
-
   const el = (id) => appWrap.querySelector('#' + id);
 
   const shuffleArray = (array) => {
@@ -2596,6 +2594,8 @@ checkSentence() {
   
   const isCorrect = userAnswer === correctAnswer;
   const feedback = document.getElementById('sentenceFeedback');
+  this.incrementTrainerCounters({ correct: isCorrect });
+this.recordDailyProgress();
   
   if (feedback) {
     if (isCorrect) {
@@ -2707,6 +2707,35 @@ showSentenceGrammarModal() {
   });
   
   document.body.appendChild(modal);
+}
+
+incrementTrainerCounters({ correct = false } = {}) {
+  try {
+    const today = new Date().toDateString();
+
+    if (!Array.isArray(this.weeklyProgress)) {
+      this.weeklyProgress = [];
+    }
+    let day = this.weeklyProgress.find(d => d.date === today);
+    if (!day) {
+      day = { date: today, count: 0, trainerRepeats: 0, trainerCorrect: 0 };
+      this.weeklyProgress.push(day);
+    }
+    if (typeof day.count !== 'number') day.count = 0;
+    if (typeof day.trainerRepeats !== 'number') day.trainerRepeats = 0;
+    if (typeof day.trainerCorrect !== 'number') day.trainerCorrect = 0;
+
+    day.trainerRepeats += 1;
+    if (correct) day.trainerCorrect += 1;
+
+    this.saveData();
+
+    if (this.currentSection === 'progress' && typeof this.renderProgress === 'function') {
+      this.renderProgress();
+    }
+  } catch (e) {
+    console.warn('incrementTrainerCounters error:', e);
+  }
 }
 
 // ==================== END SENTENCE BUILDER ====================
@@ -3342,6 +3371,29 @@ renderLearningSection() {
   }
 
   this.insertAutoDictionaryButtonInLearning(container);
+}
+
+insertAutoDictionaryButtonInLearning(containerEl) {
+  try {
+    if (!containerEl) return;
+    if (containerEl.querySelector('#autoDictInlineBtn')) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'auto-dict-inline';
+    wrap.style.cssText = 'display:flex;justify-content:center;margin:12px 0;';
+
+    const btn = document.createElement('button');
+    btn.id = 'autoDictInlineBtn';
+    btn.className = 'btn btn-primary';
+    btn.style.fontWeight = '700';
+    btn.innerHTML = '<i class="fas fa-magic"></i> Подобрать словарь под тебя';
+    btn.addEventListener('click', () => this.showAutoDictionaryTest());
+
+    wrap.appendChild(btn);
+    containerEl.insertAdjacentElement('afterbegin', wrap);
+  } catch (e) {
+    console.warn('insertAutoDictionaryButtonInLearning error:', e);
+  }
 }
 // Добавить новые методы для переключения режимов
 switchLearningMode(mode) {
@@ -4328,6 +4380,7 @@ renderProgress() {
     const totalWords = this.learningWords.length;
     const learnedWords = this.learningWords.filter(w => w.isLearned).length;
     const inProgress = totalWords - learnedWords;
+    
 
     const levelProgress = {};
     ['A1','A2','B1','B2','C1','C2','IRREGULARS','PHRASAL_VERBS','IDIOMS','MEDICAL','ADDED'].forEach(level => {
@@ -4335,44 +4388,64 @@ renderProgress() {
         const learned = this.learningWords.filter(w => w.level === level && w.isLearned).length;
         levelProgress[level] = { total, learned };
     });
+    
+    const todayKey = new Date().toDateString();
+let trainerToday = 0, trainerTodayCorrect = 0, trainerWeek = 0, trainerWeekCorrect = 0;
+(this.weeklyProgress || []).forEach(d => {
+  const rep = d.trainerRepeats || 0;
+  const cor = d.trainerCorrect || 0;
+  trainerWeek += rep;
+  trainerWeekCorrect += cor;
+  if (d.date === todayKey) {
+    trainerToday = rep;
+    trainerTodayCorrect = cor;
+  }
+});
 
-    container.innerHTML = `
-        ${petHtml}
-        <div class="progress-card">
-            <h3 style="margin-bottom:15px;">Общий прогресс</h3>
-            <div class="progress-row"><span>Всего слов:</span><strong>${totalWords}</strong></div>
-            <div class="progress-row"><span>Выучено:</span><strong style="color:var(--accent-color);">${learnedWords}</strong></div>
-            <div class="progress-row"><span>В процессе:</span><strong style="color:var(--primary-color);">${inProgress}</strong></div>
-            <div class="progress-bar-wrap" style="margin-top:10px;">
-                <div class="progress-bar-fill" style="width:${totalWords > 0 ? (learnedWords / totalWords * 100) : 0}%"></div>
-            </div>
+   container.innerHTML = `
+    ${petHtml}
+    <div class="progress-card">
+        <h3 style="margin-bottom:15px;">Общий прогресс</h3>
+        <div class="progress-row"><span>Всего слов:</span><strong>${totalWords}</strong></div>
+        <div class="progress-row"><span>Выучено:</span><strong style="color:var(--accent-color);">${learnedWords}</strong></div>
+        <div class="progress-row"><span>В процессе:</span><strong style="color:var(--primary-color);">${inProgress}</strong></div>
+        <div class="progress-bar-wrap" style="margin-top:10px;">
+            <div class="progress-bar-fill" style="width:${totalWords > 0 ? (learnedWords / totalWords * 100) : 0}%"></div>
         </div>
-        <div class="progress-card">
-            <h3 style="margin-bottom:15px;">Прогресс по категориям/уровням</h3>
-            ${Object.entries(levelProgress).map(([level, data]) => {
-                if (data.total === 0) return '';
-                const percent = (data.learned / data.total * 100).toFixed(0);
-                return `
-                    <div style="margin-bottom:12px;">
-                        <div class="progress-row"><span>${level}</span><span>${data.learned} / ${data.total}</span></div>
-                        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${percent}%"></div></div>
-                    </div>
-                `;
-            }).join('')}
-        </div>
-        <div class="progress-card">
-            <h3 style="margin-bottom:15px;">Активность за неделю</h3>
-            ${this.weeklyProgress.length > 0 ? 
-                this.weeklyProgress.map(day => `
-                    <div class="progress-row">
-                        <span>${new Date(day.date).toLocaleDateString('ru-RU', {weekday: 'short', month: 'short', day: 'numeric'})}</span>
-                        <strong>${day.count} повторений</strong>
-                    </div>
-                `).join('') : 
-                '<p style="color:var(--text-secondary);text-align:center;">Нет данных об активности</p>'
-            }
-        </div>
-    `;
+    </div>
+    <div class="progress-card">
+        <h3 style="margin-bottom:15px;">Прогресс по категориям/уровням</h3>
+        ${Object.entries(levelProgress).map(([level, data]) => {
+            if (data.total === 0) return '';
+            const percent = (data.learned / data.total * 100).toFixed(0);
+            return `
+                <div style="margin-bottom:12px;">
+                    <div class="progress-row"><span>${level}</span><span>${data.learned} / ${data.total}</span></div>
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${percent}%"></div></div>
+                </div>
+            `;
+        }).join('')}
+    </div>
+    <div class="progress-card">
+        <h3 style="margin-bottom:15px;">Тренажёр предложений</h3>
+        <div class="progress-row"><span>Сегодня:</span><strong>${trainerToday} повторений</strong></div>
+        <div class="progress-row"><span>Правильных сегодня:</span><strong>${trainerTodayCorrect}</strong></div>
+        <div class="progress-row"><span>За 7 дней:</span><strong>${trainerWeek} повторений</strong></div>
+        <div class="progress-row"><span>Правильных за 7 дней:</span><strong>${trainerWeekCorrect}</strong></div>
+    </div>
+    <div class="progress-card">
+        <h3 style="margin-bottom:15px;">Активность за неделю</h3>
+        ${this.weeklyProgress.length > 0 ? 
+            this.weeklyProgress.map(day => `
+                <div class="progress-row">
+                    <span>${new Date(day.date).toLocaleDateString('ru-RU', {weekday: 'short', month: 'short', day: 'numeric'})}</span>
+                    <strong>${day.count} повторений</strong>
+                </div>
+            `).join('') : 
+            '<p style="color:var(--text-secondary);text-align:center;">Нет данных об активности</p>'
+        }
+    </div>
+`;
     
     // ВАЖНО: Добавляем обработчики для питомца
     this.attachPetHandlers();
