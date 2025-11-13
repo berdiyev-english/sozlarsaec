@@ -1594,6 +1594,17 @@ toggleLevelsIndexVisibility(showIndex) {
   });
 }
 
+scrollMainToTop() {
+  // Прокрутка главного контейнера контента
+  const main = document.querySelector('.main-content');
+  if (main) {
+    main.scrollTop = 0; // мгновенно, без анимации
+  } else {
+    // фолбэк
+    window.scrollTo(0, 0);
+  }
+}
+
 showLevelWords(level) {
   this.stopCurrentAudio();
   this.currentLevel = level;
@@ -1604,8 +1615,18 @@ showLevelWords(level) {
   const title = document.getElementById('currentLevelTitle');
   const wordsList = document.getElementById('wordsList');
 
-  // Переключаемся в режим "список слов"
-  this.toggleLevelsIndexVisibility(false);
+  // Переключаем вид на «список» (прячем гриды и заголовки, показываем контейнер списка)
+  if (typeof this.toggleLevelsIndexVisibility === 'function') {
+    this.toggleLevelsIndexVisibility(false);
+  } else {
+    // Фолбэк, если helper не подключён
+    const levelsSection = document.getElementById('levels');
+    if (levelsSection) {
+      const grids = levelsSection.querySelectorAll('.levels-grid, .categories-grid, .level-cards, .category-cards');
+      grids.forEach(n => (n.style.display = 'none'));
+    }
+    if (container) container.classList.remove('hidden');
+  }
 
   if (container) container.classList.remove('hidden');
   if (title) title.textContent = `${level} - ${words.length} слов`;
@@ -1616,7 +1637,21 @@ showLevelWords(level) {
   }
 
   this.updateBulkToggleButton();
-  setTimeout(() => this.ensureAutoDictButton(), 0);
+
+  // Вставляем CTA «Подобрать словарь…» в верхний отступ над шапкой
+  if (typeof this.ensureAutoDictButton === 'function') {
+    this.ensureAutoDictButton();
+  }
+
+  // Прокручиваем к началу списка, чтобы сразу были видны кнопки «Назад / Учить все / Подобрать…»
+  requestAnimationFrame(() => {
+    if (typeof this.scrollMainToTop === 'function') {
+      this.scrollMainToTop();
+    } else {
+      const main = document.querySelector('.main-content');
+      if (main) main.scrollTop = 0; else window.scrollTo(0, 0);
+    }
+  });
 }
 
 showCategoryWords(category) {
@@ -1629,8 +1664,17 @@ showCategoryWords(category) {
   const title = document.getElementById('currentLevelTitle');
   const wordsList = document.getElementById('wordsList');
 
-  // Переключаемся в режим "список слов"
-  this.toggleLevelsIndexVisibility(false);
+  // Переключаем вид на «список»
+  if (typeof this.toggleLevelsIndexVisibility === 'function') {
+    this.toggleLevelsIndexVisibility(false);
+  } else {
+    const levelsSection = document.getElementById('levels');
+    if (levelsSection) {
+      const grids = levelsSection.querySelectorAll('.levels-grid, .categories-grid, .level-cards, .category-cards');
+      grids.forEach(n => (n.style.display = 'none'));
+    }
+    if (container) container.classList.remove('hidden');
+  }
 
   if (container) container.classList.remove('hidden');
 
@@ -1650,7 +1694,21 @@ showCategoryWords(category) {
   }
 
   this.updateBulkToggleButton();
-  setTimeout(() => this.ensureAutoDictButton(), 0);
+
+  // CTA «Подобрать словарь…» в верхний отступ
+  if (typeof this.ensureAutoDictButton === 'function') {
+    this.ensureAutoDictButton();
+  }
+
+  // Прокрутка в самый верх
+  requestAnimationFrame(() => {
+    if (typeof this.scrollMainToTop === 'function') {
+      this.scrollMainToTop();
+    } else {
+      const main = document.querySelector('.main-content');
+      if (main) main.scrollTop = 0; else window.scrollTo(0, 0);
+    }
+  });
 }
 
 backToLevels() {
