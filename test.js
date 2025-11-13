@@ -694,42 +694,27 @@ initializeUI() {
     });
 
     // Level cards
-    document.querySelectorAll('.level-card[data-level]').forEach(card => {
-      card.addEventListener('click', (e) => {
-        const level = e.currentTarget.getAttribute('data-level');
-        if (level) {
-          this.showLevelWords(level);
-          setTimeout(() => {
-            const wordsContainer = document.querySelector('.words-container:not(.hidden)');
-            const mainContent = document.querySelector('.main-content');
-            if (wordsContainer && mainContent) {
-              const offsetTop = wordsContainer.offsetTop - 20;
-              mainContent.scrollTo({ top: offsetTop, behavior: 'smooth' });
-            }
-          }, 150);
-        }
-      });
-    });
+document.querySelectorAll('.level-card[data-level]').forEach(card => {
+card.addEventListener('click', (e) => {
+const level = e.currentTarget.getAttribute('data-level');
+if (level) {
+this.showLevelWords(level);
+}
+});
+});
 
     // Category cards
-    document.querySelectorAll('.level-card[data-category]').forEach(card => {
-      card.addEventListener('click', (e) => {
-        const cat = e.currentTarget.getAttribute('data-category');
-        if (!cat) return;
-        
-        if (cat === 'ADDED') this.showAddedWordsCategory();
-        else this.showCategoryWords(cat);
-        
-        setTimeout(() => {
-          const wordsContainer = document.querySelector('.words-container:not(.hidden)');
-          const mainContent = document.querySelector('.main-content');
-          if (wordsContainer && mainContent) {
-            const offsetTop = wordsContainer.offsetTop - 20;
-            mainContent.scrollTo({ top: offsetTop, behavior: 'smooth' });
-          }
-        }, 150);
-      });
-    });
+document.querySelectorAll('.level-card[data-category]').forEach(card => {
+card.addEventListener('click', (e) => {
+const cat = e.currentTarget.getAttribute('data-category');
+if (!cat) return;
+if (cat === 'ADDED') {
+  this.showAddedWordsCategory();
+} else {
+  this.showCategoryWords(cat);
+}
+});
+});
 
     // Back to levels
     const backBtn = document.getElementById('backToLevels');
@@ -1584,20 +1569,48 @@ switchSection(section) {
     if (addedCard) addedCard.textContent = `${this.customWords.length} слов`;
   }
 
+toggleLevelsIndexVisibility(showIndex) {
+  // Прячем все возможные гриды/контейнеры списка уровней/категорий
+  const levelsSection = document.getElementById('levels');
+  if (!levelsSection) return;
+
+  const selectorsToToggle = [
+    '.levels-grid',
+    '.categories-grid',
+    '.level-cards',
+    '.category-cards',
+    '.levels-list',
+    '.categories',
+    '.levels-wrapper',
+    '.categories-wrapper'
+  ];
+
+  // Скрыть/показать индекс (карточки)
+  selectorsToToggle.forEach(sel => {
+    levelsSection.querySelectorAll(sel).forEach(node => {
+      node.style.display = showIndex ? '' : 'none';
+    });
+  });
+
+  // Показать/спрятать контейнер со словами
+  const wordsContainer = document.getElementById('wordsContainer');
+  if (wordsContainer) {
+    wordsContainer.classList.toggle('hidden', showIndex);
+  }
+}
+
 showLevelWords(level) {
   this.stopCurrentAudio();
   this.currentLevel = level;
   this.currentCategory = null;
 
   const words = oxfordWordsDatabase[level] || [];
-
-  // Скрываем сетку уровней и показываем контейнер со словами
-  const levelsGrid = document.querySelector('#levels .levels-grid');
-  if (levelsGrid) levelsGrid.style.display = 'none';
-
   const container = document.getElementById('wordsContainer');
   const title = document.getElementById('currentLevelTitle');
   const wordsList = document.getElementById('wordsList');
+
+  // Переключаемся в режим "список слов"
+  this.toggleLevelsIndexVisibility(false);
 
   if (container) container.classList.remove('hidden');
   if (title) title.textContent = `${level} - ${words.length} слов`;
@@ -1608,8 +1621,6 @@ showLevelWords(level) {
   }
 
   this.updateBulkToggleButton();
-
-  // Показать кнопку "словарь под тебя" в шапке списка (если нужно)
   setTimeout(() => this.ensureAutoDictButton(), 0);
 }
 
@@ -1619,13 +1630,12 @@ showCategoryWords(category) {
   this.currentLevel = null;
 
   const words = oxfordWordsDatabase[category] || [];
-
-  const levelsGrid = document.querySelector('#levels .levels-grid');
-  if (levelsGrid) levelsGrid.style.display = 'none';
-
   const container = document.getElementById('wordsContainer');
   const title = document.getElementById('currentLevelTitle');
   const wordsList = document.getElementById('wordsList');
+
+  // Переключаемся в режим "список слов"
+  this.toggleLevelsIndexVisibility(false);
 
   if (container) container.classList.remove('hidden');
 
@@ -1645,25 +1655,18 @@ showCategoryWords(category) {
   }
 
   this.updateBulkToggleButton();
-
   setTimeout(() => this.ensureAutoDictButton(), 0);
 }
 
-  backToLevels() {
+backToLevels() {
   this.stopCurrentAudio();
-
-  // Прячем контейнер списка слов
-  const container = document.getElementById('wordsContainer');
-  if (container) container.classList.add('hidden');
-
-  // Показываем сетку уровней
-  const levelsGrid = document.querySelector('#levels .levels-grid');
-  if (levelsGrid) levelsGrid.style.display = 'grid';
+  // Возвращаем вид с карточками, скрываем список
+  this.toggleLevelsIndexVisibility(true);
 
   this.currentLevel = null;
   this.currentCategory = null;
 
-  // Удаляем кнопку "словарь под тебя" из списка, чтобы не висела
+  // Убираем кнопку "словарь под тебя", если она вставлена в хедер списка
   const inlineCta = document.querySelector('#levels .auto-dict-inline');
   if (inlineCta) inlineCta.remove();
 }
