@@ -2746,27 +2746,28 @@ img[data-image-source*="Servier"],
 [data-theme="dark"] .auto-dict-btn {
   border-color: rgba(255,255,255,0.2);
 }
-/* Ряд действий в шапке списка слов */
+/* Шапка списка слов: заголовок слева, действия (Учить все) справа — в одну строку */
+#levels .words-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: nowrap; /* держим в одну строку */
+}
+
+/* Блок с действиями (в нём кнопка "Учить все") — справа */
 #levels .level-bulk-actions {
   margin-left: auto;
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  flex-wrap: wrap; /* разрешаем перенос кнопок на новую строку */
+  flex-wrap: nowrap; /* не переносим */
 }
 
-/* "Учить все" — всегда в первой строке */
-#levels .level-bulk-actions #bulkToggleBtn {
-  order: 1;
-}
-
-/* "Словарь под тебя" — после, на новой строке при нехватке места */
-#levels .level-bulk-actions .auto-dict-inline {
-  order: 2;
-  flex-basis: 100%;           /* переносим на новую строку */
+/* "Словарь под тебя" — отдельной строкой ниже шапки справа */
+#levels .auto-dict-inline {
   display: flex;
-  justify-content: flex-end;  /* справа */
-  margin-top: 6px;
+  justify-content: flex-end;
+  margin: 8px 0 12px;
 }
 /* Когда открыт список слов — прячем верхние заголовки и гриды уровней/категорий */
 #levels.list-open .section-header,
@@ -2785,3 +2786,4 @@ img[data-image-source*="Servier"],
 #levels.list-open #wordsContainer {
   display: block !important;
 }
+
