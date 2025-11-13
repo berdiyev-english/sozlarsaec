@@ -843,29 +843,36 @@ if (cat === 'ADDED') {
 
 ensureAutoDictButton() {
   try {
-    const header = document.querySelector('#levels .words-header');
+    const container = document.querySelector('#levels #wordsContainer');
+    if (!container) return;
+
+    const header = container.querySelector('.words-header');
+
+    // Если список ещё не открыт — убираем кнопку, если висит
     if (!header) {
-      // Если нет шапки — удалим кнопку, если вдруг висит
-      const old = document.querySelector('#levels .auto-dict-inline');
-      if (old) old.remove();
+      document.querySelectorAll('#levels .auto-dict-top, #levels .auto-dict-inline')
+        .forEach(n => n.remove());
       return;
     }
 
+    // Если уже есть кнопка — выходим
     if (document.getElementById('autoDictStartBtn')) return;
 
+    // На всякий случай удалим старый "нижний" вариант, если он оставался
+    document.querySelectorAll('#levels .auto-dict-inline').forEach(n => n.remove());
+
+    // Создаем верхний блок и вставляем ПЕРЕД .words-header
     const wrap = document.createElement('div');
-    wrap.className = 'auto-dict-inline';
+    wrap.className = 'auto-dict-top';
 
     const btn = document.createElement('button');
     btn.id = 'autoDictStartBtn';
     btn.className = 'btn auto-dict-btn';
     btn.innerHTML = '<i class="fas fa-magic"></i> Подобрать словарь под тебя';
     btn.addEventListener('click', () => this.showAutoDictionaryTest());
+
     wrap.appendChild(btn);
-
-    // ВАЖНО: ставим КАК СИБЛИНГ ПОСЛЕ .words-header (а не внутрь actions)
-    header.insertAdjacentElement('afterend', wrap);
-
+    container.insertBefore(wrap, header);
   } catch (e) {
     console.warn('ensureAutoDictButton error:', e);
   }
@@ -1648,17 +1655,16 @@ showCategoryWords(category) {
 
 backToLevels() {
   this.stopCurrentAudio();
-  // Возвращаем вид с карточками, скрываем список
+
   this.toggleLevelsIndexVisibility(true);
 
   this.currentLevel = null;
   this.currentCategory = null;
 
-  // Убираем кнопку "словарь под тебя", если она вставлена в хедер списка
-  const inlineCta = document.querySelector('#levels .auto-dict-inline');
-  if (inlineCta) inlineCta.remove();
+  // Удаляем CTA, если он вставлен
+  document.querySelectorAll('#levels .auto-dict-top, #levels .auto-dict-inline')
+    .forEach(n => n.remove());
 }
-
  // =========
   // Auto Dictionary (Levels page) — NEW TEST UI
   // =========
