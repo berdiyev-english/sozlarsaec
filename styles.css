@@ -2705,14 +2705,59 @@ img[data-image-source*="Servier"],
   }
 }
 
-/* CTA: Подобрать словарь под тебя */
-.auto-dict-inline {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 12px 0;
+/* Когда открыт список — прячем верхние заголовки/сетки */
+#levels.list-open .section-header,
+#levels.list-open .levels-grid,
+#levels.list-open .categories-grid,
+#levels.list-open .level-cards,
+#levels.list-open .category-cards,
+#levels.list-open .levels-list,
+#levels.list-open .categories,
+#levels.list-open .levels-wrapper,
+#levels.list-open .categories-wrapper {
+  display: none !important;
 }
 
+/* Чуть уменьшим верхний отступ контейнера в режиме списка */
+#levels.list-open .words-container {
+  margin-top: 0.75rem; /* было 2rem */
+}
+
+/* Верхний блок с CTA (в верхнем отступе) */
+#levels .auto-dict-top {
+  display: flex;
+  justify-content: flex-end;
+  /* подгоняем ширину, как у .words-header */
+  margin: 0 -1.25rem 8px -1.25rem;
+  padding: 8px 1.25rem 0 1.25rem;
+}
+
+/* Шапка списка: заголовок слева, действия справа — строго в одну строку */
+#levels .words-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+}
+
+#levels .words-header #currentLevelTitle {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Блок с действиями — справа от заголовка */
+#levels .level-bulk-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: nowrap; /* не переносим "Учить все" */
+}
+
+/* Кнопка-герой в твоём стиле */
 .auto-dict-btn {
   display: inline-flex;
   align-items: center;
@@ -2729,9 +2774,7 @@ img[data-image-source*="Servier"],
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
 
-.auto-dict-btn i {
-  font-size: 1.1rem;
-}
+.auto-dict-btn i { font-size: 1.1rem; }
 
 .auto-dict-btn:hover {
   transform: translateY(-2px);
@@ -2739,51 +2782,13 @@ img[data-image-source*="Servier"],
   filter: brightness(1.05);
 }
 
-.auto-dict-btn:active {
-  transform: translateY(0);
+[data-theme="dark"] .auto-dict-btn { border-color: rgba(255,255,255,0.2); }
+
+/* На очень узких экранах можно позволить шапке переноситься */
+@media (max-width: 480px) {
+  #levels .words-header {
+    flex-wrap: wrap;
+  }
 }
 
-[data-theme="dark"] .auto-dict-btn {
-  border-color: rgba(255,255,255,0.2);
-}
-/* Шапка списка слов: заголовок слева, действия (Учить все) справа — в одну строку */
-#levels .words-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: nowrap; /* держим в одну строку */
-}
-
-/* Блок с действиями (в нём кнопка "Учить все") — справа */
-#levels .level-bulk-actions {
-  margin-left: auto;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  flex-wrap: nowrap; /* не переносим */
-}
-
-/* "Словарь под тебя" — отдельной строкой ниже шапки справа */
-#levels .auto-dict-inline {
-  display: flex;
-  justify-content: flex-end;
-  margin: 8px 0 12px;
-}
-/* Когда открыт список слов — прячем верхние заголовки и гриды уровней/категорий */
-#levels.list-open .section-header,
-#levels.list-open .levels-grid,
-#levels.list-open .categories-grid,
-#levels.list-open .level-cards,
-#levels.list-open .category-cards,
-#levels.list-open .levels-list,
-#levels.list-open .categories,
-#levels.list-open .levels-wrapper,
-#levels.list-open .categories-wrapper {
-  display: none !important;
-}
-
-/* Контейнер со словами должен быть виден в режиме списка */
-#levels.list-open #wordsContainer {
-  display: block !important;
-}
 
