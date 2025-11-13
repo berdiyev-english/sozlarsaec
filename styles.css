@@ -1,29 +1,29 @@
 :root {
   /* Яркие мультяшные цвета*/
-  --primary-color: #58CC02;
-  --primary-dark: #4CAF00;
-  --secondary-color: #FFC800;
-  --accent-color: #FF4B4B;
-  --danger-color: #FF4B4B;
-  --warning-color: #FFB020;
-  --success-color: #58CC02;
-  --info-color: #1CB0F6;
-  --purple-color: #CE82FF;
-  
+  --primary-color: #58cc02;
+  --primary-dark: #4caf00;
+  --secondary-color: #ffc800;
+  --accent-color: #ff4b4b;
+  --danger-color: #ff4b4b;
+  --warning-color: #ffb020;
+  --success-color: #58cc02;
+  --info-color: #1cb0f6;
+  --purple-color: #ce82ff;
+
   /* Светлая тема по умолчанию */
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F7F7F7;
-  --bg-tertiary: #E5E5E5;
-  --text-primary: #3C3C3C;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7f7f7;
+  --bg-tertiary: #e5e5e5;
+  --text-primary: #3c3c3c;
   --text-secondary: #777777;
-  --text-muted: #AFAFAF;
-  
-  --border-color: #E5E5E5;
+  --text-muted: #afafaf;
+
+  --border-color: #e5e5e5;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
   --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.16);
-  
+
   /* Большие радиусы для мультяшного стиля */
   --radius-sm: 12px;
   --radius-md: 16px;
@@ -33,22 +33,22 @@
 }
 
 [data-theme="dark"] {
-  --bg-primary: #131F24;
-  --bg-secondary: #1F2937;
+  --bg-primary: #131f24;
+  --bg-secondary: #1f2937;
   --bg-tertiary: #374151;
-  --text-primary: #F9FAFB;
-  --text-secondary: #D1D5DB;
-  --text-muted: #9CA3AF;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
   --border-color: #374151;
 }
 
 /* Импорт шрифта Nunito для мультяшного стиля */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap");
 
-* { 
-  margin: 0; 
-  padding: 0; 
-  box-sizing: border-box; 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
@@ -59,9 +59,14 @@ html {
 }
 
 body {
-  font-family: 'Nunito', 'Comic Sans MS', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    "Nunito",
+    "Comic Sans MS",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   /* Зеленый градиент фона */
-  background: linear-gradient(135deg, #58CC02 0%, #4CAF00 50%, #10B981 100%);
+  background: linear-gradient(135deg, #58cc02 0%, #4caf00 50%, #10b981 100%);
   background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.6;
@@ -95,7 +100,7 @@ body {
     padding: 20px 0;
     align-items: center;
   }
-  
+
   .app-container {
     max-width: 480px; /* Увеличенная ширина для десктопа */
     border-radius: var(--radius-xl);
@@ -106,7 +111,11 @@ body {
 }
 
 .app-header {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
   color: white;
   padding: 1rem 1.25rem;
   position: sticky;
@@ -141,7 +150,8 @@ body {
   flex-shrink: 0;
 }
 
-.theme-toggle, .support-btn {
+.theme-toggle,
+.support-btn {
   background: rgba(255, 255, 255, 0.25);
   border: 2px solid rgba(255, 255, 255, 0.3);
   color: white;
@@ -158,7 +168,8 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.theme-toggle:hover, .support-btn:hover {
+.theme-toggle:hover,
+.support-btn:hover {
   background: rgba(255, 255, 255, 0.4);
   transform: scale(1.1);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
@@ -169,7 +180,7 @@ body {
 }
 
 .support-btn:hover {
-  background: #FF6B6B;
+  background: #ff6b6b;
 }
 
 /* ИСПРАВЛЕНИЕ: Основной контент с правильной прокруткой */
@@ -233,7 +244,11 @@ body {
 }
 
 .section-stats {
-  background: linear-gradient(135deg, var(--secondary-color), var(--warning-color));
+  background: linear-gradient(
+    135deg,
+    var(--secondary-color),
+    var(--warning-color)
+  );
   padding: 0.5rem 1rem;
   border-radius: var(--radius-xxl);
   font-size: 0.875rem;
@@ -360,13 +375,18 @@ body {
 }
 
 .level-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 6px;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--info-color));
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--secondary-color),
+    var(--info-color)
+  );
 }
 
 .level-card:hover {
@@ -388,12 +408,24 @@ body {
   letter-spacing: 0.5px;
 }
 
-.level-badge.beginner { background: linear-gradient(135deg, #58CC02, #4CAF00); }
-.level-badge.elementary { background: linear-gradient(135deg, #1CB0F6, #0099DB); }
-.level-badge.intermediate { background: linear-gradient(135deg, #CE82FF, #A568D3); }
-.level-badge.upper-intermediate { background: linear-gradient(135deg, #FFC800, #FFB020); }
-.level-badge.advanced { background: linear-gradient(135deg, #FF4B4B, #FF6B6B); }
-.level-badge.proficiency { background: linear-gradient(135deg, #6366f1, #8B5CF6); }
+.level-badge.beginner {
+  background: linear-gradient(135deg, #58cc02, #4caf00);
+}
+.level-badge.elementary {
+  background: linear-gradient(135deg, #1cb0f6, #0099db);
+}
+.level-badge.intermediate {
+  background: linear-gradient(135deg, #ce82ff, #a568d3);
+}
+.level-badge.upper-intermediate {
+  background: linear-gradient(135deg, #ffc800, #ffb020);
+}
+.level-badge.advanced {
+  background: linear-gradient(135deg, #ff4b4b, #ff6b6b);
+}
+.level-badge.proficiency {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
 
 .word-count {
   background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
@@ -436,26 +468,30 @@ body {
 
   position: -webkit-sticky; /* Safari */
   position: sticky;
-  top: 0;                   /* было -1px */
+  top: 0; /* было -1px */
   z-index: 90;
   background: var(--bg-primary);
 
   padding: 12px 1.25rem;
   margin: 0 -1.25rem 12px -1.25rem; /* убрали отрицательный верхний отступ! */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border-bottom: 2px solid var(--border-color);
 }
 
 /* Для темной темы */
 [data-theme="dark"] .words-header {
   background: var(--bg-primary);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* Чтоб автоскролл останавливался ниже шапки */
 @media (min-width: 768px) {
-  .main-content { scroll-padding-top: 72px; }   /* подберите под фактическую высоту .words-header */
-  .words-container { scroll-margin-top: 72px; }
+  .main-content {
+    scroll-padding-top: 72px;
+  } /* подберите под фактическую высоту .words-header */
+  .words-container {
+    scroll-margin-top: 72px;
+  }
 }
 
 /* На мобильных убираем sticky */
@@ -488,7 +524,11 @@ body {
 }
 
 .back-btn:hover {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
   color: white;
   transform: translateX(-4px);
   box-shadow: var(--shadow-lg);
@@ -594,17 +634,17 @@ body {
 }
 
 .play-btn {
-  background: linear-gradient(135deg, var(--info-color), #0099DB);
+  background: linear-gradient(135deg, var(--info-color), #0099db);
   color: white;
 }
 
 .add-btn {
-  background: linear-gradient(135deg, var(--success-color), #4CAF00);
+  background: linear-gradient(135deg, var(--success-color), #4caf00);
   color: white;
 }
 
 .remove-btn {
-  background: linear-gradient(135deg, var(--danger-color), #FF6B6B);
+  background: linear-gradient(135deg, var(--danger-color), #ff6b6b);
   color: white;
 }
 
@@ -651,7 +691,11 @@ body {
 
 .add-word-btn {
   width: 100%;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
   color: white;
   border: none;
   padding: 1.125rem;
@@ -680,7 +724,11 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, var(--bg-primary), rgba(255, 255, 255, 0.98));
+  background: linear-gradient(
+    to top,
+    var(--bg-primary),
+    rgba(255, 255, 255, 0.98)
+  );
   border-top: 3px solid var(--border-color);
   display: flex;
   padding: 0.75rem;
@@ -731,7 +779,11 @@ body {
 }
 
 .nav-item.active {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
   color: white;
   border-color: var(--primary-dark);
   transform: scale(1.05);
@@ -765,7 +817,11 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
   color: white;
   border-color: var(--primary-dark);
 }
@@ -777,21 +833,21 @@ body {
 }
 
 .btn-success {
-  background: linear-gradient(135deg, var(--success-color), #4CAF00);
+  background: linear-gradient(135deg, var(--success-color), #4caf00);
   color: white;
-  border-color: #4CAF00;
+  border-color: #4caf00;
 }
 
 .btn-danger {
-  background: linear-gradient(135deg, var(--danger-color), #FF6B6B);
+  background: linear-gradient(135deg, var(--danger-color), #ff6b6b);
   color: white;
-  border-color: #FF6B6B;
+  border-color: #ff6b6b;
 }
 
 .btn-warning {
-  background: linear-gradient(135deg, var(--warning-color), #FFB020);
+  background: linear-gradient(135deg, var(--warning-color), #ffb020);
   color: white;
-  border-color: #FFB020;
+  border-color: #ffb020;
 }
 
 /* Остальные стили остаются без изменений... */
@@ -868,7 +924,12 @@ body {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--info-color));
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--secondary-color),
+    var(--info-color)
+  );
   transition: width 0.3s ease;
   border-radius: var(--radius-xxl);
 }
@@ -1021,7 +1082,7 @@ body {
     width: 32px;
     height: 32px;
   }
-  
+
   .logo-title {
     gap: 8px;
   }
@@ -1038,7 +1099,7 @@ body {
     left: auto !important;
     max-width: calc(100vw - 20px) !important;
   }
-  
+
   #voiceflow-chat iframe {
     max-width: 100% !important;
     max-height: calc(100vh - 200px) !important;
@@ -1053,7 +1114,7 @@ body {
     right: calc(50% - 240px + 20px) !important; /* Обновлено для ширины 480px */
     z-index: 900 !important;
   }
-  
+
   /* Ограничиваем размер виджета чата */
   #voiceflow-chat iframe {
     max-width: 400px !important;
@@ -1110,29 +1171,29 @@ body {
     max-width: 100%;
     border-radius: 0;
   }
-  
+
   .main-content {
     padding: 1rem;
     padding-bottom: 140px;
   }
-  
+
   .bottom-nav {
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
-  
+
   .levels-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
   }
-  
+
   .nav-item {
     padding: 0.625rem 0.25rem;
   }
-  
+
   .nav-item span {
     font-size: 0.625rem;
   }
-  
+
   .nav-item i {
     font-size: 1.125rem;
   }
@@ -1146,7 +1207,11 @@ body {
 }
 
 .nav-item.active {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
   color: white;
   border-color: var(--primary-dark);
   transform: scale(1.05);
@@ -1180,7 +1245,11 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
   color: white;
   border-color: var(--primary-dark);
 }
@@ -1192,21 +1261,21 @@ body {
 }
 
 .btn-success {
-  background: linear-gradient(135deg, var(--success-color), #4CAF00);
+  background: linear-gradient(135deg, var(--success-color), #4caf00);
   color: white;
-  border-color: #4CAF00;
+  border-color: #4caf00;
 }
 
 .btn-danger {
-  background: linear-gradient(135deg, var(--danger-color), #FF6B6B);
+  background: linear-gradient(135deg, var(--danger-color), #ff6b6b);
   color: white;
-  border-color: #FF6B6B;
+  border-color: #ff6b6b;
 }
 
 .btn-warning {
-  background: linear-gradient(135deg, var(--warning-color), #FFB020);
+  background: linear-gradient(135deg, var(--warning-color), #ffb020);
   color: white;
-  border-color: #FFB020;
+  border-color: #ffb020;
 }
 
 /* Стили для карточек с изображениями */
@@ -1281,7 +1350,12 @@ body {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--info-color));
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--secondary-color),
+    var(--info-color)
+  );
   transition: width 0.3s ease;
   border-radius: var(--radius-xxl);
 }
@@ -1421,7 +1495,11 @@ body {
 
 .mode-btn.active,
 .practice-btn.active {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
   color: white;
   box-shadow: var(--shadow-md);
 }
@@ -1564,54 +1642,54 @@ body {
     max-width: 100%;
     border-radius: 0;
   }
-  
+
   .main-content {
     padding: 1rem;
     padding-bottom: 140px; /* Больше места для скролла на мобильных */
   }
-  
+
   .bottom-nav {
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
-  
+
   .levels-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
   }
-  
+
   .nav-item {
     padding: 0.625rem 0.25rem;
   }
-  
+
   .nav-item span {
     font-size: 0.625rem;
   }
-  
+
   .nav-item i {
     font-size: 1.125rem;
   }
-  
+
   .review-word {
     font-size: 2rem;
   }
-  
+
   .review-translation {
     font-size: 1.25rem;
     padding: 0.75rem 1rem;
   }
-  
+
   .game-card {
     grid-template-columns: 1fr;
   }
-  
+
   .game-cover {
     height: 160px;
   }
-  
+
   .motivation-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .btn {
     padding: 0.75rem 1rem;
     font-size: 0.875rem;
@@ -1703,7 +1781,11 @@ img[data-image-source*="Servier"],
   top: 20px;
   left: 20px;
   z-index: 999999;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
   color: white;
   border: none;
   padding: 0.875rem 1.5rem;
@@ -1718,7 +1800,11 @@ img[data-image-source*="Servier"],
 }
 
 .game-back-btn:hover {
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark),
+    var(--primary-color)
+  );
   transform: translateY(-2px);
   box-shadow: var(--shadow-xl);
 }
@@ -1750,17 +1836,21 @@ img[data-image-source*="Servier"],
 
 .learning-word-card.learned {
   border-color: var(--accent-color);
-  background: linear-gradient(135deg, var(--bg-secondary), rgba(16, 185, 129, 0.05));
+  background: linear-gradient(
+    135deg,
+    var(--bg-secondary),
+    rgba(16, 185, 129, 0.05)
+  );
 }
 
 .learning-word-card.learned::before {
-  content: '✓';
+  content: "✓";
   position: absolute;
   top: 1rem;
   right: 1rem;
   width: 28px;
   height: 28px;
-  background: linear-gradient(135deg, var(--success-color), #4CAF00);
+  background: linear-gradient(135deg, var(--success-color), #4caf00);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -1783,13 +1873,21 @@ img[data-image-source*="Servier"],
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
   border-radius: 10px;
   border: 2px solid var(--bg-secondary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark),
+    var(--primary-color)
+  );
 }
 
 /* Исправления для review и learning режимов */
@@ -1861,7 +1959,7 @@ img[data-image-source*="Servier"],
     left: auto !important;
     max-width: calc(100vw - 20px) !important;
   }
-  
+
   #voiceflow-chat iframe {
     max-width: 100% !important;
     max-height: calc(100vh - 200px) !important;
@@ -1997,8 +2095,13 @@ img[data-image-source*="Servier"],
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 /* Когда показываем ошибку, делаем iframe меньше */
@@ -2015,11 +2118,11 @@ img[data-image-source*="Servier"],
     text-align: center;
     padding: 20px;
   }
-  
+
   .vpn-content {
     text-align: center;
   }
-  
+
   .vpn-icon {
     font-size: 40px;
   }
@@ -2046,7 +2149,7 @@ img[data-image-source*="Servier"],
 .sentence-instruction-icon {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, var(--info-color), #0099DB);
+  background: linear-gradient(135deg, var(--info-color), #0099db);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -2067,7 +2170,7 @@ img[data-image-source*="Servier"],
 .grammar-lamp {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, #FFD700, #FFA500);
+  background: linear-gradient(135deg, #ffd700, #ffa500);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -2080,10 +2183,11 @@ img[data-image-source*="Servier"],
 }
 
 @keyframes lampGlow {
-  0%, 100% { 
+  0%,
+  100% {
     box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
   }
-  50% { 
+  50% {
     box-shadow: 0 2px 20px rgba(255, 215, 0, 0.6);
   }
 }
@@ -2124,21 +2228,37 @@ img[data-image-source*="Servier"],
   color: white;
 }
 
-.level-A1 { background: linear-gradient(135deg, #58CC02, #4CAF00); }
-.level-A2 { background: linear-gradient(135deg, #1CB0F6, #0099DB); }
-.level-B1 { background: linear-gradient(135deg, #CE82FF, #A568D3); }
-.level-B2 { background: linear-gradient(135deg, #FFC800, #FFB020); }
-.level-C1 { background: linear-gradient(135deg, #FF4B4B, #FF6B6B); }
-.level-C2 { background: linear-gradient(135deg, #6366f1, #8B5CF6); }
-.level-IDIOMS { background: linear-gradient(135deg, #FFC800, #FFB020); }
-.level-MEDICAL { background: linear-gradient(135deg, #10B981, #059669); }
+.level-A1 {
+  background: linear-gradient(135deg, #58cc02, #4caf00);
+}
+.level-A2 {
+  background: linear-gradient(135deg, #1cb0f6, #0099db);
+}
+.level-B1 {
+  background: linear-gradient(135deg, #ce82ff, #a568d3);
+}
+.level-B2 {
+  background: linear-gradient(135deg, #ffc800, #ffb020);
+}
+.level-C1 {
+  background: linear-gradient(135deg, #ff4b4b, #ff6b6b);
+}
+.level-C2 {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+.level-IDIOMS {
+  background: linear-gradient(135deg, #ffc800, #ffb020);
+}
+.level-MEDICAL {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
 
 .sentence-sound-btn {
   position: absolute;
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  background: linear-gradient(135deg, var(--info-color), #0099DB);
+  background: linear-gradient(135deg, var(--info-color), #0099db);
   border: none;
   color: white;
   width: 36px;
@@ -2163,8 +2283,13 @@ img[data-image-source*="Servier"],
 }
 
 @keyframes soundPulse {
-  0%, 100% { transform: translateY(-50%) scale(1); }
-  50% { transform: translateY(-50%) scale(1.15); }
+  0%,
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.15);
+  }
 }
 
 /* Answer Area */
@@ -2193,8 +2318,13 @@ img[data-image-source*="Servier"],
 }
 
 @keyframes correctBounce {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
 }
 
 .sentence-answer-area.incorrect {
@@ -2204,9 +2334,16 @@ img[data-image-source*="Servier"],
 }
 
 @keyframes wrongShake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
 
 .assembled-sentence {
@@ -2244,7 +2381,11 @@ img[data-image-source*="Servier"],
 }
 
 .sentence-word:hover:not(.used) {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
   color: white;
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
@@ -2294,11 +2435,11 @@ img[data-image-source*="Servier"],
 }
 
 .sentence-clear-btn:hover {
-  background: linear-gradient(135deg, var(--warning-color), #FFB020);
+  background: linear-gradient(135deg, var(--warning-color), #ffb020);
   color: white;
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
-  border-color: #FFB020;
+  border-color: #ffb020;
 }
 
 .sentence-skip-btn {
@@ -2307,17 +2448,21 @@ img[data-image-source*="Servier"],
 }
 
 .sentence-skip-btn:hover {
-  background: linear-gradient(135deg, var(--info-color), #0099DB);
+  background: linear-gradient(135deg, var(--info-color), #0099db);
   color: white;
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
-  border-color: #0099DB;
+  border-color: #0099db;
 }
 
 /* Check Button */
 .sentence-check-btn {
   width: 100%;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark)
+  );
   color: white;
   border: 3px solid var(--primary-dark);
   padding: 1rem;
@@ -2345,8 +2490,8 @@ img[data-image-source*="Servier"],
 }
 
 .sentence-check-btn.continue {
-  background: linear-gradient(135deg, var(--info-color), #0099DB);
-  border-color: #0099DB;
+  background: linear-gradient(135deg, var(--info-color), #0099db);
+  border-color: #0099db;
 }
 
 /* Feedback Message */
@@ -2374,14 +2519,14 @@ img[data-image-source*="Servier"],
 }
 
 .sentence-feedback.correct {
-  background: linear-gradient(135deg, #D7FFB8, #a7f3d0);
+  background: linear-gradient(135deg, #d7ffb8, #a7f3d0);
   color: #22c55e;
   border: 3px solid #22c55e;
   display: block;
 }
 
 .sentence-feedback.incorrect {
-  background: linear-gradient(135deg, #FFDFE0, #fecaca);
+  background: linear-gradient(135deg, #ffdfe0, #fecaca);
   color: #ef4444;
   border: 3px solid #ef4444;
   display: block;
@@ -2516,8 +2661,8 @@ img[data-image-source*="Servier"],
 }
 
 .grammar-tip {
-  background: linear-gradient(135deg, #FFF9E6, #FFE4B5);
-  border: 2px solid #FFD700;
+  background: linear-gradient(135deg, #fff9e6, #ffe4b5);
+  border: 2px solid #ffd700;
   border-radius: var(--radius-lg);
   padding: 1rem;
   margin: 1rem 0;
@@ -2525,7 +2670,7 @@ img[data-image-source*="Servier"],
 
 .grammar-tip-title {
   font-weight: 800;
-  color: #FF9500;
+  color: #ff9500;
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
@@ -2537,25 +2682,67 @@ img[data-image-source*="Servier"],
   .sentence-builder-container {
     padding: 1rem;
   }
-  
+
   .sentence-instruction-text {
     font-size: 1.125rem;
   }
-  
+
   .russian-text {
     font-size: 1.125rem;
   }
-  
+
   .sentence-word {
     padding: 0.625rem 1rem;
     font-size: 0.9rem;
   }
-  
+
   .sentence-controls {
     flex-direction: column;
   }
-  
+
   .grammar-modal-content {
     padding: 1.5rem;
   }
+}
+
+/* CTA: Подобрать словарь под тебя */
+.auto-dict-inline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.auto-dict-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.9rem 1.25rem;
+  border-radius: var(--radius-xxl);
+  border: 3px solid rgba(255,255,255,0.35);
+  background: linear-gradient(135deg, var(--info-color), var(--purple-color));
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 10px 24px rgba(28,176,246,0.25), 0 6px 16px rgba(206,130,255,0.25);
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+
+.auto-dict-btn i {
+  font-size: 1.1rem;
+}
+
+.auto-dict-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(28,176,246,0.35), 0 10px 28px rgba(206,130,255,0.35);
+  filter: brightness(1.05);
+}
+
+.auto-dict-btn:active {
+  transform: translateY(0);
+}
+
+[data-theme="dark"] .auto-dict-btn {
+  border-color: rgba(255,255,255,0.2);
 }
