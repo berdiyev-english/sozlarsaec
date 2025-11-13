@@ -2723,13 +2723,25 @@ img[data-image-source*="Servier"],
   margin-top: 0.75rem; /* было 2rem */
 }
 
+/* В режиме списка отключаем «тяжёлые» анимации/переходы, чтобы работало шустрее */
+#levels.list-open .words-container,
+#levels.list-open .words-header,
+#levels.list-open .word-card {
+  animation: none !important;
+  transition: none !important;
+}
+#levels.list-open .word-card:hover {
+  transform: none !important;
+  box-shadow: var(--shadow-md) !important; /* без тяжёлых теней */
+}
+
 /* Верхний блок с CTA (в верхнем отступе) */
 #levels .auto-dict-top {
   display: flex;
   justify-content: flex-end;
-  /* подгоняем ширину, как у .words-header */
-  margin: 0 -1.25rem 8px -1.25rem;
-  padding: 8px 1.25rem 0 1.25rem;
+  /* Чуть меньше сверху, побольше снизу */
+  margin: 4px -1.25rem 16px -1.25rem;  /* было: 0 -1.25rem 8px -1.25rem */
+  padding: 0 1.25rem;                  /* убрали верхний паддинг */
 }
 
 /* Шапка списка: заголовок слева, действия справа — строго в одну строку */
@@ -2748,7 +2760,7 @@ img[data-image-source*="Servier"],
   text-overflow: ellipsis;
 }
 
-/* Блок с действиями — справа от заголовка */
+/* Блок с действиями — справа от заголовка (кнопка «Учить все») */
 #levels .level-bulk-actions {
   margin-left: auto;
   display: flex;
@@ -2790,5 +2802,6 @@ img[data-image-source*="Servier"],
     flex-wrap: wrap;
   }
 }
+
 
 
