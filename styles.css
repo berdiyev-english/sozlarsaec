@@ -2746,3 +2746,25 @@ img[data-image-source*="Servier"],
 [data-theme="dark"] .auto-dict-btn {
   border-color: rgba(255,255,255,0.2);
 }
+/* Ряд действий в шапке списка слов */
+#levels .level-bulk-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap; /* разрешаем перенос кнопок на новую строку */
+}
+
+/* "Учить все" — всегда в первой строке */
+#levels .level-bulk-actions #bulkToggleBtn {
+  order: 1;
+}
+
+/* "Словарь под тебя" — после, на новой строке при нехватке места */
+#levels .level-bulk-actions .auto-dict-inline {
+  order: 2;
+  flex-basis: 100%;           /* переносим на новую строку */
+  display: flex;
+  justify-content: flex-end;  /* справа */
+  margin-top: 6px;
+}
