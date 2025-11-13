@@ -858,24 +858,41 @@ initializeUI() {
 
 ensureAutoDictButton() {
   try {
+    // Если кнопка уже есть — не дублируем
     let btn = document.getElementById('autoDictStartBtn');
     if (btn) return;
 
-    const host = document.querySelector('#levels .section-header')
-      || document.querySelector('#levels .levels-header')
-      || document.querySelector('#levels');
+    // 1) Пытаемся вставить в шапку списка слов (если уже открыт уровень/категория)
+    const wordsHeaderHost =
+      document.querySelector('#levels .words-header .level-bulk-actions') ||
+      document.querySelector('#levels .words-header');
 
+    // 2) Иначе — в шапку секции "Уровни"
+    const sectionHeaderHost =
+      document.querySelector('#levels .section-header') ||
+      document.querySelector('#levels');
+
+    const host = wordsHeaderHost || sectionHeaderHost;
     if (!host) return;
+
+    // Обертка для отступов (чтобы кнопка выглядела аккуратно в хедере)
+    const wrap = document.createElement('div');
+    wrap.className = 'auto-dict-inline';
 
     btn = document.createElement('button');
     btn.id = 'autoDictStartBtn';
-    btn.className = 'btn btn-primary';
-    btn.style.cssText = 'margin:10px 0;font-weight:700;';
+    btn.className = 'btn auto-dict-btn'; // новая стилизованная кнопка
     btn.innerHTML = '<i class="fas fa-magic"></i> Подобрать словарь под тебя';
     btn.addEventListener('click', () => this.showAutoDictionaryTest());
 
-    if (host.firstChild) host.insertBefore(btn, host.firstChild);
-    else host.appendChild(btn);
+    wrap.appendChild(btn);
+
+    // Если нашли .level-bulk-actions — вставляем рядом с другими кнопками, иначе — в общий header
+    if (wordsHeaderHost) {
+      wordsHeaderHost.insertAdjacentElement('afterbegin', wrap);
+    } else {
+      host.appendChild(wrap);
+    }
   } catch (e) {
     console.warn('ensureAutoDictButton error:', e);
   }
@@ -1517,10 +1534,6 @@ switchSection(section) {
       this.renderLearningSection();
     }
     
-    // УДАЛИТЬ эти строки (нет отдельной секции list)
-    // if (section === 'list') {
-    //   this.renderListSection();
-    // }
     
     if (section === 'progress') this.renderProgress();
     
@@ -3342,7 +3355,6 @@ renderLearningSection() {
   // Обработка режима "Список слов"
   if (this.currentPractice === 'list') {
     this.renderWordsList();
-    this.insertAutoDictionaryButtonInLearning(container);
     return;
   }
 
@@ -3354,7 +3366,6 @@ renderLearningSection() {
         <h3>Добавьте слова из "Списка слов", чтобы практиковаться</h3>
       </div>
     `;
-    this.insertAutoDictionaryButtonInLearning(container);
     return;
   }
 
@@ -3369,8 +3380,6 @@ renderLearningSection() {
   } else {
     this.renderQuiz();
   }
-
-  this.insertAutoDictionaryButtonInLearning(container);
 }
 
 insertAutoDictionaryButtonInLearning(containerEl) {
