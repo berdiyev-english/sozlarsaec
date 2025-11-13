@@ -2781,13 +2781,11 @@ img[data-image-source*="Servier"],
   font-weight: 900;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  box-shadow: 0 10px 24px rgba(28,176,246,0.25), 0 6px 16px rgba(206,130,255,0.25);
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
 .auto-dict-btn i { font-size: 1.1rem; }
 .auto-dict-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 32px rgba(28,176,246,0.35), 0 10px 28px rgba(206,130,255,0.35);
   filter: brightness(1.05);
 }
 [data-theme="dark"] .auto-dict-btn { border-color: rgba(255,255,255,0.2); }
@@ -2798,6 +2796,7 @@ img[data-image-source*="Servier"],
     flex-wrap: wrap;
   }
 }
+
 
 
 
