@@ -843,15 +843,11 @@ if (cat === 'ADDED') {
 
 ensureAutoDictButton() {
   try {
-    // Пытаемся вставить ТОЛЬКО в шапку списка слов
-    const wordsHeaderHost =
-      document.querySelector('#levels .words-header .level-bulk-actions') ||
-      document.querySelector('#levels .words-header');
-
-    // Если список не открыт — очищаем кнопку, если вдруг осталась
-    const existWrap = document.querySelector('#levels .auto-dict-inline');
-    if (!wordsHeaderHost) {
-      if (existWrap) existWrap.remove();
+    const header = document.querySelector('#levels .words-header');
+    if (!header) {
+      // Если нет шапки — удалим кнопку, если вдруг висит
+      const old = document.querySelector('#levels .auto-dict-inline');
+      if (old) old.remove();
       return;
     }
 
@@ -865,15 +861,11 @@ ensureAutoDictButton() {
     btn.className = 'btn auto-dict-btn';
     btn.innerHTML = '<i class="fas fa-magic"></i> Подобрать словарь под тебя';
     btn.addEventListener('click', () => this.showAutoDictionaryTest());
-
     wrap.appendChild(btn);
 
-if (wordsHeaderHost.classList.contains('level-bulk-actions')) {
-  // Вставляем в конец, чтобы "Учить все" оставалась первой справа от заголовка
-  wordsHeaderHost.appendChild(wrap);
-} else {
-  wordsHeaderHost.appendChild(wrap);
-}
+    // ВАЖНО: ставим КАК СИБЛИНГ ПОСЛЕ .words-header (а не внутрь actions)
+    header.insertAdjacentElement('afterend', wrap);
+
   } catch (e) {
     console.warn('ensureAutoDictButton error:', e);
   }
@@ -1574,34 +1566,25 @@ toggleLevelsIndexVisibility(showIndex) {
   const levelsSection = document.getElementById('levels');
   if (!levelsSection) return;
 
-  // Прячем/показываем заголовок секции (Слова по уровням / Категории)
-  const sectionHeader = levelsSection.querySelector('.section-header');
-  if (sectionHeader) {
-    sectionHeader.style.display = showIndex ? '' : 'none';
-  }
-
-  // Прячем все возможные гриды карточек (уровни и категории)
-  const selectorsToToggle = [
-    '.levels-grid',
-    '.categories-grid',
-    '.level-cards',
-    '.category-cards',
-    '.levels-list',
-    '.categories',
-    '.levels-wrapper',
-    '.categories-wrapper'
-  ];
-  selectorsToToggle.forEach(sel => {
-    levelsSection.querySelectorAll(sel).forEach(node => {
-      node.style.display = showIndex ? '' : 'none';
-    });
-  });
+  // Вешаем/снимаем класс режима списка
+  levelsSection.classList.toggle('list-open', !showIndex);
 
   // Показ/скрытие контейнера со словами
   const wordsContainer = document.getElementById('wordsContainer');
   if (wordsContainer) {
     wordsContainer.classList.toggle('hidden', showIndex);
   }
+
+  // Дополнительно: прячем любые заголовки "Слова по уровням" / "Категории"
+  // на случай если у них другие классы
+  const hideByText = ['слова по уровням', 'категории'];
+  levelsSection.querySelectorAll('h1,h2,h3,h4').forEach(h => {
+    const t = (h.textContent || '').trim().toLowerCase();
+    const match = hideByText.some(x => t.includes(x));
+    if (match) {
+      h.style.display = showIndex ? '' : 'none';
+    }
+  });
 }
 
 showLevelWords(level) {
