@@ -868,11 +868,12 @@ ensureAutoDictButton() {
 
     wrap.appendChild(btn);
 
-    if (wordsHeaderHost.classList.contains('level-bulk-actions')) {
-      wordsHeaderHost.insertAdjacentElement('afterbegin', wrap);
-    } else {
-      wordsHeaderHost.appendChild(wrap);
-    }
+if (wordsHeaderHost.classList.contains('level-bulk-actions')) {
+  // Вставляем в конец, чтобы "Учить все" оставалась первой справа от заголовка
+  wordsHeaderHost.appendChild(wrap);
+} else {
+  wordsHeaderHost.appendChild(wrap);
+}
   } catch (e) {
     console.warn('ensureAutoDictButton error:', e);
   }
@@ -1570,10 +1571,16 @@ switchSection(section) {
   }
 
 toggleLevelsIndexVisibility(showIndex) {
-  // Прячем все возможные гриды/контейнеры списка уровней/категорий
   const levelsSection = document.getElementById('levels');
   if (!levelsSection) return;
 
+  // Прячем/показываем заголовок секции (Слова по уровням / Категории)
+  const sectionHeader = levelsSection.querySelector('.section-header');
+  if (sectionHeader) {
+    sectionHeader.style.display = showIndex ? '' : 'none';
+  }
+
+  // Прячем все возможные гриды карточек (уровни и категории)
   const selectorsToToggle = [
     '.levels-grid',
     '.categories-grid',
@@ -1584,15 +1591,13 @@ toggleLevelsIndexVisibility(showIndex) {
     '.levels-wrapper',
     '.categories-wrapper'
   ];
-
-  // Скрыть/показать индекс (карточки)
   selectorsToToggle.forEach(sel => {
     levelsSection.querySelectorAll(sel).forEach(node => {
       node.style.display = showIndex ? '' : 'none';
     });
   });
 
-  // Показать/спрятать контейнер со словами
+  // Показ/скрытие контейнера со словами
   const wordsContainer = document.getElementById('wordsContainer');
   if (wordsContainer) {
     wordsContainer.classList.toggle('hidden', showIndex);
