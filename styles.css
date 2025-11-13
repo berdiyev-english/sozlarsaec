@@ -2768,3 +2768,20 @@ img[data-image-source*="Servier"],
   justify-content: flex-end;  /* справа */
   margin-top: 6px;
 }
+/* Когда открыт список слов — прячем верхние заголовки и гриды уровней/категорий */
+#levels.list-open .section-header,
+#levels.list-open .levels-grid,
+#levels.list-open .categories-grid,
+#levels.list-open .level-cards,
+#levels.list-open .category-cards,
+#levels.list-open .levels-list,
+#levels.list-open .categories,
+#levels.list-open .levels-wrapper,
+#levels.list-open .categories-wrapper {
+  display: none !important;
+}
+
+/* Контейнер со словами должен быть виден в режиме списка */
+#levels.list-open #wordsContainer {
+  display: block !important;
+}
