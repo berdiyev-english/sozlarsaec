@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -186,6 +185,38 @@
       top: 20px;
     }
   }
+  
+  /* Оптимизация анимаций для мобильных */
+@media (max-width: 768px) {
+    /* Включаем аппаратное ускорение */
+    .words-container {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    
+    /* Оптимизация скролла */
+    .main-content {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+}
+
+/* Плавность анимаций на всех устройствах */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Предотвращение дерганий при скролле */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
   /* Скрываем на десктопе */
   @media (min-width: 1024px) {
@@ -313,7 +344,7 @@
         <a href="/" class="logo-link" onclick="location.reload(); return false;">
           <img src="/logo1.png" alt="BeWords" class="app-logo">
         </a>
-        <h1 class="app-title">BeWords.ru</h1>
+        <h1 class="app-title">BeWords</h1>
       </div>
       <div class="header-actions">
         <button class="support-btn" id="supportBtn" data-testid="support-btn" title="Поддержать проект">
@@ -427,126 +458,58 @@
       </div>
     </section>
 
-    <!-- Learning -->
-    <section id="learning" class="content-section">
-      <div class="section-header">
-        <h2>Изучаю</h2>
-        <div class="section-stats"><span id="learningCount">0 слов</span></div>
-      </div>
+<!-- Learning -->
+<section id="learning" class="content-section">
+  <div class="section-header">
+    <h2>Изучаю</h2>
+    <div class="section-stats"><span id="learningCount">0 слов</span></div>
+  </div>
 
-      <p class="mode-help">
-        Всего доступно 2 режима обучения :<br><br>
-        1) Учить - умный алгоритм будет добавлять вам слова для заучивания по немножку <br>
-        2) Повторение - повторяйте весь список слов за раз <br><br>
-        * Флешкарточки — показывается слово и перевод; ответ скрыт до нажатия.<br>
-        * Quiz — одно слово и 4 варианта; правильное слово произносится после ответа.<br>
-      </p>
+  <p class="mode-help">
+    Режимы практики:<br><br>
+    1) Заучивание - нужен когда вы хотите выучить слова которые вам не знакомы. В данном режиме система будет потихоньку увеличивать количество слов в зависимости от вашего ответа. Если вы не видите всех слов которые вы добавили в этом режиме , то так и надо, так как сразу 100 и более слов за один подход не учат<br>
+   <br> 2) Повторение - нужен если вы хотите вспомнить или повторить слова<br>
+  </p>
 
-      <div class="toggles-row">
-        <div class="mode-toggle" role="tablist" aria-label="study mode">
-          <button class="mode-btn active" data-mode="quiz" id="modeQuiz" data-testid="mode-quiz">Quiz</button>
-          <button class="mode-btn" data-mode="flashcards" id="modeFlashcards" data-testid="mode-flashcards">Флешкарточки</button>
-          <button class="mode-btn" data-mode="list" id="modeList" data-testid="mode-list">Список слов</button>
-        </div>
-        <div class="practice-toggle" role="tablist" aria-label="practice mode">
-          <button class="practice-btn active" data-practice="scheduled" id="practiceScheduled" data-testid="practice-scheduled">Учить</button>
-          <button class="practice-btn" data-practice="endless" id="practiceEndless" data-testid="practice-endless">Повторение</button>
-        </div>
-      </div>
+<div class="toggles-row">
+  <div class="mode-toggle" role="tablist" aria-label="study mode">
+    <button class="mode-btn active" data-mode="quiz" id="modeQuiz" data-testid="mode-quiz">Quiz</button>
+    <button class="mode-btn" data-mode="flashcards" id="modeFlashcards" data-testid="mode-flashcards">Флешкарточки</button>
+    <button class="mode-btn" data-mode="trainer" id="modeTrainer" data-testid="mode-trainer">Тренажер</button>
+  </div>
+  <div class="practice-toggle" role="tablist" aria-label="practice mode">
+    <button class="practice-btn active" data-practice="scheduled" id="practiceScheduled" data-testid="practice-scheduled">Заучивание</button>
+    <button class="practice-btn" data-practice="endless" id="practiceEndless" data-testid="practice-endless">Повторение</button>
+    <button class="practice-btn" data-practice="list" id="practiceList" data-testid="practice-list">
+      <i class="fas fa-list"></i> Список
+    </button>
+  </div>
+</div>
 
-      <div id="learningWordsList" class="words-list">
-        <div class="empty-state">
-          <i class="fas fa-book-open"></i>
-          <h3>Пока нет слов для изучения</h3>
-          <p>Добавьте слова из списка по уровням или создайте новые</p>
-        </div>
-      </div>
-    </section>
-
+<div id="learningWordsList" class="learning-words-list"></div>
+</section>
     <!-- New Words -->
-    <section id="new-words" class="content-section">
-      <div class="section-header">
-        <h2>Загрузите новые слова</h2>
-      </div>
+  <section id="new-words" class="content-section"> <div id="translatorWidget" class="translator-card"> <div class="translator-header"> <h3>BeWords - Translate</h3> <p>Ищите слова и фразы и добавляйте их на изучение</p> </div>
+<div class="tr-lang-row">
+  <button class="tr-lang-btn active" id="trRuBtn" type="button">🇷🇺 Русский</button>
+  <button class="tr-swap-btn" id="trSwapBtn" type="button" title="Поменять местами">⇄</button>
+  <button class="tr-lang-btn" id="trEnBtn" type="button">🇬🇧 English</button>
+</div>
 
-     <p class="mode-help">
-        Загружайте свои собственные слова и фразы<br><br>
-        Все слова автоматически получают озвучку и фото и попадают в ваш словарь после загрузки <br><br>
-        После загрузки перейдите в пункт "Изучаю" и ваши слова уже будут ждать вас<br>
-      </p>
-      
-      <!-- Single add -->
-      <div class="add-word-form">
-        <div class="form-group">
-          <label for="newWord">Английское слово</label>
-          <input type="text" id="newWord" placeholder="Введите слово на английском" data-testid="new-word-input">
-        </div>
-        <div class="form-group">
-          <label for="newTranslation">Перевод</label>
-          <input type="text" id="newTranslation" placeholder="Введите перевод" data-testid="new-translation-input">
-        </div>
-        <div class="form-group">
-          <label for="newLevel">Уровень</label>
-          <select id="newLevel" data-testid="new-level-select">
-            <option value="A1">A1 - Beginner</option>
-            <option value="A2">A2 - Elementary</option>
-            <option value="B1">B1 - Intermediate</option>
-            <option value="B2">B2 - Upper-Intermediate</option>
-            <option value="C1">C1 - Advanced</option>
-            <option value="C2">C2 - Proficiency</option>
-            <option value="IRREGULARS">Irregular Verbs</option>
-            <option value="PREPOSITIONS">Prepositions</option>
-          </select>
-        </div>
-        <button class="add-word-btn" id="addWordBtn" data-testid="add-word-btn">
-          <i class="fas fa-plus"></i>
-          Добавить слово
-        </button>
-      </div>
+<div class="tr-input-row">
+  <input type="text" id="trInputText" placeholder="Введите слово или фразу..." />
+  <button id="trTranslateBtn" type="button">Перевести</button>
+</div>
 
-      <!-- Bulk add -->
-      <div class="add-word-form" id="bulkAddForm">
-        <h3 style="margin-bottom:8px;">Массовое добавление</h3>
-        <p class="mode-help" id="bulkHelp" data-testid="bulk-help">
-          Приложение поддерживает массовое добавление слов и фраз<br><br>
-          Каждое английское слово / фразу вводите с новой строки<br><br>
-          Перевод указывается через "-" <br><br>
-        </p>
-        <div class="form-group">
-          <label for="bulkLevel">Уровень для всех слов</label>
-          <select id="bulkLevel" data-testid="bulk-level-select">
-            <option value="A1">A1 - Beginner</option>
-            <option value="A2">A2 - Elementary</option>
-            <option value="B1">B1 - Intermediate</option>
-            <option value="B2">B2 - Upper-Intermediate</option>
-            <option value="C1">C1 - Advanced</option>
-            <option value="C2">C2 - Proficiency</option>
-            <option value="IRREGULARS">Irregular Verbs</option>
-            <option value="PREPOSITIONS">Prepositions</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="bulkTextarea">Вставьте строки</label>
-          <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;go - идти, ехать, ходить&#10;table - стол&#10;run - бежать, запускать" data-testid="bulk-textarea" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);border-radius:var(--radius-md);background:var(--bg-primary);color:var(--text-primary);"></textarea>
-        </div>
-        <button class="add-word-btn" id="bulkAddBtn" data-testid="bulk-add-btn">
-          <i class="fas fa-file-import"></i>
-          Добавить список
-        </button>
-      </div>
+<div class="translator-loading" id="trLoading">
+  <div class="tr-spinner"></div>
+  <p>Анализирую варианты перевода...</p>
+</div>
 
-      <div id="customWordsList" class="words-list">
-        <h3>Добавленные слова</h3>
-        <div id="customWords">
-          <div class="empty-state">
-            <i class="fas fa-plus-circle"></i>
-            <h3>Нет добавленных слов</h3>
-            <p>Используйте формы выше для добавления новых слов</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
+<div class="translator-error" id="trError"></div>
+<div class="translator-results" id="trResults"></div>
+</div> <div class="section-header"> <h2>Загрузите новые слова</h2> </div> <div class="toggles-row"> <div class="upload-toggle" role="tablist" aria-label="upload mode"> <button class="upload-btn active" id="uploadTabSingle" data-tab="single">Одно слово</button> <button class="upload-btn" id="uploadTabBulk" data-tab="bulk">Массовое добавление</button> </div> </div> <p id="singleHelp" class="mode-help"> Введите слово на английском и перевод на русский. После добавления слово сразу попадёт в ваш словарь. </p> <div class="add-word-form" id="singleAddForm"> <div class="form-group"> <label for="newWord">Английское слово</label> <input type="text" id="newWord" placeholder="Введите слово на английском" data-testid="new-word-input"> </div> <div class="form-group"> <label for="newTranslation">Перевод</label> <input type="text" id="newTranslation" placeholder="Введите перевод" data-testid="new-translation-input"> </div> <div class="form-group"> <label for="newLevel">Уровень</label> <select id="newLevel" data-testid="new-level-select"> <option value="A1">A1 - Beginner</option> <option value="A2">A2 - Elementary</option> <option value="B1">B1 - Intermediate</option> <option value="B2">B2 - Upper-Intermediate</option> <option value="C1">C1 - Advanced</option> <option value="C2">C2 - Proficiency</option> <option value="IRREGULARS">Irregular Verbs</option> <option value="PREPOSITIONS">Prepositions</option> </select> </div> <button class="add-word-btn" id="addWordBtn" data-testid="add-word-btn"> <i class="fas fa-plus"></i> Добавить слово </button> </div> <div class="add-word-form" id="bulkAddForm" style="display:none;"> <h3 style="margin-bottom:8px;">Массовое добавление</h3> <p class="mode-help" id="bulkHelp" data-testid="bulk-help"> Каждое английское слово / фразу вводите с новой строки.<br><br> Перевод указывается через "-" (например: go - идти, ехать, ходить) </p> <div class="form-group"> <label for="bulkLevel">Уровень для всех слов</label> <select id="bulkLevel" data-testid="bulk-level-select"> <option value="A1">A1 - Beginner</option> <option value="A2">A2 - Elementary</option> <option value="B1">B1 - Intermediate</option> <option value="B2">B2 - Upper-Intermediate</option> <option value="C1">C1 - Advanced</option> <option value="C2">C2 - Proficiency</option> <option value="IRREGULARS">Irregular Verbs</option> <option value="PREPOSITIONS">Prepositions</option> </select> </div> <div class="form-group"> <label for="bulkTextarea">Вставьте строки</label> <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;go - идти, ехать, ходить&#10;table - стол&#10;run - бежать, запускать" data-testid="bulk-textarea" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);border-radius:var(--radius-md);background:var(--bg-primary);color:var(--text-primary);"></textarea> </div> <button class="add-word-btn" id="bulkAddBtn" data-testid="bulk-add-btn"> <i class="fas fa-file-import"></i> Добавить список </button> </div> <div id="customWordsList" class="words-list"> <h3>Добавленные слова</h3> <div id="customWords"> <div class="empty-state"> <i class="fas fa-plus-circle"></i> <h3>Нет добавленных слов</h3> <p>Используйте формы выше для добавления новых слов</p> </div> </div> </div> </section>
+  
     <!-- Progress -->
     <section id="progress" class="content-section">
       <div class="section-header">
@@ -658,31 +621,32 @@
 </section>
   </main>
 
-  <nav class="bottom-nav" id="bottomNav">
-    <button class="nav-item active" type="button" data-section="levels" data-testid="nav-levels" onclick="window.app && app.switchSection('levels')">
-      <i class="fas fa-layer-group"></i><span>Списки</span>
-    </button>
-    <button class="nav-item" type="button" data-section="learning" data-testid="nav-learning" onclick="window.app && app.switchSection('learning')">
-      <i class="fas fa-book-reader"></i><span>Изучаю</span>
-    </button>
-    <button class="nav-item" type="button" data-section="new-words" data-testid="nav-new-words" onclick="window.app && app.switchSection('new-words')">
-      <i class="fas fa-plus"></i><span>Загрузить</span>
-    </button>
-    <button class="nav-item" type="button" data-section="progress" data-testid="nav-progress" onclick="window.app && app.switchSection('progress')">
-      <i class="fas fa-chart-line"></i><span>Прогресс</span>
-    </button>
-    <button class="nav-item" type="button" data-section="games" data-testid="nav-games" onclick="window.app && app.switchSection('games')">
-      <i class="fas fa-gamepad"></i><span>Игры</span>
-    </button>
-    <button class="nav-item" type="button" data-section="ai-chat" data-testid="nav-ai-chat" onclick="window.app && app.switchSection('ai-chat')">
-      <i class="fas fa-robot"></i><span>ИИ</span>
-    </button>
-  </nav>
+<nav class="bottom-nav" id="bottomNav">
+  <button class="nav-item active" type="button" data-section="levels" data-testid="nav-levels">
+    <i class="fas fa-layer-group"></i><span>Списки</span>
+  </button>
+  <button class="nav-item" type="button" data-section="learning" data-testid="nav-learning">
+    <i class="fas fa-book-reader"></i><span>Изучаю</span>
+  </button>
+  <button class="nav-item" type="button" data-section="new-words" data-testid="nav-new-words">
+    <i class="fas fa-plus"></i><span>Загрузить</span>
+  </button>
+  <button class="nav-item" type="button" data-section="progress" data-testid="nav-progress">
+    <i class="fas fa-chart-line"></i><span>Прогресс</span>
+  </button>
+  <button class="nav-item" type="button" data-section="games" data-testid="nav-games">
+    <i class="fas fa-gamepad"></i><span>Игры</span>
+  </button>
+  <button class="nav-item" type="button" data-section="ai-chat" data-testid="nav-ai-chat">
+    <i class="fas fa-robot"></i><span>ИИ</span>
+  </button>
+</nav>
 </div>
 
 <audio id="audioPlayer" preload="none"></audio>
 
 <script src="oxford_words_data.js"></script>
+<script src="sentences-data.js"></script>
 <script src="app.js"></script>
 <script>
   // Service Worker registration (image caching)
@@ -816,126 +780,212 @@ window.addEventListener('load', function() {
   const banner = document.getElementById('appInstallBanner');
   const installBtn = document.getElementById('bannerInstallBtn');
   
-  // УБИРАЕМ проверку localStorage - баннер будет показываться каждый раз
+  if (!banner || !installBtn) return;
   
-  // Определяем устройство и ОС
   const userAgent = navigator.userAgent.toLowerCase();
   const isIOS = /iphone|ipad|ipod/.test(userAgent);
   const isAndroid = /android/.test(userAgent);
   const isMobile = /mobile/.test(userAgent);
   const isTablet = /tablet|ipad|playbook|silk/.test(userAgent);
   
-  // Проверяем, запущено ли как PWA
   const isStandalone = window.navigator.standalone || 
                        window.matchMedia('(display-mode: standalone)').matches ||
                        window.matchMedia('(display-mode: fullscreen)').matches;
   
-  // Для Android проверяем referrer (если пришли из вашего APK)
   const isFromApp = document.referrer.includes('android-app://');
   
-  // Показываем баннер только на мобильных/планшетах и не в приложении
-  if ((isMobile || isTablet) && !isStandalone && !isFromApp) {
+  // Проверяем, нужно ли показывать баннер
+  const shouldShowBanner = (isMobile || isTablet) && !isStandalone && !isFromApp;
+  
+  if (!shouldShowBanner) return;
+  
+  // Настраиваем кнопку в зависимости от ОС
+  if (isIOS) {
+    installBtn.textContent = 'Установить';
+    installBtn.href = '/iphone.html';
+    installBtn.onclick = function(e) {
+      if (typeof ym !== 'undefined') {
+        ym(105128338, 'reachGoal', 'install_instructions_ios');
+      }
+    };
+  } else if (isAndroid) {
+    installBtn.textContent = 'Скачать';
+    installBtn.href = '/android.html';
+    installBtn.onclick = function(e) {
+      if (typeof ym !== 'undefined') {
+        ym(105128338, 'reachGoal', 'download_app_android');
+      }
+    };
+  } else {
+    installBtn.textContent = 'Установить';
+    installBtn.href = '#';
+  }
+  
+  // Функция показа баннера
+  function showBanner() {
+    // Проверяем, нет ли активных модальных окон
+    const tourOverlay = document.getElementById('firstRunTour');
+    const motivationOverlay = document.getElementById('motivationOverlay');
     
-    // Настраиваем кнопку в зависимости от ОС
-    if (isIOS) {
-      // Для iOS - переход на страницу с инструкцией PWA
-      installBtn.textContent = 'Установить';
-      installBtn.href = '/iphone.html';
-      installBtn.onclick = function(e) {
-        // Отслеживание события
-        if (typeof ym !== 'undefined') {
-          ym(105128338, 'reachGoal', 'install_instructions_ios');
-        }
-        // НЕ закрываем баннер после клика автоматически
-      };
-    } else if (isAndroid) {
-      // Для Android - переход на страницу скачивания APK
-      installBtn.textContent = 'Скачать';
-      installBtn.href = '/android.html';
-      installBtn.onclick = function(e) {
-        // Отслеживание события
-        if (typeof ym !== 'undefined') {
-          ym(105128338, 'reachGoal', 'download_app_android');
-        }
-        // НЕ закрываем баннер после клика автоматически
-      };
-    } else {
-      // Для других устройств
-      installBtn.textContent = 'Установить';
-      installBtn.href = '#';
+    if (tourOverlay || motivationOverlay) {
+      // Если есть презентация или мотивация - повторяем через 3 секунды
+      setTimeout(showBanner, 3000);
+      return;
     }
     
-    // Показываем баннер с задержкой
-    setTimeout(() => {
-      banner.classList.add('show');
-      document.body.classList.add('banner-shown');
-    }, 1000); // Уменьшил задержку с 2000 до 1000мс
+    // Показываем баннер
+    banner.classList.add('show');
+    document.body.classList.add('banner-shown');
+    console.log('Banner shown');
   }
   
-  // PWA установка для поддерживающих браузеров (не iOS)
+  // Запускаем показ через 5 секунд после загрузки
+  setTimeout(() => {
+    const firstRunDone = localStorage.getItem('first_run_completed') === '1';
+    console.log('Banner timer - firstRunDone:', firstRunDone);
+    
+    if (firstRunDone) {
+      // Если презентация была - показываем сразу (или ждем мотивацию)
+      showBanner();
+    } else {
+      // Если это первый запуск - ждем дольше
+      setTimeout(showBanner, 5000);
+    }
+  }, 5000);
+  
+  // PWA установка для Android
   let deferredPrompt;
   
-  if (!isIOS) {
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      
-      // Если браузер поддерживает PWA установку, используем её вместо APK
-      if (banner.classList.contains('show')) {
-        installBtn.textContent = 'Установить PWA';
-        installBtn.href = '#';
-        installBtn.onclick = async function(e) {
-          e.preventDefault();
-          if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log(`User ${outcome} the install prompt`);
-            
-            if (outcome === 'accepted') {
-              closeInstallBanner();
-              // Отслеживание события
-              if (typeof ym !== 'undefined') {
-                ym(105128338, 'reachGoal', 'pwa_installed');
-              }
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    if (banner && banner.classList.contains('show') && !isIOS) {
+      installBtn.textContent = 'Установить PWA';
+      installBtn.href = '#';
+      installBtn.onclick = async function(e) {
+        e.preventDefault();
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          
+          if (outcome === 'accepted') {
+            closeInstallBanner();
+            if (typeof ym !== 'undefined') {
+              ym(105128338, 'reachGoal', 'pwa_installed');
             }
-            deferredPrompt = null;
           }
-        };
-      }
-    });
-  }
+          deferredPrompt = null;
+        }
+      };
+    }
+  });
 })();
 
-// Функция закрытия баннера (только при нажатии на крестик)
 function closeInstallBanner() {
   const banner = document.getElementById('appInstallBanner');
   
-  // Анимация закрытия
-  banner.style.animation = 'slideUp 0.3s ease-out';
-  
-  setTimeout(() => {
-    banner.classList.remove('show');
-    document.body.classList.remove('banner-shown');
-  }, 300);
-  
-  // НЕ сохраняем информацию о закрытии в localStorage
-  
-  // Отслеживание события
-  if (typeof ym !== 'undefined') {
-    ym(105128338, 'reachGoal', 'banner_closed');
+  if (banner) {
+    banner.style.animation = 'slideUp 0.3s ease-out';
+    
+    setTimeout(() => {
+      banner.classList.remove('show');
+      document.body.classList.remove('banner-shown');
+    }, 300);
+    
+    if (typeof ym !== 'undefined') {
+      ym(105128338, 'reachGoal', 'banner_closed');
+    }
   }
 }
-
-// CSS анимация закрытия
-const bannerStyle = document.createElement('style');
-bannerStyle.textContent = `
-  @keyframes slideUp {
-    from { transform: translateY(0); }
-    to { transform: translateY(-100%); }
-  }
-`;
-document.head.appendChild(bannerStyle);
 </script>
-</body>
-</html>
+<script>
+(function(){
+  let src='ru',tgt='en',bound=!1;
+  function $id(id){return document.getElementById(id)}
+  function setLang(from,to){
+    src=from,tgt=to;
+    $id('trRuBtn')?.classList.toggle('active','ru'===from);
+    $id('trEnBtn')?.classList.toggle('active','en'===from);
+    
+    // Меняем надписи на кнопках
+    const ruBtn = $id('trRuBtn');
+    const enBtn = $id('trEnBtn');
+    if(ruBtn) ruBtn.textContent = from === 'ru' ? 'Russian' : 'English';
+    if(enBtn) enBtn.textContent = from === 'en' ? 'Russian' : 'English';
+  }
+  async function translate(){
+    const input=$id('trInputText');
+    if(!input)return;
+    const text=(input.value||'').trim();
+    if(!text)return void showErr('Пожалуйста, введите текст для перевода');
+    const load=$id('trLoading'),err=$id('trError'),res=$id('trResults');
+    err?.classList.remove('active'),res?.classList.remove('active'),load?.classList.add('active');
+    try{
+      const list=await fetchAll(text);
+      render(text,list)
+    }catch(e){
+      console.error(e),showErr('Произошла ошибка при переводе. Попробуйте ещё раз.')
+    }finally{
+      load?.classList.remove('active')
+    }
+  }
+  async function fetchAll(text){
+    const out=[],seen=new Set;
+    try{
+      const u=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${src}&tl=${tgt}&dt=t&dt=bd&q=${encodeURIComponent(text)}`,r=await fetch(u),d=await r.json();
+      if(Array.isArray(d[0])){
+        let m='';
+        d[0].forEach(i=>{i[0]&&(m+=i[0])}),m&&!seen.has(m.toLowerCase())&&(out.push({text:m,type:'основной',source:'Google',confidence:100}),seen.add(m.toLowerCase()))
+      }
+      if(Array.isArray(d[1]))d[1].forEach(g=>{
+        const pos=g[0];
+        Array.isArray(g[1])&&g[1].forEach((w,i)=>{w&&!seen.has(w.toLowerCase())&&(out.push({text:w,type:pos||'альтернативный',source:'Google Dict',confidence:Math.max(50,90-i*5)}),seen.add(w.toLowerCase()))})
+      })
+    }catch(e){}
+    try{
+      const u=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|${tgt}`,r=await fetch(u),d=await r.json(),t=d?.responseData?.translatedText;
+      t&&!seen.has(t.toLowerCase())&&(out.push({text:t,type:'альтернативный',source:'MyMemory',confidence:85}),seen.add(t.toLowerCase()))
+    }catch(e){}
+    return out.sort((a,b)=>b.confidence-a.confidence)
+  }
+  function esc(s=''){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function showErr(m){
+    const el=$id('trError');
+    if(!el)return;
+    el.textContent=m,el.classList.add('active'),setTimeout(()=>el.classList.remove('active'),2200)
+  }
+  function render(original,list){
+    const res=$id('trResults');
+    if(!res)return;
+    const main=list[0],groups={};
+    list.forEach((t,i)=>{(groups[t.type]||=[]).push({...t,index:i+1})});
+    const enMain='en'===src?original:'en'===tgt?main?.text:'',ruMain='ru'===src?original:'ru'===tgt?main?.text:'';
+    let html='';
+    main&&(html+=`<div class="tr-main"><div class="tr-src">${esc(original)}</div><div class="tr-res">${esc(main.text)}</div>${enMain?`<div class="tr-add"><button class="tr-chip-btn" data-en="${encodeURIComponent(enMain)}" data-ru="${encodeURIComponent(ruMain||'')}" data-src="${src}" data-tgt="${tgt}">➕ В изучение</button></div>`:''}</div>`),Object.entries(groups).forEach(([type,items])=>{html+=`<div class="tr-group"><div class="tr-head"><span>${esc(type[0].toUpperCase()+type.slice(1))}</span><span style="color:var(--text-secondary);font-size:13px;">${items.length} вариан.</span></div><div class="tr-list">${items.map(it=>{const en='en'===tgt?it.text:'en'===src?original:'',ru='ru'===tgt?it.text:'ru'===src?original:'';return`<div class="tr-item"><div class="tr-num">${it.index}</div><div style="flex:1;min-width:0;"><div class="tr-text">${esc(it.text)}</div><div class="tr-meta">${esc(it.source)} • ${it.confidence}%</div></div>${en?`<button class="tr-chip-btn" data-en="${encodeURIComponent(en)}" data-ru="${encodeURIComponent(ru||'')}" data-src="${src}" data-tgt="${tgt}">➕</button>`:''}</div>`}).join('')}</div></div>`}),res.innerHTML=html||'<div class="empty-state"><p>Переводы не найдены</p></div>',res.classList.add('active')
+  }
+  function onClick(e){
+    const t=e.target.closest('#trRuBtn, #trEnBtn, #trSwapBtn, #trTranslateBtn, .tr-chip-btn');
+    if(!t)return;
+    if('trRuBtn'===t.id){e.preventDefault(),setLang('ru','en')
+    }else if('trEnBtn'===t.id){e.preventDefault(),setLang('en','ru')
+    }else if('trSwapBtn'===t.id){e.preventDefault(),setLang('ru'===src?'en':'ru','en'===tgt?'ru':'en')
+    }else if('trTranslateBtn'===t.id){e.preventDefault(),translate()
+    }else if(t.classList.contains('tr-chip-btn')&&t.dataset.en){
+      e.preventDefault();
+      const en=decodeURIComponent(t.dataset.en||''),ru=decodeURIComponent(t.dataset.ru||'');
+      en&&'function'==typeof window.onAddToStudy&&(window.onAddToStudy({term:en,meta:{ru,sourceLang:t.dataset.src,targetLang:t.dataset.tgt,originalText:($id('trInputText')?.value||'').trim()}}),t.classList.add('added'),t.textContent='✓ Добавлено')
+    }
+  }
+  function onKey(e){'Enter'===e.key&&'trInputText'===e.target?.id&&translate()}
+  function bindOnce(){
+    if(bound)return;
+    bound=!0,document.addEventListener('click',onClick,!0),document.addEventListener('keypress',onKey,!0),setLang('ru','en')
+  }
+  window.initBewordsTranslator=bindOnce,document.addEventListener('DOMContentLoaded',bindOnce)
+})();
+</script>
 
+</body>
+
+</html>
