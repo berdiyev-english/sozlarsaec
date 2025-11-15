@@ -341,13 +341,41 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* <<< ДОБАВЛЕНО ДЛЯ ИЗУЧЕНИЯ >>> */
+        .add-btn {
+            padding: 6px 10px;
+            background: #fff;
+            border: 2px solid var(--duo-green);
+            color: var(--duo-green);
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.15s;
+        }
+        .add-btn:hover { background: #F3FFEC; }
+        .add-btn.added {
+            background: var(--duo-green);
+            color: #fff;
+            border-color: var(--duo-green);
+            pointer-events: none;
+        }
+        .main-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 12px;
+        }
+        /* <<< КОНЕЦ ДОБАВЛЕНО >>> */
     </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <h1>🟢 Context Translator Pro</h1>
-        <p>Все возможные варианты перевода с реальными примерами</p>
+        <h1>Bewords Translator</h1>
+        <p>Ищите слова и фразы и добавляйте их на изучение</p>
     </div>
 
     <div class="input-section">
@@ -363,7 +391,7 @@
                    id="inputText"
                    placeholder="Введите слово или фразу..."
                    onkeypress="if(event.key === 'Enter') translateAll()">
-            <button class="translate-btn" onclick="translateAll()">Найти все переводы</button>
+            <button class="translate-btn" onclick="translateAll()">Перевести</button>
         </div>
     </div>
 
@@ -381,20 +409,15 @@
     let sourceLang = 'ru';
     let targetLang = 'en';
 
-    // <<< НАЧАЛО ИЗМЕНЕНИЙ >>>
-
-    // Получаем кнопки один раз для эффективности
+    // <<< НАЧАЛО ИЗМЕНЕНИЙ (визуальный порядок кнопок) >>>
     const ruButton = document.getElementById('ruBtn');
     const enButton = document.getElementById('enBtn');
     const swapButton = document.querySelector('.swap-btn');
 
-    // Устанавливаем начальный порядок кнопок с помощью CSS `order`
     ruButton.style.order = '1';
     swapButton.style.order = '2';
     enButton.style.order = '3';
-
     // <<< КОНЕЦ ИЗМЕНЕНИЙ >>>
-
 
     function setLang(from, to) {
         sourceLang = from;
@@ -409,19 +432,16 @@
     }
 
     function swapLangs() {
-        // Меняем состояние (внутренние переменные и активный класс)
         if (sourceLang === 'ru') {
             setLang('en', 'ru');
         } else {
             setLang('ru', 'en');
         }
 
-        // <<< НАЧАЛО ИЗМЕНЕНИЙ >>>
-        // Теперь меняем их визуальный порядок, просто обменивая значения `order`
+        // Меняем визуальный порядок кнопок
         const tempOrder = ruButton.style.order;
         ruButton.style.order = enButton.style.order;
         enButton.style.order = tempOrder;
-        // <<< КОНЕЦ ИЗМЕНЕНИЙ >>>
     }
 
     async function translateAll() {
@@ -540,9 +560,7 @@
             console.error('MyMemory error:', e);
         }
 
-        // ВАЖНО: не генерируем артикли/герундий (по просьбе убрать)
-        // Раньше здесь добавлялись "the|a|an + слово" и "ing" форма — удалено.
-
+        // ВАЖНО: не генерируем артикли/герундий
         translations.sort((a, b) => b.confidence - a.confidence);
         return translations;
     }
@@ -566,18 +584,103 @@
         return text.replace(pattern, '<span class="highlight">$1</span>');
     }
 
+    // <<< ДОБАВЛЕНО: Хелперы для "В изучение" >>>
+    const STUDY_STORAGE_KEY = 'bewords_study_list';
+
+    function showToast(message, bg = 'var(--duo-green)') {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: ${bg};
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            font-weight: 700;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 1800);
+    }
+
+    function getStudySet() {
+        try {
+            const list = JSON.parse(localStorage.getItem(STUDY_STORAGE_KEY) || '[]');
+            return new Set(list.map(i => (i.term || '').toLowerCase()));
+        } catch {
+            return new Set();
+        }
+    }
+
+    async function addToStudy(term, meta = {}) {
+        if (!term || !/[A-Za-z]/.test(term)) {
+            showToast('Можно добавлять только англ. слова/фразы', 'var(--duo-red)');
+            return false;
+        }
+
+        const payload = { term: term.trim(), lang: 'en', ...meta };
+        try {
+            if (typeof window.onAddToStudy === 'function') {
+                await window.onAddToStudy(payload);
+            } else if (window.studyClient?.addTerm) {
+                await window.studyClient.addTerm(payload);
+            } else {
+                const list = JSON.parse(localStorage.getItem(STUDY_STORAGE_KEY) || '[]');
+                if (!list.some(i => (i.term || '').toLowerCase() === payload.term.toLowerCase())) {
+                    list.push({ term: payload.term, meta: payload, ts: Date.now() });
+                    localStorage.setItem(STUDY_STORAGE_KEY, JSON.stringify(list));
+                }
+            }
+
+            window.dispatchEvent(new CustomEvent('bewords:add', { detail: payload }));
+            showToast(`Добавлено в изучение: ${payload.term}`);
+            return true;
+        } catch (err) {
+            console.error('addToStudy error', err);
+            showToast('Не удалось добавить. Попробуйте ещё раз', 'var(--duo-red)');
+            return false;
+        }
+    }
+
+    function handleAddClick(e) {
+        e.stopPropagation();
+        const btn = e.currentTarget;
+        const term = decodeURIComponent(btn.dataset.term || '');
+        if (!term) return;
+
+        const meta = {
+            sourceLang,
+            targetLang,
+            originalText: decodeURIComponent(btn.dataset.original || ''),
+            chosenText: decodeURIComponent(btn.dataset.chosen || term),
+            source: decodeURIComponent(btn.dataset.source || 'UI'),
+            confidence: btn.dataset.confidence ? Number(btn.dataset.confidence) : undefined,
+            where: btn.dataset.where || 'list',
+            ts: Date.now()
+        };
+
+        addToStudy(term, meta).then(success => {
+            if (success) {
+                btn.classList.add('added');
+                btn.textContent = '✓ Добавлено';
+            }
+        });
+    }
+    // <<< КОНЕЦ ДОБАВЛЕНО >>>
+
     async function getRealExamples(originalText, mainTranslation) {
-        // Берём реальные примеры из MyMemory (RU↔EN)
         const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(originalText)}&langpair=${sourceLang}|${targetLang}`;
         try {
             const res = await fetch(url);
             const data = await res.json();
 
             const raw = Array.isArray(data.matches) ? data.matches : [];
-            // Сортируем по качеству/рейтингу (если есть)
             raw.sort((a, b) => (b.quality || 0) - (a.quality || 0));
 
-            // Дедуп
             const seen = new Set();
             const pairs = [];
             for (const m of raw) {
@@ -592,20 +695,17 @@
                 pairs.push({ src, tgt, quality: m.quality || 0 });
             }
 
-            // Отдаём сначала те, где в переводе встречается основной перевод
             const hasMain = (t) => mainTranslation && t.toLowerCase().includes(mainTranslation.toLowerCase());
             const prioritized = [
                 ...pairs.filter(p => hasMain(p.tgt)),
                 ...pairs.filter(p => !hasMain(p.tgt))
             ];
 
-            // Лимит 6 примеров
             return prioritized.slice(0, 6).map(p => {
                 const srcEsc = escapeHTML(p.src);
                 const tgtEsc = escapeHTML(p.tgt);
 
                 const srcHi = highlightTerm(srcEsc, originalText);
-                // Подсветка целевого — по основному переводу; если его нет в строке, оставим как есть
                 const tgtHi = mainTranslation && p.tgt.toLowerCase().includes(mainTranslation.toLowerCase())
                     ? highlightTerm(tgtEsc, mainTranslation)
                     : tgtEsc;
@@ -618,8 +718,10 @@
         }
     }
 
+    // <<< ОБНОВЛЕННО: рендер с кнопкой "В изучение" >>>
     async function displayResults(originalText, translations) {
         const resultsDiv = document.getElementById('results');
+        const studySet = getStudySet();
 
         // Группируем по типам
         const grouped = {};
@@ -647,6 +749,11 @@
 
         if (translations.length > 0) {
             const main = translations[0];
+
+            // Определяем английский терм для добавления
+            const enTermMain = sourceLang === 'en' ? originalText : (targetLang === 'en' ? main.text : '');
+            const enMainAdded = enTermMain && studySet.has(enTermMain.toLowerCase());
+
             html += `
                 <div class="main-translation">
                     <div class="original-text">${escapeHTML(originalText)}</div>
@@ -654,6 +761,23 @@
                     <div style="margin-top: 10px; color: var(--muted); font-size: 14px;">
                         Основной перевод • ${escapeHTML(main.source)} • ${main.confidence}% уверенность
                     </div>
+                    ${enTermMain ? `
+                        <div class="main-actions">
+                            <button
+                                class="add-btn ${enMainAdded ? 'added' : ''}"
+                                title="Добавить в изучение (англ.)"
+                                data-term="${encodeURIComponent(enTermMain)}"
+                                data-chosen="${encodeURIComponent(targetLang === 'en' ? main.text : originalText)}"
+                                data-original="${encodeURIComponent(originalText)}"
+                                data-source="${encodeURIComponent(main.source)}"
+                                data-confidence="${main.confidence || ''}"
+                                data-where="main"
+                                onclick="handleAddClick(event)"
+                            >
+                                ${enMainAdded ? '✓ Добавлено' : '➕ В изучение'}
+                            </button>
+                        </div>
+                    ` : ``}
                 </div>
             `;
         }
@@ -674,6 +798,9 @@
                     <div class="translation-list">
             `;
             items.forEach(item => {
+                const enTerm = targetLang === 'en' ? item.text : (sourceLang === 'en' ? originalText : '');
+                const enAdded = enTerm && studySet.has(enTerm.toLowerCase());
+
                 html += `
                     <div class="translation-item" onclick="copyText('${escapeHTML(item.text).replace(/'/g, "\\'")}')">
                         <div class="translation-number">${item.index}</div>
@@ -681,6 +808,21 @@
                             <div class="translation-text">${escapeHTML(item.text)}</div>
                             <div class="translation-info">${escapeHTML(item.source)} • ${item.confidence}% уверенность</div>
                         </div>
+                        ${enTerm ? `
+                            <button
+                                class="add-btn ${enAdded ? 'added' : ''}"
+                                title="Добавить в изучение (англ.)"
+                                data-term="${encodeURIComponent(enTerm)}"
+                                data-chosen="${encodeURIComponent(targetLang === 'en' ? item.text : originalText)}"
+                                data-original="${encodeURIComponent(originalText)}"
+                                data-source="${encodeURIComponent(item.source)}"
+                                data-confidence="${item.confidence || ''}"
+                                data-where="list"
+                                onclick="handleAddClick(event)"
+                            >
+                                ${enAdded ? '✓ Добавлено' : '➕ В изучение'}
+                            </button>
+                        ` : ``}
                     </div>
                 `;
             });
@@ -699,8 +841,9 @@
             </div>
         `;
 
-        resultsDiv.innerHTML = html;
-        resultsDiv.classList.add('active');
+        const resultsDivEl = resultsDiv;
+        resultsDivEl.innerHTML = html;
+        resultsDivEl.classList.add('active');
 
         // Подгружаем реальные примеры асинхронно
         const exContainer = document.getElementById('examples-container');
@@ -751,6 +894,16 @@
         errorDiv.classList.add('active');
         setTimeout(() => errorDiv.classList.remove('active'), 3000);
     }
+
+    // Пример интеграции (можно удалить/заменить):
+    // window.onAddToStudy = async ({ term, lang, originalText, chosenText, source, confidence }) => {
+    //   await fetch('/api/study/add', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ term, lang, originalText, chosenText, source, confidence })
+    //   });
+    // };
+    // window.addEventListener('bewords:add', (e) => console.log('В изучение:', e.detail));
 </script>
 </body>
 </html>
