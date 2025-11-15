@@ -82,6 +82,7 @@
             font-weight: 700;
             transition: all 0.2s;
             color: var(--text);
+            font-size: 14px;
         }
 
         .lang-btn:hover {
@@ -105,6 +106,7 @@
             cursor: pointer;
             font-size: 18px;
             transition: transform 0.3s, background 0.2s;
+            flex-shrink: 0;
         }
         .swap-btn:hover { transform: rotate(180deg); background: #F3FFEC; }
 
@@ -139,6 +141,7 @@
             cursor: pointer;
             transition: transform 0.15s, box-shadow 0.2s;
             box-shadow: 0 8px 18px rgba(88,204,2,0.25);
+            white-space: nowrap;
         }
         .translate-btn:hover {
             transform: translateY(-1px);
@@ -215,6 +218,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .count-badge {
@@ -248,6 +252,8 @@
             justify-content: space-between;
             align-items: center;
             color: var(--text);
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .translation-list { padding: 14px; }
@@ -263,6 +269,7 @@
             display: flex;
             align-items: center;
             gap: 14px;
+            flex-wrap: wrap;
         }
 
         .translation-item:hover {
@@ -281,6 +288,7 @@
             justify-content: center;
             font-weight: 800;
             font-size: 14px;
+            flex-shrink: 0;
         }
 
         .translation-text { font-weight: 600; color: var(--text); }
@@ -342,7 +350,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* <<< ДОБАВЛЕНО ДЛЯ ИЗУЧЕНИЯ >>> */
         .add-btn {
             padding: 6px 10px;
             background: #fff;
@@ -354,6 +361,7 @@
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.15s;
+            flex-shrink: 0;
         }
         .add-btn:hover { background: #F3FFEC; }
         .add-btn.added {
@@ -367,8 +375,249 @@
             gap: 10px;
             align-items: center;
             margin-top: 12px;
+            flex-wrap: wrap;
         }
-        /* <<< КОНЕЦ ДОБАВЛЕНО >>> */
+
+        /* ============= МОБИЛЬНАЯ АДАПТАЦИЯ ============= */
+        
+        /* Планшеты и маленькие ноутбуки */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 16px;
+            }
+
+            .header {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 6px;
+            }
+
+            .header p {
+                font-size: 13px;
+            }
+
+            .input-section {
+                padding: 18px 15px 20px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 14px;
+            }
+
+            .stat-number {
+                font-size: 24px;
+            }
+
+            .results-section {
+                padding: 20px 15px;
+            }
+        }
+
+        /* Смартфоны */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .container {
+                border-radius: 12px;
+            }
+
+            .header {
+                padding: 16px 12px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+                margin-bottom: 4px;
+                line-height: 1.2;
+            }
+
+            .header p {
+                font-size: 11px;
+                line-height: 1.3;
+            }
+
+            .input-section {
+                padding: 14px 12px 16px;
+            }
+
+            .lang-selector {
+                gap: 8px;
+                margin-bottom: 14px;
+            }
+
+            .lang-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+
+            .swap-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            /* ГЛАВНОЕ: делаем input-group вертикальным */
+            .input-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .input-field {
+                width: 100%;
+                padding: 12px 14px;
+                font-size: 16px; /* Минимум 16px для iOS, чтобы не зумило */
+            }
+
+            .translate-btn {
+                width: 100%;
+                padding: 14px 20px;
+                font-size: 15px;
+            }
+
+            .results-section {
+                padding: 16px 12px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .stat-card {
+                padding: 12px;
+            }
+
+            .stat-number {
+                font-size: 22px;
+            }
+
+            .stat-label {
+                font-size: 11px;
+            }
+
+            .main-translation {
+                padding: 16px;
+                margin-bottom: 18px;
+            }
+
+            .original-text {
+                font-size: 18px;
+                margin-bottom: 6px;
+            }
+
+            .main-result {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 16px;
+                margin: 14px 0 10px;
+            }
+
+            .count-badge {
+                font-size: 12px;
+                padding: 3px 8px;
+            }
+
+            .group-header {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .translation-list {
+                padding: 10px;
+            }
+
+            .translation-item {
+                padding: 10px;
+                gap: 10px;
+            }
+
+            .translation-number {
+                min-width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            .translation-text {
+                font-size: 14px;
+            }
+
+            .translation-info {
+                font-size: 11px;
+            }
+
+            .add-btn {
+                padding: 5px 8px;
+                font-size: 11px;
+            }
+
+            .example-card {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .loading {
+                padding: 30px 15px;
+            }
+
+            .spinner {
+                width: 40px;
+                height: 40px;
+            }
+
+            .error-message {
+                margin: 8px 12px;
+                padding: 12px;
+                font-size: 13px;
+            }
+        }
+
+        /* Очень маленькие экраны */
+        @media (max-width: 360px) {
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .header p {
+                font-size: 10px;
+            }
+
+            .lang-btn {
+                padding: 7px 10px;
+                font-size: 11px;
+            }
+
+            .swap-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+
+            .original-text,
+            .main-result {
+                font-size: 16px;
+            }
+
+            .translation-text {
+                font-size: 13px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -380,7 +629,7 @@
 
     <div class="input-section">
         <div class="lang-selector">
-            <button class="lang-btn active" id="ruBtn" onclick="setLang('ru', 'en')"> 🇷🇺 Русский</button>
+            <button class="lang-btn active" id="ruBtn" onclick="setLang('ru', 'en')">🇷🇺 Русский</button>
             <button class="swap-btn" onclick="swapLangs()" title="Поменять местами">⇄</button>
             <button class="lang-btn" id="enBtn" onclick="setLang('en', 'ru')">🇬🇧 English</button>
         </div>
@@ -409,7 +658,6 @@
     let sourceLang = 'ru';
     let targetLang = 'en';
 
-    // <<< НАЧАЛО ИЗМЕНЕНИЙ (визуальный порядок кнопок) >>>
     const ruButton = document.getElementById('ruBtn');
     const enButton = document.getElementById('enBtn');
     const swapButton = document.querySelector('.swap-btn');
@@ -417,7 +665,6 @@
     ruButton.style.order = '1';
     swapButton.style.order = '2';
     enButton.style.order = '3';
-    // <<< КОНЕЦ ИЗМЕНЕНИЙ >>>
 
     function setLang(from, to) {
         sourceLang = from;
@@ -438,7 +685,6 @@
             setLang('ru', 'en');
         }
 
-        // Меняем визуальный порядок кнопок
         const tempOrder = ruButton.style.order;
         ruButton.style.order = enButton.style.order;
         enButton.style.order = tempOrder;
@@ -467,13 +713,11 @@
         const translations = [];
         const uniqueTranslations = new Set();
 
-        // 1) Google Translate (основной и словарные)
         try {
             const googleUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=at&q=${encodeURIComponent(text)}`;
             const response = await fetch(googleUrl);
             const data = await response.json();
 
-            // Основной перевод
             if (Array.isArray(data[0])) {
                 let mainTranslation = '';
                 data[0].forEach(item => { if (item[0]) mainTranslation += item[0]; });
@@ -483,7 +727,6 @@
                 }
             }
 
-            // Альтернативные переводы (словарь)
             if (Array.isArray(data[1])) {
                 data[1].forEach(group => {
                     const partOfSpeech = group[0];
@@ -498,7 +741,6 @@
                             }
                         });
                     }
-                    // Синонимы
                     if (Array.isArray(group[2])) {
                         group[2].forEach(item => {
                             if (Array.isArray(item[1])) {
@@ -517,7 +759,6 @@
                 });
             }
 
-            // Доп. значения
             if (data[5] && data[5][0] && Array.isArray(data[5][0][2])) {
                 data[5][0][2].forEach(item => {
                     if (item[0] && !uniqueTranslations.has(item[0].toLowerCase())) {
@@ -530,7 +771,6 @@
             console.error('Google Translate error:', e);
         }
 
-        // 2) MyMemory (доп. варианты)
         try {
             const myMemoryUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${sourceLang}|${targetLang}`;
             const response = await fetch(myMemoryUrl);
@@ -560,7 +800,6 @@
             console.error('MyMemory error:', e);
         }
 
-        // ВАЖНО: не генерируем артикли/герундий
         translations.sort((a, b) => b.confidence - a.confidence);
         return translations;
     }
@@ -584,7 +823,6 @@
         return text.replace(pattern, '<span class="highlight">$1</span>');
     }
 
-    // <<< ДОБАВЛЕНО: Хелперы для "В изучение" >>>
     const STUDY_STORAGE_KEY = 'bewords_study_list';
 
     function showToast(message, bg = 'var(--duo-green)') {
@@ -670,7 +908,6 @@
             }
         });
     }
-    // <<< КОНЕЦ ДОБАВЛЕНО >>>
 
     async function getRealExamples(originalText, mainTranslation) {
         const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(originalText)}&langpair=${sourceLang}|${targetLang}`;
@@ -718,12 +955,10 @@
         }
     }
 
-    // <<< ОБНОВЛЕННО: рендер с кнопкой "В изучение" >>>
     async function displayResults(originalText, translations) {
         const resultsDiv = document.getElementById('results');
         const studySet = getStudySet();
 
-        // Группируем по типам
         const grouped = {};
         translations.forEach((t, index) => {
             if (!grouped[t.type]) grouped[t.type] = [];
@@ -749,8 +984,6 @@
 
         if (translations.length > 0) {
             const main = translations[0];
-
-            // Определяем английский терм для добавления
             const enTermMain = sourceLang === 'en' ? originalText : (targetLang === 'en' ? main.text : '');
             const enMainAdded = enTermMain && studySet.has(enTermMain.toLowerCase());
 
@@ -804,7 +1037,7 @@
                 html += `
                     <div class="translation-item" onclick="copyText('${escapeHTML(item.text).replace(/'/g, "\\'")}')">
                         <div class="translation-number">${item.index}</div>
-                        <div>
+                        <div style="flex: 1; min-width: 0;">
                             <div class="translation-text">${escapeHTML(item.text)}</div>
                             <div class="translation-info">${escapeHTML(item.source)} • ${item.confidence}% уверенность</div>
                         </div>
@@ -820,7 +1053,7 @@
                                 data-where="list"
                                 onclick="handleAddClick(event)"
                             >
-                                ${enAdded ? '✓ Добавлено' : '➕ В изучение'}
+                                ${enAdded ? '✓' : '➕'}
                             </button>
                         ` : ``}
                     </div>
@@ -831,7 +1064,6 @@
 
         html += `</div>`;
 
-        // Примеры использования (реальные, из MyMemory)
         html += `
             <div class="context-examples">
                 <div class="section-title">Примеры использования</div>
@@ -841,11 +1073,9 @@
             </div>
         `;
 
-        const resultsDivEl = resultsDiv;
-        resultsDivEl.innerHTML = html;
-        resultsDivEl.classList.add('active');
+        resultsDiv.innerHTML = html;
+        resultsDiv.classList.add('active');
 
-        // Подгружаем реальные примеры асинхронно
         const exContainer = document.getElementById('examples-container');
         try {
             const mainTr = translations[0]?.text || '';
@@ -868,23 +1098,7 @@
 
     function copyText(text) {
         navigator.clipboard.writeText(text).then(() => {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: var(--duo-green);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 12px;
-                box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-                z-index: 1000;
-                animation: slideIn 0.3s ease;
-                font-weight: 700;
-            `;
-            notification.textContent = `Скопировано: ${text}`;
-            document.body.appendChild(notification);
-            setTimeout(() => notification.remove(), 1800);
+            showToast(`Скопировано: ${text}`);
         });
     }
 
@@ -894,16 +1108,6 @@
         errorDiv.classList.add('active');
         setTimeout(() => errorDiv.classList.remove('active'), 3000);
     }
-
-    // Пример интеграции (можно удалить/заменить):
-    // window.onAddToStudy = async ({ term, lang, originalText, chosenText, source, confidence }) => {
-    //   await fetch('/api/study/add', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ term, lang, originalText, chosenText, source, confidence })
-    //   });
-    // };
-    // window.addEventListener('bewords:add', (e) => console.log('В изучение:', e.detail));
 </script>
 </body>
 </html>
