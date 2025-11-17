@@ -3673,9 +3673,6 @@ renderFlashcards() {
             <button class="btn btn-primary" id="showAnswerBtn" data-testid="flashcard-show-answer">
               <i class="fas fa-eye"></i> Показать ответ
             </button>
-            <button class="btn btn-secondary hidden" id="playFlashcardBtn" data-testid="flashcard-play">
-              <i class="fas fa-volume-up"></i> Произношение
-            </button>
           </div>
           <div class="answer-buttons hidden" id="answerButtons">
             <button class="btn btn-danger" id="flashcardWrongBtn" data-testid="flashcard-wrong">
@@ -5153,3 +5150,4 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+
