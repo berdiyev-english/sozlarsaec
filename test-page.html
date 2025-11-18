@@ -344,7 +344,7 @@ body {
         <a href="/" class="logo-link" onclick="location.reload(); return false;">
           <img src="/logo1.png" alt="BeWords" class="app-logo">
         </a>
-        <h1 class="app-title">BeWords.ru</h1>
+        <h1 class="app-title">BeWords</h1>
       </div>
       <div class="header-actions">
         <button class="support-btn" id="supportBtn" data-testid="support-btn" title="Поддержать проект">
@@ -439,6 +439,37 @@ body {
           <div class="level-stats"><span class="word-count">0 слов</span></div>
         </div>
       </div>
+      
+            <!-- Exams -->
+      <div class="section-header" style="margin-top:1rem;">
+        <h2>Экзамены</h2>
+      </div>
+      <div class="levels-grid" id="examsGrid">
+        <div class="level-card" data-category="EGE" data-testid="category-card-ege">
+          <div class="level-badge elementary">ЕГЭ</div>
+          <h3>ЕГЭ</h3>
+          <p>Подготовка к ЕГЭ</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-category="OGE" data-testid="category-card-oge">
+          <div class="level-badge beginner">ОГЭ</div>
+          <h3>ОГЭ</h3>
+          <p>Подготовка к ОГЭ</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-category="IELTS" data-testid="category-card-ielts">
+          <div class="level-badge upper-intermediate">IELTS</div>
+          <h3>IELTS</h3>
+          <p>Academic / General</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-category="TOEFL" data-testid="category-card-toefl">
+          <div class="level-badge advanced">TOEFL</div>
+          <h3>TOEFL</h3>
+          <p>Подготовка к TOEFL</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+      </div>
 
       <!-- Words List (levels or categories) -->
       <div id="wordsContainer" class="words-container hidden">
@@ -467,7 +498,7 @@ body {
 
   <p class="mode-help">
     Режимы практики:<br><br>
-    1) Заучивание - нужен когда вы хотите выучить слова которые вам не знакомы. В данном режиме система будет потихоньку увеличивать количество слов в зависимости от вашего ответа. Если вы не видите всех слов которые вы добавили в этом режиме , то так и надо, так как сразу 100 и более слов за один подход не учат<br>
+    1) Заучивание - для изучения незнакомых слов. Система добавляет слова постепенно в зависимости от ваших ответов. Добавили 500 слов? Не волнуйтесь — сначала получите 20, потом еще 10, еще 10 и так далее. Учить сразу все невозможно, поэтому система дозирует нагрузку.<br>
    <br> 2) Повторение - нужен если вы хотите вспомнить или повторить слова<br>
   </p>
 
@@ -489,88 +520,26 @@ body {
 <div id="learningWordsList" class="learning-words-list"></div>
 </section>
     <!-- New Words -->
-    <section id="new-words" class="content-section">
-      <div class="section-header">
-        <h2>Загрузите новые слова</h2>
-      </div>
+  <section id="new-words" class="content-section"> <div id="translatorWidget" class="translator-card"> <div class="translator-header"> <h3>BeWords - Translate</h3> <p>Ищите слова и фразы и добавляйте их на изучение</p> </div>
+<div class="tr-lang-row">
+  <button class="tr-lang-btn active" id="trRuBtn" type="button">🇷🇺 Русский</button>
+  <button class="tr-swap-btn" id="trSwapBtn" type="button" title="Поменять местами">⇄</button>
+  <button class="tr-lang-btn" id="trEnBtn" type="button">🇬🇧 English</button>
+</div>
 
-     <p class="mode-help">
-        Загружайте свои собственные слова и фразы<br><br>
-        Все слова автоматически получают озвучку и фото и попадают в ваш словарь после загрузки <br><br>
-        После загрузки перейдите в пункт "Изучаю" и ваши слова уже будут ждать вас<br>
-      </p>
-      
-      <!-- Single add -->
-      <div class="add-word-form">
-        <div class="form-group">
-          <label for="newWord">Английское слово</label>
-          <input type="text" id="newWord" placeholder="Введите слово на английском" data-testid="new-word-input">
-        </div>
-        <div class="form-group">
-          <label for="newTranslation">Перевод</label>
-          <input type="text" id="newTranslation" placeholder="Введите перевод" data-testid="new-translation-input">
-        </div>
-        <div class="form-group">
-          <label for="newLevel">Уровень</label>
-          <select id="newLevel" data-testid="new-level-select">
-            <option value="A1">A1 - Beginner</option>
-            <option value="A2">A2 - Elementary</option>
-            <option value="B1">B1 - Intermediate</option>
-            <option value="B2">B2 - Upper-Intermediate</option>
-            <option value="C1">C1 - Advanced</option>
-            <option value="C2">C2 - Proficiency</option>
-            <option value="IRREGULARS">Irregular Verbs</option>
-            <option value="PREPOSITIONS">Prepositions</option>
-          </select>
-        </div>
-        <button class="add-word-btn" id="addWordBtn" data-testid="add-word-btn">
-          <i class="fas fa-plus"></i>
-          Добавить слово
-        </button>
-      </div>
+<div class="tr-input-row">
+  <input type="text" id="trInputText" placeholder="Введите слово или фразу..." />
+  <button id="trTranslateBtn" type="button">Перевести</button>
+</div>
 
-      <!-- Bulk add -->
-      <div class="add-word-form" id="bulkAddForm">
-        <h3 style="margin-bottom:8px;">Массовое добавление</h3>
-        <p class="mode-help" id="bulkHelp" data-testid="bulk-help">
-          Приложение поддерживает массовое добавление слов и фраз<br><br>
-          Каждое английское слово / фразу вводите с новой строки<br><br>
-          Перевод указывается через "-" <br><br>
-        </p>
-        <div class="form-group">
-          <label for="bulkLevel">Уровень для всех слов</label>
-          <select id="bulkLevel" data-testid="bulk-level-select">
-            <option value="A1">A1 - Beginner</option>
-            <option value="A2">A2 - Elementary</option>
-            <option value="B1">B1 - Intermediate</option>
-            <option value="B2">B2 - Upper-Intermediate</option>
-            <option value="C1">C1 - Advanced</option>
-            <option value="C2">C2 - Proficiency</option>
-            <option value="IRREGULARS">Irregular Verbs</option>
-            <option value="PREPOSITIONS">Prepositions</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="bulkTextarea">Вставьте строки</label>
-          <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;go - идти, ехать, ходить&#10;table - стол&#10;run - бежать, запускать" data-testid="bulk-textarea" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);border-radius:var(--radius-md);background:var(--bg-primary);color:var(--text-primary);"></textarea>
-        </div>
-        <button class="add-word-btn" id="bulkAddBtn" data-testid="bulk-add-btn">
-          <i class="fas fa-file-import"></i>
-          Добавить список
-        </button>
-      </div>
+<div class="translator-loading" id="trLoading">
+  <div class="tr-spinner"></div>
+  <p>Анализирую варианты перевода...</p>
+</div>
 
-      <div id="customWordsList" class="words-list">
-        <h3>Добавленные слова</h3>
-        <div id="customWords">
-          <div class="empty-state">
-            <i class="fas fa-plus-circle"></i>
-            <h3>Нет добавленных слов</h3>
-            <p>Используйте формы выше для добавления новых слов</p>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="translator-error" id="trError"></div>
+<div class="translator-results" id="trResults"></div>
+</div> <div class="section-header"> <h2>Загрузите новые слова</h2> </div> <div class="toggles-row"> <div class="upload-toggle" role="tablist" aria-label="upload mode"> <button class="upload-btn active" id="uploadTabSingle" data-tab="single">Одно слово</button> <button class="upload-btn" id="uploadTabBulk" data-tab="bulk">Массовое добавление</button> </div> </div> <p id="singleHelp" class="mode-help"> Введите слово на английском и перевод на русский. После добавления слово сразу попадёт в ваш словарь. </p> <div class="add-word-form" id="singleAddForm"> <div class="form-group"> <label for="newWord">Английское слово</label> <input type="text" id="newWord" placeholder="Введите слово на английском" data-testid="new-word-input"> </div> <div class="form-group"> <label for="newTranslation">Перевод</label> <input type="text" id="newTranslation" placeholder="Введите перевод" data-testid="new-translation-input"> </div> <div class="form-group"> <label for="newLevel">Уровень</label> <select id="newLevel" data-testid="new-level-select"> <option value="A1">A1 - Beginner</option> <option value="A2">A2 - Elementary</option> <option value="B1">B1 - Intermediate</option> <option value="B2">B2 - Upper-Intermediate</option> <option value="C1">C1 - Advanced</option> <option value="C2">C2 - Proficiency</option> <option value="IRREGULARS">Irregular Verbs</option> <option value="PREPOSITIONS">Prepositions</option> </select> </div> <button class="add-word-btn" id="addWordBtn" data-testid="add-word-btn"> <i class="fas fa-plus"></i> Добавить слово </button> </div> <div class="add-word-form" id="bulkAddForm" style="display:none;"> <h3 style="margin-bottom:8px;">Массовое добавление</h3> <p class="mode-help" id="bulkHelp" data-testid="bulk-help"> Каждое английское слово / фразу вводите с новой строки.<br><br> Перевод указывается через "-" (например: go - идти, ехать, ходить) </p> <div class="form-group"> <label for="bulkLevel">Уровень для всех слов</label> <select id="bulkLevel" data-testid="bulk-level-select"> <option value="A1">A1 - Beginner</option> <option value="A2">A2 - Elementary</option> <option value="B1">B1 - Intermediate</option> <option value="B2">B2 - Upper-Intermediate</option> <option value="C1">C1 - Advanced</option> <option value="C2">C2 - Proficiency</option> <option value="IRREGULARS">Irregular Verbs</option> <option value="PREPOSITIONS">Prepositions</option> </select> </div> <div class="form-group"> <label for="bulkTextarea">Вставьте строки</label> <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;go - идти, ехать, ходить&#10;table - стол&#10;run - бежать, запускать" data-testid="bulk-textarea" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);border-radius:var(--radius-md);background:var(--bg-primary);color:var(--text-primary);"></textarea> </div> <button class="add-word-btn" id="bulkAddBtn" data-testid="bulk-add-btn"> <i class="fas fa-file-import"></i> Добавить список </button> </div> <div id="customWordsList" class="words-list"> <h3>Добавленные слова</h3> <div id="customWords"> <div class="empty-state"> <i class="fas fa-plus-circle"></i> <h3>Нет добавленных слов</h3> <p>Используйте формы выше для добавления новых слов</p> </div> </div> </div> </section>
   
     <!-- Progress -->
     <section id="progress" class="content-section">
@@ -961,6 +930,285 @@ function closeInstallBanner() {
   }
 }
 </script>
+<script>
+(function(){
+  let src = 'ru', tgt = 'en', bound = !1;
+
+  function $id(id){ return document.getElementById(id); }
+
+  function setLang(from, to){
+    src = from;
+    tgt = to;
+
+    const ruBtn = $id('trRuBtn');
+    const enBtn = $id('trEnBtn');
+
+    if (ruBtn) {
+      ruBtn.classList.toggle('active', from === 'ru');
+      ruBtn.textContent = '🇷🇺 Русский';
+    }
+    if (enBtn) {
+      enBtn.classList.toggle('active', from === 'en');
+      enBtn.textContent = '🇬🇧 Английский';
+    }
+  }
+
+  async function translate(){
+    const input = $id('trInputText');
+    if (!input) return;
+    const text = (input.value || '').trim();
+    if (!text) return void showErr('Пожалуйста, введите текст для перевода');
+
+    const load = $id('trLoading'),
+          err  = $id('trError'),
+          res  = $id('trResults');
+
+    err && err.classList.remove('active');
+    res && res.classList.remove('active');
+    load && load.classList.add('active');
+
+    try {
+      const list = await fetchAll(text);
+      render(text, list);
+    } catch (e) {
+      console.error(e);
+      showErr('Произошла ошибка при переводе. Попробуйте ещё раз.');
+    } finally {
+      load && load.classList.remove('active');
+    }
+  }
+
+  async function fetchAll(text){
+    const out = [], seen = new Set;
+    try {
+      const u = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${src}&tl=${tgt}&dt=t&dt=bd&q=${encodeURIComponent(text)}`;
+      const r = await fetch(u);
+      const d = await r.json();
+      if (Array.isArray(d[0])) {
+        let m = '';
+        d[0].forEach(i => { i[0] && (m += i[0]); });
+        if (m && !seen.has(m.toLowerCase())) {
+          out.push({ text:m, type:'основной', source:'Google', confidence:100 });
+          seen.add(m.toLowerCase());
+        }
+      }
+      if (Array.isArray(d[1])) {
+        d[1].forEach(g => {
+          const pos = g[0];
+          Array.isArray(g[1]) && g[1].forEach((w,i) => {
+            if (w && !seen.has(w.toLowerCase())) {
+              out.push({
+                text: w,
+                type: pos || 'альтернативный',
+                source: 'Google Dict',
+                confidence: Math.max(50, 90 - i*5)
+              });
+              seen.add(w.toLowerCase());
+            }
+          });
+        });
+      }
+    } catch(e){}
+
+    try {
+      const u = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|${tgt}`;
+      const r = await fetch(u);
+      const d = await r.json();
+      const t = d?.responseData?.translatedText;
+      if (t && !seen.has(t.toLowerCase())) {
+        out.push({ text:t, type:'альтернативный', source:'MyMemory', confidence:85 });
+        seen.add(t.toLowerCase());
+      }
+    } catch(e){}
+
+    return out.sort((a,b) => b.confidence - a.confidence);
+  }
+
+  function esc(s=''){
+    return String(s)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;');
+  }
+
+  function showErr(m){
+    const el = $id('trError');
+    if (!el) return;
+    el.textContent = m;
+    el.classList.add('active');
+    setTimeout(() => el.classList.remove('active'), 2200);
+  }
+
+  function render(original, list){
+    const res = $id('trResults');
+    if (!res) return;
+
+    const main = list[0];
+    const groups = {};
+    list.forEach((t,i) => {
+      (groups[t.type] || (groups[t.type] = [])).push({ ...t, index:i+1 });
+    });
+
+    const enMain = src === 'en' ? original : (tgt === 'en' ? main?.text : '');
+    const ruMain = src === 'ru' ? original : (tgt === 'ru' ? main?.text : '');
+
+    let html = '';
+
+    if (main) {
+      html += `
+        <div class="tr-main">
+          <div class="tr-src">
+            ${esc(original)}
+            <button class="tr-copy-btn" data-copy="${encodeURIComponent(original)}" title="Скопировать исходный текст">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <div class="tr-res">
+            <span class="tr-res-text">${esc(main.text)}</span>
+            <button class="tr-copy-btn" data-copy="${encodeURIComponent(main.text)}" title="Скопировать перевод">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          ${enMain ? `
+            <div class="tr-add">
+              <button class="tr-chip-btn"
+                      data-en="${encodeURIComponent(enMain)}"
+                      data-ru="${encodeURIComponent(ruMain || '')}"
+                      data-src="${src}"
+                      data-tgt="${tgt}">
+                ➕ В изучение
+              </button>
+            </div>` : ''
+          }
+        </div>
+      `;
+    }
+
+    Object.entries(groups).forEach(([type, items]) => {
+      html += `
+        <div class="tr-group">
+          <div class="tr-head">
+            <span>${esc(type[0].toUpperCase() + type.slice(1))}</span>
+            <span style="color:var(--text-secondary);font-size:13px;">${items.length} вариан.</span>
+          </div>
+          <div class="tr-list">
+            ${items.map(it => {
+              const en = tgt === 'en' ? it.text : (src === 'en' ? original : '');
+              const ru = tgt === 'ru' ? it.text : (src === 'ru' ? original : '');
+              return `
+                <div class="tr-item">
+                  <div class="tr-num">${it.index}</div>
+                  <div style="flex:1;min-width:0;">
+                    <div class="tr-text">
+                      ${esc(it.text)}
+                      <button class="tr-copy-btn"
+                              data-copy="${encodeURIComponent(it.text)}"
+                              title="Скопировать этот вариант">
+                        <i class="fas fa-copy"></i>
+                      </button>
+                    </div>
+                    <div class="tr-meta">${esc(it.source)} • ${it.confidence}%</div>
+                  </div>
+                  ${en ? `
+                    <button class="tr-chip-btn"
+                            data-en="${encodeURIComponent(en)}"
+                            data-ru="${encodeURIComponent(ru || '')}"
+                            data-src="${src}"
+                            data-tgt="${tgt}">
+                      ➕
+                    </button>` : ''
+                  }
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    });
+
+    if (!html) {
+      html = '<div class="empty-state"><p>Переводы не найдены</p></div>';
+    } else {
+      html = `
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px;">
+          Нажмите на значок <i class="fas fa-copy"></i>, чтобы скопировать текст.
+        </div>
+      ` + html;
+    }
+
+    res.innerHTML = html;
+    res.classList.add('active');
+  }
+
+  function onClick(e){
+    const t = e.target.closest('#trRuBtn, #trEnBtn, #trSwapBtn, #trTranslateBtn, .tr-chip-btn, .tr-copy-btn');
+    if (!t) return;
+
+    if (t.id === 'trRuBtn') {
+      e.preventDefault();
+      setLang('ru','en');
+    } else if (t.id === 'trEnBtn') {
+      e.preventDefault();
+      setLang('en','ru');
+    } else if (t.id === 'trSwapBtn') {
+      e.preventDefault();
+      setLang(src === 'ru' ? 'en' : 'ru', tgt === 'en' ? 'ru' : 'en');
+    } else if (t.id === 'trTranslateBtn') {
+      e.preventDefault();
+      translate();
+    } else if (t.classList.contains('tr-chip-btn') && t.dataset.en) {
+      e.preventDefault();
+      const en = decodeURIComponent(t.dataset.en || '');
+      const ru = decodeURIComponent(t.dataset.ru || '');
+      if (en && typeof window.onAddToStudy === 'function') {
+        window.onAddToStudy({
+          term: en,
+          meta: {
+            ru,
+            sourceLang: t.dataset.src,
+            targetLang: t.dataset.tgt,
+            originalText: ($id('trInputText')?.value || '').trim()
+          }
+        });
+        t.classList.add('added');
+        t.textContent = '✓ Добавлено';
+      }
+    } else if (t.classList.contains('tr-copy-btn') && t.dataset.copy) {
+      e.preventDefault();
+      const txt = decodeURIComponent(t.dataset.copy || '');
+      if (!txt) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(() => {
+          t.classList.add('copied');
+          t.innerHTML = '✓';
+          setTimeout(() => {
+            t.classList.remove('copied');
+            t.innerHTML = '<i class="fas fa-copy"></i>';
+          }, 1500);
+        }).catch(() => {});
+      }
+    }
+  }
+
+  function onKey(e){
+    if (e.key === 'Enter' && e.target?.id === 'trInputText') {
+      translate();
+    }
+  }
+
+  function bindOnce(){
+    if (bound) return;
+    bound = !0;
+    document.addEventListener('click', onClick, !0);
+    document.addEventListener('keypress', onKey, !0);
+    setLang('ru','en');
+  }
+
+  window.initBewordsTranslator = bindOnce;
+  document.addEventListener('DOMContentLoaded', bindOnce);
+})();
+</script>
+
 </body>
 
 </html>
