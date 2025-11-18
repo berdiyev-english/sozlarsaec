@@ -199,7 +199,7 @@ playMp3Url(url) {
       try {
         this.stopCurrentAudio();
         
-        // Создаем аудио с предзагрузкой
+        // Создаем аудио с предзагрузкой (пожалуйста работай)
         const audio = new Audio();
         audio.preload = 'auto';
         audio.volume = 1.0;
@@ -5612,4 +5612,5 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+
 
