@@ -23,7 +23,7 @@ class EnglishWordsApp {
     this.audioCtx = null;
     this.initMedicalImageCache();
 
-    // runtime flags
+    // runtime flags work please
     this.lastFlashcardFrontWasRussian = false;
     this.currentAudio = null;
     this.currentAudioPromise = null;
