@@ -936,22 +936,31 @@ function closeInstallBanner() {
 
   function $id(id){ return document.getElementById(id); }
 
-  function setLang(from, to){
-    src = from;
-    tgt = to;
+function setLang(from, to){
+  src = from;
+  tgt = to;
 
-    const ruBtn = $id('trRuBtn');
-    const enBtn = $id('trEnBtn');
+  const ruBtn = $id('trRuBtn');
+  const enBtn = $id('trEnBtn');
+  if (!ruBtn || !enBtn) return;
 
-    if (ruBtn) {
-      ruBtn.classList.toggle('active', from === 'ru');
-      ruBtn.textContent = '🇷🇺 Русский';
-    }
-    if (enBtn) {
-      enBtn.classList.toggle('active', from === 'en');
-      enBtn.textContent = '🇬🇧 Английский';
-    }
+  // from = язык источника:
+  // если from === 'ru' → переводим ИЗ русского В английский:
+  //   левая кнопка: Русский (активна), правая: Английский
+  // если from === 'en' → переводим ИЗ английского В русский:
+  //   левая кнопка: Английский, правая: Русский (активна)
+  if (from === 'ru') {
+    ruBtn.textContent = '🇷🇺 Русский';
+    enBtn.textContent = '🇬🇧 Английский';
+    ruBtn.classList.add('active');
+    enBtn.classList.remove('active');
+  } else {
+    ruBtn.textContent = '🇬🇧 Английский';
+    enBtn.textContent = '🇷🇺 Русский';
+    enBtn.classList.add('active');
+    ruBtn.classList.remove('active');
   }
+}
 
   async function translate(){
     const input = $id('trInputText');
@@ -1212,3 +1221,4 @@ function closeInstallBanner() {
 </body>
 
 </html>
+
