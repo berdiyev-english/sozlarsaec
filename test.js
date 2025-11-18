@@ -23,7 +23,7 @@ class EnglishWordsApp {
     this.audioCtx = null;
     this.initMedicalImageCache();
 
-    // runtime flag
+    // runtime flags
     this.lastFlashcardFrontWasRussian = false;
     this.currentAudio = null;
     this.currentAudioPromise = null;
@@ -149,7 +149,7 @@ checkAndShowFirstRunOrMotivation() {
     return `https://wooordhunt.ru/data/sound/sow/${region}/${clean}.mp3`;
   }
   
-  // Имя файла для идиомы: all ears -> all_ears
+  // Имя файла для идиомы: "all ears" -> "all_ears"
   buildIdiomFileName(phrase) {
     if (!phrase) return '';
     return String(phrase)
@@ -159,24 +159,25 @@ checkAndShowFirstRunOrMotivation() {
       .replace(/\s+/g, '_');      // пробелы -> _
   }
 
-  // URL для US-озвучки идиомы с вашего сайта
+  // URL для US-озвучки идиомы с сайта
   buildIdiomAudioUrl(fileName) {
     if (!fileName) return '';
     return `https://bewords.ru/au/idioms/us/${fileName}.mp3`;
   }
 
-  // Попробовать проиграть idiom.mp3, если не удалось — fallback в TTS
-  async playIdiomAudio(phrase) {
+  // Попробовать сыграть idiom.mp3, если не вышло — fallback в TTS
+    async playIdiomAudio(phrase) {
     const file = this.buildIdiomFileName(phrase);
     if (!file) return false;
+
     const url = this.buildIdiomAudioUrl(file);
     try {
       await this.playMp3Url(url);
+      // УСПЕШНО: mp3 проигран
       return true;
     } catch (e) {
-      // Фолбэк: Web Speech TTS
-      const ok = await this.playPhraseTTS(phrase, 'us');
-      return !!ok;
+      // Для идиом НЕ используем TTS – просто выходим
+      return false;
     }
   }
   
@@ -199,7 +200,7 @@ playMp3Url(url) {
       try {
         this.stopCurrentAudio();
         
-        // Создаем аудио с предзагрузкой (пожалуйста работай)
+        // Создаем аудио с предзагрузкой
         const audio = new Audio();
         audio.preload = 'auto';
         audio.volume = 1.0;
@@ -398,15 +399,14 @@ syncModePracticeToggles() {
     }
     return true;
   }
-      async playWord(word, forms = null, region = null, level = null) {
+         async playWord(word, forms = null, region = null, level = null) {
     if (typeof forms === 'string') { forms = [forms]; }
     const regionPref = (region === 'uk' || region === 'us') ? region : 'us';
 
-    // Особый случай: идиомы
+    // ИДИОМЫ: только mp3, без TTS вообще
     if (level === 'IDIOMS' && typeof word === 'string') {
-      const ok = await this.playIdiomAudio(word);
-      if (ok) return; // если mp3/tts отработали — дальше не идём
-      // если нет — ниже стандартная логика
+      await this.playIdiomAudio(word);
+      return; // даже если mp3 не нашёлся, дальше не идём
     }
 
     // Набор форм через "/" (для неправильных глаголов и т.п.)
@@ -425,6 +425,7 @@ syncModePracticeToggles() {
     }
 
     if (this.isMultiWord(word)) {
+      // Для обычных фраз – TTS, но не для идиом (мы их уже отфильтровали выше)
       await this.playPhraseTTS(word, regionPref);
       return;
     }
@@ -3097,14 +3098,20 @@ installWordsListDelegatedHandlers() {
     const btn = e.target.closest('.sound-us-btn, .sound-uk-btn, .word-add-btn, .word-remove-btn');
     if (!btn) return;
 
+    // Определяем уровень/категорию из карточки
+    const card = btn.closest('.word-card');
+    const cardLevel = card ? card.getAttribute('data-level') : null;
+
     // Звук US/UK
     if (btn.classList.contains('sound-us-btn') || btn.classList.contains('sound-uk-btn')) {
       const wordText = btn.getAttribute('data-word-text');
       const formsStr = btn.getAttribute('data-forms');
       let forms = null;
-      if (formsStr && formsStr !== 'null') { try { forms = JSON.parse(formsStr); } catch {} }
+      if (formsStr && formsStr !== 'null') {
+        try { forms = JSON.parse(formsStr); } catch {}
+      }
       const region = btn.classList.contains('sound-uk-btn') ? 'uk' : 'us';
-      this.playWord(wordText, forms, region);
+      this.playWord(wordText, forms, region, cardLevel); // <- ПЕРЕДАЁМ level
       return;
     }
 
@@ -3129,7 +3136,6 @@ installWordsListDelegatedHandlers() {
     }
   });
 
-  // Пометка, что делегирование уже повешено
   list.dataset.delegated = '1';
 }
 
@@ -4246,14 +4252,13 @@ attachWordsListHandlers() {
       const word = btn.getAttribute('data-word');
       const formsStr = btn.getAttribute('data-forms');
       let forms = null;
-      
       if (formsStr && formsStr !== 'null') {
-        try {
-          forms = JSON.parse(formsStr);
-        } catch {}
+        try { forms = JSON.parse(formsStr); } catch {}
       }
-      
-      this.playWord(word, forms, 'us');
+      // Находим уровень через learningWords
+      const item = this.learningWords.find(w => w.word === word);
+      const level = item ? item.level : null;
+      this.playWord(word, forms, 'us', level);
     });
   });
   
@@ -4264,18 +4269,16 @@ attachWordsListHandlers() {
       const word = btn.getAttribute('data-word');
       const formsStr = btn.getAttribute('data-forms');
       let forms = null;
-      
       if (formsStr && formsStr !== 'null') {
-        try {
-          forms = JSON.parse(formsStr);
-        } catch {}
+        try { forms = JSON.parse(formsStr); } catch {}
       }
-      
-      this.playWord(word, forms, 'uk');
+      const item = this.learningWords.find(w => w.word === word);
+      const level = item ? item.level : null;
+      this.playWord(word, forms, 'uk', level);
     });
   });
   
-  // Кнопки toggle learned
+  // Кнопки toggle learned оставляем как были
   container.querySelectorAll('.list-toggle-learned').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -5612,5 +5615,3 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
-
-
