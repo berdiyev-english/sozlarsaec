@@ -702,19 +702,21 @@ this.showLevelWords(level);
 }
 });
 });
-
     // Category cards
-document.querySelectorAll('.level-card[data-category]').forEach(card => {
-card.addEventListener('click', (e) => {
-const cat = e.currentTarget.getAttribute('data-category');
-if (!cat) return;
-if (cat === 'ADDED') {
-  this.showAddedWordsCategory();
-} else {
-  this.showCategoryWords(cat);
-}
-});
-});
+    document.querySelectorAll('.level-card[data-category]').forEach(card => {
+      card.addEventListener('click', (e) => {
+        // Если карточка "скоро" — не реагируем на клик
+        if (e.currentTarget.classList.contains('coming-soon')) return;
+
+        const cat = e.currentTarget.getAttribute('data-category');
+        if (!cat) return;
+        if (cat === 'ADDED') {
+          this.showAddedWordsCategory();
+        } else {
+          this.showCategoryWords(cat);
+        }
+      });
+    });
 
     // Back to levels
     const backBtn = document.getElementById('backToLevels');
@@ -727,6 +729,29 @@ if (cat === 'ADDED') {
     // Bulk add button
     const bulkAddBtn = document.getElementById('bulkAddBtn');
     if (bulkAddBtn) bulkAddBtn.addEventListener('click', () => this.bulkAddWords());
+    
+// Переключение форм загрузки
+const tabSingle = document.getElementById('uploadTabSingle');
+const tabBulk = document.getElementById('uploadTabBulk');
+const singleForm = document.getElementById('singleAddForm');
+const bulkForm = document.getElementById('bulkAddForm');
+const singleHelp = document.getElementById('singleHelp');
+const bulkHelp = document.getElementById('bulkHelp');
+
+function showUploadTab(tab) {
+if (!tabSingle || !tabBulk || !singleForm || !bulkForm) return;
+tabSingle.classList.toggle('active', tab === 'single');
+tabBulk.classList.toggle('active', tab === 'bulk');
+singleForm.style.display = tab === 'single' ? '' : 'none';
+bulkForm.style.display = tab === 'bulk' ? '' : 'none';
+if (singleHelp) singleHelp.style.display = tab === 'single' ? '' : 'none';
+if (bulkHelp) bulkHelp.style.display = tab === 'bulk' ? '' : 'none';
+}
+if (tabSingle && tabBulk) {
+tabSingle.addEventListener('click', () => showUploadTab('single'));
+tabBulk.addEventListener('click', () => showUploadTab('bulk'));
+showUploadTab('single'); // по умолчанию
+}
 
     // Mode toggle buttons - ВАЖНО!
     document.querySelectorAll('.mode-btn').forEach(btn => {
@@ -770,14 +795,12 @@ if (cat === 'ADDED') {
         if (!practice) return;
         
         if (practice === 'list') {
-          this.currentPractice = 'list';
-          localStorage.setItem('currentPractice', 'list');
-          
+          // Открываем попап со всеми словами вместо смены режима
+          this.showLearningWordsPopup();
+
+          // Подсветим «Список» пока открыт попап
           document.querySelectorAll('.practice-btn').forEach(b => b.classList.remove('active'));
           e.currentTarget.classList.add('active');
-          
-          this.suppressAutoSpeakOnce = true;
-          this.renderWordsList();
           return;
         }
         
@@ -839,6 +862,7 @@ if (cat === 'ADDED') {
       });
     }, 100);
     this.ensureAutoDictButton();
+    window.onAddToStudy = (payload) => this.handleTranslatorAdd(payload);
 }
 
 ensureAutoDictButton() {
@@ -1532,41 +1556,56 @@ switchSection(section) {
       }
       this.renderCustomWords();
     }
+    // Инициализируем обработчики переводчика (делегирование кликов)
+if (typeof window.initBewordsTranslator === 'function') {
+setTimeout(() => window.initBewordsTranslator(), 0);
+}
 }
 
   // =========
   // Levels & Categories
   // =========
-  updateLevelCounts() {
+    updateLevelCounts() {
     const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
     levels.forEach(level => {
       const words = oxfordWordsDatabase[level] || [];
-      const card = document.querySelector(`[data-level="${level}"] .word-count`);
-      if (card) card.textContent = `${words.length} слов`;
+      const countEl = document.querySelector(`[data-level="${level}"] .word-count`);
+      if (countEl) countEl.textContent = `${words.length} слов`;
     });
 
-    const irregulars = oxfordWordsDatabase['IRREGULARS'] || [];
-    const irregCard = document.querySelector('[data-category="IRREGULARS"] .word-count');
-    if (irregCard) irregCard.textContent = `${irregulars.length} слов`;
+    // Обычные категории
+    const setCatCount = (catKey, selector) => {
+      const words = oxfordWordsDatabase[catKey] || [];
+      const countEl = document.querySelector(`${selector} .word-count`);
+      if (countEl) countEl.textContent = `${words.length} слов`;
+    };
 
-    const phrasals = oxfordWordsDatabase['PHRASAL_VERBS'] || [];
-    const phrasalCard = document.querySelector('[data-category="PHRASAL_VERBS"] .word-count');
-    if (phrasalCard) phrasalCard.textContent = `${phrasals.length} слов`;
-
-    const idioms = oxfordWordsDatabase['IDIOMS'] || [];
-    const idiomsCard = document.querySelector('[data-category="IDIOMS"] .word-count');
-    if (idiomsCard) idiomsCard.textContent = `${idioms.length} слов`;
-    
-    const prepositions = oxfordWordsDatabase['PREPOSITIONS'] || [];
-    const prepositionsCard = document.querySelector('[data-category="PREPOSITIONS"] .word-count');
-    if (prepositionsCard) prepositionsCard.textContent = `${prepositions.length} слов`;
-    
-    const medical = oxfordWordsDatabase['MEDICAL'] || [];
-    const medicalCard = document.querySelector('[data-category="MEDICAL"] .word-count');
-    if (medicalCard) medicalCard.textContent = `${medical.length} слов`;
+    setCatCount('IRREGULARS', '[data-category="IRREGULARS"]');
+    setCatCount('PHRASAL_VERBS', '[data-category="PHRASAL_VERBS"]');
+    setCatCount('IDIOMS', '[data-category="IDIOMS"]');
+    setCatCount('PREPOSITIONS', '[data-category="PREPOSITIONS"]');
+    setCatCount('MEDICAL', '[data-category="MEDICAL"]');
 
     const addedCard = document.querySelector('[data-category="ADDED"] .word-count');
     if (addedCard) addedCard.textContent = `${this.customWords.length} слов`;
+
+    // Экзамены — если нет слов, делаем карточку "coming soon"
+    const setExamCount = (key) => {
+      const words = oxfordWordsDatabase[key] || [];
+      const card = document.querySelector(`.level-card[data-category="${key}"]`);
+      const countEl = card ? card.querySelector('.word-count') : null;
+      if (!card || !countEl) return;
+      
+      if (words.length === 0) {
+        countEl.textContent = 'Скоро';
+        card.classList.add('coming-soon');
+      } else {
+        countEl.textContent = `${words.length} слов`;
+        card.classList.remove('coming-soon');
+      }
+    };
+
+    ['EGE','OGE','IELTS','TOEFL'].forEach(setExamCount);
   }
 
 toggleLevelsIndexVisibility(showIndex) {
@@ -1645,7 +1684,6 @@ showLevelWords(level) {
   const title = document.getElementById('currentLevelTitle');
   const wordsList = document.getElementById('wordsList');
 
-  // Режим «список»: прячем гриды/заголовки, показываем контейнер
   if (typeof this.toggleLevelsIndexVisibility === 'function') {
     this.toggleLevelsIndexVisibility(false);
   }
@@ -1653,26 +1691,40 @@ showLevelWords(level) {
 
   if (title) title.textContent = `${level} - ${words.length} слов`;
 
-  // Рендер карточек
+  // ОПТИМИЗАЦИЯ: Батч-рендеринг
   if (wordsList) {
-    wordsList.innerHTML = words.map(word => this.createWordCard(word, level)).join('');
-    // Быстрый делегированный обработчик (см. шаг 3)
-    if (typeof this.installWordsListDelegatedHandlers === 'function') {
+    // Показываем заглушку
+    wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
+    
+    // Рендерим в следующем фрейме
+    requestAnimationFrame(() => {
+      const fragment = document.createDocumentFragment();
+      const tempDiv = document.createElement('div');
+      
+      // HTML одним куском
+      tempDiv.innerHTML = words.map(word => this.createWordCard(word, level)).join('');
+      
+      // Переносим в fragment
+      while (tempDiv.firstChild) {
+        fragment.appendChild(tempDiv.firstChild);
+      }
+      
+      // Одна операция DOM
+      wordsList.innerHTML = '';
+      wordsList.appendChild(fragment);
+      
+      // ТОЛЬКО делегирование
       this.installWordsListDelegatedHandlers();
-    }
-    // Если используешь старый способ — НЕ вызывай attachWordCardListeners здесь, он тяжелый
-    // this.attachWordCardListeners();
+      this.updateBulkToggleButton();
+      
+      if (typeof this.ensureAutoDictButton === 'function') {
+        this.ensureAutoDictButton();
+      }
+    });
   }
 
-  this.updateBulkToggleButton();
-
-  // CTA «Подобрать словарь…» — в верхнем отступе
-  if (typeof this.ensureAutoDictButton === 'function') {
-    this.ensureAutoDictButton();
-  }
-
-  // Жестко прокручиваем в самый верх (всегда видно кнопки)
-  requestAnimationFrame(() => this.jumpToTopStrict());
+  // Упрощенный скролл
+  this.scrollMainToTop();
 }
 
 showCategoryWords(category) {
@@ -1701,19 +1753,100 @@ showCategoryWords(category) {
   if (title) title.textContent = `${categoryName} - ${words.length} слов`;
 
   if (wordsList) {
-    wordsList.innerHTML = words.map(word => this.createWordCard(word, category)).join('');
-    if (typeof this.installWordsListDelegatedHandlers === 'function') {
+    wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
+    
+    requestAnimationFrame(() => {
+      const fragment = document.createDocumentFragment();
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = words.map(word => this.createWordCard(word, category)).join('');
+      
+      while (tempDiv.firstChild) {
+        fragment.appendChild(tempDiv.firstChild);
+      }
+      
+      wordsList.innerHTML = '';
+      wordsList.appendChild(fragment);
+      
       this.installWordsListDelegatedHandlers();
-    }
-    // this.attachWordCardListeners(); // не вызываем для скорости
+      this.updateBulkToggleButton();
+      
+      if (typeof this.ensureAutoDictButton === 'function') {
+        this.ensureAutoDictButton();
+      }
+    });
+  }
+
+  this.scrollMainToTop();
+}
+
+// ОПЦИОНАЛЬНО: Ленивая загрузка для больших списков (>200 слов)
+showLevelWordsLazy(level) {
+  const words = oxfordWordsDatabase[level] || [];
+  const BATCH_SIZE = 100;
+  
+  // Если слов мало - обычный рендеринг
+  if (words.length <= 200) {
+    this.showLevelWords(level);
+    return;
+  }
+  
+  // Для больших списков - ленивая загрузка
+  this.stopCurrentAudio();
+  this.currentLevel = level;
+  this.currentCategory = null;
+
+  const container = document.getElementById('wordsContainer');
+  const title = document.getElementById('currentLevelTitle');
+  const wordsList = document.getElementById('wordsList');
+
+  if (typeof this.toggleLevelsIndexVisibility === 'function') {
+    this.toggleLevelsIndexVisibility(false);
+  }
+  if (container) container.classList.remove('hidden');
+  if (title) title.textContent = `${level} - ${words.length} слов (загрузка...)`;
+
+  if (wordsList) {
+    // Первая порция
+    wordsList.innerHTML = words.slice(0, BATCH_SIZE)
+      .map(w => this.createWordCard(w, level))
+      .join('');
+    
+    this.installWordsListDelegatedHandlers();
+    
+    let loaded = BATCH_SIZE;
+    const loadMore = () => {
+      if (loaded >= words.length) {
+        if (title) title.textContent = `${level} - ${words.length} слов`;
+        return;
+      }
+      
+      const nextBatch = words.slice(loaded, loaded + BATCH_SIZE)
+        .map(w => this.createWordCard(w, level))
+        .join('');
+      
+      wordsList.insertAdjacentHTML('beforeend', nextBatch);
+      loaded += BATCH_SIZE;
+      
+      if (title) title.textContent = `${level} - Загружено ${loaded}/${words.length} слов`;
+    };
+    
+    // Sentinel для автозагрузки при скролле
+    const sentinel = document.createElement('div');
+    sentinel.style.height = '1px';
+    sentinel.id = 'lazy-sentinel';
+    wordsList.appendChild(sentinel);
+    
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        loadMore();
+      }
+    });
+    
+    observer.observe(sentinel);
   }
 
   this.updateBulkToggleButton();
-  if (typeof this.ensureAutoDictButton === 'function') {
-    this.ensureAutoDictButton();
-  }
-
-  requestAnimationFrame(() => this.jumpToTopStrict());
+  this.scrollMainToTop();
 }
 
 backToLevels() {
@@ -2432,7 +2565,6 @@ renderSentenceBuilder() {
       <div class="russian-sentence-box">
         <span class="russian-text">${state.currentSentence.ru}</span>
         <span class="sentence-level-badge level-${state.currentSentence.level}">${state.currentSentence.level}</span>
-        <button class="sentence-sound-btn" id="sentenceSoundBtn">🔊</button>
       </div>
       
       <div class="sentence-answer-area ${state.assembledWords.length > 0 ? 'has-content' : ''}" id="sentenceAnswerArea">
@@ -2497,12 +2629,6 @@ renderSentenceBuilder() {
       grammarBtn.addEventListener('click', () => this.showSentenceGrammarModal());
     }
     
-    // Кнопка звука
-    const soundBtn = container.querySelector('#sentenceSoundBtn');
-    if (soundBtn) {
-      soundBtn.addEventListener('click', () => this.playSentenceSound());
-    }
-    
     // Кнопка очистки
     const clearBtn = container.querySelector('#sentenceClearBtn');
     if (clearBtn) {
@@ -2529,9 +2655,25 @@ selectSentenceWord(word, index) {
   const state = this.sentenceBuilderState;
   const wordKey = `${word}_${index}`;
   
-  // Проверяем, не использовано ли уже это слово
+  // Уже использовано это конкретное слово
   if (state.assembledWords.some(w => w === wordKey)) return;
+
+  // Проверяем, какое слово должно быть следующим по порядку
+  const nextPos = state.assembledWords.length;
+  const expected = (state.correctOrder[nextPos] || '').toLowerCase().trim();
+  const clicked = (word || '').toLowerCase().trim();
+
+  // Если слово не то, которое ожидается — не добавляем, только даём лёгкую "ошибку"
+  if (clicked !== expected) {
+    const answerArea = document.getElementById('sentenceAnswerArea');
+    if (answerArea) {
+      answerArea.classList.add('incorrect');
+      setTimeout(() => answerArea.classList.remove('incorrect'), 300);
+    }
+    return;
+  }
   
+  // Сюда попадаем только если слово правильное по порядку
   state.assembledWords.push(wordKey);
   
   // Обновляем отображение собранного предложения
@@ -2562,7 +2704,7 @@ selectSentenceWord(word, index) {
     answerArea.classList.add('has-content');
   }
   
-  // Озвучиваем слово
+  // Озвучиваем слово (если нужно)
   try {
     this.playSingleWordMp3(word, 'us').catch(err => {
       console.log('Audio playback failed:', err);
@@ -2853,99 +2995,6 @@ installWordsListDelegatedHandlers() {
   list.dataset.delegated = '1';
 }
 
-attachWordCardListeners() {
-    const wordsList = document.getElementById('wordsList');
-    if (!wordsList) return;
-
-    // Удаляем старые обработчики (если есть), клонируя элемент
-    // Это не обязательно, но предотвращает дублирование обработчиков
-
-    // Обработчики для кнопок звука US
-    wordsList.querySelectorAll('.sound-us-btn').forEach(btn => {
-      const newBtn = btn.cloneNode(true);
-      btn.parentNode.replaceChild(newBtn, btn);
-      
-      newBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const wordText = newBtn.getAttribute('data-word-text');
-        const formsStr = newBtn.getAttribute('data-forms');
-        let forms = null;
-        
-        if (formsStr && formsStr !== 'null') {
-          try {
-            forms = JSON.parse(formsStr);
-          } catch (e) {
-            console.log('Forms parse error:', e);
-          }
-        }
-        
-        this.playWord(wordText, forms, 'us');
-      });
-    });
-
-    // Обработчики для кнопок звука UK
-    wordsList.querySelectorAll('.sound-uk-btn').forEach(btn => {
-      const newBtn = btn.cloneNode(true);
-      btn.parentNode.replaceChild(newBtn, btn);
-      
-      newBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const wordText = newBtn.getAttribute('data-word-text');
-        const formsStr = newBtn.getAttribute('data-forms');
-        let forms = null;
-        
-        if (formsStr && formsStr !== 'null') {
-          try {
-            forms = JSON.parse(formsStr);
-          } catch (e) {
-            console.log('Forms parse error:', e);
-          }
-        }
-        
-        this.playWord(wordText, forms, 'uk');
-      });
-    });
-
-    // Обработчики для кнопок добавления
-    wordsList.querySelectorAll('.word-add-btn').forEach(btn => {
-      const newBtn = btn.cloneNode(true);
-      btn.parentNode.replaceChild(newBtn, btn);
-      
-      newBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const wordText = newBtn.getAttribute('data-word-text');
-        const translation = newBtn.getAttribute('data-translation');
-        const level = newBtn.getAttribute('data-level');
-        const formsStr = newBtn.getAttribute('data-forms');
-        let forms = null;
-        
-        if (formsStr && formsStr !== 'null') {
-          try {
-            forms = JSON.parse(formsStr);
-          } catch (e) {
-            console.log('Forms parse error:', e);
-          }
-        }
-        
-        this.addWordToLearning(wordText, translation, level, forms);
-      });
-    });
-
-    // Обработчики для кнопок удаления
-    wordsList.querySelectorAll('.word-remove-btn').forEach(btn => {
-      const newBtn = btn.cloneNode(true);
-      btn.parentNode.replaceChild(newBtn, btn);
-      
-      newBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const wordText = newBtn.getAttribute('data-word-text');
-        const level = newBtn.getAttribute('data-level');
-        
-        this.removeWordFromLearning(wordText, level);
-      });
-    });
-}
-
 safeAttr(str) { 
     if (!str) return ''; 
     return String(str).replace(/"/g, '&quot;').replace(/'/g, '&#39;'); 
@@ -3178,6 +3227,45 @@ this.saveSrsDay();
   // =========
   // Add words (manual and bulk) -> ADDED category
   // =========
+  
+// Добавление из переводчика (EN + RU -> уровень ADDED)
+async handleTranslatorAdd(payload) {
+try {
+const en = (payload?.term || '').trim();
+const ru = (payload?.meta?.ru || '').trim();
+if (!en) { this.showNotification('Не удалось определить английское слово','warning'); return; }
+if (!ru) { this.showNotification('Не удалось определить перевод на русский','warning'); return; }
+
+// В customWords (для списка), если ещё нет
+const existsCustom = this.customWords.some(w => w.word.toLowerCase() === en.toLowerCase());
+if (!existsCustom) {
+  this.customWords.push({ word: en, translation: ru, level: 'ADDED', forms: null, isCustom: true, addedAt: Date.now() });
+}
+
+// В learningWords как ADDED (если ещё нет)
+const existsLearn = this.learningWords.some(w => w.word.toLowerCase() === en.toLowerCase() && w.level === 'ADDED');
+if (!existsLearn) {
+  this.learningWords.push({ word: en, translation: ru, level: 'ADDED', forms: null, isCustom: true, isLearned: false, addedAt: Date.now() });
+  this.initializeWordStats(en);
+}
+
+this.saveData();
+this.updateLevelCounts();
+this.showNotification(`Добавлено в изучение: ${en}`, 'success');
+
+if (this.currentSection === 'learning') {
+  this.suppressAutoSpeakOnce = true;
+  this.renderLearningSection();
+}
+if (document.getElementById('customWords')) {
+  this.renderCustomWords();
+}
+} catch (e) {
+console.error('handleTranslatorAdd error', e);
+this.showNotification('Не удалось добавить. Попробуйте ещё раз','warning');
+}
+}
+  
   addSingleWord() {
     this.stopCurrentAudio();
 
@@ -3413,12 +3501,6 @@ renderLearningSection() {
 
   if (countEl) countEl.textContent = `${this.learningWords.length} слов`;
 
-  // Обработка режима "Список слов"
-  if (this.currentPractice === 'list') {
-    this.renderWordsList();
-    return;
-  }
-
   // Проверяем пустой список
   if (this.learningWords.length === 0 && this.currentMode !== 'trainer') {
     container.innerHTML = `
@@ -3604,9 +3686,6 @@ renderFlashcards() {
           <div class="card-actions">
             <button class="btn btn-primary" id="showAnswerBtn" data-testid="flashcard-show-answer">
               <i class="fas fa-eye"></i> Показать ответ
-            </button>
-            <button class="btn btn-secondary hidden" id="playFlashcardBtn" data-testid="flashcard-play">
-              <i class="fas fa-volume-up"></i> Произношение
             </button>
           </div>
           <div class="answer-buttons hidden" id="answerButtons">
@@ -4070,6 +4149,214 @@ attachWordsListHandlers() {
     });
   });
 }
+
+// Pop up список слов
+
+  showLearningWordsPopup() {
+    // Удалим старый попап, если он есть
+    const existing = document.getElementById('learningWordsPopup');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'learningWordsPopup';
+    overlay.className = 'words-popup-overlay';
+
+    const box = document.createElement('div');
+    box.className = 'words-popup';
+
+    const header = document.createElement('div');
+    header.className = 'words-popup-header';
+    header.innerHTML = `
+      <div class="words-popup-title">
+        <h3>Все слова</h3>
+        <p>${this.learningWords.length} слов в изучении</p>
+      </div>
+      <button class="btn btn-secondary words-popup-close-btn">
+        <i class="fas fa-arrow-left"></i> Назад
+      </button>
+    `;
+
+    // Формируем фильтр по уровням / категориям
+    const levelsSet = new Set(this.learningWords.map(w => w.level || ''));
+    levelsSet.delete('');
+    const levels = Array.from(levelsSet).sort();
+
+    const filterRow = document.createElement('div');
+    filterRow.className = 'words-popup-filters';
+    let optionsHtml = `<option value="ALL">Все уровни / категории</option>`;
+    levels.forEach(l => {
+      optionsHtml += `<option value="${this.safeAttr(l)}">${l}</option>`;
+    });
+    filterRow.innerHTML = `
+      <label>
+        Уровень:
+        <select id="wordsPopupFilter">${optionsHtml}</select>
+      </label>
+      <span class="words-popup-hint">
+        Нажмите на корзину, чтобы удалить слово. Нажмите на карандаш, чтобы изменить перевод.
+      </span>
+    `;
+
+    const list = document.createElement('div');
+    list.id = 'wordsPopupList';
+    list.className = 'words-popup-list';
+
+    box.appendChild(header);
+    box.appendChild(filterRow);
+    box.appendChild(list);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    // Первичный рендер
+    this.renderLearningWordsPopupList('ALL');
+
+    const close = () => {
+      overlay.remove();
+      // Возвращаем режим "Заучивание" (scheduled)
+      this.currentPractice = 'scheduled';
+      localStorage.setItem('currentPractice', 'scheduled');
+      // Подсветка кнопок практики
+      document.querySelectorAll('.practice-btn').forEach(b => {
+        const p = b.getAttribute('data-practice');
+        b.classList.toggle('active', p === 'scheduled');
+      });
+      // Перерисовать блок "Изучаю"
+      this.suppressAutoSpeakOnce = true;
+      this.renderLearningSection();
+    };
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) close();
+    });
+    const closeBtn = header.querySelector('.words-popup-close-btn');
+    if (closeBtn) closeBtn.addEventListener('click', close);
+
+    const filterSelect = filterRow.querySelector('#wordsPopupFilter');
+    if (filterSelect) {
+      filterSelect.addEventListener('change', () => {
+        this.renderLearningWordsPopupList(filterSelect.value || 'ALL');
+      });
+    }
+
+    // Делегирование кликов внутри списка
+    list.addEventListener('click', (e) => {
+      const btn = e.target.closest('.popup-sound-us, .popup-sound-uk, .popup-edit-btn, .popup-delete-btn');
+      if (!btn) return;
+      const word = btn.getAttribute('data-word');
+      const level = btn.getAttribute('data-level');
+      if (!word) return;
+
+      if (btn.classList.contains('popup-sound-us') || btn.classList.contains('popup-sound-uk')) {
+        const formsStr = btn.getAttribute('data-forms');
+        let forms = null;
+        if (formsStr && formsStr !== 'null') {
+          try { forms = JSON.parse(formsStr); } catch {}
+        }
+        const region = btn.classList.contains('popup-sound-uk') ? 'uk' : 'us';
+        this.playWord(word, forms, region);
+      } else if (btn.classList.contains('popup-delete-btn')) {
+        this.removeWordFromLearning(word, level);
+        this.renderLearningWordsPopupList(filterSelect ? filterSelect.value : 'ALL');
+      } else if (btn.classList.contains('popup-edit-btn')) {
+        this.editLearningWord(word, level, () => {
+          this.renderLearningWordsPopupList(filterSelect ? filterSelect.value : 'ALL');
+        });
+      }
+    }, true);
+  }
+
+  renderLearningWordsPopupList(filterLevel = 'ALL') {
+    const list = document.getElementById('wordsPopupList');
+    if (!list) return;
+
+    let words = this.learningWords.slice();
+    if (filterLevel && filterLevel !== 'ALL') {
+      words = words.filter(w => (w.level || '') === filterLevel);
+    }
+
+    if (words.length === 0) {
+      list.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-inbox"></i>
+          <h3>Нет слов для отображения</h3>
+          <p>Попробуйте выбрать другой уровень или добавьте слова из раздела "Списки".</p>
+        </div>
+      `;
+      return;
+    }
+
+    // Сортируем по уровню, затем по слову
+    words.sort((a,b) => {
+      const la = (a.level || '').localeCompare(b.level || '');
+      if (la !== 0) return la;
+      return (a.word || '').localeCompare(b.word || '');
+    });
+
+    list.innerHTML = words.map(w => {
+      const display = this.getEnglishDisplay(w);
+      const formsJson = w.forms ? JSON.stringify(w.forms).replace(/"/g, '&quot;') : 'null';
+      return `
+        <div class="word-card popup-word-card" data-word="${this.safeAttr(w.word)}" data-level="${this.safeAttr(w.level)}">
+          <div class="word-header">
+            <div class="word-text">${display}</div>
+            <div class="word-actions">
+              <button class="action-btn play-btn popup-sound-us"
+                      data-word="${this.safeAttr(w.word)}"
+                      data-forms='${formsJson}'
+                      data-level="${this.safeAttr(w.level)}"
+                      title="US">
+                <i class="fas fa-volume-up"></i>
+              </button>
+              <button class="action-btn play-btn popup-sound-uk"
+                      data-word="${this.safeAttr(w.word)}"
+                      data-forms='${formsJson}'
+                      data-level="${this.safeAttr(w.level)}"
+                      title="UK">
+                <i class="fas fa-headphones"></i>
+              </button>
+              <button class="action-btn popup-edit-btn"
+                      data-word="${this.safeAttr(w.word)}"
+                      data-level="${this.safeAttr(w.level)}"
+                      title="Редактировать перевод">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button class="action-btn remove-btn popup-delete-btn"
+                      data-word="${this.safeAttr(w.word)}"
+                      data-level="${this.safeAttr(w.level)}"
+                      title="Удалить из изучаемых">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="word-translation">${w.translation}</div>
+          <span class="word-level">${w.level}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  editLearningWord(word, level, onDone) {
+    const item = this.learningWords.find(w => w.word === word && w.level === level);
+    if (!item) return;
+
+    const newTr = prompt('Измените перевод слова:', item.translation || '');
+    if (newTr == null) return; // отмена
+    const trimmed = newTr.trim();
+    if (!trimmed) return;
+
+    item.translation = trimmed;
+
+    // Если это пользовательское слово, обновим и в customWords
+    this.customWords.forEach(cw => {
+      if (cw.word === word && cw.level === level) {
+        cw.translation = trimmed;
+      }
+    });
+
+    this.saveData();
+    if (typeof onDone === 'function') onDone();
+  }
+
   playWordFromList(word, forms, region) { this.playWord(word, forms, region || 'us'); }
   toggleWordLearned(word) {
     this.stopCurrentAudio();
@@ -4442,83 +4729,188 @@ getPetWidgetHtml() {
 // =========
   
 renderProgress() {
-    const container = document.getElementById('progressContent');
-    if (!container) return;
+  const container = document.getElementById('progressContent');
+  if (!container) return;
 
-    const petHtml = this.getPetWidgetHtml();
+  const petHtml = this.getPetWidgetHtml();
 
-    const totalWords = this.learningWords.length;
-    const learnedWords = this.learningWords.filter(w => w.isLearned).length;
-    const inProgress = totalWords - learnedWords;
-    
+  const totalWords = this.learningWords.length;
+  const learnedWords = this.learningWords.filter(w => w.isLearned).length;
+  const inProgress = Math.max(0, totalWords - learnedWords);
+  const learnedPct = totalWords > 0 ? Math.round(learnedWords / totalWords * 100) : 0;
 
-    const levelProgress = {};
-    ['A1','A2','B1','B2','C1','C2','IRREGULARS','PHRASAL_VERBS','IDIOMS','MEDICAL','ADDED'].forEach(level => {
-        const total = this.learningWords.filter(w => w.level === level).length;
-        const learned = this.learningWords.filter(w => w.level === level && w.isLearned).length;
-        levelProgress[level] = { total, learned };
-    });
-    
-    const todayKey = new Date().toDateString();
-let trainerToday = 0, trainerTodayCorrect = 0, trainerWeek = 0, trainerWeekCorrect = 0;
-(this.weeklyProgress || []).forEach(d => {
-  const rep = d.trainerRepeats || 0;
-  const cor = d.trainerCorrect || 0;
-  trainerWeek += rep;
-  trainerWeekCorrect += cor;
-  if (d.date === todayKey) {
-    trainerToday = rep;
-    trainerTodayCorrect = cor;
-  }
-});
+  // Прогресс по уровням / категориям
+  const levelKeys = ['A1','A2','B1','B2','C1','C2','IRREGULARS','PHRASAL_VERBS','IDIOMS','MEDICAL','ADDED'];
+  const levelProgress = {};
+  levelKeys.forEach(level => {
+    const total = this.learningWords.filter(w => w.level === level).length;
+    const learned = this.learningWords.filter(w => w.level === level && w.isLearned).length;
+    if (total > 0) {
+      levelProgress[level] = {
+        total,
+        learned,
+        pct: Math.round(learned / total * 100)
+      };
+    }
+  });
 
-   container.innerHTML = `
+  // Статистика тренажёра предложений
+  const todayKey = new Date().toDateString();
+  let trainerToday = 0, trainerTodayCorrect = 0, trainerWeek = 0, trainerWeekCorrect = 0;
+  (this.weeklyProgress || []).forEach(d => {
+    const rep = d.trainerRepeats || 0;
+    const cor = d.trainerCorrect || 0;
+    trainerWeek += rep;
+    trainerWeekCorrect += cor;
+    if (d.date === todayKey) {
+      trainerToday = rep;
+      trainerTodayCorrect = cor;
+    }
+  });
+
+  // Общая активность за неделю (по count)
+  const weekArr = this.weeklyProgress || [];
+  const maxCount = weekArr.reduce((m,d) => Math.max(m, d.count || 0), 0) || 1;
+  const todayActivity = weekArr.find(d => d.date === todayKey);
+  const todayRepeats = todayActivity ? (todayActivity.count || 0) : 0;
+
+  container.innerHTML = `
     ${petHtml}
-    <div class="progress-card">
-        <h3 style="margin-bottom:15px;">Общий прогресс</h3>
-        <div class="progress-row"><span>Всего слов:</span><strong>${totalWords}</strong></div>
-        <div class="progress-row"><span>Выучено:</span><strong style="color:var(--accent-color);">${learnedWords}</strong></div>
-        <div class="progress-row"><span>В процессе:</span><strong style="color:var(--primary-color);">${inProgress}</strong></div>
-        <div class="progress-bar-wrap" style="margin-top:10px;">
-            <div class="progress-bar-fill" style="width:${totalWords > 0 ? (learnedWords / totalWords * 100) : 0}%"></div>
+    <div class="progress-grid">
+      <!-- Общий прогресс -->
+      <div class="progress-card progress-card-main">
+        <div class="progress-card-header">
+          <div class="progress-card-icon icon-green">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div>
+            <div class="progress-card-title">Общий прогресс</div>
+            <div class="progress-card-subtitle">Ваш личный словарный запас в Bewords</div>
+          </div>
         </div>
-    </div>
-    <div class="progress-card">
-        <h3 style="margin-bottom:15px;">Прогресс по категориям/уровням</h3>
-        ${Object.entries(levelProgress).map(([level, data]) => {
-            if (data.total === 0) return '';
-            const percent = (data.learned / data.total * 100).toFixed(0);
-            return `
-                <div style="margin-bottom:12px;">
-                    <div class="progress-row"><span>${level}</span><span>${data.learned} / ${data.total}</span></div>
-                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${percent}%"></div></div>
+        <div class="progress-main-row">
+          <div class="progress-main-number">
+            ${learnedWords}
+            <span>выучено</span>
+          </div>
+          <div class="progress-main-bar">
+            <div class="progress-main-bar-label">
+              <span>Всего слов: ${totalWords}</span>
+              <span>${learnedPct}%</span>
+            </div>
+            <div class="progress-main-bar-track">
+              <div class="progress-main-bar-fill" style="width:${learnedPct}%;"></div>
+            </div>
+            <div class="progress-main-bar-legend">
+              <span><span class="dot dot-learned"></span>Выучено: ${learnedWords}</span>
+              <span><span class="dot dot-active"></span>В процессе: ${inProgress}</span>
+            </div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span>Повторений сегодня</span>
+          <strong>${todayRepeats}</strong>
+        </div>
+      </div>
+
+      <!-- По уровням / категориям -->
+      <div class="progress-card">
+        <div class="progress-card-header">
+          <div class="progress-card-icon icon-blue">
+            <i class="fas fa-layer-group"></i>
+          </div>
+          <div>
+            <div class="progress-card-title">По уровням и категориям</div>
+            <div class="progress-card-subtitle">Где вы продвинулись больше всего</div>
+          </div>
+        </div>
+        ${
+          Object.keys(levelProgress).length === 0
+          ? `<p class="progress-empty-text">Вы ещё не добавили слова — начните с раздела «Списки».</p>`
+          : `
+            <div class="level-progress-list">
+              ${Object.entries(levelProgress).map(([level, data]) => `
+                <div class="level-progress-item">
+                  <div class="level-progress-header">
+                    <span class="level-progress-label">${level}</span>
+                    <span class="level-progress-count">${data.learned} / ${data.total}</span>
+                  </div>
+                  <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill" style="width:${data.pct}%;"></div>
+                  </div>
                 </div>
-            `;
-        }).join('')}
-    </div>
-    <div class="progress-card">
-        <h3 style="margin-bottom:15px;">Тренажёр предложений</h3>
-        <div class="progress-row"><span>Сегодня:</span><strong>${trainerToday} повторений</strong></div>
-        <div class="progress-row"><span>Правильных сегодня:</span><strong>${trainerTodayCorrect}</strong></div>
-        <div class="progress-row"><span>За 7 дней:</span><strong>${trainerWeek} повторений</strong></div>
-        <div class="progress-row"><span>Правильных за 7 дней:</span><strong>${trainerWeekCorrect}</strong></div>
-    </div>
-    <div class="progress-card">
-        <h3 style="margin-bottom:15px;">Активность за неделю</h3>
-        ${this.weeklyProgress.length > 0 ? 
-            this.weeklyProgress.map(day => `
-                <div class="progress-row">
-                    <span>${new Date(day.date).toLocaleDateString('ru-RU', {weekday: 'short', month: 'short', day: 'numeric'})}</span>
-                    <strong>${day.count} повторений</strong>
-                </div>
-            `).join('') : 
-            '<p style="color:var(--text-secondary);text-align:center;">Нет данных об активности</p>'
+              `).join('')}
+            </div>
+          `
         }
+      </div>
+
+      <!-- Тренажёр предложений -->
+      <div class="progress-card">
+        <div class="progress-card-header">
+          <div class="progress-card-icon icon-purple">
+            <i class="fas fa-keyboard"></i>
+          </div>
+          <div>
+            <div class="progress-card-title">Тренажёр предложений</div>
+            <div class="progress-card-subtitle">Ваш прогресс в режиме «Тренажер»</div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span>Сегодня</span>
+          <strong>${trainerToday} повторений (${trainerTodayCorrect} правильных)</strong>
+        </div>
+        <div class="progress-row">
+          <span>За 7 дней</span>
+          <strong>${trainerWeek} повторений (${trainerWeekCorrect} правильных)</strong>
+        </div>
+      </div>
+
+      <!-- Активность за неделю -->
+      <div class="progress-card">
+        <div class="progress-card-header">
+          <div class="progress-card-icon icon-yellow">
+            <i class="fas fa-calendar-week"></i>
+          </div>
+          <div>
+            <div class="progress-card-title">Активность за неделю</div>
+            <div class="progress-card-subtitle">Сколько повторений вы делали каждый день</div>
+          </div>
+        </div>
+        ${
+          weekArr.length === 0
+          ? `<p class="progress-empty-text">Пока нет данных об активности — начните практику.</p>`
+          : `
+            <div class="week-activity-list">
+              ${weekArr.map(day => {
+                const count = day.count || 0;
+                const pct = Math.round(count / maxCount * 100);
+                const label = new Date(day.date).toLocaleDateString('ru-RU', {
+                  weekday: 'short',
+                  day: 'numeric',
+                  month: 'short'
+                });
+                return `
+                  <div class="week-activity-item">
+                    <div class="week-activity-header">
+                      <span class="week-label">${label}</span>
+                      <span class="week-count">${count}</span>
+                    </div>
+                    <div class="week-bar">
+                      <div class="week-bar-fill" style="width:${pct}%;"></div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          `
+        }
+      </div>
     </div>
-`;
-    
-    // ВАЖНО: Добавляем обработчики для питомца
-    this.attachPetHandlers();
+  `;
+
+  // обработчики для питомца
+  this.attachPetHandlers();
 }
 
 // Добавьте новый метод после renderProgress:
