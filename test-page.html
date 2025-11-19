@@ -14,6 +14,8 @@
   <!-- Apple Touch Icon -->
   <link rel="apple-touch-icon" href="/icon-192.png">
   
+  <link rel="preload" as="image" href="/loading.gif">
+  
   <!-- Manifest -->
   <link rel="manifest" href="/manifest.json">
   
@@ -438,6 +440,12 @@ body {
           <p>База для всех</p>
           <div class="level-stats"><span class="word-count">0 слов</span></div>
         </div>
+        <div class="level-card" data-category="PROVERBS" data-testid="category-card-proverbs">
+  <div class="level-badge upper-intermediate">Proverbs</div>
+  <h3>Пословицы и поговорки</h3>
+  <p>Устойчивые выражения</p>
+  <div class="level-stats"><span class="word-count">0 слов</span></div>
+</div>
       </div>
       
             <!-- Exams -->
@@ -496,11 +504,14 @@ body {
     <div class="section-stats"><span id="learningCount">0 слов</span></div>
   </div>
 
-  <p class="mode-help">
-    Режимы практики:<br><br>
-    1) Заучивание - для изучения незнакомых слов. Система добавляет слова постепенно в зависимости от ваших ответов. Добавили 500 слов? Не волнуйтесь — сначала получите 20, потом еще 10, еще 10 и так далее. Учить сразу все невозможно, поэтому система дозирует нагрузку.<br>
-   <br> 2) Повторение - нужен если вы хотите вспомнить или повторить слова<br>
-  </p>
+  <div class="learning-instruction-row">
+  <div class="learning-instruction-label">
+    Инструкция (нажмите на лампочку →)
+  </div>
+  <button type="button" id="learningHelpLamp" class="grammar-lamp" title="Показать инструкцию по режимам">
+    💡
+  </button>
+</div>
 
 <div class="toggles-row">
   <div class="mode-toggle" role="tablist" aria-label="study mode">
@@ -1221,4 +1232,3 @@ function setLang(from, to){
 </body>
 
 </html>
-
