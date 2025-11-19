@@ -974,8 +974,8 @@ ensureAutoDictButton() {
     btn.innerHTML = '<i class="fas fa-magic"></i> Подобрать словарь под тебя';
     btn.addEventListener('click', () => this.showAutoDictionaryTest());
 
-    wrap.appendChild(btn);
-    container.insertBefore(wrap, header);
+wrap.appendChild(btn);
+container.insertBefore(wrap, header);
   } catch (e) {
     console.warn('ensureAutoDictButton error:', e);
   }
@@ -2054,6 +2054,9 @@ showLevelWordsLazy(level) {
       .join('');
 
     this.installWordsListDelegatedHandlers();
+    if (typeof this.ensureAutoDictButton === 'function') {
+  this.ensureAutoDictButton();
+}
 
     let loaded = BATCH_SIZE;
 
@@ -4469,14 +4472,24 @@ levels.forEach(l => {
     list.id = 'wordsPopupList';
     list.className = 'words-popup-list';
 
-    box.appendChild(header);
-    box.appendChild(filterRow);
-    box.appendChild(list);
-    overlay.appendChild(box);
-    document.body.appendChild(overlay);
+box.appendChild(header);
+box.appendChild(filterRow);
+box.appendChild(list);
+overlay.appendChild(box);
+document.body.appendChild(overlay);
 
-    // Первичный рендер
-    this.renderLearningWordsPopupList('ALL');
+// Если слов очень много — показываем кота Боба при открытии
+if ((this.learningWords || []).length > 500) {
+  this.showGlobalLoader('Кот Боб загружает для вас список слов...', 2000);
+}
+
+// Первичный рендер
+this.renderLearningWordsPopupList('ALL');
+
+// Спрячем лоадер после первой отрисовки
+if ((this.learningWords || []).length > 500) {
+  this.hideGlobalLoader();
+}
 
     const close = () => {
       overlay.remove();
@@ -4543,43 +4556,58 @@ list.addEventListener('click', (e) => {
   }
 
   renderLearningWordsPopupList(filterLevel = 'ALL') {
-    const list = document.getElementById('wordsPopupList');
-    if (!list) return;
+  const list = document.getElementById('wordsPopupList');
+  if (!list) return;
 
-let words;
+  let words;
 
-if (filterLevel === 'STUDY_NOW') {
-  // берём только слова из текущего пула "заучивание"
-  const prevPractice = this.currentPractice;
-  this.currentPractice = 'scheduled';
-  words = this.getWordsToReview().slice();
-  this.currentPractice = prevPractice;
-} else {
-  words = this.learningWords.slice();
-  if (filterLevel && filterLevel !== 'ALL') {
-    words = words.filter(w => (w.level || '') === filterLevel);
-  }
-}
-
-    if (words.length === 0) {
-      list.innerHTML = `
-        <div class="empty-state">
-          <i class="fas fa-inbox"></i>
-          <h3>Нет слов для отображения</h3>
-          <p>Попробуйте выбрать другой уровень или добавьте слова из раздела "Списки".</p>
-        </div>
-      `;
-      return;
+  if (filterLevel === 'STUDY_NOW') {
+    // берём только слова из текущего пула "заучивание"
+    const prevPractice = this.currentPractice;
+    this.currentPractice = 'scheduled';
+    words = this.getWordsToReview().slice();
+    this.currentPractice = prevPractice;
+  } else {
+    words = this.learningWords.slice();
+    if (filterLevel && filterLevel !== 'ALL') {
+      words = words.filter(w => (w.level || '') === filterLevel);
     }
+  }
 
-    // Сортируем по уровню, затем по слову
-    words.sort((a,b) => {
-      const la = (a.level || '').localeCompare(b.level || '');
-      if (la !== 0) return la;
-      return (a.word || '').localeCompare(b.word || '');
-    });
+  if (words.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <h3>Нет слов для отображения</h3>
+        <p>Попробуйте выбрать другой уровень или добавьте слова из раздела "Списки".</p>
+      </div>
+    `;
+    return;
+  }
 
-    list.innerHTML = words.map(w => {
+  // Сортируем по уровню, затем по слову
+  words.sort((a,b) => {
+    const la = (a.level || '').localeCompare(b.level || '');
+    if (la !== 0) return la;
+    return (a.word || '').localeCompare(b.word || '');
+  });
+
+  const BATCH_SIZE = 100;           // максимум 100 слов за раз
+  const total = words.length;
+  let rendered = 0;
+
+  list.innerHTML = '';              // очищаем список
+
+  // ВАЖНО: если много слов — показываем Боба и здесь тоже
+  if (this.isAndroid || total > 500) {
+    this.showGlobalLoader('Кот Боб загружает для вас список слов...', 2000);
+  }
+
+  const renderBatch = () => {
+    const slice = words.slice(rendered, rendered + BATCH_SIZE);
+    if (!slice.length) return;
+
+    const html = slice.map(w => {
       const display = this.getEnglishDisplay(w);
       const formsJson = w.forms ? JSON.stringify(w.forms).replace(/"/g, '&quot;') : 'null';
       return `
@@ -4620,7 +4648,51 @@ if (filterLevel === 'STUDY_NOW') {
         </div>
       `;
     }).join('');
+
+    list.insertAdjacentHTML('beforeend', html);
+    rendered += slice.length;
+  };
+
+  // Рендерим первую порцию
+  renderBatch();
+
+  // Прячем лоадер после первой партии
+  if (this.isAndroid || total > 500) {
+    this.hideGlobalLoader();
   }
+
+  // Если слов больше BATCH_SIZE — добавляем sentinel для дозагрузки
+  if (rendered < total) {
+    const sentinel = document.createElement('div');
+    sentinel.style.height = '1px';
+    sentinel.id = 'words-popup-sentinel';
+    list.appendChild(sentinel);
+
+    const observer = new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting) return;
+      if (rendered >= total) return;
+
+      // Показываем Боба на время дозагрузки
+      if (this.isAndroid || total > 500) {
+        this.showGlobalLoader('Кот Боб загружает ещё слова...', 2000);
+      }
+
+      renderBatch();
+
+      if (this.isAndroid || total > 500) {
+        this.hideGlobalLoader();
+      }
+
+      // Если всё загрузили — отключаем наблюдатель
+      if (rendered >= total) {
+        observer.disconnect();
+        sentinel.remove();
+      }
+    });
+
+    observer.observe(sentinel);
+  }
+}
 
   editLearningWord(word, level, onDone) {
     const item = this.learningWords.find(w => w.word === word && w.level === level);
