@@ -1,5 +1,15 @@
 class EnglishWordsApp {
   constructor() {
+      this.isAndroid = /android/i.test((navigator.userAgent || '').toLowerCase());
+  this.loaderEl = null;
+  this.loaderStart = 0;
+  this.loaderMinMs = 0;
+  this.loaderTimer = null;
+
+  if (this.isAndroid) {
+    const img = new Image();
+    img.src = '/loading.gif'; // предварительная подгрузка Кота Боба
+  }
     this.currentSection = 'about';
     this.currentLevel = null;
     this.currentCategory = null;
@@ -772,11 +782,13 @@ this.showLevelWords(level);
 
         const cat = e.currentTarget.getAttribute('data-category');
         if (!cat) return;
-        if (cat === 'ADDED') {
-          this.showAddedWordsCategory();
-        } else {
-          this.showCategoryWords(cat);
-        }
+if (cat === 'ADDED') {
+  this.showAddedWordsCategory();
+} else if (cat === 'STUDY_NOW') {
+  this.showStudyNowWords();        // пункт 2 ниже
+} else {
+  this.showCategoryWords(cat);
+}
       });
     });
 
@@ -910,6 +922,11 @@ showUploadTab('single'); // по умолчанию
     
     const catalogBtn = document.getElementById('catalogStartBtn');
     if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('Geo-Dash', 'dash.html'));
+    
+    const learningLamp = document.getElementById('learningHelpLamp');
+if (learningLamp) {
+  learningLamp.addEventListener('click', () => this.showLearningHelpModal());
+}
 
     this.updateLevelCounts();
     this.renderLearningSection();
@@ -1329,6 +1346,68 @@ toggleTheme() {
     modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
     document.body.appendChild(modal);
   }
+  
+  showLearningHelpModal() {
+  const overlay = document.createElement('div');
+  overlay.className = 'grammar-modal show';
+  overlay.innerHTML = `
+    <div class="grammar-modal-content">
+      <div class="grammar-modal-header">
+        <div class="grammar-modal-title">
+          <span>📚</span>
+          <span>Как работают режимы практики</span>
+        </div>
+        <button class="grammar-close-btn" aria-label="Закрыть">&times;</button>
+      </div>
+      <div class="grammar-modal-body">
+        <div class="grammar-section">
+          <div class="grammar-section-title">
+            <i class="fas fa-bullseye"></i>
+            <span>Заучивание</span>
+          </div>
+          <p>
+            Подходит для изучения новых слов. Система даёт ограниченный пул (около 40 слов)
+            и постепенно добавляет новые, когда вы отвечаете правильно. Добавили 500 слов?
+            Не страшно — сначала увидите ~20, потом ещё 10, ещё 10 и т.д.
+          </p>
+        </div>
+        <div class="grammar-section">
+          <div class="grammar-section-title">
+            <i class="fas fa-redo"></i>
+            <span>Повторение</span>
+          </div>
+          <p>
+            Показывает все незавершённые слова по кругу. Удобно, если хотите просто «погонять» всю
+            лексику без ограничений.
+          </p>
+        </div>
+        <div class="grammar-section">
+          <div class="grammar-section-title">
+            <i class="fas fa-list"></i>
+            <span>Список</span>
+          </div>
+          <p>
+            Открывает полный список слов, которые вы учите. Отсюда можно удалять слова, слушать
+            озвучку и редактировать переводы.
+          </p>
+        </div>
+        <div class="grammar-tip">
+          <div class="grammar-tip-title">💡 Совет</div>
+          <p>
+            Начинайте с режима <strong>Заучивание</strong>, чтобы не перегружать память. Когда слова
+            стали знакомыми — переходите в <strong>Повторение</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+  `;
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay || e.target.classList.contains('grammar-close-btn')) {
+      overlay.remove();
+    }
+  });
+  document.body.appendChild(overlay);
+}
 
 // =========
 // Info (О приложении)
@@ -1722,6 +1801,7 @@ setTimeout(() => window.initBewordsTranslator(), 0);
     setCatCount('IRREGULARS', '[data-category="IRREGULARS"]');
     setCatCount('PHRASAL_VERBS', '[data-category="PHRASAL_VERBS"]');
     setCatCount('IDIOMS', '[data-category="IDIOMS"]');
+    setCatCount('PROVERBS', '[data-category="PROVERBS"]');
     setCatCount('PREPOSITIONS', '[data-category="PREPOSITIONS"]');
     setCatCount('MEDICAL', '[data-category="MEDICAL"]');
 
@@ -1823,6 +1903,12 @@ showLevelWords(level) {
   const title = document.getElementById('currentLevelTitle');
   const wordsList = document.getElementById('wordsList');
 
+  // Если слов очень много — используем ленивую загрузку по 250
+  if (words.length > 250) {
+    this.showLevelWordsLazy(level);
+    return;
+  }
+
   if (typeof this.toggleLevelsIndexVisibility === 'function') {
     this.toggleLevelsIndexVisibility(false);
   }
@@ -1830,40 +1916,40 @@ showLevelWords(level) {
 
   if (title) title.textContent = `${level} - ${words.length} слов`;
 
-  // ОПТИМИЗАЦИЯ: Батч-рендеринг
   if (wordsList) {
-    // Показываем заглушку
     wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
-    
-    // Рендерим в следующем фрейме
+
+    if (this.isAndroid) {
+      this.showGlobalLoader('Кот Боб загружает для вас этот список...', 1500);
+    }
+
     requestAnimationFrame(() => {
       const fragment = document.createDocumentFragment();
       const tempDiv = document.createElement('div');
-      
-      // HTML одним куском
+
       tempDiv.innerHTML = words.map(word => this.createWordCard(word, level)).join('');
-      
-      // Переносим в fragment
+
       while (tempDiv.firstChild) {
         fragment.appendChild(tempDiv.firstChild);
       }
-      
-      // Одна операция DOM
+
       wordsList.innerHTML = '';
       wordsList.appendChild(fragment);
-      
-      // ТОЛЬКО делегирование
+
       this.installWordsListDelegatedHandlers();
       this.updateBulkToggleButton();
-      
+
       if (typeof this.ensureAutoDictButton === 'function') {
         this.ensureAutoDictButton();
+      }
+
+      if (this.isAndroid) {
+        this.hideGlobalLoader();
       }
     });
   }
 
-  // Упрощенный скролл
-  this.scrollMainToTop();
+  this.jumpToTopStrict();
 }
 
 showCategoryWords(category) {
@@ -1876,6 +1962,12 @@ showCategoryWords(category) {
   const title = document.getElementById('currentLevelTitle');
   const wordsList = document.getElementById('wordsList');
 
+  // Для очень больших списков категорий — лениво
+  if (words.length > 250) {
+    this.showLevelWordsLazy(category);
+    return;
+  }
+
   if (typeof this.toggleLevelsIndexVisibility === 'function') {
     this.toggleLevelsIndexVisibility(false);
   }
@@ -1885,6 +1977,7 @@ showCategoryWords(category) {
     category === 'IRREGULARS' ? 'Неправильные глаголы' :
     category === 'PHRASAL_VERBS' ? 'Фразовые глаголы' :
     category === 'IDIOMS' ? 'Идиомы' :
+    category === 'PROVERBS' ? 'Пословицы и поговорки' :
     category === 'MEDICAL' ? 'Медицинский английский' :
     category === 'PREPOSITIONS' ? 'Предлоги' :
     'Категория';
@@ -1893,43 +1986,50 @@ showCategoryWords(category) {
 
   if (wordsList) {
     wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
-    
+
+    if (this.isAndroid) {
+      this.showGlobalLoader('Кот Боб загружает для вас этот список...', 1500);
+    }
+
     requestAnimationFrame(() => {
       const fragment = document.createDocumentFragment();
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = words.map(word => this.createWordCard(word, category)).join('');
-      
+
       while (tempDiv.firstChild) {
         fragment.appendChild(tempDiv.firstChild);
       }
-      
+
       wordsList.innerHTML = '';
       wordsList.appendChild(fragment);
-      
+
       this.installWordsListDelegatedHandlers();
       this.updateBulkToggleButton();
-      
+
       if (typeof this.ensureAutoDictButton === 'function') {
         this.ensureAutoDictButton();
+      }
+
+      if (this.isAndroid) {
+        this.hideGlobalLoader();
       }
     });
   }
 
-  this.scrollMainToTop();
+  this.jumpToTopStrict();
 }
 
-// ОПЦИОНАЛЬНО: Ленивая загрузка для больших списков (>200 слов)
+// Ленивая загрузка для больших списков (>250 слов)
 showLevelWordsLazy(level) {
   const words = oxfordWordsDatabase[level] || [];
-  const BATCH_SIZE = 100;
-  
+  const BATCH_SIZE = 250;
+
   // Если слов мало - обычный рендеринг
-  if (words.length <= 200) {
+  if (words.length <= BATCH_SIZE) {
     this.showLevelWords(level);
     return;
   }
-  
-  // Для больших списков - ленивая загрузка
+
   this.stopCurrentAudio();
   this.currentLevel = level;
   this.currentCategory = null;
@@ -1945,47 +2045,64 @@ showLevelWordsLazy(level) {
   if (title) title.textContent = `${level} - ${words.length} слов (загрузка...)`;
 
   if (wordsList) {
-    // Первая порция
+    if (this.isAndroid) {
+      this.showGlobalLoader('Кот Боб загружает для вас эту страницу...', 2000);
+    }
+
     wordsList.innerHTML = words.slice(0, BATCH_SIZE)
       .map(w => this.createWordCard(w, level))
       .join('');
-    
+
     this.installWordsListDelegatedHandlers();
-    
+
     let loaded = BATCH_SIZE;
+
+    if (this.isAndroid) {
+      this.hideGlobalLoader();
+    }
+
     const loadMore = () => {
       if (loaded >= words.length) {
         if (title) title.textContent = `${level} - ${words.length} слов`;
         return;
       }
-      
+
+      if (this.isAndroid) {
+        this.showGlobalLoader('Кот Боб загружает ещё слова...', 2000);
+      }
+
       const nextBatch = words.slice(loaded, loaded + BATCH_SIZE)
         .map(w => this.createWordCard(w, level))
         .join('');
-      
+
       wordsList.insertAdjacentHTML('beforeend', nextBatch);
       loaded += BATCH_SIZE;
-      
-      if (title) title.textContent = `${level} - Загружено ${loaded}/${words.length} слов`;
+
+      if (title) {
+        title.textContent = `${level} - Загружено ${loaded}/${words.length} слов`;
+      }
+
+      if (this.isAndroid) {
+        this.hideGlobalLoader();
+      }
     };
-    
-    // Sentinel для автозагрузки при скролле
+
     const sentinel = document.createElement('div');
     sentinel.style.height = '1px';
     sentinel.id = 'lazy-sentinel';
     wordsList.appendChild(sentinel);
-    
+
     const observer = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
         loadMore();
       }
     });
-    
+
     observer.observe(sentinel);
   }
 
   this.updateBulkToggleButton();
-  this.scrollMainToTop();
+  this.jumpToTopStrict();
 }
 
 backToLevels() {
@@ -2639,6 +2756,9 @@ getAvailableLevelsFromWords() {
       else if (word.level === 'IDIOMS') {
         levels.add('IDIOMS');
       }
+      else if (word.level === 'PROVERBS') {
+      levels.add('PROVERBS');
+      }
     }
   });
   
@@ -3284,17 +3404,24 @@ safeAttr(str) {
     }
   }
   
-  getWordAccuracy(word) {
+getWordAccuracy(word) {
   const s = this.wordStats[word];
-  if (!s || (s.correct + s.incorrect) === 0) return null;
-  const total = s.correct + s.incorrect;
+  if (!s) return null;
+
+  const score = typeof s.accScore === 'number' ? s.accScore : 0;
+  const pct = Math.max(0, Math.min(100, score * 10)); // 0..100 шагом 10
+
+  const total = s.totalAnswers || (s.correct + s.incorrect) || 0;
+  if (total === 0 && pct === 0) return null; // совсем нет данных — не показываем
+
   return {
-    pct: Math.round((s.correct / total) * 100),
+    pct: Math.round(pct),
     total,
-    correct: s.correct,
-    incorrect: s.incorrect
+    correct: s.correct || 0,
+    incorrect: s.incorrect || 0
   };
 }
+
 getAccuracyBadgeHtml(word) {
   const acc = this.getWordAccuracy(word);
   if (!acc) return '<span class="acc-badge acc-none" title="нет данных">—</span>';
@@ -3304,35 +3431,35 @@ getAccuracyBadgeHtml(word) {
 
 initializeWordStats(word) {
 if (!this.wordStats[word]) {
-this.wordStats[word] = {
-correct: 0,
-incorrect: 0,
-lastReview: null,
-nextReview: Date.now(),
-difficulty: 0, // 0..5
-// Новые поля
-ef: 2.5, // ease factor (SM-2)
-reps: 0, // кол-во успешных повторов в фазе review
-lapses: 0, // кол-во провалов
-interval: 0, // текущий интервал в мс
-phase: 'learning', // 'learning' | 'review'
-step: 0, // шаг в learningSteps
-firstSeenAt: null,
-totalAnswers: 0,
-totalTimeMs: 0
-};
+  this.wordStats[word] = {
+    correct: 0,
+    incorrect: 0,
+    lastReview: null,
+    nextReview: Date.now(),
+    difficulty: 0, // 0..5
+    ef: 2.5, // ease factor (SM-2)
+    reps: 0,
+    lapses: 0,
+    interval: 0,
+    phase: 'learning',
+    step: 0,
+    firstSeenAt: null,
+    totalAnswers: 0,
+    totalTimeMs: 0,
+    accScore: 0 // 0..10 — наш новый счётчик точности
+  };
 } else {
-// Заполним недостающие (на случай старых данных)
-const s = this.wordStats[word];
-if (s.ef == null) s.ef = 2.5;
-if (s.reps == null) s.reps = 0;
-if (s.lapses == null) s.lapses = 0;
-if (s.interval == null) s.interval = 0;
-if (!s.phase) s.phase = 'learning';
-if (s.step == null) s.step = 0;
-if (s.firstSeenAt == null) s.firstSeenAt = null;
-if (s.totalAnswers == null) s.totalAnswers = 0;
-if (s.totalTimeMs == null) s.totalTimeMs = 0;
+  const s = this.wordStats[word];
+  if (s.ef == null) s.ef = 2.5;
+  if (s.reps == null) s.reps = 0;
+  if (s.lapses == null) s.lapses = 0;
+  if (s.interval == null) s.interval = 0;
+  if (!s.phase) s.phase = 'learning';
+  if (s.step == null) s.step = 0;
+  if (s.firstSeenAt == null) s.firstSeenAt = null;
+  if (s.totalAnswers == null) s.totalAnswers = 0;
+  if (s.totalTimeMs == null) s.totalTimeMs = 0;
+  if (s.accScore == null) s.accScore = 0; // чтобы старые данные тоже получили поле
 }
 }
 
@@ -4119,7 +4246,7 @@ this.updateWordStats(word.word, correct, rt);
 
     if (options.length < 4) {
       const allLevels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-      const allCats = ['IRREGULARS', 'PHRASAL_VERBS', 'IDIOMS' , 'MEDICAL'];
+      const allCats = ['IRREGULARS', 'PHRASAL_VERBS', 'IDIOMS' , 'MEDICAL','PROVERBS'];
       for (let level of allLevels) {
         const levelWords = (oxfordWordsDatabase[level] || []);
         const shuffledLevel = this.shuffle(levelWords);
@@ -4321,10 +4448,13 @@ attachWordsListHandlers() {
 
     const filterRow = document.createElement('div');
     filterRow.className = 'words-popup-filters';
-    let optionsHtml = `<option value="ALL">Все уровни / категории</option>`;
-    levels.forEach(l => {
-      optionsHtml += `<option value="${this.safeAttr(l)}">${l}</option>`;
-    });
+let optionsHtml = `
+  <option value="ALL">Все уровни / категории</option>
+  <option value="STUDY_NOW">Режим заучивание</option>
+`;
+levels.forEach(l => {
+  optionsHtml += `<option value="${this.safeAttr(l)}">${l}</option>`;
+});
     filterRow.innerHTML = `
       <label>
         Уровень:
@@ -4377,40 +4507,59 @@ attachWordsListHandlers() {
     }
 
     // Делегирование кликов внутри списка
-    list.addEventListener('click', (e) => {
-      const btn = e.target.closest('.popup-sound-us, .popup-sound-uk, .popup-edit-btn, .popup-delete-btn');
-      if (!btn) return;
-      const word = btn.getAttribute('data-word');
-      const level = btn.getAttribute('data-level');
-      if (!word) return;
+list.addEventListener('click', (e) => {
+  const btn = e.target.closest('.popup-sound-us, .popup-sound-uk, .popup-edit-btn, .popup-delete-btn');
+  if (!btn) return;
+  const word = btn.getAttribute('data-word');
+  const level = btn.getAttribute('data-level');
+  if (!word) return;
 
-      if (btn.classList.contains('popup-sound-us') || btn.classList.contains('popup-sound-uk')) {
-        const formsStr = btn.getAttribute('data-forms');
-        let forms = null;
-        if (formsStr && formsStr !== 'null') {
-          try { forms = JSON.parse(formsStr); } catch {}
-        }
-        const region = btn.classList.contains('popup-sound-uk') ? 'uk' : 'us';
-        this.playWord(word, forms, region);
-      } else if (btn.classList.contains('popup-delete-btn')) {
-        this.removeWordFromLearning(word, level);
-        this.renderLearningWordsPopupList(filterSelect ? filterSelect.value : 'ALL');
-      } else if (btn.classList.contains('popup-edit-btn')) {
-        this.editLearningWord(word, level, () => {
-          this.renderLearningWordsPopupList(filterSelect ? filterSelect.value : 'ALL');
-        });
-      }
-    }, true);
+  if (btn.classList.contains('popup-sound-us') || btn.classList.contains('popup-sound-uk')) {
+    const formsStr = btn.getAttribute('data-forms');
+    let forms = null;
+    if (formsStr && formsStr !== 'null') {
+      try { forms = JSON.parse(formsStr); } catch {}
+    }
+    const region = btn.classList.contains('popup-sound-uk') ? 'uk' : 'us';
+    this.playWord(word, forms, region);
+
+  } else if (btn.classList.contains('popup-delete-btn')) {
+    this.removeWordFromLearning(word, level);
+    const card = btn.closest('.word-card');
+    if (card) card.remove();
+
+    // обновим счётчик в заголовке
+    const titleCount = header.querySelector('.words-popup-title p');
+    if (titleCount) {
+      titleCount.textContent = `${this.learningWords.length} слов в изучении`;
+    }
+
+  } else if (btn.classList.contains('popup-edit-btn')) {
+    this.editLearningWord(word, level, () => {
+      this.renderLearningWordsPopupList(filterSelect ? filterSelect.value : 'ALL');
+    });
+  }
+}, true);
   }
 
   renderLearningWordsPopupList(filterLevel = 'ALL') {
     const list = document.getElementById('wordsPopupList');
     if (!list) return;
 
-    let words = this.learningWords.slice();
-    if (filterLevel && filterLevel !== 'ALL') {
-      words = words.filter(w => (w.level || '') === filterLevel);
-    }
+let words;
+
+if (filterLevel === 'STUDY_NOW') {
+  // берём только слова из текущего пула "заучивание"
+  const prevPractice = this.currentPractice;
+  this.currentPractice = 'scheduled';
+  words = this.getWordsToReview().slice();
+  this.currentPractice = prevPractice;
+} else {
+  words = this.learningWords.slice();
+  if (filterLevel && filterLevel !== 'ALL') {
+    words = words.filter(w => (w.level || '') === filterLevel);
+  }
+}
 
     if (words.length === 0) {
       list.innerHTML = `
@@ -4632,6 +4781,13 @@ updateWordStats(word, correct, responseTimeMs = null) {
     s.difficulty = Math.min(5, (s.difficulty || 0) + 1);
     s.lapses = (s.lapses || 0) + 1;
   }
+  // Обновляем "точность" 0..10
+if (s.accScore == null) s.accScore = 0;
+if (correct) {
+  s.accScore = Math.min(10, s.accScore + 1);  // +10%
+} else {
+  s.accScore = Math.max(0, s.accScore - 1);   // -10%
+}
 
   // Обновляем сессию для режима "запланировано"
   if (this.currentPractice === 'scheduled') {
@@ -5333,25 +5489,22 @@ attachPetHandlers() {
   }
 
   startGameQuizCycle(containerId) {
-    this.clearGameQuizCycle(containerId);
-  const QUIZ_DELAY = 5 * 60 * 1000;
-  const WARNING_DELAY = 10 * 1000; // предупреждаем за 10 секунд (4:50)
+  this.clearGameQuizCycle(containerId); // 1) убираем старые таймеры
 
-    const schedule = () => {
-      const warningTimeoutId = setTimeout(() => {
-        this.showNotification('Через 10 секунд появится Quiz! Поставьте игру на паузу.', 'warning');
-      }, QUIZ_DELAY - WARNING_DELAY);
+  const QUIZ_DELAY = 5 * 60 * 1000;      // 5 минут
+  const WARNING_DELAY = 10 * 1000;       // предупреждение за 10 секунд
 
-      const quizTimeoutId = setTimeout(() => {
-        this.showOverlayQuiz(containerId);
-        schedule();
-      }, QUIZ_DELAY);
+  const warningTimeoutId = setTimeout(() => {
+    this.showNotification('Через 10 секунд появится Quiz! Поставьте игру на паузу.', 'warning');
+  }, QUIZ_DELAY - WARNING_DELAY);
 
-      this.gameQuizIntervals[containerId] = { warningTimeoutId, quizTimeoutId };
-    };
+  const quizTimeoutId = setTimeout(() => {
+    this.showOverlayQuiz(containerId);   // 2) через 5 минут показываем quiz
+  }, QUIZ_DELAY);
 
-    schedule();
-  }
+  // сохраняем таймеры, чтобы потом их отменить
+  this.gameQuizIntervals[containerId] = { warningTimeoutId, quizTimeoutId };
+}
   clearGameQuizCycle(containerId) {
     const timers = this.gameQuizIntervals[containerId];
     if (timers) {
@@ -5362,6 +5515,7 @@ attachPetHandlers() {
   }
 
   showOverlayQuiz(containerId) {
+    this.clearGameQuizCycle(containerId); 
     const host = document.getElementById(containerId);
     if (!host) return;
 
@@ -5434,53 +5588,41 @@ attachPetHandlers() {
       }
 
       quizContent.querySelectorAll('.quiz-option-gate').forEach(opt => {
-        opt.addEventListener('click', async () => {
-          const chosen = opt.getAttribute('data-answer');
-          const isCorrect = chosen === correct;
+  opt.addEventListener('click', async () => {
+    const chosen = opt.getAttribute('data-answer');
+    const isCorrect = chosen === correct;
 
-          opt.style.background = isCorrect ? '#d1fae5' : '#fee2e2';
-          opt.style.borderColor = isCorrect ? '#10b981' : '#ef4444';
+    // ... оформление правильного/неправильного варианта ...
 
-          if (!isCorrect) {
-            quizContent.querySelectorAll('.quiz-option-gate').forEach(o => {
-              if (o.getAttribute('data-answer') === correct) {
-                o.style.background = '#d1fae5';
-                o.style.borderColor = '#10b981';
-              }
-            });
-          }
+    await this.waitForCurrentAudioToFinish();
 
-          await this.waitForCurrentAudioToFinish();
+    if (direction === 'RU_EN' && this.shouldAutoPronounce(word)) {
+      // ... озвучка ...
+    } else {
+      await this.delay(600);
+    }
 
-          if (direction === 'RU_EN' && this.shouldAutoPronounce(word)) {
-            await this.delay(200);
-            if (word.forms && word.forms.length) await this.playFormsSequence(word.forms, 'us');
-            else if (this.isMultiWord(word.word)) await this.playPhraseTTS(word.word, 'us');
-            else await this.playSingleWordMp3(word.word, 'us');
-          } else {
-            await this.delay(600);
-          }
+    if (isCorrect) {
+      quizCorrect++;
+      this.recordDailyProgress();
 
-          if (isCorrect) {
-            quizCorrect++;
-            this.recordDailyProgress();
-
-            if (quizCorrect >= 4) {
-              await this.delay(300);
-              overlay.remove();
-              this.showNotification('Отлично! Продолжайте играть!', 'success');
-            } else {
-              showQuestion();
-            }
-          } else {
-            showQuestion();
-          }
-        });
-      });
+      if (quizCorrect >= 4) {
+        await this.delay(300);
+        overlay.remove();
+        this.showNotification('Отлично! Продолжайте играть!', 'success');
+        this.startGameQuizCycle(containerId); // ← ВАЖНО: запускаем новый цикл
+      } else {
+        showQuestion();
+      }
+    } else {
+      showQuestion();
+    }
+  });
+});
     };
     showQuestion();
   }
-
+      
   // =========
   // Utils
   // =========
@@ -5498,7 +5640,7 @@ attachPetHandlers() {
       position:fixed;top:80px;left:50%;transform:translateX(-50%);
       background:${type === 'success' ? 'var(--accent-color)' : type === 'warning' ? 'var(--warning-color)' : 'var(--primary-color)'};
       color:white;padding:12px 24px;border-radius:8px;
-      box-shadow:var(--shadow-lg);z-index:10000;
+      box-shadow:var(--shadow-lg);z-index:2147483647;
       max-width:90%;text-align:center;font-weight:600;
       animation:slideDown 0.3s ease;
     `;
@@ -5514,6 +5656,44 @@ attachPetHandlers() {
     const availableWords = this.learningWords.filter(w => !w.isLearned);
     if (availableWords.length === 0) return null;
     return availableWords[Math.floor(Math.random() * availableWords.length)];
+  }
+  
+    createGlobalLoader() {
+    if (this.loaderEl) return;
+    const overlay = document.createElement('div');
+    overlay.id = 'globalLoader';
+    overlay.className = 'global-loader-overlay';
+    overlay.innerHTML = `
+      <div class="global-loader-box">
+        <img src="/loading.gif" alt="Кот Боб загружает..." />
+        <div class="global-loader-title">Загрузка...</div>
+        <div class="global-loader-text global-loader-text-el">
+          Кот Боб загружает для вас эту страницу
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    this.loaderEl = overlay;
+  }
+
+  showGlobalLoader(message = 'Кот Боб загружает для вас эту страницу', minDurationMs = 1500) {
+    if (!this.isAndroid) return;
+    this.createGlobalLoader();
+    const textEl = this.loaderEl.querySelector('.global-loader-text-el');
+    if (textEl) textEl.textContent = message;
+    this.loaderMinMs = minDurationMs;
+    this.loaderStart = performance.now();
+    this.loaderEl.classList.add('show');
+  }
+
+  hideGlobalLoader() {
+    if (!this.isAndroid || !this.loaderEl) return;
+    const elapsed = performance.now() - (this.loaderStart || 0);
+    const delay = Math.max(0, (this.loaderMinMs || 0) - elapsed);
+    clearTimeout(this.loaderTimer);
+    this.loaderTimer = setTimeout(() => {
+      this.loaderEl.classList.remove('show');
+    }, delay);
   }
 
 static injectStylesOnce() { if (document.getElementById('app-extra-styles')) return; const style = document.createElement('style'); style.id = 'app-extra-styles'; style.textContent = ` @keyframes slideDown { from { transform: translate(-50%, -100%); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } } @keyframes slideUp { from { transform: translate(-50%, 0); opacity: 1; } to { transform: translate(-50%, -100%); opacity: 0; } } .sound-actions .mini-btn, .option-sound .mini-btn { border:none; background: var(--bg-tertiary, #f0f2f5); padding:4px 6px; border-radius:6px; cursor:pointer; color:#333; } .quiz-option .quiz-option-inner { display:flex; align-items:center; justify-content:space-between; gap:8px; }
