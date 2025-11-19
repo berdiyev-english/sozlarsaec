@@ -909,51 +909,66 @@
         });
     }
 
-    async function getRealExamples(originalText, mainTranslation) {
-        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(originalText)}&langpair=${sourceLang}|${targetLang}`;
-        try {
-            const res = await fetch(url);
-            const data = await res.json();
+function mapToTatoebaLang(code2) {
+    if (code2 === 'en') return 'eng';
+    if (code2 === 'ru') return 'rus';
+    return 'eng';
+}
 
-            const raw = Array.isArray(data.matches) ? data.matches : [];
-            raw.sort((a, b) => (b.quality || 0) - (a.quality || 0));
+   async function getRealExamples(originalText, mainTranslation) {
+    const from3 = mapToTatoebaLang(sourceLang);
+    const to3 = mapToTatoebaLang(targetLang);
 
-            const seen = new Set();
-            const pairs = [];
-            for (const m of raw) {
-                const src = (m.segment || '').trim();
-                const tgt = (m.translation || '').trim();
-                if (!src || !tgt) continue;
+    // Запрос к Tatoeba
+    const apiUrl =
+        `https://tatoeba.org/en/api_v0/search?from=${from3}&to=${to3}` +
+        `&query=${encodeURIComponent(originalText)}` +
+        `&orphans=no&unapproved=no&has_audio=no&sort=relevance&sort_reverse=&page=1&per_page=10`;
 
-                const key = `${src.toLowerCase()}|${tgt.toLowerCase()}`;
-                if (seen.has(key)) continue;
-                seen.add(key);
+    // CORS‑прокси (чтобы работало прямо из браузера без бэкенда)
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
 
-                pairs.push({ src, tgt, quality: m.quality || 0 });
+    try {
+        const res = await fetch(proxyUrl);
+        const wrapped = await res.json();
+        const data = JSON.parse(wrapped.contents);
+
+        const results = Array.isArray(data.results) ? data.results : [];
+        const examples = [];
+
+        for (const item of results) {
+            const src = item.text || '';
+            let tgt = '(перевод отсутствует)';
+
+            // Берём первый доступный перевод (Tatoeba уже отфильтровала по языку to=...)
+            if (item.translations && item.translations.length > 0 && item.translations[0].length > 0) {
+                tgt = item.translations[0][0].text || tgt;
             }
 
-            const hasMain = (t) => mainTranslation && t.toLowerCase().includes(mainTranslation.toLowerCase());
-            const prioritized = [
-                ...pairs.filter(p => hasMain(p.tgt)),
-                ...pairs.filter(p => !hasMain(p.tgt))
-            ];
+            const srcEsc = escapeHTML(src);
+            const tgtEsc = escapeHTML(tgt);
 
-            return prioritized.slice(0, 6).map(p => {
-                const srcEsc = escapeHTML(p.src);
-                const tgtEsc = escapeHTML(p.tgt);
+            // Подсвечиваем запрос в исходном предложении
+            const srcHi = highlightTerm(srcEsc, originalText);
 
-                const srcHi = highlightTerm(srcEsc, originalText);
-                const tgtHi = mainTranslation && p.tgt.toLowerCase().includes(mainTranslation.toLowerCase())
-                    ? highlightTerm(tgtEsc, mainTranslation)
-                    : tgtEsc;
+            // В переводе можно дополнительно подсветить основной перевод (если есть)
+            let tgtHi = tgtEsc;
+            if (mainTranslation && tgt.toLowerCase().includes(mainTranslation.toLowerCase())) {
+                tgtHi = highlightTerm(tgtEsc, mainTranslation);
+            }
 
-                return { source: srcHi, target: tgtHi };
+            examples.push({
+                source: srcHi,
+                target: tgtHi
             });
-        } catch (e) {
-            console.error('Examples (MyMemory) error:', e);
-            return [];
         }
+
+        return examples;
+    } catch (e) {
+        console.error('Tatoeba error:', e);
+        return [];
     }
+}
 
     async function displayResults(originalText, translations) {
         const resultsDiv = document.getElementById('results');
