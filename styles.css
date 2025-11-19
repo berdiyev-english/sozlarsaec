@@ -2804,9 +2804,10 @@ img[data-image-source*="Servier"],
 /* Верхний блок с CTA (в верхнем отступе) — чуть меньше сверху, больше снизу */
 #levels .auto-dict-top {
   display: flex;
-  justify-content: flex-end;
-  margin: 4px -1.25rem 16px -1.25rem;
-  padding: 0 1.25rem;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 28px 0;  /* сверху НОЛЬ, снизу небольшой отступ */
+  padding: 0;
 }
 
 /* Шапка списка: заголовок слева, действия справа — строго в одну строку */
@@ -2834,27 +2835,41 @@ img[data-image-source*="Servier"],
   flex-wrap: nowrap;
 }
 
-/* Кнопка-герой в твоём стиле */
+/* Кнопка-словарь автоматически */
 .auto-dict-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  padding: 0.9rem 1.25rem;
-  border-radius: var(--radius-xxl);
-  border: 3px solid rgba(255,255,255,0.35);
-  background: linear-gradient(135deg, var(--info-color), var(--purple-color));
+  padding: 0.8rem 1.4rem;
+  border-radius: 10px;              /* не таблетка, но мягкие углы */
+  border: none;
+  background: linear-gradient(135deg, #0ea5e9, #6366f1); /* голубой → фиолетовый */
   color: #fff;
   font-weight: 900;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  text-align: center;
 }
-.auto-dict-btn i { font-size: 1.1rem; }
+
+.auto-dict-btn i {
+  font-size: 1.2rem;
+}
+
 .auto-dict-btn:hover {
   transform: translateY(-2px);
   filter: brightness(1.05);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.45);
 }
-[data-theme="dark"] .auto-dict-btn { border-color: rgba(255,255,255,0.2); }
+
+[data-theme="dark"] .auto-dict-btn {
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.9);
+}
 
 /* На очень узких экранах можно позволить шапке переноситься */
 @media (max-width: 480px) {
@@ -3471,6 +3486,13 @@ box-shadow: var(--shadow-md);
     align-items: flex-start;
   }
 }
+.learning-instruction-box {
+  border: 2px solid var(--accent-color);
+  border-radius: var(--radius-lg);
+  background: var(--bg-secondary);
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+}
 .learning-instruction-row {
   display: flex;
   justify-content: space-between;
@@ -3524,8 +3546,8 @@ box-shadow: var(--shadow-md);
 }
 
 .global-loader-box img {
-  width: 120px;
-  height: 120px;
+  width: 180px;
+  height: 180px;
   object-fit: contain;
   margin-bottom: 8px;
 }
@@ -3543,7 +3565,7 @@ box-shadow: var(--shadow-md);
 
 @media (max-width: 480px) {
   .global-loader-box img {
-    width: 90px;
-    height: 90px;
+    width: 140px;
+    height: 140px;
   }
 }
