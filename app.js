@@ -31,6 +31,11 @@ class EnglishWordsApp {
     
     this.loadData();
     this.muted = JSON.parse(localStorage.getItem('app_muted') || 'false');
+        // Глобальная скорость озвучки (0.5–1.5)
+    this.audioRate = parseFloat(localStorage.getItem('audio_rate') || '1');
+    if (isNaN(this.audioRate) || this.audioRate < 0.5 || this.audioRate > 1.5) {
+      this.audioRate = 1;
+    }
     
     this.srsConfig = {
         dailyNew: 30,
@@ -143,6 +148,39 @@ checkAndShowFirstRunOrMotivation() {
     const clean = (wordCandidate || '').toLowerCase();
     return `https://wooordhunt.ru/data/sound/sow/${region}/${clean}.mp3`;
   }
+  
+  // Имя файла для идиомы: "all ears" -> "all_ears"
+  buildIdiomFileName(phrase) {
+    if (!phrase) return '';
+    return String(phrase)
+      .toLowerCase()
+      .replace(/[^a-z\s]/g, '')   // только латинские буквы и пробелы
+      .trim()
+      .replace(/\s+/g, '_');      // пробелы -> _
+  }
+
+  // URL для US-озвучки идиомы с сайта
+  buildIdiomAudioUrl(fileName) {
+    if (!fileName) return '';
+    return `https://bewords.ru/au/idioms/us/${fileName}.mp3`;
+  }
+
+  // Попробовать сыграть idiom.mp3, если не вышло — fallback в TTS
+    async playIdiomAudio(phrase) {
+    const file = this.buildIdiomFileName(phrase);
+    if (!file) return false;
+
+    const url = this.buildIdiomAudioUrl(file);
+    try {
+      await this.playMp3Url(url);
+      // УСПЕШНО: mp3 проигран
+      return true;
+    } catch (e) {
+      // Для идиом НЕ используем TTS – просто выходим
+      return false;
+    }
+  }
+  
   stopCurrentAudio() {
     try {
       if (this.currentAudio) {
@@ -166,6 +204,7 @@ playMp3Url(url) {
         const audio = new Audio();
         audio.preload = 'auto';
         audio.volume = 1.0;
+        audio.playbackRate = this.audioRate || 1;
         
         this.currentAudio = audio;
 
@@ -297,7 +336,9 @@ syncModePracticeToggles() {
     await this.ensureVoicesLoaded();
     const voice = this.pickPreferredGoogleVoice(region === 'uk' ? 'uk' : 'us');
 
-    const rate = region === 'uk' ? 0.9 : 0.8;
+    const baseRate = region === 'uk' ? 0.9 : 0.8;
+    const globalRate = this.audioRate || 1;
+    const rate = Math.min(2, Math.max(0.3, baseRate * globalRate));
     const pitch = 1;
 
     const p = new Promise((resolve) => {
@@ -358,16 +399,37 @@ syncModePracticeToggles() {
     }
     return true;
   }
-  async playWord(word, forms = null, region = null) {
+         async playWord(word, forms = null, region = null, level = null) {
     if (typeof forms === 'string') { forms = [forms]; }
     const regionPref = (region === 'uk' || region === 'us') ? region : 'us';
 
-    if ((!forms || !Array.isArray(forms) || forms.length === 0) && typeof word === 'string' && word.includes('/')) {
-      const parts = word.split('/').map(s => s.trim()).filter(Boolean);
-      if (parts.length > 1) { await this.playFormsSequence(parts, regionPref); return; }
+    // ИДИОМЫ: только mp3, без TTS вообще
+    if (level === 'IDIOMS' && typeof word === 'string') {
+      await this.playIdiomAudio(word);
+      return; // даже если mp3 не нашёлся, дальше не идём
     }
-    if (forms && Array.isArray(forms) && forms.length) { await this.playFormsSequence(forms, regionPref); return; }
-    if (this.isMultiWord(word)) { await this.playPhraseTTS(word, regionPref); return; }
+
+    // Набор форм через "/" (для неправильных глаголов и т.п.)
+    if ((!forms || !Array.isArray(forms) || forms.length === 0) &&
+        typeof word === 'string' && word.includes('/')) {
+      const parts = word.split('/').map(s => s.trim()).filter(Boolean);
+      if (parts.length > 1) {
+        await this.playFormsSequence(parts, regionPref);
+        return;
+      }
+    }
+
+    if (forms && Array.isArray(forms) && forms.length) {
+      await this.playFormsSequence(forms, regionPref);
+      return;
+    }
+
+    if (this.isMultiWord(word)) {
+      // Для обычных фраз – TTS, но не для идиом (мы их уже отфильтровали выше)
+      await this.playPhraseTTS(word, regionPref);
+      return;
+    }
+
     await this.playSingleWordMp3(word, regionPref);
   }
 
@@ -1367,9 +1429,8 @@ showSettingsModal() {
         <button class="btn btn-primary settings-theme-btn" data-testid="settings-theme" style="width:100%;margin-bottom:10px;">
           <i class="fas fa-adjust"></i> Переключить тему
         </button> 
-        <button class="btn btn-primary settings-sound-btn" data-testid="settings-sound" style="width:100%;margin-bottom:10px;">
-          <i class="fas fa-${this.muted ? 'volume-mute' : 'volume-up'}"></i> 
-          ${this.muted ? 'Включить звук' : 'Отключить звук'}
+        <button class="btn btn-primary settings-audio-btn" data-testid="settings-audio" style="width:100%;margin-bottom:10px;">
+          <i class="fas fa-volume-up"></i> Настройки аудио
         </button>
         <button class="btn btn-primary settings-install-btn" data-testid="settings-install" style="width:100%;margin-bottom:10px;">
           <i class="fas fa-download"></i> Установка приложения
@@ -1401,11 +1462,9 @@ showSettingsModal() {
     });
   }
   
-  const soundBtn = modal.querySelector('.settings-sound-btn');
-  if (soundBtn) {
-    soundBtn.addEventListener('click', () => {
-      this.toggleSound(soundBtn);
-    });
+  const audioBtn = modal.querySelector('.settings-audio-btn');
+  if (audioBtn) {
+    audioBtn.addEventListener('click', () => this.openAudioSettingsInSettings(audioBtn));
   }
   
   const installBtn = modal.querySelector('.settings-install-btn');
@@ -1481,6 +1540,86 @@ openAboutInSettings(btnEl) {
       ${this.getAboutContentHtml()}
     </div>
   `;
+}
+
+openAudioSettingsInSettings(btnEl) {
+  const wrap = btnEl.closest('.settings-content');
+  if (!wrap) return;
+
+  const menu = wrap.querySelector('#settingsMenu');
+  const inner = wrap.querySelector('#settingsInnerPage');
+  const guide = wrap.querySelector('#installGuide');
+  if (!menu || !inner) return;
+
+  menu.style.display = 'none';
+  if (guide) guide.style.display = 'none';
+  inner.style.display = 'block';
+
+  const rate = this.audioRate || 1;
+  const muted = this.muted;
+
+  inner.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <h3 style="margin:0;color:var(--text-primary)">Настройки аудио</h3>
+      <button class="btn btn-secondary" data-testid="settings-audio-back-btn">
+        <i class="fas fa-arrow-left"></i> Назад
+      </button>
+    </div>
+    <div style="max-height:60vh;overflow:auto;border:1px solid var(--border-color);border-radius:12px;padding:14px;background:var(--bg-secondary);" data-testid="settings-audio-content">
+      <div style="margin-bottom:16px;">
+        <h4 style="margin:0 0 6px;color:var(--text-primary);">Скорость воспроизведения</h4>
+        <p style="margin:0 0 10px;color:var(--text-secondary);font-size:0.85rem;">
+          Настройте, насколько медленно или быстро будут озвучиваться слова и предложения.
+        </p>
+        <input type="range"
+               id="audioRateSlider"
+               min="0.5"
+               max="1.5"
+               step="0.1"
+               value="${rate.toFixed(1)}"
+               style="width:100%;">
+        <div style="margin-top:6px;font-size:0.85rem;color:var(--text-secondary);">
+          Текущая скорость: <strong><span id="audioRateValue">${rate.toFixed(1)}</span>x</strong>
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--border-color);padding-top:12px;margin-top:8px;">
+        <h4 style="margin:0 0 6px;color:var(--text-primary);">Звук</h4>
+        <p style="margin:0 0 10px;color:var(--text-secondary);font-size:0.85rem;">
+          Вы можете временно полностью выключить звук в приложении.
+        </p>
+        <button class="btn btn-primary" id="audioMuteToggleBtn">
+          <i class="fas fa-${muted ? 'volume-mute' : 'volume-up'}"></i>
+          ${muted ? 'Включить звук' : 'Отключить звук'}
+        </button>
+      </div>
+    </div>
+  `;
+
+  const backBtn = inner.querySelector('[data-testid="settings-audio-back-btn"]');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => {
+      inner.style.display = 'none';
+      menu.style.display = 'block';
+    });
+  }
+
+  const slider = inner.querySelector('#audioRateSlider');
+  const valueEl = inner.querySelector('#audioRateValue');
+  if (slider && valueEl) {
+    slider.addEventListener('input', () => {
+      const v = parseFloat(slider.value) || 1;
+      this.audioRate = Math.min(1.5, Math.max(0.5, v));
+      localStorage.setItem('audio_rate', String(this.audioRate));
+      valueEl.textContent = this.audioRate.toFixed(1);
+    });
+  }
+
+  const muteBtn = inner.querySelector('#audioMuteToggleBtn');
+  if (muteBtn) {
+    muteBtn.addEventListener('click', () => {
+      this.toggleSound(muteBtn);
+    });
+  }
 }
 
   // =========
@@ -2532,10 +2671,10 @@ renderSentenceBuilder() {
     return `
       <div class="empty-state">
         <i class="fas fa-book-open"></i>
-        <h3>Добавьте слова для начала</h3>
-        <p>Чтобы использовать тренажер предложений, сначала добавьте слова из раздела "Уровни"</p>
+        <h3>Для вас пока нет подходящих упражнений</h3>
+        <p>Добавьте слова из готовых списков в разделе «Списки» или воспользуйтесь другим режимом практики (Quiz, Флешкарточки).</p>
         <button class="btn btn-primary" onclick="app.switchSection('levels')">
-          Перейти к уровням
+          Перейти к спискам слов
         </button>
       </div>
     `;
@@ -2959,14 +3098,20 @@ installWordsListDelegatedHandlers() {
     const btn = e.target.closest('.sound-us-btn, .sound-uk-btn, .word-add-btn, .word-remove-btn');
     if (!btn) return;
 
+    // Определяем уровень/категорию из карточки
+    const card = btn.closest('.word-card');
+    const cardLevel = card ? card.getAttribute('data-level') : null;
+
     // Звук US/UK
     if (btn.classList.contains('sound-us-btn') || btn.classList.contains('sound-uk-btn')) {
       const wordText = btn.getAttribute('data-word-text');
       const formsStr = btn.getAttribute('data-forms');
       let forms = null;
-      if (formsStr && formsStr !== 'null') { try { forms = JSON.parse(formsStr); } catch {} }
+      if (formsStr && formsStr !== 'null') {
+        try { forms = JSON.parse(formsStr); } catch {}
+      }
       const region = btn.classList.contains('sound-uk-btn') ? 'uk' : 'us';
-      this.playWord(wordText, forms, region);
+      this.playWord(wordText, forms, region, cardLevel); // <- ПЕРЕДАЁМ level
       return;
     }
 
@@ -2991,7 +3136,6 @@ installWordsListDelegatedHandlers() {
     }
   });
 
-  // Пометка, что делегирование уже повешено
   list.dataset.delegated = '1';
 }
 
@@ -3725,14 +3869,14 @@ renderFlashcards() {
       if (soundUsBtn) {
         soundUsBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          this.playWord(word.word, word.forms, 'us');
+          this.playWord(word.word, word.forms, 'us', word.level);
         });
       }
       
       if (soundUkBtn) {
         soundUkBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          this.playWord(word.word, word.forms, 'uk');
+          this.playWord(word.word, word.forms, 'uk', word.level);
         });
       }
       
@@ -3764,9 +3908,7 @@ renderFlashcards() {
     // Автоматическое произношение
     if (!this.lastFlashcardFrontWasRussian && !this.suppressAutoSpeakOnce && this.currentSection === 'learning' && this.shouldAutoPronounce(word)) {
       setTimeout(() => {
-        if (word.forms && word.forms.length) this.playFormsSequence(word.forms, 'us');
-        else if (this.isMultiWord(word.word)) this.playPhraseTTS(word.word, 'us');
-        else this.playSingleWordMp3(word.word, 'us');
+        this.playWord(word.word, word.forms, 'us', word.level);
       }, 250);
     }
     this.suppressAutoSpeakOnce = false;
@@ -3787,19 +3929,15 @@ renderFlashcards() {
       const word = wordsToReview[this.currentReviewIndex % wordsToReview.length];
       if (this.shouldAutoPronounce(word)) {
         setTimeout(() => {
-          if (word.forms && word.forms.length) this.playFormsSequence(word.forms, 'us');
-          else if (this.isMultiWord(word.word)) this.playPhraseTTS(word.word, 'us');
-          else this.playSingleWordMp3(word.word, 'us');
+          this.playWord(word.word, word.forms, 'us', word.level);
         }, 200);
       }
     }
   }
-  playCurrentWord() {
+    playCurrentWord() {
     const wordsToReview = this.getWordsToReview();
     const word = wordsToReview[this.currentReviewIndex % wordsToReview.length];
-    if (word.forms && word.forms.length > 0) this.playFormsSequence(word.forms, 'us');
-    else if (this.isMultiWord(word.word)) this.playPhraseTTS(word.word, 'us');
-    else this.playSingleWordMp3(word.word, 'us');
+    this.playWord(word.word, word.forms, 'us', word.level);
   }
   async answerFlashcard(correct) {
     await this.waitForCurrentAudioToFinish();
@@ -3916,15 +4054,14 @@ this.updateWordStats(word.word, correct, rt);
         soundUsBtn.addEventListener('click', (e) => {
           e.stopPropagation();
           const w = soundUsBtn.getAttribute('data-word');
-          this.playWord(w, word.forms, 'us');
+          this.playWord(w, word.forms, 'us', word.level);
         });
       }
-      
       if (soundUkBtn) {
         soundUkBtn.addEventListener('click', (e) => {
           e.stopPropagation();
           const w = soundUkBtn.getAttribute('data-word');
-          this.playWord(w, word.forms, 'uk');
+          this.playWord(w, word.forms, 'uk', word.level);
         });
       }
       
@@ -3957,9 +4094,7 @@ this.updateWordStats(word.word, correct, rt);
     // Автоматическое произношение
     if (direction === 'EN_RU' && !this.suppressAutoSpeakOnce && this.currentSection === 'learning' && this.shouldAutoPronounce(word)) {
       setTimeout(() => {
-        if (word.forms && word.forms.length) this.playFormsSequence(word.forms, 'us');
-        else if (this.isMultiWord(word.word)) this.playPhraseTTS(word.word, 'us');
-        else this.playSingleWordMp3(word.word, 'us');
+        this.playWord(word.word, word.forms, 'us', word.level);
       }, 200);
     }
     this.suppressAutoSpeakOnce = false;
@@ -4029,12 +4164,18 @@ this.updateWordStats(wordToPlay, isCorrect, rt);
 
     await this.waitForCurrentAudioToFinish();
 
+    await this.waitForCurrentAudioToFinish();
+
     if (direction === 'RU_EN' && this.currentSection === 'learning' && this.shouldAutoPronounce(wordObj)) {
       await this.delay(200);
-      if (wordObj && wordObj.forms && wordObj.forms.length > 0) { await this.playFormsSequence(wordObj.forms, 'us'); }
-      else if (this.isMultiWord(wordToPlay)) { await this.playPhraseTTS(wordToPlay, 'us'); }
-      else { await this.playSingleWordMp3(wordToPlay, 'us'); }
-    } else { await this.delay(600); }
+      if (wordObj) {
+        await this.playWord(wordObj.word, wordObj.forms, 'us', wordObj.level);
+      } else {
+        await this.playSingleWordMp3(wordToPlay, 'us');
+      }
+    } else {
+      await this.delay(600);
+    }
 
     this.currentReviewIndex++;
     if (this.currentReviewIndex >= wordsToReview.length && this.currentPractice === 'scheduled') {
@@ -4111,14 +4252,13 @@ attachWordsListHandlers() {
       const word = btn.getAttribute('data-word');
       const formsStr = btn.getAttribute('data-forms');
       let forms = null;
-      
       if (formsStr && formsStr !== 'null') {
-        try {
-          forms = JSON.parse(formsStr);
-        } catch {}
+        try { forms = JSON.parse(formsStr); } catch {}
       }
-      
-      this.playWord(word, forms, 'us');
+      // Находим уровень через learningWords
+      const item = this.learningWords.find(w => w.word === word);
+      const level = item ? item.level : null;
+      this.playWord(word, forms, 'us', level);
     });
   });
   
@@ -4129,18 +4269,16 @@ attachWordsListHandlers() {
       const word = btn.getAttribute('data-word');
       const formsStr = btn.getAttribute('data-forms');
       let forms = null;
-      
       if (formsStr && formsStr !== 'null') {
-        try {
-          forms = JSON.parse(formsStr);
-        } catch {}
+        try { forms = JSON.parse(formsStr); } catch {}
       }
-      
-      this.playWord(word, forms, 'uk');
+      const item = this.learningWords.find(w => w.word === word);
+      const level = item ? item.level : null;
+      this.playWord(word, forms, 'uk', level);
     });
   });
   
-  // Кнопки toggle learned
+  // Кнопки toggle learned оставляем как были
   container.querySelectorAll('.list-toggle-learned').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -5196,12 +5334,12 @@ attachPetHandlers() {
 
   startGameQuizCycle(containerId) {
     this.clearGameQuizCycle(containerId);
-    const QUIZ_DELAY = 5 * 60 * 1000;
-    const WARNING_DELAY = 15 * 1000;
+  const QUIZ_DELAY = 5 * 60 * 1000;
+  const WARNING_DELAY = 10 * 1000; // предупреждаем за 10 секунд (4:50)
 
     const schedule = () => {
       const warningTimeoutId = setTimeout(() => {
-        this.showNotification('⚠️ Через 15 секунд появится quiz! Поставьте игру на паузу!', 'warning');
+        this.showNotification('Через 10 секунд появится Quiz! Поставьте игру на паузу.', 'warning');
       }, QUIZ_DELAY - WARNING_DELAY);
 
       const quizTimeoutId = setTimeout(() => {
