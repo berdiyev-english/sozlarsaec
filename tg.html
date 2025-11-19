@@ -439,6 +439,37 @@ body {
           <div class="level-stats"><span class="word-count">0 слов</span></div>
         </div>
       </div>
+      
+            <!-- Exams -->
+      <div class="section-header" style="margin-top:1rem;">
+        <h2>Экзамены</h2>
+      </div>
+      <div class="levels-grid" id="examsGrid">
+        <div class="level-card" data-category="EGE" data-testid="category-card-ege">
+          <div class="level-badge elementary">ЕГЭ</div>
+          <h3>ЕГЭ</h3>
+          <p>Подготовка к ЕГЭ</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-category="OGE" data-testid="category-card-oge">
+          <div class="level-badge beginner">ОГЭ</div>
+          <h3>ОГЭ</h3>
+          <p>Подготовка к ОГЭ</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-category="IELTS" data-testid="category-card-ielts">
+          <div class="level-badge upper-intermediate">IELTS</div>
+          <h3>IELTS</h3>
+          <p>Academic / General</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+        <div class="level-card" data-category="TOEFL" data-testid="category-card-toefl">
+          <div class="level-badge advanced">TOEFL</div>
+          <h3>TOEFL</h3>
+          <p>Подготовка к TOEFL</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+      </div>
 
       <!-- Words List (levels or categories) -->
       <div id="wordsContainer" class="words-container hidden">
@@ -647,7 +678,7 @@ body {
 
 <script src="oxford_words_data.js"></script>
 <script src="sentences-data.js"></script>
-<script src="app.js"></script>
+<script src="test.js"></script>
 <script>
   // Service Worker registration (image caching)
   if ('serviceWorker' in navigator) {
@@ -776,92 +807,292 @@ window.addEventListener('load', function() {
 </script>
 <script>
 (function(){
-  let src='ru',tgt='en',bound=!1;
-  function $id(id){return document.getElementById(id)}
-  function setLang(from,to){
-    src=from,tgt=to;
-    $id('trRuBtn')?.classList.toggle('active','ru'===from);
-    $id('trEnBtn')?.classList.toggle('active','en'===from);
-    
-    // Меняем надписи на кнопках
-    const ruBtn = $id('trRuBtn');
-    const enBtn = $id('trEnBtn');
-    if(ruBtn) ruBtn.textContent = from === 'ru' ? 'Russian' : 'English';
-    if(enBtn) enBtn.textContent = from === 'en' ? 'Russian' : 'English';
+  let src = 'ru', tgt = 'en', bound = !1;
+
+  function $id(id){ return document.getElementById(id); }
+
+function setLang(from, to){
+  src = from;
+  tgt = to;
+
+  const ruBtn = $id('trRuBtn');
+  const enBtn = $id('trEnBtn');
+  if (!ruBtn || !enBtn) return;
+
+  // from = язык источника:
+  // если from === 'ru' → переводим ИЗ русского В английский:
+  //   левая кнопка: Русский (активна), правая: Английский
+  // если from === 'en' → переводим ИЗ английского В русский:
+  //   левая кнопка: Английский, правая: Русский (активна)
+  if (from === 'ru') {
+    ruBtn.textContent = '🇷🇺 Русский';
+    enBtn.textContent = '🇬🇧 Английский';
+    ruBtn.classList.add('active');
+    enBtn.classList.remove('active');
+  } else {
+    ruBtn.textContent = '🇬🇧 Английский';
+    enBtn.textContent = '🇷🇺 Русский';
+    enBtn.classList.add('active');
+    ruBtn.classList.remove('active');
   }
+}
+
   async function translate(){
-    const input=$id('trInputText');
-    if(!input)return;
-    const text=(input.value||'').trim();
-    if(!text)return void showErr('Пожалуйста, введите текст для перевода');
-    const load=$id('trLoading'),err=$id('trError'),res=$id('trResults');
-    err?.classList.remove('active'),res?.classList.remove('active'),load?.classList.add('active');
-    try{
-      const list=await fetchAll(text);
-      render(text,list)
-    }catch(e){
-      console.error(e),showErr('Произошла ошибка при переводе. Попробуйте ещё раз.')
-    }finally{
-      load?.classList.remove('active')
+    const input = $id('trInputText');
+    if (!input) return;
+    const text = (input.value || '').trim();
+    if (!text) return void showErr('Пожалуйста, введите текст для перевода');
+
+    const load = $id('trLoading'),
+          err  = $id('trError'),
+          res  = $id('trResults');
+
+    err && err.classList.remove('active');
+    res && res.classList.remove('active');
+    load && load.classList.add('active');
+
+    try {
+      const list = await fetchAll(text);
+      render(text, list);
+    } catch (e) {
+      console.error(e);
+      showErr('Произошла ошибка при переводе. Попробуйте ещё раз.');
+    } finally {
+      load && load.classList.remove('active');
     }
   }
+
   async function fetchAll(text){
-    const out=[],seen=new Set;
-    try{
-      const u=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${src}&tl=${tgt}&dt=t&dt=bd&q=${encodeURIComponent(text)}`,r=await fetch(u),d=await r.json();
-      if(Array.isArray(d[0])){
-        let m='';
-        d[0].forEach(i=>{i[0]&&(m+=i[0])}),m&&!seen.has(m.toLowerCase())&&(out.push({text:m,type:'основной',source:'Google',confidence:100}),seen.add(m.toLowerCase()))
+    const out = [], seen = new Set;
+    try {
+      const u = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${src}&tl=${tgt}&dt=t&dt=bd&q=${encodeURIComponent(text)}`;
+      const r = await fetch(u);
+      const d = await r.json();
+      if (Array.isArray(d[0])) {
+        let m = '';
+        d[0].forEach(i => { i[0] && (m += i[0]); });
+        if (m && !seen.has(m.toLowerCase())) {
+          out.push({ text:m, type:'основной', source:'Google', confidence:100 });
+          seen.add(m.toLowerCase());
+        }
       }
-      if(Array.isArray(d[1]))d[1].forEach(g=>{
-        const pos=g[0];
-        Array.isArray(g[1])&&g[1].forEach((w,i)=>{w&&!seen.has(w.toLowerCase())&&(out.push({text:w,type:pos||'альтернативный',source:'Google Dict',confidence:Math.max(50,90-i*5)}),seen.add(w.toLowerCase()))})
-      })
-    }catch(e){}
-    try{
-      const u=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|${tgt}`,r=await fetch(u),d=await r.json(),t=d?.responseData?.translatedText;
-      t&&!seen.has(t.toLowerCase())&&(out.push({text:t,type:'альтернативный',source:'MyMemory',confidence:85}),seen.add(t.toLowerCase()))
-    }catch(e){}
-    return out.sort((a,b)=>b.confidence-a.confidence)
+      if (Array.isArray(d[1])) {
+        d[1].forEach(g => {
+          const pos = g[0];
+          Array.isArray(g[1]) && g[1].forEach((w,i) => {
+            if (w && !seen.has(w.toLowerCase())) {
+              out.push({
+                text: w,
+                type: pos || 'альтернативный',
+                source: 'Google Dict',
+                confidence: Math.max(50, 90 - i*5)
+              });
+              seen.add(w.toLowerCase());
+            }
+          });
+        });
+      }
+    } catch(e){}
+
+    try {
+      const u = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|${tgt}`;
+      const r = await fetch(u);
+      const d = await r.json();
+      const t = d?.responseData?.translatedText;
+      if (t && !seen.has(t.toLowerCase())) {
+        out.push({ text:t, type:'альтернативный', source:'MyMemory', confidence:85 });
+        seen.add(t.toLowerCase());
+      }
+    } catch(e){}
+
+    return out.sort((a,b) => b.confidence - a.confidence);
   }
-  function esc(s=''){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+  function esc(s=''){
+    return String(s)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;');
+  }
+
   function showErr(m){
-    const el=$id('trError');
-    if(!el)return;
-    el.textContent=m,el.classList.add('active'),setTimeout(()=>el.classList.remove('active'),2200)
+    const el = $id('trError');
+    if (!el) return;
+    el.textContent = m;
+    el.classList.add('active');
+    setTimeout(() => el.classList.remove('active'), 2200);
   }
-  function render(original,list){
-    const res=$id('trResults');
-    if(!res)return;
-    const main=list[0],groups={};
-    list.forEach((t,i)=>{(groups[t.type]||=[]).push({...t,index:i+1})});
-    const enMain='en'===src?original:'en'===tgt?main?.text:'',ruMain='ru'===src?original:'ru'===tgt?main?.text:'';
-    let html='';
-    main&&(html+=`<div class="tr-main"><div class="tr-src">${esc(original)}</div><div class="tr-res">${esc(main.text)}</div>${enMain?`<div class="tr-add"><button class="tr-chip-btn" data-en="${encodeURIComponent(enMain)}" data-ru="${encodeURIComponent(ruMain||'')}" data-src="${src}" data-tgt="${tgt}">➕ В изучение</button></div>`:''}</div>`),Object.entries(groups).forEach(([type,items])=>{html+=`<div class="tr-group"><div class="tr-head"><span>${esc(type[0].toUpperCase()+type.slice(1))}</span><span style="color:var(--text-secondary);font-size:13px;">${items.length} вариан.</span></div><div class="tr-list">${items.map(it=>{const en='en'===tgt?it.text:'en'===src?original:'',ru='ru'===tgt?it.text:'ru'===src?original:'';return`<div class="tr-item"><div class="tr-num">${it.index}</div><div style="flex:1;min-width:0;"><div class="tr-text">${esc(it.text)}</div><div class="tr-meta">${esc(it.source)} • ${it.confidence}%</div></div>${en?`<button class="tr-chip-btn" data-en="${encodeURIComponent(en)}" data-ru="${encodeURIComponent(ru||'')}" data-src="${src}" data-tgt="${tgt}">➕</button>`:''}</div>`}).join('')}</div></div>`}),res.innerHTML=html||'<div class="empty-state"><p>Переводы не найдены</p></div>',res.classList.add('active')
+
+  function render(original, list){
+    const res = $id('trResults');
+    if (!res) return;
+
+    const main = list[0];
+    const groups = {};
+    list.forEach((t,i) => {
+      (groups[t.type] || (groups[t.type] = [])).push({ ...t, index:i+1 });
+    });
+
+    const enMain = src === 'en' ? original : (tgt === 'en' ? main?.text : '');
+    const ruMain = src === 'ru' ? original : (tgt === 'ru' ? main?.text : '');
+
+    let html = '';
+
+    if (main) {
+      html += `
+        <div class="tr-main">
+          <div class="tr-src">
+            ${esc(original)}
+            <button class="tr-copy-btn" data-copy="${encodeURIComponent(original)}" title="Скопировать исходный текст">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <div class="tr-res">
+            <span class="tr-res-text">${esc(main.text)}</span>
+            <button class="tr-copy-btn" data-copy="${encodeURIComponent(main.text)}" title="Скопировать перевод">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          ${enMain ? `
+            <div class="tr-add">
+              <button class="tr-chip-btn"
+                      data-en="${encodeURIComponent(enMain)}"
+                      data-ru="${encodeURIComponent(ruMain || '')}"
+                      data-src="${src}"
+                      data-tgt="${tgt}">
+                ➕ В изучение
+              </button>
+            </div>` : ''
+          }
+        </div>
+      `;
+    }
+
+    Object.entries(groups).forEach(([type, items]) => {
+      html += `
+        <div class="tr-group">
+          <div class="tr-head">
+            <span>${esc(type[0].toUpperCase() + type.slice(1))}</span>
+            <span style="color:var(--text-secondary);font-size:13px;">${items.length} вариан.</span>
+          </div>
+          <div class="tr-list">
+            ${items.map(it => {
+              const en = tgt === 'en' ? it.text : (src === 'en' ? original : '');
+              const ru = tgt === 'ru' ? it.text : (src === 'ru' ? original : '');
+              return `
+                <div class="tr-item">
+                  <div class="tr-num">${it.index}</div>
+                  <div style="flex:1;min-width:0;">
+                    <div class="tr-text">
+                      ${esc(it.text)}
+                      <button class="tr-copy-btn"
+                              data-copy="${encodeURIComponent(it.text)}"
+                              title="Скопировать этот вариант">
+                        <i class="fas fa-copy"></i>
+                      </button>
+                    </div>
+                    <div class="tr-meta">${esc(it.source)} • ${it.confidence}%</div>
+                  </div>
+                  ${en ? `
+                    <button class="tr-chip-btn"
+                            data-en="${encodeURIComponent(en)}"
+                            data-ru="${encodeURIComponent(ru || '')}"
+                            data-src="${src}"
+                            data-tgt="${tgt}">
+                      ➕
+                    </button>` : ''
+                  }
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    });
+
+    if (!html) {
+      html = '<div class="empty-state"><p>Переводы не найдены</p></div>';
+    } else {
+      html = `
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px;">
+          Нажмите на значок <i class="fas fa-copy"></i>, чтобы скопировать текст.
+        </div>
+      ` + html;
+    }
+
+    res.innerHTML = html;
+    res.classList.add('active');
   }
+
   function onClick(e){
-    const t=e.target.closest('#trRuBtn, #trEnBtn, #trSwapBtn, #trTranslateBtn, .tr-chip-btn');
-    if(!t)return;
-    if('trRuBtn'===t.id){e.preventDefault(),setLang('ru','en')
-    }else if('trEnBtn'===t.id){e.preventDefault(),setLang('en','ru')
-    }else if('trSwapBtn'===t.id){e.preventDefault(),setLang('ru'===src?'en':'ru','en'===tgt?'ru':'en')
-    }else if('trTranslateBtn'===t.id){e.preventDefault(),translate()
-    }else if(t.classList.contains('tr-chip-btn')&&t.dataset.en){
+    const t = e.target.closest('#trRuBtn, #trEnBtn, #trSwapBtn, #trTranslateBtn, .tr-chip-btn, .tr-copy-btn');
+    if (!t) return;
+
+    if (t.id === 'trRuBtn') {
       e.preventDefault();
-      const en=decodeURIComponent(t.dataset.en||''),ru=decodeURIComponent(t.dataset.ru||'');
-      en&&'function'==typeof window.onAddToStudy&&(window.onAddToStudy({term:en,meta:{ru,sourceLang:t.dataset.src,targetLang:t.dataset.tgt,originalText:($id('trInputText')?.value||'').trim()}}),t.classList.add('added'),t.textContent='✓ Добавлено')
+      setLang('ru','en');
+    } else if (t.id === 'trEnBtn') {
+      e.preventDefault();
+      setLang('en','ru');
+    } else if (t.id === 'trSwapBtn') {
+      e.preventDefault();
+      setLang(src === 'ru' ? 'en' : 'ru', tgt === 'en' ? 'ru' : 'en');
+    } else if (t.id === 'trTranslateBtn') {
+      e.preventDefault();
+      translate();
+    } else if (t.classList.contains('tr-chip-btn') && t.dataset.en) {
+      e.preventDefault();
+      const en = decodeURIComponent(t.dataset.en || '');
+      const ru = decodeURIComponent(t.dataset.ru || '');
+      if (en && typeof window.onAddToStudy === 'function') {
+        window.onAddToStudy({
+          term: en,
+          meta: {
+            ru,
+            sourceLang: t.dataset.src,
+            targetLang: t.dataset.tgt,
+            originalText: ($id('trInputText')?.value || '').trim()
+          }
+        });
+        t.classList.add('added');
+        t.textContent = '✓ Добавлено';
+      }
+    } else if (t.classList.contains('tr-copy-btn') && t.dataset.copy) {
+      e.preventDefault();
+      const txt = decodeURIComponent(t.dataset.copy || '');
+      if (!txt) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(() => {
+          t.classList.add('copied');
+          t.innerHTML = '✓';
+          setTimeout(() => {
+            t.classList.remove('copied');
+            t.innerHTML = '<i class="fas fa-copy"></i>';
+          }, 1500);
+        }).catch(() => {});
+      }
     }
   }
-  function onKey(e){'Enter'===e.key&&'trInputText'===e.target?.id&&translate()}
-  function bindOnce(){
-    if(bound)return;
-    bound=!0,document.addEventListener('click',onClick,!0),document.addEventListener('keypress',onKey,!0),setLang('ru','en')
+
+  function onKey(e){
+    if (e.key === 'Enter' && e.target?.id === 'trInputText') {
+      translate();
+    }
   }
-  window.initBewordsTranslator=bindOnce,document.addEventListener('DOMContentLoaded',bindOnce)
+
+  function bindOnce(){
+    if (bound) return;
+    bound = !0;
+    document.addEventListener('click', onClick, !0);
+    document.addEventListener('keypress', onKey, !0);
+    setLang('ru','en');
+  }
+
+  window.initBewordsTranslator = bindOnce;
+  document.addEventListener('DOMContentLoaded', bindOnce);
 })();
 </script>
 
 </body>
 
 </html>
-
