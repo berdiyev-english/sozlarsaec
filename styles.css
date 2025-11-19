@@ -758,6 +758,29 @@ body {
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
+/* Тёмная тема: нижнее меню */
+[data-theme="dark"] .bottom-nav {
+  background: linear-gradient(to top, #020617, #0f172a);
+  border-top-color: #020617;
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.7);
+}
+
+[data-theme="dark"] .nav-item {
+  background: #020617;
+  color: #e5e7eb;
+}
+
+[data-theme="dark"] .nav-item.active {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #f9fafb;
+  border-color: #16a34a;
+}
+
+[data-theme="dark"] .nav-item:not(.active):hover {
+  background: #0f172a;
+  color: #f9fafb;
+}
+
 /* Для десктопа - центрируем навигацию в контейнере */
 @media (min-width: 768px) {
   .bottom-nav {
@@ -2148,6 +2171,29 @@ img[data-image-source*="Servier"],
   }
 }
 /* ==================== SENTENCE BUILDER STYLES ==================== */
+
+/* Тренажёр: тёмная тема — слова и подсказки */
+[data-theme="dark"] .sentence-word {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .sentence-word.used {
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+[data-theme="dark"] .grammar-tip {
+  background: linear-gradient(135deg, #111827, #1f2937);
+  border-color: #fbbf24;
+}
+
+[data-theme="dark"] .grammar-tip-title {
+  color: #fbbf24;
+}
+
 .sentence-builder-container {
   background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
   border: 3px solid var(--border-color);
