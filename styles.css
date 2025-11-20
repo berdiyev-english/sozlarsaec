@@ -3546,8 +3546,8 @@ box-shadow: var(--shadow-md);
 }
 
 .global-loader-box img {
-  width: 210px;
-  height: 210px;
+  width: 230px;
+  height: 230px;
   object-fit: contain;
   margin-bottom: 8px;
 }
@@ -3565,8 +3565,9 @@ box-shadow: var(--shadow-md);
 
 @media (max-width: 480px) {
   .global-loader-box img {
-    width: 170px;
-    height: 170px;
+    width: 190px;
+    height: 190px;
   }
 }
+
 
