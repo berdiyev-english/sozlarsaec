@@ -1801,7 +1801,6 @@ setTimeout(() => window.initBewordsTranslator(), 0);
     setCatCount('IRREGULARS', '[data-category="IRREGULARS"]');
     setCatCount('PHRASAL_VERBS', '[data-category="PHRASAL_VERBS"]');
     setCatCount('IDIOMS', '[data-category="IDIOMS"]');
-    setCatCount('PROVERBS', '[data-category="PROVERBS"]');
     setCatCount('PREPOSITIONS', '[data-category="PREPOSITIONS"]');
     setCatCount('MEDICAL', '[data-category="MEDICAL"]');
 
@@ -1824,7 +1823,7 @@ setTimeout(() => window.initBewordsTranslator(), 0);
       }
     };
 
-    ['EGE','OGE','IELTS','TOEFL'].forEach(setExamCount);
+    ['EGE','OGE','IELTS','TOEFL','PROVERBS'].forEach(setExamCount);
   }
 
 toggleLevelsIndexVisibility(showIndex) {
