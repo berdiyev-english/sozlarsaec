@@ -2052,59 +2052,75 @@ showLevelWordsLazy(level) {
     wordsList.innerHTML = words.slice(0, BATCH_SIZE)
       .map(w => this.createWordCard(w, level))
       .join('');
+      
+      // кнопка подобрать там и сям
+this.installWordsListDelegatedHandlers();
 
-    this.installWordsListDelegatedHandlers();
-    if (typeof this.ensureAutoDictButton === 'function') {
-  this.ensureAutoDictButton();
-}
+// Гарантируем появление кнопки, даже если рендер занял время
+requestAnimationFrame(() => {
+  if (typeof this.ensureAutoDictButton === 'function') {
+    this.ensureAutoDictButton();
+  }
+});
 
-    let loaded = BATCH_SIZE;
+      let loaded = BATCH_SIZE;
 
     if (this.isAndroid) {
       this.hideGlobalLoader();
     }
 
-    const loadMore = () => {
-      if (loaded >= words.length) {
-        if (title) title.textContent = `${level} - ${words.length} слов`;
-        return;
-      }
+    // Если загрузили не всё — настраиваем дозагрузку
+    if (loaded < words.length) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          // 1. Убираем старый "датчик"
+          const oldSentinel = document.getElementById('lazy-sentinel');
+          if (oldSentinel) {
+            observer.unobserve(oldSentinel);
+            oldSentinel.remove();
+          }
 
-      if (this.isAndroid) {
-        this.showGlobalLoader('Кот Боб загружает ещё слова...', 2000);
-      }
+          // 2. Показываем лоадер (если Android)
+          if (this.isAndroid) {
+            this.showGlobalLoader('Кот Боб загружает ещё слова...', 1500);
+          }
 
-      const nextBatch = words.slice(loaded, loaded + BATCH_SIZE)
-        .map(w => this.createWordCard(w, level))
-        .join('');
+          // 3. Грузим следующую порцию
+          const nextBatch = words.slice(loaded, loaded + BATCH_SIZE)
+            .map(w => this.createWordCard(w, level))
+            .join('');
+          
+          wordsList.insertAdjacentHTML('beforeend', nextBatch);
+          loaded += BATCH_SIZE;
 
-      wordsList.insertAdjacentHTML('beforeend', nextBatch);
-      loaded += BATCH_SIZE;
+          if (title) {
+            title.textContent = `${level} - Загружено ${Math.min(loaded, words.length)}/${words.length} слов`;
+          }
 
-      if (title) {
-        title.textContent = `${level} - Загружено ${loaded}/${words.length} слов`;
-      }
+          // 4. Прячем лоадер
+          if (this.isAndroid) {
+            this.hideGlobalLoader();
+          }
 
-      if (this.isAndroid) {
-        this.hideGlobalLoader();
-      }
-    };
+          // 5. Если остались ещё слова — добавляем новый "датчик" в самый низ
+          if (loaded < words.length) {
+            const newSentinel = document.createElement('div');
+            newSentinel.style.height = '40px';
+            newSentinel.id = 'lazy-sentinel';
+            wordsList.appendChild(newSentinel);
+            observer.observe(newSentinel);
+          }
+        }
+      }, { rootMargin: '400px' });
 
-    const sentinel = document.createElement('div');
-    sentinel.style.height = '1px';
-    sentinel.id = 'lazy-sentinel';
-    wordsList.appendChild(sentinel);
-
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        loadMore();
-      }
-    });
-
-    observer.observe(sentinel);
+      // Создаем самый первый "датчик"
+      const s = document.createElement('div');
+      s.style.height = '40px';
+      s.id = 'lazy-sentinel';
+      wordsList.appendChild(s);
+      observer.observe(s);
+    }
   }
-
-  this.updateBulkToggleButton();
   this.jumpToTopStrict();
 }
 
@@ -4609,11 +4625,12 @@ list.addEventListener('click', (e) => {
 
     const html = slice.map(w => {
       const display = this.getEnglishDisplay(w);
+      const accBadge = this.getAccuracyBadgeHtml(w.word);
       const formsJson = w.forms ? JSON.stringify(w.forms).replace(/"/g, '&quot;') : 'null';
       return `
         <div class="word-card popup-word-card" data-word="${this.safeAttr(w.word)}" data-level="${this.safeAttr(w.level)}">
+          <div class="word-text">${display} ${accBadge}</div>
           <div class="word-header">
-            <div class="word-text">${display}</div>
             <div class="word-actions">
               <button class="action-btn play-btn popup-sound-us"
                       data-word="${this.safeAttr(w.word)}"
@@ -4661,38 +4678,51 @@ list.addEventListener('click', (e) => {
     this.hideGlobalLoader();
   }
 
-  // Если слов больше BATCH_SIZE — добавляем sentinel для дозагрузки
   if (rendered < total) {
-    const sentinel = document.createElement('div');
-    sentinel.style.height = '1px';
-    sentinel.id = 'words-popup-sentinel';
-    list.appendChild(sentinel);
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        // 1. Удаляем старый "датчик"
+        const oldS = document.getElementById('words-popup-sentinel');
+        if (oldS) {
+          observer.unobserve(oldS);
+          oldS.remove();
+        }
 
-    const observer = new IntersectionObserver(entries => {
-      if (!entries[0].isIntersecting) return;
-      if (rendered >= total) return;
+        // 2. Анимация
+        if (this.isAndroid || total > 500) {
+          this.showGlobalLoader('Кот Боб загружает ещё слова...', 1500);
+        }
 
-      // Показываем Боба на время дозагрузки
-      if (this.isAndroid || total > 500) {
-        this.showGlobalLoader('Кот Боб загружает ещё слова...', 2000);
+        // 3. Рендер следующей пачки
+        renderBatch();
+
+        // 4. Скрываем анимацию
+        if (this.isAndroid || total > 500) {
+          this.hideGlobalLoader();
+        }
+
+        // 5. Новый датчик, если ещё есть слова
+        if (rendered < total) {
+          const newS = document.createElement('div');
+          newS.style.height = '40px';
+          newS.id = 'words-popup-sentinel';
+          list.appendChild(newS);
+          observer.observe(newS);
+        }
       }
-
-      renderBatch();
-
-      if (this.isAndroid || total > 500) {
-        this.hideGlobalLoader();
-      }
-
-      // Если всё загрузили — отключаем наблюдатель
-      if (rendered >= total) {
-        observer.disconnect();
-        sentinel.remove();
-      }
+    }, { 
+      root: list,         // Скроллим внутри попапа
+      rootMargin: '400px' // Грузим заранее
     });
 
-    observer.observe(sentinel);
+    // Создаем первый датчик
+    const s = document.createElement('div');
+    s.style.height = '40px';
+    s.id = 'words-popup-sentinel';
+    list.appendChild(s);
+    observer.observe(s);
   }
-}
+} 
 
   editLearningWord(word, level, onDone) {
     const item = this.learningWords.find(w => w.word === word && w.level === level);
