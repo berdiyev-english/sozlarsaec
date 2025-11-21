@@ -434,12 +434,6 @@ body {
           <p>Разговорные выражения</p>
           <div class="level-stats"><span class="word-count">0 слов</span></div>
         </div>
-         <div class="level-card" data-category="MEDICAL" data-testid="category-card-medical">
-          <div class="level-badge elementary">Medical</div>
-          <h3>Медицинский английский</h3>
-          <p>База для всех</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
-        </div>
         <div class="level-card" data-category="PROVERBS" data-testid="category-card-proverbs">
   <div class="level-badge upper-intermediate">Proverbs</div>
   <h3>Пословицы и поговорки</h3>
@@ -476,6 +470,42 @@ body {
           <h3>TOEFL</h3>
           <p>Подготовка к TOEFL</p>
           <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+      </div>
+      
+            <!-- Professions -->
+      <div class="section-header" style="margin-top:1rem;">
+        <h2>Профессии</h2>
+      </div>
+      <div class="levels-grid" id="professionsGrid">
+        <!-- Сюда мы перенесли Медицинский -->
+        <div class="level-card" data-category="MEDICAL" data-testid="category-card-medical" onclick="window.app && app.showCategoryWords('MEDICAL')">
+          <div class="level-badge elementary">Medical</div>
+          <h3>Медицина</h3>
+          <p>Врачи, болезни, тело</p>
+          <div class="level-stats"><span class="word-count">0 слов</span></div>
+        </div>
+
+        <!-- Новые категории -->
+        <div class="level-card" data-category="IT" data-testid="category-card-it" onclick="window.app && app.showCategoryWords('IT')">
+          <div class="level-badge proficiency">IT</div>
+          <h3>IT & Tech</h3>
+          <p>Разработка, компьютеры</p>
+          <div class="level-stats"><span class="word-count">Скоро</span></div>
+        </div>
+
+        <div class="level-card" data-category="BUSINESS" data-testid="category-card-business" onclick="window.app && app.showCategoryWords('BUSINESS')">
+          <div class="level-badge upper-intermediate">Business</div>
+          <h3>Бизнес</h3>
+          <p>Переговоры, финансы</p>
+          <div class="level-stats"><span class="word-count">Скоро</span></div>
+        </div>
+
+        <div class="level-card" data-category="LEGAL" data-testid="category-card-legal" onclick="window.app && app.showCategoryWords('LEGAL')">
+          <div class="level-badge advanced">Legal</div>
+          <h3>Юридический</h3>
+          <p>Законы, право, суды</p>
+          <div class="level-stats"><span class="word-count">Скоро</span></div>
         </div>
       </div>
 
@@ -692,7 +722,7 @@ body {
 
 <script src="oxford_words_data.js"></script>
 <script src="sentences-data.js"></script>
-<script src="test.js"></script>
+<script src="app.js"></script>
 <script>
   // Service Worker registration (image caching)
   if ('serviceWorker' in navigator) {
