@@ -1823,7 +1823,7 @@ setTimeout(() => window.initBewordsTranslator(), 0);
       }
     };
 
-    ['EGE','OGE','IELTS','TOEFL','PROVERBS'].forEach(setExamCount);
+    ['EGE','OGE','IELTS','TOEFL','PROVERBS','IT','BUSINESS','LEGAL'].forEach(setExamCount);
   }
 
 toggleLevelsIndexVisibility(showIndex) {
@@ -2211,6 +2211,35 @@ showAutoDictionaryTest() {
       #autoDictOverlay .option-btn{padding:10px;font-size:12px;min-height:40px;}
       #autoDictOverlay .btn{padding:8px 12px;font-size:13px;}
     }
+    /* Стили для виджета Ачивок */
+.achievements-widget {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 15px;
+  margin-bottom: 14px;
+}
+.ach-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+}
+.ach-title { font-weight: 800; color: var(--text-primary); font-size: 16px; }
+.ach-streak { 
+  background: #fff3cd; color: #856404; padding: 4px 8px; 
+  border-radius: 8px; font-weight: 700; font-size: 12px; display: flex; align-items: center; gap: 5px; 
+}
+.ach-streak i { color: #ffc107; }
+.ach-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
+.ach-item { 
+  background: var(--bg-primary); border: 1px solid var(--border-color); 
+  border-radius: 10px; padding: 10px 5px; text-align: center; opacity: 0.5; filter: grayscale(1); transition: all 0.3s;
+}
+.ach-item.unlocked { opacity: 1; filter: grayscale(0); border-color: #fbbf24; background: linear-gradient(180deg, var(--bg-primary) 0%, #fffbeb 100%); }
+.ach-icon { font-size: 24px; margin-bottom: 5px; display: block; }
+.ach-name { font-size: 10px; font-weight: 700; color: var(--text-secondary); line-height: 1.2; }
+.daily-goal-box { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+.goal-label { font-size: 13px; font-weight: 700; color: var(--text-primary); display: flex; justify-content: space-between; margin-bottom: 6px; }
+.goal-bar-track { height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; }
+.goal-bar-fill { height: 100%; background: var(--success-color); transition: width 0.5s ease; }
   `;
   overlay.appendChild(style);
 
@@ -3935,6 +3964,16 @@ renderFlashcards() {
     const container = document.getElementById('learningWordsList');
     this._questionStart = Date.now();
     if (!container) return;
+    
+    // === ДОБАВИТЬ ЭТО ===
+if (this.currentPractice === 'scheduled') {
+  const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+  // Берем индекс из сессии, если он там есть
+  if (typeof session.currentIndex === 'number') {
+    this.currentReviewIndex = session.currentIndex;
+  }
+}
+// ====================
 
     const wordsToReview = this.getWordsToReview();
     if (wordsToReview.length === 0) {
@@ -4108,6 +4147,16 @@ this.updateWordStats(word.word, correct, rt);
     const container = document.getElementById('learningWordsList');
     this._questionStart = Date.now();
     if (!container) return;
+    
+    // === ДОБАВИТЬ ЭТО ===
+if (this.currentPractice === 'scheduled') {
+  const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+  // Берем индекс из сессии, если он там есть
+  if (typeof session.currentIndex === 'number') {
+    this.currentReviewIndex = session.currentIndex;
+  }
+}
+// ====================
 
     const wordsToReview = this.getWordsToReview();
     if (wordsToReview.length === 0) {
@@ -4323,6 +4372,13 @@ this.updateWordStats(wordToPlay, isCorrect, rt);
     }
 
     this.currentReviewIndex++;
+    
+    if (this.currentPractice === 'scheduled') {
+  const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+  session.currentIndex = this.currentReviewIndex; // Сохраняем позицию
+  localStorage.setItem('currentSession', JSON.stringify(session));
+}
+    
     if (this.currentReviewIndex >= wordsToReview.length && this.currentPractice === 'scheduled') {
       this.currentReviewIndex = 0;
       this.showNotification('Quiz завершен! Отличная работа!', 'success');
@@ -4764,104 +4820,86 @@ list.addEventListener('click', (e) => {
   // Review logic
   // =========
 getWordsToReview() {
+  // 1. Если режим "Endless" (Повторение) - показываем всё подряд, кроме выученного
   if (this.currentPractice === 'endless') {
     return this.learningWords.filter(w => !w.isLearned);
   }
 
-  // НОВАЯ ЛОГИКА для режима "запланировано" без интервалов
-  const active = this.learningWords.filter(w => !w.isLearned);
-  
-  // Получаем текущую сессию из localStorage
-  let session = JSON.parse(localStorage.getItem('currentSession') || 'null');
-  
-  // Если нет сессии или новый день - создаем новую
+  // 2. Режим "Заучивание" (Scheduled)
   const today = new Date().toDateString();
+  
+  // Пытаемся достать текущую сессию
+  let session = JSON.parse(localStorage.getItem('currentSession') || 'null');
+
+  // Если сессии нет или она устарела (вчерашняя) — создаем новую
   if (!session || session.date !== today) {
     session = {
       date: today,
-      shownWords: [],
+      shownWords: [], // Список слов (строки)
+      currentIndex: 0, // Запоминаем, на каком слове остановились!
       correctStreak: 0,
-      totalCorrect: 0
+      totalCorrect: 0,
+      dailyGoal: 20 // Цель на день
     };
   }
-  
-  // Базовый размер пула - 40 слов
-  let poolSize = 40;
-  
-  // Добавляем по 10 слов за каждые 10 правильных ответов в сессии
-  poolSize += Math.floor(session.totalCorrect / 10) * 10;
-  
-  // Ограничиваем максимум доступными словами
-  poolSize = Math.min(poolSize, active.length);
-  
-  // Создаем пул слов для изучения
-  let wordsPool = [];
-  
-  // Приоритет 1: Слова с низкой точностью (много ошибок)
-  const withErrors = active.filter(w => {
-    const s = this.wordStats[w.word];
-    if (!s || (s.correct + s.incorrect) === 0) return false;
-    const accuracy = s.correct / (s.correct + s.incorrect);
-    return accuracy < 0.7;
-  }).sort((a, b) => {
-    const aStats = this.wordStats[a.word];
-    const bStats = this.wordStats[b.word];
-    const aAcc = aStats.correct / (aStats.correct + aStats.incorrect);
-    const bAcc = bStats.correct / (bStats.correct + bStats.incorrect);
-    return aAcc - bAcc; // Сначала самые сложные
-  });
-  
-  // Приоритет 2: Новые слова (еще не отвечали)
-  const newWords = active.filter(w => {
-    const s = this.wordStats[w.word];
-    return !s || (s.correct + s.incorrect) === 0;
-  });
-  
-  // Приоритет 3: Слова для повторения (средняя точность)
-  const toReview = active.filter(w => {
-    const s = this.wordStats[w.word];
-    if (!s || (s.correct + s.incorrect) === 0) return false;
-    const accuracy = s.correct / (s.correct + s.incorrect);
-    return accuracy >= 0.7 && accuracy < 0.95;
-  });
-  
-  // Приоритет 4: Хорошо выученные (высокая точность)
-  const wellLearned = active.filter(w => {
-    const s = this.wordStats[w.word];
-    if (!s || (s.correct + s.incorrect) === 0) return false;
-    const accuracy = s.correct / (s.correct + s.incorrect);
-    return accuracy >= 0.95;
-  });
-  
-  // Формируем пул с приоритетами
-  const errorLimit = Math.min(20, Math.floor(poolSize * 0.3));
-  const newLimit = Math.min(15, Math.floor(poolSize * 0.3));
-  
-  wordsPool.push(...withErrors.slice(0, errorLimit));
-  
-  const remaining = poolSize - wordsPool.length;
-  if (remaining > 0) {
-    wordsPool.push(...newWords.slice(0, Math.min(newLimit, remaining)));
+
+  // Если слова уже были отобраны ранее, восстанавливаем их объекты
+  if (session.shownWords.length > 0) {
+    // Восстанавливаем объекты слов по их тексту
+    let restoredWords = session.shownWords.map(wText => 
+      this.learningWords.find(lw => lw.word === wText)
+    ).filter(Boolean); // убираем удаленные слова
+
+    // Если слова еще есть в списке, возвращаем их
+    if (restoredWords.length > 0) {
+      return restoredWords;
+    }
   }
+
+  // === ГЕНЕРАЦИЯ НОВОГО СПИСКА (если сессия пустая) ===
   
-  const remaining2 = poolSize - wordsPool.length;
-  if (remaining2 > 0) {
-    wordsPool.push(...toReview.slice(0, remaining2));
-  }
+  // Берем все слова, которые НЕ выучены (isLearned: false)
+  const active = this.learningWords.filter(w => !w.isLearned);
+
+  // ФИЛЬТР ВЫУЧЕННЫХ (Задача №5):
+  // Если у слова accScore >= 8 (очень хорошо знаем) И мы его видели СЕГОДНЯ — пропускаем
+  const candidates = active.filter(w => {
+    const s = this.wordStats[w.word];
+    if (!s) return true; // новое слово
+    
+    // Если слово "мастерское" (score >= 8)
+    if (s.accScore >= 8) {
+       const lastSeenDate = s.lastReview ? new Date(s.lastReview).toDateString() : '';
+       // Если видели сегодня — не показываем, хватит мучить
+       if (lastSeenDate === today) return false; 
+       // Если видели давно — можно показать для проверки
+    }
+    return true;
+  });
+
+  // Если слов нет (всё выучили)
+  if (candidates.length === 0) return [];
+
+  // Набираем пул: сначала сложные, потом новые
+  // Сортировка: сначала те, где accScore меньше
+  candidates.sort((a, b) => {
+    const sa = (this.wordStats[a.word] || {}).accScore || 0;
+    const sb = (this.wordStats[b.word] || {}).accScore || 0;
+    return sa - sb;
+  });
+
+  // Берем топ 30 слов для сессии
+  let selected = candidates.slice(0, 30);
   
-  const remaining3 = poolSize - wordsPool.length;
-  if (remaining3 > 0) {
-    wordsPool.push(...wellLearned.slice(0, remaining3));
-  }
-  
-  // Перемешиваем для разнообразия
-  wordsPool = this.shuffle(wordsPool);
-  
-  // Сохраняем сессию
-  session.shownWords = wordsPool.map(w => w.word);
+  // Перемешиваем их один раз
+  selected = this.shuffle(selected);
+
+  // Сохраняем этот список в сессию, чтобы он НЕ менялся при переключении режимов
+  session.shownWords = selected.map(w => w.word);
+  session.currentIndex = 0; // Сброс индекса при генерации нового пула
   localStorage.setItem('currentSession', JSON.stringify(session));
-  
-  return wordsPool;
+
+  return selected;
 }
 
 updateWordStats(word, correct, responseTimeMs = null) {
@@ -5119,6 +5157,72 @@ getPetWidgetHtml() {
     `;
 }
 
+
+  // === ВОТ ЭТОТ НОВЫЙ КОД ВСТАВЛЯЕМ ===
+ getAchievementsWidgetHtml() {
+  // Загружаем данные
+  let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+  const todayCorrect = session.totalCorrect || 0;
+  const goal = 20;
+  const progressPct = Math.min(100, Math.round((todayCorrect / goal) * 100));
+  const streak = session.correctStreak || 0;
+  const totalLearned = this.learningWords.filter(w => w.isLearned).length;
+
+  // Медали
+  const medals = [
+    { id: 1, icon: '🥉', name: 'Новичок', desc: '5 слов', unlocked: totalLearned >= 5 },
+    { id: 2, icon: '🥈', name: 'Студент', desc: '50 слов', unlocked: totalLearned >= 50 },
+    { id: 3, icon: '🥇', name: 'Мастер', desc: '200 слов', unlocked: totalLearned >= 200 },
+    { id: 4, icon: '👑', name: 'Легенда', desc: '500 слов', unlocked: totalLearned >= 500 },
+  ];
+
+  // Возвращаем HTML, используя класс "progress-card" как у других блоков
+  return `
+    <div class="progress-card">
+      
+      <!-- Красивая шапка как у других карточек -->
+      <div class="progress-card-header">
+        <div class="progress-card-icon icon-gold">
+          <i class="fas fa-trophy"></i>
+        </div>
+        <div>
+          <div class="progress-card-title">Достижения</div>
+          <div class="progress-card-subtitle">
+             Серия побед: <span style="color:#d97706; font-weight:800;">${streak} 🔥</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Сетка медалей -->
+      <div class="medals-grid">
+        ${medals.map(m => `
+          <div class="medal-card ${m.unlocked ? 'unlocked' : 'locked'}">
+            <div class="medal-icon">${m.icon}</div>
+            <div class="medal-name">${m.name}</div>
+            <div class="medal-desc">${m.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- Полоска цели (в стиле приложения) -->
+      <div style="margin-top: 16px; padding-top: 12px; border-top: 2px solid var(--border-color);">
+        <div class="progress-main-bar-label" style="margin-bottom: 6px;">
+          <span style="font-weight:800; color:var(--text-primary);">Цель на день (20 слов)</span>
+          <span style="font-weight:700; color:var(--text-secondary);">${todayCorrect}/${goal}</span>
+        </div>
+        <div class="progress-main-bar-track" style="height:10px;">
+          <div class="progress-main-bar-fill" style="width: ${progressPct}%; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
+        </div>
+        <div style="text-align:center; font-size:12px; margin-top:6px; color:var(--text-secondary); font-weight:600;">
+           ${progressPct >= 100 ? '🎉 План выполнен! Ты супер!' : 'Продолжай учиться!'}
+        </div>
+      </div>
+
+    </div>
+  `;
+}
+
+
 // =========
 // Progress
 // =========
@@ -5128,6 +5232,7 @@ renderProgress() {
   if (!container) return;
 
   const petHtml = this.getPetWidgetHtml();
+  const achievementsHtml = this.getAchievementsWidgetHtml();
 
   const totalWords = this.learningWords.length;
   const learnedWords = this.learningWords.filter(w => w.isLearned).length;
@@ -5171,6 +5276,7 @@ renderProgress() {
 
   container.innerHTML = `
     ${petHtml}
+    ${achievementsHtml}
     <div class="progress-grid">
       <!-- Общий прогресс -->
       <div class="progress-card progress-card-main">
