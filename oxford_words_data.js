@@ -5860,7 +5860,7 @@ const oxfordWordsDatabase = {
   { "word": "get bent out of shape", "translation": "разозлиться из-за пустяков; слишком переживать", "pos": "id." },
   { "word": "play your cards right", "translation": "правильно разыграть карты; грамотно распорядиться ситуацией", "pos": "id." }
 ],
-"PHRASAL_VERBS": [
+  "PHRASAL_VERBS": [
     {
       "word": "look up",
       "translation": "искать, смотреть в справочник",
@@ -6272,16 +6272,6 @@ const oxfordWordsDatabase = {
       "pos": "phrasal verb"
     },
     {
-      "word": "run into",
-      "translation": "встречаться с",
-      "pos": "phrasal verb"
-    },
-    {
-      "word": "say goodbye",
-      "translation": "прощаться",
-      "pos": "phrasal verb"
-    },
-    {
       "word": "set out",
       "translation": "отправляться",
       "pos": "phrasal verb"
@@ -6297,11 +6287,6 @@ const oxfordWordsDatabase = {
       "pos": "phrasal verb"
     },
     {
-      "word": "sort out",
-      "translation": "сортировать, разбираться",
-      "pos": "phrasal verb"
-    },
-    {
       "word": "take after",
       "translation": "походить на",
       "pos": "phrasal verb"
@@ -6309,16 +6294,6 @@ const oxfordWordsDatabase = {
     {
       "word": "take back",
       "translation": "возвращать",
-      "pos": "phrasal verb"
-    },
-    {
-      "word": "take off",
-      "translation": "снимать, улетать",
-      "pos": "phrasal verb"
-    },
-    {
-      "word": "take over",
-      "translation": "захватывать",
       "pos": "phrasal verb"
     },
     {
@@ -6337,36 +6312,11 @@ const oxfordWordsDatabase = {
       "pos": "phrasal verb"
     },
     {
-      "word": "turn on",
-      "translation": "включать",
-      "pos": "phrasal verb"
-    },
-    {
       "word": "turn out",
       "translation": "оказываться, выключать",
       "pos": "phrasal verb"
-    },
-    {
-      "word": "turn up",
-      "translation": "появляться, включать",
-      "pos": "phrasal verb"
-    },
-    {
-      "word": "wake up",
-      "translation": "просыпаться",
-      "pos": "phrasal verb"
-    },
-    {
-      "word": "work out",
-      "translation": "выполнять, решать",
-      "pos": "phrasal verb"
-    },
-    {
-      "word": "write down",
-      "translation": "записывать",
-      "pos": "phrasal verb"
     }
-  ],
+  ] ,
 "MEDICAL": [
   { word: "Patient", translation: "Пациент", category: "MEDICAL" },
   { word: "Doctor", translation: "Врач", category: "MEDICAL" },
@@ -7023,3 +6973,4 @@ const oxfordWordsDatabase = {
   { word: "resemble", translation: "напоминать / быть похожим НА (без on!)", category: "PREPOSITIONS" }
   ]
 };
+
