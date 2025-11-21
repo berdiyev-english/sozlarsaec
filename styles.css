@@ -3570,4 +3570,88 @@ box-shadow: var(--shadow-md);
   }
 }
 
+/* === ИСПРАВЛЕНИЯ ДЛЯ ТЕМНОЙ ТЕМЫ (BEWORDS FIXES) === */
 
+/* 1. Фикс текста в опциях Quiz (игр и обычного) для темной темы */
+[data-theme="dark"] .quiz-option-gate,
+[data-theme="dark"] .quiz-option {
+  background-color: #1f2937 !important; /* Темно-серый фон */
+  border-color: #374151 !important;     /* Серый бордюр */
+  color: #f9fafb !important;            /* Белый текст */
+}
+
+/* При наведении */
+[data-theme="dark"] .quiz-option-gate:hover,
+[data-theme="dark"] .quiz-option:hover {
+  border-color: #58cc02 !important;     /* Зеленый бордюр при наведении */
+}
+
+/* 2. Фикс кнопок аудио (мини-кнопки) в темной теме */
+[data-theme="dark"] .mini-btn,
+[data-theme="dark"] .sound-actions .mini-btn, 
+[data-theme="dark"] .option-sound .mini-btn {
+  background-color: #374151 !important; /* Светлее фона карточки */
+  color: #e5e7eb !important;            /* Светлая иконка */
+  border: 1px solid #4b5563 !important;
+}
+
+[data-theme="dark"] .mini-btn:hover {
+  background-color: #4b5563 !important;
+  color: #fff !important;
+}
+
+/* Фикс фона карточек в играх (чтобы не сливался с фоном overlay) */
+[data-theme="dark"] #gameQuizOverlay > div {
+  background: #111827 !important;
+  color: #fff !important;
+}
+[data-theme="dark"] #gameQuizOverlay h2 {
+  color: #fff !important;
+}
+
+/* === СТИЛИ ДЛЯ АЧИВОК (В СТИЛЕ ПРИЛОЖЕНИЯ) === */
+
+/* Золотая иконка для шапки */
+.icon-gold {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24) !important;
+  color: white;
+}
+
+/* Сетка для медалей */
+.medals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 медали в ряд */
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* Карточка одной медали */
+.medal-card {
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 8px 4px;
+  text-align: center;
+  transition: all 0.3s ease;
+  opacity: 0.5; /* Полупрозрачная если закрыта */
+  filter: grayscale(1); /* Черно-белая если закрыта */
+}
+
+/* Открытая медаль */
+.medal-card.unlocked {
+  opacity: 1;
+  filter: grayscale(0);
+  border-color: #fbbf24;
+  background: linear-gradient(to bottom, var(--bg-primary), #fffbeb);
+  box-shadow: var(--shadow-sm);
+  transform: scale(1.02);
+}
+
+/* В темной теме фон открытой медали чуть темнее */
+[data-theme="dark"] .medal-card.unlocked {
+  background: linear-gradient(to bottom, var(--bg-secondary), #3f2e05);
+}
+
+.medal-icon { font-size: 22px; margin-bottom: 4px; }
+.medal-name { font-size: 10px; font-weight: 800; color: var(--text-primary); line-height: 1.2; margin-bottom: 2px; }
+.medal-desc { font-size: 9px; color: var(--text-secondary); font-weight: 600; }
