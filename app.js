@@ -159,64 +159,153 @@ checkAndShowFirstRunOrMotivation() {
     return `https://wooordhunt.ru/data/sound/sow/${region}/${clean}.mp3`;
   }
   
-  // Имя файла для идиомы: "all ears" -> "all_ears"
-  buildIdiomFileName(phrase) {
+    // ==========================================================
+  // NEW AUDIO LOGIC: PREPOSITIONS, IDIOMS, PHRASAL (NO TTS)
+  // ==========================================================
+
+  // --- 1. ПРЕДЛОГИ (Prepositions) ---
+  // Имя файла: "at" -> "at", "run into" -> "run_into"
+  buildPrepositionFileName(phrase) {
     if (!phrase) return '';
     return String(phrase)
       .toLowerCase()
-      .replace(/[^a-z\s]/g, '')   // только латинские буквы и пробелы
+      .replace(/[^a-z\s]/g, '') // Убираем спецсимволы
       .trim()
-      .replace(/\s+/g, '_');      // пробелы -> _
+      .replace(/\s+/g, '_');    // Пробелы в подчеркивания
   }
 
-  // URL для US-озвучки идиомы с сайта
-  buildIdiomAudioUrl(fileName) {
-    if (!fileName) return '';
-    return `https://bewords.ru/au/idioms/us/${fileName}.mp3`;
+  // URL: bewords.ru/au/prepositions/us/at.mp3
+  buildPrepositionAudioUrl(fileName, region) {
+    const r = region === 'uk' ? 'uk' : 'us'; // Поддержка обоих регионов
+    return `https://bewords.ru/au/prepositions/${r}/${fileName}.mp3`;
   }
 
-  
-  async playIdiomAudio(phrase) {
-    const file = this.buildIdiomFileName(phrase);
+  async playPrepositionAudio(phrase, region) {
+    const file = this.buildPrepositionFileName(phrase);
     if (!file) return false;
-    const url = this.buildIdiomAudioUrl(file);
+    
+    const url = this.buildPrepositionAudioUrl(file, region);
+    
     try {
       await this.playMp3Url(url);
       return true;
     } catch (e) {
-      console.log('Idiom audio missing for:', phrase);
-      // TTS ОТКЛЮЧЕН по просьбе
+      // TTS ОТКЛЮЧЕН: если файла нет, будет тишина
+      console.log('Preposition audio missing:', url);
       return false; 
     }
   }
-  
-    buildPhrasalFileName(phrase) {
+
+  // --- 2. ФРАЗОВЫЕ ГЛАГОЛЫ (Phrasal Verbs) ---
+  buildPhrasalFileName(phrase) {
     if (!phrase) return '';
     return String(phrase)
       .toLowerCase()
       .replace(/[^a-z\s]/g, '')
       .trim()
-      .replace(/\s+/g, '_'); // look up -> look_up
+      .replace(/\s+/g, '_');
   }
 
+  // URL: bewords.ru/au/phrasal/us/look_up.mp3 (всегда US)
   buildPhrasalAudioUrl(fileName) {
-    if (!fileName) return '';
     return `https://bewords.ru/au/phrasal/us/${fileName}.mp3`;
   }
 
-    // --- ОБНОВЛЕННЫЙ МЕТОД (Без TTS) ---
-   async playPhrasalAudio(phrase) {
+  async playPhrasalAudio(phrase) {
     const file = this.buildPhrasalFileName(phrase);
     if (!file) return false;
+    
     const url = this.buildPhrasalAudioUrl(file);
+    
     try {
       await this.playMp3Url(url);
       return true;
     } catch (e) {
-      console.log('Phrasal audio missing for:', phrase);
-      // TTS ОТКЛЮЧЕН по просьбе
+      console.log('Phrasal audio missing:', url);
       return false;
     }
+  }
+
+  // --- 3. ИДИОМЫ (Idioms) ---
+  buildIdiomFileName(phrase) {
+    if (!phrase) return '';
+    return String(phrase)
+      .toLowerCase()
+      .replace(/[^a-z\s]/g, '')
+      .trim()
+      .replace(/\s+/g, '_');
+  }
+
+  // URL: bewords.ru/au/idioms/us/break_a_leg.mp3 (всегда US)
+  buildIdiomAudioUrl(fileName) {
+    return `https://bewords.ru/au/idioms/us/${fileName}.mp3`;
+  }
+
+  async playIdiomAudio(phrase) {
+    const file = this.buildIdiomFileName(phrase);
+    if (!file) return false;
+    
+    const url = this.buildIdiomAudioUrl(file);
+    
+    try {
+      await this.playMp3Url(url);
+      return true;
+    } catch (e) {
+      console.log('Idiom audio missing:', url);
+      return false;
+    }
+  }
+
+  // --- ГЛАВНЫЙ МЕТОД (Маршрутизатор аудио) ---
+  // Вызывается отовсюду: из списков, карточек, квизов и игрового шлюза
+  async playWord(word, forms = null, region = null, level = null) {
+    if (typeof forms === 'string') { forms = [forms]; }
+    const regionPref = (region === 'uk' || region === 'us') ? region : 'us';
+
+    // A. ПРЕДЛОГИ
+    if (level === 'PREPOSITIONS') {
+      await this.playPrepositionAudio(word, regionPref);
+      return;
+    }
+
+    // B. ИДИОМЫ
+    if (level === 'IDIOMS') {
+      await this.playIdiomAudio(word);
+      return;
+    }
+
+    // C. ФРАЗОВЫЕ ГЛАГОЛЫ
+    if (level === 'PHRASAL_VERBS') {
+      await this.playPhrasalAudio(word);
+      return;
+    }
+
+    // D. СТАНДАРТНАЯ ЛОГИКА (Для A1-C2 и остальных)
+    
+    // Если слово состоит из частей через слэш (read/reading)
+    if ((!forms || !Array.isArray(forms) || forms.length === 0) &&
+        typeof word === 'string' && word.includes('/')) {
+      const parts = word.split('/').map(s => s.trim()).filter(Boolean);
+      if (parts.length > 1) {
+        await this.playFormsSequence(parts, regionPref);
+        return;
+      }
+    }
+
+    // Если переданы формы (go -> went -> gone)
+    if (forms && Array.isArray(forms) && forms.length) {
+      await this.playFormsSequence(forms, regionPref);
+      return;
+    }
+
+    // Если это фраза (но не спец. категория), используем TTS
+    if (this.isMultiWord(word)) {
+      await this.playPhraseTTS(word, regionPref);
+      return;
+    }
+
+    // Обычное одиночное слово (Wooordhunt)
+    await this.playSingleWordMp3(word, regionPref);
   }
   
   stopCurrentAudio() {
@@ -437,44 +526,7 @@ syncModePracticeToggles() {
     }
     return true;
   }
-      async playWord(word, forms = null, region = null, level = null) {
-    if (typeof forms === 'string') { forms = [forms]; }
-    const regionPref = (region === 'uk' || region === 'us') ? region : 'us';
-
-    // 1. ИДИОМЫ: Строго mp3 файл
-    if (level === 'IDIOMS') {
-      await this.playIdiomAudio(word);
-      return;
-    }
-
-    // 2. ФРАЗОВЫЕ ГЛАГОЛЫ: Строго mp3 файл
-    if (level === 'PHRASAL_VERBS') {
-      await this.playPhrasalAudio(word);
-      return;
-    }
-
-    // ... обычная логика для остальных слов
-    if ((!forms || !Array.isArray(forms) || forms.length === 0) &&
-        typeof word === 'string' && word.includes('/')) {
-      const parts = word.split('/').map(s => s.trim()).filter(Boolean);
-      if (parts.length > 1) {
-        await this.playFormsSequence(parts, regionPref);
-        return;
-      }
-    }
-
-    if (forms && Array.isArray(forms) && forms.length) {
-      await this.playFormsSequence(forms, regionPref);
-      return;
-    }
-
-    if (this.isMultiWord(word)) {
-      await this.playPhraseTTS(word, regionPref);
-      return;
-    }
-
-    await this.playSingleWordMp3(word, regionPref);
-  }
+    
 
   // =========================
   // Image helpers
