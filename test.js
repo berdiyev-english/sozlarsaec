@@ -3252,41 +3252,48 @@ incrementTrainerCounters({ correct = false } = {}) {
   // =========
   // Word cards
   // =========
-createWordCard(word, levelOrCategory) {
-    const isInLearning = this.learningWords.some(w => w.word === word.word && w.level === levelOrCategory);
+// --- В app.js (Часть 2) ЗАМЕНИТЕ createWordCard НА ЭТО: ---
 
-    let displayText = word.word;
-    let translationText = word.translation;
+  createWordCard(wordObj, level) {
+      const isInLearning = this.learningWords.some(w => w.word === wordObj.word && w.level === level);
 
-    if (word.forms && word.forms.length > 0) {
-      displayText = word.forms.join(' → ');
-    }
+      let displayText = wordObj.word;
+      if (wordObj.forms && wordObj.forms.length > 0) {
+        displayText = wordObj.forms.join(' → ');
+      }
 
-    // Создаем уникальный ID для карточки
-    const cardId = `card-${word.word.replace(/[^a-z0-9]/gi, '_')}-${levelOrCategory}`;
+      const cardId = `card-${wordObj.word.replace(/[^a-z0-9]/gi, '_')}-${level}`;
 
-    return `
-      <div class="word-card" id="${cardId}" data-word="${this.safeAttr(word.word)}" data-level="${this.safeAttr(levelOrCategory)}">
-        <div class="word-header">
-          <div class="word-text">${displayText}</div>
+      // НОВАЯ HTML СТРУКТУРА (КОМПАКТНАЯ)
+      return `
+        <div class="word-card" id="${cardId}" data-word="${this.safeAttr(wordObj.word)}" data-level="${this.safeAttr(level)}">
+          
+          <!-- ЛЕВАЯ КОЛОНКА -->
+          <div class="word-info-wrapper">
+             <div class="word-text">${displayText}</div>
+             <div class="word-translation">${wordObj.translation}</div>
+          </div>
+
+          <!-- ПРАВАЯ КОЛОНКА (Кнопки скрыты в .word-header в старом CSS, здесь выносим их явно или используем display:contents в CSS) -->
           <div class="word-actions">
-            <button class="action-btn play-btn sound-us-btn" data-word-text="${this.safeAttr(word.word)}" data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}' title="US">
-              <i class="fas fa-volume-up"></i>
-            </button>
-            <button class="action-btn play-btn sound-uk-btn" data-word-text="${this.safeAttr(word.word)}" data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}' title="UK">
-              <i class="fas fa-headphones"></i>
-            </button>
-            ${isInLearning ?
-              `<button class="action-text-btn remove word-remove-btn" data-word-text="${this.safeAttr(word.word)}" data-level="${this.safeAttr(levelOrCategory)}" data-testid="word-remove-btn" title="Удалить из изучаемых">Удалить</button>` :
-              `<button class="action-text-btn add word-add-btn" data-word-text="${this.safeAttr(word.word)}" data-translation="${this.safeAttr(translationText)}" data-level="${this.safeAttr(levelOrCategory)}" data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}' data-testid="word-add-btn" title="Добавить в изучаемые">Учить</button>`
-            }
+             <button class="action-btn play-btn sound-us-btn" data-word-text="${this.safeAttr(wordObj.word)}" data-forms='${wordObj.forms ? JSON.stringify(wordObj.forms) : 'null'}' title="US">
+                <i class="fas fa-volume-up"></i>
+             </button>
+             <button class="action-btn play-btn sound-uk-btn" data-word-text="${this.safeAttr(wordObj.word)}" data-forms='${wordObj.forms ? JSON.stringify(wordObj.forms) : 'null'}' title="UK">
+                <i class="fas fa-headphones"></i>
+             </button>
+             ${isInLearning ?
+               `<button class="action-text-btn remove word-remove-btn" data-word-text="${this.safeAttr(wordObj.word)}" data-level="${this.safeAttr(level)}" title="Удалить из изучаемых">
+                  <!-- Текст скрыт CSS, иконка через ::after -->
+               </button>` :
+               `<button class="action-text-btn add word-add-btn" data-word-text="${this.safeAttr(wordObj.word)}" data-translation="${this.safeAttr(wordObj.translation)}" data-level="${this.safeAttr(level)}" data-forms='${wordObj.forms ? JSON.stringify(wordObj.forms) : 'null'}' title="Добавить в изучаемые">
+                  <!-- Текст скрыт CSS, иконка через ::after -->
+               </button>`
+             }
           </div>
         </div>
-        <div class="word-translation">${translationText}</div>
-        <span class="word-level">${levelOrCategory}</span>
-      </div>
-    `;
-}
+      `;
+  }
 
 installWordsListDelegatedHandlers() {
   const list = document.getElementById('wordsList');
@@ -3788,45 +3795,52 @@ this.showNotification('Не удалось добавить. Попробуйт�
     });
 }
 
+  // --- В app.js (Часть 2) ЗАМЕНИТЕ renderCustomWords НА ЭТО: ---
+
   renderCustomWords() {
-    const container = document.getElementById('customWords');
-    if (!container) return;
+    const container = document.getElementById('customWords'); // или 'newWordsList'
+    // Проверка обоих ID, так как в HTML может быть по-разному
+    const list = container || document.getElementById('newWordsList');
+    
+    if (!list) return;
 
     if (this.customWords.length === 0) {
-      container.innerHTML = `
+      list.innerHTML = `
         <div class="empty-state">
           <i class="fas fa-plus-circle"></i>
           <h3>Нет добавленных слов</h3>
-          <p>Используйте формы выше для добавления новых слов</p>
         </div>
       `;
       return;
     }
 
-    container.innerHTML = this.customWords.map(word => `
+    list.innerHTML = this.customWords.map(word => `
       <div class="word-card custom-word-card" data-word="${this.safeAttr(word.word)}">
-        <div class="word-header">
-          <div class="word-text">${this.getEnglishDisplay(word)}</div>
-          <div class="word-actions">
-            <button class="action-btn play-btn custom-sound-us-btn" data-word-text="${this.safeAttr(word.word)}" data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}' title="US">
-              <i class="fas fa-volume-up"></i>
-            </button>
-            <button class="action-btn play-btn custom-sound-uk-btn" data-word-text="${this.safeAttr(word.word)}" data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}' title="UK">
-              <i class="fas fa-headphones"></i>
-            </button>
-            <button class="action-btn remove-btn custom-delete-btn" data-word-text="${this.safeAttr(word.word)}" title="Удалить">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
+        
+        <!-- ЛЕВАЯ КОЛОНКА -->
+        <div class="word-info-wrapper">
+           <div class="word-text">${this.getEnglishDisplay(word)}</div>
+           <div class="word-translation">${word.translation}</div>
         </div>
-        <div class="word-translation">${word.translation}</div>
-        <span class="word-level">ADDED</span>
+
+        <!-- ПРАВАЯ КОЛОНКА -->
+        <div class="word-actions">
+           <button class="action-btn play-btn custom-sound-us-btn" data-word-text="${this.safeAttr(word.word)}" data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}' title="US">
+              <i class="fas fa-volume-up"></i>
+           </button>
+           <button class="action-btn play-btn custom-sound-uk-btn" data-word-text="${this.safeAttr(word.word)}" data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}' title="UK">
+              <i class="fas fa-headphones"></i>
+           </button>
+           <button class="action-btn remove-btn custom-delete-btn" data-word-text="${this.safeAttr(word.word)}" title="Удалить навсегда">
+              <i class="fas fa-trash"></i>
+           </button>
+        </div>
       </div>
     `).join('');
     
-    // Добавляем обработчики
     this.attachCustomWordsListeners();
-}
+  }
+  
   deleteCustomWord(word) {
     this.stopCurrentAudio();
     this.customWords = this.customWords.filter(w => w.word !== word);
@@ -4723,14 +4737,28 @@ if ((this.learningWords || []).length > 500) {
     if (!slice.length) return;
 
     const html = slice.map(w => {
-      const display = this.getEnglishDisplay(w);
-      const accBadge = this.getAccuracyBadgeHtml(w.word);
-      const formsJson = w.forms ? JSON.stringify(w.forms).replace(/"/g, '&quot;') : 'null';
-      return `
-        <div class="word-card popup-word-card" data-word="${this.safeAttr(w.word)}" data-level="${this.safeAttr(w.level)}">
-          <div class="word-text">${display} ${accBadge}</div>
-          <div class="word-header">
-            <div class="word-actions">
+        const display = this.getEnglishDisplay(w);
+        const accBadge = this.getAccuracyBadgeHtml(w.word);
+        const formsJson = w.forms ? JSON.stringify(w.forms).replace(/"/g, '&quot;') : 'null';
+        
+        // === НОВЫЙ КОМПАКТНЫЙ HTML ===
+        return `
+          <div class="word-card word-card-compact popup-word-card" data-word="${this.safeAttr(w.word)}" data-level="${this.safeAttr(w.level)}">
+            
+            <!-- ЛЕВАЯ КОЛОНКА: ТЕКСТ -->
+            <div class="word-info-col">
+              <div class="word-text-row">
+                ${display} 
+                ${accBadge}
+                <span class="tiny-level-badge">${w.level}</span>
+              </div>
+              <div class="word-trans-row">
+                ${w.translation}
+              </div>
+            </div>
+
+            <!-- ПРАВАЯ КОЛОНКА: КНОПКИ -->
+            <div class="word-actions-row">
               <button class="action-btn play-btn popup-sound-us"
                       data-word="${this.safeAttr(w.word)}"
                       data-forms='${formsJson}'
@@ -4747,23 +4775,20 @@ if ((this.learningWords || []).length > 500) {
               </button>
               <button class="action-btn popup-edit-btn"
                       data-word="${this.safeAttr(w.word)}"
-                      data-level="${this.safeAttr(w.level)}"
-                      title="Редактировать перевод">
+                      data-level="${this.safeAttr(w.level)}">
                 <i class="fas fa-pen"></i>
               </button>
               <button class="action-btn remove-btn popup-delete-btn"
                       data-word="${this.safeAttr(w.word)}"
-                      data-level="${this.safeAttr(w.level)}"
-                      title="Удалить из изучаемых">
+                      data-level="${this.safeAttr(w.level)}">
                 <i class="fas fa-trash"></i>
               </button>
             </div>
+
           </div>
-          <div class="word-translation">${w.translation}</div>
-          <span class="word-level">${w.level}</span>
-        </div>
-      `;
-    }).join('');
+        `;
+        // ==============================
+      }).join('');
 
     list.insertAdjacentHTML('beforeend', html);
     rendered += slice.length;
