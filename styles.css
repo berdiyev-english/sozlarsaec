@@ -3655,3 +3655,114 @@ box-shadow: var(--shadow-md);
 .medal-icon { font-size: 22px; margin-bottom: 4px; }
 .medal-name { font-size: 10px; font-weight: 800; color: var(--text-primary); line-height: 1.2; margin-bottom: 2px; }
 .medal-desc { font-size: 9px; color: var(--text-secondary); font-weight: 600; }
+
+/* ==========================================
+   FIXES: DARK MODE & QUIZ UI
+   ========================================== */
+
+/* 1. Quiz в темной теме: только обводка вместо заливки */
+[data-theme="dark"] .quiz-option.correct {
+  background: transparent !important;
+  border: 2px solid #4caf50 !important;
+  color: #4caf50 !important;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
+}
+
+[data-theme="dark"] .quiz-option.wrong {
+  background: transparent !important;
+  border: 2px solid #ef4444 !important;
+  color: #ef4444 !important;
+}
+
+/* Убираем "залипание" фокуса на кнопках в темной теме */
+.quiz-option:focus, .quiz-option-gate:focus {
+  outline: none;
+}
+
+/* 2. Игровой Quiz (Gate) в темной теме */
+[data-theme="dark"] #gameQuizOverlay h2,
+[data-theme="dark"] #gameQuizOverlay div {
+  color: #f9fafb !important; /* Белый текст */
+}
+
+[data-theme="dark"] #gameQuizOverlay .quiz-option-gate {
+  background: #1f2937 !important; /* Темный фон кнопок */
+  border-color: #374151 !important;
+  color: #f9fafb !important;
+}
+
+/* Правильный ответ в игре (Темная тема) */
+[data-theme="dark"] #gameQuizOverlay .quiz-option-gate.gate-correct {
+  background: transparent !important;
+  border: 2px solid #4caf50 !important;
+  color: #4caf50 !important;
+}
+
+/* Ошибка в игре (Темная тема) */
+[data-theme="dark"] #gameQuizOverlay .quiz-option-gate.gate-wrong {
+  background: transparent !important;
+  border: 2px solid #ef4444 !important;
+  color: #ef4444 !important;
+}
+
+/* 3. Грамматическая подсказка (желтая) в темной теме */
+/* Делаем текст черным принудительно, так как фон остается желтым */
+[data-theme="dark"] .grammar-tip,
+[data-theme="dark"] .grammar-tip p,
+[data-theme="dark"] .grammar-tip h3,
+[data-theme="dark"] .grammar-tip h4,
+[data-theme="dark"] .grammar-tip li,
+[data-theme="dark"] .grammar-tip div {
+  color: #333333 !important;
+}
+
+/* ============================================================
+   FIXES: ВИДИМОСТЬ ТЕКСТА В ПОДСКАЗКАХ (DARK MODE)
+   ============================================================ */
+
+/* 1. Исправление блока "Важно помнить" (в Sentence Builder) 
+   Там используются инлайн стили, поэтому цепляемся к ним через атрибуты */
+
+[data-theme="dark"] .grammar-modal-body div[style*="#FFF9E6"],
+[data-theme="dark"] .grammar-modal-body div[style*="background: #FFF9E6"] {
+    background-color: #FFF9E6 !important; /* Принудительно светлый желтый фон */
+    color: #1f2937 !important;             /* Принудительно темный текст */
+    border-color: #FFD700 !important;
+}
+
+/* Красим все внутренние элементы (заголовки, списки) в темный цвет */
+[data-theme="dark"] .grammar-modal-body div[style*="#FFF9E6"] *,
+[data-theme="dark"] .grammar-modal-body div[style*="background: #FFF9E6"] * {
+    color: #1f2937 !important;
+}
+
+/* 2. Исправление блока "Совет" (класс .grammar-tip) */
+[data-theme="dark"] .grammar-tip {
+    background-color: #FFF9E6 !important; /* Светлый желтый фон */
+    border: 2px solid #FFD700 !important;
+    color: #1f2937 !important;            /* Темный текст */
+}
+
+/* Красим заголовок совета и текст */
+[data-theme="dark"] .grammar-tip .grammar-tip-title,
+[data-theme="dark"] .grammar-tip p,
+[data-theme="dark"] .grammar-tip strong,
+[data-theme="dark"] .grammar-tip i {
+    color: #FFFFFF !important;
+    text-shadow: none !important;
+}
+
+/* 3. Исправление для блока с примерами (синий текст) в грамматике */
+[data-theme="dark"] .grammar-modal-body div[style*="#F7F7F7"],
+[data-theme="dark"] .grammar-modal-body div[style*="background: #F7F7F7"] {
+    background-color: #374151 !important; /* Темно-серый фон для примеров */
+    color: #f9fafb !important;
+}
+
+/* В примерах английский текст делаем голубым, русский - светло-серым */
+[data-theme="dark"] .grammar-modal-body div[style*="#F7F7F7"] div[style*="#1CB0F6"] {
+    color: #60a5fa !important; /* Ярко-голубой */
+}
+[data-theme="dark"] .grammar-modal-body div[style*="#F7F7F7"] div[style*="#777"] {
+    color: #d1d5db !important; /* Светло-серый */
+}
