@@ -1007,59 +1007,118 @@ body {
   border-color: var(--danger-color);
 }
 
-/* Toast уведомления */
+/* === КОНТЕЙНЕР === */
 .toast-container {
-  position: fixed;
-  top: 100px;
-  right: 20px;
-  z-index: 99999;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 360px;
-  pointer-events: none;
+    position: fixed;
+    top: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 2147483647 !important; /* Поверх всего */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 90%;
+    max-width: 400px;
+    pointer-events: none;
 }
 
-@media (max-width: 480px) {
-  .toast-container {
-    right: 10px;
-    left: 10px;
-    max-width: calc(100% - 20px);
-  }
-}
-
+/* === ОСНОВНОЙ СТИЛЬ TOAST === */
 .toast {
-  background: var(--bg-primary);
-  border: 3px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 1rem 1.25rem;
-  box-shadow: var(--shadow-xl);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 700;
-  pointer-events: auto;
-  word-break: break-word;
+    /* Убираем старые рамки и белый фон */
+    border: none;
+    background: white; /* Резерв */
+    color: white;
+    
+    /* Скругление и отступы как в примере */
+    border-radius: 20px;
+    padding: 15px 20px;
+    
+    /* Мягкая тень (свечение) вместо жесткой */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    
+    font-family: "Nunito", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.3;
+    pointer-events: auto;
+    
+    /* Анимация */
+    animation: slideDownBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
+/* Анимация появления (более плавная) */
+@keyframes slideDownBounce {
+    from { transform: translateY(-100%) scale(0.9); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* === СТИЛИЗАЦИЯ ИКОНОК (В БЕЛОМ КРУГЕ) === */
+/* Общий стиль для псевдо-элемента иконки */
+.toast::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 1.5rem;
+    
+    /* Создаем белый круг вокруг иконки */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    min-width: 45px; /* Чтобы не сжимался */
+    background: white;
+    border-radius: 50%;
+    
+    /* Тень внутри кружка для объема (опционально) */
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+}
+
+/* === ЦВЕТОВЫЕ ТЕМЫ (ГРАДИЕНТЫ) === */
+
+/* УСПЕХ (Зеленый ) */
 .toast.success {
-  border-left: 6px solid var(--success-color);
-  background: linear-gradient(135deg, var(--bg-primary), #d1fae5);
+    background: linear-gradient(135deg, #58CC02 0%, #89E219 100%);
+    box-shadow: 0 10px 40px rgba(88, 204, 2, 0.4);
+}
+.toast.success::before {
+    content: "\f00c"; /* Галочка */
+    color: #58CC02; /* Иконка зеленая */
 }
 
-.toast.warning {
-  border-left: 6px solid var(--warning-color);
-  background: linear-gradient(135deg, var(--bg-primary), #fed7aa);
-}
-
+/* ОШИБКА (Красный) */
 .toast.error {
-  border-left: 6px solid var(--danger-color);
-  background: linear-gradient(135deg, var(--bg-primary), #fee2e2);
+    background: linear-gradient(135deg, #ff4b4b 0%, #ff6b6b 100%);
+    box-shadow: 0 10px 40px rgba(255, 75, 75, 0.4);
+}
+.toast.error::before {
+    content: "\f071"; /* Треугольник/Восклицание */
+    color: #ff4b4b;
 }
 
+/* ПРЕДУПРЕЖДЕНИЕ (Желтый/Оранжевый ) */
+.toast.warning {
+    background: linear-gradient(135deg, #ffc800 0%, #ffdf00 100%);
+    box-shadow: 0 10px 40px rgba(255, 200, 0, 0.4);
+    color: #fff; /* Текст белый */
+    text-shadow: 0 2px 0 rgba(0,0,0,0.1); /* Тень тексту для читаемости */
+}
+.toast.warning::before {
+    content: "\f12a"; /* Восклицательный знак */
+    color: #e5b400;
+}
+
+/* ИНФО (Синий ) */
 .toast.info {
-  border-left: 6px solid var(--info-color);
-  background: linear-gradient(135deg, var(--bg-primary), #dbeafe);
+    background: linear-gradient(135deg, #1cb0f6 0%, #4bc4f7 100%);
+    box-shadow: 0 10px 40px rgba(28, 176, 246, 0.4);
+}
+.toast.info::before {
+    content: "\f05a"; /* i в кружке */
+    color: #1cb0f6;
 }
 
 .empty-state {
@@ -1431,61 +1490,6 @@ body {
 .quiz-option.wrong {
   background: linear-gradient(135deg, #fee2e2, #fecaca);
   border-color: var(--danger-color);
-}
-
-/* Toast уведомления */
-.toast-container {
-  position: fixed;
-  top: 100px;
-  right: 20px;
-  z-index: 99999;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 360px;
-  pointer-events: none;
-}
-
-@media (max-width: 480px) {
-  .toast-container {
-    right: 10px;
-    left: 10px;
-    max-width: calc(100% - 20px);
-  }
-}
-
-.toast {
-  background: var(--bg-primary);
-  border: 3px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 1rem 1.25rem;
-  box-shadow: var(--shadow-xl);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 700;
-  pointer-events: auto;
-  word-break: break-word;
-}
-
-.toast.success {
-  border-left: 6px solid var(--success-color);
-  background: linear-gradient(135deg, var(--bg-primary), #d1fae5);
-}
-
-.toast.warning {
-  border-left: 6px solid var(--warning-color);
-  background: linear-gradient(135deg, var(--bg-primary), #fed7aa);
-}
-
-.toast.error {
-  border-left: 6px solid var(--danger-color);
-  background: linear-gradient(135deg, var(--bg-primary), #fee2e2);
-}
-
-.toast.info {
-  border-left: 6px solid var(--info-color);
-  background: linear-gradient(135deg, var(--bg-primary), #dbeafe);
 }
 
 .empty-state {
@@ -3765,4 +3769,472 @@ box-shadow: var(--shadow-md);
 }
 [data-theme="dark"] .grammar-modal-body div[style*="#F7F7F7"] div[style*="#777"] {
     color: #d1d5db !important; /* Светло-серый */
+}
+
+/* ============================================================
+   COMPACT WORD LIST STYLES
+   ============================================================ */
+
+/* Компактная карточка (как строка списка) */
+.word-card-compact {
+  padding: 8px 12px !important; /* Уменьшенные отступы */
+  display: grid;
+  grid-template-columns: 1fr auto; /* Слева текст, справа кнопки */
+  align-items: center;
+  gap: 12px;
+  min-height: 50px;
+}
+
+/* Блок с текстом */
+.word-card-compact .word-info-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px; /* Расстояние между англ и рус */
+  overflow: hidden;
+}
+
+/* Английское слово */
+.word-card-compact .word-text-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.05rem; /* Чуть меньше чем было */
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Перевод */
+.word-card-compact .word-trans-row {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Кнопки действий */
+.word-card-compact .word-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Плотное расположение кнопок */
+}
+
+/* Уменьшенные кнопки */
+.word-card-compact .action-btn {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  font-size: 0.85rem !important;
+  padding: 0 !important;
+  border-width: 2px !important; /* Тоньше рамка */
+}
+
+/* Бейдж уровня (A1, B2...) делаем маленьким */
+.word-card-compact .tiny-level-badge {
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Бейдж точности в компактном виде */
+.word-card-compact .acc-badge {
+  font-size: 0.7rem;
+  padding: 1px 5px;
+  margin-left: 4px;
+}
+
+/* ============================================================
+   COMPACT CARDS FOR LEVELS LIST (ADD WORDS SCREEN)
+   ============================================================ */
+
+/* Применяем компактный стиль для #wordsList .word-card */
+#wordsList .word-card, 
+#newWordsList .word-card,
+#customWords .word-card {
+  padding: 8px 12px !important;
+  display: grid;
+  grid-template-columns: 1fr auto; /* Текст слева, кнопки справа */
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+}
+
+/* Скрываем старые большие заголовки и уровни, которые мешают */
+#wordsList .word-card .word-header,
+#newWordsList .word-card .word-header,
+#customWords .word-card .word-header {
+  display: contents; /* Убираем блочность хедера, чтобы grid работал */
+}
+
+/* Левая колонка: Текст + Перевод */
+#wordsList .word-card .word-info-wrapper,
+#newWordsList .word-card .word-info-wrapper,
+#customWords .word-card .word-info-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  overflow: hidden;
+}
+
+/* Слово (английское) */
+#wordsList .word-card .word-text,
+#newWordsList .word-card .word-text,
+#customWords .word-card .word-text {
+  font-size: 1rem !important;
+  margin: 0 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+/* Перевод */
+#wordsList .word-card .word-translation,
+#newWordsList .word-card .word-translation,
+#customWords .word-card .word-translation {
+  font-size: 0.85rem !important;
+  color: var(--text-secondary);
+  margin: 0 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+/* Правая колонка: Кнопки */
+#wordsList .word-card .word-actions,
+#newWordsList .word-card .word-actions,
+#customWords .word-card .word-actions {
+  display: flex;
+  gap: 6px;
+  margin: 0 !important;
+  flex-shrink: 0;
+}
+
+/* Уменьшаем кнопки */
+#wordsList .word-card .action-btn,
+#newWordsList .word-card .action-btn,
+#customWords .word-card .action-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  font-size: 0.9rem !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+}
+
+/* Кнопка "Учить" (текстовая) превращается в иконку для компактности */
+#wordsList .word-card .action-text-btn,
+#newWordsList .word-card .action-text-btn,
+#customWords .word-card .action-text-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0 !important; /* Скрываем текст "Учить" */
+}
+
+/* Возвращаем иконку в кнопку "Учить" */
+#wordsList .word-card .action-text-btn::after,
+#newWordsList .word-card .action-text-btn::after,
+#customWords .word-card .action-text-btn::after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1rem;
+  content: "\f067"; /* fa-plus */
+}
+
+/* Иконка для кнопки "Удалить" */
+#wordsList .word-card .action-text-btn.remove::after,
+#newWordsList .word-card .action-text-btn.remove::after,
+#customWords .word-card .action-text-btn.remove::after {
+  content: "\f00c"; /* fa-check (галочка, типа "уже добавлено") */
+}
+
+/* Скрываем старый лейбл уровня, он занимает место */
+#wordsList .word-card .word-level,
+#newWordsList .word-card .word-level,
+#customWords .word-card .word-level {
+  display: none !important;
+}
+
+/* ============================================================
+   COMPACT LISTS FOR LEVELS, CATEGORIES & EXAMS
+   ============================================================ */
+
+/* Превращаем сетку в 1 колонку на мобильных (вид списка) */
+.levels-grid, 
+.categories-grid, 
+.exams-grid {
+    display: grid;
+    grid-template-columns: 1fr !important; /* Одна колонка */
+    gap: 10px !important;
+}
+
+/* На планшетах и ПК - 2 колонки (компактные плитки) */
+@media (min-width: 600px) {
+    .levels-grid, 
+    .categories-grid, 
+    .exams-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+/* Стиль самой карточки */
+.level-card {
+    /* Grid раскладка: Иконка | Текст | Инфо */
+    display: grid !important;
+    grid-template-columns: auto 1fr auto !important;
+    grid-template-rows: auto auto !important; /* Две строки текста */
+    align-items: center !important;
+    gap: 0 14px !important; /* Отступ между элементами */
+    
+    padding: 10px 16px !important;
+    text-align: left !important;
+    min-height: 68px !important; /* Фиксированная небольшая высота */
+    
+    border-radius: 18px !important;
+    border-width: 2px !important; /* Чуть тоньше рамка */
+}
+
+/* Убираем старую цветную полоску сверху */
+.level-card::before {
+    display: none !important;
+}
+
+/* === 1. ЛЕВАЯ ЧАСТЬ (БЕЙДЖ) === */
+.level-card .level-badge {
+    grid-column: 1;
+    grid-row: 1 / 3; /* Занимает всю высоту слева */
+    
+    margin: 0 !important;
+    width: 44px !important;
+    height: 44px !important;
+    
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    
+    font-size: 0.95rem !important;
+    border-radius: 12px !important;
+    box-shadow: none !important; /* Убираем лишние тени */
+}
+
+/* === 2. ЦЕНТРАЛЬНАЯ ЧАСТЬ (ТЕКСТ) === */
+
+/* Заголовок (Beginner, Idioms...) */
+.level-card h3 {
+    grid-column: 2;
+    grid-row: 1;
+    
+    font-size: 1.05rem !important;
+    margin: 0 !important;
+    line-height: 1.2;
+    align-self: end; /* Прижимаем к низу первой строки */
+    color: var(--text-primary);
+}
+
+/* Описание (Базовые слова...) */
+.level-card p {
+    grid-column: 2;
+    grid-row: 2;
+    
+    font-size: 0.8rem !important;
+    color: var(--text-secondary);
+    margin: 0 !important;
+    line-height: 1.3;
+    align-self: start; /* Прижимаем к верху второй строки */
+    
+    /* Обрезаем длинный текст */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.9;
+}
+
+/* === 3. ПРАВАЯ ЧАСТЬ (СЧЕТЧИК) === */
+.level-card .word-count {
+    grid-column: 3;
+    grid-row: 1 / 3; /* По центру справа */
+    
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    
+    font-size: 0.8rem !important;
+    color: var(--text-secondary) !important;
+    font-weight: 700;
+    text-align: right;
+    padding: 0 !important;
+    
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Добавляем стрелочку в конце */
+.level-card .word-count::after {
+    content: '\f054'; /* fa-chevron-right */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    opacity: 0.3;
+    font-size: 0.8rem;
+}
+
+/* Специальный стиль для карточек "Скоро" (серые) */
+.level-card.coming-soon {
+    opacity: 0.7;
+    filter: grayscale(1);
+}
+
+/* ============================================================
+   FIX: ICONS FOR CATEGORIES BADGES
+   ============================================================ */
+
+/* 1. Для Уровней (A1-C2) оставляем текст, он короткий и понятный */
+.level-card[data-level] .level-badge {
+    font-size: 1.1rem !important;
+    font-weight: 900;
+}
+
+/* 2. Для Категорий и Экзаменов — СКРЫВАЕМ текст и ставим ИКОНКУ */
+.level-card[data-category] .level-badge {
+    font-size: 0 !important; /* Скрываем текст "Idioms" и т.д. */
+    position: relative;
+}
+
+/* Общий стиль для иконки */
+.level-card[data-category] .level-badge::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 1.2rem; /* Размер иконки */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+/* --- НАЗНАЧЕНИЕ ИКОНОК --- */
+
+/* Irregular Verbs -> Случайная стрелка (random) */
+.level-card[data-category="IRREGULARS"] .level-badge::before { content: "\f074"; }
+
+/* Prepositions -> Маркер карты (местоположение) */
+.level-card[data-category="PREPOSITIONS"] .level-badge::before { content: "\f3c5"; }
+
+/* Phrasal Verbs -> Цепочка (связка глагола и предлога) */
+.level-card[data-category="PHRASAL_VERBS"] .level-badge::before { content: "\f0c1"; }
+
+/* Idioms -> Облачко речи (разговорное) */
+.level-card[data-category="IDIOMS"] .level-badge::before { content: "\f086"; }
+
+/* Proverbs -> Свиток (мудрость) */
+.level-card[data-category="PROVERBS"] .level-badge::before { content: "\f70e"; }
+
+/* Medical -> Аптечка */
+.level-card[data-category="MEDICAL"] .level-badge::before { content: "\f469"; }
+
+/* IT -> Код */
+.level-card[data-category="IT"] .level-badge::before { content: "\f121"; }
+
+/* Business -> Портфель */
+.level-card[data-category="BUSINESS"] .level-badge::before { content: "\f0b1"; }
+
+/* Legal -> Весы правосудия */
+.level-card[data-category="LEGAL"] .level-badge::before { content: "\f24e"; }
+
+/* Все Экзамены (EGE, OGE, IELTS, TOEFL) -> Шапочка выпускника */
+.level-card[data-category="EGE"] .level-badge::before,
+.level-card[data-category="OGE"] .level-badge::before,
+.level-card[data-category="IELTS"] .level-badge::before,
+.level-card[data-category="TOEFL"] .level-badge::before { 
+    content: "\f19d"; 
+}
+
+/* Добавленные (Added) -> Плюс или папка */
+.level-card[data-category="ADDED"] .level-badge::before { content: "\f07b"; } /* Папка */
+
+/* ============================================================
+   FIXES: BUTTONS TEXT & DESKTOP LAYOUT
+   ============================================================ */
+
+/* 1. Кнопка "Учить" - делаем снова ТЕКСТОМ (вместо иконки +) */
+#wordsList .word-card .action-text-btn.add,
+#newWordsList .word-card .action-text-btn.add,
+#customWords .word-card .action-text-btn.add {
+    width: auto !important;       /* Авто-ширина под текст */
+    min-width: 70px !important;
+    height: 32px !important;
+    border-radius: 16px !important; /* Закругленная таблетка */
+    
+    padding: 0 14px !important;
+    
+    font-size: 0.75rem !important; /* Возвращаем размер текста */
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    /* Восстанавливаем flex для центровки текста */
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Убираем иконку плюса (::after), которую мы добавляли раньше */
+#wordsList .word-card .action-text-btn.add::after,
+#newWordsList .word-card .action-text-btn.add::after,
+#customWords .word-card .action-text-btn.add::after {
+    content: none !important;
+}
+
+/* Кнопку "Удалить" (галочку) оставляем маленькой иконкой, 
+   так аккуратнее, или тоже хотите текстом? Пока оставляю иконкой */
+#wordsList .word-card .action-text-btn.remove,
+#newWordsList .word-card .action-text-btn.remove,
+#customWords .word-card .action-text-btn.remove {
+    /* Оставляем как есть (кружок с галочкой) */
+}
+
+/* 2. Списки уровней - ВСЕГДА в 1 колонку (даже на ПК) */
+@media (min-width: 600px) {
+    .levels-grid, 
+    .categories-grid, 
+    .exams-grid {
+        grid-template-columns: 1fr !important; /* Принудительно 1 колонка */
+    }
+}
+
+/* ============================================================
+   FIX: GAME QUIZ LIGHT MODE COLORS
+   ============================================================ */
+
+/* Правильный ответ (Светлая тема) */
+.quiz-option-gate.gate-correct {
+  background-color: #d1fae5 !important; /* Светло-зеленый фон */
+  border-color: #10b981 !important;     /* Зеленая рамка */
+  color: #065f46 !important;            /* Темно-зеленый текст */
+}
+
+/* Неправильный ответ (Светлая тема) */
+.quiz-option-gate.gate-wrong {
+  background-color: #fee2e2 !important; /* Светло-красный фон */
+  border-color: #ef4444 !important;     /* Красная рамка */
+  color: #991b1b !important;            /* Темно-красный текст */
 }
