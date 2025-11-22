@@ -175,18 +175,46 @@ checkAndShowFirstRunOrMotivation() {
     return `https://bewords.ru/au/idioms/us/${fileName}.mp3`;
   }
 
-  // Попробовать сыграть idiom.mp3, если не вышло — fallback в TTS
-    async playIdiomAudio(phrase) {
+  
+  async playIdiomAudio(phrase) {
     const file = this.buildIdiomFileName(phrase);
     if (!file) return false;
-
     const url = this.buildIdiomAudioUrl(file);
     try {
       await this.playMp3Url(url);
-      // УСПЕШНО: mp3 проигран
       return true;
     } catch (e) {
-      // Для идиом НЕ используем TTS – просто выходим
+      console.log('Idiom audio missing for:', phrase);
+      // TTS ОТКЛЮЧЕН по просьбе
+      return false; 
+    }
+  }
+  
+    buildPhrasalFileName(phrase) {
+    if (!phrase) return '';
+    return String(phrase)
+      .toLowerCase()
+      .replace(/[^a-z\s]/g, '')
+      .trim()
+      .replace(/\s+/g, '_'); // look up -> look_up
+  }
+
+  buildPhrasalAudioUrl(fileName) {
+    if (!fileName) return '';
+    return `https://bewords.ru/au/phrasal/us/${fileName}.mp3`;
+  }
+
+    // --- ОБНОВЛЕННЫЙ МЕТОД (Без TTS) ---
+   async playPhrasalAudio(phrase) {
+    const file = this.buildPhrasalFileName(phrase);
+    if (!file) return false;
+    const url = this.buildPhrasalAudioUrl(file);
+    try {
+      await this.playMp3Url(url);
+      return true;
+    } catch (e) {
+      console.log('Phrasal audio missing for:', phrase);
+      // TTS ОТКЛЮЧЕН по просьбе
       return false;
     }
   }
@@ -409,17 +437,23 @@ syncModePracticeToggles() {
     }
     return true;
   }
-         async playWord(word, forms = null, region = null, level = null) {
+      async playWord(word, forms = null, region = null, level = null) {
     if (typeof forms === 'string') { forms = [forms]; }
     const regionPref = (region === 'uk' || region === 'us') ? region : 'us';
 
-    // ИДИОМЫ: только mp3, без TTS вообще
-    if (level === 'IDIOMS' && typeof word === 'string') {
+    // 1. ИДИОМЫ: Строго mp3 файл
+    if (level === 'IDIOMS') {
       await this.playIdiomAudio(word);
-      return; // даже если mp3 не нашёлся, дальше не идём
+      return;
     }
 
-    // Набор форм через "/" (для неправильных глаголов и т.п.)
+    // 2. ФРАЗОВЫЕ ГЛАГОЛЫ: Строго mp3 файл
+    if (level === 'PHRASAL_VERBS') {
+      await this.playPhrasalAudio(word);
+      return;
+    }
+
+    // ... обычная логика для остальных слов
     if ((!forms || !Array.isArray(forms) || forms.length === 0) &&
         typeof word === 'string' && word.includes('/')) {
       const parts = word.split('/').map(s => s.trim()).filter(Boolean);
@@ -435,7 +469,6 @@ syncModePracticeToggles() {
     }
 
     if (this.isMultiWord(word)) {
-      // Для обычных фраз – TTS, но не для идиом (мы их уже отфильтровали выше)
       await this.playPhraseTTS(word, regionPref);
       return;
     }
@@ -1823,7 +1856,7 @@ setTimeout(() => window.initBewordsTranslator(), 0);
       }
     };
 
-    ['EGE','OGE','IELTS','TOEFL','PROVERBS'].forEach(setExamCount);
+    ['EGE','OGE','IELTS','TOEFL','PROVERBS','IT','BUSINESS','LEGAL'].forEach(setExamCount);
   }
 
 toggleLevelsIndexVisibility(showIndex) {
@@ -2211,6 +2244,35 @@ showAutoDictionaryTest() {
       #autoDictOverlay .option-btn{padding:10px;font-size:12px;min-height:40px;}
       #autoDictOverlay .btn{padding:8px 12px;font-size:13px;}
     }
+    /* Стили для виджета Ачивок */
+.achievements-widget {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 15px;
+  margin-bottom: 14px;
+}
+.ach-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+}
+.ach-title { font-weight: 800; color: var(--text-primary); font-size: 16px; }
+.ach-streak { 
+  background: #fff3cd; color: #856404; padding: 4px 8px; 
+  border-radius: 8px; font-weight: 700; font-size: 12px; display: flex; align-items: center; gap: 5px; 
+}
+.ach-streak i { color: #ffc107; }
+.ach-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
+.ach-item { 
+  background: var(--bg-primary); border: 1px solid var(--border-color); 
+  border-radius: 10px; padding: 10px 5px; text-align: center; opacity: 0.5; filter: grayscale(1); transition: all 0.3s;
+}
+.ach-item.unlocked { opacity: 1; filter: grayscale(0); border-color: #fbbf24; background: linear-gradient(180deg, var(--bg-primary) 0%, #fffbeb 100%); }
+.ach-icon { font-size: 24px; margin-bottom: 5px; display: block; }
+.ach-name { font-size: 10px; font-weight: 700; color: var(--text-secondary); line-height: 1.2; }
+.daily-goal-box { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+.goal-label { font-size: 13px; font-weight: 700; color: var(--text-primary); display: flex; justify-content: space-between; margin-bottom: 6px; }
+.goal-bar-track { height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; }
+.goal-bar-fill { height: 100%; background: var(--success-color); transition: width 0.5s ease; }
   `;
   overlay.appendChild(style);
 
@@ -3935,6 +3997,16 @@ renderFlashcards() {
     const container = document.getElementById('learningWordsList');
     this._questionStart = Date.now();
     if (!container) return;
+    
+    // === ДОБАВИТЬ ЭТО ===
+if (this.currentPractice === 'scheduled') {
+  const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+  // Берем индекс из сессии, если он там есть
+  if (typeof session.currentIndex === 'number') {
+    this.currentReviewIndex = session.currentIndex;
+  }
+}
+// ====================
 
     const wordsToReview = this.getWordsToReview();
     if (wordsToReview.length === 0) {
@@ -4105,9 +4177,22 @@ this.updateWordStats(word.word, correct, rt);
   }
 
   renderQuiz() {
+     if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+    }
     const container = document.getElementById('learningWordsList');
     this._questionStart = Date.now();
     if (!container) return;
+    
+    // === ДОБАВИТЬ ЭТО ===
+if (this.currentPractice === 'scheduled') {
+  const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+  // Берем индекс из сессии, если он там есть
+  if (typeof session.currentIndex === 'number') {
+    this.currentReviewIndex = session.currentIndex;
+  }
+}
+// ====================
 
     const wordsToReview = this.getWordsToReview();
     if (wordsToReview.length === 0) {
@@ -4323,6 +4408,13 @@ this.updateWordStats(wordToPlay, isCorrect, rt);
     }
 
     this.currentReviewIndex++;
+    
+    if (this.currentPractice === 'scheduled') {
+  const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+  session.currentIndex = this.currentReviewIndex; // Сохраняем позицию
+  localStorage.setItem('currentSession', JSON.stringify(session));
+}
+    
     if (this.currentReviewIndex >= wordsToReview.length && this.currentPractice === 'scheduled') {
       this.currentReviewIndex = 0;
       this.showNotification('Quiz завершен! Отличная работа!', 'success');
@@ -4330,6 +4422,7 @@ this.updateWordStats(wordToPlay, isCorrect, rt);
     this.renderQuiz();
   }
 
+// --- ЗАМЕНИТЬ renderWordsList ЦЕЛИКОМ ---
 renderWordsList() {
   const container = document.getElementById('learningWordsList');
   if (!container) return;
@@ -4351,6 +4444,7 @@ renderWordsList() {
   container.innerHTML = wordsToShow.map(word => {
     const displayWord = this.getEnglishDisplay(word);
     const accuracyBadge = this.getAccuracyBadgeHtml(word.word);
+    // ВАЖНО: Передаем data-level в кнопки
     return `
       <div class="word-card ${word.isLearned ? 'learned' : ''}">
         <div class="word-header">
@@ -4358,12 +4452,14 @@ renderWordsList() {
           <div class="word-actions">
             <button class="action-btn play-btn list-sound-us" 
                     data-word="${this.safeAttr(word.word)}"
+                    data-level="${this.safeAttr(word.level)}" 
                     data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}'
                     title="US">
               <i class="fas fa-volume-up"></i>
             </button>
             <button class="action-btn play-btn list-sound-uk" 
                     data-word="${this.safeAttr(word.word)}"
+                    data-level="${this.safeAttr(word.level)}"
                     data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}'
                     title="UK">
               <i class="fas fa-headphones"></i>
@@ -4384,7 +4480,6 @@ renderWordsList() {
   // Добавляем обработчики
   this.attachWordsListHandlers();
 }
-
 // Добавьте новый метод:
 attachWordsListHandlers() {
   const container = document.getElementById('learningWordsList');
@@ -4396,13 +4491,14 @@ attachWordsListHandlers() {
       e.stopPropagation();
       const word = btn.getAttribute('data-word');
       const formsStr = btn.getAttribute('data-forms');
+      // БЕРЕМ УРОВЕНЬ ПРЯМО ИЗ КНОПКИ
+      const level = btn.getAttribute('data-level'); 
+      
       let forms = null;
       if (formsStr && formsStr !== 'null') {
         try { forms = JSON.parse(formsStr); } catch {}
       }
-      // Находим уровень через learningWords
-      const item = this.learningWords.find(w => w.word === word);
-      const level = item ? item.level : null;
+      
       this.playWord(word, forms, 'us', level);
     });
   });
@@ -4413,17 +4509,19 @@ attachWordsListHandlers() {
       e.stopPropagation();
       const word = btn.getAttribute('data-word');
       const formsStr = btn.getAttribute('data-forms');
+      // БЕРЕМ УРОВЕНЬ ПРЯМО ИЗ КНОПКИ
+      const level = btn.getAttribute('data-level');
+      
       let forms = null;
       if (formsStr && formsStr !== 'null') {
         try { forms = JSON.parse(formsStr); } catch {}
       }
-      const item = this.learningWords.find(w => w.word === word);
-      const level = item ? item.level : null;
+      
       this.playWord(word, forms, 'uk', level);
     });
   });
   
-  // Кнопки toggle learned оставляем как были
+  // Кнопки toggle learned
   container.querySelectorAll('.list-toggle-learned').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -4432,7 +4530,6 @@ attachWordsListHandlers() {
     });
   });
 }
-
 // Pop up список слов
 
   showLearningWordsPopup() {
@@ -4535,39 +4632,42 @@ if ((this.learningWords || []).length > 500) {
     }
 
     // Делегирование кликов внутри списка
-list.addEventListener('click', (e) => {
-  const btn = e.target.closest('.popup-sound-us, .popup-sound-uk, .popup-edit-btn, .popup-delete-btn');
-  if (!btn) return;
-  const word = btn.getAttribute('data-word');
-  const level = btn.getAttribute('data-level');
-  if (!word) return;
+    list.addEventListener('click', (e) => {
+      const btn = e.target.closest('.popup-sound-us, .popup-sound-uk, .popup-edit-btn, .popup-delete-btn');
+      if (!btn) return;
+      
+      const word = btn.getAttribute('data-word');
+      const level = btn.getAttribute('data-level'); // <-- Получаем уровень
+      if (!word) return;
 
-  if (btn.classList.contains('popup-sound-us') || btn.classList.contains('popup-sound-uk')) {
-    const formsStr = btn.getAttribute('data-forms');
-    let forms = null;
-    if (formsStr && formsStr !== 'null') {
-      try { forms = JSON.parse(formsStr); } catch {}
-    }
-    const region = btn.classList.contains('popup-sound-uk') ? 'uk' : 'us';
-    this.playWord(word, forms, region);
+      if (btn.classList.contains('popup-sound-us') || btn.classList.contains('popup-sound-uk')) {
+        const formsStr = btn.getAttribute('data-forms');
+        let forms = null;
+        if (formsStr && formsStr !== 'null') {
+          try { forms = JSON.parse(formsStr); } catch {}
+        }
+        const region = btn.classList.contains('popup-sound-uk') ? 'uk' : 'us';
+        
+        // ИСПРАВЛЕНИЕ: Передаем 'level' четвертым аргументом!
+        this.playWord(word, forms, region, level);
 
-  } else if (btn.classList.contains('popup-delete-btn')) {
-    this.removeWordFromLearning(word, level);
-    const card = btn.closest('.word-card');
-    if (card) card.remove();
+      } else if (btn.classList.contains('popup-delete-btn')) {
+        this.removeWordFromLearning(word, level);
+        const card = btn.closest('.word-card');
+        if (card) card.remove();
 
-    // обновим счётчик в заголовке
-    const titleCount = header.querySelector('.words-popup-title p');
-    if (titleCount) {
-      titleCount.textContent = `${this.learningWords.length} слов в изучении`;
-    }
+        // обновим счётчик в заголовке
+        const titleCount = header.querySelector('.words-popup-title p');
+        if (titleCount) {
+          titleCount.textContent = `${this.learningWords.length} слов в изучении`;
+        }
 
-  } else if (btn.classList.contains('popup-edit-btn')) {
-    this.editLearningWord(word, level, () => {
-      this.renderLearningWordsPopupList(filterSelect ? filterSelect.value : 'ALL');
-    });
-  }
-}, true);
+      } else if (btn.classList.contains('popup-edit-btn')) {
+        this.editLearningWord(word, level, () => {
+          this.renderLearningWordsPopupList(filterSelect ? filterSelect.value : 'ALL');
+        });
+      }
+    }, true);
   }
 
   renderLearningWordsPopupList(filterLevel = 'ALL') {
@@ -4764,104 +4864,86 @@ list.addEventListener('click', (e) => {
   // Review logic
   // =========
 getWordsToReview() {
+  // 1. Если режим "Endless" (Повторение) - показываем всё подряд, кроме выученного
   if (this.currentPractice === 'endless') {
     return this.learningWords.filter(w => !w.isLearned);
   }
 
-  // НОВАЯ ЛОГИКА для режима "запланировано" без интервалов
-  const active = this.learningWords.filter(w => !w.isLearned);
-  
-  // Получаем текущую сессию из localStorage
-  let session = JSON.parse(localStorage.getItem('currentSession') || 'null');
-  
-  // Если нет сессии или новый день - создаем новую
+  // 2. Режим "Заучивание" (Scheduled)
   const today = new Date().toDateString();
+  
+  // Пытаемся достать текущую сессию
+  let session = JSON.parse(localStorage.getItem('currentSession') || 'null');
+
+  // Если сессии нет или она устарела (вчерашняя) — создаем новую
   if (!session || session.date !== today) {
     session = {
       date: today,
-      shownWords: [],
+      shownWords: [], // Список слов (строки)
+      currentIndex: 0, // Запоминаем, на каком слове остановились!
       correctStreak: 0,
-      totalCorrect: 0
+      totalCorrect: 0,
+      dailyGoal: 20 // Цель на день
     };
   }
-  
-  // Базовый размер пула - 40 слов
-  let poolSize = 40;
-  
-  // Добавляем по 10 слов за каждые 10 правильных ответов в сессии
-  poolSize += Math.floor(session.totalCorrect / 10) * 10;
-  
-  // Ограничиваем максимум доступными словами
-  poolSize = Math.min(poolSize, active.length);
-  
-  // Создаем пул слов для изучения
-  let wordsPool = [];
-  
-  // Приоритет 1: Слова с низкой точностью (много ошибок)
-  const withErrors = active.filter(w => {
-    const s = this.wordStats[w.word];
-    if (!s || (s.correct + s.incorrect) === 0) return false;
-    const accuracy = s.correct / (s.correct + s.incorrect);
-    return accuracy < 0.7;
-  }).sort((a, b) => {
-    const aStats = this.wordStats[a.word];
-    const bStats = this.wordStats[b.word];
-    const aAcc = aStats.correct / (aStats.correct + aStats.incorrect);
-    const bAcc = bStats.correct / (bStats.correct + bStats.incorrect);
-    return aAcc - bAcc; // Сначала самые сложные
-  });
-  
-  // Приоритет 2: Новые слова (еще не отвечали)
-  const newWords = active.filter(w => {
-    const s = this.wordStats[w.word];
-    return !s || (s.correct + s.incorrect) === 0;
-  });
-  
-  // Приоритет 3: Слова для повторения (средняя точность)
-  const toReview = active.filter(w => {
-    const s = this.wordStats[w.word];
-    if (!s || (s.correct + s.incorrect) === 0) return false;
-    const accuracy = s.correct / (s.correct + s.incorrect);
-    return accuracy >= 0.7 && accuracy < 0.95;
-  });
-  
-  // Приоритет 4: Хорошо выученные (высокая точность)
-  const wellLearned = active.filter(w => {
-    const s = this.wordStats[w.word];
-    if (!s || (s.correct + s.incorrect) === 0) return false;
-    const accuracy = s.correct / (s.correct + s.incorrect);
-    return accuracy >= 0.95;
-  });
-  
-  // Формируем пул с приоритетами
-  const errorLimit = Math.min(20, Math.floor(poolSize * 0.3));
-  const newLimit = Math.min(15, Math.floor(poolSize * 0.3));
-  
-  wordsPool.push(...withErrors.slice(0, errorLimit));
-  
-  const remaining = poolSize - wordsPool.length;
-  if (remaining > 0) {
-    wordsPool.push(...newWords.slice(0, Math.min(newLimit, remaining)));
+
+  // Если слова уже были отобраны ранее, восстанавливаем их объекты
+  if (session.shownWords.length > 0) {
+    // Восстанавливаем объекты слов по их тексту
+    let restoredWords = session.shownWords.map(wText => 
+      this.learningWords.find(lw => lw.word === wText)
+    ).filter(Boolean); // убираем удаленные слова
+
+    // Если слова еще есть в списке, возвращаем их
+    if (restoredWords.length > 0) {
+      return restoredWords;
+    }
   }
+
+  // === ГЕНЕРАЦИЯ НОВОГО СПИСКА (если сессия пустая) ===
   
-  const remaining2 = poolSize - wordsPool.length;
-  if (remaining2 > 0) {
-    wordsPool.push(...toReview.slice(0, remaining2));
-  }
+  // Берем все слова, которые НЕ выучены (isLearned: false)
+  const active = this.learningWords.filter(w => !w.isLearned);
+
+  // ФИЛЬТР ВЫУЧЕННЫХ (Задача №5):
+  // Если у слова accScore >= 8 (очень хорошо знаем) И мы его видели СЕГОДНЯ — пропускаем
+  const candidates = active.filter(w => {
+    const s = this.wordStats[w.word];
+    if (!s) return true; // новое слово
+    
+    // Если слово "мастерское" (score >= 8)
+    if (s.accScore >= 8) {
+       const lastSeenDate = s.lastReview ? new Date(s.lastReview).toDateString() : '';
+       // Если видели сегодня — не показываем, хватит мучить
+       if (lastSeenDate === today) return false; 
+       // Если видели давно — можно показать для проверки
+    }
+    return true;
+  });
+
+  // Если слов нет (всё выучили)
+  if (candidates.length === 0) return [];
+
+  // Набираем пул: сначала сложные, потом новые
+  // Сортировка: сначала те, где accScore меньше
+  candidates.sort((a, b) => {
+    const sa = (this.wordStats[a.word] || {}).accScore || 0;
+    const sb = (this.wordStats[b.word] || {}).accScore || 0;
+    return sa - sb;
+  });
+
+  // Берем топ 30 слов для сессии
+  let selected = candidates.slice(0, 30);
   
-  const remaining3 = poolSize - wordsPool.length;
-  if (remaining3 > 0) {
-    wordsPool.push(...wellLearned.slice(0, remaining3));
-  }
-  
-  // Перемешиваем для разнообразия
-  wordsPool = this.shuffle(wordsPool);
-  
-  // Сохраняем сессию
-  session.shownWords = wordsPool.map(w => w.word);
+  // Перемешиваем их один раз
+  selected = this.shuffle(selected);
+
+  // Сохраняем этот список в сессию, чтобы он НЕ менялся при переключении режимов
+  session.shownWords = selected.map(w => w.word);
+  session.currentIndex = 0; // Сброс индекса при генерации нового пула
   localStorage.setItem('currentSession', JSON.stringify(session));
-  
-  return wordsPool;
+
+  return selected;
 }
 
 updateWordStats(word, correct, responseTimeMs = null) {
@@ -5119,6 +5201,72 @@ getPetWidgetHtml() {
     `;
 }
 
+
+  // === ВОТ ЭТОТ НОВЫЙ КОД ВСТАВЛЯЕМ ===
+ getAchievementsWidgetHtml() {
+  // Загружаем данные
+  let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+  const todayCorrect = session.totalCorrect || 0;
+  const goal = 20;
+  const progressPct = Math.min(100, Math.round((todayCorrect / goal) * 100));
+  const streak = session.correctStreak || 0;
+  const totalLearned = this.learningWords.filter(w => w.isLearned).length;
+
+  // Медали
+  const medals = [
+    { id: 1, icon: '🥉', name: 'Новичок', desc: '5 слов', unlocked: totalLearned >= 5 },
+    { id: 2, icon: '🥈', name: 'Студент', desc: '50 слов', unlocked: totalLearned >= 50 },
+    { id: 3, icon: '🥇', name: 'Мастер', desc: '200 слов', unlocked: totalLearned >= 200 },
+    { id: 4, icon: '👑', name: 'Легенда', desc: '500 слов', unlocked: totalLearned >= 500 },
+  ];
+
+  // Возвращаем HTML, используя класс "progress-card" как у других блоков
+  return `
+    <div class="progress-card">
+      
+      <!-- Красивая шапка как у других карточек -->
+      <div class="progress-card-header">
+        <div class="progress-card-icon icon-gold">
+          <i class="fas fa-trophy"></i>
+        </div>
+        <div>
+          <div class="progress-card-title">Достижения</div>
+          <div class="progress-card-subtitle">
+             Серия побед: <span style="color:#d97706; font-weight:800;">${streak} 🔥</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Сетка медалей -->
+      <div class="medals-grid">
+        ${medals.map(m => `
+          <div class="medal-card ${m.unlocked ? 'unlocked' : 'locked'}">
+            <div class="medal-icon">${m.icon}</div>
+            <div class="medal-name">${m.name}</div>
+            <div class="medal-desc">${m.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- Полоска цели (в стиле приложения) -->
+      <div style="margin-top: 16px; padding-top: 12px; border-top: 2px solid var(--border-color);">
+        <div class="progress-main-bar-label" style="margin-bottom: 6px;">
+          <span style="font-weight:800; color:var(--text-primary);">Цель на день (20 слов)</span>
+          <span style="font-weight:700; color:var(--text-secondary);">${todayCorrect}/${goal}</span>
+        </div>
+        <div class="progress-main-bar-track" style="height:10px;">
+          <div class="progress-main-bar-fill" style="width: ${progressPct}%; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
+        </div>
+        <div style="text-align:center; font-size:12px; margin-top:6px; color:var(--text-secondary); font-weight:600;">
+           ${progressPct >= 100 ? '🎉 План выполнен! Ты супер!' : 'Продолжай учиться!'}
+        </div>
+      </div>
+
+    </div>
+  `;
+}
+
+
 // =========
 // Progress
 // =========
@@ -5128,6 +5276,7 @@ renderProgress() {
   if (!container) return;
 
   const petHtml = this.getPetWidgetHtml();
+  const achievementsHtml = this.getAchievementsWidgetHtml();
 
   const totalWords = this.learningWords.length;
   const learnedWords = this.learningWords.filter(w => w.isLearned).length;
@@ -5171,6 +5320,7 @@ renderProgress() {
 
   container.innerHTML = `
     ${petHtml}
+    ${achievementsHtml}
     <div class="progress-grid">
       <!-- Общий прогресс -->
       <div class="progress-card progress-card-main">
@@ -5360,7 +5510,7 @@ attachPetHandlers() {
   // =========
   // Games (gate + overlays) with irregulars auto disabled
   // =========
-  showQuizGateForGame(gameName, gameFile) {
+    showQuizGateForGame(gameName, gameFile) {
     if (this.learningWords.filter(w => !w.isLearned).length < 3) {
       this.showNotification('Чтобы играть, добавьте минимум 3 слова из "списка слов" в «Изучаю»', 'warning');
       return;
@@ -5371,7 +5521,8 @@ attachPetHandlers() {
     overlay.style.cssText = 'position:fixed;inset:0;z-index:999999;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;';
 
     const gameContainer = document.createElement('div');
-    gameContainer.style.cssText = 'background:rgba(255,255,255,0.95);border-radius:16px;padding:20px;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);';
+    // Убрали жесткий color:#333, чтобы CSS мог управлять цветом в темной теме
+    gameContainer.style.cssText = 'background:var(--bg-primary);border-radius:16px;padding:20px;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);';
 
     const closeBtn = document.createElement('button');
     closeBtn.innerHTML = '<i class="fas fa-times"></i> Закрыть';
@@ -5381,7 +5532,7 @@ attachPetHandlers() {
 
     const gameTitle = document.createElement('h2');
     gameTitle.textContent = `${gameName} - Quiz`;
-    gameTitle.style.cssText = 'text-align:center;margin-bottom:20px;color:#333;';
+    gameTitle.style.cssText = 'text-align:center;margin-bottom:20px; font-weight:800;';
 
     const quizContainer = document.createElement('div');
     quizContainer.id = 'quizGateContainer';
@@ -5402,7 +5553,7 @@ attachPetHandlers() {
     const showNextQuestion = () => {
       const word = this.getRandomLearningWord();
       if (!word) {
-        quizContainer.innerHTML = '<div style="text-align:center;padding:20px;color:#666;">Недостаточно слов</div>';
+        quizContainer.innerHTML = '<div style="text-align:center;padding:20px;">Недостаточно слов</div>';
         return;
       }
       const direction = Math.random() < 0.5 ? 'EN_RU' : 'RU_EN';
@@ -5411,70 +5562,75 @@ attachPetHandlers() {
       const options = this.buildQuizOptions(word, direction);
       const shuffled = this.shuffle(options);
 
+      // Генерируем HTML кнопок. Обрати внимание: убрали инлайн стили background/border
       quizContainer.innerHTML = `
         <div style="margin-bottom:15px;text-align:center;">
-          <div style="font-size:20px;font-weight:700;color:#333;margin-bottom:12px;">
+          <div style="font-size:20px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px;">
             ${questionText}
-            <span class="sound-actions" style="margin-left:8px;">
-              <button class="mini-btn" title="US" onclick="app.playWord('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'us')"><i class="fas fa-volume-up"></i></button>
-              <button class="mini-btn" title="UK" onclick="app.playWord('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'uk')"><i class="fas fa-headphones"></i></button>
+            <span class="sound-actions">
+               <button class="mini-btn gate-sound-btn" data-region="us"><i class="fas fa-volume-up"></i></button>
             </span>
           </div>
-          <div style="font-size:14px;color:#666;margin-bottom:12px;">
+          <div style="font-size:14px;opacity:0.8;margin-bottom:12px;">
             Выберите правильный вариант
           </div>
           <div class="quiz-options" style="display:grid;gap:10px;">
             ${shuffled.map(opt => {
-              const isEnglishOpt = this.isEnglish(opt) && !this.isRussian(opt);
-              const baseForSound = opt.split('→')[0].trim();
-              const soundBtns = isEnglishOpt ? `
-                <span class="option-sound">
-                  <button class="mini-btn" title="US" onclick="event.stopPropagation(); app.playSingleWordMp3('${this.safeAttr(baseForSound)}', 'us')"><i class="fas fa-volume-up"></i></button>
-                  <button class="mini-btn" title="UK" onclick="event.stopPropagation(); app.playSingleWordMp3('${this.safeAttr(baseForSound)}', 'uk')"><i class="fas fa-headphones"></i></button>
-                </span>
-              ` : '';
-              return `<div class="quiz-option-gate" data-answer="${this.safeAttr(opt)}" style="padding:12px;border-radius:8px;border:2px solid #e0e0e0;background:#f9f9f9;cursor:pointer;text-align:center;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;">
-                <span>${opt}</span>${soundBtns}
+              return `<div class="quiz-option-gate" data-answer="${this.safeAttr(opt)}" style="padding:12px;border-radius:8px;border:2px solid var(--border-color);cursor:pointer;text-align:center;font-weight:600;">
+                ${opt}
               </div>`;
             }).join('')}
           </div>
         </div>
       `;
 
+      // Обработчик звука вопроса (используем playWord для поддержки идиом/фразовых)
+      const soundBtn = quizContainer.querySelector('.gate-sound-btn');
+      if(soundBtn) {
+          soundBtn.onclick = (e) => {
+              e.stopPropagation();
+              // Task 3 & 4: playWord сам разберется (идиома, фразовый или обычное слово)
+              this.playWord(word.word, word.forms, 'us', word.level); 
+          };
+      }
+
+      // Авто-озвучка
       if (direction === 'EN_RU' && this.shouldAutoPronounce(word)) {
         setTimeout(() => {
-          if (word.forms && word.forms.length) this.playFormsSequence(word.forms, 'us');
-          else if (this.isMultiWord(word.word)) this.playPhraseTTS(word.word, 'us');
-          else this.playSingleWordMp3(word.word, 'us');
+           this.playWord(word.word, word.forms, 'us', word.level);
         }, 150);
       }
 
+      // Логика клика по ответу (ЧЕРЕЗ КЛАССЫ, а не стили)
       quizContainer.querySelectorAll('.quiz-option-gate').forEach(opt => {
         opt.addEventListener('click', async () => {
+          // Блокируем повторные клики
+          quizContainer.querySelectorAll('.quiz-option-gate').forEach(b => b.style.pointerEvents = 'none');
+
           const chosen = opt.getAttribute('data-answer');
           const isCorrect = chosen === correct;
 
-          opt.style.background = isCorrect ? '#d1fae5' : '#fee2e2';
-          opt.style.borderColor = isCorrect ? '#10b981' : '#ef4444';
-
-          if (!isCorrect) {
-            quizContainer.querySelectorAll('.quiz-option-gate').forEach(o => {
-              if (o.getAttribute('data-answer') === correct) {
-                o.style.background = '#d1fae5';
-                o.style.borderColor = '#10b981';
-              }
-            });
+          // Добавляем классы для стилизации (см. CSS)
+          if (isCorrect) {
+              opt.classList.add('gate-correct');
+          } else {
+              opt.classList.add('gate-wrong');
+              // Подсветим правильный
+              quizContainer.querySelectorAll('.quiz-option-gate').forEach(o => {
+                  if (o.getAttribute('data-answer') === correct) {
+                      o.classList.add('gate-correct');
+                  }
+              });
           }
 
           await this.waitForCurrentAudioToFinish();
 
+          // Озвучка при ответе (если был русский вопрос)
           if (direction === 'RU_EN' && this.shouldAutoPronounce(word)) {
-            await this.delay(200);
-            if (word.forms && word.forms.length) await this.playFormsSequence(word.forms, 'us');
-            else if (this.isMultiWord(word.word)) await this.playPhraseTTS(word.word, 'us');
-            else await this.playSingleWordMp3(word.word, 'us');
+             await this.delay(200);
+             await this.playWord(word.word, word.forms, 'us', word.level);
           } else {
-            await this.delay(600);
+             await this.delay(600);
           }
 
           if (isCorrect) {
@@ -5491,7 +5647,8 @@ attachPetHandlers() {
               showNextQuestion();
             }
           } else {
-            showNextQuestion();
+            // При ошибке даем шанс исправиться или следующий вопрос (сейчас следующий)
+            setTimeout(() => showNextQuestion(), 800);
           }
         });
       });
@@ -5842,10 +5999,10 @@ document.addEventListener('DOMContentLoaded', () => {
   window.app = new EnglishWordsApp();
 });
 
-service-worker.js
-/* Simple image cache-first service worker for Bewords */
-const CACHE_NAME = 'bewords-images-v4';
-const IMG_EXT_RE = /\.(png|jpg|jpeg|webp|gif|svg)$/i;
+/* Caching Service Worker for Bewords & Games */
+const CACHE_NAME = 'bewords-app-v5'; // Обновил версию
+// Расширили регулярку: картинки + html + css + js + json
+const ASSETS_RE = /\.(png|jpg|jpeg|webp|gif|svg|html|css|js|json)$/i;
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -5855,6 +6012,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
+    // Удаляем старые кэши
     await Promise.all(keys.map(k => (k !== CACHE_NAME ? caches.delete(k) : Promise.resolve())));
     await self.clients.claim();
   })());
@@ -5866,33 +6024,36 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(req.url);
   
-    const isImage =
-  req.destination === 'image' ||
-  IMG_EXT_RE.test(url.pathname) ||
-  url.hostname.includes('britlex.ru') ||
-  url.hostname.includes('smart.servier.com') ||
-  url.hostname.includes('scidraw.io') ||
-  url.pathname.includes('medical') ||
-  url.pathname.startsWith('/');
+  // Определяем, нужно ли кэшировать
+  const shouldCache = 
+    ASSETS_RE.test(url.pathname) || 
+    url.pathname.endsWith('/') || // главная страница
+    url.hostname.includes('britlex.ru') ||
+    url.hostname.includes('smart.servier.com');
 
-  // Do not cache audio or media streams
-  const isAudio = req.destination === 'audio' || url.pathname.endsWith('.mp3') || url.hostname.includes('wooordhunt.ru');
+  // НЕ кэшируем аудио и API
+  const isAudio = req.destination === 'audio' || url.pathname.endsWith('.mp3') || url.hostname.includes('wooordhunt.ru') || url.pathname.includes('/au/');
   if (isAudio) return;
 
-  if (isImage) {
+  if (shouldCache) {
     event.respondWith((async () => {
       const cache = await caches.open(CACHE_NAME);
       const cached = await cache.match(req, { ignoreVary: true });
-      if (cached) return cached;
-      try {
-        const res = await fetch(req, { mode: 'no-cors' });
-        // opaque responses also cacheable
-        cache.put(req, res.clone());
-        return res;
-      } catch (e) {
-        // fallback to cache if possible (already handled above)
-        return cached || Response.error();
-      }
+      
+      // Стратегия: Stale-While-Revalidate (вернуть кэш сразу, но обновить в фоне)
+      // Для игр это критично: они грузятся мгновенно.
+      const networkFetch = fetch(req, { mode: 'cors', credentials: 'omit' })
+        .then(res => {
+          if (res && res.status === 200) {
+             cache.put(req, res.clone());
+          }
+          return res;
+        })
+        .catch(() => {
+           // Если сети нет, ничего страшного, надеемся на кэш
+        });
+
+      return cached || networkFetch;
     })());
   }
 });
