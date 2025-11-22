@@ -1955,10 +1955,11 @@ showLevelWords(level) {
       this.showGlobalLoader('Кот Боб загружает для вас этот список...', 1500);
     }
 
-    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
       const fragment = document.createDocumentFragment();
       const tempDiv = document.createElement('div');
 
+      // Генерируем HTML (без изменений)
       tempDiv.innerHTML = words.map(word => this.createWordCard(word, level)).join('');
 
       while (tempDiv.firstChild) {
@@ -1969,7 +1970,13 @@ showLevelWords(level) {
       wordsList.appendChild(fragment);
 
       this.installWordsListDelegatedHandlers();
-      this.updateBulkToggleButton();
+
+      // === ВАЖНОЕ ИСПРАВЛЕНИЕ ===
+      // Вызываем обновление кнопки с небольшой задержкой, чтобы данные точно "устоялись"
+      setTimeout(() => {
+          this.updateBulkToggleButton();
+      }, 50); 
+      // ===========================
 
       if (typeof this.ensureAutoDictButton === 'function') {
         this.ensureAutoDictButton();
@@ -2036,7 +2043,9 @@ showCategoryWords(category) {
       wordsList.appendChild(fragment);
 
       this.installWordsListDelegatedHandlers();
-      this.updateBulkToggleButton();
+      setTimeout(() => {
+          this.updateBulkToggleButton();
+      }, 50);
 
       if (typeof this.ensureAutoDictButton === 'function') {
         this.ensureAutoDictButton();
@@ -2087,6 +2096,9 @@ showLevelWordsLazy(level) {
       
       // кнопка подобрать там и сям
 this.installWordsListDelegatedHandlers();
+      setTimeout(() => {
+          this.updateBulkToggleButton();
+      }, 100); 
 
 // Гарантируем появление кнопки, даже если рендер занял время
 requestAnimationFrame(() => {
@@ -2124,6 +2136,7 @@ requestAnimationFrame(() => {
           
           wordsList.insertAdjacentHTML('beforeend', nextBatch);
           loaded += BATCH_SIZE;
+          this.updateBulkToggleButton();
 
           if (title) {
             title.textContent = `${level} - Загружено ${Math.min(loaded, words.length)}/${words.length} слов`;
@@ -2765,45 +2778,77 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
   // =========
   // Bulk toggle (Добавить все / Удалить все)
   // =========
+  
   updateBulkToggleButton() {
     const btn = document.getElementById('bulkToggleBtn');
     if (!btn) return;
 
     const source = this.currentLevel || this.currentCategory;
+    
+    // 1. Для "Мои слова" (ADDED) кнопка не нужна (или всегда неактивна)
     if (!source || source === 'ADDED') {
-      btn.textContent = 'Учить все';
-      btn.title = 'Учить все';
-      btn.classList.remove('remove');
-      btn.classList.add('add');
-      btn.dataset.state = 'not-all';
-      btn.disabled = true;
+      this._setBulkButtonState(btn, 'add', 'Учить все', true);
       return;
     }
-    const words = oxfordWordsDatabase[source] || [];
-    if (!words.length) {
-      btn.textContent = 'Учить все';
-      btn.title = 'Учить все';
-      btn.classList.remove('remove');
-      btn.classList.add('add');
-      btn.dataset.state = 'not-all';
-      btn.disabled = true;
+
+    // Берем базу
+    const dbWords = oxfordWordsDatabase[source] || [];
+    if (dbWords.length === 0) {
+      this._setBulkButtonState(btn, 'add', 'Учить все', true);
       return;
     }
-    const allAdded = words.every(w => this.learningWords.some(lw => lw.word === w.word && lw.level === source));
+
+    // 2. БЫСТРАЯ ПРОВЕРКА ПО КОЛИЧЕСТВУ
+    // Считаем, сколько слов этого уровня есть у пользователя
+    const userCount = this.learningWords.reduce((acc, w) => {
+      return (w.level === source) ? acc + 1 : acc;
+    }, 0);
+
+    // Если у пользователя слов столько же или больше, чем в базе -> Считаем, что ВСЕ ДОБАВЛЕНО.
+    // Это решает проблему "одного битого слова", из-за которого кнопка глючила.
+    if (userCount >= dbWords.length) {
+      this._setBulkButtonState(btn, 'remove', 'Удалить все', false);
+      return;
+    }
+
+    // 3. ЕСЛИ КОЛИЧЕСТВО НЕ СОВПАЛО -> ТОЧНАЯ ПРОВЕРКА ЧЕРЕЗ SET (Очень быстрая)
+    // Создаем набор "ключей" слов пользователя для мгновенного поиска: "cat"
+    const userWordsSet = new Set();
+    for (let i = 0; i < this.learningWords.length; i++) {
+      const w = this.learningWords[i];
+      if (w.level === source) {
+        userWordsSet.add(w.word.toLowerCase().trim());
+      }
+    }
+
+    // Проверяем, есть ли каждое слово из базы в наборе пользователя
+    const allAdded = dbWords.every(dbW => {
+      // Пропускаем пустые, если есть
+      if (!dbW.word) return true; 
+      return userWordsSet.has(dbW.word.toLowerCase().trim());
+    });
+
     if (allAdded) {
-      btn.textContent = 'Удалить все';
-      btn.title = 'Удалить все';
+      this._setBulkButtonState(btn, 'remove', 'Удалить все', false);
+    } else {
+      this._setBulkButtonState(btn, 'add', 'Учить все', false);
+    }
+  }
+
+  // Вспомогательный метод для смены вида кнопки
+  _setBulkButtonState(btn, type, text, disabled) {
+    btn.textContent = text;
+    btn.title = text;
+    btn.disabled = disabled;
+    
+    if (type === 'remove') {
       btn.classList.remove('add');
       btn.classList.add('remove');
       btn.dataset.state = 'all-added';
-      btn.disabled = false;
     } else {
-      btn.textContent = 'Учить все';
-      btn.title = 'Учить все';
       btn.classList.remove('remove');
       btn.classList.add('add');
       btn.dataset.state = 'not-all';
-      btn.disabled = false;
     }
   }
   
