@@ -4175,42 +4175,6 @@ box-shadow: var(--shadow-md);
    FIXES: BUTTONS TEXT & DESKTOP LAYOUT
    ============================================================ */
 
-/* 1. Кнопка "Учить" - делаем снова ТЕКСТОМ (вместо иконки +) */
-#wordsList .word-card .action-text-btn.add,
-#newWordsList .word-card .action-text-btn.add,
-#customWords .word-card .action-text-btn.add {
-    width: auto !important;       /* Авто-ширина под текст */
-    min-width: 70px !important;
-    height: 32px !important;
-    border-radius: 16px !important; /* Закругленная таблетка */
-    
-    padding: 0 14px !important;
-    
-    font-size: 0.75rem !important; /* Возвращаем размер текста */
-    font-weight: 800 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    
-    /* Восстанавливаем flex для центровки текста */
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Убираем иконку плюса (::after), которую мы добавляли раньше */
-#wordsList .word-card .action-text-btn.add::after,
-#newWordsList .word-card .action-text-btn.add::after,
-#customWords .word-card .action-text-btn.add::after {
-    content: none !important;
-}
-
-/* Кнопку "Удалить" (галочку) оставляем маленькой иконкой, 
-   так аккуратнее, или тоже хотите текстом? Пока оставляю иконкой */
-#wordsList .word-card .action-text-btn.remove,
-#newWordsList .word-card .action-text-btn.remove,
-#customWords .word-card .action-text-btn.remove {
-    /* Оставляем как есть (кружок с галочкой) */
-}
 
 /* 2. Списки уровней - ВСЕГДА в 1 колонку (даже на ПК) */
 @media (min-width: 600px) {
