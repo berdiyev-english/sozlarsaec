@@ -5917,24 +5917,32 @@ attachPetHandlers() {
     }
     return result;
   }
-  showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-      position:fixed;top:80px;left:50%;transform:translateX(-50%);
-      background:${type === 'success' ? 'var(--accent-color)' : type === 'warning' ? 'var(--warning-color)' : 'var(--primary-color)'};
-      color:white;padding:12px 24px;border-radius:8px;
-      box-shadow:var(--shadow-lg);z-index:2147483647;
-      max-width:90%;text-align:center;font-weight:600;
-      animation:slideDown 0.3s ease;
-    `;
-    notification.textContent = message;
-    document.body.appendChild(notification);
+    showNotification(msg, type = 'info') {
+      // 1. Ищем или создаем контейнер
+      let container = document.querySelector('.toast-container');
+      if (!container) {
+          container = document.createElement('div');
+          container.className = 'toast-container';
+          document.body.appendChild(container);
+      }
 
-    setTimeout(() => {
-      notification.style.animation = 'slideUp 0.3s ease';
-      setTimeout(() => notification.remove(), 300);
-    }, 2500);
+      // 2. Создаем уведомление с классами
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`; // type: success, error, warning, info
+      toast.innerHTML = `<span>${msg}</span>`;
+      
+      // 3. Добавляем в контейнер
+      container.appendChild(toast);
+      
+      // 4. Удаляем через 3 секунды с анимацией исчезновения
+      setTimeout(() => {
+          toast.style.transition = 'all 0.3s ease';
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateY(-20px) scale(0.9)';
+          setTimeout(() => toast.remove(), 300);
+      }, 3000);
   }
+  
   getRandomLearningWord() {
     const availableWords = this.learningWords.filter(w => !w.isLearned);
     if (availableWords.length === 0) return null;
@@ -6024,8 +6032,10 @@ document.addEventListener('DOMContentLoaded', () => {
   window.app = new EnglishWordsApp();
 });
 
+
+service-worker.js
 /* Caching Service Worker for Bewords & Games */
-const CACHE_NAME = 'bewords-app-v5'; // Обновил версию
+const CACHE_NAME = 'bewords-app-v6'; // Обновил версию
 // Расширили регулярку: картинки + html + css + js + json
 const ASSETS_RE = /\.(png|jpg|jpeg|webp|gif|svg|html|css|js|json)$/i;
 
