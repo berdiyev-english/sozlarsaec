@@ -159,64 +159,153 @@ checkAndShowFirstRunOrMotivation() {
     return `https://wooordhunt.ru/data/sound/sow/${region}/${clean}.mp3`;
   }
   
-  // Имя файла для идиомы: "all ears" -> "all_ears"
-  buildIdiomFileName(phrase) {
+    // ==========================================================
+  // NEW AUDIO LOGIC: PREPOSITIONS, IDIOMS, PHRASAL (NO TTS)
+  // ==========================================================
+
+  // --- 1. ПРЕДЛОГИ (Prepositions) ---
+  // Имя файла: "at" -> "at", "run into" -> "run_into"
+  buildPrepositionFileName(phrase) {
     if (!phrase) return '';
     return String(phrase)
       .toLowerCase()
-      .replace(/[^a-z\s]/g, '')   // только латинские буквы и пробелы
+      .replace(/[^a-z\s]/g, '') // Убираем спецсимволы
       .trim()
-      .replace(/\s+/g, '_');      // пробелы -> _
+      .replace(/\s+/g, '_');    // Пробелы в подчеркивания
   }
 
-  // URL для US-озвучки идиомы с сайта
-  buildIdiomAudioUrl(fileName) {
-    if (!fileName) return '';
-    return `https://bewords.ru/au/idioms/us/${fileName}.mp3`;
+  // URL: bewords.ru/au/prepositions/us/at.mp3
+  buildPrepositionAudioUrl(fileName, region) {
+    const r = region === 'uk' ? 'uk' : 'us'; // Поддержка обоих регионов
+    return `https://bewords.ru/au/prepositions/${r}/${fileName}.mp3`;
   }
 
-  
-  async playIdiomAudio(phrase) {
-    const file = this.buildIdiomFileName(phrase);
+  async playPrepositionAudio(phrase, region) {
+    const file = this.buildPrepositionFileName(phrase);
     if (!file) return false;
-    const url = this.buildIdiomAudioUrl(file);
+    
+    const url = this.buildPrepositionAudioUrl(file, region);
+    
     try {
       await this.playMp3Url(url);
       return true;
     } catch (e) {
-      console.log('Idiom audio missing for:', phrase);
-      // TTS ОТКЛЮЧЕН по просьбе
+      // TTS ОТКЛЮЧЕН: если файла нет, будет тишина
+      console.log('Preposition audio missing:', url);
       return false; 
     }
   }
-  
-    buildPhrasalFileName(phrase) {
+
+  // --- 2. ФРАЗОВЫЕ ГЛАГОЛЫ (Phrasal Verbs) ---
+  buildPhrasalFileName(phrase) {
     if (!phrase) return '';
     return String(phrase)
       .toLowerCase()
       .replace(/[^a-z\s]/g, '')
       .trim()
-      .replace(/\s+/g, '_'); // look up -> look_up
+      .replace(/\s+/g, '_');
   }
 
+  // URL: bewords.ru/au/phrasal/us/look_up.mp3 (всегда US)
   buildPhrasalAudioUrl(fileName) {
-    if (!fileName) return '';
     return `https://bewords.ru/au/phrasal/us/${fileName}.mp3`;
   }
 
-    // --- ОБНОВЛЕННЫЙ МЕТОД (Без TTS) ---
-   async playPhrasalAudio(phrase) {
+  async playPhrasalAudio(phrase) {
     const file = this.buildPhrasalFileName(phrase);
     if (!file) return false;
+    
     const url = this.buildPhrasalAudioUrl(file);
+    
     try {
       await this.playMp3Url(url);
       return true;
     } catch (e) {
-      console.log('Phrasal audio missing for:', phrase);
-      // TTS ОТКЛЮЧЕН по просьбе
+      console.log('Phrasal audio missing:', url);
       return false;
     }
+  }
+
+  // --- 3. ИДИОМЫ (Idioms) ---
+  buildIdiomFileName(phrase) {
+    if (!phrase) return '';
+    return String(phrase)
+      .toLowerCase()
+      .replace(/[^a-z\s]/g, '')
+      .trim()
+      .replace(/\s+/g, '_');
+  }
+
+  // URL: bewords.ru/au/idioms/us/break_a_leg.mp3 (всегда US)
+  buildIdiomAudioUrl(fileName) {
+    return `https://bewords.ru/au/idioms/us/${fileName}.mp3`;
+  }
+
+  async playIdiomAudio(phrase) {
+    const file = this.buildIdiomFileName(phrase);
+    if (!file) return false;
+    
+    const url = this.buildIdiomAudioUrl(file);
+    
+    try {
+      await this.playMp3Url(url);
+      return true;
+    } catch (e) {
+      console.log('Idiom audio missing:', url);
+      return false;
+    }
+  }
+
+  // --- ГЛАВНЫЙ МЕТОД (Маршрутизатор аудио) ---
+  // Вызывается отовсюду: из списков, карточек, квизов и игрового шлюза
+  async playWord(word, forms = null, region = null, level = null) {
+    if (typeof forms === 'string') { forms = [forms]; }
+    const regionPref = (region === 'uk' || region === 'us') ? region : 'us';
+
+    // A. ПРЕДЛОГИ
+    if (level === 'PREPOSITIONS') {
+      await this.playPrepositionAudio(word, regionPref);
+      return;
+    }
+
+    // B. ИДИОМЫ
+    if (level === 'IDIOMS') {
+      await this.playIdiomAudio(word);
+      return;
+    }
+
+    // C. ФРАЗОВЫЕ ГЛАГОЛЫ
+    if (level === 'PHRASAL_VERBS') {
+      await this.playPhrasalAudio(word);
+      return;
+    }
+
+    // D. СТАНДАРТНАЯ ЛОГИКА (Для A1-C2 и остальных)
+    
+    // Если слово состоит из частей через слэш (read/reading)
+    if ((!forms || !Array.isArray(forms) || forms.length === 0) &&
+        typeof word === 'string' && word.includes('/')) {
+      const parts = word.split('/').map(s => s.trim()).filter(Boolean);
+      if (parts.length > 1) {
+        await this.playFormsSequence(parts, regionPref);
+        return;
+      }
+    }
+
+    // Если переданы формы (go -> went -> gone)
+    if (forms && Array.isArray(forms) && forms.length) {
+      await this.playFormsSequence(forms, regionPref);
+      return;
+    }
+
+    // Если это фраза (но не спец. категория), используем TTS
+    if (this.isMultiWord(word)) {
+      await this.playPhraseTTS(word, regionPref);
+      return;
+    }
+
+    // Обычное одиночное слово (Wooordhunt)
+    await this.playSingleWordMp3(word, regionPref);
   }
   
   stopCurrentAudio() {
@@ -437,44 +526,7 @@ syncModePracticeToggles() {
     }
     return true;
   }
-      async playWord(word, forms = null, region = null, level = null) {
-    if (typeof forms === 'string') { forms = [forms]; }
-    const regionPref = (region === 'uk' || region === 'us') ? region : 'us';
-
-    // 1. ИДИОМЫ: Строго mp3 файл
-    if (level === 'IDIOMS') {
-      await this.playIdiomAudio(word);
-      return;
-    }
-
-    // 2. ФРАЗОВЫЕ ГЛАГОЛЫ: Строго mp3 файл
-    if (level === 'PHRASAL_VERBS') {
-      await this.playPhrasalAudio(word);
-      return;
-    }
-
-    // ... обычная логика для остальных слов
-    if ((!forms || !Array.isArray(forms) || forms.length === 0) &&
-        typeof word === 'string' && word.includes('/')) {
-      const parts = word.split('/').map(s => s.trim()).filter(Boolean);
-      if (parts.length > 1) {
-        await this.playFormsSequence(parts, regionPref);
-        return;
-      }
-    }
-
-    if (forms && Array.isArray(forms) && forms.length) {
-      await this.playFormsSequence(forms, regionPref);
-      return;
-    }
-
-    if (this.isMultiWord(word)) {
-      await this.playPhraseTTS(word, regionPref);
-      return;
-    }
-
-    await this.playSingleWordMp3(word, regionPref);
-  }
+    
 
   // =========================
   // Image helpers
@@ -1955,10 +2007,11 @@ showLevelWords(level) {
       this.showGlobalLoader('Кот Боб загружает для вас этот список...', 1500);
     }
 
-    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
       const fragment = document.createDocumentFragment();
       const tempDiv = document.createElement('div');
 
+      // Генерируем HTML (без изменений)
       tempDiv.innerHTML = words.map(word => this.createWordCard(word, level)).join('');
 
       while (tempDiv.firstChild) {
@@ -1969,7 +2022,13 @@ showLevelWords(level) {
       wordsList.appendChild(fragment);
 
       this.installWordsListDelegatedHandlers();
-      this.updateBulkToggleButton();
+
+      // === ВАЖНОЕ ИСПРАВЛЕНИЕ ===
+      // Вызываем обновление кнопки с небольшой задержкой, чтобы данные точно "устоялись"
+      setTimeout(() => {
+          this.updateBulkToggleButton();
+      }, 50); 
+      // ===========================
 
       if (typeof this.ensureAutoDictButton === 'function') {
         this.ensureAutoDictButton();
@@ -2036,7 +2095,9 @@ showCategoryWords(category) {
       wordsList.appendChild(fragment);
 
       this.installWordsListDelegatedHandlers();
-      this.updateBulkToggleButton();
+      setTimeout(() => {
+          this.updateBulkToggleButton();
+      }, 50);
 
       if (typeof this.ensureAutoDictButton === 'function') {
         this.ensureAutoDictButton();
@@ -2087,6 +2148,9 @@ showLevelWordsLazy(level) {
       
       // кнопка подобрать там и сям
 this.installWordsListDelegatedHandlers();
+      setTimeout(() => {
+          this.updateBulkToggleButton();
+      }, 100); 
 
 // Гарантируем появление кнопки, даже если рендер занял время
 requestAnimationFrame(() => {
@@ -2124,6 +2188,7 @@ requestAnimationFrame(() => {
           
           wordsList.insertAdjacentHTML('beforeend', nextBatch);
           loaded += BATCH_SIZE;
+          this.updateBulkToggleButton();
 
           if (title) {
             title.textContent = `${level} - Загружено ${Math.min(loaded, words.length)}/${words.length} слов`;
@@ -2765,45 +2830,77 @@ async buildAutoDictionary(detectedLevel, detailedLevel) {
   // =========
   // Bulk toggle (Добавить все / Удалить все)
   // =========
+  
   updateBulkToggleButton() {
     const btn = document.getElementById('bulkToggleBtn');
     if (!btn) return;
 
     const source = this.currentLevel || this.currentCategory;
+    
+    // 1. Для "Мои слова" (ADDED) кнопка не нужна (или всегда неактивна)
     if (!source || source === 'ADDED') {
-      btn.textContent = 'Учить все';
-      btn.title = 'Учить все';
-      btn.classList.remove('remove');
-      btn.classList.add('add');
-      btn.dataset.state = 'not-all';
-      btn.disabled = true;
+      this._setBulkButtonState(btn, 'add', 'Учить все', true);
       return;
     }
-    const words = oxfordWordsDatabase[source] || [];
-    if (!words.length) {
-      btn.textContent = 'Учить все';
-      btn.title = 'Учить все';
-      btn.classList.remove('remove');
-      btn.classList.add('add');
-      btn.dataset.state = 'not-all';
-      btn.disabled = true;
+
+    // Берем базу
+    const dbWords = oxfordWordsDatabase[source] || [];
+    if (dbWords.length === 0) {
+      this._setBulkButtonState(btn, 'add', 'Учить все', true);
       return;
     }
-    const allAdded = words.every(w => this.learningWords.some(lw => lw.word === w.word && lw.level === source));
+
+    // 2. БЫСТРАЯ ПРОВЕРКА ПО КОЛИЧЕСТВУ
+    // Считаем, сколько слов этого уровня есть у пользователя
+    const userCount = this.learningWords.reduce((acc, w) => {
+      return (w.level === source) ? acc + 1 : acc;
+    }, 0);
+
+    // Если у пользователя слов столько же или больше, чем в базе -> Считаем, что ВСЕ ДОБАВЛЕНО.
+    // Это решает проблему "одного битого слова", из-за которого кнопка глючила.
+    if (userCount >= dbWords.length) {
+      this._setBulkButtonState(btn, 'remove', 'Удалить все', false);
+      return;
+    }
+
+    // 3. ЕСЛИ КОЛИЧЕСТВО НЕ СОВПАЛО -> ТОЧНАЯ ПРОВЕРКА ЧЕРЕЗ SET (Очень быстрая)
+    // Создаем набор "ключей" слов пользователя для мгновенного поиска: "cat"
+    const userWordsSet = new Set();
+    for (let i = 0; i < this.learningWords.length; i++) {
+      const w = this.learningWords[i];
+      if (w.level === source) {
+        userWordsSet.add(w.word.toLowerCase().trim());
+      }
+    }
+
+    // Проверяем, есть ли каждое слово из базы в наборе пользователя
+    const allAdded = dbWords.every(dbW => {
+      // Пропускаем пустые, если есть
+      if (!dbW.word) return true; 
+      return userWordsSet.has(dbW.word.toLowerCase().trim());
+    });
+
     if (allAdded) {
-      btn.textContent = 'Удалить все';
-      btn.title = 'Удалить все';
+      this._setBulkButtonState(btn, 'remove', 'Удалить все', false);
+    } else {
+      this._setBulkButtonState(btn, 'add', 'Учить все', false);
+    }
+  }
+
+  // Вспомогательный метод для смены вида кнопки
+  _setBulkButtonState(btn, type, text, disabled) {
+    btn.textContent = text;
+    btn.title = text;
+    btn.disabled = disabled;
+    
+    if (type === 'remove') {
       btn.classList.remove('add');
       btn.classList.add('remove');
       btn.dataset.state = 'all-added';
-      btn.disabled = false;
     } else {
-      btn.textContent = 'Учить все';
-      btn.title = 'Учить все';
       btn.classList.remove('remove');
       btn.classList.add('add');
       btn.dataset.state = 'not-all';
-      btn.disabled = false;
     }
   }
   
