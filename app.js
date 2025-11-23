@@ -1467,25 +1467,81 @@ toggleTheme() {
   // =========
   // Support
   // =========
+    // =========
+  // Support (New Beautiful Popup)
+  // =========
   showSupportModal() {
-    const modal = document.createElement('div');
-    modal.className = 'support-modal';
-    modal.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;';
-    modal.innerHTML = `
-      <div class="support-modal-content" style="background:var(--bg-primary);border-radius:16px;padding:30px;max-width:500px;width:100%;box-shadow:var(--shadow-lg);">
-        <h2 style="margin-bottom:15px;color:var(--text-primary);">❤️ Поддержать проект</h2>
-        <p style="margin-bottom:15px;color:var(--text-secondary);">Это бесплатный сервис без рекламы, который создан с любовью к изучению английского языка. </p>
-         <p style="margin-bottom:15px;color:var(--text-secondary);">Проект может развиваться и существовать благодаря вашим донатам.</p>
-        <p style="margin-bottom:15px;color:var(--text-secondary);">Если вам понравилось мое приложение и оно помогает вам учить английский, не забудьте помочь проекту!</p>
-        <p style="margin-bottom:20px;color:var(--text-secondary);"><strong>Об авторе:</strong><br>Приложение создано Бердиевым Абдуррахимом - Аспирантом педагогических наук</p> 
-        <a href="https://pay.cloudtips.ru/p/8f56d7d3" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-block;margin-right:10px;margin-bottom:10px;">
-          <i class="fas fa-heart"></i> Поддержать проект
+    const overlay = document.createElement('div');
+    overlay.className = 'donate-modal-overlay';
+    
+    // Генерируем "живой" процент сбора (например, 67%)
+    // Или можно поставить фиксированный
+    const percent = Math.floor(Math.random() * (78 - 45 + 1)) + 45; 
+    
+    overlay.innerHTML = `
+      <div class="donate-popup-card">
+        <button class="donate-close-absolute" id="closeDonateBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="donate-heart-icon">❤️</div>
+        
+        <h2 class="donate-title">Внесите свой вклад в <span>Bewords</span></h2>
+        
+        <p class="donate-desc">
+            Я разрабатываю это приложение в одиночку. 
+            Здесь нет рекламы и платных подписок. 
+            Ваш донат помогает оплачивать серверы и работу над новыми функциями.
+        </p>
+        
+        <div class="donate-goal-box">
+            <div class="donate-goal-header">
+                <span>Цель: Оплата серверов</span>
+                <span>${percent}%</span>
+            </div>
+            <div class="donate-track">
+                <div class="donate-fill" style="width: 0%"></div>
+            </div>
+            <div style="font-size: 11px; color: #aaa; margin-top: 8px; font-weight:600;">
+               Осталось немного, чтобы закрыть расходы на этот месяц! 🔥
+            </div>
+        </div>
+        
+        <a href="https://pay.cloudtips.ru/p/8f56d7d3" target="_blank" class="donate-main-btn">
+            <i class="fas fa-heart"></i> Поддержать автора
         </a>
-        <button class="btn btn-secondary" data-testid="support-close" onclick="this.closest('.support-modal').remove()">Закрыть</button>
+        
+        <div class="donate-secure">
+            <i class="fas fa-lock"></i> Безопасная оплата через CloudTips (Тинькофф)
+        </div>
       </div>
     `;
-    modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
-    document.body.appendChild(modal);
+
+    document.body.appendChild(overlay);
+
+    // Анимация появления (Fade In + Scale Up)
+    requestAnimationFrame(() => {
+        overlay.classList.add('visible');
+    });
+
+    // Анимация прогресс-бара (через 200мс после открытия)
+    setTimeout(() => {
+        const fill = overlay.querySelector('.donate-fill');
+        if (fill) fill.style.width = `${percent}%`;
+    }, 200);
+
+    // Логика закрытия
+    const close = () => {
+        overlay.classList.remove('visible');
+        setTimeout(() => overlay.remove(), 300); // Ждем окончания анимации CSS
+    };
+
+    overlay.querySelector('#closeDonateBtn').addEventListener('click', close);
+    
+    // Закрытие по клику на фон (вне карточки)
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) close();
+    });
   }
   
   showLearningHelpModal() {
@@ -1643,7 +1699,7 @@ showSettingsModal() {
         </button> 
       </div> 
       <div id="settingsMenu"> 
-        <button class="btn btn-primary settings-about-btn" data-testid="settings-about" style="width:100%;margin-bottom:10px;">
+        <button class="btn btn-primary" onclick="window.open('about.html', '_blank')" style="width:100%;margin-bottom:10px;">
           <i class="fas fa-info-circle"></i> О приложении
         </button> 
         <button class="btn btn-primary settings-theme-btn" data-testid="settings-theme" style="width:100%;margin-bottom:10px;">
@@ -1652,7 +1708,7 @@ showSettingsModal() {
         <button class="btn btn-primary settings-audio-btn" data-testid="settings-audio" style="width:100%;margin-bottom:10px;">
           <i class="fas fa-volume-up"></i> Настройки аудио
         </button>
-        <button class="btn btn-primary settings-install-btn" data-testid="settings-install" style="width:100%;margin-bottom:10px;">
+        <button class="btn btn-primary" onclick="window.open('app.html', '_blank')" style="width:100%;margin-bottom:10px;">
           <i class="fas fa-download"></i> Установка приложения
         </button> 
       </div>
@@ -1669,11 +1725,6 @@ showSettingsModal() {
     closeBtn.addEventListener('click', () => modal.remove());
   }
   
-  const aboutBtn = modal.querySelector('.settings-about-btn');
-  if (aboutBtn) {
-    aboutBtn.addEventListener('click', () => this.openAboutInSettings(aboutBtn));
-  }
-  
   const themeBtn = modal.querySelector('.settings-theme-btn');
   if (themeBtn) {
     themeBtn.addEventListener('click', () => {
@@ -1685,11 +1736,6 @@ showSettingsModal() {
   const audioBtn = modal.querySelector('.settings-audio-btn');
   if (audioBtn) {
     audioBtn.addEventListener('click', () => this.openAudioSettingsInSettings(audioBtn));
-  }
-  
-  const installBtn = modal.querySelector('.settings-install-btn');
-  if (installBtn) {
-    installBtn.addEventListener('click', () => this.openInstallGuideInSettings(installBtn));
   }
   
   // Закрытие по клику на overlay
