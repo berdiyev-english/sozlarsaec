@@ -566,9 +566,9 @@ body {
     <!-- New Words -->
   <section id="new-words" class="content-section"> <div id="translatorWidget" class="translator-card"> <div class="translator-header"> <h3>BeWords - Translate</h3> <p>Ищите слова и фразы и добавляйте их на изучение</p> </div>
 <div class="tr-lang-row">
-  <button class="tr-lang-btn active" id="trRuBtn" type="button">🇷🇺 Русский</button>
+  <button class="tr-lang-btn active" id="trRuBtn" type="button">🇷🇺 RU</button>
   <button class="tr-swap-btn" id="trSwapBtn" type="button" title="Поменять местами">⇄</button>
-  <button class="tr-lang-btn" id="trEnBtn" type="button">🇬🇧 English</button>
+  <button class="tr-lang-btn" id="trEnBtn" type="button">🇬🇧 ENG</button>
 </div>
 
 <div class="tr-input-row">
@@ -994,13 +994,13 @@ function setLang(from, to){
   // если from === 'en' → переводим ИЗ английского В русский:
   //   левая кнопка: Английский, правая: Русский (активна)
   if (from === 'ru') {
-    ruBtn.textContent = '🇷🇺 Русский';
-    enBtn.textContent = '🇬🇧 Английский';
+    ruBtn.textContent = '🇷🇺 Russian';
+    enBtn.textContent = '🇬🇧 English';
     ruBtn.classList.add('active');
     enBtn.classList.remove('active');
   } else {
-    ruBtn.textContent = '🇬🇧 Английский';
-    enBtn.textContent = '🇷🇺 Русский';
+    ruBtn.textContent = '🇬🇧 English';
+    enBtn.textContent = '🇷🇺 Russian';
     enBtn.classList.add('active');
     ruBtn.classList.remove('active');
   }
