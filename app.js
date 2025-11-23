@@ -1464,9 +1464,6 @@ toggleTheme() {
   this.showNotification(this.muted ? 'Звук отключен' : 'Звук включен', 'info');
 }
 
-  // =========
-  // Support
-  // =========
     // =========
   // Support (New Beautiful Popup)
   // =========
@@ -1474,9 +1471,7 @@ toggleTheme() {
     const overlay = document.createElement('div');
     overlay.className = 'donate-modal-overlay';
     
-    // Генерируем "живой" процент сбора (например, 67%)
-    // Или можно поставить фиксированный
-    const percent = Math.floor(Math.random() * (78 - 45 + 1)) + 45; 
+    const percent = 45; 
     
     overlay.innerHTML = `
       <div class="donate-popup-card">
@@ -6291,3 +6286,4 @@ self.addEventListener('fetch', (event) => {
     })());
   }
 });
+
