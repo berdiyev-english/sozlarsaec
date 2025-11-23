@@ -187,7 +187,7 @@ checkAndShowFirstRunOrMotivation() {
   }
   
     // ==========================================================
-  // NEW AUDIO LOGIC: PREPOSITIONS, IDIOMS, PHRASAL (NO TTS)
+  // NEW AUDIO LOGIC: PREPOSITIONS, IDIOMS, PHRASAL , PROVERBS
   // ==========================================================
 
   // --- 1. ПРЕДЛОГИ (Prepositions) ---
@@ -282,6 +282,38 @@ checkAndShowFirstRunOrMotivation() {
       return false;
     }
   }
+  
+    // --- 4. ПОСЛОВИЦЫ (Proverbs) ---
+  buildProverbFileName(phrase) {
+    if (!phrase) return '';
+    return String(phrase)
+      .toLowerCase()
+      .replace(/[^a-z\s]/g, '') // Убираем запятые, точки, апострофы
+      .trim()
+      .replace(/\s+/g, '_');    // Пробелы меняем на нижнее подчеркивание
+  }
+
+  // URL: bewords.ru/au/proverbs/us/no_pain_no_gain.mp3
+  buildProverbAudioUrl(fileName) {
+    // Всегда берем папку 'us', независимо от нажатой кнопки
+    return `https://bewords.ru/au/proverbs/us/${fileName}.mp3`;
+  }
+
+  async playProverbAudio(phrase) {
+    const file = this.buildProverbFileName(phrase);
+    if (!file) return false;
+    
+    const url = this.buildProverbAudioUrl(file);
+    
+    try {
+      await this.playMp3Url(url);
+      return true;
+    } catch (e) {
+      // TTS ОТКЛЮЧЕН: если файла нет — тишина
+      console.log('Proverb audio missing:', url);
+      return false; 
+    }
+  }
 
   // --- ГЛАВНЫЙ МЕТОД (Маршрутизатор аудио) ---
   // Вызывается отовсюду: из списков, карточек, квизов и игрового шлюза
@@ -306,8 +338,15 @@ checkAndShowFirstRunOrMotivation() {
       await this.playPhrasalAudio(word);
       return;
     }
+    
+    // D. ПОСЛОВИЦЫ
+    if (level === 'PROVERBS') {
+      // Игнорируем regionPref, внутри метода всегда стоит 'us'
+      await this.playProverbAudio(word);
+      return;
+    }
 
-    // D. СТАНДАРТНАЯ ЛОГИКА (Для A1-C2 и остальных)
+    // E. СТАНДАРТНАЯ ЛОГИКА (Для A1-C2 и остальных)
     
     // Если слово состоит из частей через слэш (read/reading)
     if ((!forms || !Array.isArray(forms) || forms.length === 0) &&
@@ -5336,7 +5375,12 @@ getPetWidgetHtml() {
   const goal = 20;
   const progressPct = Math.min(100, Math.round((todayCorrect / goal) * 100));
   const streak = session.correctStreak || 0;
-  const totalLearned = this.learningWords.filter(w => w.isLearned).length;
+    // Считаем выученным, если стоит галочка ИЛИ если точность (accScore) достигла 10
+  const totalLearned = this.learningWords.filter(w => {
+      if (w.isLearned) return true;
+      const s = this.wordStats[w.word];
+      return s && s.accScore >= 10;
+  }).length;
 
   // Медали
   const medals = [
@@ -5405,7 +5449,11 @@ renderProgress() {
   const achievementsHtml = this.getAchievementsWidgetHtml();
 
   const totalWords = this.learningWords.length;
-  const learnedWords = this.learningWords.filter(w => w.isLearned).length;
+  const learnedWords = this.learningWords.filter(w => {
+      if (w.isLearned) return true;
+      const s = this.wordStats[w.word];
+      return s && s.accScore >= 10;
+  }).length;
   const inProgress = Math.max(0, totalWords - learnedWords);
   const learnedPct = totalWords > 0 ? Math.round(learnedWords / totalWords * 100) : 0;
 
@@ -5414,7 +5462,12 @@ renderProgress() {
   const levelProgress = {};
   levelKeys.forEach(level => {
     const total = this.learningWords.filter(w => w.level === level).length;
-    const learned = this.learningWords.filter(w => w.level === level && w.isLearned).length;
+        const learned = this.learningWords.filter(w => {
+        if (w.level !== level) return false;
+        if (w.isLearned) return true;
+        const s = this.wordStats[w.word];
+        return s && s.accScore >= 10;
+    }).length;
     if (total > 0) {
       levelProgress[level] = {
         total,
