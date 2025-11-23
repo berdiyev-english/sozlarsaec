@@ -6,10 +6,10 @@ class EnglishWordsApp {
   this.loaderMinMs = 0;
   this.loaderTimer = null;
 
-  if (this.isAndroid) {
-    const img = new Image();
-    img.src = '/loading.gif'; // предварительная подгрузка Кота Боба
-  }
+  // Предварительная подгрузка Кота Боба для ВСЕХ устройств
+  const bobImg = new Image();
+  bobImg.src = '/loading.gif';
+  
     this.currentSection = 'about';
     this.currentLevel = null;
     this.currentCategory = null;
@@ -31,6 +31,10 @@ class EnglishWordsApp {
     this.showFilter = 'all';
     this.gameQuizIntervals = {};
     this.audioCtx = null;
+    
+    this.globalPlayer = new Audio();
+    this.globalPlayer.preload = 'auto'; 
+    
     this.initMedicalImageCache();
 
     // runtime flags
@@ -68,6 +72,29 @@ class EnglishWordsApp {
     this.syncModePracticeToggles();
     this.installAudioUnlocker();
     this.preloadAiChat();
+    
+        // "Воскрешение" звука при возврате в приложение на iOS
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            console.log('App became visible - trying to wake up audio');
+            
+            // 1. Будим AudioContext, если он уснул
+            if (this.audioCtx && this.audioCtx.state === 'suspended') {
+                this.audioCtx.resume().catch(e => console.log('Ctx resume fail', e));
+            }
+
+            // 2. Сбрасываем наш глобальный плеер, чтобы система поняла, что мы снова активны
+            // Не меняем src, просто убеждаемся, что он не в "подвешенном" состоянии
+            if (this.globalPlayer) {
+                // Если он проигрывал что-то и завис — пауза поможет сбросить состояние
+                try {
+                    // Не вызываем play(), иначе может заиграть старый звук.
+                    // Просто даем системе понять, что объект жив.
+                    this.globalPlayer.pause(); 
+                } catch(e) {}
+            }
+        }
+    });
     
     // Запуск проверки после инициализации
     setTimeout(() => {
@@ -322,81 +349,85 @@ checkAndShowFirstRunOrMotivation() {
   }
   // MP3 play that resolves when playback finishes (no overlap)
 playMp3Url(url) {
-  if (this.muted) return Promise.resolve(false);
-    const p = new Promise((resolve, reject) => {
-      try {
-        this.stopCurrentAudio();
-        
-        // Создаем аудио с предзагрузкой
-        const audio = new Audio();
-        audio.preload = 'auto';
-        audio.volume = 1.0;
-        audio.playbackRate = this.audioRate || 1;
-        
-        this.currentAudio = audio;
+    if (this.muted) return Promise.resolve(false);
 
-        let endedOrFailed = false;
-        const cleanup = () => {
-          if (endedOrFailed) return;
-          endedOrFailed = true;
-          try { 
-            audio.onended = null; 
-            audio.onerror = null; 
+    const p = new Promise((resolve, reject) => {
+        try {
+            // Используем глобальный плеер вместо new Audio()
+            const audio = this.globalPlayer;
+
+            // Сбрасываем предыдущее воспроизведение
+            audio.pause();
+            
+            // Важный хак для iOS: очистка src и принудительный load() сбрасывают буфер
+            // Но иногда вызов load() на пустом src вызывает ошибку, поэтому делаем аккуратно:
+            // audio.src = ''; 
+            // audio.load(); 
+
+            let endedOrFailed = false;
+
+            // Очистка слушателей от предыдущего запуска
+            audio.onended = null;
+            audio.onerror = null;
             audio.oncanplaythrough = null;
             audio.onloadeddata = null;
-          } catch {}
-        };
 
-        // Добавляем обработчик загрузки данных
-        audio.onloadeddata = () => {
-          // Разблокируем контекст если нужно
-          if (this.audioCtx && this.audioCtx.state === 'suspended') {
-            this.audioCtx.resume().catch(() => {});
-          }
-        };
+            const cleanup = () => {
+                if (endedOrFailed) return;
+                endedOrFailed = true;
+                // Мы не удаляем слушатели здесь жестко, так как объект переиспользуется, 
+                // они перезапишутся при следующем вызове, но флаг endedOrFailed защитит промис.
+            };
 
-        audio.oncanplaythrough = () => {
-          // Небольшая задержка для стабильности на мобильных
-          setTimeout(() => {
-            audio.play().then(() => {
-              // Успешно начали воспроизведение
-            }).catch(err => { 
-              cleanup(); 
-              reject(err); 
-            });
-          }, 50);
-        };
-        
-        audio.onended = () => { 
-          cleanup(); 
-          resolve(true); 
-        };
-        
-        audio.onerror = () => { 
-          cleanup(); 
-          reject(new Error('Audio error')); 
-        };
+            // Навешиваем новые обработчики
+            audio.onended = () => {
+                cleanup();
+                resolve(true);
+            };
 
-        // Устанавливаем src после всех обработчиков
-        audio.src = url;
-        audio.load();
+            audio.onerror = (e) => {
+                cleanup();
+                // На iOS часто бывает ошибка AbortError при быстром переключении, это не страшно
+                console.warn('Audio playback error or aborted', e);
+                reject(new Error('Audio error'));
+            };
+            
+            // Обработчик готовности
+            audio.oncanplaythrough = async () => {
+               // Пытаемся воспроизвести
+               try {
+                   await audio.play();
+               } catch (err) {
+                   // Если ошибка NotAllowedError (нет жеста), реджектим
+                   cleanup();
+                   reject(err);
+               }
+            };
 
-        // Увеличиваем таймаут для мобильных устройств
-        setTimeout(() => {
-          if (!endedOrFailed) { 
-            try { audio.pause(); } catch {} 
-            cleanup(); 
-            reject(new Error('Audio timeout')); 
-          }
-        }, 20000);
-        
-      } catch (e) { 
-        reject(e); 
-      }
+            // Устанавливаем новый URL
+            audio.src = url;
+            
+            // Явный load() помогает iOS понять, что это новый ресурс
+            audio.load();
+
+            // Таймаут на случай зависания сети
+            setTimeout(() => {
+                if (!endedOrFailed && !audio.paused && audio.duration > 0 && !audio.ended) {
+                    // Если все еще играет - ок
+                } else if (!endedOrFailed && audio.paused) {
+                    // Если завис в паузе
+                    cleanup();
+                    reject(new Error('Audio timeout'));
+                }
+            }, 20000);
+
+        } catch (e) {
+            reject(e);
+        }
     });
 
     this.currentAudioPromise = p.finally(() => {
-      if (this.currentAudioPromise === p) this.currentAudioPromise = null;
+        if (this.currentAudioPromise === p) this.currentAudioPromise = null;
     });
 
     return p;
@@ -1112,62 +1143,48 @@ maybeShowDailyMotivation(callback) {
   // Unlock audio on first user gesture (PWA fix)
 installAudioUnlocker() {
     let unlocked = false;
-    
     const unlock = async () => {
         if (unlocked) return;
-        
         try {
-            // Создаем или восстанавливаем AudioContext
+            // 1. Разблокировка Web Audio API
             const AC = window.AudioContext || window.webkitAudioContext;
             if (AC) {
-                if (!this.audioCtx) {
-                    this.audioCtx = new AC();
-                }
-                if (this.audioCtx.state === 'suspended') {
-                    await this.audioCtx.resume();
-                }
-                
-                // Создаем пустой буфер для полной разблокировки
+                if (!this.audioCtx) this.audioCtx = new AC();
+                if (this.audioCtx.state === 'suspended') await this.audioCtx.resume();
+                // Пустой буфер
                 const buffer = this.audioCtx.createBuffer(1, 1, 22050);
                 const source = this.audioCtx.createBufferSource();
                 source.buffer = buffer;
                 source.connect(this.audioCtx.destination);
                 source.start(0);
             }
-            
-            // Проигрываем беззвучное аудио для разблокировки HTML5 Audio
-            const silentAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
-            silentAudio.volume = 0.1;
-            await silentAudio.play().catch(() => {});
-            
-            // Разблокировка speechSynthesis
-            if ('speechSynthesis' in window) {
-                try { 
-                    window.speechSynthesis.cancel(); 
-                } catch {}
+
+            // 2. Разблокировка HTML5 Audio (Наш синглтон)
+            if (this.globalPlayer) {
+                // Играем тишину через наш основной плеер
+                const originalSrc = this.globalPlayer.src;
+                this.globalPlayer.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+                await this.globalPlayer.play();
+                this.globalPlayer.pause();
+                this.globalPlayer.currentTime = 0;
+                // Если там что-то было, не возвращаем src сразу, лучше пусть будет пустой до реального клика
             }
             
             unlocked = true;
-            console.log('Audio context unlocked successfully');
-            
         } catch (e) {
             console.warn('Audio unlock partial success:', e);
         }
-        
-        // Удаляем слушатели после разблокировки
+
         if (unlocked) {
-            document.removeEventListener('touchstart', unlock, true);
-            document.removeEventListener('touchend', unlock, true);
-            document.removeEventListener('click', unlock, true);
-            document.removeEventListener('pointerdown', unlock, true);
+            ['touchstart', 'touchend', 'click', 'pointerdown'].forEach(evt => 
+                document.removeEventListener(evt, unlock, true)
+            );
         }
     };
     
-    // Вешаем на множество событий для лучшей совместимости с iOS
-    document.addEventListener('touchstart', unlock, true);
-    document.addEventListener('touchend', unlock, true);
-    document.addEventListener('click', unlock, true);
-    document.addEventListener('pointerdown', unlock, true);
+    ['touchstart', 'touchend', 'click', 'pointerdown'].forEach(evt => 
+        document.addEventListener(evt, unlock, true)
+    );
 }
   
 maybeRunFirstTour() {
@@ -2003,10 +2020,8 @@ showLevelWords(level) {
   if (wordsList) {
     wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
 
-    if (this.isAndroid) {
-      this.showGlobalLoader('Кот Боб загружает для вас этот список...', 1500);
-    }
-
+   this.showGlobalLoader('Кот Боб загружает для вас этот список...', 1000);
+   
         requestAnimationFrame(() => {
       const fragment = document.createDocumentFragment();
       const tempDiv = document.createElement('div');
@@ -2034,9 +2049,8 @@ showLevelWords(level) {
         this.ensureAutoDictButton();
       }
 
-      if (this.isAndroid) {
         this.hideGlobalLoader();
-      }
+
     });
   }
 
@@ -2078,9 +2092,7 @@ showCategoryWords(category) {
   if (wordsList) {
     wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
 
-    if (this.isAndroid) {
-      this.showGlobalLoader('Кот Боб загружает для вас этот список...', 1500);
-    }
+      this.showGlobalLoader('Кот Боб загружает для вас этот список...', 1000);
 
     requestAnimationFrame(() => {
       const fragment = document.createDocumentFragment();
@@ -2103,9 +2115,7 @@ showCategoryWords(category) {
         this.ensureAutoDictButton();
       }
 
-      if (this.isAndroid) {
         this.hideGlobalLoader();
-      }
     });
   }
 
@@ -2138,9 +2148,7 @@ showLevelWordsLazy(level) {
   if (title) title.textContent = `${level} - ${words.length} слов (загрузка...)`;
 
   if (wordsList) {
-    if (this.isAndroid) {
-      this.showGlobalLoader('Кот Боб загружает для вас эту страницу...', 2000);
-    }
+      this.showGlobalLoader('Кот Боб загружает для вас эту страницу...', 1000);
 
     wordsList.innerHTML = words.slice(0, BATCH_SIZE)
       .map(w => this.createWordCard(w, level))
@@ -2161,9 +2169,7 @@ requestAnimationFrame(() => {
 
       let loaded = BATCH_SIZE;
 
-    if (this.isAndroid) {
       this.hideGlobalLoader();
-    }
 
     // Если загрузили не всё — настраиваем дозагрузку
     if (loaded < words.length) {
@@ -2178,7 +2184,7 @@ requestAnimationFrame(() => {
 
           // 2. Показываем лоадер (если Android)
           if (this.isAndroid) {
-            this.showGlobalLoader('Кот Боб загружает ещё слова...', 1500);
+            this.showGlobalLoader('Кот Боб загружает ещё слова...', 1000);
           }
 
           // 3. Грузим следующую порцию
@@ -2195,9 +2201,7 @@ requestAnimationFrame(() => {
           }
 
           // 4. Прячем лоадер
-          if (this.isAndroid) {
             this.hideGlobalLoader();
-          }
 
           // 5. Если остались ещё слова — добавляем новый "датчик" в самый низ
           if (loaded < words.length) {
@@ -4703,7 +4707,7 @@ document.body.appendChild(overlay);
 
 // Если слов очень много — показываем кота Боба при открытии
 if ((this.learningWords || []).length > 500) {
-  this.showGlobalLoader('Кот Боб загружает для вас список слов...', 2000);
+  this.showGlobalLoader('Кот Боб загружает для вас список слов...', 1000);
 }
 
 // Первичный рендер
@@ -4826,7 +4830,7 @@ if ((this.learningWords || []).length > 500) {
 
   // ВАЖНО: если много слов — показываем Боба и здесь тоже
   if (this.isAndroid || total > 500) {
-    this.showGlobalLoader('Кот Боб загружает для вас список слов...', 2000);
+    this.showGlobalLoader('Кот Боб загружает для вас список слов...', 1500);
   }
 
   const renderBatch = () => {
@@ -4911,7 +4915,7 @@ if ((this.learningWords || []).length > 500) {
 
         // 2. Анимация
         if (this.isAndroid || total > 500) {
-          this.showGlobalLoader('Кот Боб загружает ещё слова...', 1500);
+          this.showGlobalLoader('Кот Боб загружает ещё слова...', 1000);
         }
 
         // 3. Рендер следующей пачки
@@ -5373,7 +5377,7 @@ getPetWidgetHtml() {
       <!-- Полоска цели (в стиле приложения) -->
       <div style="margin-top: 16px; padding-top: 12px; border-top: 2px solid var(--border-color);">
         <div class="progress-main-bar-label" style="margin-bottom: 6px;">
-          <span style="font-weight:800; color:var(--text-primary);">Цель на день (20 слов)</span>
+          <span style="font-weight:800; color:var(--text-primary);">Цель на день</span>
           <span style="font-weight:700; color:var(--text-secondary);">${todayCorrect}/${goal}</span>
         </div>
         <div class="progress-main-bar-track" style="height:10px;">
@@ -6065,7 +6069,6 @@ attachPetHandlers() {
   }
 
   showGlobalLoader(message = 'Кот Боб загружает для вас эту страницу', minDurationMs = 1500) {
-    if (!this.isAndroid) return;
     this.createGlobalLoader();
     const textEl = this.loaderEl.querySelector('.global-loader-text-el');
     if (textEl) textEl.textContent = message;
@@ -6075,7 +6078,7 @@ attachPetHandlers() {
   }
 
   hideGlobalLoader() {
-    if (!this.isAndroid || !this.loaderEl) return;
+    if (!this.loaderEl) return; // Оставили только проверку существования элемента
     const elapsed = performance.now() - (this.loaderStart || 0);
     const delay = Math.max(0, (this.loaderMinMs || 0) - elapsed);
     clearTimeout(this.loaderTimer);
