@@ -4878,3 +4878,241 @@ box-shadow: var(--shadow-md);
     0% { transform: scale(0.8); opacity: 0; }
     100% { transform: scale(1); opacity: 1; }
 }
+/* ============================================================
+   DESKTOP & TABLET ADAPTATION (OPTIMIZATION)
+   ============================================================ */
+
+/* --- 1. КРАСИВЫЙ СКРОЛЛБАР (Для всех устройств Webkit) --- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1; /* Серый */
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color); /* Зеленый при наведении */
+}
+/* Темная тема скроллбара */
+[data-theme="dark"] ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: #4b5563;
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* --- 2. ПЛАНШЕТЫ И ПК (min-width: 768px) --- */
+@media (min-width: 768px) {
+    
+    /* Расширяем контейнер */
+    .app-container {
+        max-width: 1000px; /* Было 480px */
+        height: 90vh;      /* Окно не на весь экран, а с отступами */
+        max-height: 900px;
+        border-radius: 24px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255,255,255,0.1);
+        margin: 20px auto;
+        overflow: hidden; /* Чтобы контент не вылезал за скругления */
+        
+        /* Включаем GRID для размещения меню сбоку */
+        display: grid;
+        grid-template-columns: 260px 1fr; /* Левая колонка 260px, правая - остаток */
+        grid-template-rows: auto 1fr;
+    }
+
+    /* --- БОКОВОЕ МЕНЮ (Бывшее нижнее) --- */
+    .bottom-nav {
+        grid-column: 1;
+        grid-row: 1 / 3; /* На всю высоту */
+        
+        position: relative; /* Уже не fixed */
+        bottom: auto; left: auto; right: auto;
+        
+        flex-direction: column; /* Вертикально */
+        justify-content: flex-start;
+        padding: 30px 15px;
+        gap: 10px;
+        
+        background: var(--bg-secondary);
+        border-top: none;
+        border-right: 1px solid var(--border-color);
+        border-radius: 0;
+        box-shadow: none;
+        z-index: 10;
+    }
+
+    /* Пункты меню */
+    .nav-item {
+        flex: none; /* Не растягивать */
+        width: 100%;
+        padding: 12px 20px;
+        flex-direction: row; /* Иконка слева, текст справа */
+        justify-content: flex-start;
+        gap: 15px;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        min-height: 50px;
+    }
+
+    .nav-item i {
+        font-size: 1.4rem;
+        width: 30px;
+        text-align: center;
+    }
+
+    .nav-item span {
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    /* --- ШАПКА (Header) --- */
+    .app-header {
+        grid-column: 2;
+        grid-row: 1;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        padding: 15px 30px;
+    }
+
+    /* --- ОСНОВНОЙ КОНТЕНТ --- */
+    .main-content {
+        grid-column: 2;
+        grid-row: 2;
+        padding: 30px;
+        padding-bottom: 40px !important; /* Убираем огромный отступ для мобил */
+        overflow-y: auto;
+        height: 100%;
+    }
+
+    /* --- СЕТКИ (Grids) --- */
+    /* Возвращаем плитки вместо списка */
+    .levels-grid, 
+    .categories-grid, 
+    .exams-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+        gap: 20px !important;
+    }
+
+    /* Карточки в сетке повыше */
+    .level-card {
+        min-height: 90px !important;
+        padding: 20px !important;
+    }
+    .level-card .level-badge {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 1.2rem !important;
+    }
+    .level-card h3 { font-size: 1.2rem !important; }
+
+    /* Карточки игр */
+    .games-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 игры в ряд */
+        gap: 20px;
+    }
+
+    /* --- СПИСКИ СЛОВ (В 2 КОЛОНКИ НА ПК) --- */
+    /* Если список открыт - делаем карточки плиткой для экономии места */
+    #wordsList {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 15px;
+    }
+    
+    /* В попапе оставляем 1 колонку */
+    .words-popup-list #wordsList {
+        display: flex; 
+    }
+
+    /* --- ЭЛЕМЕНТЫ ИНТЕРФЕЙСА --- */
+    
+    /* Кнопки побольше */
+    .btn {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+
+    /* Поле ввода переводчика */
+    .tr-input-row input {
+        padding: 1rem;
+    }
+
+    /* Карточки обучения (Flashcards/Quiz) центрируем и ограничиваем */
+    .flashcard, 
+    .quiz-container, 
+    .sentence-builder-container {
+        max-width: 600px;
+        margin: 0 auto 30px auto; /* Центрируем */
+    }
+    
+    /* Картинки в карточках поменьше (чтобы не на весь экран) */
+    .flashcard-image, 
+    .quiz-image {
+        height: 280px;
+        object-fit: contain;
+        background: #f8fafc;
+    }
+    [data-theme="dark"] .flashcard-image, 
+    [data-theme="dark"] .quiz-image {
+        background: #1f2937;
+    }
+
+    /* --- HOVER ЭФФЕКТЫ (Только для ПК) --- */
+    .nav-item:not(.active):hover {
+        background: rgba(0,0,0,0.05);
+        transform: translateX(5px); /* Сдвиг вправо */
+    }
+    
+    .level-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .word-card:hover {
+        border-color: var(--primary-color);
+        background: #f0fdf4; /* Светло-зеленый */
+    }
+    [data-theme="dark"] .word-card:hover {
+        background: #1e293b;
+    }
+}
+
+/* --- 3. ОЧЕНЬ БОЛЬШИЕ ЭКРАНЫ (Full HD+) --- */
+@media (min-width: 1400px) {
+    .app-container {
+        max-width: 1200px;
+    }
+    
+    .levels-grid, 
+    .categories-grid {
+        grid-template-columns: repeat(3, 1fr) !important; /* 3 в ряд */
+    }
+}
+
+/* --- 4. ФИКС ТУТОРИАЛА НА ПК --- */
+@media (min-width: 768px) {
+    /* Тень туториала должна быть еще больше, чтобы закрыть широкий экран */
+    .tutorial-overlay {
+        box-shadow: 0 0 0 9999px rgba(0,0,0,0.75) !important; 
+    }
+    
+    /* Боб и бабл */
+    .tutorial-bob-container {
+        width: 350px;
+    }
+    .tutorial-bubble {
+        font-size: 1.1rem;
+    }
+}
