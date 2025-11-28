@@ -4543,3 +4543,338 @@ box-shadow: var(--shadow-md);
 @media (min-width: 768px) {
   .wizard-btn { width: auto; }
 }
+
+/* ==================== LEVEL CATEGORIES MENU ==================== */
+
+.category-menu-container {
+  padding: 0 0 20px 0;
+  animation: fadeInSection 0.3s ease-out;
+}
+
+.category-section-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--text-secondary);
+  margin: 20px 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.category-section-title::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: var(--border-color);
+  border-radius: 2px;
+}
+
+/* Кнопка "Показать все слова" */
+.show-all-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: var(--radius-xl);
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform 0.2s;
+  margin-bottom: 10px;
+}
+
+.show-all-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Сетка для Грамматики (плитки) */
+.grammar-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.grammar-cat-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.grammar-cat-card:hover {
+  border-color: var(--info-color);
+  transform: translateY(-2px);
+  background: var(--bg-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.grammar-icon {
+  width: 45px;
+  height: 45px;
+  background: rgba(28, 176, 246, 0.15); /* light info color */
+  color: var(--info-color);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.grammar-name {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+/* Список для Тем (стиль Уроков) */
+.lessons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lesson-card {
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.lesson-card:hover {
+  transform: translateX(4px);
+  border-color: var(--secondary-color); /* Yellow/Orange */
+  box-shadow: var(--shadow-md);
+}
+
+.lesson-number {
+  width: 36px;
+  height: 36px;
+  background: var(--secondary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.lesson-info {
+  flex: 1;
+}
+
+.lesson-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.lesson-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.lesson-icon {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* Темная тема adjustments */
+[data-theme="dark"] .grammar-cat-card:hover {
+  background: var(--bg-secondary);
+}
+[data-theme="dark"] .lesson-card {
+  background: var(--bg-secondary);
+}
+/* ===== КРАСИВЫЙ ПЕРЕВОДЧИК ===== */
+.translator-card {
+  /* Голубой фон для всего блока */
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+  border: 3px solid #38bdf8;
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Темная тема для переводчика */
+[data-theme="dark"] .translator-card {
+  background: linear-gradient(135deg, #0c4a6e, #075985); /* Темно-синий */
+  border-color: #0ea5e9;
+}
+
+/* Заголовок */
+.translator-header {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  margin: -0.5rem -0.5rem 1rem -0.5rem;
+  color: white;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+.translator-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Иконка переводчика */
+.translator-header h3::before {
+  content: '\f1ab'; /* fa-language */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1.4rem;
+}
+
+.translator-header p {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+/* Поле ввода */
+.tr-input-row input {
+  background: white;
+  color: #333; /* Всегда черный текст на белом фоне */
+  border: 3px solid #bae6fd;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Темная тема: поле ввода */
+[data-theme="dark"] .tr-input-row input {
+  background: #1e293b; /* Темный фон */
+  color: #f1f5f9;      /* Белый текст */
+  border-color: #38bdf8;
+}
+
+/* Результат перевода (карточка) */
+.tr-main {
+  background: white;
+  border-left: 6px solid #22c55e;
+  border: 2px solid #e5e7eb;
+  border-left-width: 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .tr-main {
+  background: #1e293b;
+  border-color: #334155;
+  border-left-color: #22c55e;
+}
+
+/* Текст оригинала и перевода */
+.tr-src { color: #64748b; font-size: 0.9rem; font-weight: 700; }
+.tr-res { color: #0f172a; font-size: 1.2rem; font-weight: 900; }
+
+[data-theme="dark"] .tr-src { color: #94a3b8; }
+[data-theme="dark"] .tr-res { color: #f8fafc; }
+
+/* === TUTORIAL STYLES (BOB & BUBBLE) === */
+.tutorial-bob-container {
+    pointer-events: auto; /* Чтобы кнопки нажимались */
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+}
+
+.tutorial-bubble {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    margin-bottom: 15px;
+    border: 3px solid var(--primary-color); /* Зеленая рамка как у Duolingo */
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+    max-width: 280px;
+}
+
+.tutorial-bubble p {
+    margin: 0 0 15px 0;
+}
+
+.tutorial-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    border-radius: 12px;
+}
+
+/* Стрелка бабла (Треугольник) */
+.bubble-arrow {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-right: 3px solid var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    z-index: 1;
+}
+
+/* Стрелка вниз (когда Боб сверху) */
+.bubble-arrow.down {
+    bottom: -14px;
+}
+
+/* Стрелка вверх (когда Боб снизу) */
+.bubble-arrow.up {
+    top: -14px;
+    transform: translateX(-50%) rotate(225deg); /* Поворачиваем вверх */
+}
+
+/* Анимация появления */
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
