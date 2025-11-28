@@ -478,20 +478,22 @@ body {
 }
 
 /* Фиксируем заголовок списка слов при скролле и не перекрываем контент */
+/* ИСПРАВЛЕННЫЙ HEADER СПИСКА СЛОВ */
 .words-header {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   flex-wrap: wrap;
 
-  position: -webkit-sticky; /* Safari */
+  position: -webkit-sticky;
   position: sticky;
-  top: 0; /* было -1px */
+  top: 0; /* Строго 0 */
   z-index: 90;
   background: var(--bg-primary);
 
   padding: 12px 1.25rem;
-  margin: 0 -1.25rem 12px -1.25rem; /* убрали отрицательный верхний отступ! */
+  /* Убираем странные отступы, если они были под кнопку */
+  margin: 0 -1.25rem 12px -1.25rem; 
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border-bottom: 2px solid var(--border-color);
 }
@@ -2790,8 +2792,28 @@ img[data-image-source*="Servier"],
 
 /* Чуть уменьшим верхний отступ контейнера в режиме списка */
 #levels.list-open .words-container {
-  margin-top: 0.75rem; /* было 2rem */
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  position: relative;
+  /* Снимаем анимацию, чтобы не было рывков */
+  animation: none !important;
 }
+
+#levels.list-open .words-header {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100;
+  
+  /* Убираем любые margin, которые могли её сдвигать */
+  margin: 0 -1.25rem 12px -1.25rem !important;
+  padding: 12px 1.25rem !important;
+  
+  background: var(--bg-primary);
+  border-bottom: 2px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
 
 /* В режиме списка отключаем «тяжёлые» анимации/переходы, чтобы работало шустрее */
 #levels.list-open .words-container,
@@ -2803,15 +2825,6 @@ img[data-image-source*="Servier"],
 #levels.list-open .word-card:hover {
   transform: none !important;
   box-shadow: var(--shadow-md) !important;
-}
-
-/* Верхний блок с CTA (в верхнем отступе) — чуть меньше сверху, больше снизу */
-#levels .auto-dict-top {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 0 28px 0;  /* сверху НОЛЬ, снизу небольшой отступ */
-  padding: 0;
 }
 
 /* Шапка списка: заголовок слева, действия справа — строго в одну строку */
@@ -2838,43 +2851,6 @@ img[data-image-source*="Servier"],
   align-items: center;
   flex-wrap: nowrap;
 }
-
-/* Кнопка-словарь автоматически */
-.auto-dict-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 0.8rem 1.4rem;
-  border-radius: 10px;              /* не таблетка, но мягкие углы */
-  border: none;
-  background: linear-gradient(135deg, #0ea5e9, #6366f1); /* голубой → фиолетовый */
-  color: #fff;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  width: 100%;
-  max-width: 360px;
-  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
-  cursor: pointer;
-  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-  text-align: center;
-}
-
-.auto-dict-btn i {
-  font-size: 1.2rem;
-}
-
-.auto-dict-btn:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.05);
-  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.45);
-}
-
-[data-theme="dark"] .auto-dict-btn {
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.9);
-}
-
 /* На очень узких экранах можно позволить шапке переноситься */
 @media (max-width: 480px) {
   #levels .words-header {
@@ -4371,4 +4347,534 @@ box-shadow: var(--shadow-md);
     28% { transform: scale(1); }
     42% { transform: scale(1.2); }
     70% { transform: scale(1); }
+}
+
+/* ==================== ONBOARDING WIZARD (DUOLINGO STYLE) ==================== */
+.wizard-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647; /* Поверх всего */
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.wizard-header {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.wizard-progress-track {
+  flex: 1;
+  height: 12px;
+  background: var(--bg-tertiary);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.wizard-progress-fill {
+  height: 100%;
+  background: var(--primary-color);
+  border-radius: 10px;
+  width: 0%;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wizard-content {
+  flex: 1;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.5s ease;
+}
+
+.wizard-mascot-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.wizard-mascot-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.wizard-bubble {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 15px;
+  border-radius: 16px;
+  border-top-left-radius: 0;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.wizard-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.wizard-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wizard-card {
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 0 var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+
+.wizard-card:hover {
+  background: var(--bg-secondary);
+}
+
+.wizard-card.active {
+  border-color: var(--info-color);
+  background: #ddf4ff;
+  box-shadow: 0 2px 0 var(--info-color);
+}
+
+.wizard-card.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
+}
+
+.wizard-card-icon {
+  font-size: 1.5rem;
+}
+
+.wizard-card-text {
+  flex: 1;
+}
+
+.wizard-card-title {
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.wizard-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.wizard-footer {
+  padding: 20px;
+  border-top: 2px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.wizard-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--primary-dark);
+  transition: transform 0.1s;
+  width: 100%;
+}
+
+.wizard-btn:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+.wizard-btn:disabled {
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Стиль для подсказки "Сначала базу" */
+.wizard-tooltip {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-primary);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.wizard-card:hover .wizard-tooltip {
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .wizard-btn { width: auto; }
+}
+
+/* ==================== LEVEL CATEGORIES MENU ==================== */
+
+.category-menu-container {
+  padding: 0 0 20px 0;
+  animation: fadeInSection 0.3s ease-out;
+}
+
+.category-section-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--text-secondary);
+  margin: 20px 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.category-section-title::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: var(--border-color);
+  border-radius: 2px;
+}
+
+/* Кнопка "Показать все слова" */
+.show-all-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: var(--radius-xl);
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform 0.2s;
+  margin-bottom: 10px;
+}
+
+.show-all-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Сетка для Грамматики (плитки) */
+.grammar-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.grammar-cat-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.grammar-cat-card:hover {
+  border-color: var(--info-color);
+  transform: translateY(-2px);
+  background: var(--bg-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.grammar-icon {
+  width: 45px;
+  height: 45px;
+  background: rgba(28, 176, 246, 0.15); /* light info color */
+  color: var(--info-color);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.grammar-name {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+/* Список для Тем (стиль Уроков) */
+.lessons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lesson-card {
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.lesson-card:hover {
+  transform: translateX(4px);
+  border-color: var(--secondary-color); /* Yellow/Orange */
+  box-shadow: var(--shadow-md);
+}
+
+.lesson-number {
+  width: 36px;
+  height: 36px;
+  background: var(--secondary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.lesson-info {
+  flex: 1;
+}
+
+.lesson-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.lesson-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.lesson-icon {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* Темная тема adjustments */
+[data-theme="dark"] .grammar-cat-card:hover {
+  background: var(--bg-secondary);
+}
+[data-theme="dark"] .lesson-card {
+  background: var(--bg-secondary);
+}
+/* ===== КРАСИВЫЙ ПЕРЕВОДЧИК ===== */
+.translator-card {
+  /* Голубой фон для всего блока */
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+  border: 3px solid #38bdf8;
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Темная тема для переводчика */
+[data-theme="dark"] .translator-card {
+  background: linear-gradient(135deg, #0c4a6e, #075985); /* Темно-синий */
+  border-color: #0ea5e9;
+}
+
+/* Заголовок */
+.translator-header {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  margin: -0.5rem -0.5rem 1rem -0.5rem;
+  color: white;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+.translator-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Иконка переводчика */
+.translator-header h3::before {
+  content: '\f1ab'; /* fa-language */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1.4rem;
+}
+
+.translator-header p {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+/* Поле ввода */
+.tr-input-row input {
+  background: white;
+  color: #333; /* Всегда черный текст на белом фоне */
+  border: 3px solid #bae6fd;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Темная тема: поле ввода */
+[data-theme="dark"] .tr-input-row input {
+  background: #1e293b; /* Темный фон */
+  color: #f1f5f9;      /* Белый текст */
+  border-color: #38bdf8;
+}
+
+/* Результат перевода (карточка) */
+.tr-main {
+  background: white;
+  border-left: 6px solid #22c55e;
+  border: 2px solid #e5e7eb;
+  border-left-width: 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .tr-main {
+  background: #1e293b;
+  border-color: #334155;
+  border-left-color: #22c55e;
+}
+
+/* Текст оригинала и перевода */
+.tr-src { color: #64748b; font-size: 0.9rem; font-weight: 700; }
+.tr-res { color: #0f172a; font-size: 1.2rem; font-weight: 900; }
+
+[data-theme="dark"] .tr-src { color: #94a3b8; }
+[data-theme="dark"] .tr-res { color: #f8fafc; }
+
+/* === TUTORIAL STYLES (BOB & BUBBLE) === */
+.tutorial-bob-container {
+    pointer-events: auto; /* Чтобы кнопки нажимались */
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+}
+
+.tutorial-bubble {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    margin-bottom: 15px;
+    border: 3px solid var(--primary-color); /* Зеленая рамка как у Duolingo */
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+    max-width: 280px;
+}
+
+.tutorial-bubble p {
+    margin: 0 0 15px 0;
+}
+
+.tutorial-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    border-radius: 12px;
+}
+
+/* Стрелка бабла (Треугольник) */
+.bubble-arrow {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-right: 3px solid var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    z-index: 1;
+}
+
+/* Стрелка вниз (когда Боб сверху) */
+.bubble-arrow.down {
+    bottom: -14px;
+}
+
+/* Стрелка вверх (когда Боб снизу) */
+.bubble-arrow.up {
+    top: -14px;
+    transform: translateX(-50%) rotate(225deg); /* Поворачиваем вверх */
+}
+
+/* Анимация появления */
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }
