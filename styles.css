@@ -4832,6 +4832,16 @@ box-shadow: var(--shadow-md);
     max-width: 280px;
 }
 
+/* Принудительно красим все заголовки и текст внутри пузыря в темный цвет */
+.tutorial-bubble h1,
+.tutorial-bubble h2,
+.tutorial-bubble h3,
+.tutorial-bubble h4,
+.tutorial-bubble p {
+    color: #3c3c3c !important;
+    text-shadow: none !important; /* Убираем тень текста, если она есть */
+}
+
 .tutorial-bubble p {
     margin: 0 0 15px 0;
 }
@@ -5151,4 +5161,5 @@ box-shadow: var(--shadow-md);
         left: auto !important;
     }
 }
+
 
