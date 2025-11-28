@@ -181,38 +181,44 @@ renderWizardStep() {
     
     // Обновляем прогресс
     progress.style.width = `${(step / this.wizardState.totalSteps) * 100}%`;
-    nextBtn.disabled = true; // Блокируем кнопку пока не выберут
+    
+    // Для шага 4 (Мультивыбор) кнопка активна, если уже что-то выбрано
+    if (step === 4 && Array.isArray(this.wizardState.data.focus) && this.wizardState.data.focus.length > 0) {
+        nextBtn.disabled = false;
+    } else {
+        nextBtn.disabled = true;
+    }
 
     let html = '';
     let mascotText = '';
 
     // --- ШАГ 1: ОПЫТ ---
     if (step === 1) {
-        mascotText = "Привет! Я Кот Боб. Давай подберем идеальную программу. Какой у тебя опыт с английским?";
+        mascotText = "Привет! Я Кот Боб. Давай подберем идеальную программу. Какой у тебя опыт?";
         html = `
             <div class="wizard-options">
-                ${this._renderWizardCard(1, 'step1', 'Почти не сталкивался', 'Знаю hello, okay. Сложные фразы — тёмный лес.')}
-                ${this._renderWizardCard(2, 'step1', 'Могу что-то сказать, но с трудом', 'В памяти обрывки из школы. Строю простые предложения.')}
-                ${this._renderWizardCard(3, 'step1', 'Понимаю, но говорю с ошибками', 'Понимаю смысл, но говорю криво. Знаю много слов.')}
-                ${this._renderWizardCard(4, 'step1', 'Общаюсь уверенно, но хочу лучше', 'Говорю свободно, но хочу звучать как носитель.')}
-                ${this._renderWizardCard(5, 'step1', 'Свободно владею', 'Для работы (C1) или совершенства (C2).')}
+                ${this._renderWizardCard(1, 'step1', 'Новичок (A1)', 'Знаю hello, cat. Сложные фразы — тёмный лес.')}
+                ${this._renderWizardCard(2, 'step1', 'Элементарный (A2)', 'Могу рассказать о себе простыми фразами.')}
+                ${this._renderWizardCard(3, 'step1', 'Средний (B1)', 'Понимаю смысл, но говорю с ошибками.')}
+                ${this._renderWizardCard(4, 'step1', 'Выше среднего (B2)', 'Смотрю сериалы, но хочу звучать как носитель.')}
+                ${this._renderWizardCard(5, 'step1', 'Продвинутый (C1-C2)', 'Для профи, спец. термины и сложные идиомы.')}
             </div>
         `;
     }
     
     // --- ШАГ 2: ЦЕЛЬ ---
     else if (step === 2) {
-        mascotText = "Отлично! А для чего тебе английский прямо сейчас?";
+        mascotText = "Для чего тебе английский прямо сейчас?";
         html = `
             <div class="wizard-options">
-                ${this._renderWizardCard('travel', 'step2', 'Для путешествий и общения', '✈️ 🗣️')}
-                ${this._renderWizardCard('career', 'step2', 'Для карьеры и работы', '💼 IT, Медицина, Бизнес, Юристы')}
-                ${this._renderWizardCard('exam', 'step2', 'Для сдачи экзамена', '🎓 ЕГЭ, IELTS, TOEFL')}
-                ${this._renderWizardCard('fun', 'step2', 'Для себя', '🎬 Фильмы, сериалы, хобби')}
+                ${this._renderWizardCard('travel', 'step2', 'Путешествия и общение', '✈️ Разговорный язык')}
+                ${this._renderWizardCard('career', 'step2', 'Карьера и работа', '💼 IT, Медицина, Бизнес')}
+                ${this._renderWizardCard('exam', 'step2', 'Сдача экзамена', '🎓 ОГЭ, ЕГЭ, IELTS')}
+                ${this._renderWizardCard('fun', 'step2', 'Для себя', '🎬 Фильмы, тренировка памяти')}
             </div>
             <div id="subGoalContainer" style="margin-top:15px; display:none; border-top:2px solid var(--border-color); padding-top:15px;">
-                <div class="wizard-title" style="font-size:1.1rem;">Уточните сферу:</div>
-                <div class="wizard-options">
+                <div class="wizard-title" style="font-size:1.1rem; margin-bottom:10px;">Уточните направление:</div>
+                <div class="wizard-options sub-options">
                      <!-- Рендерится динамически -->
                 </div>
             </div>
@@ -224,30 +230,30 @@ renderWizardStep() {
         mascotText = "Сколько новых слов в день ты готов учить?";
         html = `
             <div class="wizard-options">
-                ${this._renderWizardCard(5, 'step3', 'Не спеша', '5-10 слов в день')}
-                ${this._renderWizardCard(15, 'step3', 'Стабильно', '15 слов в день')}
-                ${this._renderWizardCard(25, 'step3', 'Интенсив', '25+ слов в день')}
+                ${this._renderWizardCard(5, 'step3', 'Лайт (5 слов)', 'Для очень занятых')}
+                ${this._renderWizardCard(15, 'step3', 'Норма (15 слов)', 'Золотая середина')}
+                ${this._renderWizardCard(25, 'step3', 'Хардкор (25 слов)', 'Быстрый результат')}
             </div>
         `;
     }
 
-    // --- ШАГ 4: ФОКУС ---
+    // --- ШАГ 4: ФОКУС (МУЛЬТИ-ВЫБОР) ---
     else if (step === 4) {
         const exp = this.wizardState.data.experience;
-        mascotText = "Последний шаг. На чем сделаем упор в первую очередь?";
+        mascotText = "На чем сделаем упор? (Можно выбрать несколько)";
         
-        // Логика блокировки (Smart constraint)
-        const blockSpeaking = exp < 3; // Нельзя "Живую речь" если опыт < 3
-        const blockProf = exp < 4;     // Нельзя "Профи/Экзамен" если опыт < 4
+        const blockSpeaking = exp < 2; // Нельзя идиомы, если совсем новичок
+        const blockProf = exp < 3;     // Нельзя профи, если ниже среднего
 
         html = `
             <div class="wizard-options">
-                ${this._renderWizardCard('basic', 'step4', 'Базовый словарь', 'Самые нужные слова для старта')}
-                ${this._renderWizardCard('grammar', 'step4', 'Грамматика', 'Неправильные глаголы, Предлоги')}
-                
-                ${this._renderWizardCard('speaking', 'step4', 'Живая речь', 'Фразовые глаголы, Идиомы', blockSpeaking, 'Сначала освоим базу! 😉')}
-                
-                ${this._renderWizardCard('prof', 'step4', 'Для экзамена / Профессии', 'Сложные термины, Пословицы', blockProf, 'Доступно для продвинутых уровней')}
+                ${this._renderWizardCard('basic', 'step4', 'Базовый словарь', 'Самые важные слова для выживания')}
+                ${this._renderWizardCard('grammar', 'step4', 'Грамматика', 'Неправильные глаголы, Предлоги, Союзы')}
+                ${this._renderWizardCard('speaking', 'step4', 'Разговорная речь', 'Фразовые глаголы, Идиомы', blockSpeaking, 'Нужна база A2')}
+                ${this._renderWizardCard('prof', 'step4', 'Сложная лексика', 'Пословицы, редкие слова', blockProf, 'Нужна база B1')}
+            </div>
+            <div style="text-align:center; margin-top:10px; font-size:0.8rem; color:var(--text-secondary);">
+               Выберите один или несколько пунктов
             </div>
         `;
     }
@@ -262,7 +268,17 @@ renderWizardStep() {
         ${html}
     `;
 
-    // Навешивание обработчиков выбора
+    // Если на 4 шаге уже были выбраны опции (при возврате назад), подсветим их
+    if (step === 4 && Array.isArray(this.wizardState.data.focus)) {
+        this.wizardState.data.focus.forEach(val => {
+            const card = content.querySelector(`[data-value="${val}"]`);
+            if(card) {
+                card.classList.add('active');
+                card.querySelector('i').className = 'fas fa-check-square'; // Квадратик для мультивыбора
+            }
+        });
+    }
+
     this._attachWizardCardHandlers();
 }
 
@@ -294,19 +310,48 @@ _getStepTitle(step) {
 _attachWizardCardHandlers() {
     const cards = document.querySelectorAll('.wizard-card:not(.disabled)');
     cards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            // Сброс активных в группе
-            const group = card.dataset.group;
+        // Удаляем старые слушатели, чтобы не дублировать (клон ноды - хак)
+        const newCard = card.cloneNode(true);
+        card.parentNode.replaceChild(newCard, card);
+        
+        newCard.addEventListener('click', (e) => {
+            const group = newCard.dataset.group;
+            const val = newCard.dataset.value;
+
+            // --- ЛОГИКА ДЛЯ ШАГА 4 (МУЛЬТИ-ВЫБОР) ---
+            if (this.wizardState.step === 4) {
+                // Инициализируем массив, если нет
+                if (!Array.isArray(this.wizardState.data.focus)) {
+                    this.wizardState.data.focus = [];
+                }
+
+                if (newCard.classList.contains('active')) {
+                    // Если уже активна - убираем
+                    newCard.classList.remove('active');
+                    newCard.querySelector('i').className = 'far fa-square'; // Пустой квадрат
+                    this.wizardState.data.focus = this.wizardState.data.focus.filter(i => i !== val);
+                } else {
+                    // Если не активна - добавляем
+                    newCard.classList.add('active');
+                    newCard.querySelector('i').className = 'fas fa-check-square'; // Галочка в квадрате
+                    this.wizardState.data.focus.push(val);
+                }
+
+                // Кнопка "Далее" активна, если выбран хотя бы 1 пункт
+                document.getElementById('wizardNextBtn').disabled = (this.wizardState.data.focus.length === 0);
+                return;
+            }
+
+            // --- ЛОГИКА ДЛЯ ОСТАЛЬНЫХ ШАГОВ (ОДИНОЧНЫЙ ВЫБОР) ---
             
-            // Особая логика для Шага 2 (Подцели)
+            // Сброс активных в этой группе
             if (group === 'step2_sub') {
                  document.querySelectorAll(`[data-group="step2_sub"]`).forEach(c => {
                     c.classList.remove('active');
                     c.querySelector('i').className = 'far fa-circle';
                 });
-                this.wizardState.data.subGoal = card.dataset.value;
+                this.wizardState.data.subGoal = val;
             } else {
-                // Обычная логика
                 document.querySelectorAll(`[data-group="${group}"]`).forEach(c => {
                     c.classList.remove('active');
                     c.querySelector('i').className = 'far fa-circle';
@@ -314,54 +359,69 @@ _attachWizardCardHandlers() {
             }
 
             // Активация текущей
-            card.classList.add('active');
-            card.querySelector('i').className = 'fas fa-check-circle';
+            newCard.classList.add('active');
+            newCard.querySelector('i').className = 'fas fa-check-circle';
             
-            // Сохранение значения
-            const val = card.dataset.value;
-            
+            // Сохранение данных
             if (this.wizardState.step === 1) this.wizardState.data.experience = parseInt(val);
             if (this.wizardState.step === 2) {
                 if (group === 'step2') {
                     this.wizardState.data.goal = val;
-                    this._handleStep2SubOptions(val);
+                    // Если выбрали Карьеру или Экзамен - показываем подменю
+                    if (val === 'career' || val === 'exam') {
+                        this._handleStep2SubOptions(val);
+                    } else {
+                        // Иначе скрываем подменю
+                        document.getElementById('subGoalContainer').style.display = 'none';
+                        this.wizardState.data.subGoal = null;
+                        document.getElementById('wizardNextBtn').disabled = false;
+                    }
                 }
             }
             if (this.wizardState.step === 3) this.wizardState.data.pace = parseInt(val);
-            if (this.wizardState.step === 4) this.wizardState.data.focus = val;
 
-            // Разблокировка кнопки "Далее"
-            document.getElementById('wizardNextBtn').disabled = false;
+            // Разблокировка кнопки (кроме случая когда открылось подменю)
+            if (group !== 'step2' || (val !== 'career' && val !== 'exam')) {
+                document.getElementById('wizardNextBtn').disabled = false;
+            }
         });
     });
 }
 
 _handleStep2SubOptions(mainGoal) {
     const container = document.getElementById('subGoalContainer');
-    const subOptions = container.querySelector('.wizard-options');
+    const subOptions = container.querySelector('.sub-options');
     
     let html = '';
     
     if (mainGoal === 'career') {
         html += this._renderWizardCard('MEDICAL', 'step2_sub', 'Медицина', 'Anatomy, Healthcare');
-        html += this._renderWizardCard('IT', 'step2_sub', 'IT технологии', 'Coding, Hardware');
-        html += this._renderWizardCard('BUSINESS', 'step2_sub', 'Бизнес', 'Management, Finance');
-        html += this._renderWizardCard('LEGAL', 'step2_sub', 'Юриспруденция', 'Laws, Courts');
+        html += this._renderWizardCard('IT', 'step2_sub', 'IT и Технологии', 'Coding, Hardware, Internet');
+        html += this._renderWizardCard('BUSINESS', 'step2_sub', 'Бизнес', 'Finance, Management, Marketing');
+        html += this._renderWizardCard('LEGAL', 'step2_sub', 'Юриспруденция', 'Law, Court, Crime');
     } else if (mainGoal === 'exam') {
-        html += this._renderWizardCard('EGE', 'step2_sub', 'ЕГЭ / ОГЭ', 'Russian State Exams');
-        html += this._renderWizardCard('IELTS', 'step2_sub', 'IELTS / TOEFL', 'International Exams');
+        // === ВОТ ТУТ МЫ КОНКРЕТИЗИРУЕМ ===
+        html += this._renderWizardCard('OGE', 'step2_sub', 'ОГЭ (9 класс)', 'Уровень A2-B1');
+        html += this._renderWizardCard('EGE', 'step2_sub', 'ЕГЭ (11 класс)', 'Уровень B1-B2');
+        html += this._renderWizardCard('IELTS', 'step2_sub', 'IELTS / TOEFL', 'Academic English');
     }
 
     if (html) {
         subOptions.innerHTML = html;
         container.style.display = 'block';
-        // Сброс выбора подкатегории при смене главной
         this.wizardState.data.subGoal = null; 
-        document.getElementById('wizardNextBtn').disabled = true; // Ждем выбора подкатегории
-        this._attachWizardCardHandlers(); // Перевешиваем события на новые карточки
+        document.getElementById('wizardNextBtn').disabled = true; // Ждем выбора
+        
+        // Прокрутим вниз к опциям
+        setTimeout(() => {
+             container.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+        
+        this._attachWizardCardHandlers();
     } else {
         container.style.display = 'none';
         this.wizardState.data.subGoal = null;
+        document.getElementById('wizardNextBtn').disabled = false;
     }
 }
 
@@ -394,7 +454,7 @@ async finishWizard() {
     localStorage.setItem('userConfig', JSON.stringify(userConfig));
     localStorage.setItem('first_run_completed', '1');
 
-    // 2. Показываем лоадер внутри визарда
+    // 2. Показываем лоадер
     if (overlay) {
         overlay.innerHTML = `
             <div style="text-align:center; padding:40px; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
@@ -405,9 +465,9 @@ async finishWizard() {
         `;
     }
 
-    await this.delay(1500); // Небольшая пауза для важности процесса
+    await this.delay(1500);
     
-    // 3. Генерируем слова на основе ответов
+    // 3. Генерируем слова
     this.generateInitialVocabulary(data, userConfig);
     this.saveData();
     
@@ -415,21 +475,23 @@ async finishWizard() {
     if (overlay) overlay.remove();
     localStorage.setItem('wizard_v2_completed', '1');
     
-    // === ВАЖНО: ЗАПУСКАЕМ ИНТЕРФЕЙС ПРИЛОЖЕНИЯ ===
-    // Так как при первом старте мы его пропустили в constructor
+    // Запускаем UI
     this.initializeUI(); 
     this.renderProgress();
     this.syncModePracticeToggles();
     
-    // 5. Показываем уведомление и переходим к обучению
     this.showNotification(`План готов! Ваша цель: ${data.pace} новых слов в день.`, 'success');
+    
+    // === ФИКС ОЗВУЧКИ ===
+    this.stopCurrentAudio();          // Останавливаем любые звуки
+    this.suppressAutoSpeakOnce = true; // Запрещаем авто-озвучку первого слова
+    // ====================
+
     this.switchSection('learning');
     this.renderLearningSection();
     
-    // 6. Запускаем мотивацию через 1 минуту (60000 мс)
-    // Удаляем метку, чтобы система думала, что сегодня мотивации еще не было
+    // Мотивация через 1 минуту
     localStorage.removeItem('motivation_last_shown');
-    
     setTimeout(() => {
         console.log('Showing post-wizard motivation');
         this.maybeShowDailyMotivation();
@@ -439,18 +501,17 @@ async finishWizard() {
 // --- ГЛАВНЫЙ АЛГОРИТМ ПОДБОРА (Logic Engine) ---
 generateInitialVocabulary(data, config) {
     const exp = data.experience;
+    const focusArray = Array.isArray(data.focus) ? data.focus : [data.focus]; // Работаем как с массивом
     const wordsToAdd = [];
     const pendingWords = [];
 
-    // Функция-хелпер для добавления
-    const add = (sourceLevel, targetTag) => {
+    const add = (sourceLevel) => {
         const db = oxfordWordsDatabase[sourceLevel] || [];
         db.forEach(w => {
-            wordsToAdd.push({ ...w, level: targetTag || sourceLevel, forms: w.forms || null });
+            wordsToAdd.push({ ...w, level: sourceLevel, forms: w.forms || null });
         });
     };
     
-    // Хелпер для отложенного добавления (Pending)
     const addPending = (sourceLevel) => {
         const db = oxfordWordsDatabase[sourceLevel] || [];
         db.forEach(w => {
@@ -458,74 +519,80 @@ generateInitialVocabulary(data, config) {
         });
     };
 
-    // === ЛОГИКА ПО ОПЫТУ (Step 1) ===
-    if (exp === 1) {
-        // 1. Почти не сталкивался -> Старт с нуля (A1)
-        add('A1'); 
-        // A2 пойдет потом автоматом через SRS, сейчас не грузим
-    } 
-    else if (exp === 2) {
-        // 2. С трудом -> Освежаем A2, потом B1 + простые предлоги
-        add('A2');
-        add('B1'); 
-        add('PREPOSITIONS');
-        add('IRREGULARS'); // Топ неправильных глаголов
-    } 
-    else if (exp === 3) {
-        // 3. Понимаю, но ошибки -> B1 + Фразовые + Идиомы
-        add('B1');
-        add('PHRASAL_VERBS');
-        add('IDIOMS'); 
-        // Докинем B2 для вызова
-        add('B2'); 
-    } 
-    else if (exp === 4) {
-        // 4. Уверенно -> B2 + C1 + Сложные штуки
-        add('B2');
-        add('C1');
-        add('PHRASAL_VERBS');
-        add('IDIOMS');
-        add('PROVERBS');
-    } 
-    else if (exp === 5) {
-        // 5. Профи -> C1 + C2 + Всё сложное
-        add('C1');
-        add('C2');
-        add('IDIOMS');
-        add('PROVERBS');
-    }
+    // === 1. БАЗА ПО ОПЫТУ ===
+    if (exp === 1) add('A1'); 
+    else if (exp === 2) { add('A2'); add('B1'); }
+    else if (exp === 3) { add('B1'); add('B2'); }
+    else if (exp === 4) { add('B2'); add('C1'); }
+    else if (exp === 5) { add('C1'); add('C2'); }
 
-    // === ЛОГИКА ПО ЦЕЛИ/ПРОФЕССИИ (Step 2) ===
+    // === 2. ЭКЗАМЕНЫ (УМНАЯ ЛОГИКА) ===
     if (data.subGoal) {
-        const specialCat = data.subGoal; // MEDICAL, IT, EGE...
+        const goal = data.subGoal;
         
-        if (exp <= 2) {
-            // Если уровень слабый — НЕ добавляем сразу. Сохраняем в pending.
-            addPending(specialCat);
-            this.showNotification('Проф. слова будут добавлены, когда вы освоите базу (A2)', 'info');
-        } else {
-            // Если уровень норм — добавляем сразу
-            add(specialCat);
+        if (goal === 'OGE') {
+            // ОГЭ - это уровень A2-B1. Если человек новичок, даем A1+A2.
+            if (exp <= 2) { add('A1'); add('A2'); } 
+            else { add('A2'); add('B1'); }
+            this.showNotification('Добавлен словарный минимум для ОГЭ (A2-B1)', 'success');
+        }
+        else if (goal === 'EGE') {
+            // ЕГЭ - это B1-B2.
+            if (exp <= 2) { add('A2'); add('B1'); } // Подтягиваем базу
+            else { add('B1'); add('B2'); }
+            this.showNotification('Добавлен словарный минимум для ЕГЭ (B1-B2)', 'success');
+        }
+        else if (goal === 'IELTS' || goal === 'TOEFL') {
+            add('B2');
+            add('C1');
+            add('IELTS'); // Если есть такая категория в базе
+        }
+        else {
+            // Профессии (IT, MED, etc)
+            if (exp <= 2) {
+                addPending(goal);
+                this.showNotification(`Слова для ${goal} добавлены в очередь (нужна база)`, 'info');
+            } else {
+                add(goal);
+            }
         }
     }
 
-    // === ЛОГИКА ПО ФОКУСУ (Step 4) ===
-    // Если выбрали Грамматику, докидываем предлогов и неправильных глаголов, даже если уровень низкий
-    if (data.focus === 'grammar') {
+    // === 3. ФОКУС (МУЛЬТИ-ВЫБОР) ===
+    if (focusArray.includes('basic')) {
+        // Если выбрали "Базу", убедимся, что A1/A2 добавлены
+        if (exp > 2) { add('A1'); add('A2'); } 
+    }
+    if (focusArray.includes('grammar')) {
         add('PREPOSITIONS');
-        add('IRREGULARS');
+        add('IRREGULARS'); // Неправильные глаголы
+    }
+    if (focusArray.includes('speaking')) {
+        add('PHRASAL_VERBS');
+        add('IDIOMS');
+    }
+    if (focusArray.includes('prof')) {
+        add('PROVERBS');
+        if (exp >= 3) add('C1');
     }
 
-    // Применяем Pending
+    // Сохраняем очередь
     config.pendingSpecialWords = pendingWords;
     localStorage.setItem('userConfig', JSON.stringify(config));
 
-    // ФИЛЬТРАЦИЯ И ДОБАВЛЕНИЕ В БАЗУ
-    // Добавляем только уникальные
+    // Фильтрация дублей и сохранение
     let count = 0;
+    const uniqueSet = new Set();
+    
     wordsToAdd.forEach(w => {
-        const exists = this.learningWords.some(ex => ex.word === w.word && ex.level === w.level);
-        if (!exists) {
+        // Ключ уникальности: слово + уровень
+        const key = `${w.word}_${w.level}`;
+        
+        // Проверяем, нет ли уже такого слова в текущем списке обучения
+        const alreadyInLearning = this.learningWords.some(lw => lw.word === w.word && lw.level === w.level);
+        
+        if (!uniqueSet.has(key) && !alreadyInLearning) {
+            uniqueSet.add(key);
             this.learningWords.push({
                 word: w.word,
                 translation: w.translation,
@@ -539,7 +606,7 @@ generateInitialVocabulary(data, config) {
         }
     });
     
-    console.log(`Wizard added ${count} words based on logic. Pending: ${pendingWords.length}`);
+    console.log(`Wizard added ${count} unique words.`);
 }
 
   // =========================
@@ -792,16 +859,21 @@ generateInitialVocabulary(data, config) {
   }
   
  stopCurrentAudio() {
-    // 1. Останавливаем HTML5 Audio
+    // 1. Останавливаем HTML5 Audio (Глобальный плеер)
     if (this.globalPlayer) {
         this.globalPlayer.pause();
         this.globalPlayer.currentTime = 0;
+        // ВАЖНО: Сбрасываем источник, чтобы плеер "забыл" последнее слово
+        this.globalPlayer.removeAttribute('src'); 
+        this.globalPlayer.load(); // Принудительная перезагрузка пустого состояния
     }
+
     // 2. Останавливаем TTS (синтез речи)
     if (window.speechSynthesis) {
         window.speechSynthesis.cancel();
     }
-    // 3. Сбрасываем текущий промис
+
+    // 3. Сбрасываем текущий промис и флаги
     this.currentAudioPromise = null;
 }
 
@@ -1347,8 +1419,8 @@ document.querySelectorAll('.level-card[data-level]').forEach(card => {
 card.addEventListener('click', (e) => {
 const level = e.currentTarget.getAttribute('data-level');
 if (level) {
-this.showLevelWords(level);
-}
+      this.showLevelWords(level);    // ← ВАЖНО: вызываем переход
+    }
 });
 });
     // Category cards
@@ -2283,238 +2355,40 @@ scrollMainToTop() {
   }
 }
 
-showLevelWords(level) {
-  this.stopCurrentAudio();
-  this.currentLevel = level;
-  this.currentCategory = null;
+  showCategoryWords(category) {
+    this.stopCurrentAudio();
+    this.currentCategory = category;
+    this.currentLevel = null; // Сбрасываем уровень, чтобы кнопка назад работала правильно
 
-  const words = oxfordWordsDatabase[level] || [];
-  const container = document.getElementById('wordsContainer');
-  const title = document.getElementById('currentLevelTitle');
-  const wordsList = document.getElementById('wordsList');
+    const words = oxfordWordsDatabase[category] || [];
+    const container = document.getElementById('wordsContainer');
+    const title = document.getElementById('currentLevelTitle');
+    const wordsList = document.getElementById('wordsList');
 
-  // Если слов очень много — используем ленивую загрузку по 250
-  if (words.length > 250) {
-    this.showLevelWordsLazy(level);
-    return;
-  }
-
-  if (typeof this.toggleLevelsIndexVisibility === 'function') {
-    this.toggleLevelsIndexVisibility(false);
-  }
-  if (container) container.classList.remove('hidden');
-
-  if (title) title.textContent = `${level} - ${words.length} слов`;
-
-  if (wordsList) {
-    wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
-
-   this.showGlobalLoader('Кот Боб загружает для вас этот список...', 1000);
-   
-        requestAnimationFrame(() => {
-      const fragment = document.createDocumentFragment();
-      const tempDiv = document.createElement('div');
-
-      // Генерируем HTML (без изменений)
-      tempDiv.innerHTML = words.map(word => this.createWordCard(word, level)).join('');
-
-      while (tempDiv.firstChild) {
-        fragment.appendChild(tempDiv.firstChild);
-      }
-
-      wordsList.innerHTML = '';
-      wordsList.appendChild(fragment);
-
-      this.installWordsListDelegatedHandlers();
-
-      // === ВАЖНОЕ ИСПРАВЛЕНИЕ ===
-      // Вызываем обновление кнопки с небольшой задержкой, чтобы данные точно "устоялись"
-      setTimeout(() => {
-          this.updateBulkToggleButton();
-      }, 50); 
-      // ===========================
-
-
-        this.hideGlobalLoader();
-
-    });
-  }
-
-  this.jumpToTopStrict();
-}
-
-showCategoryWords(category) {
-  this.stopCurrentAudio();
-  this.currentCategory = category;
-  this.currentLevel = null;
-
-  const words = oxfordWordsDatabase[category] || [];
-  const container = document.getElementById('wordsContainer');
-  const title = document.getElementById('currentLevelTitle');
-  const wordsList = document.getElementById('wordsList');
-
-  // Для очень больших списков категорий — лениво
-  if (words.length > 250) {
-    this.showLevelWordsLazy(category);
-    return;
-  }
-
-  if (typeof this.toggleLevelsIndexVisibility === 'function') {
-    this.toggleLevelsIndexVisibility(false);
-  }
-  if (container) container.classList.remove('hidden');
-
-  const categoryName =
-    category === 'IRREGULARS' ? 'Неправильные глаголы' :
-    category === 'PHRASAL_VERBS' ? 'Фразовые глаголы' :
-    category === 'IDIOMS' ? 'Идиомы' :
-    category === 'PROVERBS' ? 'Пословицы и поговорки' :
-    category === 'MEDICAL' ? 'Медицинский английский' :
-    category === 'PREPOSITIONS' ? 'Предлоги' :
-    'Категория';
-
-  if (title) title.textContent = `${categoryName} - ${words.length} слов`;
-
-  if (wordsList) {
-    wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
-
-      this.showGlobalLoader('Кот Боб загружает для вас этот список...', 1000);
-
-    requestAnimationFrame(() => {
-      const fragment = document.createDocumentFragment();
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = words.map(word => this.createWordCard(word, category)).join('');
-
-      while (tempDiv.firstChild) {
-        fragment.appendChild(tempDiv.firstChild);
-      }
-
-      wordsList.innerHTML = '';
-      wordsList.appendChild(fragment);
-
-      this.installWordsListDelegatedHandlers();
-      setTimeout(() => {
-          this.updateBulkToggleButton();
-      }, 50);
-
-        this.hideGlobalLoader();
-    });
-  }
-
-  this.jumpToTopStrict();
-}
-
-// Ленивая загрузка для больших списков (>250 слов)
-showLevelWordsLazy(level) {
-  const words = oxfordWordsDatabase[level] || [];
-  const BATCH_SIZE = 250;
-
-  // Если слов мало - обычный рендеринг
-  if (words.length <= BATCH_SIZE) {
-    this.showLevelWords(level);
-    return;
-  }
-
-  this.stopCurrentAudio();
-  this.currentLevel = level;
-  this.currentCategory = null;
-
-  const container = document.getElementById('wordsContainer');
-  const title = document.getElementById('currentLevelTitle');
-  const wordsList = document.getElementById('wordsList');
-
-  if (typeof this.toggleLevelsIndexVisibility === 'function') {
-    this.toggleLevelsIndexVisibility(false);
-  }
-  if (container) container.classList.remove('hidden');
-  if (title) title.textContent = `${level} - ${words.length} слов (загрузка...)`;
-
-  if (wordsList) {
-      this.showGlobalLoader('Кот Боб загружает для вас эту страницу...', 1000);
-
-    wordsList.innerHTML = words.slice(0, BATCH_SIZE)
-      .map(w => this.createWordCard(w, level))
-      .join('');
-      
-      // кнопка подобрать там и сям
-this.installWordsListDelegatedHandlers();
-      setTimeout(() => {
-          this.updateBulkToggleButton();
-      }, 100); 
-
-// Гарантируем появление кнопки, даже если рендер занял время
-
-
-      let loaded = BATCH_SIZE;
-
-      this.hideGlobalLoader();
-
-    // Если загрузили не всё — настраиваем дозагрузку
-    if (loaded < words.length) {
-      const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          // 1. Убираем старый "датчик"
-          const oldSentinel = document.getElementById('lazy-sentinel');
-          if (oldSentinel) {
-            observer.unobserve(oldSentinel);
-            oldSentinel.remove();
-          }
-
-          // 2. Показываем лоадер (если Android)
-          if (this.isAndroid) {
-            this.showGlobalLoader('Кот Боб загружает ещё слова...', 1000);
-          }
-
-          // 3. Грузим следующую порцию
-          const nextBatch = words.slice(loaded, loaded + BATCH_SIZE)
-            .map(w => this.createWordCard(w, level))
-            .join('');
-          
-          wordsList.insertAdjacentHTML('beforeend', nextBatch);
-          loaded += BATCH_SIZE;
-          this.updateBulkToggleButton();
-
-          if (title) {
-            title.textContent = `${level} - Загружено ${Math.min(loaded, words.length)}/${words.length} слов`;
-          }
-
-          // 4. Прячем лоадер
-            this.hideGlobalLoader();
-
-          // 5. Если остались ещё слова — добавляем новый "датчик" в самый низ
-          if (loaded < words.length) {
-            const newSentinel = document.createElement('div');
-            newSentinel.style.height = '40px';
-            newSentinel.id = 'lazy-sentinel';
-            wordsList.appendChild(newSentinel);
-            observer.observe(newSentinel);
-          }
-        }
-      }, { rootMargin: '400px' });
-
-      // Создаем самый первый "датчик"
-      const s = document.createElement('div');
-      s.style.height = '40px';
-      s.id = 'lazy-sentinel';
-      wordsList.appendChild(s);
-      observer.observe(s);
+    if (typeof this.toggleLevelsIndexVisibility === 'function') {
+      this.toggleLevelsIndexVisibility(false);
     }
+    if (container) container.classList.remove('hidden');
+
+    const categoryName =
+      category === 'IRREGULARS' ? 'Неправильные глаголы' :
+      category === 'PHRASAL_VERBS' ? 'Фразовые глаголы' :
+      category === 'IDIOMS' ? 'Идиомы' :
+      category === 'PROVERBS' ? 'Пословицы и поговорки' :
+      category === 'MEDICAL' ? 'Медицинский английский' :
+      category === 'PREPOSITIONS' ? 'Предлоги' :
+      category;
+
+    if (title) title.textContent = `${categoryName} - ${words.length} слов`;
+
+    if (wordsList) {
+        // Используем наш улучшенный рендер, который теперь включает кнопку "Учить все"
+        this.renderFilteredWordsList(words, category);
+    }
+
+    this.jumpToTopStrict();
   }
-  this.jumpToTopStrict();
-}
 
-backToLevels() {
-  this.stopCurrentAudio();
-
-  this.toggleLevelsIndexVisibility(true);
-
-  this.currentLevel = null;
-  this.currentCategory = null;
-
-  // Удаляем CTA, если он вставлен
-  document.querySelectorAll('#levels .auto-dict-top, #levels .auto-dict-inline')
-    .forEach(n => n.remove());
-}
 
   // =========
   // Bulk toggle (Добавить все / Удалить все)
@@ -3645,6 +3519,7 @@ this.showNotification('Не удалось добавить. Попробуйт�
   // Learning UI
   // =========
 renderLearningSection() {
+  this.stopCurrentAudio();
   const container = document.getElementById('learningWordsList');
   const countEl = document.getElementById('learningCount');
   if (!container) return;
@@ -5830,41 +5705,555 @@ attachPetHandlers() {
       this.loaderEl.classList.remove('show');
     }, delay);
   }
+  
+  // =================================================
+  // 1. КОНФИГУРАЦИЯ КАТЕГОРИЙ (A1-C2)
+  // =================================================
+ 
+    getLevelCategoriesConfig() {
+    return {
+      "A1": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" },
+          { "id": "pronouns", "name": "Местоимения", "icon": "fa-user" },
+          { "id": "determiners", "name": "Определители", "icon": "fa-crosshairs" },
+          { "id": "modal_verbs", "name": "Модальные глаголы", "icon": "fa-magic" },
+          { "id": "numbers", "name": "Числительные", "icon": "fa-sort-numeric-up" },
+          { "id": "exclamations", "name": "Междометия", "icon": "fa-comment-dots" }
+        ],
+        "topics": [
+          { "id": "family", "name": "Семья", "icon": "fa-users" },
+          { "id": "food", "name": "Еда и напитки", "icon": "fa-utensils" },
+          { "id": "home", "name": "Дом и быт", "icon": "fa-home" },
+          { "id": "clothing", "name": "Одежда", "icon": "fa-tshirt" },
+          { "id": "body", "name": "Тело человека", "icon": "fa-heartbeat" },
+          { "id": "transport", "name": "Транспорт", "icon": "fa-car" },
+          { "id": "places", "name": "Места и здания", "icon": "fa-building" },
+          { "id": "time", "name": "Время", "icon": "fa-clock" },
+          { "id": "work", "name": "Работа", "icon": "fa-briefcase" },
+          { "id": "education", "name": "Образование", "icon": "fa-graduation-cap" },
+          { "id": "entertainment", "name": "Развлечения", "icon": "fa-theater-masks" },
+          { "id": "emotions", "name": "Эмоции", "icon": "fa-smile" },
+          { "id": "colors", "name": "Цвета", "icon": "fa-rainbow" },
+          { "id": "nature", "name": "Природа", "icon": "fa-leaf" },
+          { "id": "communication", "name": "Общение", "icon": "fa-comments" },
+          { "id": "actions", "name": "Действия", "icon": "fa-running" },
+          { "id": "weather", "name": "Погода", "icon": "fa-sun" },
+          { "id": "shopping", "name": "Покупки", "icon": "fa-shopping-cart" },
+          { "id": "descriptions", "name": "Описания", "icon": "fa-star" },
+          { "id": "general", "name": "Общие слова", "icon": "fa-list-alt" }
+        ]
+      },
+      "A2": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" },
+          { "id": "pronouns", "name": "Местоимения", "icon": "fa-user" },
+          { "id": "determiners", "name": "Определители", "icon": "fa-crosshairs" },
+          { "id": "modal_verbs", "name": "Модальные глаголы", "icon": "fa-magic" },
+          { "id": "numbers", "name": "Числительные", "icon": "fa-sort-numeric-up" }
+        ],
+        "topics": [
+          { "id": "home", "name": "Дом и быт", "icon": "fa-home" },
+          { "id": "food", "name": "Еда и кухня", "icon": "fa-utensils" },
+          { "id": "work", "name": "Карьера", "icon": "fa-briefcase" },
+          { "id": "education", "name": "Образование", "icon": "fa-book" },
+          { "id": "technology", "name": "Технологии", "icon": "fa-laptop" },
+          { "id": "transport", "name": "Транспорт", "icon": "fa-plane" },
+          { "id": "health", "name": "Здоровье", "icon": "fa-medkit" },
+          { "id": "nature", "name": "Природа", "icon": "fa-tree" },
+          { "id": "entertainment", "name": "Развлечения", "icon": "fa-gamepad" },
+          { "id": "sports", "name": "Спорт", "icon": "fa-futbol" },
+          { "id": "emotions", "name": "Эмоции", "icon": "fa-laugh" },
+          { "id": "people", "name": "Люди", "icon": "fa-user-friends" },
+          { "id": "law", "name": "Закон", "icon": "fa-gavel" },
+          { "id": "society", "name": "Общество", "icon": "fa-city" },
+          { "id": "business", "name": "Бизнес", "icon": "fa-chart-line" },
+          { "id": "weather", "name": "Погода", "icon": "fa-cloud-sun" },
+          { "id": "clothing", "name": "Одежда", "icon": "fa-tshirt" },
+          { "id": "buildings", "name": "Здания", "icon": "fa-hotel" },
+          { "id": "media", "name": "СМИ", "icon": "fa-newspaper" },
+          { "id": "science", "name": "Наука", "icon": "fa-microscope" },
+          { "id": "time", "name": "Время", "icon": "fa-hourglass-half" },
+          { "id": "communication", "name": "Общение", "icon": "fa-comment-alt" },
+          { "id": "abstract", "name": "Абстрактное", "icon": "fa-brain" },
+          { "id": "actions", "name": "Действия", "icon": "fa-running" },
+          { "id": "general", "name": "Общие слова", "icon": "fa-list" }
+        ]
+      },
+      "B1": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" },
+          { "id": "pronouns", "name": "Местоимения", "icon": "fa-user" },
+          { "id": "determiners", "name": "Определители", "icon": "fa-crosshairs" },
+          { "id": "modal_verbs", "name": "Модальные", "icon": "fa-magic" }
+        ],
+        "topics": [
+          { "id": "abstract", "name": "Абстрактное", "icon": "fa-cloud" },
+          { "id": "nature", "name": "Природа", "icon": "fa-tree" },
+          { "id": "science", "name": "Наука", "icon": "fa-flask" },
+          { "id": "society", "name": "Общество", "icon": "fa-globe" },
+          { "id": "law", "name": "Закон", "icon": "fa-balance-scale" },
+          { "id": "business", "name": "Бизнес", "icon": "fa-briefcase" },
+          { "id": "emotions", "name": "Чувства", "icon": "fa-heart" },
+          { "id": "work", "name": "Работа", "icon": "fa-laptop-code" },
+          { "id": "education", "name": "Образование", "icon": "fa-university" },
+          { "id": "communication", "name": "Язык", "icon": "fa-language" },
+          { "id": "entertainment", "name": "Искусство", "icon": "fa-music" },
+          { "id": "technology", "name": "Техно", "icon": "fa-microchip" },
+          { "id": "transport", "name": "Путешествия", "icon": "fa-suitcase-rolling" },
+          { "id": "home", "name": "Быт", "icon": "fa-couch" },
+          { "id": "clothing", "name": "Стиль", "icon": "fa-hat-cowboy" },
+          { "id": "food", "name": "Кулинария", "icon": "fa-pizza-slice" },
+          { "id": "health", "name": "Здоровье", "icon": "fa-stethoscope" },
+          { "id": "materials", "name": "Материалы", "icon": "fa-layer-group" },
+          { "id": "religion", "name": "Религия", "icon": "fa-pray" },
+          { "id": "military", "name": "Армия", "icon": "fa-jet-fighter" },
+          { "id": "descriptions", "name": "Качества", "icon": "fa-feather-alt" },
+          { "id": "actions", "name": "Процессы", "icon": "fa-cogs" },
+          { "id": "general", "name": "Общее", "icon": "fa-th-list" }
+        ]
+      },
+      "B2": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" },
+          { "id": "pronouns", "name": "Местоимения", "icon": "fa-user" },
+          { "id": "numbers", "name": "Числительные", "icon": "fa-sort-numeric-up" }
+        ],
+        "topics": [
+          { "id": "abstract", "name": "Концепции", "icon": "fa-lightbulb" },
+          { "id": "nature", "name": "Экология", "icon": "fa-leaf" },
+          { "id": "science", "name": "Исследования", "icon": "fa-dna" },
+          { "id": "society", "name": "Политика", "icon": "fa-landmark" },
+          { "id": "law", "name": "Право", "icon": "fa-gavel" },
+          { "id": "business", "name": "Финансы", "icon": "fa-coins" },
+          { "id": "emotions", "name": "Психология", "icon": "fa-brain" },
+          { "id": "work", "name": "Карьера", "icon": "fa-id-card" },
+          { "id": "education", "name": "Учеба", "icon": "fa-user-graduate" },
+          { "id": "communication", "name": "Речь", "icon": "fa-bullhorn" },
+          { "id": "entertainment", "name": "Культура", "icon": "fa-theater-masks" },
+          { "id": "technology", "name": "Медиа", "icon": "fa-wifi" },
+          { "id": "transport", "name": "Логистика", "icon": "fa-shipping-fast" },
+          { "id": "home", "name": "Дом", "icon": "fa-door-open" },
+          { "id": "food", "name": "Гастрономия", "icon": "fa-wine-glass" },
+          { "id": "health", "name": "Медицина", "icon": "fa-hospital" },
+          { "id": "body", "name": "Анатомия", "icon": "fa-walking" },
+          { "id": "materials", "name": "Вещества", "icon": "fa-atom" },
+          { "id": "religion", "name": "Духовность", "icon": "fa-church" },
+          { "id": "military", "name": "Оборона", "icon": "fa-shield-alt" },
+          { "id": "descriptions", "name": "Характеристики", "icon": "fa-tags" },
+          { "id": "actions", "name": "Активность", "icon": "fa-play-circle" },
+          { "id": "time", "name": "Периоды", "icon": "fa-calendar-alt" },
+          { "id": "space", "name": "Пространство", "icon": "fa-arrows-alt" },
+          { "id": "family", "name": "Отношения", "icon": "fa-users" },
+          { "id": "clothing", "name": "Имидж", "icon": "fa-glasses" },
+          { "id": "sports", "name": "Спорт", "icon": "fa-basketball-ball" },
+          { "id": "general", "name": "Общее", "icon": "fa-clipboard-list" }
+        ]
+      },
+      "C1": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" }
+        ],
+        "topics": [
+          { "id": "abstract", "name": "Абстракция", "icon": "fa-shapes" },
+          { "id": "law", "name": "Юриспруденция", "icon": "fa-balance-scale-right" },
+          { "id": "society", "name": "Социум", "icon": "fa-users-cog" },
+          { "id": "health", "name": "Здравоохранение", "icon": "fa-heartbeat" },
+          { "id": "science", "name": "Наука", "icon": "fa-vial" },
+          { "id": "business", "name": "Экономика", "icon": "fa-chart-pie" },
+          { "id": "education", "name": "Академия", "icon": "fa-scroll" },
+          { "id": "emotions", "name": "Психика", "icon": "fa-head-side-virus" },
+          { "id": "religion", "name": "Вера", "icon": "fa-om" },
+          { "id": "military", "name": "Война", "icon": "fa-fighter-jet" },
+          { "id": "nature", "name": "Экология", "icon": "fa-globe-americas" },
+          { "id": "technology", "name": "Инновации", "icon": "fa-rocket" },
+          { "id": "communication", "name": "Диалог", "icon": "fa-comments-dollar" },
+          { "id": "work", "name": "Менеджмент", "icon": "fa-tasks" },
+          { "id": "descriptions", "name": "Нюансы", "icon": "fa-highlighter" },
+          { "id": "actions", "name": "Операции", "icon": "fa-project-diagram" },
+          { "id": "time", "name": "Хронология", "icon": "fa-history" },
+          { "id": "space", "name": "Локация", "icon": "fa-map-marked-alt" },
+          { "id": "entertainment", "name": "Культура", "icon": "fa-palette" },
+          { "id": "family", "name": "Родство", "icon": "fa-baby-carriage" },
+          { "id": "transport", "name": "Перевозки", "icon": "fa-truck-moving" },
+          { "id": "materials", "name": "Ресурсы", "icon": "fa-oil-can" },
+          { "id": "body", "name": "Физиология", "icon": "fa-x-ray" },
+          { "id": "general", "name": "Прочее", "icon": "fa-folder-open" }
+        ]
+      },
+      "C2": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" }
+        ],
+        "topics": [
+          { "id": "rhetoric", "name": "Риторика", "icon": "fa-quote-right" },
+          { "id": "character", "name": "Личность", "icon": "fa-fingerprint" },
+          { "id": "morality", "name": "Этика", "icon": "fa-yin-yang" },
+          { "id": "criticism", "name": "Критика", "icon": "fa-pen-fancy" },
+          { "id": "deception", "name": "Обман", "icon": "fa-mask" },
+          { "id": "emotions", "name": "Чувства", "icon": "fa-heart-broken" },
+          { "id": "intellect", "name": "Интеллект", "icon": "fa-chess" },
+          { "id": "behavior", "name": "Поведение", "icon": "fa-theater-masks" },
+          { "id": "conflict", "name": "Конфликт", "icon": "fa-fist-raised" },
+          { "id": "religion", "name": "Теология", "icon": "fa-khanda" },
+          { "id": "philosophy", "name": "Философия", "icon": "fa-book-open" },
+          { "id": "appearance", "name": "Облик", "icon": "fa-magic" },
+          { "id": "abstract", "name": "Метафизика", "icon": "fa-infinity" },
+          { "id": "literary", "name": "Литература", "icon": "fa-feather" },
+          { "id": "social", "name": "Интеракция", "icon": "fa-handshake" }
+        ]
+      }
+    };
+  }
 
-static injectStylesOnce() { if (document.getElementById('app-extra-styles')) return; const style = document.createElement('style'); style.id = 'app-extra-styles'; style.textContent = ` @keyframes slideDown { from { transform: translate(-50%, -100%); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } } @keyframes slideUp { from { transform: translate(-50%, 0); opacity: 1; } to { transform: translate(-50%, -100%); opacity: 0; } } .sound-actions .mini-btn, .option-sound .mini-btn { border:none; background: var(--bg-tertiary, #f0f2f5); padding:4px 6px; border-radius:6px; cursor:pointer; color:#333; } .quiz-option .quiz-option-inner { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  // 2. ОТРИСОВКА МЕНЮ КАТЕГОРИЙ (БЕЗОПАСНАЯ ВЕРСИЯ)
+   renderLevelCategoriesMenu(level, config) {
+    const list = document.getElementById('wordsList');
+    if (!list) return;
+
+    let html = '<div class="category-menu-container">';
+    
+    html += '<button class="show-all-btn" onclick="window.app.showLevelWords(\'' + level + '\', { type: \'all\' })">';
+    html += '<i class="fas fa-layer-group"></i> Показать все слова списка';
+    html += '</button>';
+    
+    html += '<div class="category-section-title">';
+    html += '<i class="fas fa-shapes"></i> Грамматика';
+    html += '</div>';
+    html += '<div class="grammar-grid">';
+    
+    for (let i = 0; i < config.grammar.length; i++) {
+        const g = config.grammar[i];
+        html += '<div class="grammar-cat-card" onclick="window.app.showLevelWords(\'' + level + '\', { type: \'grammar\', id: \'' + g.id + '\' })">';
+        html += '<div class="grammar-icon"><i class="fas ' + g.icon + '"></i></div>';
+        html += '<div class="grammar-name">' + g.name + '</div>';
+        html += '</div>';
+    }
+    
+    html += '</div>';
+    
+    html += '<div class="category-section-title" style="margin-top: 30px;">';
+    html += '<i class="fas fa-graduation-cap"></i> Тематические уроки';
+    html += '</div>';
+    html += '<div class="lessons-list">';
+    
+    for (let i = 0; i < config.topics.length; i++) {
+        const t = config.topics[i];
+        const lessonNum = i + 1;
+        html += '<div class="lesson-card" onclick="window.app.showLevelWords(\'' + level + '\', { type: \'topic\', id: \'' + t.id + '\' })">';
+        html += '<div class="lesson-number">' + lessonNum + '</div>';
+        html += '<div class="lesson-info">';
+        html += '<div class="lesson-label">Урок ' + lessonNum + '</div>';
+        html += '<div class="lesson-title">' + t.name + '</div>';
+        html += '</div>';
+        html += '<div class="lesson-icon"><i class="fas ' + t.icon + '"></i></div>';
+        html += '</div>';
+    }
+    
+    html += '</div>';
+    html += '<div style="text-align: center; margin-top: 30px; color: var(--text-muted); font-size: 0.9rem;">';
+    html += '<p>Проходите уроки последовательно для лучшего результата!</p>';
+    html += '</div>';
+    html += '</div>';
+    
+    list.innerHTML = html;
+  }
+
+  // =================================================
+  // 3. РЕНДЕР СПИСКА СЛОВ (С ленивой загрузкой)
+  // =================================================
+   renderFilteredWordsList(words, level) {
+      const wordsList = document.getElementById('wordsList');
+      const BATCH_SIZE = 100;
+      
+      wordsList.innerHTML = '';
+
+      // === ФИКС КНОПКИ "УЧИТЬ ВСЕ" ===
+      const bulkBtn = document.getElementById('bulkToggleBtn');
+      if(bulkBtn) {
+          bulkBtn.style.display = 'inline-flex'; // Показываем кнопку
+          this.updateBulkToggleButton();         // Обновляем её состояние
+      }
+      // ===============================
+
+      // Если слов мало, рендерим сразу
+      if (words.length <= BATCH_SIZE) {
+          const fragment = document.createDocumentFragment();
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = words.map(w => this.createWordCard(w, level)).join('');
+          while (tempDiv.firstChild) fragment.appendChild(tempDiv.firstChild);
+          wordsList.appendChild(fragment);
+          
+          this.installWordsListDelegatedHandlers();
+          return;
+      }
+      
+      // Ленивая загрузка
+      let loaded = 0;
+      const renderBatch = () => {
+          const batch = words.slice(loaded, loaded + BATCH_SIZE);
+          if(batch.length === 0) return;
+          const html = batch.map(w => this.createWordCard(w, level)).join('');
+          wordsList.insertAdjacentHTML('beforeend', html);
+          loaded += batch.length;
+      };
+      
+      renderBatch();
+      this.installWordsListDelegatedHandlers();
+      
+      const sentinel = document.createElement('div');
+      sentinel.style.height = '50px';
+      wordsList.appendChild(sentinel);
+      
+      const observer = new IntersectionObserver(entries => {
+          if(entries[0].isIntersecting) {
+              renderBatch();
+              if(loaded >= words.length) {
+                  observer.disconnect();
+                  sentinel.remove();
+              } else {
+                  wordsList.appendChild(sentinel);
+              }
+          }
+      }, { rootMargin: '200px' });
+      
+      observer.observe(sentinel);
+  }
+
+  // =================================================
+  // 4. ГЛАВНАЯ ФУНКЦИЯ ПОКАЗА (Маршрутизатор Меню/Список)
+  // =================================================
+   showLevelWords(level, filter = null) {
+    this.stopCurrentAudio();
+    this.currentLevel = level;
+    this.currentCategory = null;
+    
+    const container = document.getElementById('wordsContainer');
+    const title = document.getElementById('currentLevelTitle');
+    const wordsList = document.getElementById('wordsList');
+
+    if (typeof this.toggleLevelsIndexVisibility === 'function') {
+        this.toggleLevelsIndexVisibility(false);
+    }
+    if (container) container.classList.remove('hidden');
+    
+    // Проверяем конфиг
+    const config = this.getLevelCategoriesConfig();
+    const levelConfig = config[level];
+
+    // 1. ПОКАЗЫВАЕМ МЕНЮ КАТЕГОРИЙ (если нет фильтра) -> Тут Боб не нужен, меню легкое
+    if (levelConfig && !filter) {
+        if (title) title.textContent = `Уровень ${level}`;
+        const bulkBtn = document.getElementById('bulkToggleBtn');
+        if(bulkBtn) bulkBtn.style.display = 'none';
+
+        this.renderLevelCategoriesMenu(level, levelConfig);
+        this.jumpToTopStrict();
+        return;
+    }
+
+    // 2. ПОКАЗЫВАЕМ СПИСОК СЛОВ -> ТУТ НУЖЕН БОБ
+    const bulkBtn = document.getElementById('bulkToggleBtn');
+    if(bulkBtn) {
+        bulkBtn.style.display = 'inline-flex';
+        this.updateBulkToggleButton();
+    }
+
+    let words = oxfordWordsDatabase[level] || [];
+    
+    if (filter && filter.type !== 'all') {
+        if (filter.type === 'grammar') {
+            words = words.filter(w => w.grammar === filter.id);
+            if (title) title.textContent = `${level} • Грамматика`;
+        } else if (filter.type === 'topic') {
+            words = words.filter(w => w.topic === filter.id);
+            const catName = levelConfig.topics.find(t => t.id === filter.id)?.name || 'Урок';
+            if (title) title.textContent = `${level} • ${catName}`;
+        }
+    } else {
+        if (title) title.textContent = `${level} - ${words.length} слов`;
+    }
+    
+    if (wordsList) {
+        // === ДОБАВЛЯЕМ БОБА ===
+        wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
+        this.showGlobalLoader('Кот Боб открывает список...', 800);
+
+        // Рендерим с небольшой задержкой, чтобы Боб успел появиться
+        requestAnimationFrame(() => {
+             this.renderFilteredWordsList(words, level);
+             
+             // Скрываем Боба после рендера (внутри renderFilteredWordsList это может быть не сделано)
+             setTimeout(() => this.hideGlobalLoader(), 100);
+        });
+        // ======================
+    }
+    
+    this.jumpToTopStrict();
+  }
+
+  // =================================================
+  // 5. КНОПКА НАЗАД (С улучшенной логикой)
+  // =================================================
+    backToLevels() {
+    // 1. Жестко останавливаем любой звук
+    this.stopCurrentAudio();
+    
+    // 2. Сбрасываем флаг авто-озвучки, чтобы при следующем входе всё было чисто
+    this.suppressAutoSpeakOnce = true; 
+
+    const list = document.getElementById('wordsList');
+    const isShowingList = list && list.querySelector('.word-card'); // Если есть карточки - значит мы в списке
+    const hasCategories = this.currentLevel && this.getLevelCategoriesConfig()[this.currentLevel];
+
+    // Если мы внутри категории (списка слов) — вернуться в МЕНЮ категорий
+    if (isShowingList && hasCategories) {
+        // Вызываем меню категорий
+        this.showLevelWords(this.currentLevel); 
+        return;
+    }
+
+    // Иначе — выход на главную страницу уровней
+    this.toggleLevelsIndexVisibility(true);
+    this.currentLevel = null;
+    this.currentCategory = null;
+
+    // Убираем возможные остатки авто-словаря (на всякий случай)
+    document.querySelectorAll('#levels .auto-dict-top, #levels .auto-dict-inline')
+      .forEach(n => n.remove());
+  }
+
+static injectStylesOnce() {
+    if (document.getElementById('app-extra-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'app-extra-styles';
+    style.textContent = ` 
+@keyframes slideDown {
+    from { transform: translate(-50%, -100%); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+}
+@keyframes slideUp {
+    from { transform: translate(-50%, 0); opacity: 1; }
+    to { transform: translate(-50%, -100%); opacity: 0; }
+}
+.sound-actions .mini-btn, .option-sound .mini-btn {
+    border:none; 
+    background: var(--bg-tertiary, #f0f2f5); 
+    padding:4px 6px; 
+    border-radius:6px; 
+    cursor:pointer; 
+    color:#333; 
+}
+.quiz-option .quiz-option-inner {
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+    gap:8px; 
+}
 
 /* Подсветка активного пункта меню во время тура */
 .bottom-nav .nav-item.nav-highlight {
-  position: relative;
-  box-shadow: 0 0 0 6px rgba(99,102,241,0.3);
-  border-radius: 12px;
+    position: relative;
+    box-shadow: 0 0 0 6px rgba(99,102,241,0.3);
+    border-radius: 12px;
 }
 
 /* Мини-игра питомец (прогресс) */
-.pet-widget{background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:14px;padding:12px;margin-bottom:14px;}
-.pet-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-.pet-avatar{width:56px;height:56px;object-fit:contain;border-radius:10px;background:#fff;border:1px solid var(--border-color);}
-.pet-title{font-weight:800;color:var(--text-primary);}
-.pet-bars{display:grid;gap:8px;margin:8px 0 10px;}
-.pet-bar{height:10px;background:#e5e7eb;border-radius:8px;overflow:hidden;}
-.pet-bar-fill{height:100%;background:linear-gradient(90deg,#10b981,#22d3ee);}
-.pet-actions{display:flex;flex-wrap:wrap;gap:8px;}
-.pet-dead{color:#ef4444;font-weight:700;margin:8px 0;}
+.pet-widget{
+    background:var(--bg-secondary);
+    border:1px solid var(--border-color);
+    border-radius:14px;
+    padding:12px;
+    margin-bottom:14px;
+}
+.pet-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+.pet-avatar{
+    width:56px;
+    height:56px;
+    object-fit:contain;
+    border-radius:10px;
+    background:#fff;
+    border:1px solid var(--border-color);
+}
+.pet-title{
+    font-weight:800;
+    color:var(--text-primary);
+}
+.pet-bars{
+    display:grid;
+    gap:8px;
+    margin:8px 0 10px;
+}
+.pet-bar{
+    height:10px;
+    background:#e5e7eb;
+    border-radius:8px;
+    overflow:hidden;
+}
+.pet-bar-fill{
+    height:100%;
+    background:linear-gradient(90deg,#10b981,#22d3ee);
+}
+.pet-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+.pet-dead{
+    color:#ef4444;
+    font-weight:700;
+    margin:8px 0;
+}
 /* Стили для бейджей точности */
 .acc-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 700;
-  margin-left: 8px;
-  vertical-align: middle;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-left: 8px;
+    vertical-align: middle;
 }
 .acc-none { background: #e5e7eb; color: #374151; }
 .acc-good { background: #d1fae5; color: #065f46; }
 .acc-mid { background: #fef3c7; color: #92400e; }
 .acc-bad { background: #fee2e2; color: #991b1b; }
-`; document.head.appendChild(style); }
+`;
+    document.head.appendChild(style);
+}
 }
 
 // Init
@@ -5874,65 +6263,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   EnglishWordsApp.injectStylesOnce();
   window.app = new EnglishWordsApp();
-});
-
-
-service-worker.js
-/* Caching Service Worker for Bewords & Games */
-const CACHE_NAME = 'bewords-app-v6'; // Обновил версию
-// Расширили регулярку: картинки + html + css + js + json
-const ASSETS_RE = /\.(png|jpg|jpeg|webp|gif|svg|html|css|js|json)$/i;
-
-self.addEventListener('install', (event) => {
-  self.skipWaiting();
-  event.waitUntil(caches.open(CACHE_NAME));
-});
-
-self.addEventListener('activate', (event) => {
-  event.waitUntil((async () => {
-    const keys = await caches.keys();
-    // Удаляем старые кэши
-    await Promise.all(keys.map(k => (k !== CACHE_NAME ? caches.delete(k) : Promise.resolve())));
-    await self.clients.claim();
-  })());
-});
-
-self.addEventListener('fetch', (event) => {
-  const req = event.request;
-  if (req.method !== 'GET') return;
-
-  const url = new URL(req.url);
-  
-  // Определяем, нужно ли кэшировать
-  const shouldCache = 
-    ASSETS_RE.test(url.pathname) || 
-    url.pathname.endsWith('/') || // главная страница
-    url.hostname.includes('britlex.ru') ||
-    url.hostname.includes('smart.servier.com');
-
-  // НЕ кэшируем аудио и API
-  const isAudio = req.destination === 'audio' || url.pathname.endsWith('.mp3') || url.hostname.includes('wooordhunt.ru') || url.pathname.includes('/au/');
-  if (isAudio) return;
-
-  if (shouldCache) {
-    event.respondWith((async () => {
-      const cache = await caches.open(CACHE_NAME);
-      const cached = await cache.match(req, { ignoreVary: true });
-      
-      // Стратегия: Stale-While-Revalidate (вернуть кэш сразу, но обновить в фоне)
-      // Для игр это критично: они грузятся мгновенно.
-      const networkFetch = fetch(req, { mode: 'cors', credentials: 'omit' })
-        .then(res => {
-          if (res && res.status === 200) {
-             cache.put(req, res.clone());
-          }
-          return res;
-        })
-        .catch(() => {
-           // Если сети нет, ничего страшного, надеемся на кэш
-        });
-
-      return cached || networkFetch;
-    })());
-  }
 });
