@@ -518,8 +518,8 @@ body {
           </button>
           <h3 id="currentLevelTitle">Слова</h3>
           <div class="level-bulk-actions">
-            <button id="bulkToggleBtn" class="action-text-btn add" data-testid="bulk-toggle-btn" title="Добавить все">
-              Добавить все
+            <button id="bulkToggleBtn" class="action-text-btn add" data-testid="bulk-toggle-btn" title="Учить все">
+              Учить все
             </button>
           </div>
         </div>
@@ -566,9 +566,9 @@ body {
     <!-- New Words -->
   <section id="new-words" class="content-section"> <div id="translatorWidget" class="translator-card"> <div class="translator-header"> <h3>BeWords - Translate</h3> <p>Ищите слова и фразы и добавляйте их на изучение</p> </div>
 <div class="tr-lang-row">
-  <button class="tr-lang-btn active" id="trRuBtn" type="button">🇷🇺 RU</button>
+  <button class="tr-lang-btn active" id="trRuBtn" type="button">🇷🇺 Русский</button>
   <button class="tr-swap-btn" id="trSwapBtn" type="button" title="Поменять местами">⇄</button>
-  <button class="tr-lang-btn" id="trEnBtn" type="button">🇬🇧 ENG</button>
+  <button class="tr-lang-btn" id="trEnBtn" type="button">🇬🇧 English</button>
 </div>
 
 <div class="tr-input-row">
@@ -724,11 +724,37 @@ body {
 <script src="sentences-data.js"></script>
 <script src="app.js"></script>
 <script>
-  // Service Worker registration (image caching)
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+      navigator.serviceWorker.register('/service-worker.js').then(reg => {
+        
+        // Если воркер обновился
+        reg.onupdatefound = () => {
+          const installingWorker = reg.installing;
+          installingWorker.onstatechange = () => {
+            if (installingWorker.state === 'installed') {
+              if (navigator.serviceWorker.controller) {
+                // Новая версия контента доступна!
+                showUpdateNotification();
+              }
+            }
+          };
+        };
+      });
     });
+  }
+
+  function showUpdateNotification() {
+    const toast = document.createElement('div');
+    toast.className = 'toast info';
+    toast.style.cssText = 'position:fixed; bottom:80px; left:50%; transform:translateX(-50%); z-index:9999; cursor:pointer;';
+    toast.innerHTML = '<span>Доступно обновление! Нажмите, чтобы применить. 🔄</span>';
+    
+    toast.onclick = () => {
+      window.location.reload(); // Перезагрузка применит новый SW
+    };
+    
+    document.body.appendChild(toast);
   }
 </script>
 <script>
@@ -994,13 +1020,13 @@ function setLang(from, to){
   // если from === 'en' → переводим ИЗ английского В русский:
   //   левая кнопка: Английский, правая: Русский (активна)
   if (from === 'ru') {
-    ruBtn.textContent = '🇷🇺 Russian';
-    enBtn.textContent = '🇬🇧 English';
+    ruBtn.textContent = '🇷🇺 Русский';
+    enBtn.textContent = '🇬🇧 Английский';
     ruBtn.classList.add('active');
     enBtn.classList.remove('active');
   } else {
-    ruBtn.textContent = '🇬🇧 English';
-    enBtn.textContent = '🇷🇺 Russian';
+    ruBtn.textContent = '🇬🇧 Английский';
+    enBtn.textContent = '🇷🇺 Русский';
     enBtn.classList.add('active');
     ruBtn.classList.remove('active');
   }
