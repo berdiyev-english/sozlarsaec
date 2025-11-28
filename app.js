@@ -100,29 +100,543 @@ class EnglishWordsApp {
     setTimeout(() => {
         this.checkAndShowFirstRunOrMotivation();
     }, 1000);
+    
+    // PWA Audio Warmup (Разблокировка звука при первом клике)
+    window.addEventListener('click', () => {
+        // 1. Будим AudioContext
+        if (this.audioCtx && this.audioCtx.state === 'suspended') {
+            this.audioCtx.resume().catch(e => console.log(e));
+        }
+        // 2. Будим HTML5 Audio (тишиной)
+        if (this.globalPlayer) {
+            // Короткий пустой звук (WAV)
+            const silentWav = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+            // Если плеер пустой, загружаем тишину и играем
+            if (!this.globalPlayer.src || this.globalPlayer.src === window.location.href) {
+                this.globalPlayer.src = silentWav;
+            }
+            this.globalPlayer.play().then(() => {
+                // Сразу ставим на паузу, чтобы не занимать канал
+                this.globalPlayer.pause(); 
+            }).catch(() => {});
+        }
+    }, { once: true });
+    
   }
 
-  // Далее идут все ваши методы...
+// ==========================================
+// ONBOARDING WIZARD
+// ==========================================
+
 checkAndShowFirstRunOrMotivation() {
     try {
-        const firstRunDone = localStorage.getItem('first_run_completed') === '1';
+        const wizardDone = localStorage.getItem('wizard_v2_completed') === '1';
+        // Проверяем "вечный" флаг
+        const tutorialDone = localStorage.getItem('tutorial_complete_forever') === '1'; 
         
-        console.log('Checking first run status:', firstRunDone);
-        
-        if (!firstRunDone) {
-            // Первый запуск - показываем презентацию
-            console.log('First run - showing tour');
+        if (!wizardDone) {
+            // Новичок -> Визард
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            setTimeout(() => this.showOnboardingWizard(), 300);
+        } 
+        else if (!tutorialDone) {
+            // Старичок (или только прошел визард) -> Туториал (1 раз в жизни)
             setTimeout(() => {
-                this.showFirstRunTour();
-            }, 300);
-        } else {
-            // Не первый запуск - показываем мотивацию (она сама проверит, нужно ли)
-            console.log('Not first run - checking daily motivation');
+                this.startAppTutorial();
+                // Сразу ставим флаг, чтобы больше не надоедать
+                localStorage.setItem('tutorial_complete_forever', '1'); 
+            }, 1000);
+        } 
+        else {
+            // Обычный вход -> Мотивация
             this.maybeShowDailyMotivation();
         }
     } catch (e) {
-        console.error('Error in checkAndShowFirstRunOrMotivation:', e);
+        console.error(e);
     }
+}
+
+showOnboardingWizard() {
+    // Начальное состояние визарда
+    this.wizardState = {
+        step: 1,
+        totalSteps: 4,
+        data: {
+            experience: null, // 1-5
+            goal: null,       // 'travel', 'career', 'exam', 'fun'
+            subGoal: null,    // 'medical', 'it', etc.
+            pace: 15,         // words per day
+            focus: null       // 'basic', 'grammar', 'speaking', 'prof'
+        }
+    };
+
+    // Создаем DOM элементы
+    const overlay = document.createElement('div');
+    overlay.className = 'wizard-overlay';
+    overlay.id = 'onboardingWizard';
+    
+    overlay.innerHTML = `
+        <div class="wizard-header">
+            <div class="wizard-progress-track">
+                <div class="wizard-progress-fill" id="wizardProgress" style="width: 25%"></div>
+            </div>
+        </div>
+        <div class="wizard-content" id="wizardContent">
+            <!-- Контент шага рендерится тут -->
+        </div>
+        <div class="wizard-footer">
+            <button class="wizard-btn" id="wizardNextBtn" disabled>ПРОДОЛЖИТЬ</button>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    
+    // Биндим кнопку
+    document.getElementById('wizardNextBtn').addEventListener('click', () => this.nextWizardStep());
+    
+    // Рендерим первый шаг
+    this.renderWizardStep();
+}
+
+renderWizardStep() {
+    const content = document.getElementById('wizardContent');
+    const progress = document.getElementById('wizardProgress');
+    const nextBtn = document.getElementById('wizardNextBtn');
+    const step = this.wizardState.step;
+    
+    // Обновляем прогресс
+    progress.style.width = `${(step / this.wizardState.totalSteps) * 100}%`;
+    
+    // Для шага 4 (Мультивыбор) кнопка активна, если уже что-то выбрано
+    if (step === 4 && Array.isArray(this.wizardState.data.focus) && this.wizardState.data.focus.length > 0) {
+        nextBtn.disabled = false;
+    } else {
+        nextBtn.disabled = true;
+    }
+
+    let html = '';
+    let mascotText = '';
+
+    // --- ШАГ 1: ОПЫТ ---
+    if (step === 1) {
+        mascotText = "Привет! Я Кот Боб. Давай подберем идеальную программу. Какой у тебя опыт?";
+        html = `
+            <div class="wizard-options">
+                ${this._renderWizardCard(1, 'step1', 'Новичок (A1)', 'Знаю hello, cat. Сложные фразы — тёмный лес.')}
+                ${this._renderWizardCard(2, 'step1', 'Элементарный (A2)', 'Могу рассказать о себе простыми фразами.')}
+                ${this._renderWizardCard(3, 'step1', 'Средний (B1)', 'Понимаю смысл, но говорю с ошибками.')}
+                ${this._renderWizardCard(4, 'step1', 'Выше среднего (B2)', 'Смотрю сериалы, но хочу звучать как носитель.')}
+                ${this._renderWizardCard(5, 'step1', 'Продвинутый (C1-C2)', 'Для профи, спец. термины и сложные идиомы.')}
+            </div>
+        `;
+    }
+    
+    // --- ШАГ 2: ЦЕЛЬ ---
+    else if (step === 2) {
+        mascotText = "Для чего тебе английский прямо сейчас?";
+        html = `
+            <div class="wizard-options">
+                ${this._renderWizardCard('travel', 'step2', 'Путешествия и общение', '✈️ Разговорный язык')}
+                ${this._renderWizardCard('career', 'step2', 'Карьера и работа', '💼 IT, Медицина, Бизнес')}
+                ${this._renderWizardCard('exam', 'step2', 'Сдача экзамена', '🎓 ОГЭ, ЕГЭ, IELTS')}
+                ${this._renderWizardCard('fun', 'step2', 'Для себя', '🎬 Фильмы, тренировка памяти')}
+            </div>
+            <div id="subGoalContainer" style="margin-top:15px; display:none; border-top:2px solid var(--border-color); padding-top:15px;">
+                <div class="wizard-title" style="font-size:1.1rem; margin-bottom:10px;">Уточните направление:</div>
+                <div class="wizard-options sub-options">
+                     <!-- Рендерится динамически -->
+                </div>
+            </div>
+        `;
+    }
+
+    // --- ШАГ 3: ТЕМП ---
+    else if (step === 3) {
+        mascotText = "Сколько новых слов в день ты готов учить?";
+        html = `
+            <div class="wizard-options">
+                ${this._renderWizardCard(5, 'step3', 'Лайт (5 слов)', 'Для очень занятых')}
+                ${this._renderWizardCard(15, 'step3', 'Норма (15 слов)', 'Золотая середина')}
+                ${this._renderWizardCard(25, 'step3', 'Хардкор (25 слов)', 'Быстрый результат')}
+            </div>
+        `;
+    }
+
+    // --- ШАГ 4: ФОКУС (МУЛЬТИ-ВЫБОР) ---
+    else if (step === 4) {
+        const exp = this.wizardState.data.experience;
+        mascotText = "На чем сделаем упор? (Можно выбрать несколько)";
+        
+        const blockSpeaking = exp < 2; // Нельзя идиомы, если совсем новичок
+        const blockProf = exp < 3;     // Нельзя профи, если ниже среднего
+
+        html = `
+            <div class="wizard-options">
+                ${this._renderWizardCard('basic', 'step4', 'Базовый словарь', 'Самые важные слова для выживания')}
+                ${this._renderWizardCard('grammar', 'step4', 'Грамматика', 'Неправильные глаголы, Предлоги, Союзы')}
+                ${this._renderWizardCard('speaking', 'step4', 'Разговорная речь', 'Фразовые глаголы, Идиомы', blockSpeaking, 'Нужна база A2')}
+                ${this._renderWizardCard('prof', 'step4', 'Сложная лексика', 'Пословицы, редкие слова', blockProf, 'Нужна база B1')}
+            </div>
+            <div style="text-align:center; margin-top:10px; font-size:0.8rem; color:var(--text-secondary);">
+               Выберите один или несколько пунктов
+            </div>
+        `;
+    }
+
+    // Вставка в DOM
+    content.innerHTML = `
+        <div class="wizard-mascot-area">
+            <img src="/loading.gif" class="wizard-mascot-img" alt="Bob">
+            <div class="wizard-bubble">${mascotText}</div>
+        </div>
+        <div class="wizard-title">${this._getStepTitle(step)}</div>
+        ${html}
+    `;
+
+    // Если на 4 шаге уже были выбраны опции (при возврате назад), подсветим их
+    if (step === 4 && Array.isArray(this.wizardState.data.focus)) {
+        this.wizardState.data.focus.forEach(val => {
+            const card = content.querySelector(`[data-value="${val}"]`);
+            if(card) {
+                card.classList.add('active');
+                card.querySelector('i').className = 'fas fa-check-square'; // Квадратик для мультивыбора
+            }
+        });
+    }
+
+    this._attachWizardCardHandlers();
+}
+
+_renderWizardCard(value, group, title, desc, disabled = false, tooltip = '') {
+    const disabledAttr = disabled ? 'disabled' : '';
+    const tooltipHtml = disabled ? `<div class="wizard-tooltip">${tooltip}</div>` : '';
+    return `
+        <div class="wizard-card ${disabledAttr ? 'disabled' : ''}" data-group="${group}" data-value="${value}">
+            ${tooltipHtml}
+            <div class="wizard-card-text">
+                <div class="wizard-card-title">${title}</div>
+                <div class="wizard-card-desc">${desc}</div>
+            </div>
+            <div class="wizard-card-icon">
+                <i class="far fa-circle"></i> 
+            </div>
+        </div>
+    `;
+}
+
+_getStepTitle(step) {
+    if (step === 1) return 'Уровень владения';
+    if (step === 2) return 'Ваша цель';
+    if (step === 3) return 'Дневная цель';
+    if (step === 4) return 'Фокус обучения';
+    return '';
+}
+
+_attachWizardCardHandlers() {
+    const cards = document.querySelectorAll('.wizard-card:not(.disabled)');
+    cards.forEach(card => {
+        // Удаляем старые слушатели, чтобы не дублировать (клон ноды - хак)
+        const newCard = card.cloneNode(true);
+        card.parentNode.replaceChild(newCard, card);
+        
+        newCard.addEventListener('click', (e) => {
+            const group = newCard.dataset.group;
+            const val = newCard.dataset.value;
+
+            // --- ЛОГИКА ДЛЯ ШАГА 4 (МУЛЬТИ-ВЫБОР) ---
+            if (this.wizardState.step === 4) {
+                // Инициализируем массив, если нет
+                if (!Array.isArray(this.wizardState.data.focus)) {
+                    this.wizardState.data.focus = [];
+                }
+
+                if (newCard.classList.contains('active')) {
+                    // Если уже активна - убираем
+                    newCard.classList.remove('active');
+                    newCard.querySelector('i').className = 'far fa-square'; // Пустой квадрат
+                    this.wizardState.data.focus = this.wizardState.data.focus.filter(i => i !== val);
+                } else {
+                    // Если не активна - добавляем
+                    newCard.classList.add('active');
+                    newCard.querySelector('i').className = 'fas fa-check-square'; // Галочка в квадрате
+                    this.wizardState.data.focus.push(val);
+                }
+
+                // Кнопка "Далее" активна, если выбран хотя бы 1 пункт
+                document.getElementById('wizardNextBtn').disabled = (this.wizardState.data.focus.length === 0);
+                return;
+            }
+
+            // --- ЛОГИКА ДЛЯ ОСТАЛЬНЫХ ШАГОВ (ОДИНОЧНЫЙ ВЫБОР) ---
+            
+            // Сброс активных в этой группе
+            if (group === 'step2_sub') {
+                 document.querySelectorAll(`[data-group="step2_sub"]`).forEach(c => {
+                    c.classList.remove('active');
+                    c.querySelector('i').className = 'far fa-circle';
+                });
+                this.wizardState.data.subGoal = val;
+            } else {
+                document.querySelectorAll(`[data-group="${group}"]`).forEach(c => {
+                    c.classList.remove('active');
+                    c.querySelector('i').className = 'far fa-circle';
+                });
+            }
+
+            // Активация текущей
+            newCard.classList.add('active');
+            newCard.querySelector('i').className = 'fas fa-check-circle';
+            
+            // Сохранение данных
+            if (this.wizardState.step === 1) this.wizardState.data.experience = parseInt(val);
+            if (this.wizardState.step === 2) {
+                if (group === 'step2') {
+                    this.wizardState.data.goal = val;
+                    // Если выбрали Карьеру или Экзамен - показываем подменю
+                    if (val === 'career' || val === 'exam') {
+                        this._handleStep2SubOptions(val);
+                    } else {
+                        // Иначе скрываем подменю
+                        document.getElementById('subGoalContainer').style.display = 'none';
+                        this.wizardState.data.subGoal = null;
+                        document.getElementById('wizardNextBtn').disabled = false;
+                    }
+                }
+            }
+            if (this.wizardState.step === 3) this.wizardState.data.pace = parseInt(val);
+
+            // Разблокировка кнопки (кроме случая когда открылось подменю)
+            if (group !== 'step2' || (val !== 'career' && val !== 'exam')) {
+                document.getElementById('wizardNextBtn').disabled = false;
+            }
+        });
+    });
+}
+
+_handleStep2SubOptions(mainGoal) {
+    const container = document.getElementById('subGoalContainer');
+    const subOptions = container.querySelector('.sub-options');
+    
+    let html = '';
+    
+    if (mainGoal === 'career') {
+        html += this._renderWizardCard('MEDICAL', 'step2_sub', 'Медицина', 'Anatomy, Healthcare');
+        html += this._renderWizardCard('IT', 'step2_sub', 'IT и Технологии', 'Coding, Hardware, Internet');
+        html += this._renderWizardCard('BUSINESS', 'step2_sub', 'Бизнес', 'Finance, Management, Marketing');
+        html += this._renderWizardCard('LEGAL', 'step2_sub', 'Юриспруденция', 'Law, Court, Crime');
+    } else if (mainGoal === 'exam') {
+        // === ВОТ ТУТ МЫ КОНКРЕТИЗИРУЕМ ===
+        html += this._renderWizardCard('OGE', 'step2_sub', 'ОГЭ (9 класс)', 'Уровень A2-B1');
+        html += this._renderWizardCard('EGE', 'step2_sub', 'ЕГЭ (11 класс)', 'Уровень B1-B2');
+        html += this._renderWizardCard('IELTS', 'step2_sub', 'IELTS / TOEFL', 'Academic English');
+    }
+
+    if (html) {
+        subOptions.innerHTML = html;
+        container.style.display = 'block';
+        this.wizardState.data.subGoal = null; 
+        document.getElementById('wizardNextBtn').disabled = true; // Ждем выбора
+        
+        // Прокрутим вниз к опциям
+        setTimeout(() => {
+             container.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+        
+        this._attachWizardCardHandlers();
+    } else {
+        container.style.display = 'none';
+        this.wizardState.data.subGoal = null;
+        document.getElementById('wizardNextBtn').disabled = false;
+    }
+}
+
+nextWizardStep() {
+    if (this.wizardState.step < this.wizardState.totalSteps) {
+        this.wizardState.step++;
+        this.renderWizardStep();
+    } else {
+        this.finishWizard();
+    }
+}
+
+async finishWizard() {
+    const overlay = document.getElementById('onboardingWizard');
+    const data = this.wizardState.data;
+    
+    // 1. Формируем конфиг пользователя
+    const userConfig = {
+        experience: data.experience,
+        goal: data.goal,
+        subGoal: data.subGoal,
+        dailyLimit: data.pace,
+        focus: data.focus,
+        setupDate: new Date().toDateString(),
+        newWordsAddedToday: 0,
+        lastNewWordsDate: null,
+        pendingSpecialWords: [] 
+    };
+    
+    localStorage.setItem('userConfig', JSON.stringify(userConfig));
+    localStorage.setItem('first_run_completed', '1');
+
+    // 2. Показываем лоадер (Кот Боб)
+    if (overlay) {
+        overlay.innerHTML = `
+            <div style="text-align:center; padding:40px; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
+                <img src="/loading.gif" style="width:120px; margin-bottom:20px;">
+                <h2 style="margin-bottom:10px; font-weight:900;">Настраиваю программу...</h2>
+                <p style="color:var(--text-secondary)">Кот Боб подбирает слова под ваш уровень.</p>
+            </div>
+        `;
+    }
+
+    await this.delay(1500); // Пауза для эффекта
+    
+    // 3. Генерируем слова
+    this.generateInitialVocabulary(data, userConfig);
+    this.saveData();
+    
+    // 4. Удаляем Визард (Опросник)
+    if (overlay) overlay.remove();
+    localStorage.setItem('wizard_v2_completed', '1');
+    
+    // 5. Запускаем интерфейс приложения
+    this.initializeUI(); 
+    this.renderProgress();
+    this.syncModePracticeToggles();
+    
+    this.showNotification(`План готов! Ваша цель: ${data.pace} новых слов в день.`, 'success');
+    
+    // 6. Останавливаем лишние звуки
+    this.stopCurrentAudio();
+    this.suppressAutoSpeakOnce = true;
+
+    // 7. Переходим на экран обучения
+    this.switchSection('learning');
+    this.renderLearningSection();
+    
+    // === ГЛАВНОЕ ИЗМЕНЕНИЕ ===
+    // Запускаем инструкцию (Туториал) через полсекунды
+    setTimeout(() => {
+        this.startAppTutorial();
+        
+        // СТАВИМ "ВЕЧНЫЙ" ФЛАГ
+        // Это значит: "Пользователь прошел обучение, больше не показывать".
+        localStorage.setItem('tutorial_complete_forever', '1');
+        
+    }, 500);
+    // ==========================
+}
+
+// --- ГЛАВНЫЙ АЛГОРИТМ ПОДБОРА (Logic Engine) ---
+generateInitialVocabulary(data, config) {
+    const exp = data.experience;
+    const focusArray = Array.isArray(data.focus) ? data.focus : [data.focus]; // Работаем как с массивом
+    const wordsToAdd = [];
+    const pendingWords = [];
+
+    const add = (sourceLevel) => {
+        const db = oxfordWordsDatabase[sourceLevel] || [];
+        db.forEach(w => {
+            wordsToAdd.push({ ...w, level: sourceLevel, forms: w.forms || null });
+        });
+    };
+    
+    const addPending = (sourceLevel) => {
+        const db = oxfordWordsDatabase[sourceLevel] || [];
+        db.forEach(w => {
+            pendingWords.push({ ...w, level: sourceLevel });
+        });
+    };
+
+    // === 1. БАЗА ПО ОПЫТУ ===
+    if (exp === 1) add('A1'); 
+    else if (exp === 2) { add('A2'); add('B1'); }
+    else if (exp === 3) { add('B1'); add('B2'); }
+    else if (exp === 4) { add('B2'); add('C1'); }
+    else if (exp === 5) { add('C1'); add('C2'); }
+
+    // === 2. ЭКЗАМЕНЫ (УМНАЯ ЛОГИКА) ===
+    if (data.subGoal) {
+        const goal = data.subGoal;
+        
+        if (goal === 'OGE') {
+            // ОГЭ - это уровень A2-B1. Если человек новичок, даем A1+A2.
+            if (exp <= 2) { add('A1'); add('A2'); } 
+            else { add('A2'); add('B1'); }
+            this.showNotification('Добавлен словарный минимум для ОГЭ (A2-B1)', 'success');
+        }
+        else if (goal === 'EGE') {
+            // ЕГЭ - это B1-B2.
+            if (exp <= 2) { add('A2'); add('B1'); } // Подтягиваем базу
+            else { add('B1'); add('B2'); }
+            this.showNotification('Добавлен словарный минимум для ЕГЭ (B1-B2)', 'success');
+        }
+        else if (goal === 'IELTS' || goal === 'TOEFL') {
+            add('B2');
+            add('C1');
+            add('IELTS'); // Если есть такая категория в базе
+        }
+        else {
+            // Профессии (IT, MED, etc)
+            if (exp <= 2) {
+                addPending(goal);
+                this.showNotification(`Слова для ${goal} добавлены в очередь (нужна база)`, 'info');
+            } else {
+                add(goal);
+            }
+        }
+    }
+
+    // === 3. ФОКУС (МУЛЬТИ-ВЫБОР) ===
+    if (focusArray.includes('basic')) {
+        // Если выбрали "Базу", убедимся, что A1/A2 добавлены
+        if (exp > 2) { add('A1'); add('A2'); } 
+    }
+    if (focusArray.includes('grammar')) {
+        add('PREPOSITIONS');
+        add('IRREGULARS'); // Неправильные глаголы
+    }
+    if (focusArray.includes('speaking')) {
+        add('PHRASAL_VERBS');
+        add('IDIOMS');
+    }
+    if (focusArray.includes('prof')) {
+        add('PROVERBS');
+        if (exp >= 3) add('C1');
+    }
+
+    // Сохраняем очередь
+    config.pendingSpecialWords = pendingWords;
+    localStorage.setItem('userConfig', JSON.stringify(config));
+
+    // Фильтрация дублей и сохранение
+    let count = 0;
+    const uniqueSet = new Set();
+    
+    wordsToAdd.forEach(w => {
+        // Ключ уникальности: слово + уровень
+        const key = `${w.word}_${w.level}`;
+        
+        // Проверяем, нет ли уже такого слова в текущем списке обучения
+        const alreadyInLearning = this.learningWords.some(lw => lw.word === w.word && lw.level === w.level);
+        
+        if (!uniqueSet.has(key) && !alreadyInLearning) {
+            uniqueSet.add(key);
+            this.learningWords.push({
+                word: w.word,
+                translation: w.translation,
+                level: w.level,
+                forms: w.forms || null,
+                isLearned: false,
+                addedAt: Date.now()
+            });
+            this.initializeWordStats(w.word);
+            count++;
+        }
+    });
+    
+    console.log(`Wizard added ${count} unique words.`);
 }
 
   // =========================
@@ -374,18 +888,25 @@ checkAndShowFirstRunOrMotivation() {
     await this.playSingleWordMp3(word, regionPref);
   }
   
-  stopCurrentAudio() {
-    try {
-      if (this.currentAudio) {
-        this.currentAudio.pause();
-        this.currentAudio.src = '';
-        this.currentAudio = null;
-      }
-      if (window && window.speechSynthesis) {
+ stopCurrentAudio() {
+    // 1. Останавливаем HTML5 Audio (Глобальный плеер)
+    if (this.globalPlayer) {
+        this.globalPlayer.pause();
+        this.globalPlayer.currentTime = 0;
+        // ВАЖНО: Сбрасываем источник, чтобы плеер "забыл" последнее слово
+        this.globalPlayer.removeAttribute('src'); 
+        this.globalPlayer.load(); // Принудительная перезагрузка пустого состояния
+    }
+
+    // 2. Останавливаем TTS (синтез речи)
+    if (window.speechSynthesis) {
         window.speechSynthesis.cancel();
-      }
-    } catch {}
-  }
+    }
+
+    // 3. Сбрасываем текущий промис и флаги
+    this.currentAudioPromise = null;
+}
+
   // MP3 play that resolves when playback finishes (no overlap)
 playMp3Url(url) {
     if (this.muted) return Promise.resolve(false);
@@ -574,7 +1095,10 @@ syncModePracticeToggles() {
   async _playSingleTokenMp3Only(word, regionPreferred = 'us') {
     const candidates = this.buildAudioCandidates(word);
     if (candidates.length === 0) return false;
-    const tryRegions = regionPreferred === 'uk' ? ['uk', 'us'] : ['us', 'uk'];
+    
+    // ИЗМЕНЕНИЕ: Строго следуем региону, без авто-переключения
+    // Если нажали US — пробуем только US.
+    const tryRegions = [regionPreferred]; 
 
     for (const cand of candidates) {
       for (const region of tryRegions) {
@@ -585,7 +1109,7 @@ syncModePracticeToggles() {
       }
     }
     return false;
-  }
+}
 
   async playFormsSequence(forms, regionPreferred = 'us') {
     if (!forms || !forms.length) return false;
@@ -925,8 +1449,8 @@ document.querySelectorAll('.level-card[data-level]').forEach(card => {
 card.addEventListener('click', (e) => {
 const level = e.currentTarget.getAttribute('data-level');
 if (level) {
-this.showLevelWords(level);
-}
+      this.showLevelWords(level);    // ← ВАЖНО: вызываем переход
+    }
 });
 });
     // Category cards
@@ -1095,45 +1619,7 @@ if (learningLamp) {
         b.classList.toggle('active', b.getAttribute('data-practice') === this.currentPractice);
       });
     }, 100);
-    this.ensureAutoDictButton();
     window.onAddToStudy = (payload) => this.handleTranslatorAdd(payload);
-}
-
-ensureAutoDictButton() {
-  try {
-    const container = document.querySelector('#levels #wordsContainer');
-    if (!container) return;
-
-    const header = container.querySelector('.words-header');
-
-    // Если список ещё не открыт — убираем кнопку, если висит
-    if (!header) {
-      document.querySelectorAll('#levels .auto-dict-top, #levels .auto-dict-inline')
-        .forEach(n => n.remove());
-      return;
-    }
-
-    // Если уже есть кнопка — выходим
-    if (document.getElementById('autoDictStartBtn')) return;
-
-    // На всякий случай удалим старый "нижний" вариант, если он оставался
-    document.querySelectorAll('#levels .auto-dict-inline').forEach(n => n.remove());
-
-    // Создаем верхний блок и вставляем ПЕРЕД .words-header
-    const wrap = document.createElement('div');
-    wrap.className = 'auto-dict-top';
-
-    const btn = document.createElement('button');
-    btn.id = 'autoDictStartBtn';
-    btn.className = 'btn auto-dict-btn';
-    btn.innerHTML = '<i class="fas fa-magic"></i> Подобрать словарь под тебя';
-    btn.addEventListener('click', () => this.showAutoDictionaryTest());
-
-wrap.appendChild(btn);
-container.insertBefore(wrap, header);
-  } catch (e) {
-    console.warn('ensureAutoDictButton error:', e);
-  }
 }
 
   // Daily Motivation once per day
@@ -1226,180 +1712,6 @@ installAudioUnlocker() {
     );
 }
   
-maybeRunFirstTour() {
-    try {
-        // Проверяем готовность DOM
-        if (!document.body || document.readyState !== 'complete') {
-            // Если DOM не готов, ждем
-            window.addEventListener('load', () => {
-                this.maybeRunFirstTour();
-            });
-            return;
-        }
-        
-        const done = localStorage.getItem('first_run_completed') === '1';
-        if (done) return;
-        
-        // Закрываем баннер установки если он показан
-        const banner = document.getElementById('appInstallBanner');
-        if (banner && banner.classList.contains('show')) {
-            banner.classList.remove('show');
-            document.body.classList.remove('banner-shown');
-        }
-        
-        setTimeout(() => this.showFirstRunTour(), 300);
-    } catch (e) {
-        console.error('Error in maybeRunFirstTour:', e);
-    }
-}
-
-showFirstRunTour() {
-    const highlight = (section) => {
-        this.clearNavHighlights();
-        if (!section) return;
-        const btn = document.querySelector(`.bottom-nav .nav-item[data-section="${section}"]`);
-        if (btn) btn.classList.add('nav-highlight');
-    };
-    
-    this.clearNavHighlights = () => {
-        document.querySelectorAll('.bottom-nav .nav-item').forEach(b => b.classList.remove('nav-highlight'));
-    };
-
-    const slides = [
-        {
-            key: 'welcome',
-            title: 'Добро пожаловать!',
-            image: 'hello.gif',
-            html: `
-                <div style="text-align:left;color:var(--text-primary);line-height:1.55;font-size:15px;">
-                    <div style="font-weight:800;margin-bottom:8px;">Добро пожаловать в лучшее приложение для повышения словарного запаса!</div>
-                    <p style="margin:0 0 8px 0;">Bewords.ru — приложение, созданное одним человеком, чтобы у вас было всё для удобного изучения.</p>
-                    <p style="margin:0 0 8px 0;">Приложение полностью бесплатное и без рекламы. Если понравится — поделитесь с друзьями или поддержите донатом через кнопку «♥».</p>
-                </div>
-            `,
-            spotlight: null
-        },
-        {
-            key: 'levels',
-            title: 'Уровни',
-            image: '1.gif',
-            html: `<p>Здесь вы можете добавлять слова в свой словарь для изучения — из уровней и тематических категорий.</p>`,
-            spotlight: 'levels'
-        },
-        {
-            key: 'learning',
-            title: 'Изучаю',
-            image: '2.gif',
-            html: `<p>Практикуйте слова в 2 режимах: <strong>Quiz</strong> и <strong>Flashcards</strong>. Система учитывает интервалы повторения.</p>`,
-            spotlight: 'learning'
-        },
-        {
-            key: 'new-words',
-            title: 'Новые',
-            image: '3.gif',
-            html: `<p>Добавляйте свои слова и фразы. После добавления они сразу попадут в ваш словарь.</p>`,
-            spotlight: 'new-words'
-        },
-        {
-            key: 'progress',
-            title: 'Прогресс',
-            image: '4.gif',
-            html: `<p>Отслеживайте прогресс: сколько повторений вы сделали и как продвигаетесь по уровням.</p>`,
-            spotlight: 'progress'
-        },
-        {
-            key: 'games',
-            title: 'Игры',
-            image: '5.gif',
-            html: `<p>Играйте и одновременно учите слова. Чтобы запустить игру, ответьте правильно 3 раза в quiz.</p>`,
-            spotlight: 'games'
-        },
-        {
-            key: 'ai-chat',
-            title: 'AI Chat',
-            image: '6.gif',
-            html: `<p>Спросите у бота на основе ChatGPT любой вопрос по английскому — доступен 24/7.</p>`,
-            spotlight: 'ai-chat'
-        }
-    ];
-
-    let index = 0;
-    const overlay = document.createElement('div');
-    overlay.id = 'firstRunTour';
-overlay.style.cssText = 'position:fixed;inset:0;z-index:2147483647;background:rgba(0,0,0,.85);display:flex;align-items:flex-end;justify-content:center;';
-
-    const panel = document.createElement('div');
-    panel.style.cssText = 'width:100%;background:var(--bg-primary);border-top-left-radius:16px;border-top-right-radius:16px;box-shadow:0 -8px 30px rgba(0,0,0,.25);padding:16px 16px 12px 16px;max-height:85vh;overflow-y:auto;';
-    overlay.appendChild(panel);
-
-    let startX = 0;
-    overlay.addEventListener('touchstart', (e) => {
-        startX = e.changedTouches[0].clientX;
-    }, { passive: true });
-    
-    overlay.addEventListener('touchend', (e) => {
-        const endX = e.changedTouches[0].clientX;
-        const dx = endX - startX;
-        if (Math.abs(dx) > 60) {
-            if (dx < 0) goNext();
-            else goPrev();
-        }
-    }, { passive: true });
-
-    const render = () => {
-        const s = slides[index];
-        highlight(s.spotlight);
-
-        panel.innerHTML = `
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                <div style="font-weight:900;color:var(--text-primary);font-size:18px;">${s.title}</div>
-                <div style="display:flex;gap:6px;">${slides.map((_, i) => `<span style="width:8px;height:8px;border-radius:50%;background:${i === index ? '#6366f1' : '#cbd5e1'};display:inline-block;"></span>`).join('')}</div>
-            </div>
-            ${s.image ? `<div style="text-align:center;margin:12px 0;"><img src="/${s.image}" alt="${s.title}" style="max-width:100%;height:auto;max-height:200px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>` : ''}
-            <div style="color:var(--text-secondary);">${s.html}</div>
-            <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px;">
-                <button class="btn btn-secondary" ${index === 0 ? 'disabled' : ''} data-tour="prev">Назад</button>
-                <button class="btn btn-primary" data-tour="next">${index === slides.length - 1 ? 'Готово' : 'Далее'}</button>
-            </div>
-        `;
-
-        panel.querySelector('[data-tour="prev"]').onclick = () => goPrev();
-        panel.querySelector('[data-tour="next"]').onclick = () => goNext();
-    };
-
-const finish = () => {
-    this.clearNavHighlights();
-    try {
-        localStorage.setItem('first_run_completed', '1');
-    } catch {}
-    overlay.remove();
-    
-    // После презентации показываем мотивацию
-    setTimeout(() => {
-        this.maybeShowDailyMotivation();
-    }, 500);
-};
-
-    const goPrev = () => {
-        if (index > 0) {
-            index--;
-            render();
-        }
-    };
-    
-    const goNext = () => {
-        if (index < slides.length - 1) {
-            index++;
-            render();
-        } else {
-            finish();
-        }
-    };
-
-    document.body.appendChild(overlay);
-    render();
-}
-
 
   // Preload AI chat iframe eagerly (no lazy)
   preloadAiChat() {
@@ -1705,7 +2017,10 @@ showSettingsModal() {
         </button>
         <button class="btn btn-primary" onclick="window.open('app.html', '_blank')" style="width:100%;margin-bottom:10px;">
           <i class="fas fa-download"></i> Установка приложения
-        </button> 
+        </button>
+        <button class="btn btn-primary" onclick="app.startAppTutorial()" style="width:100%; margin-bottom:10px;">
+   <i class="fas fa-question-circle"></i> Обучение
+</button>
       </div>
       <div id="settingsInnerPage" style="display:none;"></div>
       <div id="installGuide" style="display:none;"></div>
@@ -1912,7 +2227,6 @@ switchSection(section) {
     if (section === 'levels') {
       this.backToLevels();
       this.updateLevelCounts(); // ДОБАВИТЬ
-      setTimeout(() => this.ensureAutoDictButton(), 0);
     }
     
     if (section === 'learning') {
@@ -2074,842 +2388,40 @@ scrollMainToTop() {
   }
 }
 
-showLevelWords(level) {
-  this.stopCurrentAudio();
-  this.currentLevel = level;
-  this.currentCategory = null;
+  showCategoryWords(category) {
+    this.stopCurrentAudio();
+    this.currentCategory = category;
+    this.currentLevel = null; // Сбрасываем уровень, чтобы кнопка назад работала правильно
 
-  const words = oxfordWordsDatabase[level] || [];
-  const container = document.getElementById('wordsContainer');
-  const title = document.getElementById('currentLevelTitle');
-  const wordsList = document.getElementById('wordsList');
+    const words = oxfordWordsDatabase[category] || [];
+    const container = document.getElementById('wordsContainer');
+    const title = document.getElementById('currentLevelTitle');
+    const wordsList = document.getElementById('wordsList');
 
-  // Если слов очень много — используем ленивую загрузку по 250
-  if (words.length > 250) {
-    this.showLevelWordsLazy(level);
-    return;
-  }
-
-  if (typeof this.toggleLevelsIndexVisibility === 'function') {
-    this.toggleLevelsIndexVisibility(false);
-  }
-  if (container) container.classList.remove('hidden');
-
-  if (title) title.textContent = `${level} - ${words.length} слов`;
-
-  if (wordsList) {
-    wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
-
-   this.showGlobalLoader('Кот Боб загружает для вас этот список...', 1000);
-   
-        requestAnimationFrame(() => {
-      const fragment = document.createDocumentFragment();
-      const tempDiv = document.createElement('div');
-
-      // Генерируем HTML (без изменений)
-      tempDiv.innerHTML = words.map(word => this.createWordCard(word, level)).join('');
-
-      while (tempDiv.firstChild) {
-        fragment.appendChild(tempDiv.firstChild);
-      }
-
-      wordsList.innerHTML = '';
-      wordsList.appendChild(fragment);
-
-      this.installWordsListDelegatedHandlers();
-
-      // === ВАЖНОЕ ИСПРАВЛЕНИЕ ===
-      // Вызываем обновление кнопки с небольшой задержкой, чтобы данные точно "устоялись"
-      setTimeout(() => {
-          this.updateBulkToggleButton();
-      }, 50); 
-      // ===========================
-
-      if (typeof this.ensureAutoDictButton === 'function') {
-        this.ensureAutoDictButton();
-      }
-
-        this.hideGlobalLoader();
-
-    });
-  }
-
-  this.jumpToTopStrict();
-}
-
-showCategoryWords(category) {
-  this.stopCurrentAudio();
-  this.currentCategory = category;
-  this.currentLevel = null;
-
-  const words = oxfordWordsDatabase[category] || [];
-  const container = document.getElementById('wordsContainer');
-  const title = document.getElementById('currentLevelTitle');
-  const wordsList = document.getElementById('wordsList');
-
-  // Для очень больших списков категорий — лениво
-  if (words.length > 250) {
-    this.showLevelWordsLazy(category);
-    return;
-  }
-
-  if (typeof this.toggleLevelsIndexVisibility === 'function') {
-    this.toggleLevelsIndexVisibility(false);
-  }
-  if (container) container.classList.remove('hidden');
-
-  const categoryName =
-    category === 'IRREGULARS' ? 'Неправильные глаголы' :
-    category === 'PHRASAL_VERBS' ? 'Фразовые глаголы' :
-    category === 'IDIOMS' ? 'Идиомы' :
-    category === 'PROVERBS' ? 'Пословицы и поговорки' :
-    category === 'MEDICAL' ? 'Медицинский английский' :
-    category === 'PREPOSITIONS' ? 'Предлоги' :
-    'Категория';
-
-  if (title) title.textContent = `${categoryName} - ${words.length} слов`;
-
-  if (wordsList) {
-    wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
-
-      this.showGlobalLoader('Кот Боб загружает для вас этот список...', 1000);
-
-    requestAnimationFrame(() => {
-      const fragment = document.createDocumentFragment();
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = words.map(word => this.createWordCard(word, category)).join('');
-
-      while (tempDiv.firstChild) {
-        fragment.appendChild(tempDiv.firstChild);
-      }
-
-      wordsList.innerHTML = '';
-      wordsList.appendChild(fragment);
-
-      this.installWordsListDelegatedHandlers();
-      setTimeout(() => {
-          this.updateBulkToggleButton();
-      }, 50);
-
-      if (typeof this.ensureAutoDictButton === 'function') {
-        this.ensureAutoDictButton();
-      }
-
-        this.hideGlobalLoader();
-    });
-  }
-
-  this.jumpToTopStrict();
-}
-
-// Ленивая загрузка для больших списков (>250 слов)
-showLevelWordsLazy(level) {
-  const words = oxfordWordsDatabase[level] || [];
-  const BATCH_SIZE = 250;
-
-  // Если слов мало - обычный рендеринг
-  if (words.length <= BATCH_SIZE) {
-    this.showLevelWords(level);
-    return;
-  }
-
-  this.stopCurrentAudio();
-  this.currentLevel = level;
-  this.currentCategory = null;
-
-  const container = document.getElementById('wordsContainer');
-  const title = document.getElementById('currentLevelTitle');
-  const wordsList = document.getElementById('wordsList');
-
-  if (typeof this.toggleLevelsIndexVisibility === 'function') {
-    this.toggleLevelsIndexVisibility(false);
-  }
-  if (container) container.classList.remove('hidden');
-  if (title) title.textContent = `${level} - ${words.length} слов (загрузка...)`;
-
-  if (wordsList) {
-      this.showGlobalLoader('Кот Боб загружает для вас эту страницу...', 1000);
-
-    wordsList.innerHTML = words.slice(0, BATCH_SIZE)
-      .map(w => this.createWordCard(w, level))
-      .join('');
-      
-      // кнопка подобрать там и сям
-this.installWordsListDelegatedHandlers();
-      setTimeout(() => {
-          this.updateBulkToggleButton();
-      }, 100); 
-
-// Гарантируем появление кнопки, даже если рендер занял время
-requestAnimationFrame(() => {
-  if (typeof this.ensureAutoDictButton === 'function') {
-    this.ensureAutoDictButton();
-  }
-});
-
-      let loaded = BATCH_SIZE;
-
-      this.hideGlobalLoader();
-
-    // Если загрузили не всё — настраиваем дозагрузку
-    if (loaded < words.length) {
-      const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          // 1. Убираем старый "датчик"
-          const oldSentinel = document.getElementById('lazy-sentinel');
-          if (oldSentinel) {
-            observer.unobserve(oldSentinel);
-            oldSentinel.remove();
-          }
-
-          // 2. Показываем лоадер (если Android)
-          if (this.isAndroid) {
-            this.showGlobalLoader('Кот Боб загружает ещё слова...', 1000);
-          }
-
-          // 3. Грузим следующую порцию
-          const nextBatch = words.slice(loaded, loaded + BATCH_SIZE)
-            .map(w => this.createWordCard(w, level))
-            .join('');
-          
-          wordsList.insertAdjacentHTML('beforeend', nextBatch);
-          loaded += BATCH_SIZE;
-          this.updateBulkToggleButton();
-
-          if (title) {
-            title.textContent = `${level} - Загружено ${Math.min(loaded, words.length)}/${words.length} слов`;
-          }
-
-          // 4. Прячем лоадер
-            this.hideGlobalLoader();
-
-          // 5. Если остались ещё слова — добавляем новый "датчик" в самый низ
-          if (loaded < words.length) {
-            const newSentinel = document.createElement('div');
-            newSentinel.style.height = '40px';
-            newSentinel.id = 'lazy-sentinel';
-            wordsList.appendChild(newSentinel);
-            observer.observe(newSentinel);
-          }
-        }
-      }, { rootMargin: '400px' });
-
-      // Создаем самый первый "датчик"
-      const s = document.createElement('div');
-      s.style.height = '40px';
-      s.id = 'lazy-sentinel';
-      wordsList.appendChild(s);
-      observer.observe(s);
+    if (typeof this.toggleLevelsIndexVisibility === 'function') {
+      this.toggleLevelsIndexVisibility(false);
     }
-  }
-  this.jumpToTopStrict();
-}
+    if (container) container.classList.remove('hidden');
 
-backToLevels() {
-  this.stopCurrentAudio();
+    const categoryName =
+      category === 'IRREGULARS' ? 'Неправильные глаголы' :
+      category === 'PHRASAL_VERBS' ? 'Фразовые глаголы' :
+      category === 'IDIOMS' ? 'Идиомы' :
+      category === 'PROVERBS' ? 'Пословицы и поговорки' :
+      category === 'MEDICAL' ? 'Медицинский английский' :
+      category === 'PREPOSITIONS' ? 'Предлоги' :
+      category;
 
-  this.toggleLevelsIndexVisibility(true);
+    if (title) title.textContent = `${categoryName} - ${words.length} слов`;
 
-  this.currentLevel = null;
-  this.currentCategory = null;
-
-  // Удаляем CTA, если он вставлен
-  document.querySelectorAll('#levels .auto-dict-top, #levels .auto-dict-inline')
-    .forEach(n => n.remove());
-}
- // =========
-  // Auto Dictionary (Levels page) — NEW TEST UI
-  // =========
-
-
-showAutoDictionaryTest() {
-  // Build overlay container styled per provided design
-  const overlay = document.createElement('div');
-  overlay.id = 'autoDictOverlay';
-  overlay.style.cssText = 'position:fixed;inset:0;z-index:1000003;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);display:flex;align-items:center;justify-content:center;padding:10px;';
-
-  const container = document.createElement('div');
-  container.className = 'container';
-  container.style.cssText = 'background:white;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-width:100%;width:100%;padding:20px;';
-
-  // Styles injection (scoped via ids/classes used below)
-  const style = document.createElement('style');
-  style.textContent = `
-    #autoDictOverlay h1 { color:#333;text-align:center;margin-bottom:10px;font-size:22px; }
-    #autoDictOverlay .subtitle { text-align:center;color:#666;margin-bottom:20px;font-size:14px; }
-    #autoDictOverlay .progress-bar{width:100%;height:8px;background:#e0e0e0;border-radius:10px;margin-bottom:20px;overflow:hidden;}
-    #autoDictOverlay .progress-fill{height:100%;background:linear-gradient(90deg,#667eea 0%,#764ba2 100%);width:0%;transition:width .3s ease;}
-    #autoDictOverlay .question-counter{text-align:center;color:#666;margin-bottom:15px;font-weight:600;font-size:16px;}
-    #autoDictOverlay .question-card{background:#f8f9fa;padding:20px;border-radius:15px;margin-bottom:20px;}
-    #autoDictOverlay .word{font-size:24px;font-weight:bold;color:#333;text-align:center;margin-bottom:20px;word-break:break-word;}
-    #autoDictOverlay .options{display:grid;gap:12px;}
-    #autoDictOverlay .option-btn{background:white;border:2px solid #e0e0e0;padding:15px;border-radius:10px;cursor:pointer;transition:all .3s ease;font-size:14px;text-align:left;color:#333;min-height:50px;display:flex;align-items:center;justify-content:flex-start;}
-    #autoDictOverlay .option-btn:hover{border-color:#667eea;background:#f0f4ff;transform:translateX(5px);}
-    #autoDictOverlay .option-btn.correct{background:#10b981;color:white;border-color:#10b981;}
-    #autoDictOverlay .option-btn.incorrect{background:#ef4444;color:white;border-color:#ef4444;}
-    #autoDictOverlay .control-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px;}
-    #autoDictOverlay .btn{padding:12px 20px;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s ease;flex:1;max-width:200px;}
-    #autoDictOverlay .btn-primary{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;}
-    #autoDictOverlay .btn-secondary{background:#f3f4f6;color:#666;}
-    #autoDictOverlay .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(102,126,234,.3);}
-    #autoDictOverlay .btn-secondary:hover{background:#e5e7eb;}
-    #autoDictOverlay .btn:disabled{opacity:.5;cursor:not-allowed;}
-    #autoDictOverlay .result-card{text-align:center;padding:20px;}
-    #autoDictOverlay .level-badge{display:inline-block;padding:12px 25px;border-radius:50px;font-size:20px;font-weight:bold;margin:15px 0;color:white;}
-    #autoDictOverlay .level-A1{background:linear-gradient(135deg,#84fab0 0%,#8fd3f4 100%);}
-    #autoDictOverlay .level-A2{background:linear-gradient(135deg,#a1c4fd 0%,#c2e9fb 100%);}
-    #autoDictOverlay .level-B1{background:linear-gradient(135deg,#fbc2eb 0%,#a6c1ee 100%);}
-    #autoDictOverlay .level-B2{background:linear-gradient(135deg,#fdcbf1 0%,#e6dee9 100%);}
-    #autoDictOverlay .level-C1{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);}
-    #autoDictOverlay .level-C2{background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);}
-    #autoDictOverlay .level-description{color:#666;font-size:16px;margin:15px 0;line-height:1.5;}
-    #autoDictOverlay .stats{background:#f8f9fa;padding:15px;border-radius:15px;margin:15px 0;}
-    #autoDictOverlay .stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e0e0e0;font-size:14px;}
-    #autoDictOverlay .stat-row:last-child{border-bottom:none;}
-    #autoDictOverlay .stat-label{color:#666;font-weight:600;}
-    #autoDictOverlay .stat-value{color:#333;font-weight:bold;}
-    #autoDictOverlay .start-screen{text-align:center;padding:15px;}
-    #autoDictOverlay .start-screen h2{color:#333;margin-bottom:15px;font-size:18px;}
-    #autoDictOverlay .start-screen ul{text-align:left;max-width:300px;margin:15px auto;color:#666;line-height:1.5;font-size:13px;}
-    #autoDictOverlay .start-screen li{margin-bottom:8px;}
-    #autoDictOverlay .start-screen .btn{margin-top:10px;}
-    #autoDictOverlay .back-btn { position: absolute; top: 15px; left: 15px; background: #f3f4f6; color: #666; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 5px; }
-    #autoDictOverlay .back-btn:hover { background: #e5e7eb; }
-    .acc-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700;}
-.acc-none{background:#e5e7eb;color:#374151;}
-.acc-good{background:#d1fae5;color:#065f46;}
-.acc-mid{background:#fef3c7;color:#92400e;}
-.acc-bad{background:#fee2e2;color:#991b1b;}
-.word-meta{margin-top:6px;color:var(--text-secondary);}
-    @media (max-width:480px){
-      #autoDictOverlay .container{padding:15px;}
-      #autoDictOverlay h1{font-size:18px;}
-      #autoDictOverlay .word{font-size:20px;}
-      #autoDictOverlay .option-btn{padding:12px;font-size:13px;min-height:45px;}
-      #autoDictOverlay .btn{padding:10px 15px;font-size:14px;max-width:100%;}
-      #autoDictOverlay .start-screen ul{font-size:12px;max-width:250px;}
-    }
-    @media (max-width:320px){
-      #autoDictOverlay .option-btn{padding:10px;font-size:12px;min-height:40px;}
-      #autoDictOverlay .btn{padding:8px 12px;font-size:13px;}
-    }
-    /* Стили для виджета Ачивок */
-.achievements-widget {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  padding: 15px;
-  margin-bottom: 14px;
-}
-.ach-header {
-  display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
-}
-.ach-title { font-weight: 800; color: var(--text-primary); font-size: 16px; }
-.ach-streak { 
-  background: #fff3cd; color: #856404; padding: 4px 8px; 
-  border-radius: 8px; font-weight: 700; font-size: 12px; display: flex; align-items: center; gap: 5px; 
-}
-.ach-streak i { color: #ffc107; }
-.ach-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
-.ach-item { 
-  background: var(--bg-primary); border: 1px solid var(--border-color); 
-  border-radius: 10px; padding: 10px 5px; text-align: center; opacity: 0.5; filter: grayscale(1); transition: all 0.3s;
-}
-.ach-item.unlocked { opacity: 1; filter: grayscale(0); border-color: #fbbf24; background: linear-gradient(180deg, var(--bg-primary) 0%, #fffbeb 100%); }
-.ach-icon { font-size: 24px; margin-bottom: 5px; display: block; }
-.ach-name { font-size: 10px; font-weight: 700; color: var(--text-secondary); line-height: 1.2; }
-.daily-goal-box { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
-.goal-label { font-size: 13px; font-weight: 700; color: var(--text-primary); display: flex; justify-content: space-between; margin-bottom: 6px; }
-.goal-bar-track { height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; }
-.goal-bar-fill { height: 100%; background: var(--success-color); transition: width 0.5s ease; }
-  `;
-  overlay.appendChild(style);
-
-  // App node
-  const appWrap = document.createElement('div');
-  appWrap.id = 'autoTestApp';
-  appWrap.innerHTML = `
-    <button class="back-btn" id="backBtnTest">
-      <i class="fas fa-arrow-left"></i> Назад
-    </button>
-    
-    <div id="startScreen" class="start-screen">
-      <h1>📚 Тест на определение словарного запаса</h1>
-      <p class="subtitle">Английский язык A1 - C2</p>
-      <div style="margin:15px 0;">
-        <h2>Как проходить тест:</h2>
-        <ul>
-          <li>✓ Вам будут показаны слова разной сложности</li>
-          <li>✓ Выберите правильный перевод из предложенных вариантов</li>
-          <li>✓ Если не знаете слово - нажмите "Не знаю"</li>
-          <li>✓ Тест состоит из 40 вопросов</li>
-          <li>✓ Результат определит ваш точный уровень</li>
-          <li>✓ Будьте честны для получения точного результата!</li>
-          <li>✓ После прохождения теста, система автоматически соберет за вас словарный запас для изучения!</li>
-        </ul>
-      </div>
-      <div class="control-buttons">
-        <button class="btn btn-secondary" id="closeTestBtn">Закрыть</button>
-        <button class="btn btn-primary" id="startBtn">Начать тест</button>
-      </div>
-    </div>
-
-    <div id="testScreen" style="display:none;">
-      <h1>📚 Тест словарного запаса</h1>
-      <p class="subtitle">Выберите правильный перевод слова</p>
-      <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
-      <div class="question-counter" id="questionCounter"></div>
-      <div class="question-card">
-        <div class="word" id="wordDisplay"></div>
-        <div class="options" id="optionsContainer"></div>
-      </div>
-      <div class="control-buttons">
-        <button class="btn btn-secondary" id="dontKnowBtn">❌ Не знаю</button>
-        <button class="btn btn-primary" id="nextBtn" disabled>Далее →</button>
-      </div>
-    </div>
-
-    <div id="resultScreen" style="display:none;">
-      <div class="result-card">
-        <h1>🎉 Тест завершен!</h1>
-        <p class="subtitle">Вот ваш результат:</p>
-        <div class="level-badge" id="levelBadge"></div>
-        <div class="level-description" id="levelDescription"></div>
-        <div class="stats">
-          <div class="stat-row"><span class="stat-label">Всего вопросов:</span><span class="stat-value" id="totalQuestions"></span></div>
-          <div class="stat-row"><span class="stat-label">Правильных ответов:</span><span class="stat-value" id="correctAnswers"></span></div>
-          <div class="stat-row"><span class="stat-label">Точность:</span><span class="stat-value" id="accuracy"></span></div>
-          <div class="stat-row"><span class="stat-label">Примерный словарный запас:</span><span class="stat-value" id="vocabSize"></span></div>
-        </div>
-        <div class="control-buttons">
-          <button class="btn btn-secondary" id="restartBtn">Пройти тест заново</button>
-          <button class="btn btn-primary" id="applyDictBtn">Собрать словарь автоматически</button>
-          <button class="btn btn-secondary" id="closeResultBtn">Закрыть</button>
-        </div>
-      </div>
-    </div>
-  `;
-
-  // Append nodes
-  container.appendChild(appWrap);
-  overlay.appendChild(container);
-  document.body.appendChild(overlay);
-
-  // Local state for test
-  const wordDatabase = [
-    // A1.1 - Weak A1 (basic words)
-    { word: "cat", translation: "кошка", level: "A1.1", options: ["собака", "кошка", "птица", "рыба"] },
-    { word: "book", translation: "книга", level: "A1.1", options: ["ручка", "книга", "стол", "стул"] },
-    { word: "water", translation: "вода", level: "A1.1", options: ["еда", "вода", "молоко", "сок"] },
-    { word: "house", translation: "дом", level: "A1.1", options: ["дом", "машина", "дерево", "парк"] },
-    { word: "family", translation: "семья", level: "A1.1", options: ["друзья", "семья", "соседи", "коллеги"] },
-    { word: "happy", translation: "счастливый", level: "A1.1", options: ["грустный", "злой", "счастливый", "уставший"] },
-    { word: "work", translation: "работа", level: "A1.1", options: ["игра", "отдых", "работа", "учеба"] },
-    { word: "food", translation: "еда", level: "A1.1", options: ["напиток", "еда", "одежда", "мебель"] },
-    { word: "day", translation: "день", level: "A1.1", options: ["ночь", "день", "месяц", "год"] },
-    { word: "time", translation: "время", level: "A1.1", options: ["время", "место", "день", "час"] },
-    
-    // A1.2 - Strong A1 or Weak A2 (intermediate basic words)
-    { word: "weather", translation: "погода", level: "A1.2", options: ["время", "погода", "сезон", "климат"] },
-    { word: "expensive", translation: "дорогой", level: "A1.2", options: ["дешевый", "дорогой", "старый", "новый"] },
-    { word: "journey", translation: "путешествие", level: "A1.2", options: ["прогулка", "поездка", "путешествие", "экскурсия"] },
-    { word: "neighbor", translation: "сосед", level: "A1.2", options: ["друг", "родственник", "сосед", "коллега"] },
-    { word: "create", translation: "создавать", level: "A1.2", options: ["разрушать", "создавать", "менять", "копировать"] },
-    { word: "opinion", translation: "мнение", level: "A1.2", options: ["факт", "мнение", "правда", "ложь"] },
-    { word: "discover", translation: "открывать", level: "A1.2", options: ["закрывать", "прятать", "открывать", "терять"] },
-    { word: "prepare", translation: "готовить", level: "A1.2", options: ["готовить", "убирать", "мыть", "резать"] },
-    { word: "difficult", translation: "трудный", level: "A1.2", options: ["легкий", "трудный", "сложный", "простой"] },
-    { word: "important", translation: "важный", level: "A1.2", options: ["важный", "малый", "большой", "маленький"] },
-    
-    // A2.1 - Strong A2 or Weak B1 (intermediate words)
-    { word: "achievement", translation: "достижение", level: "A2.1", options: ["провал", "попытка", "достижение", "цель"] },
-    { word: "beneficial", translation: "полезный", level: "A2.1", options: ["вредный", "нейтральный", "полезный", "опасный"] },
-    { word: "contribute", translation: "вносить вклад", level: "A2.1", options: ["забирать", "вносить вклад", "отказываться", "игнорировать"] },
-    { word: "evidence", translation: "доказательство", level: "A2.1", options: ["догадка", "доказательство", "предположение", "слух"] },
-    { word: "anxiety", translation: "тревога", level: "A2.1", options: ["радость", "спокойствие", "тревога", "скука"] },
-    { word: "decline", translation: "снижаться", level: "A2.1", options: ["расти", "снижаться", "оставаться", "колебаться"] },
-    { word: "enthusiasm", translation: "энтузиазм", level: "A2.1", options: ["апатия", "энтузиазм", "страх", "злость"] },
-    { word: "obvious", translation: "очевидный", level: "A2.1", options: ["скрытый", "очевидный", "сложный", "простой"] },
-    { word: "anticipate", translation: "предвидеть", level: "A2.1", options: ["игнорировать", "предвидеть", "забывать", "отрицать"] },
-    { word: "coherent", translation: "связный", level: "A2.1", options: ["хаотичный", "связный", "простой", "сложный"] },
-    
-    // A2.2 - Strong B1 or Weak B2 (advanced intermediate words)
-    { word: "deteriorate", translation: "ухудшаться", level: "A2.2", options: ["улучшаться", "ухудшаться", "стабилизироваться", "изменяться"] },
-    { word: "incentive", translation: "стимул", level: "A2.2", options: ["препятствие", "стимул", "результат", "процесс"] },
-    { word: "ambiguous", translation: "неоднозначный", level: "A2.2", options: ["ясный", "неоднозначный", "простой", "прямой"] },
-    { word: "condemn", translation: "осуждать", level: "A2.2", options: ["хвалить", "осуждать", "игнорировать", "принимать"] },
-    { word: "diligent", translation: "усердный", level: "A2.2", options: ["ленивый", "усердный", "быстрый", "медленный"] },
-    { word: "resilient", translation: "устойчивый", level: "A2.2", options: ["хрупкий", "устойчивый", "слабый", "твердый"] },
-    { word: "alleviate", translation: "облегчать", level: "A2.2", options: ["усиливать", "облегчать", "вызывать", "избегать"] },
-    { word: "convoluted", translation: "запутанный", level: "A2.2", options: ["простой", "прямой", "запутанный", "ясный"] },
-    { word: "meticulous", translation: "дотошный", level: "A2.2", options: ["небрежный", "дотошный", "быстрый", "медленный"] },
-    { word: "pervasive", translation: "всепроникающий", level: "A2.2", options: ["редкий", "всепроникающий", "локальный", "временный"] },
-    
-    // B1.1 - Strong B1 or Weak B2 (upper intermediate words)
-    { word: "complacent", translation: "самодовольный", level: "B1.1", options: ["беспокойный", "самодовольный", "скромный", "нервный"] },
-    { word: "eloquent", translation: "красноречивый", level: "B1.1", options: ["косноязычный", "красноречивый", "тихий", "громкий"] },
-    { word: "pragmatic", translation: "прагматичный", level: "B1.1", options: ["идеалистичный", "прагматичный", "мечтательный", "романтичный"] },
-    { word: "scrutinize", translation: "тщательно изучать", level: "B1.1", options: ["игнорировать", "бегло просматривать", "тщательно изучать", "пропускать"] },
-    { word: "obfuscate", translation: "затуманивать", level: "B1.1", options: ["прояснять", "затуманивать", "объяснять", "упрощать"] },
-    { word: "ubiquitous", translation: "вездесущий", level: "B1.1", options: ["редкий", "вездесущий", "отсутствующий", "единичный"] },
-    { word: "vicarious", translation: "косвенный", level: "B1.1", options: ["прямой", "косвенный", "личный", "открытый"] },
-    { word: "nebulous", translation: "туманный", level: "B1.1", options: ["четкий", "туманный", "яркий", "точный"] },
-    { word: "ephemeral", translation: "эфемерный", level: "B1.1", options: ["вечный", "эфемерный", "долгий", "постоянный"] },
-    { word: "inscrutable", translation: "загадочный", level: "B1.1", options: ["понятный", "простой", "загадочный", "открытый"] },
-    
-    // B1.2 - Strong B2 or Weak C1 (advanced upper intermediate)
-    { word: "surreptitious", translation: "тайный", level: "B1.2", options: ["открытый", "тайный", "публичный", "явный"] },
-    { word: "zeitgeist", translation: "дух времени", level: "B1.2", options: ["прошлое", "дух времени", "будущее", "настоящее"] },
-    { word: "reverberate", translation: "отражаться", level: "B1.2", options: ["отражаться", "затихать", "вспыхивать", "разбиваться"] },
-    { word: "quintessential", translation: "сущностный", level: "B1.2", options: ["внешний", "сущностный", "важный", "незначительный"] },
-    { word: "ephemeral", translation: "эфемерный", level: "B1.2", options: ["вечный", "эфемерный", "долгий", "постоянный"] },
-    { word: "mellifluous", translation: "медовый", level: "B1.2", options: ["резкий", "медовый", "простой", "громкий"] },
-    { word: "pragmatic", translation: "прагматичный", level: "B1.2", options: ["идеалистичный", "прагматичный", "мечтательный", "романтичный"] },
-    { word: "serendipity", translation: "счастливое совпадение", level: "B1.2", options: ["несчастье", "счастливое совпадение", "случайность", "противоречие"] },
-    { word: "ubiquitous", translation: "вездесущий", level: "B1.2", options: ["редкий", "вездесущий", "отсутствующий", "единичный"] },
-    { word: "nebulous", translation: "туманный", level: "B1.2", options: ["четкий", "туманный", "яркий", "точный"] },
-    
-    // B2.1 - Strong C1 or Weak C2 (advanced words)
-    { word: "reverberate", translation: "отражаться", level: "B2.1", options: ["отражаться", "затихать", "вспыхивать", "разбиваться"] },
-    { word: "quintessential", translation: "сущностный", level: "B2.1", options: ["внешний", "сущностный", "важный", "незначительный"] },
-    { word: "mellifluous", translation: "медовый", level: "B2.1", options: ["резкий", "медовый", "простой", "громкий"] },
-    { word: "serendipity", translation: "счастливое совпадение", level: "B2.1", options: ["несчастье", "счастливое совпадение", "случайность", "противоречие"] },
-    { word: "surreptitious", translation: "тайный", level: "B2.1", options: ["открытый", "тайный", "публичный", "явный"] },
-    { word: "zeitgeist", translation: "дух времени", level: "B2.1", options: ["прошлое", "дух времени", "будущее", "настоящее"] },
-    { word: "reverberate", translation: "отражаться", level: "B2.1", options: ["отражаться", "затихать", "вспыхивать", "разбиваться"] },
-    { word: "quintessential", translation: "сущностный", level: "B2.1", options: ["внешний", "сущностный", "важный", "незначительный"] },
-    { word: "mellifluous", translation: "медовый", level: "B2.1", options: ["резкий", "медовый", "простой", "громкий"] },
-    { word: "serendipity", translation: "счастливое совпадение", level: "B2.1", options: ["несчастье", "счастливое совпадение", "случайность", "противоречие"] },
-    
-    // B2.2 - Strong C2 (proficiency level)
-    { word: "reverberate", translation: "отражаться", level: "B2.2", options: ["отражаться", "затихать", "вспыхивать", "разбиваться"] },
-    { word: "quintessential", translation: "сущностный", level: "B2.2", options: ["внешний", "сущностный", "важный", "незначительный"] },
-    { word: "mellifluous", translation: "медовый", level: "B2.2", options: ["резкий", "медовый", "простой", "громкий"] },
-    { word: "serendipity", translation: "счастливое совпадение", level: "B2.2", options: ["несчастье", "счастливое совпадение", "случайность", "противоречие"] },
-    { word: "surreptitious", translation: "тайный", level: "B2.2", options: ["открытый", "тайный", "публичный", "явный"] },
-    { word: "zeitgeist", translation: "дух времени", level: "B2.2", options: ["прошлое", "дух времени", "будущее", "настоящее"] },
-    { word: "reverberate", translation: "отражаться", level: "B2.2", options: ["отражаться", "затихать", "вспыхивать", "разбиваться"] },
-    { word: "quintessential", translation: "сущностный", level: "B2.2", options: ["внешний", "сущностный", "важный", "незначительный"] },
-    { word: "mellifluous", translation: "медовый", level: "B2.2", options: ["резкий", "медовый", "простой", "громкий"] },
-    { word: "serendipity", translation: "счастливое совпадение", level: "B2.2", options: ["несчастье", "счастливое совпадение", "случайность", "противоречие"] }
-  ];
-
-  const levelDescriptions = {
-    "A1.1": { 
-      title:"A1.1 - Слабый A1", 
-      description:"Вы знаете самые базовые слова. Продолжайте изучать основную лексику повседневного общения.", 
-      vocabSize:"300-500 слов" 
-    },
-    "A1.2": { 
-      title:"A1.2 - Сильный A1 или слабый A2", 
-      description:"Вы знаете базовую лексику. Можете понимать простые фразы о себе и семье.", 
-      vocabSize:"500-800 слов" 
-    },
-    "A2.1": { 
-      title:"A2.1 - Сильный A2 или слабый B1", 
-      description:"Вы понимаете выражения на повседневные темы. Можете общаться в простых бытовых ситуациях.", 
-      vocabSize:"800-1200 слов" 
-    },
-    "A2.2": { 
-      title:"A2.2 - Сильный B1 или слабый B2", 
-      description:"Вы можете описывать свой опыт, события и планы. Понимаете основные идеи простых текстов.", 
-      vocabSize:"1200-1800 слов" 
-    },
-    "B1.1": { 
-      title:"B1.1 - Сильный B1 или слабый B2", 
-      description:"Вы понимаете основные идеи на знакомые темы. Можете справиться с большинством ситуаций в поездках.", 
-      vocabSize:"1800-2500 слов" 
-    },
-    "B1.2": { 
-      title:"B1.2 - Сильный B2 или слабый C1", 
-      description:"Вы можете описывать опыт, события, мечты и амбиции. Способны обосновать свое мнение.", 
-      vocabSize:"2500-3200 слов" 
-    },
-    "B2.1": { 
-      title:"B2.1 - Сильный C1 или слабый C2", 
-      description:"Вы понимаете сложные тексты на конкретные и абстрактные темы. Можете свободно общаться с носителями.", 
-      vocabSize:"3200-4000 слов" 
-    },
-    "B2.2": { 
-      title:"B2.2 - Сильный C2", 
-      description:"Вы владеете языком на уровне образованного носителя. Можете выражаться спонтанно, очень бегло и точно.", 
-      vocabSize:"4000+ слов" 
-    }
-  };
-
-  let currentQuestion = 0;
-  let correctCount = 0;
-  let totalQuestions = 40;
-  let answers = [];
-  let selectedAnswer = null;
-  let testQuestions = [];
-  const el = (id) => appWrap.querySelector('#' + id);
-
-  const shuffleArray = (array) => {
-    const newArray = [...array];
-    for (let i = newArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-    }
-    return newArray;
-  };
-
-  const levels12 = ["A1.1","A1.2","A2.1","A2.2","B1.1","B1.2","B2.1","B2.2"];
-
-  const startTest = () => {
-    el('startScreen').style.display = 'none';
-    el('testScreen').style.display = 'block';
-
-    testQuestions = [];
-    const questionsPerLevel = Math.floor(totalQuestions / levels12.length);
-
-    levels12.forEach(level => {
-      const levelWords = wordDatabase.filter(w => w.level === level);
-      const selected = shuffleArray(levelWords).slice(0, questionsPerLevel);
-      testQuestions.push(...selected);
-    });
-
-    while (testQuestions.length < totalQuestions) {
-      const randomWord = wordDatabase[Math.floor(Math.random() * wordDatabase.length)];
-      if (!testQuestions.includes(randomWord)) testQuestions.push(randomWord);
+    if (wordsList) {
+        // Используем наш улучшенный рендер, который теперь включает кнопку "Учить все"
+        this.renderFilteredWordsList(words, category);
     }
 
-    testQuestions = shuffleArray(testQuestions).slice(0, totalQuestions);
-    showQuestion();
-  };
-
-  const showQuestion = () => {
-    if (currentQuestion >= totalQuestions) {
-      showResults();
-      return;
-    }
-    const q = testQuestions[currentQuestion];
-    selectedAnswer = null;
-
-    const progress = (currentQuestion / totalQuestions) * 100;
-    el('progressBar').style.width = progress + '%';
-    el('questionCounter').textContent = `Вопрос ${currentQuestion + 1} из ${totalQuestions}`;
-
-    el('wordDisplay').textContent = q.word;
-
-    const optionsContainer = el('optionsContainer');
-    optionsContainer.innerHTML = '';
-    const shuffledOptions = shuffleArray(q.options);
-
-    shuffledOptions.forEach(option => {
-      const btn = document.createElement('button');
-      btn.className = 'option-btn';
-      btn.textContent = option;
-      btn.onclick = () => selectAnswer(option, q.translation);
-      optionsContainer.appendChild(btn);
-    });
-
-    el('nextBtn').disabled = true;
-  };
-
-  const selectAnswer = (selected, correct) => {
-    if (selectedAnswer !== null) return;
-    selectedAnswer = selected;
-    const isCorrect = selected === correct;
-    if (isCorrect) correctCount++;
-
-    answers.push({
-      question: currentQuestion,
-      selected, correct, isCorrect,
-      level: testQuestions[currentQuestion].level
-    });
-
-    const buttons = appWrap.querySelectorAll('.option-btn');
-    buttons.forEach(b => {
-      if (b.textContent === correct) {
-        b.classList.add('correct');
-      } else if (b.textContent === selected) {
-        b.classList.add('incorrect');
-      }
-      b.style.pointerEvents = 'none';
-    });
-
-    el('nextBtn').disabled = false;
-  };
-
-  const dontKnow = () => {
-    if (selectedAnswer !== null) return;
-    const q = testQuestions[currentQuestion];
-    selectedAnswer = "don't know";
-
-    answers.push({
-      question: currentQuestion,
-      selected: null,
-      correct: q.translation,
-      isCorrect: false,
-      level: q.level
-    });
-
-    const buttons = appWrap.querySelectorAll('.option-btn');
-    buttons.forEach(b => {
-      if (b.textContent === q.translation) {
-        b.classList.add('correct');
-      }
-      b.style.pointerEvents = 'none';
-    });
-
-    el('nextBtn').disabled = false;
-  };
-
-  const nextQuestion = () => {
-    currentQuestion++;
-    showQuestion();
-  };
-
-  const calculateLevel = () => {
-    const levelStats = {};
-    levels12.forEach(level => { levelStats[level] = { correct:0, total:0 }; });
-
-    answers.forEach(a => {
-      levelStats[a.level].total++;
-      if (a.isCorrect) levelStats[a.level].correct++;
-    });
-
-    let finalLevel = "A1.1";
-    for (let i = 0; i < levels12.length; i++) {
-      const level = levels12[i];
-      const stats = levelStats[level];
-      if (stats.total > 0) {
-        const percentage = (stats.correct / stats.total) * 100;
-        if (percentage >= 60) {
-          finalLevel = level;
-        } else {
-          break;
-        }
-      }
-    }
-    return finalLevel;
-  };
-
-  const showResults = () => {
-    el('testScreen').style.display = 'none';
-    el('resultScreen').style.display = 'block';
-
-    const level = calculateLevel();
-    const accuracy = Math.round((correctCount / totalQuestions) * 100);
-    const info = levelDescriptions[level];
-
-    const mainLevel = level.substring(0,2);
-    const badge = el('levelBadge');
-    badge.textContent = info.title;
-    badge.className = `level-badge level-${mainLevel}`;
-
-    el('levelDescription').textContent = info.description;
-    el('totalQuestions').textContent = totalQuestions;
-    el('correctAnswers').textContent = correctCount;
-    el('accuracy').textContent = accuracy + '%';
-    el('vocabSize').textContent = info.vocabSize;
-
-// Bind auto dictionary apply
-el('applyDictBtn').onclick = async () => {
-  // Передаем базовый уровень (A1, A2, etc) и детальный (A1.1, A1.2, etc)
-  await this.buildAutoDictionary(mainLevel, level);  //
-  overlay.remove();
-};
-  };
-
-  const restartTest = () => {
-    currentQuestion = 0;
-    correctCount = 0;
-    answers = [];
-    selectedAnswer = null;
-    testQuestions = [];
-    el('resultScreen').style.display = 'none';
-    el('startScreen').style.display = 'block';
-  };
-
-  // Wire buttons
-  el('startBtn').onclick = startTest;
-  el('closeTestBtn').onclick = () => overlay.remove();
-  el('backBtnTest').onclick = () => overlay.remove();
-  el('dontKnowBtn').onclick = dontKnow;
-  el('nextBtn').onclick = nextQuestion;
-  el('restartBtn').onclick = restartTest;
-  el('closeResultBtn').onclick = () => overlay.remove();
-}
-
-
-async buildAutoDictionary(detectedLevel, detailedLevel) {
-  // Build from detected base level and include categories based on user's proficiency
-  const toAdd = [];
-
-  const addFromArray = (arr, levelTag) => {
-    (arr || []).forEach(w => {
-      toAdd.push({ ...w, level: levelTag, forms: w.forms || null });
-    });
-  };
-
-  // Level categorization logic:
-  // .1 = weak (слабый), .2 = strong (сильный)
-  
-  if (detailedLevel === "A1.1") {
-    // Слабый A1 → только A1
-    addFromArray(oxfordWordsDatabase['A1'] || [], 'A1');
-    
-  } else if (detailedLevel === "A1.2" || detailedLevel === "A2.1") {
-    // Сильный A1 ИЛИ слабый A2 → только A2
-    addFromArray(oxfordWordsDatabase['A2'] || [], 'A2');
-    
-  } else if (detailedLevel === "A2.2" || detailedLevel === "B1.1") {
-    // Сильный A2 ИЛИ слабый B1 → только B1 + фразовые глаголы
-    addFromArray(oxfordWordsDatabase['B1'] || [], 'B1');
-    addFromArray(oxfordWordsDatabase['PHRASAL_VERBS'] || [], 'PHRASAL_VERBS');
-    
-  } else if (detailedLevel === "B1.2" || detailedLevel === "B2.1") {
-    // Сильный B1 ИЛИ слабый B2 → только B2 + фразовые глаголы + идиомы
-    addFromArray(oxfordWordsDatabase['B2'] || [], 'B2');
-    addFromArray(oxfordWordsDatabase['PHRASAL_VERBS'] || [], 'PHRASAL_VERBS');
-    addFromArray(oxfordWordsDatabase['IDIOMS'] || [], 'IDIOMS');
-    
-  } else if (detailedLevel === "B2.2" || detailedLevel === "C1.1") {
-    // Сильный B2 ИЛИ слабый C1 → только C1 + идиомы
-    addFromArray(oxfordWordsDatabase['C1'] || [], 'C1');
-    addFromArray(oxfordWordsDatabase['IDIOMS'] || [], 'IDIOMS');
-    
-  } else if (detailedLevel === "C1.2" || detailedLevel === "C2.1" || detailedLevel === "C2.2") {
-    // Сильный C1 ИЛИ любой C2 (слабый, сильный) → только C2
-    addFromArray(oxfordWordsDatabase['C2'] || [], 'C2');
-    
-  } else {
-    // Default case - если уровень не распознан
-    addFromArray(oxfordWordsDatabase[detectedLevel] || [], detectedLevel);
-    addFromArray(oxfordWordsDatabase['IRREGULARS'] || [], 'IRREGULARS');
-    addFromArray(oxfordWordsDatabase['PHRASAL_VERBS'] || [], 'PHRASAL_VERBS');
-    addFromArray(oxfordWordsDatabase['IDIOMS'] || [], 'IDIOMS');
+    this.jumpToTopStrict();
   }
 
-  let addedCount = 0;
-  toAdd.forEach(word => {
-    const exists = this.learningWords.some(w => w.word === word.word && w.level === word.level);
-    if (!exists) {
-      this.learningWords.push({
-        word: word.word,
-        translation: word.translation,
-        level: word.level,
-        forms: word.forms || null,
-        isLearned: false,
-        addedAt: Date.now()
-      });
-      this.initializeWordStats(word.word);
-      addedCount++;
-    }
-  });
-
-  if (addedCount > 0) {
-    this.saveData();
-    this.updateLevelCounts();
-    this.suppressAutoSpeakOnce = true;
-    this.showNotification(`Готово! Добавлено ${addedCount} слов по уровню ${detectedLevel}`, 'success');
-    if (this.currentSection === 'learning') this.renderLearningSection();
-  } else {
-    this.showNotification('Подходящие новые слова не найдены (возможно, уже добавлены)', 'info');
-  }
-}
 
   // =========
   // Bulk toggle (Добавить все / Удалить все)
@@ -3433,7 +2945,6 @@ incrementTrainerCounters({ correct = false } = {}) {
   // =========
   // Word cards
   // =========
-// --- В app.js (Часть 2) ЗАМЕНИТЕ createWordCard НА ЭТО: ---
 
   createWordCard(wordObj, level) {
       const isInLearning = this.learningWords.some(w => w.word === wordObj.word && w.level === level);
@@ -4041,6 +3552,7 @@ this.showNotification('Не удалось добавить. Попробуйт�
   // Learning UI
   // =========
 renderLearningSection() {
+  this.stopCurrentAudio();
   const container = document.getElementById('learningWordsList');
   const countEl = document.getElementById('learningCount');
   if (!container) return;
@@ -4085,7 +3597,6 @@ insertAutoDictionaryButtonInLearning(containerEl) {
     btn.className = 'btn btn-primary';
     btn.style.fontWeight = '700';
     btn.innerHTML = '<i class="fas fa-magic"></i> Подобрать словарь под тебя';
-    btn.addEventListener('click', () => this.showAutoDictionaryTest());
 
     wrap.appendChild(btn);
     containerEl.insertAdjacentElement('afterbegin', wrap);
@@ -5070,86 +4581,133 @@ if ((this.learningWords || []).length > 500) {
   // Review logic
   // =========
 getWordsToReview() {
-  // 1. Если режим "Endless" (Повторение) - показываем всё подряд, кроме выученного
+  // 1. Режим "Endless" — без ограничений
   if (this.currentPractice === 'endless') {
     return this.learningWords.filter(w => !w.isLearned);
   }
 
-  // 2. Режим "Заучивание" (Scheduled)
+  // 2. Режим "Заучивание" (Scheduled) — СТРОГАЯ ЛОГИКА
   const today = new Date().toDateString();
   
+  // Загружаем конфиг пользователя
+  let userConfig = JSON.parse(localStorage.getItem('userConfig') || '{}');
+  // Дефолтный лимит, если конфига нет
+  const dailyLimit = userConfig.dailyLimit || 15; 
+
+  // Сброс счетчика нового дня
+  if (userConfig.lastNewWordsDate !== today) {
+      userConfig.lastNewWordsDate = today;
+      userConfig.newWordsAddedToday = 0;
+      localStorage.setItem('userConfig', JSON.stringify(userConfig));
+  }
+
   // Пытаемся достать текущую сессию
   let session = JSON.parse(localStorage.getItem('currentSession') || 'null');
 
-  // Если сессии нет или она устарела (вчерашняя) — создаем новую
+  // Если сессии нет или она вчерашняя — создаем новую
   if (!session || session.date !== today) {
     session = {
       date: today,
-      shownWords: [], // Список слов (строки)
-      currentIndex: 0, // Запоминаем, на каком слове остановились!
+      shownWords: [],
+      currentIndex: 0, 
       correctStreak: 0,
-      totalCorrect: 0,
-      dailyGoal: 20 // Цель на день
+      totalCorrect: 0
     };
   }
 
-  // Если слова уже были отобраны ранее, восстанавливаем их объекты
+  // --- ВОЗВРАТ СОХРАНЕННОЙ СЕССИИ ---
   if (session.shownWords.length > 0) {
-    // Восстанавливаем объекты слов по их тексту
     let restoredWords = session.shownWords.map(wText => 
       this.learningWords.find(lw => lw.word === wText)
-    ).filter(Boolean); // убираем удаленные слова
-
-    // Если слова еще есть в списке, возвращаем их
-    if (restoredWords.length > 0) {
-      return restoredWords;
-    }
+    ).filter(Boolean); 
+    if (restoredWords.length > 0) return restoredWords;
   }
 
-  // === ГЕНЕРАЦИЯ НОВОГО СПИСКА (если сессия пустая) ===
+  // --- ГЕНЕРАЦИЯ НОВОГО ПУЛА ---
   
-  // Берем все слова, которые НЕ выучены (isLearned: false)
-  const active = this.learningWords.filter(w => !w.isLearned);
-
-  // ФИЛЬТР ВЫУЧЕННЫХ (Задача №5):
-  // Если у слова accScore >= 8 (очень хорошо знаем) И мы его видели СЕГОДНЯ — пропускаем
-  const candidates = active.filter(w => {
-    const s = this.wordStats[w.word];
-    if (!s) return true; // новое слово
-    
-    // Если слово "мастерское" (score >= 8)
-    if (s.accScore >= 8) {
-       const lastSeenDate = s.lastReview ? new Date(s.lastReview).toDateString() : '';
-       // Если видели сегодня — не показываем, хватит мучить
-       if (lastSeenDate === today) return false; 
-       // Если видели давно — можно показать для проверки
-    }
-    return true;
-  });
-
-  // Если слов нет (всё выучили)
-  if (candidates.length === 0) return [];
-
-  // Набираем пул: сначала сложные, потом новые
-  // Сортировка: сначала те, где accScore меньше
-  candidates.sort((a, b) => {
-    const sa = (this.wordStats[a.word] || {}).accScore || 0;
-    const sb = (this.wordStats[b.word] || {}).accScore || 0;
-    return sa - sb;
-  });
-
-  // Берем топ 30 слов для сессии
-  let selected = candidates.slice(0, 30);
+  const activeWords = this.learningWords.filter(w => !w.isLearned);
   
-  // Перемешиваем их один раз
-  selected = this.shuffle(selected);
+  // 1. Сначала отбираем слова на ПОВТОРЕНИЕ (уже видели, accScore > 0)
+  // Сортируем: самые "плохие" (низкий accScore) идут первыми
+  const reviewCandidates = activeWords
+      .filter(w => {
+          const s = this.wordStats[w.word];
+          // Если статистики нет — это новое слово, пропускаем этот фильтр
+          if (!s) return false; 
+          // Если accScore >= 8 (хорошо знаем) и видели сегодня — не показываем
+          if (s.accScore >= 8) {
+             const lastSeen = s.lastReview ? new Date(s.lastReview).toDateString() : '';
+             if (lastSeen === today) return false;
+          }
+          // Берем только те, что уже учили (totalAnswers > 0)
+          return s.totalAnswers > 0;
+      })
+      .sort((a, b) => {
+          const sa = (this.wordStats[a.word] || {}).accScore || 0;
+          const sb = (this.wordStats[b.word] || {}).accScore || 0;
+          return sa - sb;
+      });
 
-  // Сохраняем этот список в сессию, чтобы он НЕ менялся при переключении режимов
-  session.shownWords = selected.map(w => w.word);
-  session.currentIndex = 0; // Сброс индекса при генерации нового пула
+  // 2. Проверяем "Качество" базы (средний балл повторения)
+  // Если слов на повторение много и средний балл низкий — новые не даем!
+  let canAddNew = true;
+  if (reviewCandidates.length > 5) {
+      const totalScore = reviewCandidates.reduce((acc, w) => acc + ((this.wordStats[w.word]||{}).accScore || 0), 0);
+      const avgScore = totalScore / reviewCandidates.length;
+      // Если средняя точность меньше 5 (50%), блокируем новые слова
+      if (avgScore < 5) {
+          canAddNew = false;
+          console.log('Blocking new words: avg score is too low', avgScore);
+      }
+  }
+
+  // 3. Отбираем НОВЫЕ слова (ни разу не учили)
+  let newCandidates = [];
+  if (canAddNew) {
+      // Сколько еще можно добавить сегодня?
+      const slotsLeft = dailyLimit - userConfig.newWordsAddedToday;
+      
+      if (slotsLeft > 0) {
+          newCandidates = activeWords
+              .filter(w => {
+                  const s = this.wordStats[w.word];
+                  // Новое слово: статистики нет или ответов 0
+                  return !s || s.totalAnswers === 0;
+              })
+              // Сортируем по уровню (сначала A1, потом A2...)
+              .sort((a, b) => (a.level || '').localeCompare(b.level || ''))
+              .slice(0, slotsLeft); // БЕРЕМ НЕ БОЛЬШЕ ЛИМИТА
+      }
+  }
+
+  // Если вообще нет слов (всё выучили)
+  if (reviewCandidates.length === 0 && newCandidates.length === 0) return [];
+
+  // 4. Собираем пул: Сначала повторение, потом новые
+  // Ограничиваем размер сессии (например, 30 слов за подход)
+  let finalPool = [];
+  
+  // Заполняем повторением
+  finalPool = finalPool.concat(reviewCandidates.slice(0, 25));
+  
+  // Добиваем новыми (если есть место и лимит позволяет)
+  if (finalPool.length < 30 && newCandidates.length > 0) {
+      finalPool = finalPool.concat(newCandidates);
+      
+      // ОБНОВЛЯЕМ СЧЕТЧИК НОВЫХ СЛОВ
+      userConfig.newWordsAddedToday += newCandidates.length;
+      localStorage.setItem('userConfig', JSON.stringify(userConfig));
+  }
+  
+  // Перемешиваем
+  finalPool = this.shuffle(finalPool);
+
+  // Сохраняем в сессию
+  session.shownWords = finalPool.map(w => w.word);
+  session.currentIndex = 0;
   localStorage.setItem('currentSession', JSON.stringify(session));
 
-  return selected;
+  return finalPool;
 }
 
 updateWordStats(word, correct, responseTimeMs = null) {
@@ -6180,41 +5738,734 @@ attachPetHandlers() {
       this.loaderEl.classList.remove('show');
     }, delay);
   }
+  
+  // =================================================
+  // 1. КОНФИГУРАЦИЯ КАТЕГОРИЙ (A1-C2)
+  // =================================================
+ 
+    getLevelCategoriesConfig() {
+    return {
+      "A1": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" },
+          { "id": "pronouns", "name": "Местоимения", "icon": "fa-user" },
+          { "id": "determiners", "name": "Определители", "icon": "fa-crosshairs" },
+          { "id": "modal_verbs", "name": "Модальные глаголы", "icon": "fa-magic" },
+          { "id": "numbers", "name": "Числительные", "icon": "fa-sort-numeric-up" },
+          { "id": "exclamations", "name": "Междометия", "icon": "fa-comment-dots" }
+        ],
+        "topics": [
+          { "id": "family", "name": "Семья", "icon": "fa-users" },
+          { "id": "food", "name": "Еда и напитки", "icon": "fa-utensils" },
+          { "id": "home", "name": "Дом и быт", "icon": "fa-home" },
+          { "id": "clothing", "name": "Одежда", "icon": "fa-tshirt" },
+          { "id": "body", "name": "Тело человека", "icon": "fa-heartbeat" },
+          { "id": "transport", "name": "Транспорт", "icon": "fa-car" },
+          { "id": "places", "name": "Места и здания", "icon": "fa-building" },
+          { "id": "time", "name": "Время", "icon": "fa-clock" },
+          { "id": "work", "name": "Работа", "icon": "fa-briefcase" },
+          { "id": "education", "name": "Образование", "icon": "fa-graduation-cap" },
+          { "id": "entertainment", "name": "Развлечения", "icon": "fa-theater-masks" },
+          { "id": "emotions", "name": "Эмоции", "icon": "fa-smile" },
+          { "id": "colors", "name": "Цвета", "icon": "fa-rainbow" },
+          { "id": "nature", "name": "Природа", "icon": "fa-leaf" },
+          { "id": "communication", "name": "Общение", "icon": "fa-comments" },
+          { "id": "actions", "name": "Действия", "icon": "fa-running" },
+          { "id": "weather", "name": "Погода", "icon": "fa-sun" },
+          { "id": "shopping", "name": "Покупки", "icon": "fa-shopping-cart" },
+          { "id": "descriptions", "name": "Описания", "icon": "fa-star" },
+          { "id": "general", "name": "Общие слова", "icon": "fa-list-alt" }
+        ]
+      },
+      "A2": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" },
+          { "id": "pronouns", "name": "Местоимения", "icon": "fa-user" },
+          { "id": "determiners", "name": "Определители", "icon": "fa-crosshairs" },
+          { "id": "modal_verbs", "name": "Модальные глаголы", "icon": "fa-magic" },
+          { "id": "numbers", "name": "Числительные", "icon": "fa-sort-numeric-up" }
+        ],
+        "topics": [
+          { "id": "home", "name": "Дом и быт", "icon": "fa-home" },
+          { "id": "food", "name": "Еда и кухня", "icon": "fa-utensils" },
+          { "id": "work", "name": "Карьера", "icon": "fa-briefcase" },
+          { "id": "education", "name": "Образование", "icon": "fa-book" },
+          { "id": "technology", "name": "Технологии", "icon": "fa-laptop" },
+          { "id": "transport", "name": "Транспорт", "icon": "fa-plane" },
+          { "id": "health", "name": "Здоровье", "icon": "fa-medkit" },
+          { "id": "nature", "name": "Природа", "icon": "fa-tree" },
+          { "id": "entertainment", "name": "Развлечения", "icon": "fa-gamepad" },
+          { "id": "sports", "name": "Спорт", "icon": "fa-futbol" },
+          { "id": "emotions", "name": "Эмоции", "icon": "fa-laugh" },
+          { "id": "people", "name": "Люди", "icon": "fa-user-friends" },
+          { "id": "law", "name": "Закон", "icon": "fa-gavel" },
+          { "id": "society", "name": "Общество", "icon": "fa-city" },
+          { "id": "business", "name": "Бизнес", "icon": "fa-chart-line" },
+          { "id": "weather", "name": "Погода", "icon": "fa-cloud-sun" },
+          { "id": "clothing", "name": "Одежда", "icon": "fa-tshirt" },
+          { "id": "buildings", "name": "Здания", "icon": "fa-hotel" },
+          { "id": "media", "name": "СМИ", "icon": "fa-newspaper" },
+          { "id": "science", "name": "Наука", "icon": "fa-microscope" },
+          { "id": "time", "name": "Время", "icon": "fa-hourglass-half" },
+          { "id": "communication", "name": "Общение", "icon": "fa-comment-alt" },
+          { "id": "abstract", "name": "Абстрактное", "icon": "fa-brain" },
+          { "id": "actions", "name": "Действия", "icon": "fa-running" },
+          { "id": "general", "name": "Общие слова", "icon": "fa-list" }
+        ]
+      },
+      "B1": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" },
+          { "id": "pronouns", "name": "Местоимения", "icon": "fa-user" },
+          { "id": "determiners", "name": "Определители", "icon": "fa-crosshairs" },
+          { "id": "modal_verbs", "name": "Модальные", "icon": "fa-magic" }
+        ],
+        "topics": [
+          { "id": "abstract", "name": "Абстрактное", "icon": "fa-cloud" },
+          { "id": "nature", "name": "Природа", "icon": "fa-tree" },
+          { "id": "science", "name": "Наука", "icon": "fa-flask" },
+          { "id": "society", "name": "Общество", "icon": "fa-globe" },
+          { "id": "law", "name": "Закон", "icon": "fa-balance-scale" },
+          { "id": "business", "name": "Бизнес", "icon": "fa-briefcase" },
+          { "id": "emotions", "name": "Чувства", "icon": "fa-heart" },
+          { "id": "work", "name": "Работа", "icon": "fa-laptop-code" },
+          { "id": "education", "name": "Образование", "icon": "fa-university" },
+          { "id": "communication", "name": "Язык", "icon": "fa-language" },
+          { "id": "entertainment", "name": "Искусство", "icon": "fa-music" },
+          { "id": "technology", "name": "Техно", "icon": "fa-microchip" },
+          { "id": "transport", "name": "Путешествия", "icon": "fa-suitcase-rolling" },
+          { "id": "home", "name": "Быт", "icon": "fa-couch" },
+          { "id": "clothing", "name": "Стиль", "icon": "fa-hat-cowboy" },
+          { "id": "food", "name": "Кулинария", "icon": "fa-pizza-slice" },
+          { "id": "health", "name": "Здоровье", "icon": "fa-stethoscope" },
+          { "id": "materials", "name": "Материалы", "icon": "fa-layer-group" },
+          { "id": "religion", "name": "Религия", "icon": "fa-pray" },
+          { "id": "military", "name": "Армия", "icon": "fa-jet-fighter" },
+          { "id": "descriptions", "name": "Качества", "icon": "fa-feather-alt" },
+          { "id": "actions", "name": "Процессы", "icon": "fa-cogs" },
+          { "id": "general", "name": "Общее", "icon": "fa-th-list" }
+        ]
+      },
+      "B2": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" },
+          { "id": "pronouns", "name": "Местоимения", "icon": "fa-user" },
+          { "id": "numbers", "name": "Числительные", "icon": "fa-sort-numeric-up" }
+        ],
+        "topics": [
+          { "id": "abstract", "name": "Концепции", "icon": "fa-lightbulb" },
+          { "id": "nature", "name": "Экология", "icon": "fa-leaf" },
+          { "id": "science", "name": "Исследования", "icon": "fa-dna" },
+          { "id": "society", "name": "Политика", "icon": "fa-landmark" },
+          { "id": "law", "name": "Право", "icon": "fa-gavel" },
+          { "id": "business", "name": "Финансы", "icon": "fa-coins" },
+          { "id": "emotions", "name": "Психология", "icon": "fa-brain" },
+          { "id": "work", "name": "Карьера", "icon": "fa-id-card" },
+          { "id": "education", "name": "Учеба", "icon": "fa-user-graduate" },
+          { "id": "communication", "name": "Речь", "icon": "fa-bullhorn" },
+          { "id": "entertainment", "name": "Культура", "icon": "fa-theater-masks" },
+          { "id": "technology", "name": "Медиа", "icon": "fa-wifi" },
+          { "id": "transport", "name": "Логистика", "icon": "fa-shipping-fast" },
+          { "id": "home", "name": "Дом", "icon": "fa-door-open" },
+          { "id": "food", "name": "Гастрономия", "icon": "fa-wine-glass" },
+          { "id": "health", "name": "Медицина", "icon": "fa-hospital" },
+          { "id": "body", "name": "Анатомия", "icon": "fa-walking" },
+          { "id": "materials", "name": "Вещества", "icon": "fa-atom" },
+          { "id": "religion", "name": "Духовность", "icon": "fa-church" },
+          { "id": "military", "name": "Оборона", "icon": "fa-shield-alt" },
+          { "id": "descriptions", "name": "Характеристики", "icon": "fa-tags" },
+          { "id": "actions", "name": "Активность", "icon": "fa-play-circle" },
+          { "id": "time", "name": "Периоды", "icon": "fa-calendar-alt" },
+          { "id": "space", "name": "Пространство", "icon": "fa-arrows-alt" },
+          { "id": "family", "name": "Отношения", "icon": "fa-users" },
+          { "id": "clothing", "name": "Имидж", "icon": "fa-glasses" },
+          { "id": "sports", "name": "Спорт", "icon": "fa-basketball-ball" },
+          { "id": "general", "name": "Общее", "icon": "fa-clipboard-list" }
+        ]
+      },
+      "C1": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" }
+        ],
+        "topics": [
+          { "id": "abstract", "name": "Абстракция", "icon": "fa-shapes" },
+          { "id": "law", "name": "Юриспруденция", "icon": "fa-balance-scale-right" },
+          { "id": "society", "name": "Социум", "icon": "fa-users-cog" },
+          { "id": "health", "name": "Здравоохранение", "icon": "fa-heartbeat" },
+          { "id": "science", "name": "Наука", "icon": "fa-vial" },
+          { "id": "business", "name": "Экономика", "icon": "fa-chart-pie" },
+          { "id": "education", "name": "Академия", "icon": "fa-scroll" },
+          { "id": "emotions", "name": "Психика", "icon": "fa-head-side-virus" },
+          { "id": "religion", "name": "Вера", "icon": "fa-om" },
+          { "id": "military", "name": "Война", "icon": "fa-fighter-jet" },
+          { "id": "nature", "name": "Экология", "icon": "fa-globe-americas" },
+          { "id": "technology", "name": "Инновации", "icon": "fa-rocket" },
+          { "id": "communication", "name": "Диалог", "icon": "fa-comments-dollar" },
+          { "id": "work", "name": "Менеджмент", "icon": "fa-tasks" },
+          { "id": "descriptions", "name": "Нюансы", "icon": "fa-highlighter" },
+          { "id": "actions", "name": "Операции", "icon": "fa-project-diagram" },
+          { "id": "time", "name": "Хронология", "icon": "fa-history" },
+          { "id": "space", "name": "Локация", "icon": "fa-map-marked-alt" },
+          { "id": "entertainment", "name": "Культура", "icon": "fa-palette" },
+          { "id": "family", "name": "Родство", "icon": "fa-baby-carriage" },
+          { "id": "transport", "name": "Перевозки", "icon": "fa-truck-moving" },
+          { "id": "materials", "name": "Ресурсы", "icon": "fa-oil-can" },
+          { "id": "body", "name": "Физиология", "icon": "fa-x-ray" },
+          { "id": "general", "name": "Прочее", "icon": "fa-folder-open" }
+        ]
+      },
+      "C2": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" }
+        ],
+        "topics": [
+          { "id": "rhetoric", "name": "Риторика", "icon": "fa-quote-right" },
+          { "id": "character", "name": "Личность", "icon": "fa-fingerprint" },
+          { "id": "morality", "name": "Этика", "icon": "fa-yin-yang" },
+          { "id": "criticism", "name": "Критика", "icon": "fa-pen-fancy" },
+          { "id": "deception", "name": "Обман", "icon": "fa-mask" },
+          { "id": "emotions", "name": "Чувства", "icon": "fa-heart-broken" },
+          { "id": "intellect", "name": "Интеллект", "icon": "fa-chess" },
+          { "id": "behavior", "name": "Поведение", "icon": "fa-theater-masks" },
+          { "id": "conflict", "name": "Конфликт", "icon": "fa-fist-raised" },
+          { "id": "religion", "name": "Теология", "icon": "fa-khanda" },
+          { "id": "philosophy", "name": "Философия", "icon": "fa-book-open" },
+          { "id": "appearance", "name": "Облик", "icon": "fa-magic" },
+          { "id": "abstract", "name": "Метафизика", "icon": "fa-infinity" },
+          { "id": "literary", "name": "Литература", "icon": "fa-feather" },
+          { "id": "social", "name": "Интеракция", "icon": "fa-handshake" }
+        ]
+      }
+    };
+  }
 
-static injectStylesOnce() { if (document.getElementById('app-extra-styles')) return; const style = document.createElement('style'); style.id = 'app-extra-styles'; style.textContent = ` @keyframes slideDown { from { transform: translate(-50%, -100%); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } } @keyframes slideUp { from { transform: translate(-50%, 0); opacity: 1; } to { transform: translate(-50%, -100%); opacity: 0; } } .sound-actions .mini-btn, .option-sound .mini-btn { border:none; background: var(--bg-tertiary, #f0f2f5); padding:4px 6px; border-radius:6px; cursor:pointer; color:#333; } .quiz-option .quiz-option-inner { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  // 2. ОТРИСОВКА МЕНЮ КАТЕГОРИЙ (БЕЗОПАСНАЯ ВЕРСИЯ)
+   renderLevelCategoriesMenu(level, config) {
+    const list = document.getElementById('wordsList');
+    if (!list) return;
+
+    let html = '<div class="category-menu-container">';
+    
+    html += '<button class="show-all-btn" onclick="window.app.showLevelWords(\'' + level + '\', { type: \'all\' })">';
+    html += '<i class="fas fa-layer-group"></i> Показать все слова списка';
+    html += '</button>';
+    
+    html += '<div class="category-section-title">';
+    html += '<i class="fas fa-shapes"></i> Грамматика';
+    html += '</div>';
+    html += '<div class="grammar-grid">';
+    
+    for (let i = 0; i < config.grammar.length; i++) {
+        const g = config.grammar[i];
+        html += '<div class="grammar-cat-card" onclick="window.app.showLevelWords(\'' + level + '\', { type: \'grammar\', id: \'' + g.id + '\' })">';
+        html += '<div class="grammar-icon"><i class="fas ' + g.icon + '"></i></div>';
+        html += '<div class="grammar-name">' + g.name + '</div>';
+        html += '</div>';
+    }
+    
+    html += '</div>';
+    
+    html += '<div class="category-section-title" style="margin-top: 30px;">';
+    html += '<i class="fas fa-graduation-cap"></i> Тематические уроки';
+    html += '</div>';
+    html += '<div class="lessons-list">';
+    
+    for (let i = 0; i < config.topics.length; i++) {
+        const t = config.topics[i];
+        const lessonNum = i + 1;
+        html += '<div class="lesson-card" onclick="window.app.showLevelWords(\'' + level + '\', { type: \'topic\', id: \'' + t.id + '\' })">';
+        html += '<div class="lesson-number">' + lessonNum + '</div>';
+        html += '<div class="lesson-info">';
+        html += '<div class="lesson-label">Урок ' + lessonNum + '</div>';
+        html += '<div class="lesson-title">' + t.name + '</div>';
+        html += '</div>';
+        html += '<div class="lesson-icon"><i class="fas ' + t.icon + '"></i></div>';
+        html += '</div>';
+    }
+    
+    html += '</div>';
+    html += '<div style="text-align: center; margin-top: 30px; color: var(--text-muted); font-size: 0.9rem;">';
+    html += '<p>Проходите уроки последовательно для лучшего результата!</p>';
+    html += '</div>';
+    html += '</div>';
+    
+    list.innerHTML = html;
+  }
+
+  // =================================================
+  // 3. РЕНДЕР СПИСКА СЛОВ (С ленивой загрузкой)
+  // =================================================
+   renderFilteredWordsList(words, level) {
+      const wordsList = document.getElementById('wordsList');
+      const BATCH_SIZE = 100;
+      
+      wordsList.innerHTML = '';
+
+      // === ФИКС КНОПКИ "УЧИТЬ ВСЕ" ===
+      const bulkBtn = document.getElementById('bulkToggleBtn');
+      if(bulkBtn) {
+          bulkBtn.style.display = 'inline-flex'; // Показываем кнопку
+          this.updateBulkToggleButton();         // Обновляем её состояние
+      }
+      // ===============================
+
+      // Если слов мало, рендерим сразу
+      if (words.length <= BATCH_SIZE) {
+          const fragment = document.createDocumentFragment();
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = words.map(w => this.createWordCard(w, level)).join('');
+          while (tempDiv.firstChild) fragment.appendChild(tempDiv.firstChild);
+          wordsList.appendChild(fragment);
+          
+          this.installWordsListDelegatedHandlers();
+          return;
+      }
+      
+      // Ленивая загрузка
+      let loaded = 0;
+      const renderBatch = () => {
+          const batch = words.slice(loaded, loaded + BATCH_SIZE);
+          if(batch.length === 0) return;
+          const html = batch.map(w => this.createWordCard(w, level)).join('');
+          wordsList.insertAdjacentHTML('beforeend', html);
+          loaded += batch.length;
+      };
+      
+      renderBatch();
+      this.installWordsListDelegatedHandlers();
+      
+      const sentinel = document.createElement('div');
+      sentinel.style.height = '50px';
+      wordsList.appendChild(sentinel);
+      
+      const observer = new IntersectionObserver(entries => {
+          if(entries[0].isIntersecting) {
+              renderBatch();
+              if(loaded >= words.length) {
+                  observer.disconnect();
+                  sentinel.remove();
+              } else {
+                  wordsList.appendChild(sentinel);
+              }
+          }
+      }, { rootMargin: '200px' });
+      
+      observer.observe(sentinel);
+  }
+
+  // =================================================
+  // 4. ГЛАВНАЯ ФУНКЦИЯ ПОКАЗА (Маршрутизатор Меню/Список)
+  // =================================================
+   showLevelWords(level, filter = null) {
+    this.stopCurrentAudio();
+    this.currentLevel = level;
+    this.currentCategory = null;
+    
+    const container = document.getElementById('wordsContainer');
+    const title = document.getElementById('currentLevelTitle');
+    const wordsList = document.getElementById('wordsList');
+
+    if (typeof this.toggleLevelsIndexVisibility === 'function') {
+        this.toggleLevelsIndexVisibility(false);
+    }
+    if (container) container.classList.remove('hidden');
+    
+    // Проверяем конфиг
+    const config = this.getLevelCategoriesConfig();
+    const levelConfig = config[level];
+
+    // 1. ПОКАЗЫВАЕМ МЕНЮ КАТЕГОРИЙ (если нет фильтра) -> Тут Боб не нужен, меню легкое
+    if (levelConfig && !filter) {
+        if (title) title.textContent = `Уровень ${level}`;
+        const bulkBtn = document.getElementById('bulkToggleBtn');
+        if(bulkBtn) bulkBtn.style.display = 'none';
+
+        this.renderLevelCategoriesMenu(level, levelConfig);
+        this.jumpToTopStrict();
+        return;
+    }
+
+    // 2. ПОКАЗЫВАЕМ СПИСОК СЛОВ -> ТУТ НУЖЕН БОБ
+    const bulkBtn = document.getElementById('bulkToggleBtn');
+    if(bulkBtn) {
+        bulkBtn.style.display = 'inline-flex';
+        this.updateBulkToggleButton();
+    }
+
+    let words = oxfordWordsDatabase[level] || [];
+    
+    if (filter && filter.type !== 'all') {
+        if (filter.type === 'grammar') {
+            words = words.filter(w => w.grammar === filter.id);
+            if (title) title.textContent = `${level} • Грамматика`;
+        } else if (filter.type === 'topic') {
+            words = words.filter(w => w.topic === filter.id);
+            const catName = levelConfig.topics.find(t => t.id === filter.id)?.name || 'Урок';
+            if (title) title.textContent = `${level} • ${catName}`;
+        }
+    } else {
+        if (title) title.textContent = `${level} - ${words.length} слов`;
+    }
+    
+    if (wordsList) {
+        // === ДОБАВЛЯЕМ БОБА ===
+        wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
+        this.showGlobalLoader('Кот Боб открывает список...', 800);
+
+        // Рендерим с небольшой задержкой, чтобы Боб успел появиться
+        requestAnimationFrame(() => {
+             this.renderFilteredWordsList(words, level);
+             
+             // Скрываем Боба после рендера (внутри renderFilteredWordsList это может быть не сделано)
+             setTimeout(() => this.hideGlobalLoader(), 100);
+        });
+        // ======================
+    }
+    
+    this.jumpToTopStrict();
+  }
+
+  // =================================================
+  // 5. КНОПКА НАЗАД (С улучшенной логикой)
+  // =================================================
+    backToLevels() {
+    // 1. Жестко останавливаем любой звук
+    this.stopCurrentAudio();
+    
+    // 2. Сбрасываем флаг авто-озвучки, чтобы при следующем входе всё было чисто
+    this.suppressAutoSpeakOnce = true; 
+
+    const list = document.getElementById('wordsList');
+    const isShowingList = list && list.querySelector('.word-card'); // Если есть карточки - значит мы в списке
+    const hasCategories = this.currentLevel && this.getLevelCategoriesConfig()[this.currentLevel];
+
+    // Если мы внутри категории (списка слов) — вернуться в МЕНЮ категорий
+    if (isShowingList && hasCategories) {
+        // Вызываем меню категорий
+        this.showLevelWords(this.currentLevel); 
+        return;
+    }
+
+    // Иначе — выход на главную страницу уровней
+    this.toggleLevelsIndexVisibility(true);
+    this.currentLevel = null;
+    this.currentCategory = null;
+
+    // Убираем возможные остатки авто-словаря (на всякий случай)
+    document.querySelectorAll('#levels .auto-dict-top, #levels .auto-dict-inline')
+      .forEach(n => n.remove());
+  }
+  
+      startAppTutorial() {
+    const settingsModal = document.querySelector('.settings-modal');
+    if (settingsModal) settingsModal.remove();
+
+    const steps = [
+      // 1. Списки
+      { 
+        el: '.nav-item[data-section="levels"]', 
+        text: 'Раздел "Списки". Здесь вся библиотека слов: по уровням, темам и грамматика.',
+        pos: 'top',
+        action: () => this.switchSection('levels')
+      },
+      // 2. Обучение (Главная)
+      { 
+        el: '.nav-item[data-section="learning"]', 
+        text: 'Главный экран "Изучаю". Здесь твои карточки, квизы и тренажер предложений.',
+        pos: 'top',
+        action: () => this.switchSection('learning')
+      },
+      // 3. Игры (если есть кнопка в меню)
+      {
+        el: '.nav-item[data-section="games"]', // <-- ПРОВЕРЬ СЕЛЕКТОР КНОПКИ ИГР
+        text: 'Игротека! Учись играючи. Аркады, гонки и головоломки со словами.',
+        pos: 'top',
+        action: () => this.switchSection('games') // <-- ПРОВЕРЬ ID СЕКЦИИ
+      },
+      // 4. ИИ Чат (если есть кнопка)
+      {
+        el: '.nav-item[data-section="ai-chat"]', // <-- ПРОВЕРЬ СЕЛЕКТОР
+        text: 'Умный ИИ-собеседник. Потренируй диалог или попроси объяснить правило.',
+        pos: 'top',
+        action: () => this.switchSection('ai-chat') // <-- ПРОВЕРЬ ID
+      },
+      // 5. Переводчик
+      {
+        el: '.nav-item[data-section="new-words"]', 
+        text: 'Переводчик. Введи любое слово, и я создам для него красивую карточку.',
+        pos: 'top',
+        action: () => this.switchSection('new-words')
+      },
+      // 6. Прогресс
+      { 
+        el: '.nav-item[data-section="progress"]', 
+        text: 'Прогресс и Питомец. Заходи каждый день, чтобы кормить его своими знаниями!',
+        pos: 'top',
+        action: () => this.switchSection('progress')
+      }
+    ];
+
+    this.currentTutorialStep = 0;
+    // Начинаем с первого шага
+    this.showTutorialStep(steps);
+  }
+
+   showTutorialStep(steps) {
+    // 1. Удаляем старые элементы (оверлей и боба)
+    document.querySelectorAll('.tutorial-overlay, .tutorial-bob-container').forEach(e => e.remove());
+
+    // 2. Если шаги кончились -> Финиш
+    if (this.currentTutorialStep >= steps.length) {
+        this.showTutorialFinish();
+        return;
+    }
+
+    const step = steps[this.currentTutorialStep];
+
+    // 3. Выполняем действие (переключение вкладки)
+    if (step.action && typeof step.action === 'function') {
+        step.action();
+    }
+
+    // 4. Ждем 500мс, пока интерфейс обновится
+    setTimeout(() => {
+        const element = document.querySelector(step.el);
+
+        // Если элемента нет — пропускаем шаг рекурсивно
+        if (!element || element.offsetParent === null) {
+            console.warn('Tutorial: Element not found or hidden:', step.el);
+            this.currentTutorialStep++;
+            this.showTutorialStep(steps); // Рекурсия
+            return;
+        }
+
+        // 5. Рисуем подсветку (Overlay)
+        const rect = element.getBoundingClientRect();
+        const overlay = document.createElement('div');
+        overlay.className = 'tutorial-overlay';
+        
+        // Тень с "дыркой" через box-shadow
+        overlay.style.cssText = `
+            position: fixed;
+            top: ${rect.top - 8}px;
+            left: ${rect.left - 8}px;
+            width: ${rect.width + 16}px;
+            height: ${rect.height + 16}px;
+            border-radius: 16px;
+            box-shadow: 0 0 0 9999px rgba(0,0,0,0.75); 
+            z-index: 99998;
+            pointer-events: auto; 
+            cursor: pointer;
+            transition: all 0.4s ease;
+        `;
+
+        // 6. Рисуем Боба и Бабл
+        const container = document.createElement('div');
+        container.className = 'tutorial-bob-container';
+        
+        let topPos;
+        const isTop = step.pos === 'top';
+        
+        // Вычисляем позицию Боба
+        if (isTop) {
+            topPos = rect.top - 240; // Над элементом
+            if (topPos < 20) topPos = rect.bottom + 20; // Если не влезает — вниз
+        } else {
+            topPos = rect.bottom + 20; // Под элементом
+        }
+
+        container.style.cssText = `
+            position: fixed;
+            top: ${topPos}px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            pointer-events: auto;
+        `;
+
+        // HTML Боба
+        container.innerHTML = `
+            <div class="tutorial-bubble" style="animation: popIn 0.3s ease;">
+                <p>${step.text}</p>
+                <div class="tutorial-controls">
+                    <span style="font-size:12px; color:#999; font-weight:600;">${this.currentTutorialStep + 1} из ${steps.length}</span>
+                    <button class="btn btn-primary btn-sm" id="tutNextBtn">Далее</button>
+                </div>
+                <div class="bubble-arrow ${isTop ? 'down' : 'up'}"></div>
+            </div>
+            <img src="/instruction.png" class="bob-img" style="width:110px; height:auto; margin-top:-12px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));">
+        `;
+
+        document.body.appendChild(overlay);
+        document.body.appendChild(container);
+
+        // 7. Обработчики кликов
+        const next = () => {
+            this.currentTutorialStep++;
+            this.showTutorialStep(steps);
+        };
+
+        document.getElementById('tutNextBtn').onclick = next;
+        
+        // Клик по затемнению тоже переключает шаг
+        overlay.onclick = (e) => {
+            if (e.target === overlay) next();
+        };
+
+    }, 600); // Задержка для плавности
+  }
+
+  showTutorialFinish() {
+      const overlay = document.createElement('div');
+      overlay.className = 'tutorial-overlay';
+      overlay.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:99999; display:flex; align-items:center; justify-content:center;';
+      
+      overlay.innerHTML = `
+        <div style="background:white; padding:30px; border-radius:20px; text-align:center; max-width:320px; animation: popIn 0.4s;">
+            <img src="/instruction.png" style="width:100px; margin-bottom:15px;">
+            <h2 style="margin-bottom:10px;">Ты готов! 🚀</h2>
+            <p style="color:#666; margin-bottom:20px;">Если что-то забудешь, инструкция всегда доступна в Настройках.</p>
+            <button class="btn btn-primary" onclick="this.closest('.tutorial-overlay').remove()">Погнали!</button>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+  }
+
+static injectStylesOnce() {
+    if (document.getElementById('app-extra-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'app-extra-styles';
+    style.textContent = ` 
+@keyframes slideDown {
+    from { transform: translate(-50%, -100%); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+}
+@keyframes slideUp {
+    from { transform: translate(-50%, 0); opacity: 1; }
+    to { transform: translate(-50%, -100%); opacity: 0; }
+}
+.sound-actions .mini-btn, .option-sound .mini-btn {
+    border:none; 
+    background: var(--bg-tertiary, #f0f2f5); 
+    padding:4px 6px; 
+    border-radius:6px; 
+    cursor:pointer; 
+    color:#333; 
+}
+.quiz-option .quiz-option-inner {
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+    gap:8px; 
+}
 
 /* Подсветка активного пункта меню во время тура */
 .bottom-nav .nav-item.nav-highlight {
-  position: relative;
-  box-shadow: 0 0 0 6px rgba(99,102,241,0.3);
-  border-radius: 12px;
+    position: relative;
+    box-shadow: 0 0 0 6px rgba(99,102,241,0.3);
+    border-radius: 12px;
 }
 
 /* Мини-игра питомец (прогресс) */
-.pet-widget{background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:14px;padding:12px;margin-bottom:14px;}
-.pet-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-.pet-avatar{width:56px;height:56px;object-fit:contain;border-radius:10px;background:#fff;border:1px solid var(--border-color);}
-.pet-title{font-weight:800;color:var(--text-primary);}
-.pet-bars{display:grid;gap:8px;margin:8px 0 10px;}
-.pet-bar{height:10px;background:#e5e7eb;border-radius:8px;overflow:hidden;}
-.pet-bar-fill{height:100%;background:linear-gradient(90deg,#10b981,#22d3ee);}
-.pet-actions{display:flex;flex-wrap:wrap;gap:8px;}
-.pet-dead{color:#ef4444;font-weight:700;margin:8px 0;}
+.pet-widget{
+    background:var(--bg-secondary);
+    border:1px solid var(--border-color);
+    border-radius:14px;
+    padding:12px;
+    margin-bottom:14px;
+}
+.pet-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+.pet-avatar{
+    width:56px;
+    height:56px;
+    object-fit:contain;
+    border-radius:10px;
+    background:#fff;
+    border:1px solid var(--border-color);
+}
+.pet-title{
+    font-weight:800;
+    color:var(--text-primary);
+}
+.pet-bars{
+    display:grid;
+    gap:8px;
+    margin:8px 0 10px;
+}
+.pet-bar{
+    height:10px;
+    background:#e5e7eb;
+    border-radius:8px;
+    overflow:hidden;
+}
+.pet-bar-fill{
+    height:100%;
+    background:linear-gradient(90deg,#10b981,#22d3ee);
+}
+.pet-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+.pet-dead{
+    color:#ef4444;
+    font-weight:700;
+    margin:8px 0;
+}
 /* Стили для бейджей точности */
 .acc-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 700;
-  margin-left: 8px;
-  vertical-align: middle;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-left: 8px;
+    vertical-align: middle;
 }
 .acc-none { background: #e5e7eb; color: #374151; }
 .acc-good { background: #d1fae5; color: #065f46; }
 .acc-mid { background: #fef3c7; color: #92400e; }
 .acc-bad { background: #fee2e2; color: #991b1b; }
-`; document.head.appendChild(style); }
+`;
+    document.head.appendChild(style);
+}
 }
 
 // Init
@@ -6225,65 +6476,3 @@ document.addEventListener('DOMContentLoaded', () => {
   EnglishWordsApp.injectStylesOnce();
   window.app = new EnglishWordsApp();
 });
-
-
-service-worker.js
-/* Caching Service Worker for Bewords & Games */
-const CACHE_NAME = 'bewords-app-v6'; // Обновил версию
-// Расширили регулярку: картинки + html + css + js + json
-const ASSETS_RE = /\.(png|jpg|jpeg|webp|gif|svg|html|css|js|json)$/i;
-
-self.addEventListener('install', (event) => {
-  self.skipWaiting();
-  event.waitUntil(caches.open(CACHE_NAME));
-});
-
-self.addEventListener('activate', (event) => {
-  event.waitUntil((async () => {
-    const keys = await caches.keys();
-    // Удаляем старые кэши
-    await Promise.all(keys.map(k => (k !== CACHE_NAME ? caches.delete(k) : Promise.resolve())));
-    await self.clients.claim();
-  })());
-});
-
-self.addEventListener('fetch', (event) => {
-  const req = event.request;
-  if (req.method !== 'GET') return;
-
-  const url = new URL(req.url);
-  
-  // Определяем, нужно ли кэшировать
-  const shouldCache = 
-    ASSETS_RE.test(url.pathname) || 
-    url.pathname.endsWith('/') || // главная страница
-    url.hostname.includes('britlex.ru') ||
-    url.hostname.includes('smart.servier.com');
-
-  // НЕ кэшируем аудио и API
-  const isAudio = req.destination === 'audio' || url.pathname.endsWith('.mp3') || url.hostname.includes('wooordhunt.ru') || url.pathname.includes('/au/');
-  if (isAudio) return;
-
-  if (shouldCache) {
-    event.respondWith((async () => {
-      const cache = await caches.open(CACHE_NAME);
-      const cached = await cache.match(req, { ignoreVary: true });
-      
-      // Стратегия: Stale-While-Revalidate (вернуть кэш сразу, но обновить в фоне)
-      // Для игр это критично: они грузятся мгновенно.
-      const networkFetch = fetch(req, { mode: 'cors', credentials: 'omit' })
-        .then(res => {
-          if (res && res.status === 200) {
-             cache.put(req, res.clone());
-          }
-          return res;
-        })
-        .catch(() => {
-           // Если сети нет, ничего страшного, надеемся на кэш
-        });
-
-      return cached || networkFetch;
-    })());
-  }
-});
-
