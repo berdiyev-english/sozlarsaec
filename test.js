@@ -100,34 +100,59 @@ class EnglishWordsApp {
     setTimeout(() => {
         this.checkAndShowFirstRunOrMotivation();
     }, 1000);
+    
+    // PWA Audio Warmup (Разблокировка звука при первом клике)
+    window.addEventListener('click', () => {
+        // 1. Будим AudioContext
+        if (this.audioCtx && this.audioCtx.state === 'suspended') {
+            this.audioCtx.resume().catch(e => console.log(e));
+        }
+        // 2. Будим HTML5 Audio (тишиной)
+        if (this.globalPlayer) {
+            // Короткий пустой звук (WAV)
+            const silentWav = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+            // Если плеер пустой, загружаем тишину и играем
+            if (!this.globalPlayer.src || this.globalPlayer.src === window.location.href) {
+                this.globalPlayer.src = silentWav;
+            }
+            this.globalPlayer.play().then(() => {
+                // Сразу ставим на паузу, чтобы не занимать канал
+                this.globalPlayer.pause(); 
+            }).catch(() => {});
+        }
+    }, { once: true });
+    
   }
 
 // ==========================================
-// ONBOARDING WIZARD (DUOLINGO STYLE)
+// ONBOARDING WIZARD
 // ==========================================
 
 checkAndShowFirstRunOrMotivation() {
     try {
-        // Проверяем флаг именно НОВОГО визарда
         const wizardDone = localStorage.getItem('wizard_v2_completed') === '1';
+        // Проверяем "вечный" флаг
+        const tutorialDone = localStorage.getItem('tutorial_complete_forever') === '1'; 
         
         if (!wizardDone) {
-            // Если новый визард не пройден — запускаем его для ВСЕХ
-            console.log('New wizard not completed - showing it now');
-            
-            // Скрываем старый UI на всякий случай
+            // Новичок -> Визард
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            
+            setTimeout(() => this.showOnboardingWizard(), 300);
+        } 
+        else if (!tutorialDone) {
+            // Старичок (или только прошел визард) -> Туториал (1 раз в жизни)
             setTimeout(() => {
-                this.showOnboardingWizard();
-            }, 300);
-        } else {
-            // Если пройден — обычная работа
-            console.log('Wizard done - checking motivation');
+                this.startAppTutorial();
+                // Сразу ставим флаг, чтобы больше не надоедать
+                localStorage.setItem('tutorial_complete_forever', '1'); 
+            }, 1000);
+        } 
+        else {
+            // Обычный вход -> Мотивация
             this.maybeShowDailyMotivation();
         }
     } catch (e) {
-        console.error('Error in checkAndShowFirstRunOrMotivation:', e);
+        console.error(e);
     }
 }
 
@@ -454,7 +479,7 @@ async finishWizard() {
     localStorage.setItem('userConfig', JSON.stringify(userConfig));
     localStorage.setItem('first_run_completed', '1');
 
-    // 2. Показываем лоадер
+    // 2. Показываем лоадер (Кот Боб)
     if (overlay) {
         overlay.innerHTML = `
             <div style="text-align:center; padding:40px; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
@@ -465,37 +490,42 @@ async finishWizard() {
         `;
     }
 
-    await this.delay(1500);
+    await this.delay(1500); // Пауза для эффекта
     
     // 3. Генерируем слова
     this.generateInitialVocabulary(data, userConfig);
     this.saveData();
     
-    // 4. Удаляем Визард
+    // 4. Удаляем Визард (Опросник)
     if (overlay) overlay.remove();
     localStorage.setItem('wizard_v2_completed', '1');
     
-    // Запускаем UI
+    // 5. Запускаем интерфейс приложения
     this.initializeUI(); 
     this.renderProgress();
     this.syncModePracticeToggles();
     
     this.showNotification(`План готов! Ваша цель: ${data.pace} новых слов в день.`, 'success');
     
-    // === ФИКС ОЗВУЧКИ ===
-    this.stopCurrentAudio();          // Останавливаем любые звуки
-    this.suppressAutoSpeakOnce = true; // Запрещаем авто-озвучку первого слова
-    // ====================
+    // 6. Останавливаем лишние звуки
+    this.stopCurrentAudio();
+    this.suppressAutoSpeakOnce = true;
 
+    // 7. Переходим на экран обучения
     this.switchSection('learning');
     this.renderLearningSection();
     
-    // Мотивация через 1 минуту
-    localStorage.removeItem('motivation_last_shown');
+    // === ГЛАВНОЕ ИЗМЕНЕНИЕ ===
+    // Запускаем инструкцию (Туториал) через полсекунды
     setTimeout(() => {
-        console.log('Showing post-wizard motivation');
-        this.maybeShowDailyMotivation();
-    }, 60000);
+        this.startAppTutorial();
+        
+        // СТАВИМ "ВЕЧНЫЙ" ФЛАГ
+        // Это значит: "Пользователь прошел обучение, больше не показывать".
+        localStorage.setItem('tutorial_complete_forever', '1');
+        
+    }, 500);
+    // ==========================
 }
 
 // --- ГЛАВНЫЙ АЛГОРИТМ ПОДБОРА (Logic Engine) ---
@@ -1987,7 +2017,10 @@ showSettingsModal() {
         </button>
         <button class="btn btn-primary" onclick="window.open('app.html', '_blank')" style="width:100%;margin-bottom:10px;">
           <i class="fas fa-download"></i> Установка приложения
-        </button> 
+        </button>
+        <button class="btn btn-primary" onclick="app.startAppTutorial()" style="width:100%; margin-bottom:10px;">
+   <i class="fas fa-question-circle"></i> Обучение
+</button>
       </div>
       <div id="settingsInnerPage" style="display:none;"></div>
       <div id="installGuide" style="display:none;"></div>
@@ -6149,6 +6182,185 @@ attachPetHandlers() {
     // Убираем возможные остатки авто-словаря (на всякий случай)
     document.querySelectorAll('#levels .auto-dict-top, #levels .auto-dict-inline')
       .forEach(n => n.remove());
+  }
+  
+      startAppTutorial() {
+    const settingsModal = document.querySelector('.settings-modal');
+    if (settingsModal) settingsModal.remove();
+
+    const steps = [
+      // 1. Списки
+      { 
+        el: '.nav-item[data-section="levels"]', 
+        text: 'Раздел "Списки". Здесь вся библиотека слов: по уровням, темам и грамматика.',
+        pos: 'top',
+        action: () => this.switchSection('levels')
+      },
+      // 2. Обучение (Главная)
+      { 
+        el: '.nav-item[data-section="learning"]', 
+        text: 'Главный экран "Изучаю". Здесь твои карточки, квизы и тренажер предложений.',
+        pos: 'top',
+        action: () => this.switchSection('learning')
+      },
+      // 3. Игры (если есть кнопка в меню)
+      {
+        el: '.nav-item[data-section="games"]', // <-- ПРОВЕРЬ СЕЛЕКТОР КНОПКИ ИГР
+        text: 'Игротека! Учись играючи. Аркады, гонки и головоломки со словами.',
+        pos: 'top',
+        action: () => this.switchSection('games') // <-- ПРОВЕРЬ ID СЕКЦИИ
+      },
+      // 4. ИИ Чат (если есть кнопка)
+      {
+        el: '.nav-item[data-section="ai-chat"]', // <-- ПРОВЕРЬ СЕЛЕКТОР
+        text: 'Умный ИИ-собеседник. Потренируй диалог или попроси объяснить правило.',
+        pos: 'top',
+        action: () => this.switchSection('ai-chat') // <-- ПРОВЕРЬ ID
+      },
+      // 5. Переводчик
+      {
+        el: '.nav-item[data-section="new-words"]', 
+        text: 'Переводчик. Введи любое слово, и я создам для него красивую карточку.',
+        pos: 'top',
+        action: () => this.switchSection('new-words')
+      },
+      // 6. Прогресс
+      { 
+        el: '.nav-item[data-section="progress"]', 
+        text: 'Прогресс и Питомец. Заходи каждый день, чтобы кормить его своими знаниями!',
+        pos: 'top',
+        action: () => this.switchSection('progress')
+      }
+    ];
+
+    this.currentTutorialStep = 0;
+    // Начинаем с первого шага
+    this.showTutorialStep(steps);
+  }
+
+   showTutorialStep(steps) {
+    // 1. Удаляем старые элементы (оверлей и боба)
+    document.querySelectorAll('.tutorial-overlay, .tutorial-bob-container').forEach(e => e.remove());
+
+    // 2. Если шаги кончились -> Финиш
+    if (this.currentTutorialStep >= steps.length) {
+        this.showTutorialFinish();
+        return;
+    }
+
+    const step = steps[this.currentTutorialStep];
+
+    // 3. Выполняем действие (переключение вкладки)
+    if (step.action && typeof step.action === 'function') {
+        step.action();
+    }
+
+    // 4. Ждем 500мс, пока интерфейс обновится
+    setTimeout(() => {
+        const element = document.querySelector(step.el);
+
+        // Если элемента нет — пропускаем шаг рекурсивно
+        if (!element || element.offsetParent === null) {
+            console.warn('Tutorial: Element not found or hidden:', step.el);
+            this.currentTutorialStep++;
+            this.showTutorialStep(steps); // Рекурсия
+            return;
+        }
+
+        // 5. Рисуем подсветку (Overlay)
+        const rect = element.getBoundingClientRect();
+        const overlay = document.createElement('div');
+        overlay.className = 'tutorial-overlay';
+        
+        // Тень с "дыркой" через box-shadow
+        overlay.style.cssText = `
+            position: fixed;
+            top: ${rect.top - 8}px;
+            left: ${rect.left - 8}px;
+            width: ${rect.width + 16}px;
+            height: ${rect.height + 16}px;
+            border-radius: 16px;
+            box-shadow: 0 0 0 9999px rgba(0,0,0,0.75); 
+            z-index: 99998;
+            pointer-events: auto; 
+            cursor: pointer;
+            transition: all 0.4s ease;
+        `;
+
+        // 6. Рисуем Боба и Бабл
+        const container = document.createElement('div');
+        container.className = 'tutorial-bob-container';
+        
+        let topPos;
+        const isTop = step.pos === 'top';
+        
+        // Вычисляем позицию Боба
+        if (isTop) {
+            topPos = rect.top - 240; // Над элементом
+            if (topPos < 20) topPos = rect.bottom + 20; // Если не влезает — вниз
+        } else {
+            topPos = rect.bottom + 20; // Под элементом
+        }
+
+        container.style.cssText = `
+            position: fixed;
+            top: ${topPos}px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            pointer-events: auto;
+        `;
+
+        // HTML Боба
+        container.innerHTML = `
+            <div class="tutorial-bubble" style="animation: popIn 0.3s ease;">
+                <p>${step.text}</p>
+                <div class="tutorial-controls">
+                    <span style="font-size:12px; color:#999; font-weight:600;">${this.currentTutorialStep + 1} из ${steps.length}</span>
+                    <button class="btn btn-primary btn-sm" id="tutNextBtn">Далее</button>
+                </div>
+                <div class="bubble-arrow ${isTop ? 'down' : 'up'}"></div>
+            </div>
+            <img src="/instruction.png" class="bob-img" style="width:110px; height:auto; margin-top:-12px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));">
+        `;
+
+        document.body.appendChild(overlay);
+        document.body.appendChild(container);
+
+        // 7. Обработчики кликов
+        const next = () => {
+            this.currentTutorialStep++;
+            this.showTutorialStep(steps);
+        };
+
+        document.getElementById('tutNextBtn').onclick = next;
+        
+        // Клик по затемнению тоже переключает шаг
+        overlay.onclick = (e) => {
+            if (e.target === overlay) next();
+        };
+
+    }, 600); // Задержка для плавности
+  }
+
+  showTutorialFinish() {
+      const overlay = document.createElement('div');
+      overlay.className = 'tutorial-overlay';
+      overlay.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:99999; display:flex; align-items:center; justify-content:center;';
+      
+      overlay.innerHTML = `
+        <div style="background:white; padding:30px; border-radius:20px; text-align:center; max-width:320px; animation: popIn 0.4s;">
+            <img src="/instruction.png" style="width:100px; margin-bottom:15px;">
+            <h2 style="margin-bottom:10px;">Ты готов! 🚀</h2>
+            <p style="color:#666; margin-bottom:20px;">Если что-то забудешь, инструкция всегда доступна в Настройках.</p>
+            <button class="btn btn-primary" onclick="this.closest('.tutorial-overlay').remove()">Погнали!</button>
+        </div>
+      `;
+      document.body.appendChild(overlay);
   }
 
 static injectStylesOnce() {
