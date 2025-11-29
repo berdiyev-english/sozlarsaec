@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Bewords Merge</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap');
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #FFF8E1;
+            background-image: radial-gradient(#FFE0B2 15%, transparent 15%);
+            background-size: 24px 24px;
+            font-family: 'Fredoka', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+            user-select: none;
+        }
+
+        #app-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 480px;
+            max-height: 900px;
+            display: flex;
+            flex-direction: column;
+            background: #FFFFFF;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        @media (min-width: 500px) {
+            #app-container {
+                border-radius: 24px;
+                border: 6px solid #FF9800;
+            }
+        }
+
+        header {
+            flex: 0 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #FFF;
+            border-bottom: 3px solid #FFE0B2;
+        }
+
+        .brand { 
+            font-size: 26px; 
+            font-weight: 800; 
+            color: #E65100;
+            line-height: 1;
+        }
+        .brand span {
+            display: block;
+            font-size: 11px;
+            color: #FF9800;
+            letter-spacing: 3px;
+            font-weight: 700;
+        }
+        
+        .score-area {
+            text-align: right;
+        }
+        .score-label { font-size: 10px; color: #999; font-weight: 700; }
+        .score-val { font-size: 28px; color: #333; font-weight: 800; line-height: 1; }
+
+        #game-viewport {
+            flex: 1 1 auto;
+            position: relative;
+            background: #FFFDF5;
+            overflow: hidden;
+        }
+
+        #next-box {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #FFF;
+            padding: 6px;
+            border-radius: 14px;
+            border: 3px solid #FFCC80;
+            width: 68px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .next-label { font-size: 10px; color: #EF6C00; font-weight: 800; margin-bottom: 4px; }
+        #next-canvas { width: 48px; height: 48px; }
+
+        canvas#world {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            transition: opacity 0.2s;
+        }
+        .hidden { opacity: 0; pointer-events: none; }
+
+        h1 { font-size: 42px; color: #E65100; margin: 0; }
+        h2 { font-size: 16px; color: #FF9800; margin: 5px 0 25px; letter-spacing: 3px; }
+        
+        .btn {
+            background: linear-gradient(180deg, #FF9800 0%, #F57C00 100%);
+            color: white;
+            border: none;
+            padding: 16px 60px;
+            font-size: 24px;
+            font-weight: 700;
+            border-radius: 50px;
+            font-family: 'Fredoka', sans-serif;
+            box-shadow: 0 6px 0 #E65100;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #E65100; }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+    <header>
+        <div class="brand">
+            Bewords
+            <span>MERGE</span>
+        </div>
+        <div class="score-area">
+            <div class="score-label">SCORE</div>
+            <div class="score-val" id="score-el">0</div>
+        </div>
+    </header>
+
+    <div id="game-viewport">
+        <canvas id="world"></canvas>
+        
+        <div id="next-box">
+            <div class="next-label">NEXT</div>
+            <canvas id="next-canvas"></canvas>
+        </div>
+
+        <div id="menu-overlay" class="overlay">
+            <h1>Bewords</h1>
+            <h2>MERGE</h2>
+            <div style="font-size: 50px; margin-bottom: 10px;">🍒🍊🍉</div>
+            <button class="btn" onclick="startGame()">PLAY</button>
+        </div>
+
+        <div id="gameover-overlay" class="overlay hidden">
+            <h1 style="color:#D32F2F">GAME OVER</h1>
+            <h2>BEWORDS MERGE</h2>
+            <div style="font-size:14px;color:#888;margin-top:10px;">FINAL SCORE</div>
+            <div id="final-score" style="font-size:56px;font-weight:800;color:#333;">0</div>
+            <button class="btn" onclick="startGame()">RETRY</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+<script>
+// === НАСТРОЙКИ ===
+const W = 400, H = 600;
+
+// Фрукты: цвета приближены к оригиналу Suika
+const FRUITS = [
+    { r: 17,  c1: '#FF1744', c2: '#D50000', type: 'cherry' },      // 0
+    { r: 25,  c1: '#FF5252', c2: '#FF1744', type: 'strawberry' },  // 1
+    { r: 33,  c1: '#E040FB', c2: '#AA00FF', type: 'grape' },       // 2
+    { r: 40,  c1: '#FFCA28', c2: '#FFB300', type: 'dekopon' },     // 3
+    { r: 50,  c1: '#FFA726', c2: '#FB8C00', type: 'orange' },      // 4
+    { r: 62,  c1: '#EF5350', c2: '#E53935', type: 'apple' },       // 5
+    { r: 72,  c1: '#D4E157', c2: '#C0CA33', type: 'pear' },        // 6
+    { r: 85,  c1: '#FFCCBC', c2: '#FFAB91', type: 'peach' },       // 7
+    { r: 100, c1: '#FFEE58', c2: '#FDD835', type: 'pineapple' },   // 8
+    { r: 115, c1: '#C6FF00', c2: '#AEEA00', type: 'melon' },       // 9
+    { r: 132, c1: '#66BB6A', c2: '#43A047', type: 'watermelon' }   // 10
+];
+
+let engine, world, canvas, ctx, nextCanvas, nextCtx;
+let current = null, nextId = 0;
+let dropping = false, gameOver = false;
+let score = 0, dangerTime = 0;
+let scale = 1, offX = 0, offY = 0;
+let audioCtx = null;
+
+window.onload = () => {
+    canvas = document.getElementById('world');
+    ctx = canvas.getContext('2d');
+    nextCanvas = document.getElementById('next-canvas');
+    nextCtx = nextCanvas.getContext('2d');
+    
+    const dpr = window.devicePixelRatio || 1;
+    nextCanvas.width = 48 * dpr;
+    nextCanvas.height = 48 * dpr;
+    nextCtx.scale(dpr, dpr);
+
+    initPhysics();
+    resize();
+    window.addEventListener('resize', resize);
+    setupInput();
+    requestAnimationFrame(loop);
+};
+
+function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+function playSound(type) {
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    const t = audioCtx.currentTime;
+    if (type === 'merge') {
+        osc.frequency.setValueAtTime(400, t);
+        osc.frequency.exponentialRampToValueAtTime(800, t + 0.1);
+        gain.gain.setValueAtTime(0.3, t);
+        gain.gain.linearRampToValueAtTime(0, t + 0.15);
+        osc.start(t); osc.stop(t + 0.15);
+    } else {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(120, t);
+        osc.frequency.exponentialRampToValueAtTime(60, t + 0.08);
+        gain.gain.setValueAtTime(0.4, t);
+        gain.gain.linearRampToValueAtTime(0, t + 0.08);
+        osc.start(t); osc.stop(t + 0.08);
+    }
+}
+
+function initPhysics() {
+    engine = Matter.Engine.create();
+    world = engine.world;
+    engine.world.gravity.y = 1.6;
+
+    const t = 100;
+    Matter.World.add(world, [
+        Matter.Bodies.rectangle(W/2, H + t/2, W, t, { isStatic: true }),
+        Matter.Bodies.rectangle(-t/2, H/2, t, H*2, { isStatic: true }),
+        Matter.Bodies.rectangle(W + t/2, H/2, t, H*2, { isStatic: true })
+    ]);
+
+    Matter.Events.on(engine, 'collisionStart', e => {
+        e.pairs.forEach(p => {
+            const a = p.bodyA, b = p.bodyB;
+            if (a.fid !== undefined && b.fid !== undefined && a.fid === b.fid) {
+                if (!a.gone && !b.gone && a.fid < FRUITS.length - 1) {
+                    a.gone = b.gone = true;
+                    Matter.World.remove(world, [a, b]);
+                    const nid = a.fid + 1;
+                    const mx = (a.position.x + b.position.x) / 2;
+                    const my = (a.position.y + b.position.y) / 2;
+                    spawn(mx, my, nid);
+                    playSound('merge');
+                    score += (a.fid + 1) * 2;
+                    document.getElementById('score-el').textContent = score;
+                }
+            }
+        });
+    });
+
+    Matter.Runner.run(engine);
+}
+
+function resize() {
+    const box = document.getElementById('game-viewport');
+    const cw = box.clientWidth, ch = box.clientHeight;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = cw * dpr;
+    canvas.height = ch * dpr;
+    scale = Math.min(cw / W, ch / H);
+    offX = (cw - W * scale) / 2;
+    offY = ch - H * scale;
+}
+
+function startGame() {
+    initAudio();
+    document.getElementById('menu-overlay').classList.add('hidden');
+    document.getElementById('gameover-overlay').classList.add('hidden');
+    Matter.Composite.allBodies(world).forEach(b => {
+        if (b.fid !== undefined) Matter.World.remove(world, b);
+    });
+    score = 0;
+    document.getElementById('score-el').textContent = 0;
+    gameOver = false;
+    dropping = false;
+    dangerTime = 0;
+    nextId = Math.floor(Math.random() * 3);
+    nextTurn();
+}
+
+function nextTurn() {
+    if (gameOver) return;
+    const id = nextId;
+    nextId = Math.floor(Math.random() * 5);
+    drawNext();
+    current = { x: W / 2, y: 50, id };
+    dropping = false;
+}
+
+function spawn(x, y, id) {
+    const body = Matter.Bodies.circle(x, y, FRUITS[id].r, {
+        restitution: 0.2, friction: 0.5, density: 0.002, fid: id
+    });
+    Matter.World.add(world, body);
+}
+
+function drop() {
+    if (!current || dropping || gameOver) return;
+    dropping = true;
+    spawn(current.x, current.y, current.id);
+    playSound('drop');
+    current = null;
+    setTimeout(nextTurn, 450);
+}
+
+function checkLose() {
+    if (dropping) return;
+    let danger = false;
+    Matter.Composite.allBodies(world).forEach(b => {
+        if (b.fid !== undefined && !b.isStatic && b.position.y < 90 && Math.abs(b.velocity.y) < 0.15) {
+            danger = true;
+        }
+    });
+    if (danger) {
+        dangerTime++;
+        if (dangerTime > 100) {
+            gameOver = true;
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('gameover-overlay').classList.remove('hidden');
+        }
+    } else {
+        dangerTime = 0;
+    }
+}
+
+// === ОТРИСОВКА ===
+function loop() {
+    const dpr = window.devicePixelRatio || 1;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.setTransform(dpr * scale, 0, 0, dpr * scale, offX * dpr, offY * dpr);
+
+    // Рамка
+    ctx.strokeStyle = '#FFCC80';
+    ctx.lineWidth = 5;
+    ctx.strokeRect(0, 0, W, H);
+
+    // Линия опасности
+    ctx.strokeStyle = dangerTime > 50 ? '#E53935' : 'rgba(229,57,53,0.25)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([8, 8]);
+    ctx.beginPath();
+    ctx.moveTo(0, 90);
+    ctx.lineTo(W, 90);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Фрукты
+    Matter.Composite.allBodies(world).forEach(b => {
+        if (b.fid !== undefined) drawFruit(ctx, b.position.x, b.position.y, b.fid, b.angle);
+    });
+
+    // Текущий
+    if (current && !dropping) {
+        ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(current.x, current.y);
+        ctx.lineTo(current.x, H);
+        ctx.stroke();
+        drawFruit(ctx, current.x, current.y, current.id, 0);
+    }
+
+    if (!gameOver) checkLose();
+    requestAnimationFrame(loop);
+}
+
+function drawFruit(c, x, y, id, ang) {
+    const f = FRUITS[id];
+    const r = f.r;
+
+    c.save();
+    c.translate(x, y);
+    c.rotate(ang);
+
+    // === 1. Основа (круг с градиентом) ===
+    const grad = c.createRadialGradient(-r * 0.3, -r * 0.3, 0, 0, 0, r);
+    grad.addColorStop(0, f.c1);
+    grad.addColorStop(1, f.c2);
+
+    c.beginPath();
+    c.arc(0, 0, r, 0, Math.PI * 2);
+    c.fillStyle = grad;
+    c.fill();
+
+    // === 2. Текстуры и детали ===
+    drawDetails(c, r, f.type);
+
+    // === 3. Блик ===
+    c.beginPath();
+    c.ellipse(-r * 0.3, -r * 0.35, r * 0.28, r * 0.15, -0.5, 0, Math.PI * 2);
+    c.fillStyle = 'rgba(255,255,255,0.45)';
+    c.fill();
+
+    // === 4. Лицо ===
+    drawFace(c, r);
+
+    c.restore();
+}
+
+function drawDetails(c, r, type) {
+    c.lineCap = 'round';
+    c.lineJoin = 'round';
+
+    if (type === 'cherry') {
+        // Хвостик
+        c.beginPath();
+        c.moveTo(0, -r * 0.85);
+        c.quadraticCurveTo(r * 0.15, -r * 1.2, r * 0.4, -r * 1.35);
+        c.strokeStyle = '#5D4037';
+        c.lineWidth = 3;
+        c.stroke();
+    }
+    else if (type === 'strawberry') {
+        // Листики сверху
+        c.fillStyle = '#43A047';
+        c.beginPath();
+        c.moveTo(0, -r * 1.05);
+        c.lineTo(-r * 0.5, -r * 0.75);
+        c.lineTo(-r * 0.15, -r * 0.55);
+        c.lineTo(0, -r * 0.7);
+        c.lineTo(r * 0.15, -r * 0.55);
+        c.lineTo(r * 0.5, -r * 0.75);
+        c.closePath();
+        c.fill();
+        // Семечки
+        c.fillStyle = 'rgba(255,235,59,0.7)';
+        const seeds = [[-0.3, 0.1], [0.3, 0.2], [-0.15, 0.45], [0.2, -0.1], [-0.35, -0.25], [0.35, 0.5]];
+        seeds.forEach(([sx, sy]) => {
+            c.beginPath();
+            c.ellipse(sx * r, sy * r, 2, 3, 0.3, 0, Math.PI * 2);
+            c.fill();
+        });
+    }
+    else if (type === 'grape') {
+        // Блики как шарики грозди
+        c.fillStyle = 'rgba(255,255,255,0.15)';
+        c.beginPath(); c.arc(-r * 0.35, r * 0.2, r * 0.3, 0, Math.PI * 2); c.fill();
+        c.beginPath(); c.arc(r * 0.35, -r * 0.15, r * 0.25, 0, Math.PI * 2); c.fill();
+        c.beginPath(); c.arc(0, r * 0.4, r * 0.22, 0, Math.PI * 2); c.fill();
+    }
+    else if (type === 'dekopon') {
+        // Шишечка сверху
+        c.fillStyle = '#8BC34A';
+        c.beginPath();
+        c.ellipse(0, -r * 0.9, r * 0.18, r * 0.12, 0, 0, Math.PI * 2);
+        c.fill();
+    }
+    else if (type === 'orange') {
+        // Листик
+        c.fillStyle = '#66BB6A';
+        c.beginPath();
+        c.ellipse(r * 0.2, -r * 0.95, r * 0.18, r * 0.1, 0.4, 0, Math.PI * 2);
+        c.fill();
+        // Пупка
+        c.fillStyle = '#E65100';
+        c.beginPath();
+        c.arc(0, -r * 0.85, r * 0.12, 0, Math.PI * 2);
+        c.fill();
+    }
+    else if (type === 'apple') {
+        // Хвостик
+        c.beginPath();
+        c.moveTo(0, -r * 0.82);
+        c.lineTo(0, -r * 1.15);
+        c.strokeStyle = '#5D4037';
+        c.lineWidth = 3;
+        c.stroke();
+        // Листик
+        c.fillStyle = '#66BB6A';
+        c.beginPath();
+        c.ellipse(r * 0.18, -r * 1.05, r * 0.22, r * 0.1, 0.3, 0, Math.PI * 2);
+        c.fill();
+    }
+    else if (type === 'pear') {
+        // Хвостик
+        c.beginPath();
+        c.moveTo(0, -r * 0.85);
+        c.lineTo(0, -r * 1.12);
+        c.strokeStyle = '#795548';
+        c.lineWidth = 3;
+        c.stroke();
+        // Листик
+        c.fillStyle = '#8BC34A';
+        c.beginPath();
+        c.ellipse(r * 0.15, -r * 1.0, r * 0.18, r * 0.08, 0.4, 0, Math.PI * 2);
+        c.fill();
+    }
+    else if (type === 'peach') {
+        // Линия персика (попка)
+        c.beginPath();
+        c.moveTo(0, -r * 0.9);
+        c.quadraticCurveTo(-r * 0.1, 0, 0, r * 0.9);
+        c.strokeStyle = 'rgba(0,0,0,0.08)';
+        c.lineWidth = 3;
+        c.stroke();
+        // Листик
+        c.fillStyle = '#81C784';
+        c.beginPath();
+        c.ellipse(r * 0.2, -r * 0.9, r * 0.2, r * 0.1, 0.3, 0, Math.PI * 2);
+        c.fill();
+    }
+    else if (type === 'pineapple') {
+        // Сетка
+        c.strokeStyle = 'rgba(0,0,0,0.08)';
+        c.lineWidth = 2;
+        for (let i = -r; i < r; i += 18) {
+            c.beginPath(); c.moveTo(i, -r); c.lineTo(i + r, r); c.stroke();
+            c.beginPath(); c.moveTo(i + r, -r); c.lineTo(i, r); c.stroke();
+        }
+        // Корона
+        c.fillStyle = '#43A047';
+        const leaves = [
+            [0, -r * 1.45, 0.12, 0.35, 0],
+            [-0.2, -r * 1.3, 0.1, 0.28, -0.4],
+            [0.2, -r * 1.3, 0.1, 0.28, 0.4],
+            [-0.35, -r * 1.1, 0.08, 0.2, -0.6],
+            [0.35, -r * 1.1, 0.08, 0.2, 0.6]
+        ];
+        leaves.forEach(([lx, ly, lw, lh, la]) => {
+            c.beginPath();
+            c.ellipse(lx * r, ly, lw * r, lh * r, la, 0, Math.PI * 2);
+            c.fill();
+        });
+    }
+    else if (type === 'melon') {
+        // Полоски
+        c.strokeStyle = 'rgba(255,255,255,0.4)';
+        c.lineWidth = r * 0.08;
+        for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
+            c.beginPath();
+            c.moveTo(0, 0);
+            c.lineTo(Math.cos(a) * r * 0.9, Math.sin(a) * r * 0.9);
+            c.stroke();
+        }
+        // Шапочка
+        c.fillStyle = '#9E9D24';
+        c.beginPath();
+        c.ellipse(0, -r * 0.92, r * 0.12, r * 0.08, 0, 0, Math.PI * 2);
+        c.fill();
+    }
+    else if (type === 'watermelon') {
+        // Полоски
+        c.save();
+        c.beginPath();
+        c.arc(0, 0, r, 0, Math.PI * 2);
+        c.clip();
+        c.strokeStyle = '#1B5E20';
+        c.lineWidth = r * 0.18;
+        c.lineCap = 'round';
+        for (let i = -1.2; i <= 1.2; i += 0.45) {
+            c.beginPath();
+            c.moveTo(-r, i * r);
+            c.bezierCurveTo(-r * 0.3, (i - 0.15) * r, r * 0.3, (i + 0.15) * r, r, i * r);
+            c.stroke();
+        }
+        c.restore();
+    }
+}
+
+function drawFace(c, r) {
+    const eyeY = -r * 0.08;
+    const eyeX = r * 0.25;
+    const eyeR = Math.max(2.5, r * 0.09);
+
+    // Глаза
+    c.fillStyle = '#3E2723';
+    c.beginPath();
+    c.arc(-eyeX, eyeY, eyeR, 0, Math.PI * 2);
+    c.arc(eyeX, eyeY, eyeR, 0, Math.PI * 2);
+    c.fill();
+
+    // Блики в глазах
+    c.fillStyle = 'rgba(255,255,255,0.7)';
+    c.beginPath();
+    c.arc(-eyeX - eyeR * 0.3, eyeY - eyeR * 0.3, eyeR * 0.35, 0, Math.PI * 2);
+    c.arc(eyeX - eyeR * 0.3, eyeY - eyeR * 0.3, eyeR * 0.35, 0, Math.PI * 2);
+    c.fill();
+
+    // Рот (улыбка)
+    c.strokeStyle = '#3E2723';
+    c.lineWidth = Math.max(2, r * 0.045);
+    c.lineCap = 'round';
+    c.beginPath();
+    c.arc(0, eyeY + r * 0.22, r * 0.14, 0.2, Math.PI - 0.2);
+    c.stroke();
+
+    // Румянец
+    c.fillStyle = 'rgba(255,100,100,0.25)';
+    c.beginPath();
+    c.ellipse(-eyeX - r * 0.18, eyeY + r * 0.18, r * 0.12, r * 0.08, 0, 0, Math.PI * 2);
+    c.fill();
+    c.beginPath();
+    c.ellipse(eyeX + r * 0.18, eyeY + r * 0.18, r * 0.12, r * 0.08, 0, 0, Math.PI * 2);
+    c.fill();
+}
+
+function drawNext() {
+    nextCtx.clearRect(0, 0, 48, 48);
+    const f = FRUITS[nextId];
+    const r = f.r;
+    const s = 20 / r;
+    nextCtx.save();
+    nextCtx.translate(24, 24);
+    nextCtx.scale(s, s);
+
+    const grad = nextCtx.createRadialGradient(-r * 0.3, -r * 0.3, 0, 0, 0, r);
+    grad.addColorStop(0, f.c1);
+    grad.addColorStop(1, f.c2);
+    nextCtx.beginPath();
+    nextCtx.arc(0, 0, r, 0, Math.PI * 2);
+    nextCtx.fillStyle = grad;
+    nextCtx.fill();
+
+    drawDetails(nextCtx, r, f.type);
+    
+    nextCtx.beginPath();
+    nextCtx.ellipse(-r * 0.3, -r * 0.35, r * 0.28, r * 0.15, -0.5, 0, Math.PI * 2);
+    nextCtx.fillStyle = 'rgba(255,255,255,0.45)';
+    nextCtx.fill();
+
+    drawFace(nextCtx, r);
+    nextCtx.restore();
+}
+
+// === ВВОД ===
+function setupInput() {
+    const el = document.getElementById('game-viewport');
+
+    const getX = (clientX) => {
+        const rect = canvas.getBoundingClientRect();
+        let lx = (clientX - rect.left - offX) / scale;
+        if (current) {
+            const r = FRUITS[current.id].r;
+            lx = Math.max(r, Math.min(W - r, lx));
+        }
+        return lx;
+    };
+
+    const move = e => {
+        if (!current || dropping) return;
+        e.preventDefault();
+        current.x = getX(e.touches ? e.touches[0].clientX : e.clientX);
+    };
+    const end = e => {
+        if (e.cancelable) e.preventDefault();
+        drop();
+    };
+
+    el.addEventListener('mousemove', move);
+    el.addEventListener('touchmove', move, { passive: false });
+    el.addEventListener('mouseup', end);
+    el.addEventListener('touchend', end);
+}
+</script>
+</body>
+</html>
