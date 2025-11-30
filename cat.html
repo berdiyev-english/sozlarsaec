@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Bewords Game</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: #0b316b;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        /* --- ЗАГРУЗОЧНЫЙ ЭКРАН --- */
+        #loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #F2EBD9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
+
+        .brand-name {
+            font-size: 48px;
+            font-weight: 900;
+            color: #4A3B32;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px #D6CBB4;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        .progress-container {
+            width: 200px;
+            height: 8px;
+            background-color: #D6CBB4;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #E88D67;
+            width: 0%;
+            border-radius: 10px;
+            /* Анимация длится 3.5с */
+            animation: fillProgress 3.5s linear forwards;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fillProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* --- КОНТЕЙНЕР ИГРЫ --- */
+        .game-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        iframe {
+            border: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Класс для принудительного пересчета размеров (fix для iOS) */
+        .force-repaint {
+            width: 100.1% !important; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader-overlay">
+        <div class="brand-name">BEWORDS</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <!-- 
+           Игра начнет грузиться сразу, так как iframe находится в DOM.
+           Загрузчик будет висеть поверх нее.
+        -->
+        <iframe 
+            id="game-frame"
+            src="https://vaz63.github.io/g6/class-158/" 
+            title="Game"
+            allowfullscreen="true"
+            scrolling="no"
+            frameborder="0"
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock allow-orientation-lock"
+        ></iframe>
+    </div>
+
+    <script>
+        // Состояния
+        let animationFinished = false;
+        let gameLoaded = false;
+        let minTimePassed = false; // Страховка времени
+
+        const loader = document.getElementById('loader-overlay');
+        const progressBar = document.getElementById('progress-bar');
+        const gameFrame = document.getElementById('game-frame');
+
+        // Функция проверки готовности
+        function checkReady() {
+            // Убираем лоадер только если: Анимация прошла И Игра загрузилась
+            if (animationFinished && gameLoaded) {
+                hideLoader();
+            }
+        }
+
+        function hideLoader() {
+            loader.style.opacity = '0';
+            
+            // После исчезновения убираем блок полностью и "дергаем" iframe
+            setTimeout(() => {
+                loader.style.visibility = 'hidden';
+                loader.style.display = 'none';
+                
+                // Хак для iOS/Mobile: немного меняем размер iframe, чтобы форсировать отрисовку Canvas
+                gameFrame.classList.add('force-repaint');
+                setTimeout(() => {
+                    gameFrame.classList.remove('force-repaint');
+                }, 100);
+            }, 500);
+        }
+
+        // 1. Слушаем конец CSS анимации (3.5 сек)
+        progressBar.addEventListener('animationend', () => {
+            console.log("Animation done");
+            animationFinished = true;
+            checkReady();
+        });
+
+        // 2. Слушаем загрузку Iframe
+        gameFrame.onload = () => {
+            console.log("Game Loaded inside Iframe");
+            gameLoaded = true;
+            checkReady();
+        };
+
+        // 3. ФОЛЛБЭК (Страховка):
+        // Если вдруг iframe не отправит событие load (глюк сети),
+        // или анимация зависнет — принудительно открыть игру через 7 секунд.
+        setTimeout(() => {
+            if (!animationFinished || !gameLoaded) {
+                console.log("Force loading by timeout");
+                animationFinished = true;
+                gameLoaded = true;
+                checkReady();
+            }
+        }, 7000);
+
+    </script>
+</body>
+</html>
