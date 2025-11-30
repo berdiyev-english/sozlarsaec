@@ -2,7 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Добавлено viewport-fit=cover для корректной работы на iPhone с челкой -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Bewords Game</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +17,7 @@
             height: 100%;
             width: 100%;
             overflow: hidden;
-            background-color: #000;
+            background-color: #0b316b; /* Цвет фона как в игре, чтобы не мигало белым */
             font-family: 'Rubik', sans-serif;
         }
 
@@ -27,7 +28,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #F2EBD9; /* Бежевый */
+            background-color: #F2EBD9;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -61,8 +62,7 @@
             background-color: #E88D67;
             width: 0%;
             border-radius: 10px;
-            /* Анимация ровно 3 секунды */
-            animation: fillProgress 3s linear forwards;
+            animation: fillProgress 3.5s linear forwards; /* Чуть увеличили время */
         }
 
         @keyframes pulse {
@@ -80,44 +80,29 @@
         .game-container {
             width: 100%;
             height: 100%;
-            position: relative;
-            overflow: hidden;
-            background-color: #000;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         iframe {
             border: none;
             display: block;
-            transition: all 0.1s ease; /* Мгновенный переход при смене размера */
+            width: 100%;
+            height: 100%;
+            /* Важно: transition может мешать резкому пересчету размеров в некоторых движках, убрали */
         }
 
-        /* 
-           Класс для принудительного горизонтального режима.
-           Делаем ширину огромной, а высоту маленькой.
-           Это заставит игру думать, что она в Landscape.
-        */
-        .force-landscape {
-            position: absolute;
-            width: 150vw !important;  /* Шире экрана */
-            height: 50vh !important;  /* Половина высоты */
-            top: 25%;
-            left: -25%;
-        }
-
-        /* Нормальное состояние */
-        .normal-portrait {
-            width: 100% !important;
-            height: 100% !important;
-            position: relative;
-            top: 0;
-            left: 0;
+        /* Класс для "встряски" экрана */
+        .shake-dimensions {
+            width: 101% !important; /* Чуть меняем ширину */
+            height: 99% !important; /* Чуть меняем высоту */
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Экран загрузки -->
     <div id="loader-overlay">
         <div class="brand-name">BEWORDS</div>
         <div class="progress-container">
@@ -125,17 +110,15 @@
         </div>
     </div>
 
-    <!-- Игра -->
     <div class="game-container">
         <!-- 
-            Сразу даем класс force-landscape, чтобы при старте 
-            iframe был "сплющенным" (горизонтальным)
+           Убрали force-landscape из старта. 
+           Пусть загружается нормально, а JS потом "дернет" его.
         -->
         <iframe 
             id="game-frame"
-            class="force-landscape"
             src="https://i.gamesgo.net/uploads/game/html5/25490/" 
-            title="Subway Surfers"
+            title="Game"
             allowfullscreen="true"
             scrolling="no"
             frameborder="0"
@@ -148,25 +131,42 @@
             const loader = document.getElementById('loader-overlay');
             const iframe = document.getElementById('game-frame');
             
-            // --- ЭТАП 1: Игра загружается в "сплющенном" (горизонтальном) виде (CSS класс .force-landscape) ---
-            // Это происходит автоматически при старте HTML
-            
-            // --- ЭТАП 2: Через 2 секунды переключаем в нормальный (вертикальный) вид ---
-            setTimeout(function() {
-                iframe.classList.remove('force-landscape');
-                iframe.classList.add('normal-portrait');
+            // Функция для принудительного пересчета размеров (Reflow)
+            function triggerResize() {
+                // 1. Добавляем класс, который чуть меняет размер (эмуляция поворота/ресайза)
+                iframe.classList.add('shake-dimensions');
                 
-                // Принудительно сообщаем ифрейму, что он в фокусе, чтобы перерисовка сработала
-                iframe.focus();
-            }, 2000);
+                // 2. Форсируем браузер применить изменения прямо сейчас
+                void iframe.offsetWidth; 
+                
+                // 3. Через короткую паузу возвращаем всё как было
+                setTimeout(() => {
+                    iframe.classList.remove('shake-dimensions');
+                    // Снова форсируем
+                    void iframe.offsetWidth; 
+                    iframe.focus();
+                }, 100);
+            }
 
-            // --- ЭТАП 3: Через 3 секунды убираем заставку ---
+            // --- ЛОГИКА ЗАПУСКА ---
+
+            // 1. Ждем 1.5 секунды, пока игра начнет грузить свои ассеты
             setTimeout(function() {
+                triggerResize(); // ПЕРВОЕ "Встряхивание", чтобы движок проснулся
+            }, 1500);
+
+            // 2. Ждем 3 секунды (конец загрузки)
+            setTimeout(function() {
+                // ВТОРОЕ "Встряхивание" перед самым показом, на случай если первое не сработало
+                triggerResize();
+
+                // Убираем лоадер
                 loader.style.opacity = '0';
                 setTimeout(function() {
                     loader.style.display = 'none';
+                    iframe.focus(); // Фокус на игру
                 }, 500);
-            }, 3000);
+            }, 3500);
         });
     </script>
 
