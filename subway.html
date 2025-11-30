@@ -2,163 +2,145 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <title>Subway Surfers Mobile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bewords Game</title>
+    
+    <!-- Подключаем округлый, "мягкий" шрифт -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700;900&display=swap" rel="stylesheet">
+
     <style>
-        * {
+        /* Основные настройки страницы */
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-        
-        html, body {
-            width: 100%;
             height: 100%;
+            width: 100%;
             overflow: hidden;
-            background: #000;
-            position: fixed;
-            touch-action: none;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #000; /* Черный фон под игрой */
+            font-family: 'Rubik', sans-serif;
         }
-        
-        iframe {
-            width: 100vw;
-            height: 100vh;
-            height: 100dvh;
-            border: none;
-            display: block;
-            position: absolute;
+
+        /* --- ЗАГРУЗОЧНЫЙ ЭКРАН --- */
+        #loader-overlay {
+            position: fixed;
             top: 0;
             left: 0;
-        }
-        
-        /* Уведомление в стиле Duolingo */
-        .notification {
-            position: fixed;
-            top: -200px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #58CC02 0%, #89E219 100%);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(88, 204, 2, 0.4);
-            z-index: 10000;
+            width: 100%;
+            height: 100%;
+            /* Бежевый "игровой" цвет */
+            background-color: #F2EBD9; 
             display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 90%;
-            max-width: 400px;
-            transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            font-weight: 600;
-        }
-        
-        .notification.show {
-            top: 20px;
-        }
-        
-        .notification-icon {
-            width: 45px;
-            height: 45px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            flex-shrink: 0;
+            z-index: 9999; /* Поверх всего */
+            transition: opacity 0.5s ease-in-out; /* Плавное исчезновение */
         }
-        
-        .notification-content {
-            flex: 1;
+
+        /* Логотип BEWORDS */
+        .brand-name {
+            font-size: 48px;
+            font-weight: 900;
+            color: #4A3B32; /* Темно-коричневый */
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px #D6CBB4; /* Легкая тень для объема */
+            animation: pulse 1.5s infinite ease-in-out;
         }
-        
-        .notification-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 3px;
-        }
-        
-        .notification-text {
-            font-size: 13px;
-            opacity: 0.95;
-            line-height: 1.3;
-        }
-        
-        .notification-timer {
-            background: white;
-            color: #58CC02;
-            padding: 5px 10px;
+
+        /* Контейнер полоски загрузки */
+        .progress-container {
+            width: 200px;
+            height: 8px;
+            background-color: #D6CBB4;
             border-radius: 10px;
-            font-weight: 700;
-            font-size: 16px;
-            min-width: 28px;
-            text-align: center;
-            flex-shrink: 0;
+            overflow: hidden;
+            position: relative;
         }
+
+        /* Сама полоска, которая едет */
+        .progress-bar {
+            height: 100%;
+            background-color: #E88D67; /* Акцентный оранжевый/терракотовый */
+            width: 0%;
+            border-radius: 10px;
+            /* Анимация заполнения ровно на 3 секунды */
+            animation: fillProgress 3s linear forwards;
+        }
+
+        /* Анимация пульсации текста */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Анимация заполнения полоски */
+        @keyframes fillProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* --- КОНТЕЙНЕР ИГРЫ --- */
+        .game-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
     </style>
 </head>
 <body>
-    <iframe 
-        id="game-frame"
-        src="https://g.igroutka.ru/games/164/NpBgPruAK8CiHj9D/12/subway_surfers_winter_wonderland/" 
-        allowfullscreen
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals"
-        scrolling="no"
-        frameborder="0">
-    </iframe>
+
+    <!-- Экран загрузки -->
+    <div id="loader-overlay">
+        <div class="brand-name">BEWORDS</div>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Игра -->
+    <div class="game-container">
+        <iframe 
+            src="https://i.gamesgo.net/uploads/game/html5/25490/" 
+            title="Subway Surfers"
+            allowfullscreen="true"
+            scrolling="no"
+            frameborder="0"
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock allow-orientation-lock"
+        ></iframe>
+    </div>
 
     <script>
-        let notificationTimeout;
-        let gameInterval;
-        
-        // Функция показа уведомления
-        function showNotification() {
-            const notification = document.getElementById('notification');
-            const timerElement = document.getElementById('notificationTimer');
-            let timeLeft = 8;
+        // Скрипт для управления загрузкой
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loader-overlay');
             
-            notification.classList.add('show');
-            timerElement.textContent = '8';
-            
-            notificationTimeout = setInterval(() => {
-                timeLeft--;
-                timerElement.textContent = timeLeft;
+            // Ждем 3000 миллисекунд (3 секунды)
+            setTimeout(function() {
+                // Делаем прозрачным
+                loader.style.opacity = '0';
                 
-                if (timeLeft <= 0) {
-                    clearInterval(notificationTimeout);
-                    notification.classList.remove('show');
-                    // Перезапускаем таймер для следующего показа
-                    startGameTimer();
-                }
-            }, 1000);
-        }
-        
-        // Запуск таймера игры
-        function startGameTimer() {
-            clearInterval(gameInterval);
-            // Запускаем таймер на 4 минуты 50 секунд
-            gameInterval = setTimeout(() => {
-                showNotification();
-            }, 290000); // 4 минуты 50 секунд = 290000 мс
-        }
-        
-        // Запускаем таймер после загрузки страницы
-        window.addEventListener('load', () => {
-            startGameTimer();
+                // Через полсекунды (когда анимация исчезновения пройдет) удаляем блок,
+                // чтобы можно было кликать по игре
+                setTimeout(function() {
+                    loader.style.display = 'none';
+                }, 500);
+                
+            }, 3000);
         });
-        
-        // Предотвращение скролла
-        document.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-        }, { passive: false });
     </script>
+
 </body>
 </html>
-
-
-
-
