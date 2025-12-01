@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>TILE</title>
+    <title>BEWORDS TILE</title>
     
-    <!-- Блокировка зума на iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
@@ -13,7 +12,7 @@
 
     <style>
         :root {
-            --game-bg: linear-gradient (180deg, #4FACFE 0%, #00F2FE 100%);
+            --game-bg: linear-gradient(180deg, #4FACFE 0%, #00F2FE 100%);
             --tile-w: clamp(46px, 12vw, 58px);
             --tile-h: clamp(54px, 14vw, 66px);
             --dock-height: 90px;
@@ -32,24 +31,22 @@
             outline: none; 
         }
 
-        /* Критично для мобильных - запрет зума */
         html {
-          touch-action: manipulation;
-          -ms-touch-action: manipulation;
-          overflow: hidden;
-           /* Добавляем фон на html тоже */
-           background: linear-gradient(180deg, #4FACFE 0%, #00F2FE 100%);
-           background-attachment: fixed;
-           min-height: 100%;
-           }
+            touch-action: manipulation;
+            -ms-touch-action: manipulation;
+            overflow: hidden;
+            background: linear-gradient(180deg, #4FACFE 0%, #00F2FE 100%);
+        }
 
         body {
             margin: 0;
             padding: 0;
             background: var(--game-bg);
+            background-attachment: fixed;
+            min-height: 100vh;
+            min-height: 100dvh;
             height: 100vh;
             height: 100dvh;
-            height: -webkit-fill-available;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -105,7 +102,6 @@
             font-weight: 600;
         }
 
-        /* Статистика на стартовом экране */
         .stats-box {
             background: rgba(255,255,255,0.6);
             border-radius: 16px;
@@ -289,96 +285,385 @@
         }
 
         .dock-slot {
-            width: calc(var(--tile-w) * 0.85); 
-            height: calc(var(--tile-h) * 0.85); 
+            width: calc(var(--tile-w) * var(--dock-scale)); 
+            height: calc(var(--tile-h) * var(--dock-scale)); 
             border-radius: 10px;
             background: #d1d8e0;
             box-shadow: inset 0 3px 5px rgba(0,0,0,0.12);
             flex-shrink: 0;
         }
 
-        /* ========== MODALS ========== */
+        /* ========================================
+           🎉 EPIC WIN MODAL - КРУТОЙ ЭКРАН ПОБЕДЫ
+           ======================================== */
         .modal-overlay {
             position: fixed; 
             top: 0; left: 0; 
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); 
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0);
             display: flex; 
             justify-content: center; 
             align-items: center;
             z-index: 300; 
             opacity: 0; 
             pointer-events: none; 
-            transition: opacity 0.3s;
+            transition: all 0.5s;
+            overflow: hidden;
         }
-        .modal-overlay.active { opacity: 1; pointer-events: all; }
-        
+        .modal-overlay.active { 
+            opacity: 1; 
+            pointer-events: all; 
+            background: rgba(0, 0, 0, 0.85);
+        }
+
+        /* Конфетти контейнер */
+        .confetti-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            top: -20px;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% { 
+                transform: translateY(0) rotate(0deg) scale(1); 
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(100vh) rotate(720deg) scale(0.5); 
+                opacity: 0;
+            }
+        }
+
+        /* Лучи света */
+        .rays {
+            position: absolute;
+            width: 300%;
+            height: 300%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(255, 215, 0, 0.1) 10deg,
+                transparent 20deg,
+                transparent 30deg,
+                rgba(255, 215, 0, 0.1) 40deg,
+                transparent 50deg,
+                transparent 60deg,
+                rgba(255, 215, 0, 0.1) 70deg,
+                transparent 80deg,
+                transparent 90deg
+            );
+            animation: rotate-rays 20s linear infinite;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        .modal-overlay.active.win .rays {
+            opacity: 1;
+        }
+        @keyframes rotate-rays {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Карточка победы */
         .modal-card {
-            background: #fff;
-            width: 88%; 
-            max-width: 320px;
-            padding: 28px; 
-            border-radius: 24px;
+            background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 100%);
+            width: 90%; 
+            max-width: 340px;
+            padding: 0;
+            border-radius: 30px;
             text-align: center;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            transform: scale(0.8); 
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.4),
+                0 0 0 4px rgba(255, 215, 0, 0.5),
+                inset 0 2px 0 rgba(255,255,255,0.8);
+            transform: scale(0) rotate(-10deg);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: visible;
         }
-        .modal-overlay.active .modal-card { transform: scale(1); }
-        
-        .modal-emoji { font-size: 3.5rem; margin-bottom: 5px; }
-        
-        .modal-title { 
-            font-family: 'Montserrat', sans-serif; 
+        .modal-overlay.active .modal-card { 
+            transform: scale(1) rotate(0deg); 
+        }
+
+        /* Корона / Трофей сверху */
+        .trophy-container {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .trophy {
+            font-size: 5rem;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3));
+            animation: trophy-bounce 0.6s ease-out 0.3s both, trophy-glow 2s ease-in-out infinite 1s;
+        }
+
+        @keyframes trophy-bounce {
+            0% { transform: scale(0) rotate(-20deg); }
+            50% { transform: scale(1.3) rotate(5deg); }
+            70% { transform: scale(0.9) rotate(-3deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes trophy-glow {
+            0%, 100% { filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3)) drop-shadow(0 0 20px rgba(255, 215, 0, 0.5)); }
+            50% { filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.8)); }
+        }
+
+        /* Звёзды */
+        .stars-container {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+            z-index: 5;
+        }
+
+        .star {
+            font-size: 2.5rem;
+            opacity: 0;
+            transform: scale(0) rotate(-180deg);
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+        }
+
+        .star:nth-child(1) { animation: star-pop 0.5s ease-out 0.6s forwards; }
+        .star:nth-child(2) { animation: star-pop 0.5s ease-out 0.8s forwards; font-size: 3rem; margin-top: -15px; }
+        .star:nth-child(3) { animation: star-pop 0.5s ease-out 1s forwards; }
+
+        @keyframes star-pop {
+            0% { opacity: 0; transform: scale(0) rotate(-180deg); }
+            60% { transform: scale(1.4) rotate(20deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        /* Контент карточки */
+        .modal-content {
+            padding: 60px 30px 30px;
+        }
+
+        /* Ribbon / Лента */
+        .ribbon {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #5D4E37;
+            font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 1.6rem; 
-            color: #2d3436; 
-            margin: 10px 0; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 10px 40px;
+            position: relative;
+            margin: 0 -30px 20px;
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);
         }
-        
-        .modal-text {
-            color: #636e72; 
-            font-size: 0.95rem;
-            margin-bottom: 5px;
+        .ribbon::before, .ribbon::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            border: 8px solid transparent;
+            border-top-color: #CC8400;
         }
-        
-        .btn-action {
-            background: #0984e3; 
-            color: white; 
-            padding: 14px 28px;
-            border-radius: 50px; 
-            font-size: 1rem; 
-            border: none; 
-            cursor: pointer;
-            box-shadow: 0 5px 0 #0663ad; 
-            font-family: 'Montserrat', sans-serif; 
+        .ribbon::before { left: 0; border-left-color: #CC8400; }
+        .ribbon::after { right: 0; border-right-color: #CC8400; }
+
+        /* Заголовок победы */
+        .win-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.5rem;
             font-weight: 700;
-            margin-top: 15px; 
-            width: 100%; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 10px 0;
+            animation: title-pulse 2s ease-in-out infinite;
+            text-shadow: none;
+        }
+
+        @keyframes title-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        /* Подзаголовок уровня */
+        .level-complete {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .level-complete span {
+            color: #333;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        /* Статистика */
+        .stats-row-modal {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+        .stat-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #333;
+            display: block;
+        }
+        .stat-value.animated {
+            animation: count-up 0.5s ease-out forwards;
+        }
+        @keyframes count-up {
+            from { transform: scale(1.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .stat-label {
+            font-size: 0.7rem;
+            color: #999;
             text-transform: uppercase;
             letter-spacing: 1px;
-            touch-action: manipulation;
+            margin-top: 5px;
         }
-        .btn-action:active { transform: translateY(5px); box-shadow: none; }
-        .btn-action.danger { background: #d63031; box-shadow: 0 5px 0 #a02525; }
 
-        .modal-link {
-            color: #b2bec3; 
-            cursor: pointer; 
-            font-size: 0.75rem; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
-            margin-top: 18px;
+        /* Кнопка продолжить */
+        .btn-next-level {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 
+                0 8px 0 #4c3a8a,
+                0 15px 30px rgba(102, 126, 234, 0.4);
+            transition: all 0.15s;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-next-level::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        .btn-next-level:active {
+            transform: translateY(8px);
+            box-shadow: 0 0 0 #4c3a8a, 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-next-level .arrow {
             display: inline-block;
-            touch-action: manipulation;
+            margin-left: 10px;
+            animation: arrow-bounce 1s ease-in-out infinite;
+        }
+        @keyframes arrow-bounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
         }
 
-        /* ========== ANIMATIONS ========== */
+        /* Ссылка в меню */
+        .modal-link {
+            color: #aaa;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            display: inline-block;
+            transition: color 0.2s;
+        }
+        .modal-link:active { color: #666; }
+
+        /* ========== LOSE MODAL ========== */
+        .modal-overlay.lose .modal-card {
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.4),
+                0 0 0 4px rgba(214, 48, 49, 0.5),
+                inset 0 2px 0 rgba(255,255,255,0.8);
+        }
+
+        .lose-emoji {
+            font-size: 4rem;
+            animation: shake-emoji 0.5s ease-in-out;
+            display: block;
+            margin-bottom: 10px;
+        }
+        @keyframes shake-emoji {
+            0%, 100% { transform: rotate(0deg); }
+            20% { transform: rotate(-15deg); }
+            40% { transform: rotate(15deg); }
+            60% { transform: rotate(-10deg); }
+            80% { transform: rotate(10deg); }
+        }
+
+        .lose-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            color: #d63031;
+            margin: 10px 0;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, #d63031 0%, #e17055 100%);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 
+                0 8px 0 #a02525,
+                0 15px 30px rgba(214, 48, 49, 0.3);
+            width: 100%;
+            margin-top: 20px;
+        }
+        .btn-retry:active {
+            transform: translateY(8px);
+            box-shadow: 0 0 0 #a02525;
+        }
+
+        /* ========== BASE ANIMATIONS ========== */
         @keyframes popScale { 
             0% { transform: scale(0) rotate(0deg); } 
             100% { transform: scale(1) rotate(var(--rot, 0deg)); } 
@@ -395,10 +680,8 @@
             25% { transform: translateX(-5px); }
             75% { transform: translateX(5px); }
         }
-        
         .shake { animation: shake 0.3s ease; }
 
-        /* Saving indicator */
         .save-indicator {
             position: fixed;
             top: 10px;
@@ -419,7 +702,6 @@
 </head>
 <body>
 
-    <!-- SAVE INDICATOR -->
     <div class="save-indicator" id="saveIndicator">💾 Сохранено</div>
 
     <!-- MENU -->
@@ -448,7 +730,7 @@
     <!-- GAME UI -->
     <div class="header-row">
         <button class="btn-icon" id="btn-home">⌂</button>
-        <div class="game-logo">Bewords</div>
+        <div class="game-logo">BEWORDS</div>
         <button class="btn-icon" id="btn-restart">↺</button>
     </div>
 
@@ -461,14 +743,65 @@
 
     <div class="dock-container" id="dock"></div>
 
-    <!-- MODAL -->
+    <!-- 🎉 EPIC WIN/LOSE MODAL -->
     <div id="gameModal" class="modal-overlay">
+        <!-- Конфетти будут добавляться сюда через JS -->
+        <div class="confetti-container" id="confettiContainer"></div>
+        
+        <!-- Лучи света (только для победы) -->
+        <div class="rays"></div>
+        
         <div class="modal-card">
-            <div class="modal-emoji" id="m-emoji">🎉</div>
-            <h2 id="m-title" class="modal-title">Victory</h2>
-            <p id="m-text" class="modal-text">Уровень 1 пройден!</p>
-            <button id="m-btn" class="btn-action">ДАЛЕЕ →</button>
-            <div class="modal-link" id="m-menu">В Меню</div>
+            <!-- WIN STATE -->
+            <div id="win-content" style="display: none;">
+                <div class="trophy-container">
+                    <div class="trophy">🏆</div>
+                </div>
+                <div class="stars-container">
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                </div>
+                
+                <div class="modal-content">
+                    <div class="ribbon">УРОВЕНЬ ПРОЙДЕН</div>
+                    <div class="win-title">ПОБЕДА!</div>
+                    <div class="level-complete">Уровень <span id="completed-level">1</span></div>
+                    
+                    <div class="stats-row-modal">
+                        <div class="stat-item">
+                            <span class="stat-value" id="modal-score">0</span>
+                            <div class="stat-label">Очки</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="modal-best">0</span>
+                            <div class="stat-label">Рекорд</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-next-level" id="btn-next">
+                        УРОВЕНЬ <span id="next-level-num">2</span>
+                        <span class="arrow">→</span>
+                    </button>
+                    
+                    <div class="modal-link" id="m-menu-win">В Меню</div>
+                </div>
+            </div>
+            
+            <!-- LOSE STATE -->
+            <div id="lose-content" style="display: none;">
+                <div class="modal-content" style="padding-top: 30px;">
+                    <span class="lose-emoji">😢</span>
+                    <div class="lose-title">Не вышло...</div>
+                    <p style="color: #888; margin: 15px 0;">Док переполнен!</p>
+                    
+                    <button class="btn-retry" id="btn-retry">
+                        🔄 Ещё раз
+                    </button>
+                    
+                    <div class="modal-link" id="m-menu-lose">В Меню</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -477,30 +810,24 @@
         const DOCK_SIZE = 7;
         const ALL_FRUITS = ['🍓', '🍋', '🍇', '🍉', '🥝', '🍍', '🍒', '🍑', '🥥', '🥑', '🍏', '🍊'];
         const STORAGE_KEY = 'bewords_tile_save';
-        
-        // Размеры для коллизий (в пикселях)
         const COLLISION_W = 45;
         const COLLISION_H = 50;
-        const MIN_TILE_DISTANCE = 20; // Минимальное расстояние между центрами плиток
+        const MIN_TILE_DISTANCE = 20;
 
-        // ============ СОСТОЯНИЕ ИГРЫ ============
         let currentLevel = 1;
         let score = 0;
         let bestScore = 0;
         let tiles = [];
         let dock = [];
         let isLocked = false;
+        let audioCtx = null;
 
         // ============ АУДИО ============
-        let audioCtx = null;
-        
         function initAudio() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
         }
 
         function playSound(type) {
@@ -546,17 +873,19 @@
                     o.stop(now + i * 0.05 + 0.25);
                 });
             } else if (type === 'win') {
-                [523, 659, 783, 1046].forEach((f, i) => {
+                // Победная мелодия - фанфары!
+                const notes = [523, 659, 783, 1046, 783, 1046];
+                notes.forEach((f, i) => {
                     const o = audioCtx.createOscillator();
                     const g = audioCtx.createGain();
-                    o.type = 'square';
+                    o.type = i < 4 ? 'square' : 'sine';
                     o.frequency.value = f;
-                    g.gain.setValueAtTime(0.04, now + i * 0.1);
-                    g.gain.linearRampToValueAtTime(0, now + i * 0.1 + 0.2);
+                    g.gain.setValueAtTime(0.06, now + i * 0.12);
+                    g.gain.linearRampToValueAtTime(0, now + i * 0.12 + 0.3);
                     o.connect(g);
                     g.connect(audioCtx.destination);
-                    o.start(now + i * 0.1);
-                    o.stop(now + i * 0.1 + 0.2);
+                    o.start(now + i * 0.12);
+                    o.stop(now + i * 0.12 + 0.3);
                 });
             } else if (type === 'error') {
                 const osc = audioCtx.createOscillator();
@@ -572,7 +901,28 @@
             }
         }
 
-        // ============ СОХРАНЕНИЕ ПРОГРЕССА ============
+        // ============ КОНФЕТТИ ============
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            container.innerHTML = '';
+            
+            const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8'];
+            const shapes = ['■', '●', '▲', '★', '♦'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                container.appendChild(confetti);
+            }
+        }
+
+        // ============ СОХРАНЕНИЕ ============
         function saveProgress() {
             try {
                 const data = {
@@ -583,7 +933,6 @@
                 };
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
                 
-                // Показываем индикатор сохранения
                 const indicator = document.getElementById('saveIndicator');
                 indicator.classList.add('show');
                 setTimeout(() => indicator.classList.remove('show'), 1500);
@@ -611,7 +960,6 @@
         function resetProgress() {
             currentLevel = 1;
             score = 0;
-            // bestScore сохраняем!
             saveProgress();
         }
 
@@ -625,9 +973,7 @@
             loadProgress();
             updateMenuStats();
             document.getElementById('start-screen').classList.remove('hidden');
-            document.getElementById('gameModal').classList.remove('active');
-            
-            // Очистка игрового поля
+            closeModal();
             document.getElementById('game-board').innerHTML = '';
             document.getElementById('dock').innerHTML = '';
             tiles = [];
@@ -636,13 +982,8 @@
 
         function startGame(isNewGame = false) {
             initAudio();
-            
-            if (isNewGame) {
-                resetProgress();
-            } else {
-                loadProgress();
-            }
-            
+            if (isNewGame) resetProgress();
+            else loadProgress();
             document.getElementById('start-screen').classList.add('hidden');
             loadLevel();
         }
@@ -653,17 +994,23 @@
         }
 
         function nextLevel() {
-            document.getElementById('gameModal').classList.remove('active');
+            closeModal();
             currentLevel++;
             saveProgress();
             loadLevel();
         }
 
         function restartLevel() {
-            document.getElementById('gameModal').classList.remove('active');
+            closeModal();
             score = Math.max(0, score - 50);
             saveProgress();
             loadLevel();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('gameModal');
+            modal.classList.remove('active', 'win', 'lose');
+            document.getElementById('confettiContainer').innerHTML = '';
         }
 
         // ============ ГЕНЕРАЦИЯ УРОВНЯ ============
@@ -681,35 +1028,29 @@
             const dockEl = document.getElementById('dock');
             dockEl.innerHTML = '';
             
-            // Генерация слотов дока
             for (let i = 0; i < DOCK_SIZE; i++) {
                 const s = document.createElement('div');
                 s.className = 'dock-slot';
                 dockEl.appendChild(s);
             }
             
-            // --- ГЕНЕРАЦИЯ КОЛОДЫ ---
             const typesCount = Math.min(ALL_FRUITS.length, 3 + Math.floor(currentLevel / 2));
             const triplesCount = 6 + (currentLevel * 3);
             
             let deck = [];
             const levelFruits = [...ALL_FRUITS].sort(() => 0.5 - Math.random()).slice(0, typesCount);
             
-            // Строго по 3 штуки каждого вида
             for (let i = 0; i < triplesCount; i++) {
                 const f = levelFruits[i % typesCount];
                 deck.push(f, f, f);
             }
             
-            // Перемешиваем
             deck.sort(() => 0.5 - Math.random());
             
-            // Размеры доски
             const boardRect = board.getBoundingClientRect();
             const maxX = boardRect.width - 60;
             const maxY = boardRect.height - 70;
             
-            // Для отслеживания уже размещенных плиток (ИСПРАВЛЕНИЕ БАГА)
             const placedPositions = [];
             
             let id = 0;
@@ -718,17 +1059,14 @@
                 el.className = 'tile';
                 el.textContent = fruit;
                 
-                // --- ИСПРАВЛЕНИЕ БАГА: проверка на наложение ---
                 let x, y;
                 let attempts = 0;
                 const maxAttempts = 100;
                 
                 do {
-                    // Распределение "кучей" с пирамидальностью
                     let r = Math.floor(Math.random() * 6);
                     let c = Math.floor(Math.random() * 5);
                     
-                    // Последние плитки ближе к центру (пирамидальность)
                     if (index > deck.length * 0.5) {
                         r = 1 + Math.floor(Math.random() * 4);
                         c = 1 + Math.floor(Math.random() * 3);
@@ -737,21 +1075,17 @@
                     x = (c * 55) + (Math.random() * 25 - 12);
                     y = (r * 60) + (Math.random() * 25 - 12);
                     
-                    // Центрирование
                     x += 10;
                     y += 20;
                     
-                    // Ограничения по границам
                     x = Math.max(5, Math.min(x, maxX));
                     y = Math.max(5, Math.min(y, maxY));
                     
                     attempts++;
                 } while (isTooClose(x, y, placedPositions) && attempts < maxAttempts);
                 
-                // Сохраняем позицию
                 placedPositions.push({ x, y });
                 
-                // Рандомный поворот для визуального разнообразия
                 const rot = (Math.random() * 10) - 5;
                 el.style.setProperty('--rot', `${rot}deg`);
                 el.style.transform = `rotate(${rot}deg)`;
@@ -760,27 +1094,10 @@
                 el.style.zIndex = index;
                 el.style.animation = `popScale 0.35s backwards ${index * 0.015}s`;
                 
-                const tileObj = {
-                    id: id++,
-                    el,
-                    fruit,
-                    x,
-                    y,
-                    z: index,
-                    inDock: false,
-                    rot
-                };
+                const tileObj = { id: id++, el, fruit, x, y, z: index, inDock: false, rot };
                 
-                // Обработчики событий (touch + click)
-                el.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    clickTile(tileObj);
-                });
-                
-                el.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    clickTile(tileObj);
-                }, { passive: false });
+                el.addEventListener('click', (e) => { e.preventDefault(); clickTile(tileObj); });
+                el.addEventListener('touchstart', (e) => { e.preventDefault(); clickTile(tileObj); }, { passive: false });
                 
                 board.appendChild(el);
                 tiles.push(tileObj);
@@ -789,14 +1106,11 @@
             updateClickability();
         }
 
-        // Проверка, не слишком ли близко к существующим плиткам
         function isTooClose(x, y, existing) {
             for (const pos of existing) {
                 const dx = Math.abs(pos.x - x);
                 const dy = Math.abs(pos.y - y);
-                if (dx < MIN_TILE_DISTANCE && dy < MIN_TILE_DISTANCE) {
-                    return true;
-                }
+                if (dx < MIN_TILE_DISTANCE && dy < MIN_TILE_DISTANCE) return true;
             }
             return false;
         }
@@ -805,229 +1119,187 @@
         function updateClickability() {
             tiles.forEach(t => {
                 if (t.inDock) return;
-                
                 let isCovered = false;
-                
                 tiles.forEach(other => {
                     if (other === t || other.inDock) return;
-                    
-                    // Если other выше по Z
                     if (other.z > t.z) {
                         const dx = Math.abs(other.x - t.x);
                         const dy = Math.abs(other.y - t.y);
-                        
-                        if (dx < COLLISION_W && dy < COLLISION_H) {
-                            isCovered = true;
-                        }
+                        if (dx < COLLISION_W && dy < COLLISION_H) isCovered = true;
                     }
                 });
-                
-                if (isCovered) {
-                    t.el.classList.add('disabled');
-                } else {
-                    t.el.classList.remove('disabled');
-                }
+                if (isCovered) t.el.classList.add('disabled');
+                else t.el.classList.remove('disabled');
             });
         }
 
-function clickTile(t) {
-    if (isLocked) return;
-    
-    if (t.el.classList.contains('disabled') || t.inDock) {
-        return;
-    }
-    
-    if (dock.length >= DOCK_SIZE) {
-        playSound('error');
-        t.el.classList.add('shake');
-        setTimeout(() => t.el.classList.remove('shake'), 300);
-        return;
-    }
-    
-    // Блокируем на время анимации
-    isLocked = true;
-    
-    playSound('click');
-    
-    t.inDock = true;
-    t.el.classList.add('in-dock');
-    
-    // Находим позицию для вставки (группировка одинаковых)
-    let insertIdx = dock.length;
-    for (let i = dock.length - 1; i >= 0; i--) {
-        if (dock[i].fruit === t.fruit) {
-            insertIdx = i + 1;
-            break;
-        }
-    }
-    
-    // Вставляем в массив
-    dock.splice(insertIdx, 0, t);
-    
-    playSound('dock');
-    
-    // ВАЖНО: Обновляем позиции ВСЕХ плиток в доке
-    requestAnimationFrame(() => {
-        renderDock();
-        updateClickability();
-        
-        // Разблокируем после анимации
-        setTimeout(() => {
-            isLocked = false;
-            checkMatches();
-        }, 250);
-    });
-}
-
-function renderDock() {
-    const board = document.getElementById('game-board');
-    const boardRect = board.getBoundingClientRect();
-    const slots = document.querySelectorAll('.dock-slot');
-    
-    if (slots.length === 0 || dock.length === 0) return;
-    
-    dock.forEach((t, i) => {
-        if (i >= slots.length) return;
-        
-        const slotRect = slots[i].getBoundingClientRect();
-        
-        // Реальный размер плитки ДО трансформации (scale)
-        const tileW = t.el.offsetWidth;
-        const tileH = t.el.offsetHeight;
-        
-        // Центр слота относительно viewport
-        const slotCenterX = slotRect.left + slotRect.width / 2;
-        const slotCenterY = slotRect.top + slotRect.height / 2;
-        
-        // Позиция плитки относительно game-board
-        // Центр плитки должен совпасть с центром слота
-        const targetX = slotCenterX - boardRect.left - tileW / 2;
-        const targetY = slotCenterY - boardRect.top - tileH / 2;
-        
-        t.el.style.left = `${Math.round(targetX)}px`;
-        t.el.style.top = `${Math.round(targetY)}px`;
-        t.el.style.zIndex = 1000 + i;
-    });
-}
-
-        function checkMatches() {
-    for (let i = 0; i < dock.length - 2; i++) {
-        if (dock[i].fruit === dock[i + 1].fruit && 
-            dock[i].fruit === dock[i + 2].fruit) {
+        function clickTile(t) {
+            if (isLocked) return;
+            if (t.el.classList.contains('disabled') || t.inDock) return;
             
-            isLocked = true;
-            const triplet = [dock[i], dock[i + 1], dock[i + 2]];
-            
-            playSound('match');
-            
-            score += 50;
-            bestScore = Math.max(score, bestScore);
-            document.getElementById('score-display').textContent = `${score}`;
-            
-            triplet.forEach(t => {
-                t.el.style.animation = 'matchAnim 0.35s forwards';
-            });
-            
-            setTimeout(() => {
-                triplet.forEach(t => t.el.remove());
-                dock.splice(i, 3);
-                
-                // Перерисовываем оставшиеся плитки
-                renderDock();
-                
-                isLocked = false;
-                
-                // Проверка победы
-                const remaining = tiles.filter(t => !t.inDock).length;
-                if (remaining === 0 && dock.length === 0) {
-                    playSound('win');
-                    saveProgress();
-                    showModal(true);
-                } else {
-                    // Проверяем ещё раз на случай каскада
-                    setTimeout(checkMatches, 100);
-                }
-            }, 350);
-            
-            return;
-        }
-    }
-    
-    // Проверка поражения
-    if (dock.length === DOCK_SIZE) {
-        playSound('error');
-        showModal(false);
-    }
-}
-
-        function showModal(isWin) {
-            const m = document.getElementById('gameModal');
-            const title = document.getElementById('m-title');
-            const text = document.getElementById('m-text');
-            const btn = document.getElementById('m-btn');
-            const emoji = document.getElementById('m-emoji');
-            
-            if (isWin) {
-                emoji.textContent = '🎉';
-                title.textContent = 'ПОБЕДА!';
-                text.textContent = `Уровень ${currentLevel} пройден`;
-                btn.textContent = `УРОВЕНЬ ${currentLevel + 1} →`;
-                btn.className = 'btn-action';
-                btn.onclick = nextLevel;
-            } else {
-                emoji.textContent = '😓';
-                title.textContent = 'НЕУДАЧА';
-                text.textContent = 'Док переполнен!';
-                btn.textContent = 'ЗАНОВО';
-                btn.className = 'btn-action danger';
-                btn.onclick = restartLevel;
+            if (dock.length >= DOCK_SIZE) {
+                playSound('error');
+                t.el.classList.add('shake');
+                setTimeout(() => t.el.classList.remove('shake'), 300);
+                return;
             }
             
-            m.classList.add('active');
+            isLocked = true;
+            playSound('click');
+            
+            t.inDock = true;
+            t.el.classList.add('in-dock');
+            
+            let insertIdx = dock.length;
+            for (let i = dock.length - 1; i >= 0; i--) {
+                if (dock[i].fruit === t.fruit) {
+                    insertIdx = i + 1;
+                    break;
+                }
+            }
+            
+            dock.splice(insertIdx, 0, t);
+            
+            playSound('dock');
+            
+            requestAnimationFrame(() => {
+                renderDock();
+                updateClickability();
+                
+                setTimeout(() => {
+                    isLocked = false;
+                    checkMatches();
+                }, 250);
+            });
+        }
+
+        function renderDock() {
+            const board = document.getElementById('game-board');
+            const boardRect = board.getBoundingClientRect();
+            const slots = document.querySelectorAll('.dock-slot');
+            
+            if (slots.length === 0 || dock.length === 0) return;
+            
+            dock.forEach((t, i) => {
+                if (i >= slots.length) return;
+                
+                const slotRect = slots[i].getBoundingClientRect();
+                const tileW = t.el.offsetWidth;
+                const tileH = t.el.offsetHeight;
+                
+                const slotCenterX = slotRect.left + slotRect.width / 2;
+                const slotCenterY = slotRect.top + slotRect.height / 2;
+                
+                const targetX = slotCenterX - boardRect.left - tileW / 2;
+                const targetY = slotCenterY - boardRect.top - tileH / 2;
+                
+                t.el.style.left = `${Math.round(targetX)}px`;
+                t.el.style.top = `${Math.round(targetY)}px`;
+                t.el.style.zIndex = 1000 + i;
+            });
+        }
+
+        function checkMatches() {
+            for (let i = 0; i < dock.length - 2; i++) {
+                if (dock[i].fruit === dock[i + 1].fruit && dock[i].fruit === dock[i + 2].fruit) {
+                    isLocked = true;
+                    const triplet = [dock[i], dock[i + 1], dock[i + 2]];
+                    
+                    playSound('match');
+                    
+                    score += 50;
+                    bestScore = Math.max(score, bestScore);
+                    document.getElementById('score-display').textContent = `${score}`;
+                    
+                    triplet.forEach(t => { t.el.style.animation = 'matchAnim 0.35s forwards'; });
+                    
+                    setTimeout(() => {
+                        triplet.forEach(t => t.el.remove());
+                        dock.splice(i, 3);
+                        renderDock();
+                        isLocked = false;
+                        
+                        const remaining = tiles.filter(t => !t.inDock).length;
+                        if (remaining === 0 && dock.length === 0) {
+                            playSound('win');
+                            saveProgress();
+                            showWinModal();
+                        } else {
+                            setTimeout(checkMatches, 100);
+                        }
+                    }, 350);
+                    
+                    return;
+                }
+            }
+            
+            if (dock.length === DOCK_SIZE) {
+                playSound('error');
+                showLoseModal();
+            }
+        }
+
+        // ============ КРУТЫЕ МОДАЛКИ ============
+        function showWinModal() {
+            const modal = document.getElementById('gameModal');
+            
+            document.getElementById('win-content').style.display = 'block';
+            document.getElementById('lose-content').style.display = 'none';
+            
+            document.getElementById('completed-level').textContent = currentLevel;
+            document.getElementById('next-level-num').textContent = currentLevel + 1;
+            document.getElementById('modal-score').textContent = score;
+            document.getElementById('modal-best').textContent = bestScore;
+            
+            // Запускаем конфетти
+            createConfetti();
+            
+            modal.classList.add('active', 'win');
+            
+            // Анимация счёта
+            setTimeout(() => {
+                document.getElementById('modal-score').classList.add('animated');
+                document.getElementById('modal-best').classList.add('animated');
+            }, 800);
+        }
+
+        function showLoseModal() {
+            const modal = document.getElementById('gameModal');
+            
+            document.getElementById('win-content').style.display = 'none';
+            document.getElementById('lose-content').style.display = 'block';
+            
+            modal.classList.add('active', 'lose');
         }
 
         // ============ ИНИЦИАЛИЗАЦИЯ ============
         document.addEventListener('DOMContentLoaded', () => {
-            // Кнопки меню
             document.getElementById('btn-continue').addEventListener('click', () => startGame(false));
             document.getElementById('btn-new-game').addEventListener('click', () => startGame(true));
-            
-            // Кнопки в игре
             document.getElementById('btn-home').addEventListener('click', goHome);
             document.getElementById('btn-restart').addEventListener('click', restartLevel);
+            document.getElementById('btn-next').addEventListener('click', nextLevel);
+            document.getElementById('btn-retry').addEventListener('click', restartLevel);
+            document.getElementById('m-menu-win').addEventListener('click', goHome);
+            document.getElementById('m-menu-lose').addEventListener('click', goHome);
             
-            // Кнопка "В меню" в модалке
-            document.getElementById('m-menu').addEventListener('click', goHome);
-            
-            // Загрузка прогресса для меню
             loadProgress();
             updateMenuStats();
             
-            // Предотвращение скролла и зума на мобильных
             document.addEventListener('touchmove', (e) => {
-                if (e.touches.length > 1) {
-                    e.preventDefault();
-                }
+                if (e.touches.length > 1) e.preventDefault();
             }, { passive: false });
             
-            // Обработка resize для перерисовки дока
             window.addEventListener('resize', () => {
-                if (dock.length > 0) {
-                    setTimeout(renderDock, 100);
-                }
+                if (dock.length > 0) setTimeout(renderDock, 100);
             });
             
-            // Сохранение при сворачивании/закрытии
             document.addEventListener('visibilitychange', () => {
-                if (document.hidden && tiles.length > 0) {
-                    saveProgress();
-                }
+                if (document.hidden && tiles.length > 0) saveProgress();
             });
             
             window.addEventListener('beforeunload', () => {
-                if (tiles.length > 0) {
-                    saveProgress();
-                }
+                if (tiles.length > 0) saveProgress();
             });
         });
     </script>
