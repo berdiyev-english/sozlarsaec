@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>BEWORDS TILE</title>
+    <title>TILE</title>
     
     <!-- Блокировка зума на iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -830,111 +830,135 @@
             });
         }
 
-        function clickTile(t) {
-            if (isLocked) return;
-            
-            if (t.el.classList.contains('disabled') || t.inDock) {
-                return;
-            }
-            
-            if (dock.length >= DOCK_SIZE) {
-                playSound('error');
-                t.el.classList.add('shake');
-                setTimeout(() => t.el.classList.remove('shake'), 300);
-                return;
-            }
-            
-            playSound('click');
-            
-            t.inDock = true;
-            t.el.style.zIndex = 1000 + dock.length;
-            
-            // Сортировка в доке (группировка одинаковых)
-            let insertIdx = dock.length;
-            for (let i = dock.length - 1; i >= 0; i--) {
-                if (dock[i].fruit === t.fruit) {
-                    insertIdx = i + 1;
-                    break;
-                }
-            }
-            
-            dock.splice(insertIdx, 0, t);
-            t.el.classList.add('in-dock');
-            
-            playSound('dock');
-            renderDock();
-            updateClickability();
-            
-            setTimeout(checkMatches, 280);
+function clickTile(t) {
+    if (isLocked) return;
+    
+    if (t.el.classList.contains('disabled') || t.inDock) {
+        return;
+    }
+    
+    if (dock.length >= DOCK_SIZE) {
+        playSound('error');
+        t.el.classList.add('shake');
+        setTimeout(() => t.el.classList.remove('shake'), 300);
+        return;
+    }
+    
+    // Блокируем на время анимации
+    isLocked = true;
+    
+    playSound('click');
+    
+    t.inDock = true;
+    t.el.classList.add('in-dock');
+    
+    // Находим позицию для вставки (группировка одинаковых)
+    let insertIdx = dock.length;
+    for (let i = dock.length - 1; i >= 0; i--) {
+        if (dock[i].fruit === t.fruit) {
+            insertIdx = i + 1;
+            break;
         }
+    }
+    
+    // Вставляем в массив
+    dock.splice(insertIdx, 0, t);
+    
+    playSound('dock');
+    
+    // ВАЖНО: Обновляем позиции ВСЕХ плиток в доке
+    requestAnimationFrame(() => {
+        renderDock();
+        updateClickability();
+        
+        // Разблокируем после анимации
+        setTimeout(() => {
+            isLocked = false;
+            checkMatches();
+        }, 250);
+    });
+}
 
-        function renderDock() {
-            const boardRect = document.getElementById('game-board').getBoundingClientRect();
-            const slots = document.querySelectorAll('.dock-slot');
-            
-            if (slots.length === 0) return;
-            
-            const tileW = slots[0].getBoundingClientRect().width / 0.85;
-            const tileH = slots[0].getBoundingClientRect().height / 0.85;
-            
-            dock.forEach((t, i) => {
-                if (i >= slots.length) return;
-                
-                const slotRect = slots[i].getBoundingClientRect();
-                const slotCenterX = slotRect.left + (slotRect.width / 2);
-                const slotCenterY = slotRect.top + (slotRect.height / 2);
-                
-                const targetX = slotCenterX - (tileW / 2) - boardRect.left;
-                const targetY = slotCenterY - (tileH / 2) - boardRect.top;
-                
-                t.el.style.left = targetX + 'px';
-                t.el.style.top = targetY + 'px';
-            });
-        }
+function renderDock() {
+    const board = document.getElementById('game-board');
+    const boardRect = board.getBoundingClientRect();
+    const slots = document.querySelectorAll('.dock-slot');
+    
+    if (slots.length === 0 || dock.length === 0) return;
+    
+    dock.forEach((t, i) => {
+        if (i >= slots.length) return;
+        
+        const slotRect = slots[i].getBoundingClientRect();
+        
+        // Реальный размер плитки ДО трансформации (scale)
+        const tileW = t.el.offsetWidth;
+        const tileH = t.el.offsetHeight;
+        
+        // Центр слота относительно viewport
+        const slotCenterX = slotRect.left + slotRect.width / 2;
+        const slotCenterY = slotRect.top + slotRect.height / 2;
+        
+        // Позиция плитки относительно game-board
+        // Центр плитки должен совпасть с центром слота
+        const targetX = slotCenterX - boardRect.left - tileW / 2;
+        const targetY = slotCenterY - boardRect.top - tileH / 2;
+        
+        t.el.style.left = `${Math.round(targetX)}px`;
+        t.el.style.top = `${Math.round(targetY)}px`;
+        t.el.style.zIndex = 1000 + i;
+    });
+}
 
         function checkMatches() {
-            for (let i = 0; i < dock.length - 2; i++) {
-                if (dock[i].fruit === dock[i + 1].fruit && 
-                    dock[i].fruit === dock[i + 2].fruit) {
-                    
-                    isLocked = true;
-                    const triplet = [dock[i], dock[i + 1], dock[i + 2]];
-                    
-                    playSound('match');
-                    
-                    score += 50;
-                    bestScore = Math.max(score, bestScore);
-                    document.getElementById('score-display').textContent = `${score}`;
-                    
-                    triplet.forEach(t => {
-                        t.el.style.animation = 'matchAnim 0.35s forwards';
-                    });
-                    
-                    setTimeout(() => {
-                        triplet.forEach(t => t.el.remove());
-                        dock.splice(i, 3);
-                        renderDock();
-                        isLocked = false;
-                        
-                        // Проверка победы
-                        const remaining = tiles.filter(t => !t.inDock).length;
-                        if (remaining === 0 && dock.length === 0) {
-                            playSound('win');
-                            saveProgress();
-                            showModal(true);
-                        }
-                    }, 350);
-                    
-                    return;
-                }
-            }
+    for (let i = 0; i < dock.length - 2; i++) {
+        if (dock[i].fruit === dock[i + 1].fruit && 
+            dock[i].fruit === dock[i + 2].fruit) {
             
-            // Проверка поражения
-            if (dock.length === DOCK_SIZE) {
-                playSound('error');
-                showModal(false);
-            }
+            isLocked = true;
+            const triplet = [dock[i], dock[i + 1], dock[i + 2]];
+            
+            playSound('match');
+            
+            score += 50;
+            bestScore = Math.max(score, bestScore);
+            document.getElementById('score-display').textContent = `${score}`;
+            
+            triplet.forEach(t => {
+                t.el.style.animation = 'matchAnim 0.35s forwards';
+            });
+            
+            setTimeout(() => {
+                triplet.forEach(t => t.el.remove());
+                dock.splice(i, 3);
+                
+                // Перерисовываем оставшиеся плитки
+                renderDock();
+                
+                isLocked = false;
+                
+                // Проверка победы
+                const remaining = tiles.filter(t => !t.inDock).length;
+                if (remaining === 0 && dock.length === 0) {
+                    playSound('win');
+                    saveProgress();
+                    showModal(true);
+                } else {
+                    // Проверяем ещё раз на случай каскада
+                    setTimeout(checkMatches, 100);
+                }
+            }, 350);
+            
+            return;
         }
+    }
+    
+    // Проверка поражения
+    if (dock.length === DOCK_SIZE) {
+        playSound('error');
+        showModal(false);
+    }
+}
 
         function showModal(isWin) {
             const m = document.getElementById('gameModal');
