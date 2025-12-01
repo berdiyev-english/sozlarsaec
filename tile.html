@@ -12,18 +12,12 @@
 
     <style>
         :root {
-            /* Обновленные "мультяшные" цвета */
-            --bg-color: #4facfe; /* Ярко-голубой */
-            --panel-bg: #ffffff;
-            --text-color: #2d3436;
-            --btn-primary: #00b894; /* Мятно-зеленый */
-            --btn-secondary: #fdcb6e; /* Желток */
-            --accent-shadow: #2d3436; /* Темная тень для обводки */
-            
+            --bg-color: #4facfe;
             --tile-w: clamp(46px, 12vw, 58px);
             --tile-h: clamp(54px, 14vw, 66px);
             --dock-height: 90px;
             --dock-scale: 0.82;
+            --accent-shadow: #2d3436;
         }
 
         * { 
@@ -44,7 +38,6 @@
         body {
             margin: 0;
             padding: 0;
-            /* Фон игры - оставляем приятный голубой, но плоский */
             background-color: #74b9ff;
             background-image: radial-gradient(#dfe6e9 20%, transparent 20%);
             background-size: 20px 20px;
@@ -64,18 +57,16 @@
             touch-action: none;
         }
 
-        /* ========== CARTOON MENU (НОВЫЙ СТИЛЬ) ========== */
+        /* ========== MENU ========== */
         #start-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* Яркий фон с точками */
             background-color: #54a0ff;
             background-image: 
                 radial-gradient(circle, rgba(255,255,255,0.2) 20%, transparent 20%),
                 radial-gradient(circle, rgba(255,255,255,0.2) 20%, transparent 20%);
             background-size: 40px 40px;
             background-position: 0 0, 20px 20px;
-            
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -85,18 +76,15 @@
         }
         #start-screen.hidden { opacity: 0; pointer-events: none; transform: scale(1.1); }
 
-        .deco-frame { display: none; } /* Убрали старую рамку */
-
         .premium-title {
             font-family: 'Fredoka', sans-serif;
             font-weight: 700;
             font-size: clamp(3.5rem, 12vw, 5rem);
-            color: #ffeaa7; /* Желтый текст */
+            color: #ffeaa7;
             line-height: 0.9;
             text-align: center;
             text-transform: uppercase;
             margin-bottom: 10px;
-            /* Жирная мультяшная обводка */
             -webkit-text-stroke: 3px var(--accent-shadow); 
             text-shadow: 5px 5px 0px var(--accent-shadow);
             transform: rotate(-3deg);
@@ -144,9 +132,8 @@
         }
         .stats-row { display: flex; justify-content: space-around; width: 100%; }
 
-        /* Мультяшные кнопки */
         .btn-premium {
-            background: #00b894; /* Зеленый */
+            background: #00b894;
             color: #fff;
             font-family: 'Fredoka', sans-serif;
             font-size: 1.2rem;
@@ -156,20 +143,17 @@
             border-radius: 15px;
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 6px 6px 0px var(--accent-shadow); /* Жесткая тень */
+            box-shadow: 6px 6px 0px var(--accent-shadow);
             transition: all 0.1s;
             width: 80%;
             max-width: 300px;
             margin-bottom: 15px;
             text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
         }
-        .btn-premium:active {
-            transform: translate(4px, 4px);
-            box-shadow: 2px 2px 0px var(--accent-shadow);
-        }
+        .btn-premium:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0px var(--accent-shadow); }
 
         .btn-secondary {
-            background: #fab1a0; /* Персиковый */
+            background: #fab1a0;
             color: var(--accent-shadow);
             font-family: 'Fredoka', sans-serif;
             font-size: 1rem;
@@ -184,45 +168,32 @@
             max-width: 250px;
             margin-top: 5px;
         }
-        .btn-secondary:active {
-            transform: translate(3px, 3px);
-            box-shadow: 2px 2px 0px var(--accent-shadow);
-        }
+        .btn-secondary:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0px var(--accent-shadow); }
 
-        /* ========== GAME UI ========== */
+        /* ========== UI ========== */
         .header-row {
-            width: 100%; 
-            max-width: 450px;
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between;
+            width: 100%; max-width: 450px;
+            display: flex; align-items: center; justify-content: space-between;
             padding: 10px 15px 0;
             z-index: 10;
             padding-top: max(12px, env(safe-area-inset-top));
         }
 
         .btn-icon {
-            background: #fff;
-            color: #333;
+            background: #fff; color: #333;
             width: 42px; height: 42px;
-            border-radius: 10px;
-            font-size: 1.3rem;
-            border: 2px solid #333;
-            box-shadow: 3px 3px 0 #333;
+            border-radius: 10px; font-size: 1.3rem;
+            border: 2px solid #333; box-shadow: 3px 3px 0 #333;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            transition: transform 0.1s;
-            touch-action: manipulation;
+            transition: transform 0.1s; touch-action: manipulation;
         }
         .btn-icon:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #333; }
 
         .game-logo {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.8rem; 
-            color: #fff; 
-            font-weight: 700;
-            -webkit-text-stroke: 1.5px #333;
-            text-shadow: 3px 3px 0 #333;
+            font-family: 'Fredoka', sans-serif; font-size: 1.8rem; 
+            color: #fff; font-weight: 700;
+            -webkit-text-stroke: 1.5px #333; text-shadow: 3px 3px 0 #333;
         }
 
         .ui-bar {
@@ -233,38 +204,31 @@
             z-index: 10;
         }
         #score-display, #level-display {
-            background: #fff;
-            padding: 4px 12px;
-            border-radius: 20px;
-            border: 2px solid #333;
-            box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+            background: #fff; padding: 4px 12px; border-radius: 20px;
+            border: 2px solid #333; box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
         }
 
-        /* ========== GAME BOARD ========== */
+        /* ========== BOARD ========== */
         #game-board {
             position: relative;
-            width: 95%;
-            max-width: 360px;
-            flex-grow: 1;
-            margin: 8px auto;
+            width: 95%; max-width: 360px;
+            flex-grow: 1; margin: 8px auto;
             touch-action: none;
         }
 
         .tile {
-            width: var(--tile-w);
-            height: var(--tile-h);
-            background: #fff;
-            border-radius: 12px;
+            width: var(--tile-w); height: var(--tile-h);
+            background: #fff; border-radius: 12px;
             position: absolute;
             display: flex; justify-content: center; align-items: center;
             font-size: clamp(22px, 7vw, 30px);
             cursor: pointer;
             border: 3px solid #333;
             box-shadow: 3px 3px 0 #999;
-            transition: left 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                        top 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                        transform 0.15s ease,
-                        opacity 0.2s ease;
+            /* Время анимации должно быть чуть меньше времени лока в JS (300ms vs 350ms) */
+            transition: left 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        top 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        transform 0.2s ease, opacity 0.2s ease;
             z-index: 10;
             transform-origin: center center;
             -webkit-touch-callout: none;
@@ -272,19 +236,16 @@
         }
 
         .tile.disabled {
-            filter: brightness(0.8) grayscale(0.2);
-            cursor: default;
+            filter: brightness(0.8) grayscale(0.2); cursor: default;
         }
 
         .tile:not(.disabled):not(.in-dock):active {
-            transform: scale(0.92);
-            box-shadow: 1px 1px 0 #999;
+            transform: scale(0.92); box-shadow: 1px 1px 0 #999;
         }
 
         .tile.in-dock {
             box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
-            border: 2px solid #333;
-            background: #fff;
+            border: 2px solid #333; background: #fff;
             transform: rotate(0deg) scale(var(--dock-scale)) !important;
         }
 
@@ -292,16 +253,12 @@
         .dock-container {
             background: #fff;
             border-radius: 20px;
-            border: 3px solid #333;
-            border-bottom: 6px solid #333;
-            width: 96%;
-            max-width: 400px;
-            height: var(--dock-height);
+            border: 3px solid #333; border-bottom: 6px solid #333;
+            width: 96%; max-width: 400px; height: var(--dock-height);
             display: flex; justify-content: center; align-items: center;
             gap: 3px;
             margin-bottom: max(12px, env(safe-area-inset-bottom));
-            position: relative; 
-            z-index: 5;
+            position: relative; z-index: 5;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             padding: 0 8px;
         }
@@ -316,9 +273,7 @@
             flex-shrink: 0;
         }
 
-        /* ========================================
-           🎉 MODALS (CARTOON STYLE)
-           ======================================== */
+        /* ========== MODALS ========== */
         .modal-overlay {
             position: fixed; top: 0; left: 0; 
             width: 100%; height: 100%;
@@ -341,22 +296,16 @@
 
         .rays {
             position: absolute; width: 300%; height: 300%;
-            background: conic-gradient(
-                from 0deg, transparent 0deg, rgba(255, 255, 255, 0.2) 10deg, transparent 20deg, transparent 30deg, rgba(255, 255, 255, 0.2) 40deg, transparent 50deg, transparent 60deg, rgba(255, 255, 255, 0.2) 70deg, transparent 80deg, transparent 90deg
-            );
-            animation: rotate-rays 20s linear infinite;
-            opacity: 0; transition: opacity 1s;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(255, 255, 255, 0.2) 10deg, transparent 20deg, transparent 30deg, rgba(255, 255, 255, 0.2) 40deg, transparent 50deg, transparent 60deg, rgba(255, 255, 255, 0.2) 70deg, transparent 80deg, transparent 90deg);
+            animation: rotate-rays 20s linear infinite; opacity: 0; transition: opacity 1s;
         }
         .modal-overlay.active.win .rays { opacity: 1; }
         @keyframes rotate-rays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .modal-card {
-            background: #fff;
-            width: 90%; max-width: 340px; padding: 0;
+            background: #fff; width: 90%; max-width: 340px; padding: 0;
             border-radius: 25px; text-align: center;
-            /* Жирная рамка для модалки */
-            border: 4px solid #333;
-            box-shadow: 10px 10px 0 rgba(0,0,0,0.2);
+            border: 4px solid #333; box-shadow: 10px 10px 0 rgba(0,0,0,0.2);
             transform: scale(0) rotate(-10deg);
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative; overflow: visible;
@@ -365,15 +314,12 @@
 
         .trophy-container { position: absolute; top: -50px; left: 50%; transform: translateX(-50%); z-index: 10; }
         .trophy {
-            font-size: 5rem;
-            filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.2));
+            font-size: 5rem; filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.2));
             animation: trophy-bounce 0.6s ease-out 0.3s both;
         }
         @keyframes trophy-bounce {
-            0% { transform: scale(0) rotate(-20deg); }
-            50% { transform: scale(1.3) rotate(5deg); }
-            70% { transform: scale(0.9) rotate(-3deg); }
-            100% { transform: scale(1) rotate(0deg); }
+            0% { transform: scale(0) rotate(-20deg); } 50% { transform: scale(1.3) rotate(5deg); }
+            70% { transform: scale(0.9) rotate(-3deg); } 100% { transform: scale(1) rotate(0deg); }
         }
 
         .stars-container {
@@ -390,21 +336,15 @@
         }
 
         .modal-content { padding: 60px 30px 30px; }
-
         .ribbon {
-            background: #fdcb6e;
-            color: #333; font-family: 'Fredoka', sans-serif; font-weight: 800;
+            background: #fdcb6e; color: #333; font-family: 'Fredoka', sans-serif; font-weight: 800;
             font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
             padding: 10px 40px; position: relative; margin: 0 -30px 20px;
-            border-top: 3px solid #333; border-bottom: 3px solid #333;
-            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+            border-top: 3px solid #333; border-bottom: 3px solid #333; box-shadow: 0 4px 0 rgba(0,0,0,0.1);
         }
-
         .win-title {
-            font-family: 'Fredoka', sans-serif; font-size: 2.8rem; font-weight: 800;
-            color: #00b894;
-            -webkit-text-stroke: 2px #333;
-            text-shadow: 3px 3px 0 #333;
+            font-family: 'Fredoka', sans-serif; font-size: 2.8rem; font-weight: 800; color: #00b894;
+            -webkit-text-stroke: 2px #333; text-shadow: 3px 3px 0 #333;
             margin: 10px 0; animation: title-pulse 2s ease-in-out infinite;
         }
         @keyframes title-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
@@ -422,11 +362,9 @@
         .stat-label { font-size: 0.7rem; color: #636e72; text-transform: uppercase; margin-top: 5px; font-weight: 700; }
 
         .btn-next-level {
-            background: #0984e3;
-            color: white; font-family: 'Fredoka', sans-serif; font-size: 1.2rem; font-weight: 700;
+            background: #0984e3; color: white; font-family: 'Fredoka', sans-serif; font-size: 1.2rem; font-weight: 700;
             padding: 18px 40px; border: 3px solid #333; border-radius: 15px; cursor: pointer; text-transform: uppercase; 
-            box-shadow: 5px 5px 0 #333;
-            transition: all 0.1s; position: relative; overflow: hidden; width: 100%; margin-top: 10px;
+            box-shadow: 5px 5px 0 #333; transition: all 0.1s; position: relative; overflow: hidden; width: 100%; margin-top: 10px;
         }
         .btn-next-level:active { transform: translate(4px, 4px); box-shadow: 1px 1px 0 #333; }
         .btn-next-level .arrow { display: inline-block; margin-left: 10px; animation: arrow-bounce 1s ease-in-out infinite; }
@@ -440,11 +378,9 @@
         .lose-emoji { font-size: 4rem; animation: shake-emoji 0.5s ease-in-out; display: block; margin-bottom: 10px; filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.2)); }
         .lose-title { font-family: 'Fredoka', sans-serif; font-size: 2.2rem; color: #d63031; margin: 10px 0; -webkit-text-stroke: 1.5px #333; text-shadow: 2px 2px 0 #333; font-weight: 800; }
         .btn-retry {
-            background: #d63031;
-            color: white; font-family: 'Fredoka', sans-serif; font-size: 1.2rem; font-weight: 700;
+            background: #d63031; color: white; font-family: 'Fredoka', sans-serif; font-size: 1.2rem; font-weight: 700;
             padding: 18px 40px; border: 3px solid #333; border-radius: 15px; cursor: pointer; text-transform: uppercase;
-            box-shadow: 5px 5px 0 #333;
-            width: 100%; margin-top: 20px;
+            box-shadow: 5px 5px 0 #333; width: 100%; margin-top: 20px;
         }
         .btn-retry:active { transform: translate(4px, 4px); box-shadow: 1px 1px 0 #333; }
 
@@ -465,25 +401,16 @@
 
     <div class="save-indicator" id="saveIndicator">💾 Сохранено</div>
 
-    <!-- CARTOON MENU -->
+    <!-- MENU -->
     <div id="start-screen">
-        <!-- Рамку убрали, добавили мультяшный стиль -->
         <div class="premium-title">BEWORDS<br>TILE</div>
         <div class="premium-subtitle">Fruit Puzzle</div>
-        
         <div class="stats-box">
             <div class="stats-row">
-                <div>
-                    <div class="label">Уровень</div>
-                    <div class="value" id="menu-level">1</div>
-                </div>
-                <div>
-                    <div class="label">Рекорд</div>
-                    <div class="value" id="menu-best">0</div>
-                </div>
+                <div><div class="label">Уровень</div><div class="value" id="menu-level">1</div></div>
+                <div><div class="label">Рекорд</div><div class="value" id="menu-best">0</div></div>
             </div>
         </div>
-        
         <button class="btn-premium" id="btn-continue">ПРОДОЛЖИТЬ</button>
         <button class="btn-secondary" id="btn-new-game">Новая игра</button>
     </div>
@@ -491,56 +418,37 @@
     <!-- GAME UI -->
     <div class="header-row">
         <button class="btn-icon" id="btn-home">⌂</button>
-        <div class="game-logo">BEWORDS</div>
+        <div class="game-logo">Bewords</div>
         <button class="btn-icon" id="btn-restart">↺</button>
     </div>
-
     <div class="ui-bar">
         <div id="level-display">Lv. 1</div>
         <div id="score-display">0</div>
     </div>
-
     <div id="game-board"></div>
-
     <div class="dock-container" id="dock"></div>
 
-    <!-- MODAL -->
+    <!-- MODALS -->
     <div id="gameModal" class="modal-overlay">
         <div class="confetti-container" id="confettiContainer"></div>
         <div class="rays"></div>
-        
         <div class="modal-card">
             <!-- WIN -->
             <div id="win-content" style="display: none;">
                 <div class="trophy-container"><div class="trophy">🏆</div></div>
-                <div class="stars-container">
-                    <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
-                </div>
-                
+                <div class="stars-container"><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span></div>
                 <div class="modal-content">
                     <div class="ribbon">УРОВЕНЬ ПРОЙДЕН</div>
                     <div class="win-title">ПОБЕДА!</div>
                     <div class="level-complete">Уровень <span id="completed-level">1</span></div>
-                    
                     <div class="stats-row-modal">
-                        <div class="stat-item">
-                            <span class="stat-value" id="modal-score">0</span>
-                            <div class="stat-label">Очки</div>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value" id="modal-best">0</span>
-                            <div class="stat-label">Рекорд</div>
-                        </div>
+                        <div class="stat-item"><span class="stat-value" id="modal-score">0</span><div class="stat-label">Очки</div></div>
+                        <div class="stat-item"><span class="stat-value" id="modal-best">0</span><div class="stat-label">Рекорд</div></div>
                     </div>
-                    
-                    <button class="btn-next-level" id="btn-next">
-                        УРОВЕНЬ <span id="next-level-num">2</span>
-                        <span class="arrow">→</span>
-                    </button>
+                    <button class="btn-next-level" id="btn-next">УРОВЕНЬ <span id="next-level-num">2</span><span class="arrow">→</span></button>
                     <div class="modal-link" id="m-menu-win">В Меню</div>
                 </div>
             </div>
-            
             <!-- LOSE -->
             <div id="lose-content" style="display: none;">
                 <div class="modal-content" style="padding-top: 30px;">
@@ -558,12 +466,10 @@
         // ============ CONFIG ============
         const DOCK_SIZE = 7;
         const ALL_FRUITS = ['🍓', '🍋', '🍇', '🍉', '🥝', '🍍', '🍒', '🍑', '🥥', '🥑', '🍏', '🍊'];
-        const STORAGE_KEY = 'bewords_tile_save_v3';
+        const STORAGE_KEY = 'bewords_tile_save_v4'; // Уникальный ключ для сохранения
         const MIN_TILE_DISTANCE = 20;
         const COLLISION_W = 45;
         const COLLISION_H = 50;
-        
-        // === ЛИМИТ ПЛИТОК: 60 (20 троек) ===
         const MAX_TILES = 60; 
         const MAX_TRIPLES = MAX_TILES / 3; 
 
@@ -581,121 +487,84 @@
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             if (audioCtx.state === 'suspended') audioCtx.resume();
         }
-
         function playSound(type) {
             if (!audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const now = audioCtx.currentTime;
-            
             if (type === 'click') {
-                const osc = audioCtx.createOscillator();
-                const g = audioCtx.createGain();
-                osc.frequency.setValueAtTime(500, now);
-                osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
-                g.gain.setValueAtTime(0.08, now);
-                g.gain.linearRampToValueAtTime(0, now + 0.08);
-                osc.connect(g); g.connect(audioCtx.destination);
-                osc.start(now); osc.stop(now + 0.08);
+                const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
+                o.frequency.setValueAtTime(500, now); o.frequency.exponentialRampToValueAtTime(800, now+0.08);
+                g.gain.setValueAtTime(0.08, now); g.gain.linearRampToValueAtTime(0, now+0.08);
+                o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.08);
             } else if (type === 'dock') {
-                const osc = audioCtx.createOscillator();
-                const g = audioCtx.createGain();
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(300, now);
-                g.gain.setValueAtTime(0.08, now);
-                g.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-                osc.connect(g); g.connect(audioCtx.destination);
-                osc.start(now); osc.stop(now + 0.1);
+                const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
+                o.type = 'triangle'; o.frequency.setValueAtTime(300, now);
+                g.gain.setValueAtTime(0.08, now); g.gain.exponentialRampToValueAtTime(0.01, now+0.1);
+                o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.1);
             } else if (type === 'match') {
-                [523, 659, 783].forEach((f, i) => {
-                    const o = audioCtx.createOscillator();
-                    const g = audioCtx.createGain();
-                    o.frequency.value = f;
-                    g.gain.setValueAtTime(0.04, now + i*0.05);
-                    g.gain.linearRampToValueAtTime(0, now + i*0.05 + 0.25);
-                    o.connect(g); g.connect(audioCtx.destination);
-                    o.start(now + i*0.05); o.stop(now + i*0.05 + 0.25);
+                [523, 659, 783].forEach((f,i) => {
+                    const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
+                    o.frequency.value = f; g.gain.setValueAtTime(0.04, now+i*0.05);
+                    g.gain.linearRampToValueAtTime(0, now+i*0.05+0.25);
+                    o.connect(g); g.connect(audioCtx.destination); o.start(now+i*0.05); o.stop(now+i*0.05+0.25);
                 });
             } else if (type === 'win') {
                 const notes = [523, 659, 783, 1046, 783, 1046];
-                notes.forEach((f, i) => {
-                    const o = audioCtx.createOscillator();
-                    const g = audioCtx.createGain();
-                    o.type = i < 4 ? 'square' : 'sine';
-                    o.frequency.value = f;
-                    g.gain.setValueAtTime(0.06, now + i*0.12);
-                    g.gain.linearRampToValueAtTime(0, now + i*0.12 + 0.3);
-                    o.connect(g); g.connect(audioCtx.destination);
-                    o.start(now + i*0.12); o.stop(now + i*0.12 + 0.3);
+                notes.forEach((f,i) => {
+                    const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
+                    o.type = i<4?'square':'sine'; o.frequency.value = f;
+                    g.gain.setValueAtTime(0.06, now+i*0.12); g.gain.linearRampToValueAtTime(0, now+i*0.12+0.3);
+                    o.connect(g); g.connect(audioCtx.destination); o.start(now+i*0.12); o.stop(now+i*0.12+0.3);
                 });
             } else if (type === 'error') {
-                const o = audioCtx.createOscillator();
-                const g = audioCtx.createGain();
-                o.type = 'sawtooth';
-                o.frequency.setValueAtTime(150, now);
-                g.gain.setValueAtTime(0.06, now);
-                g.gain.linearRampToValueAtTime(0, now + 0.15);
-                o.connect(g); g.connect(audioCtx.destination);
-                o.start(now); o.stop(now + 0.15);
+                const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
+                o.type = 'sawtooth'; o.frequency.setValueAtTime(150, now);
+                g.gain.setValueAtTime(0.06, now); g.gain.linearRampToValueAtTime(0, now+0.15);
+                o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.15);
             }
         }
 
-        // ============ PARTICLES ============
+        // ============ VISUALS ============
         function createConfetti() {
-            const c = document.getElementById('confettiContainer');
-            c.innerHTML = '';
+            const c = document.getElementById('confettiContainer'); c.innerHTML = '';
             const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1'];
             const shapes = ['■', '●', '▲', '★'];
             for (let i=0; i<50; i++) {
-                const el = document.createElement('div');
-                el.className = 'confetti';
+                const el = document.createElement('div'); el.className = 'confetti';
                 el.textContent = shapes[Math.floor(Math.random()*shapes.length)];
-                el.style.left = Math.random()*100+'%';
-                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.style.left = Math.random()*100+'%'; el.style.color = colors[Math.floor(Math.random()*colors.length)];
                 el.style.fontSize = (Math.random()*15+10)+'px';
-                el.style.animationDelay = Math.random()*2+'s';
-                el.style.animationDuration = (Math.random()*2+2)+'s';
+                el.style.animationDelay = Math.random()*2+'s'; el.style.animationDuration = (Math.random()*2+2)+'s';
                 c.appendChild(el);
             }
         }
 
-        // ============ SAVING ============
+        // ============ SAVE SYSTEM ============
         function saveProgress() {
             try {
-                const data = {
-                    level: currentLevel,
-                    score: score,
-                    bestScore: Math.max(score, bestScore),
-                    timestamp: Date.now()
-                };
+                const data = { level: currentLevel, score: score, bestScore: Math.max(score, bestScore), timestamp: Date.now() };
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-                
                 const ind = document.getElementById('saveIndicator');
-                ind.classList.add('show');
-                setTimeout(() => ind.classList.remove('show'), 1500);
-            } catch(e) { console.log('Save failed', e); }
+                ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 1500);
+            } catch(e){}
         }
-
         function loadProgress() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
                 if (raw) {
                     const data = JSON.parse(raw);
-                    currentLevel = data.level || 1;
-                    score = data.score || 0;
-                    bestScore = data.bestScore || 0;
+                    currentLevel = data.level||1; score = data.score||0; bestScore = data.bestScore||0;
                     return true;
                 }
-            } catch(e) {}
-            return false;
+            } catch(e){} return false;
         }
-
         function updateMenuStats() {
             loadProgress();
             document.getElementById('menu-level').textContent = currentLevel;
             document.getElementById('menu-best').textContent = bestScore;
         }
 
-        // ============ GAME LOGIC ============
+        // ============ NAVIGATION ============
         function showStartScreen() {
             updateMenuStats();
             document.getElementById('start-screen').classList.remove('hidden');
@@ -704,128 +573,77 @@
             document.getElementById('dock').innerHTML = '';
             tiles = []; dock = [];
         }
-
         function startGame(isNew) {
             initAudio();
-            if (isNew) {
-                currentLevel = 1;
-                score = 0;
-                saveProgress();
-            } else {
-                loadProgress();
-            }
+            if (isNew) { currentLevel = 1; score = 0; saveProgress(); } else { loadProgress(); }
             document.getElementById('start-screen').classList.add('hidden');
             loadLevel();
         }
-
-        function goHome() {
-            saveProgress();
-            showStartScreen();
-        }
-
-        function nextLevel() {
-            closeModal();
-            loadLevel();
-        }
-
-        function restartLevel() {
-            closeModal();
-            score = Math.max(0, score - 50); 
-            saveProgress();
-            loadLevel();
-        }
-
+        function goHome() { saveProgress(); showStartScreen(); }
+        function nextLevel() { closeModal(); loadLevel(); }
+        function restartLevel() { closeModal(); score = Math.max(0, score - 50); saveProgress(); loadLevel(); }
         function closeModal() {
             document.getElementById('gameModal').classList.remove('active', 'win', 'lose');
             document.getElementById('confettiContainer').innerHTML = '';
         }
 
+        // ============ LEVEL GEN ============
         function loadLevel() {
-            isLocked = false;
-            dock = [];
-            tiles = [];
-            
+            isLocked = false; dock = []; tiles = [];
             document.getElementById('level-display').textContent = `Lv. ${currentLevel}`;
             document.getElementById('score-display').textContent = score;
             
-            const board = document.getElementById('game-board');
-            board.innerHTML = '';
-            
-            const dockEl = document.getElementById('dock');
-            dockEl.innerHTML = '';
+            const board = document.getElementById('game-board'); board.innerHTML = '';
+            const dockEl = document.getElementById('dock'); dockEl.innerHTML = '';
             for(let i=0; i<DOCK_SIZE; i++) {
-                const d = document.createElement('div');
-                d.className = 'dock-slot';
-                dockEl.appendChild(d);
+                const d = document.createElement('div'); d.className = 'dock-slot'; dockEl.appendChild(d);
             }
             
             const typesCount = Math.min(ALL_FRUITS.length, 3 + Math.floor(currentLevel/2));
-            
             let calculatedTriples = 5 + (currentLevel * 2); 
             const triplesCount = Math.min(calculatedTriples, MAX_TRIPLES);
             
             let deck = [];
             const lvlFruits = [...ALL_FRUITS].sort(()=>0.5-Math.random()).slice(0, typesCount);
-            
             for(let i=0; i<triplesCount; i++) {
-                const f = lvlFruits[i % typesCount];
-                deck.push(f,f,f);
+                const f = lvlFruits[i % typesCount]; deck.push(f,f,f);
             }
             deck.sort(()=>0.5-Math.random());
             
             const rect = board.getBoundingClientRect();
-            const maxX = rect.width - 60;
-            const maxY = rect.height - 70;
+            const maxX = rect.width - 60; const maxY = rect.height - 70;
             const placed = [];
-            
             let id = 0;
+            
             deck.forEach((fruit, idx) => {
                 const el = document.createElement('div');
-                el.className = 'tile';
-                el.textContent = fruit;
-                
+                el.className = 'tile'; el.textContent = fruit;
                 let x, y, attempts=0;
                 do {
-                    let r = Math.floor(Math.random()*6);
-                    let c = Math.floor(Math.random()*5);
-                    if (idx > deck.length*0.5) {
-                        r = 1 + Math.floor(Math.random()*4);
-                        c = 1 + Math.floor(Math.random()*3);
-                    }
-                    x = (c*55) + (Math.random()*20-10) + 10;
-                    y = (r*60) + (Math.random()*20-10) + 20;
-                    x = Math.max(5, Math.min(x, maxX));
-                    y = Math.max(5, Math.min(y, maxY));
+                    let r = Math.floor(Math.random()*6); let c = Math.floor(Math.random()*5);
+                    if (idx > deck.length*0.5) { r = 1 + Math.floor(Math.random()*4); c = 1 + Math.floor(Math.random()*3); }
+                    x = (c*55) + (Math.random()*20-10) + 10; y = (r*60) + (Math.random()*20-10) + 20;
+                    x = Math.max(5, Math.min(x, maxX)); y = Math.max(5, Math.min(y, maxY));
                     attempts++;
                 } while(isTooClose(x,y,placed) && attempts<100);
                 
                 placed.push({x,y});
-                
                 const rot = (Math.random()*10)-5;
                 el.style.setProperty('--rot', `${rot}deg`);
                 el.style.transform = `rotate(${rot}deg)`;
-                el.style.left = x+'px';
-                el.style.top = y+'px';
-                el.style.zIndex = idx;
+                el.style.left = x+'px'; el.style.top = y+'px'; el.style.zIndex = idx;
                 el.style.animation = `popScale 0.35s backwards ${idx*0.015}s`;
                 
                 const tObj = { id: id++, el, fruit, x, y, z: idx, inDock: false };
-                
                 const action = (e) => { e.preventDefault(); clickTile(tObj); };
-                el.addEventListener('click', action);
-                el.addEventListener('touchstart', action, {passive:false});
-                
-                board.appendChild(el);
-                tiles.push(tObj);
+                el.addEventListener('click', action); el.addEventListener('touchstart', action, {passive:false});
+                board.appendChild(el); tiles.push(tObj);
             });
-            
             updateClickability();
         }
 
         function isTooClose(x, y, arr) {
-            for(let p of arr) {
-                if (Math.abs(p.x-x) < MIN_TILE_DISTANCE && Math.abs(p.y-y) < MIN_TILE_DISTANCE) return true;
-            }
+            for(let p of arr) { if (Math.abs(p.x-x) < MIN_TILE_DISTANCE && Math.abs(p.y-y) < MIN_TILE_DISTANCE) return true; }
             return false;
         }
 
@@ -839,30 +657,37 @@
                         if (Math.abs(o.x - t.x) < COLLISION_W && Math.abs(o.y - t.y) < COLLISION_H) covered = true;
                     }
                 });
-                if(covered) t.el.classList.add('disabled');
-                else t.el.classList.remove('disabled');
+                if(covered) t.el.classList.add('disabled'); else t.el.classList.remove('disabled');
             });
         }
 
+        // ============ GAME LOGIC FIXES ============
         function clickTile(t) {
             if(isLocked || t.el.classList.contains('disabled') || t.inDock) return;
-            
             if(dock.length >= DOCK_SIZE) {
-                playSound('error');
-                t.el.classList.add('shake');
-                setTimeout(()=>t.el.classList.remove('shake'),300);
-                return;
+                playSound('error'); t.el.classList.add('shake');
+                setTimeout(()=>t.el.classList.remove('shake'),300); return;
             }
             
-            isLocked = true;
+            // Блокируем ввод на время анимации (350мс)
+            isLocked = true; 
             playSound('click');
+            
             t.inDock = true;
             t.el.classList.add('in-dock');
             
+            // Поднимаем плитку вверх, чтобы она летела поверх дока
+            t.el.style.zIndex = 2000;
+            
+            // Более надежный поиск позиции
             let insIdx = dock.length;
-            for(let i=dock.length-1; i>=0; i--) {
-                if(dock[i].fruit === t.fruit) { insIdx = i+1; break; }
+            // Ищем последний такой же фрукт
+            let foundIndex = -1;
+            for(let i = 0; i < dock.length; i++) {
+                if(dock[i].fruit === t.fruit) foundIndex = i;
             }
+            if(foundIndex !== -1) insIdx = foundIndex + 1;
+            
             dock.splice(insIdx, 0, t);
             playSound('dock');
             
@@ -870,9 +695,10 @@
                 renderDock();
                 updateClickability();
                 setTimeout(() => {
+                    // Разблокируем только когда анимация прошла
                     isLocked = false;
                     checkMatches();
-                }, 250);
+                }, 350);
             });
         }
 
@@ -888,6 +714,7 @@
                 
                 t.el.style.left = `${tx}px`;
                 t.el.style.top = `${ty}px`;
+                // Восстанавливаем нормальный z-index после полета
                 t.el.style.zIndex = 1000 + i;
             });
         }
@@ -933,12 +760,10 @@
             const m = document.getElementById('gameModal');
             document.getElementById('win-content').style.display = 'block';
             document.getElementById('lose-content').style.display = 'none';
-            
             document.getElementById('completed-level').textContent = completedLvl;
             document.getElementById('next-level-num').textContent = currentLevel;
             document.getElementById('modal-score').textContent = score;
             document.getElementById('modal-best').textContent = bestScore;
-            
             createConfetti();
             m.classList.add('active', 'win');
             setTimeout(() => {
@@ -946,7 +771,6 @@
                 document.getElementById('modal-best').classList.add('animated');
             }, 800);
         }
-
         function showLoseModal() {
             const m = document.getElementById('gameModal');
             document.getElementById('win-content').style.display = 'none';
@@ -954,7 +778,6 @@
             m.classList.add('active', 'lose');
         }
 
-        // ============ INIT ============
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('btn-continue').addEventListener('click', () => startGame(false));
             document.getElementById('btn-new-game').addEventListener('click', () => startGame(true));
@@ -966,18 +789,9 @@
             document.getElementById('m-menu-lose').addEventListener('click', goHome);
             
             updateMenuStats();
-            
-            document.addEventListener('touchmove', (e) => {
-                if(e.touches.length > 1) e.preventDefault();
-            }, {passive:false});
-            
-            window.addEventListener('resize', () => {
-                if(dock.length>0) setTimeout(renderDock, 100);
-            });
-            
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden && tiles.length > 0) saveProgress();
-            });
+            document.addEventListener('touchmove', (e) => { if(e.touches.length > 1) e.preventDefault(); }, {passive:false});
+            window.addEventListener('resize', () => { if(dock.length>0) setTimeout(renderDock, 100); });
+            document.addEventListener('visibilitychange', () => { if (document.hidden && tiles.length > 0) saveProgress(); });
         });
     </script>
 </body>
