@@ -58,6 +58,13 @@
             text-transform: uppercase; letter-spacing: 1px;
         }
         .btn-main:active { transform: translateY(8px); box-shadow: none; }
+        
+        .btn-black {
+            background: #451a03; box-shadow: 0 8px 0 #290f02;
+        }
+        .btn-black:active {
+            box-shadow: none;
+        }
 
         /* --- ИГРА --- */
         #game-container {
@@ -140,6 +147,7 @@
         }
         .close-help:active { transform: translateY(5px); box-shadow: none; }
 
+        /* ПОДСВЕТКА КЛЕТОК */
         .highlight-dest { background: rgba(34, 197, 94, 0.6); border-radius: 50%; transform: scale(0.6); }
         .highlight-capture { 
             position: relative;
@@ -157,6 +165,10 @@
             box-sizing: border-box;
             pointer-events: none;
         }
+        .highlight-selected {
+            background-color: rgba(251, 191, 36, 0.6) !important;
+            box-shadow: inset 0 0 3px 3px #d97706;
+        }
 
     </style>
 </head>
@@ -170,7 +182,10 @@
             <p style="font-size: 1.1rem; color: #78350f; margin-bottom: 20px;">
                 Кот Боб вызывает тебя на дуэль!<br>Сможешь поставить ему мат?
             </p>
-            <button class="btn-main" onclick="startGame()">ИГРАТЬ</button>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-main" onclick="startGame('w')">⚪ За Белых</button>
+                <button class="btn-main btn-black" onclick="startGame('b')">⚫ За Черных</button>
+            </div>
         </div>
     </div>
 
@@ -286,60 +301,12 @@
             var strokeWidth = 1.5;
 
             var svgContent = {
-                // Пешка - классическая форма
-                'P': `
-                    <circle cx="22.5" cy="10" r="4"/>
-                    <path d="M 15 28 C 15 25 17 22 18.5 20 C 16 18 15 15 15 12 C 15 12 17 11 22.5 11 C 28 11 30 12 30 12 C 30 15 29 18 26.5 20 C 28 22 30 25 30 28 L 15 28 Z"/>
-                    <path d="M 12 32 L 33 32 L 33 29 L 12 29 Z"/>
-                    <path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/>
-                `,
-
-                // Конь - классический силуэт лошади (Staunton style)
-                'N': `
-                    <path d="M 37 36 L 8 36 L 8 33 L 10 33 C 10 28 14 24 14 24 L 14 20 C 14 17 16 13 18 11 C 16 9 15 8 15 6 C 15 6 17 5 20 6 C 21 4 23 4 25 5 L 25 7 C 25 9 24 11 22 13 C 24 14 26 15 27 18 C 27 18 30 16 32 17 C 32 19 30 21 27 21 L 27 24 C 31 26 35 30 35 33 L 37 33 Z"/>
-                    <path d="M 18 23 C 17 23 15 24 14 26 L 18 26 C 19 25 19 24 18 23 Z"/>
-                `,
-
-                // Слон - классическая митра без креста
-                'B': `
-                    <circle cx="22.5" cy="8" r="3"/>
-                    <path d="M 17.5 26 L 27.5 26 L 33 32 L 12 32 Z"/>
-                    <path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/>
-                    <path d="M 22.5 11 C 22.5 11 30 14 30 24 C 30 26 28.5 26 28.5 26 L 16.5 26 C 16.5 26 15 26 15 24 C 15 14 22.5 11 22.5 11 Z"/>
-                    <path d="M 22.5 14 L 22.5 22" style="stroke-width:2; stroke-linecap:round;"/>
-                `,
-
-                // Ладья - классическая башня
-                'R': `
-                    <path d="M 9 39 L 36 39 L 36 36 L 9 36 Z"/>
-                    <path d="M 12 36 L 12 32 L 33 32 L 33 36 Z"/>
-                    <path d="M 14 32 L 14 17 L 31 17 L 31 32 Z"/>
-                    <path d="M 11 17 L 11 12 L 16 12 L 16 8 L 20 8 L 20 12 L 25 12 L 25 8 L 29 8 L 29 12 L 34 12 L 34 17 Z"/>
-                `,
-
-                // Ферзь - корона с шариком наверху
-                'Q': `
-                    <circle cx="22.5" cy="8" r="3.5"/>
-                    <path d="M 9 26 C 17.5 24.5 27 24.5 36 26 L 38 14 L 31 25 L 26 8 L 22.5 22 L 19 8 L 14 25 L 7 14 L 9 26 Z"/>
-                    <path d="M 9 26 C 9 28 10 30 10 32 L 35 32 C 35 30 36 28 36 26 C 27 24.5 17.5 24.5 9 26 Z"/>
-                    <path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/>
-                    <circle cx="7" cy="14" r="2"/>
-                    <circle cx="14" cy="8" r="2"/>
-                    <circle cx="22.5" cy="6" r="2"/>
-                    <circle cx="31" cy="8" r="2"/>
-                    <circle cx="38" cy="14" r="2"/>
-                `,
-
-                // Король - корона с шаром наверху (вместо креста)
-                'K': `
-                    <circle cx="22.5" cy="8" r="4"/>
-                    <path d="M 22.5 12 L 22.5 16"/>
-                    <path d="M 17.5 16 L 27.5 16"/>
-                    <path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/>
-                    <path d="M 12 33 L 12 30 L 33 30 L 33 33 Z"/>
-                    <path d="M 12 30 C 12 27 15 22 15 22 L 30 22 C 30 22 33 27 33 30 Z"/>
-                    <path d="M 15 22 C 15 20 13 18 13 18 L 22.5 16 L 32 18 C 32 18 30 20 30 22 Z"/>
-                `
+                'P': `<circle cx="22.5" cy="10" r="4"/><path d="M 15 28 C 15 25 17 22 18.5 20 C 16 18 15 15 15 12 C 15 12 17 11 22.5 11 C 28 11 30 12 30 12 C 30 15 29 18 26.5 20 C 28 22 30 25 30 28 L 15 28 Z"/><path d="M 12 32 L 33 32 L 33 29 L 12 29 Z"/><path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/>`,
+                'N': `<path d="M 37 36 L 8 36 L 8 33 L 10 33 C 10 28 14 24 14 24 L 14 20 C 14 17 16 13 18 11 C 16 9 15 8 15 6 C 15 6 17 5 20 6 C 21 4 23 4 25 5 L 25 7 C 25 9 24 11 22 13 C 24 14 26 15 27 18 C 27 18 30 16 32 17 C 32 19 30 21 27 21 L 27 24 C 31 26 35 30 35 33 L 37 33 Z"/><path d="M 18 23 C 17 23 15 24 14 26 L 18 26 C 19 25 19 24 18 23 Z"/>`,
+                'B': `<circle cx="22.5" cy="8" r="3"/><path d="M 17.5 26 L 27.5 26 L 33 32 L 12 32 Z"/><path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/><path d="M 22.5 11 C 22.5 11 30 14 30 24 C 30 26 28.5 26 28.5 26 L 16.5 26 C 16.5 26 15 26 15 24 C 15 14 22.5 11 22.5 11 Z"/><path d="M 22.5 14 L 22.5 22" style="stroke-width:2; stroke-linecap:round;"/>`,
+                'R': `<path d="M 9 39 L 36 39 L 36 36 L 9 36 Z"/><path d="M 12 36 L 12 32 L 33 32 L 33 36 Z"/><path d="M 14 32 L 14 17 L 31 17 L 31 32 Z"/><path d="M 11 17 L 11 12 L 16 12 L 16 8 L 20 8 L 20 12 L 25 12 L 25 8 L 29 8 L 29 12 L 34 12 L 34 17 Z"/>`,
+                'Q': `<circle cx="22.5" cy="8" r="3.5"/><path d="M 9 26 C 17.5 24.5 27 24.5 36 26 L 38 14 L 31 25 L 26 8 L 22.5 22 L 19 8 L 14 25 L 7 14 L 9 26 Z"/><path d="M 9 26 C 9 28 10 30 10 32 L 35 32 C 35 30 36 28 36 26 C 27 24.5 17.5 24.5 9 26 Z"/><path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/><circle cx="7" cy="14" r="2"/><circle cx="14" cy="8" r="2"/><circle cx="22.5" cy="6" r="2"/><circle cx="31" cy="8" r="2"/><circle cx="38" cy="14" r="2"/>`,
+                'K': `<circle cx="22.5" cy="8" r="4"/><path d="M 22.5 12 L 22.5 16"/><path d="M 17.5 16 L 27.5 16"/><path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/><path d="M 12 33 L 12 30 L 33 30 L 33 33 Z"/><path d="M 12 30 C 12 27 15 22 15 22 L 30 22 C 30 22 33 27 33 30 Z"/><path d="M 15 22 C 15 20 13 18 13 18 L 22.5 16 L 32 18 C 32 18 30 20 30 22 Z"/>`
             };
 
             var svgString = `
@@ -359,6 +326,8 @@
         var game = new Chess();
         var stockfish = null;
         var isEngineRunning = false;
+        var selectedSquare = null;
+        var playerColor = 'w';
 
         var phrases = {
             start: ["Мур! Я готов!", "Посмотрим, кто кого.", "Не наступи мне на хвост!", "Я слежу за тобой..."],
@@ -380,11 +349,21 @@
             }
         }
 
-        function startGame() {
+        function startGame(color) {
+            playerColor = color || 'w';
             $('#welcome-screen').addClass('hidden');
             $('#game-container').removeClass('hidden');
             if (!stockfish) initEngine();
-            setTimeout(() => { $(window).resize(); bobTalk('start'); }, 100);
+            
+            setTimeout(() => { 
+                if(board) board.orientation(playerColor === 'w' ? 'white' : 'black');
+                $(window).resize(); 
+                bobTalk('start');
+                
+                if (playerColor === 'b') {
+                    makeEngineMove();
+                }
+            }, 100);
         }
 
         function showGameOver(result) {
@@ -401,13 +380,29 @@
         }
 
         function resetGame() {
-            game.reset(); board.start();
+            game.reset(); 
+            board.start();
+            board.orientation(playerColor === 'w' ? 'white' : 'black');
+            
             $('#game-over-screen').addClass('hidden');
             $('#game-container').removeClass('hidden');
+            
             if(stockfish) stockfish.postMessage("ucinewgame");
             bobTalk('start');
             isEngineRunning = false;
+            selectedSquare = null;
             removeHighlights();
+
+            if (playerColor === 'b') {
+                makeEngineMove();
+            }
+        }
+
+        function makeEngineMove() {
+            isEngineRunning = true;
+            bobTalk('think');
+            stockfish.postMessage("position fen " + game.fen());
+            stockfish.postMessage("go depth " + $('#difficulty').val());
         }
 
         function initEngine() {
@@ -427,12 +422,67 @@
                 }
             };
             stockfish.postMessage("uci");
+            
             board = Chessboard('board', {
-                draggable: true, position: 'start',
-                onDragStart: onDragStart, onDrop: onDrop,
-                onMouseoverSquare: onMouseoverSquare, onMouseoutSquare: removeHighlights,
-                pieceTheme: getPieceTheme // Подключаем наши новые фигуры
+                draggable: false, 
+                position: 'start',
+                pieceTheme: getPieceTheme
             });
+
+            $('#board').on('click', '.square-55d63', function() {
+                var square = $(this).attr('data-square');
+                if (square) onSquareClick(square);
+            });
+        }
+
+        function onSquareClick(square) {
+            if (game.game_over() || isEngineRunning || game.turn() !== playerColor) return;
+
+            if (selectedSquare === null) {
+                var piece = game.get(square);
+                if (piece && piece.color === playerColor) {
+                    selectedSquare = square;
+                    highlightSquare(square);
+                    highlightMoves(square);
+                }
+                return;
+            }
+
+            if (selectedSquare === square) {
+                selectedSquare = null;
+                removeHighlights();
+                return;
+            }
+
+            var move = game.move({
+                from: selectedSquare,
+                to: square,
+                promotion: 'q'
+            });
+
+            if (move === null) {
+                var piece = game.get(square);
+                if (piece && piece.color === playerColor) {
+                    selectedSquare = square;
+                    removeHighlights();
+                    highlightSquare(square);
+                    highlightMoves(square);
+                } else {
+                    selectedSquare = null;
+                    removeHighlights();
+                }
+            } else {
+                selectedSquare = null;
+                removeHighlights();
+                board.position(game.fen());
+                
+                if (move.captured) bobTalk('capture');
+                else if (game.in_check()) bobTalk('check');
+                
+                if (checkStatus()) return;
+                
+                makeEngineMove();
+            }
         }
 
         function checkStatus() {
@@ -447,36 +497,32 @@
             return false;
         }
 
-        function onDragStart (source, piece) {
-            if (game.game_over() || isEngineRunning) return false;
-            if ((game.turn() === 'w' && piece.search(/^b/) !== -1) || (game.turn() === 'b' && piece.search(/^w/) !== -1)) return false;
+        function highlightSquare(square) {
+            $('#board .square-' + square).addClass('highlight-selected');
         }
 
-        function onDrop (source, target) {
-            removeHighlights();
-            var move = game.move({ from: source, to: target, promotion: 'q' });
-            if (move === null) return 'snapback';
-            if (checkStatus()) return;
-            bobTalk('think'); isEngineRunning = true;
-            stockfish.postMessage("position fen " + game.fen());
-            stockfish.postMessage("go depth " + $('#difficulty').val());
-        }
+        function highlightMoves(square) {
+            var moves = game.moves({
+                square: square,
+                verbose: true
+            });
 
-        function onMouseoverSquare (square) {
-            if(isEngineRunning || game.game_over()) return;
-            var moves = game.moves({ square: square, verbose: true });
             if (moves.length === 0) return;
+
             for (var i = 0; i < moves.length; i++) {
                 var type = moves[i].flags.includes('c') || moves[i].flags.includes('e') ? 'highlight-capture' : 'highlight-dest';
                 $('#board .square-' + moves[i].to).addClass(type);
             }
         }
-        function removeHighlights () { $('#board .square-55d63').removeClass('highlight-dest highlight-capture'); }
+
+        function removeHighlights () { 
+            $('#board .square-55d63').removeClass('highlight-dest highlight-capture highlight-selected'); 
+        }
+        
         $(window).resize(function(){ if(board) board.resize(); });
 
         // 4. МОДАЛКА ПОДСКАЗКИ
         function showHelp() {
-            // Устанавливаем иконки фигур в модалке
             $('#help-king').attr('src', getPieceTheme('wK'));
             $('#help-queen').attr('src', getPieceTheme('wQ'));
             $('#help-rook').attr('src', getPieceTheme('wR'));
