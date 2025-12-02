@@ -189,6 +189,11 @@
             box-sizing: border-box;
             pointer-events: none;
         }
+        
+        .highlight-selected {
+            box-shadow: inset 0 0 0 4px #fbbf24;
+            background: rgba(251, 191, 36, 0.4);
+        }
 
     </style>
 </head>
@@ -519,6 +524,7 @@
         var checkers = new CheckersGame();
         var board = null;
         var isAiThinking = false;
+        var selectedSquare = null;
 
         var phrases = {
             start: ["Мяу! Русские шашки? Я готов!", "Только чур рубить обязательно!", "Вперед, к дамкам!"],
@@ -570,40 +576,82 @@
             $('#game-container').removeClass('hidden');
             bobTalk('start');
             isAiThinking = false;
-            removeHighlights();
+            deselect();
         }
 
         function initBoard() {
             board = Chessboard('board', {
-                draggable: true,
+                draggable: false,
                 position: checkers.getFen(),
-                onDragStart: onDragStart,
-                onDrop: onDrop,
-                onMouseoverSquare: onMouseoverSquare,
-                onMouseoutSquare: removeHighlights,
                 pieceTheme: getPieceTheme
             });
+            
+            $('#board').off('click').on('click', '.square-55d63', onSquareClick);
         }
 
-        function onDragStart(source, piece) {
-            if (isAiThinking || checkers.turn === -1) return false; 
-            if (piece.search(/^w/) === -1) return false;
-            if (checkers.isGameOver() !== 0) return false;
+        function onSquareClick() {
+            if (isAiThinking || checkers.turn !== 1) return;
+
+            var square = $(this).data('square');
+            var cols = {'a':0,'b':1,'c':2,'d':3,'e':4,'f':5,'g':6,'h':7};
+            var c = cols[square[0]];
+            var r = 8 - parseInt(square[1]);
             
-            // Если есть активная серия, разрешаем брать только ту фигуру, которая должна ходить
-            if (checkers.chainPiece) {
-                 let cols = {'a':0,'b':1,'c':2,'d':3,'e':4,'f':5,'g':6,'h':7};
-                 let r = 8 - parseInt(source[1]);
-                 let c = cols[source[0]];
-                 if (r !== checkers.chainPiece.r || c !== checkers.chainPiece.c) {
-                     return false;
-                 }
+            var pieceVal = checkers.board[r][c];
+            var isOwnPiece = pieceVal > 0;
+
+            if (selectedSquare === null) {
+                if (!isOwnPiece) return;
+
+                if (checkers.chainPiece) {
+                    if (checkers.chainPiece.r !== r || checkers.chainPiece.c !== c) return;
+                }
+
+                selectSquare(square, r, c);
+            } else {
+                if (square === selectedSquare) {
+                    deselect();
+                    return;
+                }
+
+                if (isOwnPiece) {
+                    if (checkers.chainPiece) return;
+                    deselect();
+                    selectSquare(square, r, c);
+                    return;
+                }
+
+                attemptMove(selectedSquare, square);
             }
         }
 
-        function onDrop(source, target) {
-            if (source === target) return;
+        function selectSquare(sq, r, c) {
+            selectedSquare = sq;
+            $('#board .square-' + sq).addClass('highlight-selected');
             
+            var moves = checkers.getPossibleMoves(1);
+            var pieceMoves = moves.filter(m => m.r === r && m.c === c);
+            
+            var canCaptureAny = moves.some(m => m.capture);
+            
+            for (let m of pieceMoves) {
+                if (canCaptureAny && !m.capture) continue;
+                
+                let colName = ['a','b','c','d','e','f','g','h'][m.toC];
+                let rowName = 8 - m.toR;
+                let dest = colName + rowName;
+                
+                let type = m.capture ? 'highlight-capture' : 'highlight-dest';
+                $('#board .square-' + dest).addClass(type);
+            }
+        }
+
+        function deselect() {
+            selectedSquare = null;
+            $('#board .square-55d63').removeClass('highlight-selected highlight-dest highlight-capture');
+        }
+
+        function attemptMove(source, target) {
             let cols = {'a':0,'b':1,'c':2,'d':3,'e':4,'f':5,'g':6,'h':7};
             let r1 = 8 - parseInt(source[1]), c1 = cols[source[0]];
             let r2 = 8 - parseInt(target[1]), c2 = cols[target[0]];
@@ -611,25 +659,28 @@
             let moves = checkers.getPossibleMoves(1);
             let move = moves.find(m => m.r === r1 && m.c === c1 && m.toR === r2 && m.toC === c2);
             
-            if (!move) return 'snapback';
+            if (!move) {
+                deselect();
+                return;
+            }
 
             let canCapture = moves.some(m => m.capture);
             if (canCapture && !move.capture) {
                 bobTalk('capture'); 
                 $('#bubble').text("Нужно бить!").addClass('show');
-                return 'snapback';
+                return;
             }
 
             let continueTurn = checkers.makeMove(move);
             board.position(checkers.getFen(), false);
-            removeHighlights();
+            deselect();
 
             if (move.capture) bobTalk('capture');
 
             if (continueTurn) {
                 bobTalk('chain');
-                // Важно: обновляем подсветку для следующего удара
-                // Мы не вызываем AI, так как ход все еще у игрока
+                let nextSq = ['a','b','c','d','e','f','g','h'][move.toC] + (8 - move.toR);
+                selectSquare(nextSq, move.toR, move.toC);
                 return; 
             }
 
@@ -738,32 +789,6 @@
             }
             return maxVal;
         }
-
-        function onMouseoverSquare(square) {
-            if(isAiThinking || checkers.turn !== 1) return;
-            
-            let cols = {'a':0,'b':1,'c':2,'d':3,'e':4,'f':5,'g':6,'h':7};
-            let r = 8 - parseInt(square[1]), c = cols[square[0]];
-            
-            let moves = checkers.getPossibleMoves(1);
-            
-            // Подсветка
-            let canCaptureAny = moves.some(m => m.capture);
-            let pieceMoves = moves.filter(m => m.r === r && m.c === c);
-            
-            for (let m of pieceMoves) {
-                if (canCaptureAny && !m.capture) continue; 
-                
-                let colName = ['a','b','c','d','e','f','g','h'][m.toC];
-                let rowName = 8 - m.toR;
-                let dest = colName + rowName;
-                
-                let type = m.capture ? 'highlight-capture' : 'highlight-dest';
-                $('#board .square-' + dest).addClass(type);
-            }
-        }
-
-        function removeHighlights () { $('#board .square-55d63').removeClass('highlight-dest highlight-capture'); }
         $(window).resize(function(){ if(board) board.resize(); });
 
         // 4. МОДАЛКА ПОДСКАЗКИ (ОБНОВЛЕНИЕ)
