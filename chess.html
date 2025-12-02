@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeWords Chess vs Bob</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- СТИЛИ (БЕЖЕВЫЙ МУЛЬТЯШНЫЙ) --- */
+        body {
+            background-color: #fff8e1; 
+            background-image: radial-gradient(#fde68a 15%, transparent 16%), radial-gradient(#fde68a 15%, transparent 16%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            color: #451a03;
+        }
+
+        /* --- ЭКРАНЫ --- */
+        .overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(69, 26, 3, 0.92); backdrop-filter: blur(8px);
+            z-index: 1000; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            transition: opacity 0.4s;
+        }
+        .hidden { display: none !important; opacity: 0; }
+
+        .overlay-content {
+            background: #fff; padding: 40px; border-radius: 40px;
+            border: 8px solid #fbbf24; box-shadow: 0 20px 0 rgba(0,0,0,0.2);
+            max-width: 90%; width: 400px;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .bob-large-img {
+            width: 160px; height: 160px; object-fit: contain; margin-bottom: 15px;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+        }
+
+        .overlay-content h1 { font-size: 2.5rem; color: #d97706; margin: 10px 0; line-height: 1; }
+        
+        .btn-main {
+            background: #22c55e; color: white; border: none; padding: 15px 40px;
+            font-size: 22px; border-radius: 50px; font-weight: 900; cursor: pointer;
+            box-shadow: 0 8px 0 #15803d; transition: transform 0.1s; margin-top: 20px;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn-main:active { transform: translateY(8px); box-shadow: none; }
+
+        /* --- ИГРА --- */
+        #game-container {
+            display: flex; flex-direction: column; align-items: center;
+            width: 100%; opacity: 1; transition: opacity 0.5s;
+        }
+
+        .bob-area {
+            display: flex; align-items: center; justify-content: center;
+            width: 100%; max-width: 500px; margin-bottom: 15px; position: relative;
+        }
+
+        .bob-avatar {
+            width: 110px; height: 110px; background-size: cover; background-position: center;
+            filter: drop-shadow(0 8px 10px rgba(0,0,0,0.15)); z-index: 2; transition: transform 0.2s;
+        }
+        .bob-jump { animation: bounce 0.5s ease infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+        .speech-bubble {
+            position: relative; background: white; border-radius: 25px; padding: 15px 25px;
+            margin-left: 10px; color: #451a03; font-weight: 800; font-size: 16px;
+            box-shadow: 5px 5px 0 #fbbf24; border: 3px solid #fbbf24; max-width: 180px;
+            opacity: 0; transform: translateX(-10px); transition: all 0.3s;
+        }
+        .speech-bubble.show { opacity: 1; transform: translateX(0); }
+        .speech-bubble::after {
+            content: ''; position: absolute; left: -13px; top: 50%; transform: translateY(-50%);
+            border-style: solid; border-width: 10px 13px 10px 0; border-color: transparent #fbbf24 transparent transparent;
+        }
+
+        /* --- ДОСКА --- */
+        #board-wrapper {
+            padding: 15px; background: #86efac; border-radius: 20px;
+            border: 8px solid #16a34a; box-shadow: 0 15px 0 rgba(0,0,0,0.1); margin-bottom: 20px;
+        }
+        #board { width: 85vw; max-width: 420px; }
+
+        /* --- УПРАВЛЕНИЕ --- */
+        .controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; width: 90%; }
+        .game-btn {
+            background: #3b82f6; color: white; border: none; padding: 12px 20px; border-radius: 15px;
+            font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 16px; cursor: pointer;
+            box-shadow: 0 6px 0 #1d4ed8; transition: transform 0.1s;
+        }
+        .game-btn:active { transform: translateY(6px); box-shadow: none; }
+        .btn-exit { background: #ef4444; box-shadow: 0 6px 0 #b91c1c; }
+        .btn-help { background: #a855f7; box-shadow: 0 6px 0 #7e22ce; }
+        select {
+            padding: 12px; border-radius: 15px; border: 3px solid #fbbf24; background: white;
+            font-family: 'Nunito', sans-serif; font-weight: bold; color: #b45309; outline: none; cursor: pointer;
+        }
+
+        /* --- МОДАЛКА ПОДСКАЗКИ --- */
+        .help-modal {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(69, 26, 3, 0.92); backdrop-filter: blur(8px);
+            z-index: 2000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s;
+        }
+        .help-modal.show { opacity: 1; pointer-events: auto; }
+        .help-content {
+            background: #fff; padding: 30px; border-radius: 30px;
+            border: 6px solid #fbbf24; box-shadow: 0 15px 0 rgba(0,0,0,0.2);
+            max-width: 90%; width: 380px; max-height: 80vh; overflow-y: auto;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .help-content h2 { color: #d97706; margin: 0 0 20px 0; text-align: center; font-size: 1.8rem; }
+        .piece-row {
+            display: flex; align-items: center; gap: 15px; padding: 12px;
+            background: #fef3c7; border-radius: 15px; margin-bottom: 10px;
+        }
+        .piece-icon { width: 45px; height: 45px; flex-shrink: 0; }
+        .piece-info h3 { margin: 0; color: #92400e; font-size: 1.1rem; }
+        .piece-info p { margin: 5px 0 0 0; font-size: 0.9rem; color: #78350f; font-weight: 600; }
+        .close-help {
+            background: #ef4444; color: white; border: none; padding: 12px 30px;
+            border-radius: 50px; font-weight: 900; font-size: 16px; cursor: pointer;
+            box-shadow: 0 5px 0 #b91c1c; margin-top: 15px; display: block; margin-left: auto; margin-right: auto;
+        }
+        .close-help:active { transform: translateY(5px); box-shadow: none; }
+
+        .highlight-dest { background: rgba(34, 197, 94, 0.6); border-radius: 50%; transform: scale(0.6); }
+        .highlight-capture { 
+            position: relative;
+        }
+        .highlight-capture::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85%;
+            height: 85%;
+            border: 5px solid rgba(239, 68, 68, 0.8);
+            border-radius: 50%;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ПРИВЕТСТВИЕ -->
+    <div id="welcome-screen" class="overlay">
+        <div class="overlay-content">
+            <img src="https://bewords.ru/photo/games/bob-chess.png" class="bob-large-img" alt="Bob">
+            <h1>BeWords Chess</h1>
+            <p style="font-size: 1.1rem; color: #78350f; margin-bottom: 20px;">
+                Кот Боб вызывает тебя на дуэль!<br>Сможешь поставить ему мат?
+            </p>
+            <button class="btn-main" onclick="startGame()">ИГРАТЬ</button>
+        </div>
+    </div>
+
+    <!-- ИГРА -->
+    <div id="game-container" class="hidden">
+        <div class="bob-area">
+            <div id="bob" class="bob-avatar"></div>
+            <div id="bubble" class="speech-bubble">Мяу! Я хожу.</div>
+        </div>
+
+        <div id="board-wrapper">
+            <div id="board"></div>
+        </div>
+
+        <div class="controls">
+            <select id="difficulty">
+                <option value="1">Сонный Боб (Легко)</option>
+                <option value="5" selected>Игривый Боб (Средне)</option>
+                <option value="10">Злой Боб (Сложно)</option>
+            </select>
+            <button class="game-btn" onclick="resetGame()">Заново</button>
+            <button class="game-btn btn-help" onclick="showHelp()">❓ Фигуры</button>
+            <button class="game-btn btn-exit" onclick="location.reload()">Выход</button>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА ПОДСКАЗКИ -->
+    <div id="help-modal" class="help-modal" onclick="hideHelp()">
+        <div class="help-content" onclick="event.stopPropagation()">
+            <h2>🎯 Шахматные фигуры</h2>
+            
+            <div class="piece-row">
+                <img id="help-king" class="piece-icon" alt="Король">
+                <div class="piece-info">
+                    <h3>👑 Король</h3>
+                    <p>Главная фигура! Ходит на 1 клетку в любую сторону. Защищай его!</p>
+                </div>
+            </div>
+            
+            <div class="piece-row">
+                <img id="help-queen" class="piece-icon" alt="Ферзь">
+                <div class="piece-info">
+                    <h3>👸 Ферзь (Королева)</h3>
+                    <p>Самая сильная! Ходит как угодно далеко по прямой и диагонали.</p>
+                </div>
+            </div>
+            
+            <div class="piece-row">
+                <img id="help-rook" class="piece-icon" alt="Ладья">
+                <div class="piece-info">
+                    <h3>🏰 Ладья (Башня)</h3>
+                    <p>Ходит по прямой — вверх, вниз, влево, вправо. Без ограничений!</p>
+                </div>
+            </div>
+            
+            <div class="piece-row">
+                <img id="help-bishop" class="piece-icon" alt="Слон">
+                <div class="piece-info">
+                    <h3>⛪ Слон</h3>
+                    <p>Ходит только по диагонали. Один слон — по белым, другой — по чёрным.</p>
+                </div>
+            </div>
+            
+            <div class="piece-row">
+                <img id="help-knight" class="piece-icon" alt="Конь">
+                <div class="piece-info">
+                    <h3>🐴 Конь</h3>
+                    <p>Ходит буквой "Г" и может перепрыгивать через фигуры!</p>
+                </div>
+            </div>
+            
+            <div class="piece-row">
+                <img id="help-pawn" class="piece-icon" alt="Пешка">
+                <div class="piece-info">
+                    <h3>♟️ Пешка</h3>
+                    <p>Ходит вперёд на 1 клетку (первый ход — можно на 2). Бьёт по диагонали.</p>
+                </div>
+            </div>
+            
+            <button class="close-help" onclick="hideHelp()">Понятно!</button>
+        </div>
+    </div>
+
+    <!-- КОНЕЦ ИГРЫ -->
+    <div id="game-over-screen" class="overlay hidden">
+        <div class="overlay-content">
+            <h1 id="go-title">ПОБЕДА!</h1>
+            <img id="go-img" src="" class="bob-large-img" style="margin: 10px auto;">
+            <p id="go-message" style="font-size: 1.2rem; color: #555;">...</p>
+            <button class="btn-main" onclick="resetGame()">Еще раз</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
+
+    <script>
+        // 1. ССЫЛКИ НА БОБА
+        var imgBobNormal = "https://bewords.ru/photo/games/bob-chess.png";
+        var imgBobWin    = "https://bewords.ru/photo/games/bob-chess-win.png";
+        var imgBobLoss   = "https://bewords.ru/photo/games/bob-chess-loss.png";
+
+        $('#bob').css('background-image', 'url(' + imgBobNormal + ')');
+
+        // 2. ГЕНЕРАТОР ФИГУР (КЛАССИЧЕСКИЙ СТИЛЬ STAUNTON)
+        function getPieceTheme(piece) {
+            var color = piece.charAt(0);
+            var type = piece.charAt(1);
+            
+            var fill = (color === 'w') ? '#ffffff' : '#451a03';
+            var stroke = (color === 'w') ? '#451a03' : '#ffffff';
+            var strokeWidth = 1.5;
+
+            var svgContent = {
+                // Пешка - классическая форма
+                'P': `
+                    <circle cx="22.5" cy="10" r="4"/>
+                    <path d="M 15 28 C 15 25 17 22 18.5 20 C 16 18 15 15 15 12 C 15 12 17 11 22.5 11 C 28 11 30 12 30 12 C 30 15 29 18 26.5 20 C 28 22 30 25 30 28 L 15 28 Z"/>
+                    <path d="M 12 32 L 33 32 L 33 29 L 12 29 Z"/>
+                    <path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/>
+                `,
+
+                // Конь - классический силуэт лошади (Staunton style)
+                'N': `
+                    <path d="M 37 36 L 8 36 L 8 33 L 10 33 C 10 28 14 24 14 24 L 14 20 C 14 17 16 13 18 11 C 16 9 15 8 15 6 C 15 6 17 5 20 6 C 21 4 23 4 25 5 L 25 7 C 25 9 24 11 22 13 C 24 14 26 15 27 18 C 27 18 30 16 32 17 C 32 19 30 21 27 21 L 27 24 C 31 26 35 30 35 33 L 37 33 Z"/>
+                    <path d="M 18 23 C 17 23 15 24 14 26 L 18 26 C 19 25 19 24 18 23 Z"/>
+                `,
+
+                // Слон - классическая митра без креста
+                'B': `
+                    <circle cx="22.5" cy="8" r="3"/>
+                    <path d="M 17.5 26 L 27.5 26 L 33 32 L 12 32 Z"/>
+                    <path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/>
+                    <path d="M 22.5 11 C 22.5 11 30 14 30 24 C 30 26 28.5 26 28.5 26 L 16.5 26 C 16.5 26 15 26 15 24 C 15 14 22.5 11 22.5 11 Z"/>
+                    <path d="M 22.5 14 L 22.5 22" style="stroke-width:2; stroke-linecap:round;"/>
+                `,
+
+                // Ладья - классическая башня
+                'R': `
+                    <path d="M 9 39 L 36 39 L 36 36 L 9 36 Z"/>
+                    <path d="M 12 36 L 12 32 L 33 32 L 33 36 Z"/>
+                    <path d="M 14 32 L 14 17 L 31 17 L 31 32 Z"/>
+                    <path d="M 11 17 L 11 12 L 16 12 L 16 8 L 20 8 L 20 12 L 25 12 L 25 8 L 29 8 L 29 12 L 34 12 L 34 17 Z"/>
+                `,
+
+                // Ферзь - корона с шариком наверху
+                'Q': `
+                    <circle cx="22.5" cy="8" r="3.5"/>
+                    <path d="M 9 26 C 17.5 24.5 27 24.5 36 26 L 38 14 L 31 25 L 26 8 L 22.5 22 L 19 8 L 14 25 L 7 14 L 9 26 Z"/>
+                    <path d="M 9 26 C 9 28 10 30 10 32 L 35 32 C 35 30 36 28 36 26 C 27 24.5 17.5 24.5 9 26 Z"/>
+                    <path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/>
+                    <circle cx="7" cy="14" r="2"/>
+                    <circle cx="14" cy="8" r="2"/>
+                    <circle cx="22.5" cy="6" r="2"/>
+                    <circle cx="31" cy="8" r="2"/>
+                    <circle cx="38" cy="14" r="2"/>
+                `,
+
+                // Король - корона с шаром наверху (вместо креста)
+                'K': `
+                    <circle cx="22.5" cy="8" r="4"/>
+                    <path d="M 22.5 12 L 22.5 16"/>
+                    <path d="M 17.5 16 L 27.5 16"/>
+                    <path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/>
+                    <path d="M 12 33 L 12 30 L 33 30 L 33 33 Z"/>
+                    <path d="M 12 30 C 12 27 15 22 15 22 L 30 22 C 30 22 33 27 33 30 Z"/>
+                    <path d="M 15 22 C 15 20 13 18 13 18 L 22.5 16 L 32 18 C 32 18 30 20 30 22 Z"/>
+                `
+            };
+
+            var svgString = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45">
+                    <g style="fill:${fill}; stroke:${stroke}; stroke-width:${strokeWidth}; stroke-linecap:round; stroke-linejoin:round;">
+                        ${svgContent[type]}
+                    </g>
+                </svg>
+            `;
+            
+            return 'data:image/svg+xml;base64,' + btoa(svgString);
+        }
+
+
+        // 3. ЛОГИКА
+        var board = null;
+        var game = new Chess();
+        var stockfish = null;
+        var isEngineRunning = false;
+
+        var phrases = {
+            start: ["Мур! Я готов!", "Посмотрим, кто кого.", "Не наступи мне на хвост!", "Я слежу за тобой..."],
+            think: ["Хрум-хрум...", "Считаю в уме...", "Так-так...", "Где-то я это видел..."],
+            capture: ["Цап! Моё!", "Спасибо за фигуру!", "Ой, как вкусно!", "Не зевай!"],
+            check: ["ШАХ! Куда бежишь?", "Королю страшно?", "Осторожнее!"],
+            win: ["МАТ! Я победил!", "Коты правят миром!", "Не расстраивайся, человек."],
+            lose: ["Как ты это сделал?!", "Я поддавался...", "Ладно, ты крут.", "Требую реванш!"]
+        };
+
+        function bobTalk(category) {
+            var options = phrases[category];
+            var text = options[Math.floor(Math.random() * options.length)];
+            $('#bubble').text(text).addClass('show');
+            setTimeout(() => $('#bubble').removeClass('show'), 3000);
+            if(category !== 'think' && category !== 'start') {
+                $('#bob').addClass('bob-jump');
+                setTimeout(() => $('#bob').removeClass('bob-jump'), 500);
+            }
+        }
+
+        function startGame() {
+            $('#welcome-screen').addClass('hidden');
+            $('#game-container').removeClass('hidden');
+            if (!stockfish) initEngine();
+            setTimeout(() => { $(window).resize(); bobTalk('start'); }, 100);
+        }
+
+        function showGameOver(result) {
+            var title, msg, img;
+            if (result === 'win') {
+                title = "ТЫ ВЫИГРАЛ!"; msg = "Боб повержен. Отличная тактика!"; img = imgBobLoss; bobTalk('lose');
+            } else if (result === 'lose') {
+                title = "БОБ ПОБЕДИЛ!"; msg = "Не расстраивайся, коты очень умные."; img = imgBobWin; bobTalk('win');
+            } else {
+                title = "НИЧЬЯ"; msg = "Силы равны."; img = imgBobNormal;
+            }
+            $('#go-title').text(title); $('#go-message').text(msg); $('#go-img').attr('src', img);
+            setTimeout(() => $('#game-over-screen').removeClass('hidden'), 1000);
+        }
+
+        function resetGame() {
+            game.reset(); board.start();
+            $('#game-over-screen').addClass('hidden');
+            $('#game-container').removeClass('hidden');
+            if(stockfish) stockfish.postMessage("ucinewgame");
+            bobTalk('start');
+            isEngineRunning = false;
+            removeHighlights();
+        }
+
+        function initEngine() {
+            var blobWorkerCode = `importScripts('https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.2/stockfish.js');`;
+            stockfish = new Worker(window.URL.createObjectURL(new Blob([blobWorkerCode], {type: "application/javascript"})));
+            stockfish.onmessage = function(event) {
+                if (event.data.indexOf("bestmove") > -1) {
+                    var match = event.data.match(/^bestmove ([a-h][1-8])([a-h][1-8])([qrbn])?/);
+                    if (match) {
+                        var move = game.move({ from: match[1], to: match[2], promotion: match[3] });
+                        board.position(game.fen());
+                        isEngineRunning = false;
+                        if (move.captured) bobTalk('capture');
+                        else if (game.in_check()) bobTalk('check');
+                        checkStatus();
+                    }
+                }
+            };
+            stockfish.postMessage("uci");
+            board = Chessboard('board', {
+                draggable: true, position: 'start',
+                onDragStart: onDragStart, onDrop: onDrop,
+                onMouseoverSquare: onMouseoverSquare, onMouseoutSquare: removeHighlights,
+                pieceTheme: getPieceTheme // Подключаем наши новые фигуры
+            });
+        }
+
+        function checkStatus() {
+            if (game.in_checkmate()) {
+                game.turn() === 'w' ? showGameOver('lose') : showGameOver('win');
+                return true;
+            } 
+            if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) {
+                showGameOver('draw');
+                return true;
+            }
+            return false;
+        }
+
+        function onDragStart (source, piece) {
+            if (game.game_over() || isEngineRunning) return false;
+            if ((game.turn() === 'w' && piece.search(/^b/) !== -1) || (game.turn() === 'b' && piece.search(/^w/) !== -1)) return false;
+        }
+
+        function onDrop (source, target) {
+            removeHighlights();
+            var move = game.move({ from: source, to: target, promotion: 'q' });
+            if (move === null) return 'snapback';
+            if (checkStatus()) return;
+            bobTalk('think'); isEngineRunning = true;
+            stockfish.postMessage("position fen " + game.fen());
+            stockfish.postMessage("go depth " + $('#difficulty').val());
+        }
+
+        function onMouseoverSquare (square) {
+            if(isEngineRunning || game.game_over()) return;
+            var moves = game.moves({ square: square, verbose: true });
+            if (moves.length === 0) return;
+            for (var i = 0; i < moves.length; i++) {
+                var type = moves[i].flags.includes('c') || moves[i].flags.includes('e') ? 'highlight-capture' : 'highlight-dest';
+                $('#board .square-' + moves[i].to).addClass(type);
+            }
+        }
+        function removeHighlights () { $('#board .square-55d63').removeClass('highlight-dest highlight-capture'); }
+        $(window).resize(function(){ if(board) board.resize(); });
+
+        // 4. МОДАЛКА ПОДСКАЗКИ
+        function showHelp() {
+            // Устанавливаем иконки фигур в модалке
+            $('#help-king').attr('src', getPieceTheme('wK'));
+            $('#help-queen').attr('src', getPieceTheme('wQ'));
+            $('#help-rook').attr('src', getPieceTheme('wR'));
+            $('#help-bishop').attr('src', getPieceTheme('wB'));
+            $('#help-knight').attr('src', getPieceTheme('wN'));
+            $('#help-pawn').attr('src', getPieceTheme('wP'));
+            $('#help-modal').addClass('show');
+        }
+        
+        function hideHelp() {
+            $('#help-modal').removeClass('show');
+        }
+
+    </script>
+</body>
+</html>
