@@ -207,7 +207,10 @@
             <p style="font-size: 1.1rem; color: #78350f; margin-bottom: 20px;">
                 Кот Боб вызывает тебя на партию в шашки!<br>Сможешь выбить все его фишки?
             </p>
-            <button class="btn-main" onclick="startGame()">ИГРАТЬ</button>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-main" onclick="startGame(1)">⚪ За Белых</button>
+                <button class="btn-main" style="background: #451a03; box-shadow: 0 8px 0 #2a0f01;" onclick="startGame(-1)">⚫ За Черных</button>
+            </div>
         </div>
     </div>
 
@@ -230,7 +233,7 @@
             </select>
             <button class="game-btn" onclick="resetGame()">Заново</button>
             <button class="game-btn btn-help" onclick="showHelp()">❓ Правила</button>
-            <button class="game-btn btn-exit" onclick="location.reload()">Выход</button>
+            <button class="game-btn btn-exit" onclick="location.reload()">🏠 Меню</button>
         </div>
     </div>
 
@@ -525,6 +528,7 @@
         var board = null;
         var isAiThinking = false;
         var selectedSquare = null;
+        var userSide = 1; // 1 - белые, -1 - черные
 
         var phrases = {
             start: ["Мяу! Русские шашки? Я готов!", "Только чур рубить обязательно!", "Вперед, к дамкам!"],
@@ -546,20 +550,35 @@
             }
         }
 
-        function startGame() {
+        function startGame(side) {
+            userSide = side;
             $('#welcome-screen').addClass('hidden');
             $('#game-container').removeClass('hidden');
             checkers.reset();
-            if(!board) initBoard();
-            else {
+            
+            if(!board) {
+                initBoard();
+            } else {
                 board.position(checkers.getFen(), false);
                 $(window).resize();
             }
+            
+            // Переворот доски
+            board.orientation(userSide === 1 ? 'white' : 'black');
+
             setTimeout(() => { bobTalk('start'); }, 100);
+
+            // Если игрок выбрал черных, Боб (белые) ходит первым
+            if (userSide === -1) {
+                isAiThinking = true;
+                bobTalk('think');
+                setTimeout(makeAiMove, 1000);
+            }
         }
 
         function showGameOver(result) {
             var title, msg, img;
+            // result: 'win' (user won), 'lose' (bob won)
             if (result === 'win') {
                 title = "ТЫ ВЫИГРАЛ!"; msg = "Боб повержен. Ты мастер шашек!"; img = imgBobLoss; bobTalk('lose');
             } else {
@@ -577,6 +596,12 @@
             bobTalk('start');
             isAiThinking = false;
             deselect();
+            
+            // Если играем за черных, Боб снова ходит первым при ресете
+            if (userSide === -1) {
+                isAiThinking = true;
+                setTimeout(makeAiMove, 1000);
+            }
         }
 
         function initBoard() {
@@ -590,7 +615,8 @@
         }
 
         function onSquareClick() {
-            if (isAiThinking || checkers.turn !== 1) return;
+            // Проверяем, думает ли AI и наш ли сейчас ход
+            if (isAiThinking || checkers.turn !== userSide) return;
 
             var square = $(this).data('square');
             var cols = {'a':0,'b':1,'c':2,'d':3,'e':4,'f':5,'g':6,'h':7};
@@ -598,7 +624,7 @@
             var r = 8 - parseInt(square[1]);
             
             var pieceVal = checkers.board[r][c];
-            var isOwnPiece = pieceVal > 0;
+            var isOwnPiece = (Math.sign(pieceVal) === userSide);
 
             if (selectedSquare === null) {
                 if (!isOwnPiece) return;
@@ -629,7 +655,7 @@
             selectedSquare = sq;
             $('#board .square-' + sq).addClass('highlight-selected');
             
-            var moves = checkers.getPossibleMoves(1);
+            var moves = checkers.getPossibleMoves(userSide);
             var pieceMoves = moves.filter(m => m.r === r && m.c === c);
             
             var canCaptureAny = moves.some(m => m.capture);
@@ -656,7 +682,7 @@
             let r1 = 8 - parseInt(source[1]), c1 = cols[source[0]];
             let r2 = 8 - parseInt(target[1]), c2 = cols[target[0]];
 
-            let moves = checkers.getPossibleMoves(1);
+            let moves = checkers.getPossibleMoves(userSide);
             let move = moves.find(m => m.r === r1 && m.c === c1 && m.toR === r2 && m.toC === c2);
             
             if (!move) {
@@ -684,9 +710,11 @@
                 return; 
             }
 
+            // Проверяем победу/поражение
             let winner = checkers.isGameOver();
             if (winner !== 0) {
-                showGameOver(winner === 1 ? 'win' : 'lose');
+                // Если победитель совпадает с userSide - победа, иначе поражение
+                showGameOver(winner === userSide ? 'win' : 'lose');
                 return;
             }
 
@@ -696,8 +724,10 @@
         }
 
         function makeAiMove() {
+            // AI играет за противоположную сторону (-userSide)
+            let aiSide = -userSide;
             let depth = parseInt($('#difficulty').val());
-            let bestMove = getBestMove(checkers, depth, -1); 
+            let bestMove = getBestMove(checkers, depth, aiSide); 
             
             if (bestMove) {
                 let continueTurn = checkers.makeMove(bestMove);
@@ -712,7 +742,7 @@
 
             let winner = checkers.isGameOver();
             if (winner !== 0) {
-                showGameOver(winner === 1 ? 'win' : 'lose');
+                showGameOver(winner === userSide ? 'win' : 'lose');
             }
             isAiThinking = false;
         }
