@@ -186,14 +186,22 @@ showOnboardingWizard() {
     overlay.id = 'onboardingWizard';
     
     overlay.innerHTML = `
-        <div class="wizard-header">
-            <div class="wizard-progress-track">
+        <div class="wizard-header" style="display:flex; align-items:center; gap:10px; padding:15px;">
+            <!-- Кнопка НАЗАД -->
+            <button class="btn btn-secondary" onclick="document.getElementById('onboardingWizard').remove()" style="padding:8px 12px; border-radius:12px;">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <!-- Полоска прогресса -->
+            <div class="wizard-progress-track" style="flex:1;">
                 <div class="wizard-progress-fill" id="wizardProgress" style="width: 25%"></div>
             </div>
         </div>
+        
         <div class="wizard-content" id="wizardContent">
             <!-- Контент шага рендерится тут -->
         </div>
+        
         <div class="wizard-footer">
             <button class="wizard-btn" id="wizardNextBtn" disabled>ПРОДОЛЖИТЬ</button>
         </div>
@@ -2072,8 +2080,8 @@ showSettingsModal() {
         <button class="btn btn-success" onclick="app.showOnboardingWizard(); document.querySelector('.settings-modal').remove();" style="width:100%; margin-bottom:10px;">
            <i class="fas fa-magic"></i> Подобрать программу
         </button>
-        <button class="btn btn-primary" onclick="app.requestNotificationPermission()" style="width:100%; margin-bottom:10px;">
-           <i class="fas fa-bell"></i> Включить напоминания
+        <button class="btn btn-primary" id="notifyToggleBtn" style="width:100%; margin-bottom:10px;">
+           <i class="fas fa-bell"></i> Управление уведомлениями
         </button>
       </div>
       <div id="settingsInnerPage" style="display:none;"></div>
@@ -2082,6 +2090,38 @@ showSettingsModal() {
   `; 
   
   document.body.appendChild(modal);
+  
+ // Логика кнопки уведомлений
+  const notifyBtn = modal.querySelector('#notifyToggleBtn');
+  if (notifyBtn) {
+      // Проверяем текущее состояние и меняем текст кнопки
+      const isDisabled = localStorage.getItem('notifications_disabled') === 'true';
+      const isGranted = Notification.permission === 'granted';
+      
+      if (isGranted && !isDisabled) {
+          notifyBtn.innerHTML = '<i class="fas fa-bell-slash"></i> Отключить уведомления';
+          notifyBtn.className = 'btn btn-secondary'; // Серый цвет
+      } else {
+          notifyBtn.innerHTML = '<i class="fas fa-bell"></i> Включить уведомления';
+          notifyBtn.className = 'btn btn-primary'; // Зеленый цвет
+      }
+
+      notifyBtn.onclick = () => {
+          if (isGranted && !isDisabled) {
+              // Выключаем
+              localStorage.setItem('notifications_disabled', 'true');
+              notifyBtn.innerHTML = '<i class="fas fa-bell"></i> Включить уведомления';
+              notifyBtn.className = 'btn btn-primary';
+              this.showNotification('Уведомления отключены', 'info');
+          } else {
+              // Включаем
+              localStorage.setItem('notifications_disabled', 'false');
+              this.requestNotificationPermission();
+              // Текст обновится, если разрешение дадут
+              modal.remove(); // Закрываем модалку, чтобы обновить состояние при следующем открытии
+          }
+      };
+  }
   
   // Добавляем обработчики через addEventListener
   const closeBtn = modal.querySelector('.settings-close-btn');
@@ -5683,6 +5723,31 @@ attachPetHandlers() {
 
     const quizContainer = document.createElement('div');
     quizContainer.id = 'quizGateContainer';
+    
+    // СТАРТОВЫЙ ЭКРАН
+    quizContainer.innerHTML = `
+        <div style="text-align:center; padding:20px;">
+            <img src="/instruction.png" style="width:100px; margin-bottom:15px; filter:drop-shadow(0 5px 10px rgba(0,0,0,0.2));">
+            <h3 style="margin-bottom:10px; font-weight:800;">Доступ к игре</h3>
+            <p style="color:var(--text-secondary); margin-bottom:20px; font-size:0.95rem;">
+                Боб охраняет эту игру! 😼<br>
+                Ответь правильно на 3 вопроса, чтобы пройти.
+            </p>
+            <button class="btn btn-primary" id="startGateBtn" style="width:100%; font-size:1.1rem; padding:12px;">
+                Погнали! 🚀
+            </button>
+        </div>
+    `;
+
+    // ОБРАБОТЧИК ЗАПУСКА
+    setTimeout(() => {
+        const startBtn = document.getElementById('startGateBtn');
+        if (startBtn) {
+            startBtn.onclick = () => {
+                showNextQuestion(); // <-- ВОТ ТУТ ЗАПУСКАЕМ ВОПРОСЫ
+            };
+        }
+    }, 50);
 
     const scoreDisplay = document.createElement('div');
     scoreDisplay.id = 'scoreGateDisplay';
@@ -6716,13 +6781,18 @@ attachPetHandlers() {
     }, 600); // Задержка для плавности
   }
   
-    requestNotificationPermission() {
-    if (!('Notification' in window)) return;
+     requestNotificationPermission() {
+    if (!('Notification' in window)) {
+        this.showNotification('Ваш браузер не поддерживает уведомления', 'warning');
+        return;
+    }
     
     Notification.requestPermission().then(permission => {
         if (permission === 'granted') {
             this.showNotification('Уведомления включены! Боб будет напоминать о словах.', 'success');
             this.scheduleBobReminders();
+        } else {
+            this.showNotification('Вы запретили уведомления. Включите их в настройках браузера.', 'warning');
         }
     });
   }
@@ -6730,6 +6800,7 @@ attachPetHandlers() {
   scheduleBobReminders() {
     // Проверка раз в час
     setInterval(() => {
+       if (localStorage.getItem('notifications_disabled') === 'true') return;
         // Если страница скрыта (пользователь не в приложении)
         if (document.hidden && Notification.permission === 'granted') {
             const now = new Date();
