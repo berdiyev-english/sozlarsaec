@@ -118,11 +118,21 @@
             animation: float 2s ease-in-out infinite;
         }
         
-        /* Специальный класс для большого Боба на старте */
-        #startScreen .bob-preview {
-            width: 220px;
-            height: 220px;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        /* Стили для обложки игры на старте */
+        .game-cover {
+            width: 280px;
+            height: auto;
+            max-height: 350px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            margin-bottom: 25px;
+            border: 6px solid #FFFFFF;
+            transform: rotate(-3deg);
+            transition: transform 0.5s ease;
+        }
+        
+        .game-cover:hover {
+            transform: rotate(0deg) scale(1.05);
         }
         
         @keyframes float {
@@ -159,6 +169,51 @@
             text-align: center;
             opacity: 0.8;
         }
+
+        #pauseBtn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid white;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: transform 0.1s;
+        }
+
+        #pauseBtn:active {
+            transform: scale(0.9);
+        }
+
+        #pauseScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 30;
+            backdrop-filter: blur(4px);
+        }
+
+        .pause-title {
+            font-size: 3rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
@@ -166,10 +221,17 @@
         <canvas id="gameCanvas"></canvas>
         <div id="score" class="hidden">0</div>
         <div id="levelDisplay" class="hidden">LVL 1</div>
+        <button id="pauseBtn" class="hidden">ll</button>
+        
+        <!-- Pause Screen -->
+        <div id="pauseScreen" class="hidden">
+            <h2 class="pause-title">ПАУЗА</h2>
+            <button class="play-btn" id="resumeBtn">ПРОДОЛЖИТЬ</button>
+        </div>
         
         <!-- Start Screen -->
         <div id="startScreen">
-            <img src="https://bewords.ru/flying_bob.png" alt="Bob" class="bob-preview">
+            <img src="https://bewords.ru/bird.jpg" alt="Flying Bob Cover" class="game-cover">
             <h1 class="game-title">Flying Bob</h1>
             <div class="level-badge">🏆 Макс. уровень: <span id="startMaxLevel">1</span></div>
             <button class="play-btn" id="startBtn">ИГРАТЬ</button>
@@ -195,6 +257,9 @@
         const levelDisplay = document.getElementById('levelDisplay');
         const startScreen = document.getElementById('startScreen');
         const gameOverScreen = document.getElementById('gameOverScreen');
+        const pauseScreen = document.getElementById('pauseScreen');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resumeBtn = document.getElementById('resumeBtn');
         const finalScoreSpan = document.getElementById('finalScore');
         const bestScoreSpan = document.getElementById('bestScore');
         const startMaxLevelSpan = document.getElementById('startMaxLevel');
@@ -290,19 +355,34 @@
             }
         }
         
+        function togglePause() {
+            if (gameState === 'playing') {
+                gameState = 'paused';
+                pauseScreen.classList.remove('hidden');
+                pauseBtn.classList.add('hidden'); // Hide pause button when menu is open
+            } else if (gameState === 'paused') {
+                gameState = 'playing';
+                pauseScreen.classList.add('hidden');
+                pauseBtn.classList.remove('hidden');
+            }
+        }
+        
         function startGame() {
             resetGame();
             gameState = 'playing';
             startScreen.classList.add('hidden');
             gameOverScreen.classList.add('hidden');
+            pauseScreen.classList.add('hidden');
             scoreDisplay.classList.remove('hidden');
             levelDisplay.classList.remove('hidden');
+            pauseBtn.classList.remove('hidden');
         }
         
         function gameOver() {
             gameState = 'gameOver';
             scoreDisplay.classList.add('hidden');
             levelDisplay.classList.add('hidden');
+            pauseBtn.classList.add('hidden');
             gameOverScreen.classList.remove('hidden');
             finalScoreSpan.textContent = score;
             finalLevelSpan.textContent = level;
@@ -533,6 +613,11 @@
         // Event listeners
         document.getElementById('startBtn').addEventListener('click', startGame);
         document.getElementById('restartBtn').addEventListener('click', startGame);
+        pauseBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent click from propagating to canvas
+            togglePause();
+        });
+        resumeBtn.addEventListener('click', togglePause);
         
         // Touch and click controls
         canvas.addEventListener('click', () => {
@@ -551,6 +636,11 @@
                 if (gameState === 'start') startGame();
                 else if (gameState === 'playing') jump();
                 else if (gameState === 'gameOver') startGame();
+            }
+            if (e.code === 'Escape' || e.code === 'KeyP') {
+                if (gameState === 'playing' || gameState === 'paused') {
+                    togglePause();
+                }
             }
         });
         
