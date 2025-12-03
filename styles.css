@@ -5161,5 +5161,398 @@ box-shadow: var(--shadow-md);
         left: auto !important;
     }
 }
+/* === НОВЫЕ ИСПРАВЛЕНИЯ (Вставлено в конец) === */
 
+/* 1. Фикс текста в Туториале для темной темы */
+[data-theme="dark"] .tutorial-overlay h2,
+[data-theme="dark"] .tutorial-overlay p,
+[data-theme="dark"] .tutorial-bubble h2, 
+[data-theme="dark"] .tutorial-bubble p {
+    color: #333 !important; /* Черный текст на белом фоне */
+    text-shadow: none !important;
+}
 
+/* 2. Сетка игр: 2 в ряд на мобильных */
+.games-grid {
+  display: grid;
+  /* Адаптивно: минимум 140px, чтобы влезло 2 шт на экранах от 300px */
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+  gap: 12px !important;
+}
+
+.game-card {
+  display: flex !important;
+  flex-direction: column;
+  padding: 10px !important;
+  min-height: auto !important; /* Сброс старой высоты */
+}
+
+.game-cover {
+  height: 110px !important; /* Фиксируем высоту картинки */
+  width: 100%;
+  object-fit: cover;
+}
+
+.game-info h3 {
+  font-size: 1rem !important;
+  margin-bottom: 4px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.game-info p {
+  display: none !important; /* Скрываем описание на плитках для компактности, или оставь если нужно */
+}
+
+.game-info .btn {
+  width: 100%;
+  margin-top: auto;
+  padding: 8px !important;
+  font-size: 0.85rem !important;
+}
+
+/* 3. Красивый Квиз в Играх (Зеленый/Красный ответы) */
+/* Оверлей */
+#gameQuizOverlay > div, 
+.game-quiz-overlay > div {
+    background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary)) !important;
+    border: 3px solid var(--border-color);
+    box-shadow: var(--shadow-xl) !important;
+    border-radius: 20px !important;
+}
+
+/* Кнопки ответов */
+.quiz-option-gate {
+    padding: 12px !important;
+    border-radius: 12px !important;
+    border: 3px solid var(--border-color) !important;
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary)) !important;
+    font-weight: 800 !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.05);
+    transition: all 0.2s;
+}
+
+/* ПРАВИЛЬНЫЙ (Зеленый) */
+.quiz-option-gate.gate-correct {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0) !important;
+    border-color: #58cc02 !important;
+    color: #065f46 !important;
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(88, 204, 2, 0.4);
+}
+
+/* ОШИБКА (Красный) */
+.quiz-option-gate.gate-wrong {
+    background: linear-gradient(135deg, #fee2e2, #fecaca) !important;
+    border-color: #ff4b4b !important;
+    color: #991b1b !important;
+    opacity: 0.7;
+}
+
+/* 4. Боб-помощник (картинка с указкой) */
+.bob-helper-img {
+    position: absolute;
+    top: -75px;     /* Торчит сверху */
+    right: -25px;   /* Справа */
+    width: 90px;
+    height: auto;
+    z-index: 10;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+    pointer-events: none; /* Чтобы клики проходили сквозь него */
+}
+/* === СТИЛИ ДЛЯ ПРЕЗЕНТАЦИИ (СЛАЙДЕР) === */
+.presentation-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200000;
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+}
+
+.presentation-slide {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.presentation-img {
+    width: 80%;
+    max-width: 300px;
+    height: auto;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+}
+
+.presentation-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.presentation-text {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    max-width: 500px;
+}
+
+.presentation-footer {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-secondary);
+}
+
+.presentation-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.presentation-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border-color);
+    transition: all 0.3s;
+}
+
+.presentation-dot.active {
+    background: var(--primary-color);
+    transform: scale(1.2);
+}
+/* === ОПТИМИЗАЦИЯ МЕНЮ (6 пунктов) === */
+@media (max-width: 480px) {
+  .bottom-nav {
+    padding: 4px 2px; /* Минимальные отступы */
+    justify-content: space-around; /* Равномерное распределение */
+  }
+  
+  .nav-item {
+    min-width: auto; /* Убираем минимальную ширину */
+    padding: 6px 2px;
+    flex: 1; /* Растягиваем */
+  }
+  
+  .nav-item i {
+    font-size: 1.1rem; /* Чуть меньше иконки */
+    margin-bottom: 2px;
+  }
+  
+  .nav-item span {
+    font-size: 0.6rem; /* Мелкий текст */
+    letter-spacing: -0.2px; /* Плотнее буквы */
+  }
+}
+
+/* === СТИЛИ ДЛЯ ГРАММАТИКИ === */
+
+/* Сетка тем */
+.grammar-topics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding-bottom: 80px;
+}
+
+/* Карточка темы */
+.grammar-topic-card {
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.grammar-topic-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-md);
+}
+
+.grammar-topic-icon {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.grammar-topic-info h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.grammar-topic-info p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Детальный просмотр урока */
+#grammarDetail {
+  background: var(--bg-primary);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  z-index: 10;
+  animation: slideUp 0.3s ease;
+  padding-bottom: 100px;
+}
+
+.grammar-detail-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 20;
+}
+
+.grammar-content {
+  padding: 20px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.grammar-content h3 {
+  color: var(--primary-color);
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.grammar-example-box {
+  background: var(--bg-secondary);
+  border-left: 4px solid #3b82f6;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+
+.en-ex { font-weight: 800; color: var(--text-primary); }
+.ru-ex { color: var(--text-secondary); font-size: 0.9rem; }
+
+[data-theme="dark"] .grammar-topic-card {
+  background: #1f2937;
+}
+
+/* === POP-UP РЕЗУЛЬТАТА (FIXED) === */
+
+.sentence-builder-container {
+    position: relative !important;
+    overflow: hidden !important; /* Возвращаем hidden, чтобы не ломало верстку */
+}
+
+.sentence-feedback {
+    /* Позиционирование */
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    
+    /* Размеры */
+    width: 280px !important;
+    height: auto !important;
+    min-height: 200px !important; /* Чтобы не сплющивался */
+    
+    /* Внешний вид */
+    background: linear-gradient(135deg, #58cc02, #23a500) !important;
+    border: 4px solid #fff !important;
+    border-radius: 24px !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+    z-index: 9999 !important;
+    
+    /* Flexbox для центрирования */
+    display: none; /* JS переключит на flex */
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+    text-align: center !important;
+    
+    /* Анимация */
+    animation: popInFeedback 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Когда активен (JS добавляет display: flex) */
+.sentence-feedback.visible {
+    display: flex !important;
+}
+
+/* Текст внутри */
+.sentence-feedback div {
+    color: white !important;
+    font-size: 1.5rem !important;
+    font-weight: 900 !important;
+    margin-top: 10px !important;
+    line-height: 1.2 !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+}
+
+/* Картинка Боба */
+.feedback-bob {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)) !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+/* Анимация */
+@keyframes popInFeedback {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    80% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* === ФИКС ЧЕРНОЙ ПОЛОСЫ СНИЗУ НА ПК === */
+@media (min-width: 768px) {
+    
+    .main-content {
+        /* Убираем гигантский отступ, который нужен только для телефона */
+        padding-bottom: 120px !important; 
+        
+        /* Убедимся, что высота контента занимает всё место */
+        min-height: 100vh !important;
+    }
+
+    /* Убедимся, что нижнее меню точно не "плавает" снизу */
+    .bottom-nav {
+        position: static !important; /* Не fixed! */
+        bottom: auto !important;
+        padding-bottom: 20px !important; /* Обычный отступ */
+        height: 100vh !important; /* На всю высоту слева */
+    }
+
+    /* Скрываем любые системные элементы, которые могут перекрывать */
+    .app-container {
+        margin-bottom: 0 !important;
+        border-bottom: none !important;
+    }
+}
