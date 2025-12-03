@@ -1,1 +1,6902 @@
-const _0x3a406e=_0x5b63;(function(_0x180fdd,_0x1d4ea2){const _0x350601=_0x5b63,_0x1d01be=_0x180fdd();while(!![]){try{const _0x35891c=parseInt(_0x350601(0x20c))/0x1*(parseInt(_0x350601(0x4f3))/0x2)+-parseInt(_0x350601(0x246))/0x3*(-parseInt(_0x350601(0x2ed))/0x4)+-parseInt(_0x350601(0x4bf))/0x5*(parseInt(_0x350601(0x494))/0x6)+parseInt(_0x350601(0x48e))/0x7+parseInt(_0x350601(0x3ac))/0x8*(parseInt(_0x350601(0x5ca))/0x9)+-parseInt(_0x350601(0x664))/0xa*(parseInt(_0x350601(0x1fa))/0xb)+-parseInt(_0x350601(0x441))/0xc*(-parseInt(_0x350601(0x641))/0xd);if(_0x35891c===_0x1d4ea2)break;else _0x1d01be['push'](_0x1d01be['shift']());}catch(_0xcb3ca7){_0x1d01be['push'](_0x1d01be['shift']());}}}(_0x1fbf,0xbb8fb));const _0x1e8a75=(function(){let _0x3b981f=!![];return function(_0xbe0e96,_0x41be82){const _0x48e91c=_0x3b981f?function(){if(_0x41be82){const _0x3c648f=_0x41be82['apply'](_0xbe0e96,arguments);return _0x41be82=null,_0x3c648f;}}:function(){};return _0x3b981f=![],_0x48e91c;};}()),_0x3b48e5=_0x1e8a75(this,function(){const _0x2e4fa0=_0x5b63;return _0x3b48e5[_0x2e4fa0(0x5fd)]()[_0x2e4fa0(0x682)](_0x2e4fa0(0x34e))[_0x2e4fa0(0x5fd)]()['constructor'](_0x3b48e5)[_0x2e4fa0(0x682)](_0x2e4fa0(0x34e));});function _0x1fbf(){const _0xaa6483=['currentSession','audioCtx','adjectives','<button\x20class=\x22action-text-btn\x20add\x20word-add-btn\x22\x20data-word-text=\x22','has','Легенда','sports','prototype','addSingleWord','https://smart.servier.com/wp-content/uploads/2016/10/neurone.png','Цвета','playPrepositionAudio','shownWords','Panda','learningWordsList','toFixed','Audio\x20error:','skipSentence','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22week-bar\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22week-bar-fill\x22\x20style=\x22width:','.word-level','playSentenceSound','index','https://smart.servier.com/wp-content/uploads/2016/10/intestin_grele.png','Чувства','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22level-progress-count\x22>','<div\x20class=\x22quiz-option-gate\x22\x20data-answer=\x22','\x22][data-word=\x22','Философия','Слово\x20\x22','entries','Гастрономия','\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-forms=\x27','Тема\x20изменена!','bulkTextarea','showGlobalLoader','tutorial-overlay','Кулинария','fa-baby-carriage','13NTNtGr','_playSingleTokenMp3Only','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22subGoalContainer\x22\x20style=\x22margin-top:15px;\x20display:none;\x20border-top:2px\x20solid\x20var(--border-color);\x20padding-top:15px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-title\x22\x20style=\x22font-size:1.1rem;\x20margin-bottom:10px;\x22>Уточните\x20направление:</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-options\x20sub-options\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<!--\x20Рендерится\x20динамически\x20-->\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','200\x20слов','getAccuracyBadgeHtml','Звук\x20отключен','currentIndex','translateY(-20px)\x20scale(0.9)','Failed\x20to\x20load\x20medical\x20image\x20cache:','\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20style=\x22margin-top:20px;text-align:center;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-secondary\x22\x20onclick=\x22this.closest(\x27.info-modal\x27).remove()\x22>Закрыть</button>\x20\x0a\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20</div>\x0a\x20\x20','https://smart.servier.com/wp-content/uploads/2016/10/colonne_01.png','playWord','getPetState','fa-heartbeat','words-popup-overlay','hunger','google\x20en-us','renderWizardStep','.nav-item[data-section=\x22games\x22]','fa-graduation-cap','\x0a\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>','[data-category=\x22PHRASAL_VERBS\x22]','Знаю\x20hello,\x20cat.\x20Сложные\x20фразы\x20—\x20тёмный\x20лес.','<i\x20class=\x22fas\x20fa-graduation-cap\x22></i>\x20Тематические\x20уроки','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','Для\x20профи,\x20спец.\x20термины\x20и\x20сложные\x20идиомы.','info','progress','string','.settings-modal','Не\x20удалось\x20определить\x20перевод\x20на\x20русский','Слово\x20возвращено\x20в\x20изучение','max','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x20btn-sm\x22\x20id=\x22tutNextBtn\x22>Далее</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22bubble-arrow\x20','321850aAkFao','down','#sentenceClearBtn','data-level','Эмоции','getElementById','filter','word-remove-btn','innerHTML','game-header','incrementTrainerCounters\x20error:','Действия','Имидж','Специальный\x20вопрос:\x20Wh-word\x20+\x20Auxiliary\x20+\x20Subject\x20+\x20Verb...?','Idiom\x20audio\x20missing:','body','selectSentenceWord','renderLearningWordsPopupList','prof','resolve','clearSentence','.level-card[data-category=\x22','suppressAutoSpeakOnce','table','Экономика','\x22></i></div>','\x20-\x20','Малыш','behavior','currentSentence','search','\x0a\x20\x20\x20\x20<div\x20class=\x22grammar-modal-content\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-modal-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-modal-title\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>📚</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>Как\x20работают\x20режимы\x20практики</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22grammar-close-btn\x22\x20aria-label=\x22Закрыть\x22>&times;</button>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-modal-body\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-section\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-section-title\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-bullseye\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>Заучивание</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Подходит\x20для\x20изучения\x20новых\x20слов.\x20Система\x20даёт\x20ограниченный\x20пул\x20(около\x2040\x20слов)\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20и\x20постепенно\x20добавляет\x20новые,\x20когда\x20вы\x20отвечаете\x20правильно.\x20Добавили\x20500\x20слов?\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Не\x20страшно\x20—\x20сначала\x20увидите\x20~20,\x20потом\x20ещё\x2010,\x20ещё\x2010\x20и\x20т.д.\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-section\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-section-title\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-redo\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>Повторение</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Показывает\x20все\x20незавершённые\x20слова\x20по\x20кругу.\x20Удобно,\x20если\x20хотите\x20просто\x20«погонять»\x20всю\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20лексику\x20без\x20ограничений.\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-section\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-section-title\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-list\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>Список</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Открывает\x20полный\x20список\x20слов,\x20которые\x20вы\x20учите.\x20Отсюда\x20можно\x20удалять\x20слова,\x20слушать\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20озвучку\x20и\x20редактировать\x20переводы.\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-tip\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-tip-title\x22>💡\x20Совет</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Начинайте\x20с\x20режима\x20<strong>Заучивание</strong>,\x20чтобы\x20не\x20перегружать\x20память.\x20Когда\x20слова\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20стали\x20знакомыми\x20—\x20переходите\x20в\x20<strong>Повторение</strong>.\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20','hideGlobalLoader','flex','Error\x20in\x20maybeShowDailyMotivation:','Для\x20чего\x20тебе\x20английский\x20прямо\x20сейчас?','Наука','wizardContent','Anatomy,\x20Healthcare',',\x20\x27uk\x27)\x22><i\x20class=\x22fas\x20fa-headphones\x22></i></button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22font-size:14px;color:var(--text-secondary);margin-bottom:10px;\x22>Выбрано\x20правильных:\x20','fa-map-marker-alt','Вещества','aiChatFrame','Урок','<p\x20class=\x22progress-empty-text\x22>Пока\x20нет\x20данных\x20об\x20активности\x20—\x20начните\x20практику.</p>','[data-group=\x22','.pet-feed-btn','word','srsDay','fa-briefcase','numbers','time','buildPrepositionFileName','bulk','/4</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22quiz-options\x22\x20style=\x22display:grid;gap:10px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','\x20слов','correct','abstract','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-card-icon\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22far\x20fa-circle\x22></i>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','toast\x20','cancel','not','\x20слов\x20в\x20изучаемые!','add','currentMode','https://smart.servier.com/wp-content/uploads/2016/10/nerf.png','Природа','_renderWizardCard','Привет!\x20Я\x20Кот\x20Боб.\x20Давай\x20подберем\x20идеальную\x20программу.\x20Какой\x20у\x20тебя\x20опыт?','Checking\x20daily\x20motivation\x20-\x20today:','sound-uk-btn','\x20list-toggle-learned\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-word=\x22','Отношения','food','IRREGULARS','flashcards','Теология','data','position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;','currentTutorialStep','bulkAddForm','\x22\x20title=\x22','\x27,\x20\x27','\x27,\x20','playProverbAudio','buffer','Родство','fa-book-open','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22global-loader-box\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22/loading.gif\x22\x20alt=\x22Кот\x20Боб\x20загружает...\x22\x20/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22global-loader-title\x22>Загрузка...</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22global-loader-text\x20global-loader-text-el\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Кот\x20Боб\x20загружает\x20для\x20вас\x20эту\x20страницу\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','showLevelWords','newLevel','Академия','Измените\x20перевод\x20слова:','fa-wifi','Базовый\x20словарь','[data-category=\x22IDIOMS\x22]','Утверждение:\x20Subject\x20+\x20Verb\x20(+\x20Object)','pause','slice','💼\x20IT,\x20Медицина,\x20Бизнес','\x22]\x20.word-count','buildPhrasalAudioUrl','Слово\x20отмечено\x20как\x20выученное!','Числительные','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<!--\x20ПРАВАЯ\x20КОЛОНКА:\x20КНОПКИ\x20-->\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-actions-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20play-btn\x20popup-sound-us\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-word=\x22','\x27,\x20null,\x20\x27uk\x27)\x22><i\x20class=\x22fas\x20fa-headphones\x22></i></button>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-text-btn\x20add\x22\x20data-testid=\x22word-add-btn\x22\x20onclick=\x22app.addWordToLearning(\x27','\x27,\x20\x27uk\x27)\x22><i\x20class=\x22fas\x20fa-headphones\x22></i></button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','show','.pet-water-btn','modal_verbs','fa-balance-scale-right','migrateStatsSchema','fa-khanda','div','startsWith','review','fa-layer-group','customWords','games','updateBulkToggleButton','toLowerCase','toggleSound','onboardingWizard','showTutorialStep','insertAdjacentElement','.words-popup-title\x20p','audio_rate','loadData','entertainment','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>Повторений\x20сегодня</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<strong>','undo','fa-comments','textContent','Союзы','Закон','Кот\x20Боб\x20загружает\x20для\x20вас\x20список\x20слов...','openAudioSettingsInSettings','voiceschanged','.tutorial-overlay,\x20.tutorial-bob-container','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22week-activity-item\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22week-activity-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22week-label\x22>','❌\x20Неправильно!<br>Правильный\x20ответ:\x20<strong>','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-card\x22\x20id=\x22','\x0a\x20\x20\x20\x20<div\x20class=\x22grammar-modal-content\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-modal-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-modal-title\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>📚</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>Грамматическая\x20подсказка</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22grammar-close-btn\x22\x20onclick=\x22this.closest(\x27.grammar-modal\x27).remove()\x22>&times;</button>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-modal-body\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22margin-bottom:\x2020px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22color:\x20#58CC02;\x22>📝\x20Структура\x20английского\x20предложения</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22margin-top:\x2010px;\x22><strong>Утверждение:</strong>\x20Subject\x20+\x20Verb\x20(+\x20Object)</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22background:\x20#F7F7F7;\x20padding:\x2010px;\x20border-radius:\x208px;\x20margin:\x2010px\x200;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:\x20#1CB0F6;\x20font-weight:\x20bold;\x22>I\x20read\x20books</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:\x20#777;\x20font-size:\x2014px;\x22>Я\x20читаю\x20книги</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22margin-bottom:\x2020px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22color:\x20#58CC02;\x22>❓\x20Вопросы</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22margin-top:\x2010px;\x22><strong>Общий\x20вопрос:</strong>\x20Do/Does\x20+\x20Subject\x20+\x20Verb?</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22background:\x20#F7F7F7;\x20padding:\x2010px;\x20border-radius:\x208px;\x20margin:\x2010px\x200;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:\x20#1CB0F6;\x20font-weight:\x20bold;\x22>Do\x20you\x20speak\x20English?</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:\x20#777;\x20font-size:\x2014px;\x22>Ты\x20говоришь\x20по-английски?</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22margin-top:\x2010px;\x22><strong>Специальный\x20вопрос:</strong>\x20Wh-word\x20+\x20do/does\x20+\x20Subject\x20+\x20Verb?</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22background:\x20#F7F7F7;\x20padding:\x2010px;\x20border-radius:\x208px;\x20margin:\x2010px\x200;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:\x20#1CB0F6;\x20font-weight:\x20bold;\x22>Where\x20do\x20you\x20work?</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:\x20#777;\x20font-size:\x2014px;\x22>Где\x20ты\x20работаешь?</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22margin-bottom:\x2020px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22color:\x20#58CC02;\x22>❌\x20Отрицание</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22margin-top:\x2010px;\x22><strong>Структура:</strong>\x20Subject\x20+\x20don\x27t/doesn\x27t\x20+\x20Verb</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22background:\x20#F7F7F7;\x20padding:\x2010px;\x20border-radius:\x208px;\x20margin:\x2010px\x200;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:\x20#1CB0F6;\x20font-weight:\x20bold;\x22>I\x20don\x27t\x20understand</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:\x20#777;\x20font-size:\x2014px;\x22>Я\x20не\x20понимаю</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22background:\x20#FFF9E6;\x20border:\x201px\x20solid\x20#FFD700;\x20border-radius:\x2010px;\x20padding:\x2015px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h4\x20style=\x22color:\x20#FF9500;\x22>💡\x20Важно\x20помнить:</h4>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<ul\x20style=\x22margin:\x2010px\x200;\x20padding-left:\x2020px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<li>В\x203-м\x20лице\x20ед.\x20числа\x20(he/she/it)\x20глагол\x20получает\x20окончание\x20-s</li>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<li>Do\x20используется\x20с\x20I,\x20you,\x20we,\x20they</li>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<li>Does\x20используется\x20с\x20he,\x20she,\x20it</li>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<li>После\x20didn\x27t\x20всегда\x20базовая\x20форма\x20глагола</li>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</ul>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20','isMultiWord','parse','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22margin-bottom:15px;text-align:center;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22font-size:20px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','auto','width','scrollTo','trim','nerf','handleTranslatorAdd','coming-soon','currentTarget','\x20-\x20Quiz','find','Быстрый\x20результат','\x27,\x20null,\x20\x27uk\x27)\x22><i\x20class=\x22fas\x20fa-headphones\x22></i></button>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-text-btn\x20remove\x22\x20data-testid=\x22word-remove-btn\x22\x20onclick=\x22app.removeWordFromLearning(\x27','data-theme','Уровень\x20владения','currentAudioPromise','resume','source','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22empty-state\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-book-open\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h3>Для\x20вас\x20пока\x20нет\x20подходящих\x20упражнений</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p>Добавьте\x20слова\x20из\x20готовых\x20списков\x20в\x20разделе\x20«Списки»\x20или\x20воспользуйтесь\x20другим\x20режимом\x20практики\x20(Quiz,\x20Флешкарточки).</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x22\x20onclick=\x22app.switchSection(\x27levels\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Перейти\x20к\x20спискам\x20слов\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','\x27\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20title=\x22US\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-volume-up\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20play-btn\x20list-sound-uk\x22\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-word=\x22','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22tutorial-bubble\x22\x20style=\x22animation:\x20popIn\x200.3s\x20ease;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>','https://smart.servier.com/wp-content/uploads/2016/10/foie.png','\x27\x20})\x22>','<div\x20class=\x22grammar-icon\x22><i\x20class=\x22fas\x20','showTutorialFinish','.word-count','focus','Здоровье','.level-card[data-level]','background:var(--bg-primary);border-radius:16px;padding:20px;max-width:480px;width:90%;box-shadow:0\x2020px\x2060px\x20rgba(0,0,0,0.3);','totalSteps','isArray','buildPhrasalFileName','answered','fa-cloud','recordDailyProgress','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x20pet-revive-btn\x22>Оживить</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-secondary\x20pet-switch-btn\x22>Сменить\x20питомца</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Медицина','localeCompare','law','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<!--\x20ЛЕВАЯ\x20КОЛОНКА:\x20ТЕКСТ\x20-->\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-info-col\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-text-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','light','fa-hat-cowboy','\x20слов\x20в\x20изучении</p>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-secondary\x20words-popup-close-btn\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-arrow-left\x22></i>\x20Назад\x0a\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20','totalTimeMs','height','injectStylesOnce','Абстрактное','[data-category=\x22IRREGULARS\x22]','uploadTabBulk','\x22\x20title=\x22US\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-volume-up\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22mini-btn\x20flashcard-sound-uk\x22\x20data-word=\x22','Игротека','LEGAL','https://smart.servier.com/wp-content/uploads/2016/10/muscle.png','#playFlashcardBtn','\x22\x20data-value=\x22','doodle-jump.html','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22word-level\x22>','</div>\x0a\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22sentence-word-pool\x22\x20id=\x22sentenceWordPool\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','Error\x20saving\x20data:','getAchievementsWidgetHtml','\x22\x20data-forms=\x27','iframe','rein','coeur','fa-pen-fancy','deleteCustomWord','Техно','Введите\x20имя\x20питомца','<i\x20class=\x22fas\x20fa-arrow-left\x22></i>\x20Назад\x20в\x20приложение','showNotification','visible','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22text-align:center;margin-bottom:20px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22font-size:24px;font-weight:700;color:var(--text-primary);margin-bottom:12px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','https://smart.servier.com/wp-content/uploads/2016/10/','2048','toast-container','fa-brain','contains','&quot;','revivePet','Работа','playCurrentWord','_getStepTitle','Одежда','communication','waterPet','fa-stethoscope','%</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-main-bar-track\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-main-bar-fill\x22\x20style=\x22width:','fa-infinity','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','getWordsToReview','https://smart.servier.com/wp-content/uploads/2016/10/bacterie.png','addAllLevelWords','work','Физиология','\x22\x20удалено','topics','\x22\x20data-word=\x22','.word-card[data-word=\x22','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pet-bars\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);\x22><span>Сытость</span><span>','Операции','showSettingsModal','/nophoto.jpg','translation','Flying\x20Bird','Общество','veine','\x20•\x20Грамматика','srsConfig','\x27,\x20null,\x20\x27us\x27)\x22><i\x20class=\x22fas\x20fa-volume-up\x22></i></button>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20play-btn\x22\x20title=\x22UK\x22\x20onclick=\x22app.playWord(\x27','<i\x20class=\x22fas\x20fa-shapes\x22></i>\x20Грамматика','Finance,\x20Management,\x20Marketing','createElement','display','Описания','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-translation\x22>','technology','getBoundingClientRect','getAvailableLevelsFromWords','Для\x20очень\x20занятых','preloadAiChat','\x22][data-level=\x22','Audio\x20playback\x20error\x20or\x20aborted','Не\x20удалось\x20определить\x20английское\x20слово','userAgent','\x20повторений\x20(','createWordCard','display:flex;align-items:center;justify-content:space-between;gap:10px;','/kitten.png','game2048StartBtn','Медиа','fa-heart','165LWqzVA','Пословицы,\x20редкие\x20слова','morality','Стиль','en-GB','Финансы','quizPlayQuestion','length','goal','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22quiz-container\x22\x20data-testid=\x22quiz-container\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22/nophoto.jpg\x22\x20alt=\x22quiz\x22\x20class=\x22quiz-image\x22\x20data-loading=\x22true\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22word-level\x22\x20style=\x22display:none\x22>','playFlashcardBtn','attachWordsListHandlers','\x20слов\x20в\x20изучении','Качества','addEventListener','\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','accelerometer;\x20autoplay;\x20clipboard-write;\x20encrypted-media;\x20gyroscope;\x20picture-in-picture','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-card-text\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-card-title\x22>','11odawjJ','toISOString','ALL','data-index','renderWordsList','state','Наречия','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-bar-wrap\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-bar-fill\x22\x20style=\x22width:','unobserve','lastCare','quizTimeoutId','Для\x20категории\x20«Добавленные\x20слова»\x20массовое\x20добавление\x20не\x20доступно','#flashcardCorrectBtn','fa-running','\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20title=\x22UK\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-headphones\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20popup-edit-btn\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-word=\x22','toggleWordLearned','insertAdjacentHTML','https://smart.servier.com/wp-content/uploads/2016/10/cerveau.png','date','tutNextBtn','IELTS','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22medal-card\x20','{}.constructor(\x22return\x20this\x22)(\x20)','fa-book','<div\x20class=\x22lesson-icon\x22><i\x20class=\x22fas\x20','Отрицание:\x20Subject\x20+\x20Auxiliary\x20+\x20not\x20+\x20Verb...','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22tutorial-controls\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:12px;\x20color:#999;\x20font-weight:600;\x22>','style','keys','loadSentencesForLevels','replace','every','MEDICAL','fa-link','\x0a\x20\x20\x20\x20<div\x20class=\x22settings-content\x22\x20style=\x22background:var(--bg-primary);border-radius:16px;padding:20px;max-width:520px;width:100%;box-shadow:var(--shadow-lg);\x22>\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h2\x20style=\x22margin:0;color:var(--text-primary)\x22>Настройки</h2>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-secondary\x20settings-close-btn\x22\x20data-testid=\x22settings-close\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-times\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x20\x0a\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20id=\x22settingsMenu\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x22\x20onclick=\x22window.open(\x27about.html\x27,\x20\x27_blank\x27)\x22\x20style=\x22width:100%;margin-bottom:10px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-info-circle\x22></i>\x20О\x20приложении\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x20settings-theme-btn\x22\x20data-testid=\x22settings-theme\x22\x20style=\x22width:100%;margin-bottom:10px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-adjust\x22></i>\x20Переключить\x20тему\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x20settings-audio-btn\x22\x20data-testid=\x22settings-audio\x22\x20style=\x22width:100%;margin-bottom:10px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-volume-up\x22></i>\x20Настройки\x20аудио\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x22\x20onclick=\x22window.open(\x27app.html\x27,\x20\x27_blank\x27)\x22\x20style=\x22width:100%;margin-bottom:10px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-download\x22></i>\x20Установка\x20приложения\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x22\x20onclick=\x22app.startAppTutorial()\x22\x20style=\x22width:100%;\x20margin-bottom:10px;\x22>\x0a\x20\x20\x20<i\x20class=\x22fas\x20fa-question-circle\x22></i>\x20Обучение\x0a</button>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20id=\x22settingsInnerPage\x22\x20style=\x22display:none;\x22></div>\x0a\x20\x20\x20\x20\x20\x20<div\x20id=\x22installGuide\x22\x20style=\x22display:none;\x22></div>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Карьера\x20и\x20работа','App\x20became\x20visible\x20-\x20trying\x20to\x20wake\x20up\x20audio','answerButtons','scheduled','delegated','fa-shapes','Материалы','step4','Добавлено\x20','#audioRateValue','<div\x20class=\x22lesson-label\x22>Урок\x20','data-word-text','\x22\x20title=\x22UK\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-headphones\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','replaceChild','google\x20en-gb','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22empty-state\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-check-circle\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3>Все\x20слова\x20повторены!</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Отличная\x20работа!\x20Возвращайтесь\x20позже\x20для\x20новых\x20повторений</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20','userConfig','function','fa-music','fa-globe-americas','\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-forms=\x27','createGlobalLoader','39DNrsoA','fa-coins','Здравоохранение','data-mode','overlayQuizContent_','target','currentReviewIndex','fa-newspaper','offsetParent','fa-feather','initializeUI','Путешествия\x20и\x20общение','interval','font-weight:600;','fa-project-diagram','check','incorrect','playIdiomAudio','.settings-audio-btn','\x27,\x20null)\x22\x20title=\x22Добавить\x20в\x20изучаемые\x22>Учить</button>\x0a\x20\x20\x20\x20','remove','stopCurrentAudio','\x20→\x20','data-testid','Этика','step2','get','Семья','\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20title=\x22US\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-volume-up\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20play-btn\x20popup-sound-uk\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-word=\x22','short','touchstart','#autoDictInlineBtn','delay','meta','.nav-item[data-section=\x22levels\x22]','IELTS\x20/\x20TOEFL','%;background:linear-gradient(90deg,#22d3ee,#3b82f6)\x22></div></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pet-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','text','width:100%;display:flex;align-items:center;justify-content:center;','getEnglishDisplay','rocket-soccer.html','position:fixed;inset:0;z-index:999999;background:#000;','parentElement','assembledSentence','fa-user-friends','isIntersecting','Фокус\x20обучения','renderQuiz','used','acc-bad','fa-basketball-ball','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22empty-state\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-plus-circle\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3>Нет\x20добавленных\x20слов</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20','getWordAccuracy','Звук\x20включен','learningWords','>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Определители','exam','.settings-content','Инновации','Чтобы\x20играть,\x20добавьте\x20минимум\x204\x20слова\x20в\x20«Изучаю»','null','.custom-sound-uk-btn','<span>','fa-map-marked-alt','Погода','google\x20english\x20uk\x20male','min','Учить\x20все','_setBulkButtonState','ТВОЯ\x20МОТИВАЦИЯ\x20НА\x20СЕГОДНЯ\x20:','syncModePracticeToggles','px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20','Чтобы\x20играть,\x20добавьте\x20минимум\x203\x20слова\x20из\x20\x22списка\x20слов\x22\x20в\x20«Изучаю»','showQuizGateForGame','loaderMinMs','\x0a\x20\x20\x20\x20<div\x20style=\x22display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;\x22>\x0a\x20\x20\x20\x20\x20\x20<h3\x20style=\x22margin:0;color:var(--text-primary)\x22>О\x20приложении</h3>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-secondary\x22\x20data-testid=\x22settings-about-back-btn\x22\x20onclick=\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20const\x20p=this.closest(\x27.settings-content\x27);\x0a\x20\x20\x20\x20\x20\x20\x20\x20p.querySelector(\x27#settingsInnerPage\x27).style.display=\x27none\x27;\x0a\x20\x20\x20\x20\x20\x20\x20\x20p.querySelector(\x27#settingsMenu\x27).style.display=\x27block\x27;\x0a\x20\x20\x20\x20\x20\x20\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-arrow-left\x22></i>\x20Назад\x0a\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<div\x20style=\x22max-height:60vh;overflow:auto;border:1px\x20solid\x20var(--border-color);border-radius:12px;padding:14px;background:var(--bg-secondary);\x22\x20data-testid=\x22settings-about-content\x22>\x0a\x20\x20\x20\x20\x20\x20','Еда\x20и\x20кухня','https://smart.servier.com/wp-content/uploads/2016/10/veine.png','fa-oil-can','installWordsListDelegatedHandlers','fas\x20fa-check-square','popup-delete-btn','pet_state_v1','fa-highlighter','Психика','playMp3Url','Время','Норма\x20(15\x20слов)','Религия','\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20<!--\x20Тренажёр\x20предложений\x20-->\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-icon\x20icon-purple\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-keyboard\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-title\x22>Тренажёр\x20предложений</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-subtitle\x22>Ваш\x20прогресс\x20в\x20режиме\x20«Тренажер»</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>Сегодня</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<strong>','google\x20uk\x20english\x20male','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>','prepareMedicalSearchTerms','fa-hourglass-half','\x0a\x20\x20\x20\x20\x20\x20<label>\x0a\x20\x20\x20\x20\x20\x20\x20\x20Уровень:\x0a\x20\x20\x20\x20\x20\x20\x20\x20<select\x20id=\x22wordsPopupFilter\x22>','lapses','motivationBtn','sentenceAnswerArea','Phrasal\x20audio\x20missing:','fa-tshirt','\x27,\x20{\x20type:\x20\x27grammar\x27,\x20id:\x20\x27','fa-flask','count','Уровень\x20','afterbegin','\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-translation\x22>','fa-heart-broken','Лайт\x20(5\x20слов)','wizardNextBtn','<div\x20class=\x22lesson-title\x22>','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-card\x20','nature','playPhrasalAudio','isLearned','deception','updateLevelCounts','<div\x20class=\x22lesson-card\x22\x20onclick=\x22window.app.showLevelWords(\x27','generateInitialVocabulary','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<!--\x20ЛЕВАЯ\x20КОЛОНКА\x20-->\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-info-wrapper\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-text\x22>','cssText','home','visibilityState','pendingSpecialWords','toDateString','Сколько\x20новых\x20слов\x20в\x20день\x20ты\x20готов\x20учить?','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-text\x22>','data-forms','https://smart.servier.com/wp-content/uploads/2016/10/crane_01.png','words-popup','wordsList','wizardProgress','🎬\x20Фильмы,\x20тренировка\x20памяти','installAudioUnlocker','playPhraseTTS','План\x20готов!\x20Ваша\x20цель:\x20','renderLearningSection','fa-laptop-code','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22sound-actions\x22\x20style=\x22margin-left:8px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22mini-btn\x22\x20title=\x22US\x22\x20onclick=\x22app.playWord(\x27','Критика','Уровень\x20B1-B2','words-popup-list','Понимаю\x20смысл,\x20но\x20говорю\x20с\x20ошибками.','btn\x20btn-primary','rocketStartBtn','fa-gamepad','background:var(--bg-primary);border-radius:16px;padding:16px;max-width:800px;width:90%;max-height:90vh;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;gap:12px;','<p>Проходите\x20уроки\x20последовательно\x20для\x20лучшего\x20результата!</p>','<button\x20class=\x22show-all-btn\x22\x20onclick=\x22window.app.showLevelWords(\x27','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22sound-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22mini-btn\x20gate-sound-btn\x22\x20data-region=\x22us\x22><i\x20class=\x22fas\x20fa-volume-up\x22></i></button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22font-size:14px;opacity:0.8;margin-bottom:12px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Выберите\x20правильный\x20вариант\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22quiz-options\x22\x20style=\x22display:grid;gap:10px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','medical-image','bind','fa-medkit','fa-bolt','\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20play-btn\x22\x20title=\x22US\x22\x20onclick=\x22app.playWord(\x27','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20<!--\x20ПРАВАЯ\x20КОЛОНКА\x20-->\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20play-btn\x20custom-sound-us-btn\x22\x20data-word-text=\x22','handleTranslatorAdd\x20error','Фразовые\x20глаголы','pointerEvents','sentence-feedback\x20incorrect','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22text-align:center;\x20margin-top:10px;\x20font-size:0.8rem;\x20color:var(--text-secondary);\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Выберите\x20один\x20или\x20несколько\x20пунктов\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','_handleStep2SubOptions','isEnglish','OGE','quiz','Культура','234212mORQZW','fa-folder-open','beforeend','sang','activeElement','visibilitychange','\x20слов\x20из\x20изучаемых','%</span></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pet-bar\x22><div\x20class=\x22pet-bar-fill\x22\x20style=\x22width:','clearGameQuizCycle','%;\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','alive','/puppy.png','error','cat','correctOrder','grammar-close-btn','appearance','data-practice','tutorial-bob-container','Облик','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22flashcard\x22\x20data-testid=\x22flashcard\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22/nophoto.jpg\x22\x20alt=\x22flashcard\x22\x20class=\x22flashcard-image\x22\x20data-loading=\x22true\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22flashcard-body\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20class=\x22flashcard-title\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','IT\x20и\x20Технологии','https://smart.servier.com/wp-content/uploads/2016/10/coeur.png','catalogStartBtn','renderLevelCategoriesMenu','fa-theater-masks','\x20из\x20','Удалено\x20','scrollIntoView','floor','\x27\x20title=\x22Добавить\x20в\x20изучаемые\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<!--\x20Текст\x20скрыт\x20CSS,\x20иконка\x20через\x20::after\x20-->\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>','shopping','Перевозки','initBewordsTranslator','round','.toast-container','totalCorrect','some','fa-hotel','handleImageError','&#39;','removeItem','pancreas','✈️\x20Разговорный\x20язык','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22option-sound\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22mini-btn\x22\x20title=\x22US\x22\x20onclick=\x22event.stopPropagation();\x20app.playSingleWordMp3(\x27','wordsContainer','background:var(--bg-primary);border-radius:16px;padding:30px;max-width:520px;width:90%;box-shadow:var(--shadow-lg);','bulkHelp','push','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-options\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','.content-section','.option-sound-us','switchSection','firstSeenAt','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22card-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x22\x20id=\x22showAnswerBtn\x22\x20data-testid=\x22flashcard-show-answer\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-eye\x22></i>\x20Показать\x20ответ\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22answer-buttons\x20hidden\x22\x20id=\x22answerButtons\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-danger\x22\x20id=\x22flashcardWrongBtn\x22\x20data-testid=\x22flashcard-wrong\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-times\x22></i>\x20Не\x20знал\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-success\x22\x20id=\x22flashcardCorrectBtn\x22\x20data-testid=\x22flashcard-correct\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-check\x22></i>\x20Знал\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20style=\x22text-align:center;margin-top:15px;color:var(--text-secondary);\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20Карточка\x20','#wordsPopupFilter','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22medal-name\x22>','descriptions','<i\x20class=\x22fas\x20fa-magic\x22></i>\x20Подобрать\x20словарь\x20под\x20тебя','last\x20shown:','.quiz-sound-uk','2048.html','Law,\x20Court,\x20Crime','\x27\x20title=\x22UK\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-headphones\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','trainerRepeats','estomac','attachCustomWordsListeners','Модальные','PHRASAL_VERBS','\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20title=\x22','\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20<!--\x20Полоска\x20цели\x20(в\x20стиле\x20приложения)\x20-->\x0a\x20\x20\x20\x20\x20\x20<div\x20style=\x22margin-top:\x2016px;\x20padding-top:\x2012px;\x20border-top:\x202px\x20solid\x20var(--border-color);\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-main-bar-label\x22\x20style=\x22margin-bottom:\x206px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-weight:800;\x20color:var(--text-primary);\x22>Цель\x20на\x20день</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-weight:700;\x20color:var(--text-secondary);\x22>','observe','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22quiz-option\x22\x20data-answer=\x22','data-section','answerFlashcard','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22week-activity-list\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','assembledWords','voice','showCategoryWords','%</span>','step3','\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20</div>\x0a\x20\x20','fa-comment-dots','phase','donate-modal-overlay','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pet-widget\x22\x20data-testid=\x22pet-widget\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pet-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22/kitten.png\x22\x20class=\x22pet-avatar\x22\x20alt=\x22pet\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pet-title\x22>Заведи\x20питомца!</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:var(--text-secondary);font-size:13px;\x22>Выбери\x20котёнка\x20или\x20щенка\x20—\x20заботься\x20о\x20нём\x20каждый\x20день!</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;gap:8px;align-items:flex-end;margin-bottom:8px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<label\x20style=\x22display:block;font-size:12px;margin-bottom:6px;color:var(--text-secondary)\x22>Кого\x20выбираем?</label>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;gap:8px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-secondary\x20pet-choose-cat\x22>Котёнок</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-secondary\x20pet-choose-dog\x22>Щенок</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22flex:1;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<label\x20style=\x22display:block;font-size:12px;margin-bottom:6px;color:var(--text-secondary)\x22>Имя\x20питомца</label>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<input\x20id=\x22petNameInput\x22\x20style=\x22width:100%;padding:8px;border:1px\x20solid\x20var(--border-color);border-radius:8px;background:var(--bg-primary);color:var(--text-primary);\x22\x20placeholder=\x22Малыш\x22\x20/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:var(--text-secondary);font-size:12px;\x22>Подсказка:\x20если\x20не\x20ухаживать\x20ежедневно\x20—\x20питомец\x20может\x20сбежать\x20на\x20улицу\x20🥺</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','fa-bullhorn','50px','career','\x22\x20title=\x22UK\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-headphones\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22flashcard-subtitle\x22>Нажмите,\x20чтобы\x20увидеть\x20перевод</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22flashcard-answer\x20hidden\x22\x20id=\x22flashcardAnswer\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22review-translation\x22>','10px','fa-shipping-fast','safeAttr','Предлоги','fa-list','step1','action','(((.+)+)+)+$','shouldAutoPronounce','startAppTutorial','findIndex','attachPetHandlers','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','localService','join','fa-wine-glass','desc','onend','learningHelpLamp','\x22></i>\x20\x0a\x20\x20\x20\x20\x20\x20','\x22\x20удалено\x20из\x20изучаемых','medicalImageCache','position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;','https://bewords.ru/au/phrasal/us/','nextReview','#audioRateSlider','bulkLevel','not-all','gameFullscreenContainer','tutorial_complete_forever','Обман','progressContent','px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2016px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x200\x200\x209999px\x20rgba(0,0,0,0.75);\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20z-index:\x2099998;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20pointer-events:\x20auto;\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transition:\x20all\x200.4s\x20ease;\x0a\x20\x20\x20\x20\x20\x20\x20\x20','.quiz-option-gate','words-popup-sentinel','load','getPrimaryImageUrl','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22sentence-word\x20','position:fixed;\x20inset:0;\x20background:rgba(0,0,0,0.8);\x20z-index:99999;\x20display:flex;\x20align-items:center;\x20justify-content:center;','actions','.practice-btn','createBufferSource','fa-head-side-virus','fa-smile','.quiz-option','choosePet','data-category','has-content','Развлечения','appendChild','.pet-choose-dog','fun','transport','flashcardAnswer','bulkAddBtn','\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22sentence-controls\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22sentence-control-btn\x20sentence-clear-btn\x22\x20id=\x22sentenceClearBtn\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20🔄\x20Сбросить\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22sentence-control-btn\x20sentence-skip-btn\x22\x20id=\x22sentenceSkipBtn\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20⏭️\x20Пропустить\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22sentence-check-btn\x22\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Диалог','toLocaleDateString','Audio\x20timeout','.nav-item[data-section=\x22progress\x22]','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22background:white;\x20padding:30px;\x20border-radius:20px;\x20text-align:center;\x20max-width:320px;\x20animation:\x20popIn\x200.4s;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22/instruction.png\x22\x20style=\x22width:100px;\x20margin-bottom:15px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2\x20style=\x22margin-bottom:10px;\x22>Ты\x20готов!\x20🚀</h2>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:#666;\x20margin-bottom:20px;\x22>Если\x20что-то\x20забудешь,\x20инструкция\x20всегда\x20доступна\x20в\x20Настройках.</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x22\x20onclick=\x22this.closest(\x27.tutorial-overlay\x27).remove()\x22>Погнали!</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20','all\x200.3s\x20ease','buildProverbAudioUrl','Менеджмент','globalPlayer','fas\x20fa-check-circle','getSentenceHint','findWordObject','\x22\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-forms=\x27','name','success','[data-section=\x22','preventDefault','renamePet','fa-cogs','Местоимения','Разговорная\x20речь','First\x20run\x20not\x20completed\x20-\x20skipping\x20motivation','Игра\x20','🎓\x20ОГЭ,\x20ЕГЭ,\x20IELTS','ADDED','disabled','<div\x20class=\x22lesson-info\x22>','Логистика','.install-guide-back-btn','getFallbackImageUrl','fa-star','src','<div\x20style=\x22text-align:center;color:var(--text-secondary);\x22>Недостаточно\x20слов</div>','.word-card','Дом\x20и\x20быт','</button>','card-','\x20\x0a@keyframes\x20slideDown\x20{\x0a\x20\x20\x20\x20from\x20{\x20transform:\x20translate(-50%,\x20-100%);\x20opacity:\x200;\x20}\x0a\x20\x20\x20\x20to\x20{\x20transform:\x20translate(-50%,\x200);\x20opacity:\x201;\x20}\x0a}\x0a@keyframes\x20slideUp\x20{\x0a\x20\x20\x20\x20from\x20{\x20transform:\x20translate(-50%,\x200);\x20opacity:\x201;\x20}\x0a\x20\x20\x20\x20to\x20{\x20transform:\x20translate(-50%,\x20-100%);\x20opacity:\x200;\x20}\x0a}\x0a.sound-actions\x20.mini-btn,\x20.option-sound\x20.mini-btn\x20{\x0a\x20\x20\x20\x20border:none;\x20\x0a\x20\x20\x20\x20background:\x20var(--bg-tertiary,\x20#f0f2f5);\x20\x0a\x20\x20\x20\x20padding:4px\x206px;\x20\x0a\x20\x20\x20\x20border-radius:6px;\x20\x0a\x20\x20\x20\x20cursor:pointer;\x20\x0a\x20\x20\x20\x20color:#333;\x20\x0a}\x0a.quiz-option\x20.quiz-option-inner\x20{\x0a\x20\x20\x20\x20display:flex;\x20\x0a\x20\x20\x20\x20align-items:center;\x20\x0a\x20\x20\x20\x20justify-content:space-between;\x20\x0a\x20\x20\x20\x20gap:8px;\x20\x0a}\x0a\x0a/*\x20Подсветка\x20активного\x20пункта\x20меню\x20во\x20время\x20тура\x20*/\x0a.bottom-nav\x20.nav-item.nav-highlight\x20{\x0a\x20\x20\x20\x20position:\x20relative;\x0a\x20\x20\x20\x20box-shadow:\x200\x200\x200\x206px\x20rgba(99,102,241,0.3);\x0a\x20\x20\x20\x20border-radius:\x2012px;\x0a}\x0a\x0a/*\x20Мини-игра\x20питомец\x20(прогресс)\x20*/\x0a.pet-widget{\x0a\x20\x20\x20\x20background:var(--bg-secondary);\x0a\x20\x20\x20\x20border:1px\x20solid\x20var(--border-color);\x0a\x20\x20\x20\x20border-radius:14px;\x0a\x20\x20\x20\x20padding:12px;\x0a\x20\x20\x20\x20margin-bottom:14px;\x0a}\x0a.pet-header{\x0a\x20\x20\x20\x20display:flex;\x0a\x20\x20\x20\x20align-items:center;\x0a\x20\x20\x20\x20gap:10px;\x0a\x20\x20\x20\x20margin-bottom:10px;\x0a}\x0a.pet-avatar{\x0a\x20\x20\x20\x20width:56px;\x0a\x20\x20\x20\x20height:56px;\x0a\x20\x20\x20\x20object-fit:contain;\x0a\x20\x20\x20\x20border-radius:10px;\x0a\x20\x20\x20\x20background:#fff;\x0a\x20\x20\x20\x20border:1px\x20solid\x20var(--border-color);\x0a}\x0a.pet-title{\x0a\x20\x20\x20\x20font-weight:800;\x0a\x20\x20\x20\x20color:var(--text-primary);\x0a}\x0a.pet-bars{\x0a\x20\x20\x20\x20display:grid;\x0a\x20\x20\x20\x20gap:8px;\x0a\x20\x20\x20\x20margin:8px\x200\x2010px;\x0a}\x0a.pet-bar{\x0a\x20\x20\x20\x20height:10px;\x0a\x20\x20\x20\x20background:#e5e7eb;\x0a\x20\x20\x20\x20border-radius:8px;\x0a\x20\x20\x20\x20overflow:hidden;\x0a}\x0a.pet-bar-fill{\x0a\x20\x20\x20\x20height:100%;\x0a\x20\x20\x20\x20background:linear-gradient(90deg,#10b981,#22d3ee);\x0a}\x0a.pet-actions{\x0a\x20\x20\x20\x20display:flex;\x0a\x20\x20\x20\x20flex-wrap:wrap;\x0a\x20\x20\x20\x20gap:8px;\x0a}\x0a.pet-dead{\x0a\x20\x20\x20\x20color:#ef4444;\x0a\x20\x20\x20\x20font-weight:700;\x0a\x20\x20\x20\x20margin:8px\x200;\x0a}\x0a/*\x20Стили\x20для\x20бейджей\x20точности\x20*/\x0a.acc-badge\x20{\x0a\x20\x20\x20\x20display:\x20inline-block;\x0a\x20\x20\x20\x20padding:\x202px\x208px;\x0a\x20\x20\x20\x20border-radius:\x2010px;\x0a\x20\x20\x20\x20font-size:\x2012px;\x0a\x20\x20\x20\x20font-weight:\x20700;\x0a\x20\x20\x20\x20margin-left:\x208px;\x0a\x20\x20\x20\x20vertical-align:\x20middle;\x0a}\x0a.acc-none\x20{\x20background:\x20#e5e7eb;\x20color:\x20#374151;\x20}\x0a.acc-good\x20{\x20background:\x20#d1fae5;\x20color:\x20#065f46;\x20}\x0a.acc-mid\x20{\x20background:\x20#fef3c7;\x20color:\x20#92400e;\x20}\x0a.acc-bad\x20{\x20background:\x20#fee2e2;\x20color:\x20#991b1b;\x20}\x0a','lastReview','Audio\x20error','position:absolute;top:56px;left:0;width:100%;height:calc(100%\x20-\x2056px);border:none;','\x0a\x20\x20\x20\x20<div\x20class=\x22progress-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20<!--\x20Красивая\x20шапка\x20как\x20у\x20других\x20карточек\x20-->\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-icon\x20icon-gold\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-trophy\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-title\x22>Достижения</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-subtitle\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Серия\x20побед:\x20<span\x20style=\x22color:#d97706;\x20font-weight:800;\x22>','theme','getBaseEnglish','newWordsAddedToday','624lVLMRg','querySelector','removeAttribute','\x0a\x20\x20\x20\x20<div\x20class=\x22about-content\x22>\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22feature-card\x22\x20style=\x22background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22feature-icon\x22\x20style=\x22width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-graduation-cap\x22\x20style=\x22color:white;\x22></i>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22margin-bottom:8px;color:var(--text-primary);\x22>Изучение\x20по\x20уровням</h3>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:var(--text-secondary);margin:0;\x22>Структурированное\x20изучение\x20английских\x20слов\x20от\x20начального\x20до\x20продвинутого\x20уровня\x20(A1–C2)</p>\x20\x0a\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22feature-card\x22\x20style=\x22background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22feature-icon\x22\x20style=\x22width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-volume-up\x22\x20style=\x22color:white;\x22></i>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22margin-bottom:8px;color:var(--text-primary);\x22>Произношение</h3>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:var(--text-secondary);margin:0;\x22>Прослушивание\x20правильного\x20произношения\x20слов\x20(британский\x20и\x20американский\x20акценты)</p>\x20\x0a\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22feature-card\x22\x20style=\x22background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22feature-icon\x22\x20style=\x22width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-gamepad\x22\x20style=\x22color:white;\x22></i>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22margin-bottom:8px;color:var(--text-primary);\x22>Учите\x20английские\x20слова\x20играя\x20в\x20игры</h3>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:var(--text-secondary);margin:0;\x22>Играйте\x20в\x20разные\x20увлекательные\x20игры!\x20Спустя\x20время\x20у\x20вас\x20будет\x20появляться\x20quiz,\x20на\x20который\x20нужно\x20ответить\x20правильно,\x20чтобы\x20продолжить\x20играть.</p>\x20\x0a\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22feature-card\x22\x20style=\x22background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22feature-icon\x22\x20style=\x22width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-laugh-beam\x22\x20style=\x22color:white;\x22></i>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22margin-bottom:8px;color:var(--text-primary);\x22>Позитивная\x20атмосфера\x20обучения</h3>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:var(--text-secondary);margin:0;\x22>Добавлены\x20смешные\x20картинки\x20и\x20мемы\x20для\x20мотивации\x20и\x20интереса.</p>\x20\x0a\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22feature-card\x22\x20style=\x22background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22feature-icon\x22\x20style=\x22width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-chart-line\x22\x20style=\x22color:white;\x22></i>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22margin-bottom:8px;color:var(--text-primary);\x22>Отслеживание\x20прогресса</h3>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:var(--text-secondary);margin:0;\x22>Учет\x20изученных\x20слов\x20и\x20прогресс\x20по\x20уровням</p>\x20\x0a\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22author-info\x22\x20style=\x22background:var(--bg-secondary);padding:20px;border-radius:12px;border-left:4px\x20solid\x20#7c3aed;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22margin-bottom:8px;color:var(--text-primary);\x22>Об\x20авторе\x20методики</h3>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:var(--text-secondary);margin-bottom:12px;\x22>Приложение\x20создано\x20на\x20основе\x20методики\x20<strong>Абдуррахима\x20Бердиева</strong>.</p>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<a\x20href=\x22https://berdiyev-eng.ru\x22\x20target=\x22_blank\x22\x20class=\x22author-link\x20btn\x20btn-primary\x22\x20style=\x22text-decoration:none;display:inline-block;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-external-link-alt\x22></i>\x20Узнать\x20больше\x20об\x20авторе\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20</a>\x20\x0a\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20</div>\x0a\x20\x20','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','\x20•\x20','showSupportModal','materials','Вопрос:\x20Auxiliary/Modal\x20+\x20Subject\x20+\x20Verb...?','Вера','currentLevelTitle','ninja','fa-users-cog','loaderStart','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22tiny-level-badge\x22>','currentLevel','determiners','then','\x20запущена!\x20Приятной\x20игры!','en-US','buildAudioUrl','getRandomLearningWord','conjunctions','checkImageAvailability','showFlashcardAnswer','fa-leaf','pct','space','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22empty-state\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-check-circle\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h3>Нет\x20слов\x20для\x20отображения</h3>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','https://smart.servier.com/wp-content/uploads/2017/01/','</div>','icon','loaderTimer','top','\x20/\x20','openInstallGuideInSettings','ensureVoicesLoaded','autoDictInlineBtn','education','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22level-progress-list\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','en-gb','buildPrepositionAudioUrl','Общее','type','Смотрю\x20сериалы,\x20но\x20хочу\x20звучать\x20как\x20носитель.','reduce','endless','basic','society','\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22text-align:center;margin-top:15px;color:var(--text-secondary);\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Вопрос\x20','play','.word-text,\x20.flashcard-title,\x20.quiz-question','all-added','exception','Глаголы','Слова\x20для\x20','topic','EGE','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-title\x22>','Motivation\x20already\x20shown\x20today','auto-dict-inline','parentNode','\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20','<div\x20class=\x22category-menu-container\x22>','speak','includes','showInfoModal','emotions','[data-group=\x22step2_sub\x22]','Скоро','openAboutInSettings','fontWeight','score','Бизнес','.level-card[data-category]','places','category','split','Самые\x20важные\x20слова\x20для\x20выживания','return\x20(function()\x20','ПОЛУЧИТЬ\x20ЗАРЯД\x20МОТИВАЦИИ\x20💪','Subway','.practice-toggle','btn\x20btn-secondary','set','rhetoric','Духовность','word-add-btn','Wizard\x20added\x20','location','popup-sound-uk','accScore','Включить\x20звук','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Прочее','all','active','app-extra-styles','_attachWizardCardHandlers','stringify','pronouns','religion','position:fixed;inset:0;z-index:1000001;background:rgba(0,0,0,0.95);display:flex;align-items:center;justify-content:center;padding:20px;','✅\x20Отлично!\x20Правильный\x20ответ!','Добавлен\x20словарный\x20минимум\x20для\x20ЕГЭ\x20(B1-B2)','DOMContentLoaded','Армия','showMotivationPopup','\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','constructor','</option>','dailyLimit','Питомец\x20умер.\x20Оживите\x20его,\x20чтобы\x20продолжить.','Карьера','ai-chat','Пространство','switchLearningMode','from','<p\x20class=\x22progress-empty-text\x22>Вы\x20ещё\x20не\x20добавили\x20слова\x20—\x20начните\x20с\x20раздела\x20«Списки».</p>','\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-index=\x22','petNameInput','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-progress-track\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-progress-fill\x22\x20id=\x22wizardProgress\x22\x20style=\x22width:\x2025%\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-content\x22\x20id=\x22wizardContent\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<!--\x20Контент\x20шага\x20рендерится\x20тут\x20-->\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-footer\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22wizard-btn\x22\x20id=\x22wizardNextBtn\x22\x20disabled>ПРОДОЛЖИТЬ</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','newWord','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22quiz-option-inner\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>','pickPreferredGoogleVoice','addWordBtn','list','fa-feather-alt','setItem','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:var(--text-secondary);font-size:12px;\x22>','size','dash.html','Пословицы\x20и\x20поговорки','ensurePetDecay','nouns','finally','editLearningWord','escape','\x27,\x20{\x20type:\x20\x27topic\x27,\x20id:\x20\x27','showSentenceGrammarModal','sentencesByLevel','Удалить\x20все','cleanWordForAudio','\x22\x20title=\x22Удалить\x20из\x20изучаемых\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<!--\x20Текст\x20скрыт\x20CSS,\x20иконка\x20через\x20::after\x20-->\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Игра:\x20','\x20добавлены\x20в\x20очередь\x20(нужна\x20база)','<div\x20style=\x22text-align:center;padding:20px;\x22>Недостаточно\x20слов</div>','webkitAudioContext','1796412hAHKjG','fa-palette','fa-cloud-sun','classList','new-words','Прогресс\x20и\x20Питомец.\x20Заходи\x20каждый\x20день,\x20чтобы\x20кормить\x20его\x20своими\x20знаниями!','Умный\x20ИИ-собеседник.\x20Потренируй\x20диалог\x20или\x20попроси\x20объяснить\x20правило.','jumpToTopStrict','gate-correct','.form-group','volume-mute','lang','Blocking\x20new\x20words:\x20avg\x20score\x20is\x20too\x20low','cerveau','.quiz-sound-us','#closeDonateBtn','Модальные\x20глаголы','img','[data-level=\x22','single','onAddToStudy','loaderEl','getVoices','Ctx\x20resume\x20fail','Geo-Dash','Главный\x20экран\x20\x22Изучаю\x22.\x20Здесь\x20твои\x20карточки,\x20квизы\x20и\x20тренажер\x20предложений.','https://britlex.ru/images/','getAboutContentHtml','Coding,\x20Hardware,\x20Internet','Вернуть\x20в\x20изучение','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-card\x20word-card-compact\x20popup-word-card\x22\x20data-word=\x22','url','grammar-modal\x20show','currentAudio','documentElement','rate','Proverb\x20audio\x20missing:','fa-futbol','fa-th-list','fa-dna','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22sound-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22mini-btn\x20flashcard-sound-us\x22\x20data-word=\x22','surfStartBtn','resetSrsDayIfNeeded','audioRate','removeWordFromLearning','.custom-delete-btn','currentTime','fa-calendar-alt','[data-category=\x22MEDICAL\x22]','Места\x20и\x20здания','setAttribute','switchPet','grammar','initializeWordStats','dark','totalAnswers','loading','sound-us-btn','renderSentenceBuilder','%;\x20background:\x20linear-gradient(90deg,\x20#f59e0b,\x20#fbbf24);\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22text-align:center;\x20font-size:12px;\x20margin-top:6px;\x20color:var(--text-secondary);\x20font-weight:600;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Локация','\x20.word-count','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22margin:0;color:var(--text-primary)\x22>Инструкция\x20по\x20установке</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-secondary\x20install-guide-back-btn\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-arrow-left\x22></i>\x20Назад\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22border:1px\x20solid\x20var(--border-color);border-radius:12px;overflow:hidden;height:60vh;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<iframe\x20src=\x22app.html\x22\x20style=\x22width:100%;height:100%;border:0;background:var(--bg-secondary);\x22\x20title=\x22Инструкция\x20по\x20установке\x22></iframe>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','sentenceCheckBtn','button','saveMedicalImageCache','conflict','sentenceBuilderState','term','science','motivation_last_shown','none','.pet-choose-cat','far\x20fa-circle','Отметить\x20выученным','getAttribute','5\x20слов','4165504TYNKRA','log','acc-mid','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-card\x20','fa-suitcase-rolling','className','18ppxcwb','game-quiz-overlay','400px','toggleLevelsIndexVisibility','\x27\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-level=\x22','\x22\x20добавлено\x20в\x20«Добавленные\x20слова»!','trainer','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22donate-popup-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22donate-close-absolute\x22\x20id=\x22closeDonateBtn\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-times\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22donate-heart-icon\x22>❤️</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h2\x20class=\x22donate-title\x22>Внесите\x20свой\x20вклад\x20в\x20<span>Bewords</span></h2>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22donate-desc\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Я\x20разрабатываю\x20это\x20приложение\x20в\x20одиночку.\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Здесь\x20нет\x20рекламы\x20и\x20платных\x20подписок.\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Ваш\x20донат\x20помогает\x20оплачивать\x20серверы\x20и\x20работу\x20над\x20новыми\x20функциями.\x0a\x20\x20\x20\x20\x20\x20\x20\x20</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22donate-goal-box\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22donate-goal-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>Цель:\x20Оплата\x20серверов</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>','ОГЭ\x20(9\x20класс)','far\x20fa-square','Поведение','buildIdiomAudioUrl','.pet-rename-btn','acc-good','[data-category=\x22PREPOSITIONS\x22]','Нюансы','Путешествия','Политика','\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22sentence-hint\x22>','swapCardButtonToRemove','toggleTheme','#motivationBtn','test','Люди','createDocumentFragment','difficulty','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span><span\x20class=\x22dot\x20dot-active\x22></span>В\x20процессе:\x20','sanitizeForSpeech','fa-cube','bulkToggleBtn','updateWordStats','AudioContext','fa-shield-alt','\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','swapCardButtonToAdd','muted','group','pos','setPetState','showOnboardingWizard','currentCategory','selectQuizOption','step','1336955rFBjYO','Еда\x20и\x20напитки','Для\x20себя','toggle','playSingleWordMp3','foie','unlocked','<div\x20class=\x22grammar-name\x22>','<i\x20class=\x22fas\x20fa-layer-group\x22></i>\x20Показать\x20все\x20слова\x20списка','fa-arrows-alt','EN_RU','\x27\x20title=\x22US\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-volume-up\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20play-btn\x20sound-uk-btn\x22\x20data-word-text=\x22','globalLoader','dent','500\x20слов','step2_sub','fa-sort-numeric-up','ninja.html','Средний\x20(B1)','Экология','verbs','Правильных\x20ответов:\x20<span\x20id=\x22gateScore\x22>0</span>/3','waitForCurrentAudioToFinish','currentSection','Время\x20повторить\x20слова!','\x0a\x20\x20\x20\x20\x20\x20position:absolute;top:0;left:0;right:0;height:56px;background:rgba(255,255,255,0.96);\x0a\x20\x20\x20\x20\x20\x20display:flex;align-items:center;gap:8px;padding:8px\x2012px;z-index:1000000;box-shadow:0\x202px\x208px\x20rgba(0,0,0,0.15);\x0a\x20\x20\x20\x20','level','Социум','\x27)\x22\x20title=\x22Удалить\x20из\x20изучаемых\x22>Удалить</button>\x0a\x20\x20\x20\x20','50\x20слов','connect','%;\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-main-bar-legend\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span><span\x20class=\x22dot\x20dot-learned\x22></span>Выучено:\x20','learningWordsPopup','Интеракция','adverbs','.popup-sound-us,\x20.popup-sound-uk,\x20.popup-edit-btn,\x20.popup-delete-btn','\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-level=\x22','initMedicalImageCache','fa-wind','<div\x20class=\x22category-section-title\x22>','\x20🔥</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20<!--\x20Сетка\x20медалей\x20-->\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22medals-grid\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','dog','Игротека!\x20Учись\x20играючи.\x20Аркады,\x20гонки\x20и\x20головоломки\x20со\x20словами.','Кот\x20Боб\x20загружает\x20ещё\x20слова...','\x22\x20добавлено\x20в\x20изучаемые!','fa-tree','settingsBtn','literary','map','fa-couch','data-translation','display:flex;justify-content:center;margin:12px\x200;','34942LKGkAS','Юриспруденция','\x22\x20уже\x20в\x20изучаемых','\x22\x20class=\x22pet-avatar\x22\x20alt=\x22pet\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pet-title\x22>','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20','levels','TOEFL','finishWizard','oncanplaythrough','\x22\x20title=\x22UK\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-headphones\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22quiz-sub\x22>Выберите\x20правильный\x20перевод</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22quiz-options\x22\x20id=\x22quizOptions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','removeAllLevelWords','correctStreak','.list-sound-us','Заполните\x20все\x20поля!','insertAutoDictionaryButtonInLearning\x20error:','nextWizardStep','\x20слов\x20в\x20«Добавленные\x20слова»!','onloadeddata','https://smart.servier.com/wp-content/uploads/2016/10/virus.png','insertAutoDictionaryButtonInLearning','text-align:center;margin-bottom:20px;\x20font-weight:800;','singleAddForm','Риторика','PREPOSITIONS','forEach','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22words-popup-title\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h3>Все\x20слова</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p>','suspended','gameQuizIntervals','bottom','getMedicalImageUrl','.jpg','#showAnswerBtn','random','bulkAddWords','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22option-sound\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22mini-btn\x20option-sound-us\x22\x20data-word=\x22','fa-rainbow','settings-modal','startGameQuizCycle','srsDayV1','\x0a\x20\x20\x20\x20<div\x20class=\x22progress-grid\x22>\x0a\x20\x20\x20\x20\x20\x20<!--\x20Общий\x20прогресс\x20-->\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card\x20progress-card-main\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-icon\x20icon-green\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-chart-line\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-title\x22>Общий\x20прогресс</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-subtitle\x22>Ваш\x20личный\x20словарный\x20запас\x20в\x20Bewords</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-main-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-main-number\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','oeil','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<!--\x20ЛЕВАЯ\x20КОЛОНКА\x20-->\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-info-wrapper\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-text\x22>','currentPractice','</strong>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20<!--\x20По\x20уровням\x20/\x20категориям\x20-->\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-icon\x20icon-blue\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-layer-group\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-title\x22>По\x20уровням\x20и\x20категориям</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-subtitle\x22>Где\x20вы\x20продвинулись\x20больше\x20всего</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','block','https://smart.servier.com/wp-content/uploads/2016/10/dent.png','head','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-main-bar-track\x22\x20style=\x22height:10px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-main-bar-fill\x22\x20style=\x22width:\x20','onended','warning','fa-lightbulb','lastNewWordsDate','Быт','number','intellect','speechSynthesis','.mode-btn','fa-scroll','BUSINESS','now','fa-utensils','Язык','fa-chart-line','false','data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA','en-us','fa-gavel','destination','weather','fas\x20fa-volume-up','lastFlashcardFrontWasRussian','Спорт',',\x20\x27us\x27)\x22><i\x20class=\x22fas\x20fa-volume-up\x22></i></button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22mini-btn\x22\x20title=\x22UK\x22\x20onclick=\x22app.playWord(\x27','business','/loading.gif','playFormsSequence','scrollTop','trainerCorrect','poumon','switchPracticeMode','fa-quote-right','fa-language','locked','Academic\x20English','Дневная\x20цель','.word-card,\x20.flashcard,\x20.quiz-container','incrementTrainerCounters','.nav-item[data-section=\x22ai-chat\x22]','motivation-btn','renderCustomWords','.word-actions','buildIdiomFileName','renderProgress','fa-door-open','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x20pet-feed-btn\x22>Покормить</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x20pet-water-btn\x22>Напоить</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-secondary\x20pet-rename-btn\x22>Переименовать</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-secondary\x20pet-switch-btn\x22>Сменить\x20питомца</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','#settingsInnerPage','200px','Здания','console','showLearningWordsPopup','getItem','.flashcard-sound-uk','fa-laugh','\x22\x20title=\x22Удалить\x20навсегда\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-trash\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','40px','Процессы','data-loading','thirst','splice','#audioMuteToggleBtn','click','https://smart.servier.com/wp-content/uploads/2016/10/gros_intestin.png','onclick','Ваша\x20цель','Preposition\x20audio\x20missing:','app_muted','Forms\x20parse\x20error:','Котёнок','hidden','data-word','isRussian','Общие\x20слова','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22empty-state\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-inbox\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h3>Нет\x20слов\x20для\x20отображения</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p>Попробуйте\x20выбрать\x20другой\x20уровень\x20или\x20добавьте\x20слова\x20из\x20раздела\x20\x22Списки\x22.</p>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','wordStats','app','catch','.nav-item','words-popup-filters','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','fa-clipboard-list','.quiz-image','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22sentence-level-badge\x20level-','scrollBehavior','\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22/instruction.png\x22\x20class=\x22bob-img\x22\x20style=\x22width:110px;\x20height:auto;\x20margin-top:-12px;\x20filter:\x20drop-shadow(0\x205px\x2010px\x20rgba(0,0,0,0.2));\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','_questionStart','</span>x</strong>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20style=\x22border-top:1px\x20solid\x20var(--border-color);padding-top:12px;margin-top:8px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h4\x20style=\x22margin:0\x200\x206px;color:var(--text-primary);\x22>Звук</h4>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22margin:0\x200\x2010px;color:var(--text-secondary);font-size:0.85rem;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Вы\x20можете\x20временно\x20полностью\x20выключить\x20звук\x20в\x20приложении.\x0a\x20\x20\x20\x20\x20\x20\x20\x20</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-primary\x22\x20id=\x22audioMuteToggleBtn\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-','Мастер','gateScore','\x22\x20data-group=\x22','weeklyProgress','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-mascot-area\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22/loading.gif\x22\x20class=\x22wizard-mascot-img\x22\x20alt=\x22Bob\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-bubble\x22>','preload','getPetWidgetHtml','PROVERBS','change','font-weight:900;font-size:18px;color:var(--text-primary);','motivationOverlay','reps','.gate-sound-btn','feedPet','px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20','renderFilteredWordsList','Искусство','shuffle','about','learningCount','isIrregularWord','prepositions','paused','Отключить\x20звук','buildQuizOptions','fa-clock','fa-magic','font-weight:700;color:#333;','ninjaStartBtn','adn','Прилагательные','Конфликт','wizardState','fa-user','\x22\x20data-level=\x22','inline-flex','total','fa-users','sentenceFeedback','wrong','\x0a\x20\x20\x20\x20<div\x20style=\x22display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;\x22>\x0a\x20\x20\x20\x20\x20\x20<h3\x20style=\x22margin:0;color:var(--text-primary)\x22>Настройки\x20аудио</h3>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn\x20btn-secondary\x22\x20data-testid=\x22settings-audio-back-btn\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-arrow-left\x22></i>\x20Назад\x0a\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<div\x20style=\x22max-height:60vh;overflow:auto;border:1px\x20solid\x20var(--border-color);border-radius:12px;padding:14px;background:var(--bg-secondary);\x22\x20data-testid=\x22settings-audio-content\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20style=\x22margin-bottom:16px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h4\x20style=\x22margin:0\x200\x206px;color:var(--text-primary);\x22>Скорость\x20воспроизведения</h4>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22margin:0\x200\x2010px;color:var(--text-secondary);font-size:0.85rem;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Настройте,\x20насколько\x20медленно\x20или\x20быстро\x20будут\x20озвучиваться\x20слова\x20и\x20предложения.\x0a\x20\x20\x20\x20\x20\x20\x20\x20</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<input\x20type=\x22range\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20id=\x22audioRateSlider\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min=\x220.5\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max=\x221.5\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20step=\x220.1\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20value=\x22','Могу\x20рассказать\x20о\x20себе\x20простыми\x20фразами.','Неправильные\x20глаголы','showStudyNowWords','Выше\x20среднего\x20(B2)','gameQuizOverlay','clothing','military','showLearningHelpModal','fa-history','.pet-revive-btn','Студент','fa-crosshairs','words-popup-header','subway.html','fa-chess','Раздел\x20\x22Списки\x22.\x20Здесь\x20вся\x20библиотека\x20слов:\x20по\x20уровням,\x20темам\x20и\x20грамматика.','Servier\x20Medical\x20Art','buildAudioCandidates','onerror','backToLevels','saveData','handleMotivationImageError','wizard_v2_completed','gate-wrong','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20fixed;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20top:\x20','fa-yin-yang','Уровень\x20A2-B1','fa-city','%;\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','\x0a\x20\x20\x20\x20<div\x20class=\x22info-modal-content\x22\x20style=\x22background:var(--bg-primary);border-radius:16px;padding:30px;max-width:800px;width:100%;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h2\x20style=\x22margin:0;color:var(--text-primary);\x22>О\x20приложении</h2>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20data-testid=\x22info-close\x22\x20onclick=\x22this.closest(\x27.info-modal\x27).remove()\x22\x20style=\x22background:transparent;border:none;font-size:24px;cursor:pointer;color:var(--text-secondary);width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all\x200.2s;\x22>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-times\x22></i>\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x20\x0a\x20\x20\x20\x20\x20\x20</div>\x20\x0a\x20\x20\x20\x20\x20\x20','fa-vial','#installGuide','\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-level=\x22','fa-comments-dollar','buildProverbFileName','subGoalContainer','closest','40968zWGhKK','https://smart.servier.com/wp-content/uploads/2016/10/pancreas.png','family','px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20left:\x20','.mp3','addWordToLearning','loadSrsDay','newWordsList','Литература','experience','health','https://bewords.ru/au/prepositions/','<i\x20class=\x22fas\x20fa-times\x22></i>','popup-sound-us','checkAndShowFirstRunOrMotivation','#settingsMenu','<div\x20class=\x22grammar-cat-card\x22\x20onclick=\x22window.app.showLevelWords(\x27','IDIOMS','Через\x2010\x20секунд\x20появится\x20Quiz!\x20Поставьте\x20игру\x20на\x20паузу.','value','learning','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-translation\x22>','learned','colors','fa-balance-scale','warn','max-width:100%;max-height:70vh;height:auto;object-fit:contain;display:block;border-radius:10px;','pace','fa-globe','warningTimeoutId','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22medal-icon\x22>','getLevelCategoriesConfig','concat','stopPropagation','fa-fist-raised','fa-handshake','RU_EN','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-trash\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','dataset','quizGateContainer','querySelectorAll','forms','wordsPopupList','cloneNode','.words-popup-close-btn','data-answer','fa-om','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22text-align:center;\x20padding:40px;\x20display:flex;\x20flex-direction:column;\x20align-items:center;\x20justify-content:center;\x20height:100%;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22/loading.gif\x22\x20style=\x22width:120px;\x20margin-bottom:20px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2\x20style=\x22margin-bottom:10px;\x20font-weight:900;\x22>Настраиваю\x20программу...</h2>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:var(--text-secondary)\x22>Кот\x20Боб\x20подбирает\x20слова\x20под\x20ваш\x20уровень.</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','fa-car','На\x20чем\x20сделаем\x20упор?\x20(Можно\x20выбрать\x20несколько)','.main-content','toString','character','\x20новых\x20слов\x20в\x20день.','fallbackTried','subGoal','Tutorial:\x20Element\x20not\x20found\x20or\x20hidden:','general','removeEventListener','onload','#flashcardWrongBtn','singleHelp','Активность','\x0a\x20\x20\x20\x20','checkSentence','isAndroid','n\x27t','fa-plane','<i\x20class=\x22fas\x20fa-times\x22></i>\x20Закрыть','Транспорт','<div\x20style=\x22text-align:\x20center;\x20margin-top:\x2030px;\x20color:\x20var(--text-muted);\x20font-size:\x200.9rem;\x22>','apply','sort','Существительные','opacity','.png','https://smart.servier.com/wp-content/uploads/2016/10/oeil.png','https://bewords.ru/au/proverbs/us/','volume-up','https://smart.servier.com/wp-content/uploads/2016/10/squelette.png','renderFlashcards'];_0x1fbf=function(){return _0xaa6483;};return _0x1fbf();}_0x3b48e5();function _0x5b63(_0x4d9ec1,_0x2dcb14){const _0x124f87=_0x1fbf();return _0x5b63=function(_0x21f94f,_0x947a88){_0x21f94f=_0x21f94f-0x199;let _0x25030d=_0x124f87[_0x21f94f];return _0x25030d;},_0x5b63(_0x4d9ec1,_0x2dcb14);}const _0x947a88=(function(){let _0xb4fdf4=!![];return function(_0x5ba915,_0x199b7f){const _0x323317=_0xb4fdf4?function(){const _0x2e3a70=_0x5b63;if(_0x199b7f){const _0x4c5a5d=_0x199b7f[_0x2e3a70(0x611)](_0x5ba915,arguments);return _0x199b7f=null,_0x4c5a5d;}}:function(){};return _0xb4fdf4=![],_0x323317;};}()),_0x21f94f=_0x947a88(this,function(){const _0x3122cc=_0x5b63;let _0x3cf409;try{const _0x318e91=Function(_0x3122cc(0x3fb)+_0x3122cc(0x222)+');');_0x3cf409=_0x318e91();}catch(_0x410f6a){_0x3cf409=window;}const _0x27d599=_0x3cf409[_0x3122cc(0x555)]=_0x3cf409[_0x3122cc(0x555)]||{},_0x235f6f=['log','warn',_0x3122cc(0x65c),_0x3122cc(0x2f9),_0x3122cc(0x3e1),_0x3122cc(0x67b),'trace'];for(let _0x391ff5=0x0;_0x391ff5<_0x235f6f['length'];_0x391ff5++){const _0x378ae=_0x947a88[_0x3122cc(0x419)][_0x3122cc(0x622)][_0x3122cc(0x2de)](_0x947a88),_0x30e73e=_0x235f6f[_0x391ff5],_0x2adf57=_0x27d599[_0x30e73e]||_0x378ae;_0x378ae['__proto__']=_0x947a88[_0x3122cc(0x2de)](_0x947a88),_0x378ae[_0x3122cc(0x5fd)]=_0x2adf57[_0x3122cc(0x5fd)]['bind'](_0x2adf57),_0x27d599[_0x30e73e]=_0x378ae;}});_0x21f94f();class EnglishWordsApp{constructor(){const _0x13f0a4=_0x5b63;this['isAndroid']=/android/i['test']((navigator[_0x13f0a4(0x1f2)]||'')[_0x13f0a4(0x6dc)]()),this[_0x13f0a4(0x456)]=null,this[_0x13f0a4(0x3b9)]=0x0,this[_0x13f0a4(0x292)]=0x0,this[_0x13f0a4(0x3cc)]=null;const _0x1aff7e=new Image();_0x1aff7e[_0x13f0a4(0x39e)]=_0x13f0a4(0x53d),this[_0x13f0a4(0x4d6)]=_0x13f0a4(0x58d),this[_0x13f0a4(0x3bb)]=null,this[_0x13f0a4(0x4bc)]=null,this[_0x13f0a4(0x27d)]=[],this[_0x13f0a4(0x6d9)]=[],this[_0x13f0a4(0x56e)]={},this[_0x13f0a4(0x57e)]=[],this['currentMode']=localStorage[_0x13f0a4(0x557)]('currentMode')||_0x13f0a4(0x2eb),this[_0x13f0a4(0x51d)]=localStorage[_0x13f0a4(0x557)](_0x13f0a4(0x51d))||_0x13f0a4(0x233),this[_0x13f0a4(0x24c)]=0x0,this[_0x13f0a4(0x484)]={'currentSentence':null,'assembledWords':[],'correctOrder':[],'score':0x0,'total':0x0,'availableLevels':new Set()},this['showFilter']='all',this[_0x13f0a4(0x50e)]={},this[_0x13f0a4(0x61c)]=null,this['globalPlayer']=new Audio(),this[_0x13f0a4(0x387)][_0x13f0a4(0x580)]='auto',this[_0x13f0a4(0x4e4)](),this['lastFlashcardFrontWasRussian']=![],this[_0x13f0a4(0x462)]=null,this[_0x13f0a4(0x704)]=null,this[_0x13f0a4(0x67a)]=![],this[_0x13f0a4(0x6e3)](),this[_0x13f0a4(0x4b7)]=JSON[_0x13f0a4(0x6f4)](localStorage[_0x13f0a4(0x557)](_0x13f0a4(0x566))||_0x13f0a4(0x532)),this[_0x13f0a4(0x46c)]=parseFloat(localStorage[_0x13f0a4(0x557)]('audio_rate')||'1'),(isNaN(this[_0x13f0a4(0x46c)])||this[_0x13f0a4(0x46c)]<0.5||this['audioRate']>1.5)&&(this[_0x13f0a4(0x46c)]=0x1),this[_0x13f0a4(0x1e2)]={'dailyNew':0x1e,'dailyReview':0x96,'activePool':0xc8,'learningSteps':[0xa*0x3c*0x3e8,0x3c*0x3c*0x3e8,0x4*0x3c*0x3c*0x3e8],'graduateToDays':[0x1,0x6],'minEase':1.3},this['srsDay']=this[_0x13f0a4(0x5d0)](),this[_0x13f0a4(0x6d3)](),this[_0x13f0a4(0x250)](),this[_0x13f0a4(0x54f)](),this[_0x13f0a4(0x28e)](),this[_0x13f0a4(0x2cc)](),this[_0x13f0a4(0x1ee)](),document[_0x13f0a4(0x208)](_0x13f0a4(0x2f2),()=>{const _0x3b121a=_0x13f0a4;if(document[_0x3b121a(0x2c1)]===_0x3b121a(0x1bd)){console['log'](_0x3b121a(0x231));this[_0x3b121a(0x61c)]&&this[_0x3b121a(0x61c)][_0x3b121a(0x211)]===_0x3b121a(0x50d)&&this[_0x3b121a(0x61c)][_0x3b121a(0x705)]()[_0x3b121a(0x570)](_0x3e4f8e=>console[_0x3b121a(0x48f)](_0x3b121a(0x458),_0x3e4f8e));if(this[_0x3b121a(0x387)])try{this[_0x3b121a(0x387)][_0x3b121a(0x6c5)]();}catch(_0x33cfd1){}}}),setTimeout(()=>{const _0x23dea8=_0x13f0a4;this[_0x23dea8(0x5d8)]();},0x3e8),window[_0x13f0a4(0x208)]('click',()=>{const _0x1852df=_0x13f0a4;this[_0x1852df(0x61c)]&&this[_0x1852df(0x61c)][_0x1852df(0x211)]===_0x1852df(0x50d)&&this['audioCtx']['resume']()['catch'](_0x3371ec=>console[_0x1852df(0x48f)](_0x3371ec));if(this['globalPlayer']){const _0x1924eb='data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';(!this[_0x1852df(0x387)][_0x1852df(0x39e)]||this[_0x1852df(0x387)][_0x1852df(0x39e)]===window[_0x1852df(0x405)]['href'])&&(this[_0x1852df(0x387)][_0x1852df(0x39e)]=_0x1924eb),this[_0x1852df(0x387)][_0x1852df(0x3de)]()[_0x1852df(0x3bd)](()=>{const _0x46f952=_0x1852df;this[_0x46f952(0x387)]['pause']();})[_0x1852df(0x570)](()=>{});}},{'once':!![]});}['checkAndShowFirstRunOrMotivation'](){const _0x1ffb91=_0x5b63;try{const _0x508c41=localStorage['getItem'](_0x1ffb91(0x5ba))==='1',_0x2487cb=localStorage[_0x1ffb91(0x557)]('tutorial_complete_forever')==='1';if(!_0x508c41)document[_0x1ffb91(0x5f2)](_0x1ffb91(0x31f))['forEach'](_0x36f892=>_0x36f892[_0x1ffb91(0x444)][_0x1ffb91(0x25a)](_0x1ffb91(0x40c))),setTimeout(()=>this[_0x1ffb91(0x4bb)](),0x12c);else!_0x2487cb?setTimeout(()=>{const _0x1e78c7=_0x1ffb91;this[_0x1e78c7(0x350)](),localStorage[_0x1e78c7(0x42c)](_0x1e78c7(0x364),'1');},0x3e8):this['maybeShowDailyMotivation']();}catch(_0xf1b872){console[_0x1ffb91(0x2f9)](_0xf1b872);}}[_0x3a406e(0x4bb)](){const _0x2a0978=_0x3a406e;this[_0x2a0978(0x59b)]={'step':0x1,'totalSteps':0x4,'data':{'experience':null,'goal':null,'subGoal':null,'pace':0xf,'focus':null}};const _0x33bcd7=document[_0x2a0978(0x1e6)](_0x2a0978(0x6d5));_0x33bcd7[_0x2a0978(0x493)]='wizard-overlay',_0x33bcd7['id']=_0x2a0978(0x6de),_0x33bcd7[_0x2a0978(0x66c)]=_0x2a0978(0x425),document[_0x2a0978(0x673)][_0x2a0978(0x378)](_0x33bcd7),document[_0x2a0978(0x669)]('wizardNextBtn')[_0x2a0978(0x208)](_0x2a0978(0x561),()=>this['nextWizardStep']()),this[_0x2a0978(0x652)]();}[_0x3a406e(0x652)](){const _0x59e725=_0x3a406e,_0x397faf=document[_0x59e725(0x669)](_0x59e725(0x689)),_0x457e52=document[_0x59e725(0x669)](_0x59e725(0x2ca)),_0x2fe43e=document[_0x59e725(0x669)](_0x59e725(0x2b4)),_0x1d4c50=this[_0x59e725(0x59b)][_0x59e725(0x4be)];_0x457e52[_0x59e725(0x227)][_0x59e725(0x6f7)]=_0x1d4c50/this['wizardState'][_0x59e725(0x713)]*0x64+'%';_0x1d4c50===0x4&&Array[_0x59e725(0x714)](this[_0x59e725(0x59b)]['data'][_0x59e725(0x70f)])&&this[_0x59e725(0x59b)][_0x59e725(0x6b1)][_0x59e725(0x70f)][_0x59e725(0x201)]>0x0?_0x2fe43e[_0x59e725(0x398)]=![]:_0x2fe43e[_0x59e725(0x398)]=!![];let _0x5e0b2e='',_0x50a8d0='';if(_0x1d4c50===0x1)_0x50a8d0=_0x59e725(0x6a8),_0x5e0b2e=_0x59e725(0x31e)+this[_0x59e725(0x6a7)](0x1,_0x59e725(0x34c),'Новичок\x20(A1)',_0x59e725(0x658))+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+this[_0x59e725(0x6a7)](0x2,_0x59e725(0x34c),'Элементарный\x20(A2)',_0x59e725(0x5a4))+_0x59e725(0x279)+this[_0x59e725(0x6a7)](0x3,'step1',_0x59e725(0x4d1),_0x59e725(0x2d5))+_0x59e725(0x279)+this[_0x59e725(0x6a7)](0x4,_0x59e725(0x34c),_0x59e725(0x5a7),_0x59e725(0x3d8))+_0x59e725(0x279)+this[_0x59e725(0x6a7)](0x5,_0x59e725(0x34c),'Продвинутый\x20(C1-C2)',_0x59e725(0x65b))+_0x59e725(0x3b0);else{if(_0x1d4c50===0x2)_0x50a8d0=_0x59e725(0x687),_0x5e0b2e=_0x59e725(0x31e)+this['_renderWizardCard']('travel','step2',_0x59e725(0x251),_0x59e725(0x318))+_0x59e725(0x279)+this['_renderWizardCard'](_0x59e725(0x345),_0x59e725(0x25f),_0x59e725(0x230),_0x59e725(0x6c7))+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+this['_renderWizardCard'](_0x59e725(0x280),_0x59e725(0x25f),'Сдача\x20экзамена',_0x59e725(0x396))+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+this['_renderWizardCard'](_0x59e725(0x37a),_0x59e725(0x25f),_0x59e725(0x4c1),_0x59e725(0x2cb))+_0x59e725(0x643);else{if(_0x1d4c50===0x3)_0x50a8d0=_0x59e725(0x2c4),_0x5e0b2e=_0x59e725(0x31e)+this[_0x59e725(0x6a7)](0x5,_0x59e725(0x33d),_0x59e725(0x2b3),_0x59e725(0x1ed))+_0x59e725(0x279)+this[_0x59e725(0x6a7)](0xf,_0x59e725(0x33d),_0x59e725(0x29f),'Золотая\x20середина')+_0x59e725(0x279)+this[_0x59e725(0x6a7)](0x19,_0x59e725(0x33d),'Хардкор\x20(25\x20слов)',_0x59e725(0x700))+_0x59e725(0x3b0);else{if(_0x1d4c50===0x4){const _0x4699d9=this[_0x59e725(0x59b)]['data'][_0x59e725(0x5d3)];_0x50a8d0=_0x59e725(0x5fb);const _0x45dad1=_0x4699d9<0x2,_0x360e43=_0x4699d9<0x3;_0x5e0b2e=_0x59e725(0x31e)+this[_0x59e725(0x6a7)](_0x59e725(0x3db),_0x59e725(0x237),_0x59e725(0x6c2),_0x59e725(0x3fa))+_0x59e725(0x279)+this[_0x59e725(0x6a7)](_0x59e725(0x475),_0x59e725(0x237),'Грамматика','Неправильные\x20глаголы,\x20Предлоги,\x20Союзы')+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+this[_0x59e725(0x6a7)]('speaking',_0x59e725(0x237),_0x59e725(0x393),'Фразовые\x20глаголы,\x20Идиомы',_0x45dad1,'Нужна\x20база\x20A2')+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+this['_renderWizardCard'](_0x59e725(0x676),_0x59e725(0x237),'Сложная\x20лексика',_0x59e725(0x1fb),_0x360e43,'Нужна\x20база\x20B1')+_0x59e725(0x2e7);}}}}_0x397faf['innerHTML']=_0x59e725(0x57f)+_0x50a8d0+_0x59e725(0x3e6)+this[_0x59e725(0x1c8)](_0x1d4c50)+_0x59e725(0x65a)+_0x5e0b2e+'\x0a\x20\x20\x20\x20',_0x1d4c50===0x4&&Array[_0x59e725(0x714)](this[_0x59e725(0x59b)]['data'][_0x59e725(0x70f)])&&this[_0x59e725(0x59b)][_0x59e725(0x6b1)]['focus'][_0x59e725(0x50b)](_0x58f8cf=>{const _0x46fac4=_0x59e725,_0x3eb8e7=_0x397faf[_0x46fac4(0x3ad)]('[data-value=\x22'+_0x58f8cf+'\x22]');_0x3eb8e7&&(_0x3eb8e7['classList'][_0x46fac4(0x6a3)](_0x46fac4(0x40c)),_0x3eb8e7['querySelector']('i')[_0x46fac4(0x493)]=_0x46fac4(0x298));}),this[_0x59e725(0x40e)]();}['_renderWizardCard'](_0x20b77a,_0x3622fe,_0x312c9e,_0x52377e,_0x18a163=![],_0xd86a2f=''){const _0x380063=_0x3a406e,_0x15d6f6=_0x18a163?_0x380063(0x398):'',_0x247d8c=_0x18a163?'<div\x20class=\x22wizard-tooltip\x22>'+_0xd86a2f+_0x380063(0x3ca):'';return _0x380063(0x491)+(_0x15d6f6?'disabled':'')+_0x380063(0x57d)+_0x3622fe+_0x380063(0x1ad)+_0x20b77a+_0x380063(0x1cf)+_0x247d8c+_0x380063(0x20b)+_0x312c9e+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22wizard-card-desc\x22>'+_0x52377e+_0x380063(0x69e);}[_0x3a406e(0x1c8)](_0x51d841){const _0x2dd9a4=_0x3a406e;if(_0x51d841===0x1)return _0x2dd9a4(0x703);if(_0x51d841===0x2)return _0x2dd9a4(0x564);if(_0x51d841===0x3)return _0x2dd9a4(0x547);if(_0x51d841===0x4)return _0x2dd9a4(0x274);return'';}[_0x3a406e(0x40e)](){const _0x4e7155=_0x3a406e,_0x576c18=document[_0x4e7155(0x5f2)]('.wizard-card:not(.disabled)');_0x576c18[_0x4e7155(0x50b)](_0x1848da=>{const _0x17f206=_0x4e7155,_0x278245=_0x1848da[_0x17f206(0x5f5)](!![]);_0x1848da[_0x17f206(0x3e9)][_0x17f206(0x23d)](_0x278245,_0x1848da),_0x278245[_0x17f206(0x208)](_0x17f206(0x561),_0x3b16b5=>{const _0x132e2d=_0x17f206,_0x207b34=_0x278245['dataset'][_0x132e2d(0x4b8)],_0x51aa2c=_0x278245[_0x132e2d(0x5f0)]['value'];if(this[_0x132e2d(0x59b)][_0x132e2d(0x4be)]===0x4){!Array[_0x132e2d(0x714)](this['wizardState'][_0x132e2d(0x6b1)][_0x132e2d(0x70f)])&&(this[_0x132e2d(0x59b)][_0x132e2d(0x6b1)][_0x132e2d(0x70f)]=[]);_0x278245[_0x132e2d(0x444)]['contains'](_0x132e2d(0x40c))?(_0x278245[_0x132e2d(0x444)][_0x132e2d(0x25a)]('active'),_0x278245[_0x132e2d(0x3ad)]('i')['className']=_0x132e2d(0x49d),this[_0x132e2d(0x59b)][_0x132e2d(0x6b1)]['focus']=this[_0x132e2d(0x59b)][_0x132e2d(0x6b1)]['focus'][_0x132e2d(0x66a)](_0x39ab00=>_0x39ab00!==_0x51aa2c)):(_0x278245[_0x132e2d(0x444)][_0x132e2d(0x6a3)](_0x132e2d(0x40c)),_0x278245[_0x132e2d(0x3ad)]('i')[_0x132e2d(0x493)]='fas\x20fa-check-square',this['wizardState'][_0x132e2d(0x6b1)][_0x132e2d(0x70f)][_0x132e2d(0x31d)](_0x51aa2c));document[_0x132e2d(0x669)]('wizardNextBtn')[_0x132e2d(0x398)]=this['wizardState'][_0x132e2d(0x6b1)][_0x132e2d(0x70f)][_0x132e2d(0x201)]===0x0;return;}_0x207b34===_0x132e2d(0x4ce)?(document[_0x132e2d(0x5f2)](_0x132e2d(0x3f0))[_0x132e2d(0x50b)](_0x40d654=>{const _0x351d3d=_0x132e2d;_0x40d654[_0x351d3d(0x444)][_0x351d3d(0x25a)](_0x351d3d(0x40c)),_0x40d654[_0x351d3d(0x3ad)]('i')['className']=_0x351d3d(0x48a);}),this[_0x132e2d(0x59b)]['data'][_0x132e2d(0x601)]=_0x51aa2c):document[_0x132e2d(0x5f2)](_0x132e2d(0x691)+_0x207b34+'\x22]')[_0x132e2d(0x50b)](_0x1dec48=>{const _0xe20ea4=_0x132e2d;_0x1dec48[_0xe20ea4(0x444)][_0xe20ea4(0x25a)](_0xe20ea4(0x40c)),_0x1dec48[_0xe20ea4(0x3ad)]('i')[_0xe20ea4(0x493)]=_0xe20ea4(0x48a);});_0x278245[_0x132e2d(0x444)][_0x132e2d(0x6a3)](_0x132e2d(0x40c)),_0x278245[_0x132e2d(0x3ad)]('i')['className']=_0x132e2d(0x388);if(this[_0x132e2d(0x59b)]['step']===0x1)this['wizardState']['data'][_0x132e2d(0x5d3)]=parseInt(_0x51aa2c);this['wizardState'][_0x132e2d(0x4be)]===0x2&&(_0x207b34===_0x132e2d(0x25f)&&(this[_0x132e2d(0x59b)][_0x132e2d(0x6b1)][_0x132e2d(0x202)]=_0x51aa2c,_0x51aa2c===_0x132e2d(0x345)||_0x51aa2c===_0x132e2d(0x280)?this[_0x132e2d(0x2e8)](_0x51aa2c):(document['getElementById'](_0x132e2d(0x5c8))[_0x132e2d(0x227)]['display']=_0x132e2d(0x488),this[_0x132e2d(0x59b)][_0x132e2d(0x6b1)][_0x132e2d(0x601)]=null,document[_0x132e2d(0x669)](_0x132e2d(0x2b4))[_0x132e2d(0x398)]=![])));if(this[_0x132e2d(0x59b)][_0x132e2d(0x4be)]===0x3)this[_0x132e2d(0x59b)]['data'][_0x132e2d(0x5e5)]=parseInt(_0x51aa2c);(_0x207b34!==_0x132e2d(0x25f)||_0x51aa2c!==_0x132e2d(0x345)&&_0x51aa2c!==_0x132e2d(0x280))&&(document[_0x132e2d(0x669)](_0x132e2d(0x2b4))[_0x132e2d(0x398)]=![]);});});}['_handleStep2SubOptions'](_0x2ab6ed){const _0x430d70=_0x3a406e,_0x2e2236=document['getElementById']('subGoalContainer'),_0x56c69b=_0x2e2236[_0x430d70(0x3ad)]('.sub-options');let _0xcb81cc='';if(_0x2ab6ed===_0x430d70(0x345))_0xcb81cc+=this[_0x430d70(0x6a7)](_0x430d70(0x22c),'step2_sub',_0x430d70(0x19b),_0x430d70(0x68a)),_0xcb81cc+=this[_0x430d70(0x6a7)]('IT',_0x430d70(0x4ce),_0x430d70(0x302),_0x430d70(0x45d)),_0xcb81cc+=this[_0x430d70(0x6a7)](_0x430d70(0x52d),'step2_sub',_0x430d70(0x3f5),_0x430d70(0x1e5)),_0xcb81cc+=this[_0x430d70(0x6a7)]('LEGAL',_0x430d70(0x4ce),_0x430d70(0x4f4),_0x430d70(0x32b));else _0x2ab6ed==='exam'&&(_0xcb81cc+=this[_0x430d70(0x6a7)]('OGE',_0x430d70(0x4ce),_0x430d70(0x49c),_0x430d70(0x5bf)),_0xcb81cc+=this['_renderWizardCard'](_0x430d70(0x3e5),'step2_sub','ЕГЭ\x20(11\x20класс)',_0x430d70(0x2d3)),_0xcb81cc+=this[_0x430d70(0x6a7)](_0x430d70(0x220),'step2_sub',_0x430d70(0x269),_0x430d70(0x546)));_0xcb81cc?(_0x56c69b[_0x430d70(0x66c)]=_0xcb81cc,_0x2e2236[_0x430d70(0x227)]['display']=_0x430d70(0x51f),this['wizardState'][_0x430d70(0x6b1)][_0x430d70(0x601)]=null,document[_0x430d70(0x669)](_0x430d70(0x2b4))[_0x430d70(0x398)]=!![],setTimeout(()=>{const _0x36211a=_0x430d70;_0x2e2236[_0x36211a(0x309)]({'behavior':'smooth'});},0x64),this[_0x430d70(0x40e)]()):(_0x2e2236[_0x430d70(0x227)]['display']=_0x430d70(0x488),this[_0x430d70(0x59b)][_0x430d70(0x6b1)][_0x430d70(0x601)]=null,document[_0x430d70(0x669)]('wizardNextBtn')[_0x430d70(0x398)]=![]);}[_0x3a406e(0x502)](){const _0x3ffe75=_0x3a406e;this[_0x3ffe75(0x59b)][_0x3ffe75(0x4be)]<this['wizardState'][_0x3ffe75(0x713)]?(this['wizardState']['step']++,this[_0x3ffe75(0x652)]()):this[_0x3ffe75(0x4fa)]();}async['finishWizard'](){const _0x1cd8a6=_0x3a406e,_0x1ac9c7=document[_0x1cd8a6(0x669)](_0x1cd8a6(0x6de)),_0x1319a2=this[_0x1cd8a6(0x59b)][_0x1cd8a6(0x6b1)],_0x48fb7d={'experience':_0x1319a2[_0x1cd8a6(0x5d3)],'goal':_0x1319a2[_0x1cd8a6(0x202)],'subGoal':_0x1319a2['subGoal'],'dailyLimit':_0x1319a2[_0x1cd8a6(0x5e5)],'focus':_0x1319a2[_0x1cd8a6(0x70f)],'setupDate':new Date()['toDateString'](),'newWordsAddedToday':0x0,'lastNewWordsDate':null,'pendingSpecialWords':[]};localStorage[_0x1cd8a6(0x42c)](_0x1cd8a6(0x240),JSON[_0x1cd8a6(0x40f)](_0x48fb7d)),localStorage[_0x1cd8a6(0x42c)]('first_run_completed','1');_0x1ac9c7&&(_0x1ac9c7['innerHTML']=_0x1cd8a6(0x5f9));await this[_0x1cd8a6(0x266)](0x5dc),this[_0x1cd8a6(0x2bd)](_0x1319a2,_0x48fb7d),this['saveData']();if(_0x1ac9c7)_0x1ac9c7[_0x1cd8a6(0x25a)]();localStorage[_0x1cd8a6(0x42c)](_0x1cd8a6(0x5ba),'1'),this['initializeUI'](),this[_0x1cd8a6(0x54f)](),this[_0x1cd8a6(0x28e)](),this['showNotification'](_0x1cd8a6(0x2ce)+_0x1319a2[_0x1cd8a6(0x5e5)]+_0x1cd8a6(0x5ff),_0x1cd8a6(0x38d)),this[_0x1cd8a6(0x25b)](),this[_0x1cd8a6(0x67a)]=!![],this[_0x1cd8a6(0x321)]('learning'),this['renderLearningSection'](),setTimeout(()=>{const _0x303f9d=_0x1cd8a6;this[_0x303f9d(0x350)](),localStorage[_0x303f9d(0x42c)](_0x303f9d(0x364),'1');},0x1f4);}['generateInitialVocabulary'](_0x3c974f,_0x5bcd6e){const _0x37c3ea=_0x3a406e,_0x1be614=_0x3c974f[_0x37c3ea(0x5d3)],_0x25e006=Array[_0x37c3ea(0x714)](_0x3c974f[_0x37c3ea(0x70f)])?_0x3c974f[_0x37c3ea(0x70f)]:[_0x3c974f['focus']],_0x2b56ec=[],_0x27de48=[],_0x4f775d=_0x125139=>{const _0x49fa78=oxfordWordsDatabase[_0x125139]||[];_0x49fa78['forEach'](_0x53320c=>{const _0x14dd0c=_0x5b63;_0x2b56ec[_0x14dd0c(0x31d)]({..._0x53320c,'level':_0x125139,'forms':_0x53320c[_0x14dd0c(0x5f3)]||null});});},_0x6c1b2c=_0x23ab28=>{const _0x406b8f=oxfordWordsDatabase[_0x23ab28]||[];_0x406b8f['forEach'](_0xcac3b7=>{_0x27de48['push']({..._0xcac3b7,'level':_0x23ab28});});};if(_0x1be614===0x1)_0x4f775d('A1');else{if(_0x1be614===0x2)_0x4f775d('A2'),_0x4f775d('B1');else{if(_0x1be614===0x3)_0x4f775d('B1'),_0x4f775d('B2');else{if(_0x1be614===0x4)_0x4f775d('B2'),_0x4f775d('C1');else _0x1be614===0x5&&(_0x4f775d('C1'),_0x4f775d('C2'));}}}if(_0x3c974f['subGoal']){const _0x5962c3=_0x3c974f['subGoal'];if(_0x5962c3===_0x37c3ea(0x2ea))_0x1be614<=0x2?(_0x4f775d('A1'),_0x4f775d('A2')):(_0x4f775d('A2'),_0x4f775d('B1')),this[_0x37c3ea(0x1bc)]('Добавлен\x20словарный\x20минимум\x20для\x20ОГЭ\x20(A2-B1)',_0x37c3ea(0x38d));else{if(_0x5962c3==='EGE')_0x1be614<=0x2?(_0x4f775d('A2'),_0x4f775d('B1')):(_0x4f775d('B1'),_0x4f775d('B2')),this[_0x37c3ea(0x1bc)](_0x37c3ea(0x414),_0x37c3ea(0x38d));else _0x5962c3===_0x37c3ea(0x220)||_0x5962c3==='TOEFL'?(_0x4f775d('B2'),_0x4f775d('C1'),_0x4f775d(_0x37c3ea(0x220))):_0x1be614<=0x2?(_0x6c1b2c(_0x5962c3),this[_0x37c3ea(0x1bc)](_0x37c3ea(0x3e3)+_0x5962c3+_0x37c3ea(0x43e),'info')):_0x4f775d(_0x5962c3);}}_0x25e006['includes'](_0x37c3ea(0x3db))&&(_0x1be614>0x2&&(_0x4f775d('A1'),_0x4f775d('A2')));_0x25e006[_0x37c3ea(0x3ed)]('grammar')&&(_0x4f775d(_0x37c3ea(0x50a)),_0x4f775d('IRREGULARS'));_0x25e006[_0x37c3ea(0x3ed)]('speaking')&&(_0x4f775d('PHRASAL_VERBS'),_0x4f775d(_0x37c3ea(0x5db)));if(_0x25e006[_0x37c3ea(0x3ed)](_0x37c3ea(0x676))){_0x4f775d(_0x37c3ea(0x582));if(_0x1be614>=0x3)_0x4f775d('C1');}_0x5bcd6e[_0x37c3ea(0x2c2)]=_0x27de48,localStorage[_0x37c3ea(0x42c)]('userConfig',JSON[_0x37c3ea(0x40f)](_0x5bcd6e));let _0x1214bc=0x0;const _0x3c7998=new Set();_0x2b56ec[_0x37c3ea(0x50b)](_0x42c3a0=>{const _0xd71dcf=_0x37c3ea,_0x50ae2e=_0x42c3a0[_0xd71dcf(0x693)]+'_'+_0x42c3a0[_0xd71dcf(0x4d9)],_0xd2c9f2=this['learningWords'][_0xd71dcf(0x312)](_0x4dd20c=>_0x4dd20c[_0xd71dcf(0x693)]===_0x42c3a0['word']&&_0x4dd20c[_0xd71dcf(0x4d9)]===_0x42c3a0['level']);!_0x3c7998[_0xd71dcf(0x61f)](_0x50ae2e)&&!_0xd2c9f2&&(_0x3c7998[_0xd71dcf(0x6a3)](_0x50ae2e),this[_0xd71dcf(0x27d)][_0xd71dcf(0x31d)]({'word':_0x42c3a0[_0xd71dcf(0x693)],'translation':_0x42c3a0['translation'],'level':_0x42c3a0[_0xd71dcf(0x4d9)],'forms':_0x42c3a0['forms']||null,'isLearned':![],'addedAt':Date[_0xd71dcf(0x52e)]()}),this[_0xd71dcf(0x476)](_0x42c3a0['word']),_0x1214bc++);}),console[_0x37c3ea(0x48f)](_0x37c3ea(0x404)+_0x1214bc+'\x20unique\x20words.');}['isRussian'](_0x537fb5){const _0x2e74ae=_0x3a406e;return/[а-яё]/i[_0x2e74ae(0x4aa)](_0x537fb5||'');}[_0x3a406e(0x2e9)](_0x3d076d){const _0x502388=_0x3a406e;return/[a-z]/i[_0x502388(0x4aa)](_0x3d076d||'');}[_0x3a406e(0x6f3)](_0x56f85c){if(!_0x56f85c)return![];return/\s/['test'](String(_0x56f85c)['trim']());}[_0x3a406e(0x26d)](_0x3c6f78){const _0x1232e8=_0x3a406e;if(!_0x3c6f78)return'';if(_0x3c6f78[_0x1232e8(0x5f3)]&&Array['isArray'](_0x3c6f78[_0x1232e8(0x5f3)])&&_0x3c6f78[_0x1232e8(0x5f3)]['length']>0x0)return _0x3c6f78['forms']['join'](_0x1232e8(0x25c));return _0x3c6f78[_0x1232e8(0x693)];}['getBaseEnglish'](_0x33019a){const _0xf88480=_0x3a406e;if(!_0x33019a)return'';return _0x33019a['forms']&&_0x33019a[_0xf88480(0x5f3)]['length']>0x0?_0x33019a['forms'][0x0]:_0x33019a[_0xf88480(0x693)];}[_0x3a406e(0x58f)](_0x311570){const _0x2865eb=_0x3a406e;return _0x311570&&_0x311570[_0x2865eb(0x4d9)]==='IRREGULARS';}[_0x3a406e(0x34f)](_0x534f05){const _0x219d75=_0x3a406e;return!this[_0x219d75(0x58f)](_0x534f05);}[_0x3a406e(0x266)](_0x11f83a){return new Promise(_0x179beb=>setTimeout(_0x179beb,_0x11f83a));}async['waitForCurrentAudioToFinish'](){const _0x4f1080=_0x3a406e,_0x500fba=this[_0x4f1080(0x704)];if(_0x500fba&&typeof _0x500fba['then']===_0x4f1080(0x241))try{await _0x500fba;}catch{}}[_0x3a406e(0x43a)](_0x5cc30a){const _0x43752c=_0x3a406e;if(!_0x5cc30a)return'';const _0x17b146=String(_0x5cc30a)['toLowerCase']()[_0x43752c(0x6f9)](),_0x3b7805=_0x17b146[_0x43752c(0x22a)](/[\/]+/g,'\x20')[_0x43752c(0x22a)](/[^a-z\s'-]/g,'')['replace'](/\s+/g,'\x20')[_0x43752c(0x6f9)]();return _0x3b7805;}[_0x3a406e(0x4af)](_0x36f788){const _0x397a12=_0x3a406e;if(!_0x36f788)return'';return String(_0x36f788)[_0x397a12(0x6dc)]()[_0x397a12(0x22a)](/→/g,'\x20')[_0x397a12(0x22a)](/[\/]+/g,'\x20')[_0x397a12(0x22a)](/[^a-z\s'-]/g,'')[_0x397a12(0x22a)](/\s+/g,'\x20')[_0x397a12(0x6f9)]();}['buildAudioCandidates'](_0x4db9c2){const _0x2f46b3=_0x3a406e,_0x523cdd=this[_0x2f46b3(0x43a)](_0x4db9c2);if(!_0x523cdd)return[];const _0x4afb2e=_0x523cdd[_0x2f46b3(0x22a)](/\s+/g,''),_0x153649=_0x523cdd[_0x2f46b3(0x3f9)]('\x20')[0x0],_0x4c86e0=[];return[_0x523cdd,_0x4afb2e,_0x153649][_0x2f46b3(0x50b)](_0x129b14=>{const _0xcd7c6a=_0x2f46b3;if(_0x129b14&&!_0x4c86e0['includes'](_0x129b14))_0x4c86e0[_0xcd7c6a(0x31d)](_0x129b14);}),_0x4c86e0;}[_0x3a406e(0x3c0)](_0x8c0747,_0x33acc8='us'){const _0x552ccc=_0x3a406e,_0x148cab=(_0x8c0747||'')[_0x552ccc(0x6dc)]();return'https://wooordhunt.ru/data/sound/sow/'+_0x33acc8+'/'+_0x148cab+_0x552ccc(0x5ce);}[_0x3a406e(0x698)](_0x110066){const _0x34bc5d=_0x3a406e;if(!_0x110066)return'';return String(_0x110066)['toLowerCase']()[_0x34bc5d(0x22a)](/[^a-z\s]/g,'')[_0x34bc5d(0x6f9)]()[_0x34bc5d(0x22a)](/\s+/g,'_');}[_0x3a406e(0x3d5)](_0x10755d,_0x64b49a){const _0x485ffd=_0x3a406e,_0x7162ca=_0x64b49a==='uk'?'uk':'us';return _0x485ffd(0x5d5)+_0x7162ca+'/'+_0x10755d+'.mp3';}async['playPrepositionAudio'](_0x1e970b,_0x1f594b){const _0x58f139=_0x3a406e,_0x3cae41=this[_0x58f139(0x698)](_0x1e970b);if(!_0x3cae41)return![];const _0x313da2=this['buildPrepositionAudioUrl'](_0x3cae41,_0x1f594b);try{return await this[_0x58f139(0x29d)](_0x313da2),!![];}catch(_0x50ede9){return console[_0x58f139(0x48f)](_0x58f139(0x565),_0x313da2),![];}}[_0x3a406e(0x715)](_0x1aee4a){const _0x51a70e=_0x3a406e;if(!_0x1aee4a)return'';return String(_0x1aee4a)['toLowerCase']()[_0x51a70e(0x22a)](/[^a-z\s]/g,'')[_0x51a70e(0x6f9)]()[_0x51a70e(0x22a)](/\s+/g,'_');}['buildPhrasalAudioUrl'](_0x4b5020){const _0x1cfcea=_0x3a406e;return _0x1cfcea(0x35e)+_0x4b5020+_0x1cfcea(0x5ce);}async[_0x3a406e(0x2b8)](_0x58b0f7){const _0x279640=_0x3a406e,_0x32154e=this['buildPhrasalFileName'](_0x58b0f7);if(!_0x32154e)return![];const _0x397d65=this[_0x279640(0x6c9)](_0x32154e);try{return await this['playMp3Url'](_0x397d65),!![];}catch(_0x3828a1){return console[_0x279640(0x48f)](_0x279640(0x2aa),_0x397d65),![];}}[_0x3a406e(0x54e)](_0x15c0bf){const _0x2f1fd0=_0x3a406e;if(!_0x15c0bf)return'';return String(_0x15c0bf)[_0x2f1fd0(0x6dc)]()[_0x2f1fd0(0x22a)](/[^a-z\s]/g,'')['trim']()[_0x2f1fd0(0x22a)](/\s+/g,'_');}['buildIdiomAudioUrl'](_0x1b86fd){const _0x439168=_0x3a406e;return'https://bewords.ru/au/idioms/us/'+_0x1b86fd+_0x439168(0x5ce);}async[_0x3a406e(0x257)](_0x591888){const _0x11150b=_0x3a406e,_0x1eee21=this[_0x11150b(0x54e)](_0x591888);if(!_0x1eee21)return![];const _0x4097b1=this[_0x11150b(0x49f)](_0x1eee21);try{return await this[_0x11150b(0x29d)](_0x4097b1),!![];}catch(_0x23de20){return console[_0x11150b(0x48f)](_0x11150b(0x672),_0x4097b1),![];}}[_0x3a406e(0x5c7)](_0x176326){const _0x43c5d8=_0x3a406e;if(!_0x176326)return'';return String(_0x176326)[_0x43c5d8(0x6dc)]()['replace'](/[^a-z\s]/g,'')[_0x43c5d8(0x6f9)]()[_0x43c5d8(0x22a)](/\s+/g,'_');}[_0x3a406e(0x385)](_0x3e2090){const _0x515671=_0x3a406e;return _0x515671(0x617)+_0x3e2090+_0x515671(0x5ce);}async[_0x3a406e(0x6b8)](_0x42006e){const _0x219820=_0x3a406e,_0x25a0bf=this['buildProverbFileName'](_0x42006e);if(!_0x25a0bf)return![];const _0x15803d=this[_0x219820(0x385)](_0x25a0bf);try{return await this[_0x219820(0x29d)](_0x15803d),!![];}catch(_0x9c0daa){return console[_0x219820(0x48f)](_0x219820(0x465),_0x15803d),![];}}async['playWord'](_0x554999,_0x525d75=null,_0x1268d9=null,_0x63e814=null){const _0x94da4e=_0x3a406e;typeof _0x525d75==='string'&&(_0x525d75=[_0x525d75]);const _0x29ec9f=_0x1268d9==='uk'||_0x1268d9==='us'?_0x1268d9:'us';if(_0x63e814===_0x94da4e(0x50a)){await this[_0x94da4e(0x626)](_0x554999,_0x29ec9f);return;}if(_0x63e814==='IDIOMS'){await this[_0x94da4e(0x257)](_0x554999);return;}if(_0x63e814==='PHRASAL_VERBS'){await this['playPhrasalAudio'](_0x554999);return;}if(_0x63e814===_0x94da4e(0x582)){await this[_0x94da4e(0x6b8)](_0x554999);return;}if((!_0x525d75||!Array[_0x94da4e(0x714)](_0x525d75)||_0x525d75[_0x94da4e(0x201)]===0x0)&&typeof _0x554999===_0x94da4e(0x65e)&&_0x554999['includes']('/')){const _0x1e89c1=_0x554999[_0x94da4e(0x3f9)]('/')[_0x94da4e(0x4ef)](_0x3787ef=>_0x3787ef[_0x94da4e(0x6f9)]())[_0x94da4e(0x66a)](Boolean);if(_0x1e89c1[_0x94da4e(0x201)]>0x1){await this[_0x94da4e(0x53e)](_0x1e89c1,_0x29ec9f);return;}}if(_0x525d75&&Array[_0x94da4e(0x714)](_0x525d75)&&_0x525d75['length']){await this[_0x94da4e(0x53e)](_0x525d75,_0x29ec9f);return;}if(this[_0x94da4e(0x6f3)](_0x554999)){await this[_0x94da4e(0x2cd)](_0x554999,_0x29ec9f);return;}await this[_0x94da4e(0x4c3)](_0x554999,_0x29ec9f);}[_0x3a406e(0x25b)](){const _0x1903fe=_0x3a406e;this['globalPlayer']&&(this[_0x1903fe(0x387)][_0x1903fe(0x6c5)](),this['globalPlayer'][_0x1903fe(0x46f)]=0x0,this['globalPlayer']['removeAttribute'](_0x1903fe(0x39e)),this['globalPlayer']['load']()),window[_0x1903fe(0x52a)]&&window[_0x1903fe(0x52a)]['cancel'](),this[_0x1903fe(0x704)]=null;}[_0x3a406e(0x29d)](_0x1c8ff2){const _0x41ebc5=_0x3a406e;if(this['muted'])return Promise[_0x41ebc5(0x677)](![]);const _0xdce851=new Promise((_0x34cecd,_0x12dd3a)=>{const _0x24ede2=_0x41ebc5;try{const _0x3f2c60=this['globalPlayer'];_0x3f2c60[_0x24ede2(0x6c5)]();let _0x416b9e=![];_0x3f2c60[_0x24ede2(0x523)]=null,_0x3f2c60[_0x24ede2(0x5b6)]=null,_0x3f2c60[_0x24ede2(0x4fb)]=null,_0x3f2c60[_0x24ede2(0x504)]=null;const _0x50a3b0=()=>{if(_0x416b9e)return;_0x416b9e=!![];};_0x3f2c60[_0x24ede2(0x523)]=()=>{_0x50a3b0(),_0x34cecd(!![]);},_0x3f2c60[_0x24ede2(0x5b6)]=_0xc83e19=>{const _0x1dfa83=_0x24ede2;_0x50a3b0(),console[_0x1dfa83(0x5e3)](_0x1dfa83(0x1f0),_0xc83e19),_0x12dd3a(new Error(_0x1dfa83(0x3a6)));},_0x3f2c60[_0x24ede2(0x4fb)]=async()=>{try{await _0x3f2c60['play']();}catch(_0x2a0302){_0x50a3b0(),_0x12dd3a(_0x2a0302);}},_0x3f2c60[_0x24ede2(0x39e)]=_0x1c8ff2,_0x3f2c60[_0x24ede2(0x36a)](),setTimeout(()=>{const _0x497372=_0x24ede2;if(!_0x416b9e&&!_0x3f2c60[_0x497372(0x591)]&&_0x3f2c60['duration']>0x0&&!_0x3f2c60['ended']){}else!_0x416b9e&&_0x3f2c60[_0x497372(0x591)]&&(_0x50a3b0(),_0x12dd3a(new Error(_0x497372(0x381))));},0x4e20);}catch(_0x35266b){_0x12dd3a(_0x35266b);}});return this[_0x41ebc5(0x704)]=_0xdce851[_0x41ebc5(0x433)](()=>{const _0x13f6eb=_0x41ebc5;if(this[_0x13f6eb(0x704)]===_0xdce851)this[_0x13f6eb(0x704)]=null;}),_0xdce851;}async[_0x3a406e(0x3d0)](_0x5f281b=0x5dc){const _0x44eb8f=_0x3a406e;if(!('speechSynthesis'in window))return;if(window['speechSynthesis'][_0x44eb8f(0x457)]()[_0x44eb8f(0x201)]>0x0)return;await new Promise(_0x16ac69=>{const _0x2dda46=_0x44eb8f,_0x2eb9e4=setTimeout(_0x16ac69,_0x5f281b),_0xb0ee86=()=>{const _0x5a4dcd=_0x5b63;clearTimeout(_0x2eb9e4),window[_0x5a4dcd(0x52a)][_0x5a4dcd(0x604)](_0x5a4dcd(0x6ed),_0xb0ee86),_0x16ac69();};window['speechSynthesis'][_0x2dda46(0x208)]('voiceschanged',_0xb0ee86);});}[_0x3a406e(0x28e)](){const _0x148a02=_0x3a406e,_0x8ddbb6=this[_0x148a02(0x6a4)],_0x497347=this[_0x148a02(0x51d)];document[_0x148a02(0x5f2)]('.mode-btn')[_0x148a02(0x50b)](_0x29b284=>{const _0xf8b4c8=_0x148a02,_0x21acb3=_0x29b284['getAttribute'](_0xf8b4c8(0x249));_0x29b284[_0xf8b4c8(0x444)][_0xf8b4c8(0x4c2)](_0xf8b4c8(0x40c),_0x21acb3===_0x8ddbb6);}),document[_0x148a02(0x5f2)](_0x148a02(0x36f))['forEach'](_0x2ee16e=>{const _0x5410c1=_0x148a02,_0x42c846=_0x2ee16e[_0x5410c1(0x48c)](_0x5410c1(0x2fe));_0x2ee16e[_0x5410c1(0x444)][_0x5410c1(0x4c2)](_0x5410c1(0x40c),_0x42c846===_0x497347);});}[_0x3a406e(0x428)](_0x1bae60='us'){const _0x22b0ab=_0x3a406e;if(!(_0x22b0ab(0x52a)in window))return null;const _0x39d9c1=window[_0x22b0ab(0x52a)][_0x22b0ab(0x457)]()||[];if(!_0x39d9c1[_0x22b0ab(0x201)])return null;const _0x211a67=_0x3066a8=>(_0x3066a8||'')[_0x22b0ab(0x6dc)](),_0x119ca7=_0x22719e=>_0x22719e&&_0x22719e[_0x22b0ab(0x354)]===![],_0x1a27fe=[_0x22b0ab(0x2a2),'google\x20uk\x20english',_0x22b0ab(0x289),_0x22b0ab(0x23e)],_0x4e2f64=['google\x20us\x20english',_0x22b0ab(0x651),'google\x20english\x20us'],_0x1d41f9=_0x52ed7c=>_0x211a67(_0x52ed7c['lang'])[_0x22b0ab(0x6d6)](_0x22b0ab(0x3d4)),_0x59f74a=_0xc31266=>_0x211a67(_0xc31266[_0x22b0ab(0x44c)])[_0x22b0ab(0x6d6)](_0x22b0ab(0x534))||_0x211a67(_0xc31266[_0x22b0ab(0x44c)])==='en',_0x2ad7e3=(_0x5bab19,_0x53768d)=>{const _0x463997=_0x22b0ab;for(const _0x4d3e9b of _0x5bab19){const _0x550759=_0x39d9c1[_0x463997(0x6ff)](_0x32ab62=>_0x119ca7(_0x32ab62)&&_0x211a67(_0x32ab62[_0x463997(0x38c)])[_0x463997(0x3ed)](_0x4d3e9b));if(_0x550759)return _0x550759;}const _0x3c704b=_0x39d9c1[_0x463997(0x6ff)](_0x557ee8=>_0x119ca7(_0x557ee8)&&_0x53768d(_0x557ee8));if(_0x3c704b)return _0x3c704b;const _0x328030=_0x39d9c1[_0x463997(0x6ff)](_0x2e2610=>_0x53768d(_0x2e2610));if(_0x328030)return _0x328030;const _0x4265fc=_0x39d9c1[_0x463997(0x6ff)](_0x8d08c5=>_0x119ca7(_0x8d08c5)&&_0x211a67(_0x8d08c5[_0x463997(0x44c)])[_0x463997(0x6d6)]('en'));if(_0x4265fc)return _0x4265fc;const _0x411caa=_0x39d9c1[_0x463997(0x6ff)](_0xcbf9d4=>_0x211a67(_0xcbf9d4[_0x463997(0x44c)])[_0x463997(0x6d6)]('en'));return _0x411caa||_0x39d9c1[0x0]||null;};return _0x1bae60==='uk'?_0x2ad7e3(_0x1a27fe,_0x1d41f9):_0x2ad7e3(_0x4e2f64,_0x59f74a);}async[_0x3a406e(0x2cd)](_0x3f256a,_0x375aa8='us'){const _0x300168=_0x3a406e;if(this[_0x300168(0x4b7)])return![];const _0x4c3da9=this[_0x300168(0x4af)](_0x3f256a);if(!_0x4c3da9)return![];if(!(_0x300168(0x52a)in window))return![];await this[_0x300168(0x3d0)]();const _0x4446c5=this[_0x300168(0x428)](_0x375aa8==='uk'?'uk':'us'),_0x559244=_0x375aa8==='uk'?0.9:0.8,_0x2a5581=this['audioRate']||0x1,_0x5b9c57=Math['min'](0x2,Math[_0x300168(0x662)](0.3,_0x559244*_0x2a5581)),_0x3dd819=0x1,_0x3c0a07=new Promise(_0x287241=>{const _0x666b78=_0x300168,_0x15e1a9=new SpeechSynthesisUtterance(_0x4c3da9);if(_0x4446c5){_0x15e1a9[_0x666b78(0x33a)]=_0x4446c5;if(_0x4446c5['lang'])_0x15e1a9[_0x666b78(0x44c)]=_0x4446c5[_0x666b78(0x44c)];}else _0x15e1a9['lang']=_0x375aa8==='uk'?_0x666b78(0x1fe):_0x666b78(0x3bf);_0x15e1a9[_0x666b78(0x464)]=_0x5b9c57,_0x15e1a9['pitch']=_0x3dd819,_0x15e1a9[_0x666b78(0x358)]=_0x287241,_0x15e1a9[_0x666b78(0x5b6)]=_0x287241;try{window[_0x666b78(0x52a)][_0x666b78(0x6a0)]();}catch{}window[_0x666b78(0x52a)][_0x666b78(0x3ec)](_0x15e1a9);});return this[_0x300168(0x704)]=_0x3c0a07[_0x300168(0x433)](()=>{const _0x3626e7=_0x300168;if(this[_0x3626e7(0x704)]===_0x3c0a07)this[_0x3626e7(0x704)]=null;}),await _0x3c0a07,!![];}async[_0x3a406e(0x4c3)](_0x4b0b82,_0x33f0a9='us'){const _0x5834a6=_0x3a406e;if(typeof _0x4b0b82===_0x5834a6(0x65e)&&_0x4b0b82[_0x5834a6(0x3ed)]('/')){const _0x3a7a66=_0x4b0b82[_0x5834a6(0x3f9)]('/')[_0x5834a6(0x4ef)](_0x56c88f=>_0x56c88f[_0x5834a6(0x6f9)]())[_0x5834a6(0x66a)](Boolean);if(_0x3a7a66[_0x5834a6(0x201)]>0x1){for(const _0x1ecc3e of _0x3a7a66){await this[_0x5834a6(0x642)](_0x1ecc3e,_0x33f0a9),await this[_0x5834a6(0x266)](0xc8);}return!![];}}return this[_0x5834a6(0x642)](_0x4b0b82,_0x33f0a9);}async[_0x3a406e(0x642)](_0xc61961,_0x49442c='us'){const _0x161d2b=_0x3a406e,_0x3143c3=this[_0x161d2b(0x5b5)](_0xc61961);if(_0x3143c3[_0x161d2b(0x201)]===0x0)return![];const _0x3f04b6=[_0x49442c];for(const _0x27d015 of _0x3143c3){for(const _0x3956cb of _0x3f04b6){try{return await this['playMp3Url'](this[_0x161d2b(0x3c0)](_0x27d015,_0x3956cb)),!![];}catch(_0x11eff1){}}}return![];}async[_0x3a406e(0x53e)](_0x10cd74,_0x5a6b92='us'){const _0x1be879=_0x3a406e;if(!_0x10cd74||!_0x10cd74['length'])return![];for(let _0x2bf5=0x0;_0x2bf5<_0x10cd74['length'];_0x2bf5++){const _0x3ec971=_0x10cd74[_0x2bf5];await this[_0x1be879(0x4c3)](_0x3ec971,_0x5a6b92),await this[_0x1be879(0x266)](0xc8);}return!![];}async['getPrimaryImageUrl'](_0x2864f8){const _0xea761=_0x3a406e;if(_0x2864f8[_0xea761(0x4d9)]===_0xea761(0x22c)||_0x2864f8[_0xea761(0x3f8)]===_0xea761(0x22c)){const _0x5e70cc=await this[_0xea761(0x510)](_0x2864f8);if(_0x5e70cc&&_0x5e70cc[_0xea761(0x460)])return _0x5e70cc[_0xea761(0x460)];return this['getFallbackImageUrl']();}const _0x2d22e4=(this[_0xea761(0x3aa)](_0x2864f8)||'')[_0xea761(0x6dc)]()[_0xea761(0x6f9)]();return _0xea761(0x45b)+encodeURIComponent(_0x2d22e4)+'.jpg';}[_0x3a406e(0x39c)](){const _0xaef13b=_0x3a406e,_0x192597=Math['floor'](Math[_0xaef13b(0x513)]()*0x64)+0x1;return'/'+_0x192597+_0xaef13b(0x511);}[_0x3a406e(0x5b9)](_0x51defc){const _0x10b069=_0x3a406e,_0x157536=parseInt(_0x51defc[_0x10b069(0x5f0)][_0x10b069(0x630)]||'1'),_0x1d29b7=_0x157536%0x3d||0x3d;_0x51defc['src']='/m'+_0x1d29b7+'.jpg';}async[_0x3a406e(0x314)](_0x29a5f1){const _0x3cbf76=_0x3a406e;if(_0x29a5f1[_0x3cbf76(0x5f0)][_0x3cbf76(0x600)]){_0x29a5f1['onerror']=null,_0x29a5f1['src']=_0x3cbf76(0x1dc);return;}const _0x2c26b7=_0x29a5f1['closest'](_0x3cbf76(0x548));if(_0x2c26b7){const _0x36cc57=_0x2c26b7[_0x3cbf76(0x3ad)](_0x3cbf76(0x62e))?.[_0x3cbf76(0x6e8)]?.[_0x3cbf76(0x6f9)](),_0x5e3b4f=_0x2c26b7['querySelector'](_0x3cbf76(0x3df))?.[_0x3cbf76(0x6e8)]?.['trim']();if(_0x36cc57==='MEDICAL'){const _0x5b5291=this[_0x3cbf76(0x38a)](_0x5e3b4f,_0x36cc57);if(_0x5b5291){const _0x487b67=await this[_0x3cbf76(0x510)](_0x5b5291);if(_0x487b67&&_0x487b67[_0x3cbf76(0x460)]&&_0x487b67[_0x3cbf76(0x460)]!==_0x29a5f1['src']){_0x29a5f1[_0x3cbf76(0x39e)]=_0x487b67['url'],_0x29a5f1[_0x3cbf76(0x5f0)]['imageSource']=_0x487b67[_0x3cbf76(0x706)],_0x29a5f1[_0x3cbf76(0x444)][_0x3cbf76(0x6a3)](_0x3cbf76(0x2dd));return;}}}}_0x29a5f1[_0x3cbf76(0x5f0)][_0x3cbf76(0x600)]='1',_0x29a5f1[_0x3cbf76(0x39e)]=this[_0x3cbf76(0x39c)]();}['findWordObject'](_0x1f73d5,_0x2e7654){const _0x3b5e69=_0x3a406e;if(!_0x1f73d5)return null;const _0x5ef0ab=_0x1f73d5[_0x3b5e69(0x6f9)]()[_0x3b5e69(0x6dc)]();let _0x4f3292=this[_0x3b5e69(0x27d)][_0x3b5e69(0x6ff)](_0x55fb6c=>{const _0x585e3d=_0x3b5e69,_0xa992bb=(_0x55fb6c[_0x585e3d(0x693)]||'')[_0x585e3d(0x6dc)](),_0x3a782d=(this[_0x585e3d(0x26d)](_0x55fb6c)||'')[_0x585e3d(0x6dc)]();return(_0xa992bb===_0x5ef0ab||_0x3a782d===_0x5ef0ab)&&(!_0x2e7654||_0x55fb6c['level']===_0x2e7654);});if(_0x4f3292)return _0x4f3292;return _0x2e7654&&oxfordWordsDatabase[_0x2e7654]&&(_0x4f3292=oxfordWordsDatabase[_0x2e7654][_0x3b5e69(0x6ff)](_0x1d027d=>{const _0x4bb414=_0x3b5e69,_0xaac71=(_0x1d027d[_0x4bb414(0x693)]||'')['toLowerCase'](),_0x1295f0=(this[_0x4bb414(0x26d)](_0x1d027d)||'')[_0x4bb414(0x6dc)]();return _0xaac71===_0x5ef0ab||_0x1295f0===_0x5ef0ab;})),_0x4f3292;}async[_0x3a406e(0x510)](_0x46fd59){const _0x2753ee=_0x3a406e;if(!_0x46fd59)return null;this[_0x2753ee(0x4e4)]();const _0x5b2917=(this[_0x2753ee(0x3aa)](_0x46fd59)||_0x46fd59[_0x2753ee(0x693)]||'')[_0x2753ee(0x6dc)]()[_0x2753ee(0x6f9)](),_0x2d8158='medical_'+_0x5b2917;if(this[_0x2753ee(0x35c)][_0x2753ee(0x61f)](_0x2d8158))return this[_0x2753ee(0x35c)][_0x2753ee(0x260)](_0x2d8158);const _0x5aa0c9={'heart':_0x2753ee(0x303),'brain':_0x2753ee(0x21d),'lungs':'https://smart.servier.com/wp-content/uploads/2016/10/poumon_01.png','liver':_0x2753ee(0x70a),'kidney':'https://smart.servier.com/wp-content/uploads/2016/10/rein.png','stomach':'https://smart.servier.com/wp-content/uploads/2016/10/estomac.png','eye':_0x2753ee(0x616),'spine':_0x2753ee(0x64b),'large\x20intestine':_0x2753ee(0x562),'small\x20intestine':_0x2753ee(0x631),'pancreas':_0x2753ee(0x5cb),'skull':_0x2753ee(0x2c7),'tooth':_0x2753ee(0x520),'neuron':_0x2753ee(0x624),'dna':'https://smart.servier.com/wp-content/uploads/2016/10/adn.png','blood':'https://smart.servier.com/wp-content/uploads/2016/10/sang.png','bone':'https://smart.servier.com/wp-content/uploads/2016/10/os.png','muscle':_0x2753ee(0x1ab),'nerve':_0x2753ee(0x6a5),'artery':'https://smart.servier.com/wp-content/uploads/2016/10/artere.png','vein':_0x2753ee(0x295),'skeleton':_0x2753ee(0x619),'cell':'https://smart.servier.com/wp-content/uploads/2016/10/cellule.png','bacteria':_0x2753ee(0x1d1),'virus':_0x2753ee(0x505)};if(_0x5aa0c9[_0x5b2917]){const _0x463d13=_0x5aa0c9[_0x5b2917],_0x8da9d7=await this[_0x2753ee(0x3c3)](_0x463d13);if(_0x8da9d7){const _0x363222={'url':_0x463d13,'source':'Servier\x20Medical\x20Art'};return this[_0x2753ee(0x35c)][_0x2753ee(0x400)](_0x2d8158,_0x363222),this[_0x2753ee(0x482)](),_0x363222;}}const _0x4a178e=this['prepareMedicalSearchTerms'](_0x5b2917);for(const _0x439ed9 of _0x4a178e){const _0x4f5495=[_0x2753ee(0x1bf)+_0x439ed9+'.png',_0x2753ee(0x3c9)+_0x439ed9+_0x2753ee(0x615)];for(const _0x4024db of _0x4f5495){const _0x2275e6=await this[_0x2753ee(0x3c3)](_0x4024db);if(_0x2275e6){const _0x558620={'url':_0x4024db,'source':_0x2753ee(0x5b4)};return this[_0x2753ee(0x35c)][_0x2753ee(0x400)](_0x2d8158,_0x558620),this['saveMedicalImageCache'](),_0x558620;}}}return null;}[_0x3a406e(0x3c3)](_0x5db05a,_0x4b1631=0xbb8){return new Promise(_0x58092b=>{const _0x3a7db3=_0x5b63,_0x1bcc31=new Image();let _0x3ab0ed;const _0x474fc0=()=>{const _0x1ca509=_0x5b63;clearTimeout(_0x3ab0ed),_0x1bcc31[_0x1ca509(0x605)]=null,_0x1bcc31[_0x1ca509(0x5b6)]=null;};_0x1bcc31[_0x3a7db3(0x605)]=()=>{_0x474fc0(),_0x58092b(!![]);},_0x1bcc31['onerror']=()=>{_0x474fc0(),_0x58092b(![]);},_0x3ab0ed=setTimeout(()=>{_0x474fc0(),_0x58092b(![]);},_0x4b1631),_0x1bcc31[_0x3a7db3(0x39e)]=_0x5db05a;});}[_0x3a406e(0x2a4)](_0x400c39){const _0xbaea35=_0x3a406e,_0x302be5=[],_0x3104de=_0x400c39['toLowerCase']()[_0xbaea35(0x6f9)]();_0x302be5[_0xbaea35(0x31d)](_0x3104de);_0x3104de[_0xbaea35(0x3ed)]('\x20')&&(_0x302be5['push'](_0x3104de[_0xbaea35(0x22a)](/\s+/g,'_')),_0x302be5[_0xbaea35(0x31d)](_0x3104de[_0xbaea35(0x22a)](/\s+/g,'-')));const _0x34713f={'heart':_0xbaea35(0x1b6),'brain':_0xbaea35(0x44e),'lungs':_0xbaea35(0x541),'liver':_0xbaea35(0x4c4),'kidney':_0xbaea35(0x1b5),'stomach':_0xbaea35(0x32e),'eye':_0xbaea35(0x51b),'spine':'colonne','large\x20intestine':'gros_intestin','small\x20intestine':'intestin_grele','pancreas':_0xbaea35(0x317),'skull':'crane','tooth':_0xbaea35(0x4cc),'neuron':'neurone','dna':_0xbaea35(0x598),'blood':_0xbaea35(0x2f0),'bone':'os','muscle':'muscle','nerve':_0xbaea35(0x6fa),'artery':'artere','vein':_0xbaea35(0x1e0)};return _0x34713f[_0x3104de]&&_0x302be5[_0xbaea35(0x31d)](_0x34713f[_0x3104de]),_0x302be5;}[_0x3a406e(0x4e4)](){const _0x19bece=_0x3a406e;if(!this[_0x19bece(0x35c)]){this['medicalImageCache']=new Map();try{const _0x29999b=localStorage[_0x19bece(0x557)]('medicalImageCache');if(_0x29999b){const _0x2850e8=JSON['parse'](_0x29999b);Object[_0x19bece(0x638)](_0x2850e8)['forEach'](([_0x2bce34,_0xc3480d])=>{const _0x14be70=_0x19bece;this[_0x14be70(0x35c)]['set'](_0x2bce34,_0xc3480d);});}}catch(_0x39be07){console[_0x19bece(0x5e3)](_0x19bece(0x649),_0x39be07);}}}['saveMedicalImageCache'](){const _0x134588=_0x3a406e;try{const _0x1d3a5b={};this[_0x134588(0x35c)]['forEach']((_0x5bce02,_0x520fcd)=>{_0x1d3a5b[_0x520fcd]=_0x5bce02;}),localStorage['setItem'](_0x134588(0x35c),JSON[_0x134588(0x40f)](_0x1d3a5b));}catch(_0x35d77a){console[_0x134588(0x5e3)]('Failed\x20to\x20save\x20medical\x20image\x20cache:',_0x35d77a);}}[_0x3a406e(0x250)](){const _0x15c291=_0x3a406e,_0x5e33f3=document['getElementById']('newLevel');if(_0x5e33f3){const _0x1d5db1=_0x5e33f3['closest'](_0x15c291(0x44a))||_0x5e33f3[_0x15c291(0x270)];if(_0x1d5db1)_0x1d5db1[_0x15c291(0x227)][_0x15c291(0x1e7)]=_0x15c291(0x488);else _0x5e33f3[_0x15c291(0x227)][_0x15c291(0x1e7)]=_0x15c291(0x488);}const _0x4ca5b9=document[_0x15c291(0x669)]('bulkLevel');if(_0x4ca5b9){const _0x25df6b=_0x4ca5b9[_0x15c291(0x5c9)]('.form-group')||_0x4ca5b9[_0x15c291(0x270)];if(_0x25df6b)_0x25df6b[_0x15c291(0x227)][_0x15c291(0x1e7)]=_0x15c291(0x488);else _0x4ca5b9['style'][_0x15c291(0x1e7)]=_0x15c291(0x488);}const _0x1e9917=document[_0x15c291(0x669)](_0x15c291(0x4ed));if(_0x1e9917)_0x1e9917[_0x15c291(0x208)](_0x15c291(0x561),()=>this[_0x15c291(0x1db)]());const _0x4acc29=document[_0x15c291(0x669)]('supportBtn');if(_0x4acc29)_0x4acc29[_0x15c291(0x208)](_0x15c291(0x561),()=>this['showSupportModal']());document[_0x15c291(0x5f2)]('.nav-item')[_0x15c291(0x50b)](_0x5a6f97=>{const _0x5b9b47=_0x15c291;_0x5a6f97[_0x5b9b47(0x208)](_0x5b9b47(0x561),_0x42ab93=>{const _0x409e4a=_0x5b9b47,_0x25d750=_0x42ab93[_0x409e4a(0x6fd)][_0x409e4a(0x48c)](_0x409e4a(0x336));if(_0x25d750)this[_0x409e4a(0x321)](_0x25d750);});}),document['querySelectorAll'](_0x15c291(0x711))[_0x15c291(0x50b)](_0x202fb1=>{const _0x1865b2=_0x15c291;_0x202fb1[_0x1865b2(0x208)](_0x1865b2(0x561),_0x445066=>{const _0x4aa1a6=_0x1865b2,_0x3fd38d=_0x445066[_0x4aa1a6(0x6fd)][_0x4aa1a6(0x48c)]('data-level');_0x3fd38d&&this[_0x4aa1a6(0x6bd)](_0x3fd38d);});}),document['querySelectorAll'](_0x15c291(0x3f6))['forEach'](_0x1764cb=>{_0x1764cb['addEventListener']('click',_0x36192c=>{const _0x5642ce=_0x5b63;if(_0x36192c[_0x5642ce(0x6fd)][_0x5642ce(0x444)][_0x5642ce(0x1c3)](_0x5642ce(0x6fc)))return;const _0x23fc67=_0x36192c[_0x5642ce(0x6fd)][_0x5642ce(0x48c)](_0x5642ce(0x375));if(!_0x23fc67)return;if(_0x23fc67===_0x5642ce(0x397))this['showAddedWordsCategory']();else _0x23fc67==='STUDY_NOW'?this[_0x5642ce(0x5a6)]():this[_0x5642ce(0x33b)](_0x23fc67);});});const _0x848ce3=document[_0x15c291(0x669)]('backToLevels');if(_0x848ce3)_0x848ce3[_0x15c291(0x208)]('click',()=>this[_0x15c291(0x5b7)]());const _0x1d1095=document['getElementById'](_0x15c291(0x429));if(_0x1d1095)_0x1d1095['addEventListener'](_0x15c291(0x561),()=>this[_0x15c291(0x623)]());const _0x1ddab6=document[_0x15c291(0x669)](_0x15c291(0x37d));if(_0x1ddab6)_0x1ddab6[_0x15c291(0x208)](_0x15c291(0x561),()=>this[_0x15c291(0x514)]());const _0x14584a=document[_0x15c291(0x669)]('uploadTabSingle'),_0x1cf86b=document[_0x15c291(0x669)](_0x15c291(0x1a7)),_0x49d5b9=document[_0x15c291(0x669)](_0x15c291(0x508)),_0x1997ce=document['getElementById'](_0x15c291(0x6b4)),_0x294332=document[_0x15c291(0x669)](_0x15c291(0x607)),_0x1a5783=document[_0x15c291(0x669)](_0x15c291(0x31c));function _0x1c8127(_0x501234){const _0x38aeae=_0x15c291;if(!_0x14584a||!_0x1cf86b||!_0x49d5b9||!_0x1997ce)return;_0x14584a[_0x38aeae(0x444)][_0x38aeae(0x4c2)](_0x38aeae(0x40c),_0x501234===_0x38aeae(0x454)),_0x1cf86b['classList']['toggle'](_0x38aeae(0x40c),_0x501234===_0x38aeae(0x699)),_0x49d5b9[_0x38aeae(0x227)]['display']=_0x501234===_0x38aeae(0x454)?'':_0x38aeae(0x488),_0x1997ce[_0x38aeae(0x227)]['display']=_0x501234==='bulk'?'':'none';if(_0x294332)_0x294332[_0x38aeae(0x227)][_0x38aeae(0x1e7)]=_0x501234===_0x38aeae(0x454)?'':_0x38aeae(0x488);if(_0x1a5783)_0x1a5783[_0x38aeae(0x227)][_0x38aeae(0x1e7)]=_0x501234===_0x38aeae(0x699)?'':_0x38aeae(0x488);}_0x14584a&&_0x1cf86b&&(_0x14584a[_0x15c291(0x208)](_0x15c291(0x561),()=>_0x1c8127('single')),_0x1cf86b[_0x15c291(0x208)](_0x15c291(0x561),()=>_0x1c8127(_0x15c291(0x699))),_0x1c8127(_0x15c291(0x454)));document['querySelectorAll'](_0x15c291(0x52b))[_0x15c291(0x50b)](_0x2d8efb=>{const _0x534e3e=_0x15c291;_0x2d8efb[_0x534e3e(0x208)](_0x534e3e(0x561),_0x315569=>{const _0x40ba00=_0x534e3e;_0x315569[_0x40ba00(0x38f)]();const _0x54c9b6=_0x315569[_0x40ba00(0x6fd)]['getAttribute']('data-mode');if(!_0x54c9b6)return;this[_0x40ba00(0x6a4)]=_0x54c9b6,localStorage[_0x40ba00(0x42c)]('currentMode',this[_0x40ba00(0x6a4)]),document[_0x40ba00(0x5f2)](_0x40ba00(0x52b))[_0x40ba00(0x50b)](_0xe00b67=>_0xe00b67[_0x40ba00(0x444)][_0x40ba00(0x25a)](_0x40ba00(0x40c))),_0x315569['currentTarget'][_0x40ba00(0x444)][_0x40ba00(0x6a3)](_0x40ba00(0x40c));const _0x3a812d=document[_0x40ba00(0x3ad)]('.practice-toggle');_0x3a812d&&(_0x54c9b6===_0x40ba00(0x49a)?_0x3a812d[_0x40ba00(0x227)][_0x40ba00(0x1e7)]=_0x40ba00(0x488):(_0x3a812d['style'][_0x40ba00(0x1e7)]=_0x40ba00(0x685),this[_0x40ba00(0x51d)]===_0x40ba00(0x42a)&&(this[_0x40ba00(0x51d)]=_0x40ba00(0x233),localStorage[_0x40ba00(0x42c)](_0x40ba00(0x51d),_0x40ba00(0x233)),document[_0x40ba00(0x5f2)](_0x40ba00(0x36f))[_0x40ba00(0x50b)](_0x9c73e0=>{const _0x3e5f05=_0x40ba00;_0x9c73e0[_0x3e5f05(0x444)][_0x3e5f05(0x4c2)](_0x3e5f05(0x40c),_0x9c73e0[_0x3e5f05(0x48c)](_0x3e5f05(0x2fe))==='scheduled');})))),this[_0x40ba00(0x67a)]=!![],this['renderLearningSection']();});}),document['querySelectorAll'](_0x15c291(0x36f))[_0x15c291(0x50b)](_0x3dabd0=>{const _0x27b3a2=_0x15c291;_0x3dabd0[_0x27b3a2(0x208)](_0x27b3a2(0x561),_0x12a04c=>{const _0x190b9a=_0x27b3a2;_0x12a04c[_0x190b9a(0x38f)]();const _0x581c51=_0x12a04c[_0x190b9a(0x6fd)][_0x190b9a(0x48c)](_0x190b9a(0x2fe));if(!_0x581c51)return;if(_0x581c51===_0x190b9a(0x42a)){this[_0x190b9a(0x556)](),document[_0x190b9a(0x5f2)](_0x190b9a(0x36f))[_0x190b9a(0x50b)](_0x59083d=>_0x59083d['classList'][_0x190b9a(0x25a)](_0x190b9a(0x40c))),_0x12a04c[_0x190b9a(0x6fd)][_0x190b9a(0x444)]['add'](_0x190b9a(0x40c));return;}this[_0x190b9a(0x51d)]=_0x581c51,localStorage[_0x190b9a(0x42c)](_0x190b9a(0x51d),_0x581c51),document['querySelectorAll']('.practice-btn')[_0x190b9a(0x50b)](_0x405e30=>_0x405e30[_0x190b9a(0x444)][_0x190b9a(0x25a)]('active')),_0x12a04c[_0x190b9a(0x6fd)][_0x190b9a(0x444)][_0x190b9a(0x6a3)](_0x190b9a(0x40c)),this[_0x190b9a(0x24c)]=0x0,_0x581c51===_0x190b9a(0x3da)&&localStorage[_0x190b9a(0x316)]('currentSession'),this['suppressAutoSpeakOnce']=!![],this[_0x190b9a(0x2cf)]();});});const _0x1a2267=document[_0x15c291(0x669)](_0x15c291(0x4b1));_0x1a2267&&_0x1a2267['addEventListener'](_0x15c291(0x561),()=>{const _0x4bc527=_0x15c291,_0x173e8a=_0x1a2267[_0x4bc527(0x5f0)]['state']==='all-added';if(_0x173e8a)this[_0x4bc527(0x4fd)]();else this[_0x4bc527(0x1d2)]();});const _0x483e6f=document['getElementById'](_0x15c291(0x46a));if(_0x483e6f)_0x483e6f['addEventListener'](_0x15c291(0x561),()=>this[_0x15c291(0x291)](_0x15c291(0x3fd),_0x15c291(0x5b1)));const _0x5ea974=document[_0x15c291(0x669)]('doodleStartBtn');if(_0x5ea974)_0x5ea974[_0x15c291(0x208)](_0x15c291(0x561),()=>this[_0x15c291(0x291)](_0x15c291(0x1de),_0x15c291(0x1ae)));const _0x51958b=document['getElementById'](_0x15c291(0x1f7));if(_0x51958b)_0x51958b[_0x15c291(0x208)](_0x15c291(0x561),()=>this[_0x15c291(0x291)](_0x15c291(0x1c0),_0x15c291(0x32a)));const _0x4a3f70=document['getElementById'](_0x15c291(0x2d7));if(_0x4a3f70)_0x4a3f70[_0x15c291(0x208)](_0x15c291(0x561),()=>this['showQuizGateForGame'](_0x15c291(0x628),_0x15c291(0x26e)));const _0x14f1c9=document[_0x15c291(0x669)](_0x15c291(0x597));if(_0x14f1c9)_0x14f1c9['addEventListener'](_0x15c291(0x561),()=>this[_0x15c291(0x291)](_0x15c291(0x3b7),_0x15c291(0x4d0)));const _0x273c84=document['getElementById'](_0x15c291(0x304));if(_0x273c84)_0x273c84['addEventListener'](_0x15c291(0x561),()=>this['showQuizGateForGame'](_0x15c291(0x459),_0x15c291(0x42f)));const _0x16bb76=document[_0x15c291(0x669)](_0x15c291(0x359));_0x16bb76&&_0x16bb76[_0x15c291(0x208)](_0x15c291(0x561),()=>this[_0x15c291(0x5ab)]()),this['updateLevelCounts'](),this[_0x15c291(0x2cf)](),this[_0x15c291(0x54c)](),setTimeout(()=>{const _0xc76f2a=_0x15c291;document['querySelectorAll'](_0xc76f2a(0x52b))[_0xc76f2a(0x50b)](_0x180625=>{const _0x34f950=_0xc76f2a;_0x180625[_0x34f950(0x444)][_0x34f950(0x4c2)](_0x34f950(0x40c),_0x180625['getAttribute'](_0x34f950(0x249))===this[_0x34f950(0x6a4)]);}),document[_0xc76f2a(0x5f2)](_0xc76f2a(0x36f))[_0xc76f2a(0x50b)](_0x34d48d=>{const _0x4b2387=_0xc76f2a;_0x34d48d['classList'][_0x4b2387(0x4c2)]('active',_0x34d48d[_0x4b2387(0x48c)](_0x4b2387(0x2fe))===this[_0x4b2387(0x51d)]);});},0x64),window[_0x15c291(0x455)]=_0x8c775a=>this['handleTranslatorAdd'](_0x8c775a);}['maybeShowDailyMotivation'](_0x94bfe5){const _0x3196a7=_0x3a406e;try{const _0x3033ce=localStorage[_0x3196a7(0x557)]('first_run_completed')==='1';if(!_0x3033ce){console[_0x3196a7(0x48f)](_0x3196a7(0x394));_0x94bfe5&&typeof _0x94bfe5===_0x3196a7(0x241)&&_0x94bfe5();return;}const _0xa96a82=new Date()[_0x3196a7(0x2c3)](),_0x45a8c8=localStorage['getItem'](_0x3196a7(0x487));console['log'](_0x3196a7(0x6a9),_0xa96a82,_0x3196a7(0x328),_0x45a8c8),_0x45a8c8!==_0xa96a82?setTimeout(()=>{const _0x211591=_0x3196a7;this[_0x211591(0x417)](()=>{const _0x563660=_0x211591;localStorage[_0x563660(0x42c)](_0x563660(0x487),_0xa96a82),_0x94bfe5&&typeof _0x94bfe5===_0x563660(0x241)&&_0x94bfe5();});},0x258):(console[_0x3196a7(0x48f)](_0x3196a7(0x3e7)),_0x94bfe5&&typeof _0x94bfe5===_0x3196a7(0x241)&&_0x94bfe5());}catch(_0x26e49d){console[_0x3196a7(0x2f9)](_0x3196a7(0x686),_0x26e49d),_0x94bfe5&&typeof _0x94bfe5===_0x3196a7(0x241)&&_0x94bfe5();}}[_0x3a406e(0x2cc)](){const _0x3e151d=_0x3a406e;let _0x3bd7d5=![];const _0x4b2b7c=async()=>{const _0x31070a=_0x5b63;if(_0x3bd7d5)return;try{const _0x5edf46=window[_0x31070a(0x4b3)]||window[_0x31070a(0x440)];if(_0x5edf46){if(!this[_0x31070a(0x61c)])this[_0x31070a(0x61c)]=new _0x5edf46();if(this['audioCtx'][_0x31070a(0x211)]===_0x31070a(0x50d))await this[_0x31070a(0x61c)][_0x31070a(0x705)]();const _0x1ef4e3=this[_0x31070a(0x61c)]['createBuffer'](0x1,0x1,0x5622),_0x1968b6=this['audioCtx'][_0x31070a(0x370)]();_0x1968b6[_0x31070a(0x6b9)]=_0x1ef4e3,_0x1968b6[_0x31070a(0x4dd)](this[_0x31070a(0x61c)][_0x31070a(0x536)]),_0x1968b6['start'](0x0);}if(this['globalPlayer']){const _0x58f1a1=this[_0x31070a(0x387)][_0x31070a(0x39e)];this['globalPlayer'][_0x31070a(0x39e)]=_0x31070a(0x533),await this['globalPlayer']['play'](),this[_0x31070a(0x387)][_0x31070a(0x6c5)](),this[_0x31070a(0x387)][_0x31070a(0x46f)]=0x0;}_0x3bd7d5=!![];}catch(_0x48d00a){console[_0x31070a(0x5e3)]('Audio\x20unlock\x20partial\x20success:',_0x48d00a);}_0x3bd7d5&&[_0x31070a(0x264),'touchend',_0x31070a(0x561),'pointerdown'][_0x31070a(0x50b)](_0x557b44=>document[_0x31070a(0x604)](_0x557b44,_0x4b2b7c,!![]));};['touchstart','touchend',_0x3e151d(0x561),'pointerdown'][_0x3e151d(0x50b)](_0x1a18eb=>document[_0x3e151d(0x208)](_0x1a18eb,_0x4b2b7c,!![]));}[_0x3a406e(0x1ee)](){const _0x2822e3=_0x3a406e,_0x4bb100=document[_0x2822e3(0x669)](_0x2822e3(0x68e));if(_0x4bb100)try{_0x4bb100[_0x2822e3(0x479)]='eager';}catch{}}[_0x3a406e(0x6e3)](){const _0x246234=_0x3a406e;try{this[_0x246234(0x27d)]=JSON[_0x246234(0x6f4)](localStorage[_0x246234(0x557)](_0x246234(0x27d))||'[]'),this['customWords']=JSON[_0x246234(0x6f4)](localStorage[_0x246234(0x557)](_0x246234(0x6d9))||'[]'),this[_0x246234(0x56e)]=JSON[_0x246234(0x6f4)](localStorage[_0x246234(0x557)](_0x246234(0x56e))||'{}'),this['weeklyProgress']=JSON[_0x246234(0x6f4)](localStorage[_0x246234(0x557)](_0x246234(0x57e))||'[]');}catch(_0x8640e2){console['error']('Error\x20loading\x20data:',_0x8640e2),this[_0x246234(0x27d)]=[],this['customWords']=[],this[_0x246234(0x56e)]={},this[_0x246234(0x57e)]=[];}}[_0x3a406e(0x5b8)](){const _0x7a03dd=_0x3a406e;try{localStorage[_0x7a03dd(0x42c)](_0x7a03dd(0x27d),JSON['stringify'](this[_0x7a03dd(0x27d)])),localStorage[_0x7a03dd(0x42c)](_0x7a03dd(0x6d9),JSON[_0x7a03dd(0x40f)](this[_0x7a03dd(0x6d9)])),localStorage[_0x7a03dd(0x42c)](_0x7a03dd(0x56e),JSON[_0x7a03dd(0x40f)](this[_0x7a03dd(0x56e)])),localStorage[_0x7a03dd(0x42c)](_0x7a03dd(0x57e),JSON[_0x7a03dd(0x40f)](this[_0x7a03dd(0x57e)]));}catch(_0x54c660){console[_0x7a03dd(0x2f9)](_0x7a03dd(0x1b1),_0x54c660);}}[_0x3a406e(0x4a8)](){const _0x2b17fc=_0x3a406e,_0x232b63=document['documentElement'][_0x2b17fc(0x48c)]('data-theme'),_0x2d72ea=_0x232b63==='dark'?_0x2b17fc(0x19f):_0x2b17fc(0x477);document['documentElement'][_0x2b17fc(0x473)](_0x2b17fc(0x702),_0x2d72ea),localStorage[_0x2b17fc(0x42c)](_0x2b17fc(0x3a9),_0x2d72ea);}[_0x3a406e(0x6dd)](_0x2c591d){const _0x5dd55c=_0x3a406e;this['muted']=!this[_0x5dd55c(0x4b7)],localStorage[_0x5dd55c(0x42c)](_0x5dd55c(0x566),JSON[_0x5dd55c(0x40f)](this[_0x5dd55c(0x4b7)]));if(_0x2c591d){const _0xbf8ccc=_0x2c591d[_0x5dd55c(0x3ad)]('i');_0xbf8ccc&&(_0xbf8ccc['className']=this[_0x5dd55c(0x4b7)]?'fas\x20fa-volume-mute':_0x5dd55c(0x538)),_0x2c591d[_0x5dd55c(0x66c)]=_0x5dd55c(0x655)+(this[_0x5dd55c(0x4b7)]?_0x5dd55c(0x44b):_0x5dd55c(0x618))+_0x5dd55c(0x35a)+(this[_0x5dd55c(0x4b7)]?_0x5dd55c(0x408):_0x5dd55c(0x592))+_0x5dd55c(0x609);}this[_0x5dd55c(0x1bc)](this[_0x5dd55c(0x4b7)]?_0x5dd55c(0x646):_0x5dd55c(0x27c),_0x5dd55c(0x65c));}[_0x3a406e(0x3b2)](){const _0xdec8ef=_0x3a406e,_0x10510d=document['createElement'](_0xdec8ef(0x6d5));_0x10510d['className']=_0xdec8ef(0x341);const _0x32e333=0x2d;_0x10510d[_0xdec8ef(0x66c)]=_0xdec8ef(0x49b)+_0x32e333+'%</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22donate-track\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22donate-fill\x22\x20style=\x22width:\x200%\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22font-size:\x2011px;\x20color:\x20#aaa;\x20margin-top:\x208px;\x20font-weight:600;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Осталось\x20немного,\x20чтобы\x20закрыть\x20расходы\x20на\x20этот\x20месяц!\x20🔥\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<a\x20href=\x22https://pay.cloudtips.ru/p/8f56d7d3\x22\x20target=\x22_blank\x22\x20class=\x22donate-main-btn\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-heart\x22></i>\x20Поддержать\x20автора\x0a\x20\x20\x20\x20\x20\x20\x20\x20</a>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22donate-secure\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-lock\x22></i>\x20Безопасная\x20оплата\x20через\x20CloudTips\x20(Тинькофф)\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20',document[_0xdec8ef(0x673)][_0xdec8ef(0x378)](_0x10510d),requestAnimationFrame(()=>{const _0x5dfc3d=_0xdec8ef;_0x10510d[_0x5dfc3d(0x444)][_0x5dfc3d(0x6a3)](_0x5dfc3d(0x1bd));}),setTimeout(()=>{const _0x145834=_0xdec8ef,_0x3c1651=_0x10510d[_0x145834(0x3ad)]('.donate-fill');if(_0x3c1651)_0x3c1651[_0x145834(0x227)]['width']=_0x32e333+'%';},0xc8);const _0x1f66c9=()=>{const _0x4292eb=_0xdec8ef;_0x10510d[_0x4292eb(0x444)][_0x4292eb(0x25a)](_0x4292eb(0x1bd)),setTimeout(()=>_0x10510d[_0x4292eb(0x25a)](),0x12c);};_0x10510d[_0xdec8ef(0x3ad)](_0xdec8ef(0x450))['addEventListener'](_0xdec8ef(0x561),_0x1f66c9),_0x10510d['addEventListener'](_0xdec8ef(0x561),_0x41ad8b=>{if(_0x41ad8b['target']===_0x10510d)_0x1f66c9();});}['showLearningHelpModal'](){const _0x4f9c3f=_0x3a406e,_0xfd4411=document[_0x4f9c3f(0x1e6)]('div');_0xfd4411[_0x4f9c3f(0x493)]='grammar-modal\x20show',_0xfd4411['innerHTML']=_0x4f9c3f(0x683),_0xfd4411[_0x4f9c3f(0x208)]('click',_0x579832=>{const _0x3c4a53=_0x4f9c3f;(_0x579832[_0x3c4a53(0x24b)]===_0xfd4411||_0x579832['target'][_0x3c4a53(0x444)][_0x3c4a53(0x1c3)](_0x3c4a53(0x2fc)))&&_0xfd4411[_0x3c4a53(0x25a)]();}),document[_0x4f9c3f(0x673)][_0x4f9c3f(0x378)](_0xfd4411);}[_0x3a406e(0x3ee)](){const _0x1bfbd2=_0x3a406e,_0x3fb6da=document[_0x1bfbd2(0x1e6)](_0x1bfbd2(0x6d5));_0x3fb6da['className']='info-modal',_0x3fb6da[_0x1bfbd2(0x227)][_0x1bfbd2(0x2bf)]=_0x1bfbd2(0x35d),_0x3fb6da[_0x1bfbd2(0x66c)]=_0x1bfbd2(0x5c2)+this[_0x1bfbd2(0x45c)]()+_0x1bfbd2(0x64a),_0x3fb6da[_0x1bfbd2(0x208)](_0x1bfbd2(0x561),_0x50d4ba=>{const _0xdd57b2=_0x1bfbd2;if(_0x50d4ba['target']===_0x3fb6da)_0x3fb6da[_0xdd57b2(0x25a)]();}),document['body'][_0x1bfbd2(0x378)](_0x3fb6da);}[_0x3a406e(0x45c)](){const _0x3c9906=_0x3a406e;return _0x3c9906(0x3af);}[_0x3a406e(0x1db)](){const _0x22206f=_0x3a406e,_0x46ea80=document[_0x22206f(0x1e6)](_0x22206f(0x6d5));_0x46ea80[_0x22206f(0x493)]=_0x22206f(0x517),_0x46ea80[_0x22206f(0x227)][_0x22206f(0x2bf)]=_0x22206f(0x6b2),_0x46ea80['innerHTML']=_0x22206f(0x22e),document[_0x22206f(0x673)][_0x22206f(0x378)](_0x46ea80);const _0x1999c4=_0x46ea80[_0x22206f(0x3ad)]('.settings-close-btn');_0x1999c4&&_0x1999c4[_0x22206f(0x208)](_0x22206f(0x561),()=>_0x46ea80[_0x22206f(0x25a)]());const _0x4d0267=_0x46ea80[_0x22206f(0x3ad)]('.settings-theme-btn');_0x4d0267&&_0x4d0267[_0x22206f(0x208)](_0x22206f(0x561),()=>{const _0x323e12=_0x22206f;this[_0x323e12(0x4a8)](),this[_0x323e12(0x1bc)](_0x323e12(0x63b),'success');});const _0x137959=_0x46ea80['querySelector'](_0x22206f(0x258));_0x137959&&_0x137959[_0x22206f(0x208)](_0x22206f(0x561),()=>this[_0x22206f(0x6ec)](_0x137959)),_0x46ea80[_0x22206f(0x208)](_0x22206f(0x561),_0x218de0=>{const _0x38d20d=_0x22206f;if(_0x218de0[_0x38d20d(0x24b)]===_0x46ea80)_0x46ea80[_0x38d20d(0x25a)]();});}[_0x3a406e(0x3cf)](_0x52f8a9){const _0x3a4369=_0x3a406e,_0x123c1c=_0x52f8a9[_0x3a4369(0x5c9)](_0x3a4369(0x281));if(!_0x123c1c)return;const _0x579aae=_0x123c1c[_0x3a4369(0x3ad)](_0x3a4369(0x5d9)),_0x4f51c2=_0x123c1c[_0x3a4369(0x3ad)]('#installGuide');if(!_0x4f51c2||!_0x579aae)return;_0x579aae[_0x3a4369(0x227)][_0x3a4369(0x1e7)]=_0x3a4369(0x488),_0x123c1c[_0x3a4369(0x3ad)](_0x3a4369(0x552))[_0x3a4369(0x227)][_0x3a4369(0x1e7)]=_0x3a4369(0x488),_0x4f51c2[_0x3a4369(0x227)][_0x3a4369(0x1e7)]=_0x3a4369(0x51f),_0x4f51c2[_0x3a4369(0x66c)]=_0x3a4369(0x47f);const _0x1fbb1d=_0x4f51c2[_0x3a4369(0x3ad)](_0x3a4369(0x39b));_0x1fbb1d&&_0x1fbb1d[_0x3a4369(0x208)]('click',()=>{const _0x6cbe88=_0x3a4369;_0x4f51c2[_0x6cbe88(0x227)][_0x6cbe88(0x1e7)]=_0x6cbe88(0x488),_0x579aae['style'][_0x6cbe88(0x1e7)]=_0x6cbe88(0x51f);});}[_0x3a406e(0x3f2)](_0x3f6f71){const _0x2f8240=_0x3a406e,_0x167969=_0x3f6f71[_0x2f8240(0x5c9)](_0x2f8240(0x281));if(!_0x167969)return;const _0x43435b=_0x167969[_0x2f8240(0x3ad)]('#settingsMenu'),_0x3af0e1=_0x167969[_0x2f8240(0x3ad)](_0x2f8240(0x552)),_0x316292=_0x167969[_0x2f8240(0x3ad)]('#installGuide');if(!_0x43435b||!_0x3af0e1)return;_0x43435b[_0x2f8240(0x227)][_0x2f8240(0x1e7)]=_0x2f8240(0x488);if(_0x316292)_0x316292[_0x2f8240(0x227)][_0x2f8240(0x1e7)]=_0x2f8240(0x488);_0x3af0e1['style'][_0x2f8240(0x1e7)]=_0x2f8240(0x51f),_0x3af0e1['innerHTML']=_0x2f8240(0x293)+this[_0x2f8240(0x45c)]()+'\x0a\x20\x20\x20\x20</div>\x0a\x20\x20';}['openAudioSettingsInSettings'](_0x137b5b){const _0x21b946=_0x3a406e,_0x1758bd=_0x137b5b[_0x21b946(0x5c9)](_0x21b946(0x281));if(!_0x1758bd)return;const _0x3f12d6=_0x1758bd[_0x21b946(0x3ad)](_0x21b946(0x5d9)),_0x4520ef=_0x1758bd[_0x21b946(0x3ad)](_0x21b946(0x552)),_0x4f680d=_0x1758bd['querySelector'](_0x21b946(0x5c4));if(!_0x3f12d6||!_0x4520ef)return;_0x3f12d6['style'][_0x21b946(0x1e7)]=_0x21b946(0x488);if(_0x4f680d)_0x4f680d[_0x21b946(0x227)][_0x21b946(0x1e7)]='none';_0x4520ef[_0x21b946(0x227)][_0x21b946(0x1e7)]='block';const _0x413c1b=this[_0x21b946(0x46c)]||0x1,_0x2987e1=this[_0x21b946(0x4b7)];_0x4520ef[_0x21b946(0x66c)]=_0x21b946(0x5a3)+_0x413c1b[_0x21b946(0x62a)](0x1)+'\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20style=\x22width:100%;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22margin-top:6px;font-size:0.85rem;color:var(--text-secondary);\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Текущая\x20скорость:\x20<strong><span\x20id=\x22audioRateValue\x22>'+_0x413c1b[_0x21b946(0x62a)](0x1)+_0x21b946(0x57a)+(_0x2987e1?_0x21b946(0x44b):_0x21b946(0x618))+_0x21b946(0x209)+(_0x2987e1?_0x21b946(0x408):_0x21b946(0x592))+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20';const _0x40e727=_0x4520ef[_0x21b946(0x3ad)]('[data-testid=\x22settings-audio-back-btn\x22]');_0x40e727&&_0x40e727['addEventListener'](_0x21b946(0x561),()=>{const _0x434829=_0x21b946;_0x4520ef['style'][_0x434829(0x1e7)]=_0x434829(0x488),_0x3f12d6[_0x434829(0x227)]['display']=_0x434829(0x51f);});const _0x28e880=_0x4520ef[_0x21b946(0x3ad)](_0x21b946(0x360)),_0x27d4f6=_0x4520ef[_0x21b946(0x3ad)](_0x21b946(0x239));_0x28e880&&_0x27d4f6&&_0x28e880[_0x21b946(0x208)]('input',()=>{const _0x12e905=_0x21b946,_0x46e3f0=parseFloat(_0x28e880[_0x12e905(0x5dd)])||0x1;this[_0x12e905(0x46c)]=Math[_0x12e905(0x28a)](1.5,Math['max'](0.5,_0x46e3f0)),localStorage[_0x12e905(0x42c)](_0x12e905(0x6e2),String(this['audioRate'])),_0x27d4f6[_0x12e905(0x6e8)]=this[_0x12e905(0x46c)][_0x12e905(0x62a)](0x1);});const _0xc6a917=_0x4520ef['querySelector'](_0x21b946(0x560));_0xc6a917&&_0xc6a917[_0x21b946(0x208)](_0x21b946(0x561),()=>{const _0x62c8a5=_0x21b946;this[_0x62c8a5(0x6dd)](_0xc6a917);});}[_0x3a406e(0x321)](_0x53349c){const _0x364574=_0x3a406e;window[_0x364574(0x6f8)](0x0,0x0),this[_0x364574(0x4d6)]=_0x53349c,this[_0x364574(0x25b)](),document[_0x364574(0x5f2)]('.content-section')[_0x364574(0x50b)](_0x411d91=>{const _0x3be642=_0x364574;_0x411d91[_0x3be642(0x444)][_0x3be642(0x25a)](_0x3be642(0x40c)),_0x411d91['style'][_0x3be642(0x1e7)]=_0x3be642(0x488);});const _0x313317=document[_0x364574(0x669)](_0x53349c);_0x313317&&(_0x313317[_0x364574(0x444)][_0x364574(0x6a3)](_0x364574(0x40c)),_0x313317[_0x364574(0x227)][_0x364574(0x1e7)]=_0x364574(0x51f));document[_0x364574(0x5f2)](_0x364574(0x571))['forEach'](_0x61322e=>_0x61322e[_0x364574(0x444)][_0x364574(0x25a)](_0x364574(0x40c)));const _0x164a45=document[_0x364574(0x3ad)](_0x364574(0x38e)+_0x53349c+'\x22]');if(_0x164a45)_0x164a45[_0x364574(0x444)]['add'](_0x364574(0x40c));_0x53349c===_0x364574(0x4f8)&&(this[_0x364574(0x5b7)](),this[_0x364574(0x2bb)]());_0x53349c===_0x364574(0x5de)&&(setTimeout(()=>{const _0x2943d9=_0x364574;document['querySelectorAll']('.mode-btn')[_0x2943d9(0x50b)](_0x2177b9=>{const _0x536774=_0x2943d9;_0x2177b9[_0x536774(0x444)][_0x536774(0x4c2)](_0x536774(0x40c),_0x2177b9['getAttribute'](_0x536774(0x249))===this[_0x536774(0x6a4)]);}),document[_0x2943d9(0x5f2)](_0x2943d9(0x36f))['forEach'](_0x312349=>{const _0x2420b8=_0x2943d9;_0x312349['classList'][_0x2420b8(0x4c2)](_0x2420b8(0x40c),_0x312349['getAttribute'](_0x2420b8(0x2fe))===this['currentPractice']);});const _0x2ce201=document[_0x2943d9(0x3ad)](_0x2943d9(0x3fe));if(_0x2ce201){if(this['currentMode']===_0x2943d9(0x49a)){}else _0x2ce201['style'][_0x2943d9(0x1e7)]='flex';}},0x32),this['renderLearningSection']());if(_0x53349c==='progress')this[_0x364574(0x54f)]();if(_0x53349c===_0x364574(0x445)){const _0x6fa72b=document[_0x364574(0x669)](_0x364574(0x6be));if(_0x6fa72b){const _0x2c9598=_0x6fa72b['closest'](_0x364574(0x44a))||_0x6fa72b[_0x364574(0x270)];if(_0x2c9598)_0x2c9598['style'][_0x364574(0x1e7)]=_0x364574(0x488);else _0x6fa72b['style']['display']=_0x364574(0x488);}const _0x5130e5=document['getElementById'](_0x364574(0x361));if(_0x5130e5){const _0x554518=_0x5130e5['closest'](_0x364574(0x44a))||_0x5130e5[_0x364574(0x270)];if(_0x554518)_0x554518[_0x364574(0x227)]['display']=_0x364574(0x488);else _0x5130e5[_0x364574(0x227)]['display']='none';}this[_0x364574(0x54c)]();}typeof window[_0x364574(0x30e)]==='function'&&setTimeout(()=>window[_0x364574(0x30e)](),0x0);}['updateLevelCounts'](){const _0x471098=_0x3a406e,_0x403135=['A1','A2','B1','B2','C1','C2'];_0x403135[_0x471098(0x50b)](_0x3c4ad9=>{const _0x39ffe5=_0x471098,_0x474730=oxfordWordsDatabase[_0x3c4ad9]||[],_0x4d224f=document[_0x39ffe5(0x3ad)](_0x39ffe5(0x453)+_0x3c4ad9+_0x39ffe5(0x6c8));if(_0x4d224f)_0x4d224f[_0x39ffe5(0x6e8)]=_0x474730['length']+_0x39ffe5(0x69b);});const _0x23110b=(_0x90b27a,_0x33dfb2)=>{const _0x25e25b=_0x471098,_0x38053=oxfordWordsDatabase[_0x90b27a]||[],_0x1ce23b=document['querySelector'](_0x33dfb2+_0x25e25b(0x47e));if(_0x1ce23b)_0x1ce23b[_0x25e25b(0x6e8)]=_0x38053[_0x25e25b(0x201)]+_0x25e25b(0x69b);};_0x23110b(_0x471098(0x6ae),_0x471098(0x1a6)),_0x23110b(_0x471098(0x331),_0x471098(0x657)),_0x23110b('IDIOMS',_0x471098(0x6c3)),_0x23110b(_0x471098(0x50a),_0x471098(0x4a2)),_0x23110b(_0x471098(0x22c),_0x471098(0x471));const _0x2ac712=document[_0x471098(0x3ad)]('[data-category=\x22ADDED\x22]\x20.word-count');if(_0x2ac712)_0x2ac712[_0x471098(0x6e8)]=this['customWords'][_0x471098(0x201)]+'\x20слов';const _0x149193=_0x12cdff=>{const _0x4e9547=_0x471098,_0x5e2397=oxfordWordsDatabase[_0x12cdff]||[],_0x7f31a7=document[_0x4e9547(0x3ad)](_0x4e9547(0x679)+_0x12cdff+'\x22]'),_0x302408=_0x7f31a7?_0x7f31a7['querySelector'](_0x4e9547(0x70e)):null;if(!_0x7f31a7||!_0x302408)return;_0x5e2397[_0x4e9547(0x201)]===0x0?(_0x302408['textContent']=_0x4e9547(0x3f1),_0x7f31a7[_0x4e9547(0x444)][_0x4e9547(0x6a3)](_0x4e9547(0x6fc))):(_0x302408['textContent']=_0x5e2397['length']+_0x4e9547(0x69b),_0x7f31a7[_0x4e9547(0x444)][_0x4e9547(0x25a)](_0x4e9547(0x6fc)));};[_0x471098(0x3e5),'OGE',_0x471098(0x220),_0x471098(0x4f9),_0x471098(0x582),'IT',_0x471098(0x52d),_0x471098(0x1aa)][_0x471098(0x50b)](_0x149193);}[_0x3a406e(0x497)](_0x1c0df2){const _0x1897d7=_0x3a406e,_0x21b157=document['getElementById'](_0x1897d7(0x4f8));if(!_0x21b157)return;_0x21b157[_0x1897d7(0x444)][_0x1897d7(0x4c2)]('list-open',!_0x1c0df2);const _0x394c3e=document[_0x1897d7(0x669)](_0x1897d7(0x31a));_0x394c3e&&_0x394c3e[_0x1897d7(0x444)]['toggle']('hidden',_0x1c0df2);const _0x3231c5=['слова\x20по\x20уровням','категории'];_0x21b157[_0x1897d7(0x5f2)]('h1,h2,h3,h4')[_0x1897d7(0x50b)](_0xf7254c=>{const _0x44ac6f=_0x1897d7,_0x1e4481=(_0xf7254c[_0x44ac6f(0x6e8)]||'')['trim']()[_0x44ac6f(0x6dc)](),_0x2cad11=_0x3231c5[_0x44ac6f(0x312)](_0x1e34eb=>_0x1e4481[_0x44ac6f(0x3ed)](_0x1e34eb));_0x2cad11&&(_0xf7254c[_0x44ac6f(0x227)]['display']=_0x1c0df2?'':'none');});}[_0x3a406e(0x448)](_0x182a4a=0x3){const _0x3e9667=_0x3a406e;try{const _0x23208f=document[_0x3e9667(0x3ad)]('.main-content'),_0x428996=_0x23208f?_0x23208f[_0x3e9667(0x227)][_0x3e9667(0x577)]:'';if(_0x23208f)_0x23208f['style']['scrollBehavior']=_0x3e9667(0x6f6);const _0x874f0b=()=>{const _0x15dcc9=_0x3e9667;if(_0x23208f)_0x23208f['scrollTop']=0x0;window['scrollTo'](0x0,0x0),document['documentElement']['scrollTop']=0x0,document[_0x15dcc9(0x673)][_0x15dcc9(0x53f)]=0x0;};_0x874f0b();let _0x26941c=0x1;const _0x6fdd52=()=>{const _0x4df1bc=_0x3e9667;if(_0x26941c++>=_0x182a4a){if(_0x23208f)_0x23208f[_0x4df1bc(0x227)][_0x4df1bc(0x577)]=_0x428996;return;}requestAnimationFrame(()=>{_0x874f0b(),setTimeout(_0x6fdd52,0x0);});};_0x6fdd52();}catch(_0x59f9ca){}}['scrollMainToTop'](){const _0x22cf98=_0x3a406e,_0x2f5f41=document[_0x22cf98(0x3ad)](_0x22cf98(0x5fc));_0x2f5f41?_0x2f5f41[_0x22cf98(0x53f)]=0x0:window[_0x22cf98(0x6f8)](0x0,0x0);}['showCategoryWords'](_0x29ebde){const _0x4c4101=_0x3a406e;this[_0x4c4101(0x25b)](),this['currentCategory']=_0x29ebde,this[_0x4c4101(0x3bb)]=null;const _0x1c7464=oxfordWordsDatabase[_0x29ebde]||[],_0x11d0ab=document[_0x4c4101(0x669)](_0x4c4101(0x31a)),_0x2823f8=document[_0x4c4101(0x669)](_0x4c4101(0x3b6)),_0x3a026d=document[_0x4c4101(0x669)](_0x4c4101(0x2c9));typeof this[_0x4c4101(0x497)]==='function'&&this[_0x4c4101(0x497)](![]);if(_0x11d0ab)_0x11d0ab[_0x4c4101(0x444)][_0x4c4101(0x25a)](_0x4c4101(0x569));const _0x163a4d=_0x29ebde===_0x4c4101(0x6ae)?_0x4c4101(0x5a5):_0x29ebde===_0x4c4101(0x331)?_0x4c4101(0x2e4):_0x29ebde==='IDIOMS'?'Идиомы':_0x29ebde==='PROVERBS'?_0x4c4101(0x430):_0x29ebde===_0x4c4101(0x22c)?'Медицинский\x20английский':_0x29ebde===_0x4c4101(0x50a)?_0x4c4101(0x34a):_0x29ebde;if(_0x2823f8)_0x2823f8[_0x4c4101(0x6e8)]=_0x163a4d+_0x4c4101(0x67e)+_0x1c7464[_0x4c4101(0x201)]+_0x4c4101(0x69b);_0x3a026d&&this[_0x4c4101(0x58a)](_0x1c7464,_0x29ebde),this[_0x4c4101(0x448)]();}[_0x3a406e(0x6db)](){const _0x10343a=_0x3a406e,_0x1ea684=document[_0x10343a(0x669)](_0x10343a(0x4b1));if(!_0x1ea684)return;const _0x9ee108=this[_0x10343a(0x3bb)]||this[_0x10343a(0x4bc)];if(!_0x9ee108||_0x9ee108===_0x10343a(0x397)){this['_setBulkButtonState'](_0x1ea684,_0x10343a(0x6a3),_0x10343a(0x28b),!![]);return;}const _0x4478d4=oxfordWordsDatabase[_0x9ee108]||[];if(_0x4478d4['length']===0x0){this['_setBulkButtonState'](_0x1ea684,_0x10343a(0x6a3),_0x10343a(0x28b),!![]);return;}const _0x3792c6=this[_0x10343a(0x27d)]['reduce']((_0x47e38c,_0x3095f2)=>{return _0x3095f2['level']===_0x9ee108?_0x47e38c+0x1:_0x47e38c;},0x0);if(_0x3792c6>=_0x4478d4[_0x10343a(0x201)]){this[_0x10343a(0x28c)](_0x1ea684,_0x10343a(0x25a),_0x10343a(0x439),![]);return;}const _0x2d7e11=new Set();for(let _0x21c3e8=0x0;_0x21c3e8<this[_0x10343a(0x27d)][_0x10343a(0x201)];_0x21c3e8++){const _0x41aa98=this[_0x10343a(0x27d)][_0x21c3e8];_0x41aa98[_0x10343a(0x4d9)]===_0x9ee108&&_0x2d7e11[_0x10343a(0x6a3)](_0x41aa98[_0x10343a(0x693)][_0x10343a(0x6dc)]()[_0x10343a(0x6f9)]());}const _0x38cc1a=_0x4478d4[_0x10343a(0x22b)](_0x2484ca=>{const _0x3975f7=_0x10343a;if(!_0x2484ca['word'])return!![];return _0x2d7e11[_0x3975f7(0x61f)](_0x2484ca[_0x3975f7(0x693)][_0x3975f7(0x6dc)]()[_0x3975f7(0x6f9)]());});_0x38cc1a?this[_0x10343a(0x28c)](_0x1ea684,'remove','Удалить\x20все',![]):this['_setBulkButtonState'](_0x1ea684,'add',_0x10343a(0x28b),![]);}['_setBulkButtonState'](_0x4ff975,_0x1b0b3a,_0x1f3510,_0xd0537e){const _0x192424=_0x3a406e;_0x4ff975['textContent']=_0x1f3510,_0x4ff975['title']=_0x1f3510,_0x4ff975['disabled']=_0xd0537e,_0x1b0b3a===_0x192424(0x25a)?(_0x4ff975[_0x192424(0x444)][_0x192424(0x25a)](_0x192424(0x6a3)),_0x4ff975[_0x192424(0x444)]['add']('remove'),_0x4ff975[_0x192424(0x5f0)]['state']=_0x192424(0x3e0)):(_0x4ff975[_0x192424(0x444)][_0x192424(0x25a)](_0x192424(0x25a)),_0x4ff975[_0x192424(0x444)][_0x192424(0x6a3)](_0x192424(0x6a3)),_0x4ff975[_0x192424(0x5f0)]['state']=_0x192424(0x362));}[_0x3a406e(0x1ec)](){const _0x43987a=_0x3a406e,_0x3be9c8=new Set();return this[_0x43987a(0x27d)][_0x43987a(0x50b)](_0x57074d=>{const _0x51f657=_0x43987a;if(_0x57074d[_0x51f657(0x4d9)]){if(/^[ABC]\d$/['test'](_0x57074d[_0x51f657(0x4d9)]))_0x3be9c8['add'](_0x57074d['level']);else{if(_0x57074d[_0x51f657(0x4d9)]==='MEDICAL')_0x3be9c8[_0x51f657(0x6a3)](_0x51f657(0x22c));else{if(_0x57074d[_0x51f657(0x4d9)]==='PREPOSITIONS')_0x3be9c8[_0x51f657(0x6a3)](_0x51f657(0x50a));else{if(_0x57074d[_0x51f657(0x4d9)]===_0x51f657(0x6ae))_0x3be9c8[_0x51f657(0x6a3)]('IRREGULARS');else{if(_0x57074d[_0x51f657(0x4d9)]==='PHRASAL_VERBS')_0x3be9c8[_0x51f657(0x6a3)](_0x51f657(0x331));else{if(_0x57074d['level']===_0x51f657(0x5db))_0x3be9c8['add']('IDIOMS');else _0x57074d['level']===_0x51f657(0x582)&&_0x3be9c8[_0x51f657(0x6a3)](_0x51f657(0x582));}}}}}}}),_0x3be9c8;}[_0x3a406e(0x229)](){const _0x31d2f=_0x3a406e,_0x3bb51f=this[_0x31d2f(0x1ec)]();let _0x28feea=[];if(_0x3bb51f[_0x31d2f(0x42e)]===0x0)return[];return _0x3bb51f[_0x31d2f(0x50b)](_0x593b9e=>{const _0x4f9d12=_0x31d2f;window['sentencesByLevel']&&window[_0x4f9d12(0x438)][_0x593b9e]&&(_0x28feea=_0x28feea['concat'](window[_0x4f9d12(0x438)][_0x593b9e][_0x4f9d12(0x4ef)](_0x23c7cd=>({..._0x23c7cd,'level':_0x593b9e}))));}),_0x28feea;}[_0x3a406e(0x47b)](){const _0x2b0f52=_0x3a406e,_0x46f5c6=this['loadSentencesForLevels']();if(_0x46f5c6['length']===0x0)return _0x2b0f52(0x707);!this['sentenceBuilderState'][_0x2b0f52(0x681)]&&(this[_0x2b0f52(0x484)][_0x2b0f52(0x681)]=_0x46f5c6[Math[_0x2b0f52(0x30a)](Math[_0x2b0f52(0x513)]()*_0x46f5c6[_0x2b0f52(0x201)])],this['sentenceBuilderState']['assembledWords']=[],this[_0x2b0f52(0x484)][_0x2b0f52(0x2fb)]=this[_0x2b0f52(0x484)]['currentSentence']['en'][_0x2b0f52(0x3f9)]('\x20'));const _0x6a45ce=this[_0x2b0f52(0x484)],_0x45e60d=[..._0x6a45ce['correctOrder']][_0x2b0f52(0x612)](()=>Math['random']()-0.5),_0x4233fb=document['getElementById'](_0x2b0f52(0x629));if(!_0x4233fb)return'';return _0x4233fb[_0x2b0f52(0x66c)]='\x0a\x20\x20\x20\x20<div\x20class=\x22sentence-builder-container\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22sentence-instruction\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22sentence-instruction-icon\x22>✏️</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22sentence-instruction-text\x22>Переведите\x20на\x20английский</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grammar-lamp\x20pulse\x22\x20id=\x22grammarLampBtn\x22\x20title=\x22Грамматическая\x20подсказка\x22>💡</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22russian-sentence-box\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22russian-text\x22>'+_0x6a45ce['currentSentence']['ru']+_0x2b0f52(0x576)+_0x6a45ce[_0x2b0f52(0x681)]['level']+'\x22>'+_0x6a45ce['currentSentence'][_0x2b0f52(0x4d9)]+'</span>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22sentence-answer-area\x20'+(_0x6a45ce['assembledWords'][_0x2b0f52(0x201)]>0x0?'has-content':'')+'\x22\x20id=\x22sentenceAnswerArea\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22assembled-sentence\x22\x20id=\x22assembledSentence\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x6a45ce[_0x2b0f52(0x339)][_0x2b0f52(0x4ef)](_0x133869=>_0x133869['split']('_')[0x0])[_0x2b0f52(0x355)]('\x20')+_0x2b0f52(0x4a6)+this[_0x2b0f52(0x389)]()+_0x2b0f52(0x1b0)+_0x45e60d[_0x2b0f52(0x4ef)]((_0x3484ae,_0x43899a)=>{const _0x145373=_0x2b0f52,_0x418bfa=_0x3484ae+'_'+_0x43899a,_0x50fc9f=_0x6a45ce['assembledWords'][_0x145373(0x312)](_0x2d3ce3=>_0x2d3ce3===_0x418bfa);return _0x145373(0x36c)+(_0x50fc9f?_0x145373(0x276):'')+'\x22\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-word=\x22'+this['safeAttr'](_0x3484ae)+_0x145373(0x423)+_0x43899a+_0x145373(0x418)+(_0x50fc9f?_0x145373(0x398):'')+_0x145373(0x27e)+_0x3484ae+_0x145373(0x353);})[_0x2b0f52(0x355)]('')+_0x2b0f52(0x37e)+(_0x6a45ce[_0x2b0f52(0x339)][_0x2b0f52(0x201)]===0x0?_0x2b0f52(0x398):'')+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20id=\x22sentenceCheckBtn\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20Проверить\x0a\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22sentence-feedback\x22\x20id=\x22sentenceFeedback\x22\x20style=\x22display:\x20none;\x22></div>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20',setTimeout(()=>{const _0x46566f=_0x2b0f52,_0xb04177=_0x4233fb['querySelectorAll']('.sentence-word');_0xb04177[_0x46566f(0x50b)](_0x2e55d6=>{const _0x204b08=_0x46566f;!_0x2e55d6[_0x204b08(0x398)]&&_0x2e55d6['addEventListener'](_0x204b08(0x561),()=>{const _0x12d25e=_0x204b08,_0x23e0ff=_0x2e55d6[_0x12d25e(0x48c)](_0x12d25e(0x56a)),_0x2753f0=parseInt(_0x2e55d6[_0x12d25e(0x48c)](_0x12d25e(0x20f)));this[_0x12d25e(0x674)](_0x23e0ff,_0x2753f0);});});const _0x28a4ef=_0x4233fb[_0x46566f(0x3ad)]('#grammarLampBtn');_0x28a4ef&&_0x28a4ef[_0x46566f(0x208)](_0x46566f(0x561),()=>this[_0x46566f(0x437)]());const _0x470634=_0x4233fb[_0x46566f(0x3ad)](_0x46566f(0x666));_0x470634&&_0x470634[_0x46566f(0x208)](_0x46566f(0x561),()=>this['clearSentence']());const _0xf3c78d=_0x4233fb[_0x46566f(0x3ad)]('#sentenceSkipBtn');_0xf3c78d&&_0xf3c78d[_0x46566f(0x208)](_0x46566f(0x561),()=>this['skipSentence']());const _0x47cd29=_0x4233fb[_0x46566f(0x3ad)]('#sentenceCheckBtn');_0x47cd29&&_0x47cd29[_0x46566f(0x208)]('click',()=>this['checkSentence']());},0x0),'';}[_0x3a406e(0x674)](_0x42d71e,_0x11cf7f){const _0x1fc9dc=_0x3a406e,_0x28fc78=this[_0x1fc9dc(0x484)],_0x1e4283=_0x42d71e+'_'+_0x11cf7f;if(_0x28fc78[_0x1fc9dc(0x339)][_0x1fc9dc(0x312)](_0x1eb8d4=>_0x1eb8d4===_0x1e4283))return;const _0x809456=_0x28fc78[_0x1fc9dc(0x339)][_0x1fc9dc(0x201)],_0x104143=(_0x28fc78[_0x1fc9dc(0x2fb)][_0x809456]||'')['toLowerCase']()[_0x1fc9dc(0x6f9)](),_0x1fcd18=(_0x42d71e||'')[_0x1fc9dc(0x6dc)]()['trim']();if(_0x1fcd18!==_0x104143){const _0x238a22=document[_0x1fc9dc(0x669)](_0x1fc9dc(0x2a9));_0x238a22&&(_0x238a22[_0x1fc9dc(0x444)]['add']('incorrect'),setTimeout(()=>_0x238a22[_0x1fc9dc(0x444)][_0x1fc9dc(0x25a)](_0x1fc9dc(0x256)),0x12c));return;}_0x28fc78[_0x1fc9dc(0x339)][_0x1fc9dc(0x31d)](_0x1e4283);const _0x30c833=document[_0x1fc9dc(0x669)](_0x1fc9dc(0x271));_0x30c833&&(_0x30c833['textContent']=_0x28fc78[_0x1fc9dc(0x339)][_0x1fc9dc(0x4ef)](_0x587b30=>_0x587b30[_0x1fc9dc(0x3f9)]('_')[0x0])[_0x1fc9dc(0x355)]('\x20'));const _0x1fcfc8=document[_0x1fc9dc(0x669)]('learningWordsList');if(_0x1fcfc8){const _0x4eab32=_0x1fcfc8[_0x1fc9dc(0x3ad)]('[data-index=\x22'+_0x11cf7f+_0x1fc9dc(0x635)+this[_0x1fc9dc(0x349)](_0x42d71e)+'\x22]');_0x4eab32&&(_0x4eab32[_0x1fc9dc(0x444)][_0x1fc9dc(0x6a3)]('used'),_0x4eab32[_0x1fc9dc(0x398)]=!![]);}const _0x1e1774=document[_0x1fc9dc(0x669)]('sentenceCheckBtn');_0x1e1774&&(_0x1e1774[_0x1fc9dc(0x398)]=![]);const _0x52c966=document['getElementById'](_0x1fc9dc(0x2a9));_0x52c966&&_0x52c966[_0x1fc9dc(0x444)][_0x1fc9dc(0x6a3)](_0x1fc9dc(0x376));try{this['playSingleWordMp3'](_0x42d71e,'us')[_0x1fc9dc(0x570)](_0x484871=>{const _0x3d8f4f=_0x1fc9dc;console[_0x3d8f4f(0x48f)]('Audio\x20playback\x20failed:',_0x484871);});}catch(_0x14cba5){console['log'](_0x1fc9dc(0x62b),_0x14cba5);}_0x28fc78['assembledWords'][_0x1fc9dc(0x201)]===_0x28fc78[_0x1fc9dc(0x2fb)][_0x1fc9dc(0x201)]&&setTimeout(()=>this[_0x1fc9dc(0x60a)](),0x1f4);}[_0x3a406e(0x678)](){const _0x2a6cf8=_0x3a406e;this['sentenceBuilderState'][_0x2a6cf8(0x339)]=[];const _0x2bc8f7=document[_0x2a6cf8(0x669)](_0x2a6cf8(0x271));_0x2bc8f7&&(_0x2bc8f7['textContent']='');document[_0x2a6cf8(0x5f2)]('.sentence-word')[_0x2a6cf8(0x50b)](_0x29032d=>{const _0x116788=_0x2a6cf8;_0x29032d[_0x116788(0x444)][_0x116788(0x25a)](_0x116788(0x276)),_0x29032d[_0x116788(0x398)]=![];});const _0x34cc7d=document[_0x2a6cf8(0x669)](_0x2a6cf8(0x480));_0x34cc7d&&(_0x34cc7d[_0x2a6cf8(0x398)]=!![]);const _0x43e472=document[_0x2a6cf8(0x669)]('sentenceAnswerArea');_0x43e472&&_0x43e472[_0x2a6cf8(0x444)][_0x2a6cf8(0x25a)](_0x2a6cf8(0x376));}[_0x3a406e(0x62c)](){const _0x4769aa=_0x3a406e,_0x364f36=this[_0x4769aa(0x229)]();_0x364f36[_0x4769aa(0x201)]>0x0&&(this['sentenceBuilderState']['currentSentence']=_0x364f36[Math[_0x4769aa(0x30a)](Math[_0x4769aa(0x513)]()*_0x364f36['length'])],this['sentenceBuilderState'][_0x4769aa(0x339)]=[],this['sentenceBuilderState'][_0x4769aa(0x2fb)]=this[_0x4769aa(0x484)][_0x4769aa(0x681)]['en'][_0x4769aa(0x3f9)]('\x20')),this[_0x4769aa(0x2cf)]();}[_0x3a406e(0x60a)](){const _0x347904=_0x3a406e,_0x4e14ce=this[_0x347904(0x484)],_0x5b9ea4=_0x4e14ce[_0x347904(0x339)][_0x347904(0x4ef)](_0xd1fe=>_0xd1fe[_0x347904(0x3f9)]('_')[0x0])[_0x347904(0x355)]('\x20')[_0x347904(0x6dc)](),_0x308500=_0x4e14ce[_0x347904(0x2fb)][_0x347904(0x355)]('\x20')[_0x347904(0x6dc)](),_0x1a2457=_0x5b9ea4===_0x308500,_0x143b86=document[_0x347904(0x669)](_0x347904(0x5a1));this[_0x347904(0x549)]({'correct':_0x1a2457}),this[_0x347904(0x199)](),_0x143b86&&(_0x1a2457?(_0x4e14ce[_0x347904(0x3f4)]++,_0x143b86[_0x347904(0x493)]='sentence-feedback\x20correct',_0x143b86['innerHTML']=_0x347904(0x413),setTimeout(()=>{this['skipSentence']();},0x7d0)):(_0x143b86[_0x347904(0x493)]=_0x347904(0x2e6),_0x143b86[_0x347904(0x66c)]=_0x347904(0x6f0)+_0x4e14ce[_0x347904(0x2fb)][_0x347904(0x355)]('\x20')+'</strong>'),_0x143b86[_0x347904(0x227)][_0x347904(0x1e7)]=_0x347904(0x51f),_0x4e14ce[_0x347904(0x59f)]++);}[_0x3a406e(0x389)](){const _0x3016eb=_0x3a406e,_0x372abc=this['sentenceBuilderState'][_0x3016eb(0x681)];if(!_0x372abc)return'';const _0xd75134=_0x372abc['en']['toLowerCase']();if(_0xd75134[_0x3016eb(0x3ed)]('?')){if(/^(do|does|did|will|can|should|must)/[_0x3016eb(0x4aa)](_0xd75134))return _0x3016eb(0x3b4);else{if(/^(what|where|when|why|how|who)/[_0x3016eb(0x4aa)](_0xd75134))return _0x3016eb(0x671);}}else return _0xd75134[_0x3016eb(0x3ed)](_0x3016eb(0x60c))||_0xd75134['includes'](_0x3016eb(0x6a1))?_0x3016eb(0x225):_0x3016eb(0x6c4);return'';}[_0x3a406e(0x62f)](){const _0x2f570a=_0x3a406e,_0x2d8924=this[_0x2f570a(0x484)];if(!_0x2d8924[_0x2f570a(0x681)])return;this['playPhraseTTS'](_0x2d8924[_0x2f570a(0x681)]['en'],'us');}[_0x3a406e(0x437)](){const _0x1059ca=_0x3a406e,_0x446521=document[_0x1059ca(0x1e6)](_0x1059ca(0x6d5));_0x446521[_0x1059ca(0x493)]=_0x1059ca(0x461),_0x446521[_0x1059ca(0x66c)]=_0x1059ca(0x6f2),_0x446521[_0x1059ca(0x208)](_0x1059ca(0x561),_0x1d3a64=>{const _0x4eac7d=_0x1059ca;if(_0x1d3a64[_0x4eac7d(0x24b)]===_0x446521)_0x446521['remove']();}),document[_0x1059ca(0x673)][_0x1059ca(0x378)](_0x446521);}['incrementTrainerCounters']({correct:correct=![]}={}){const _0x2df1c2=_0x3a406e;try{const _0x2c1b0c=new Date()['toDateString']();!Array['isArray'](this['weeklyProgress'])&&(this[_0x2df1c2(0x57e)]=[]);let _0x92fa6f=this['weeklyProgress'][_0x2df1c2(0x6ff)](_0x2b3718=>_0x2b3718[_0x2df1c2(0x21e)]===_0x2c1b0c);!_0x92fa6f&&(_0x92fa6f={'date':_0x2c1b0c,'count':0x0,'trainerRepeats':0x0,'trainerCorrect':0x0},this[_0x2df1c2(0x57e)][_0x2df1c2(0x31d)](_0x92fa6f));if(typeof _0x92fa6f[_0x2df1c2(0x2ae)]!==_0x2df1c2(0x528))_0x92fa6f[_0x2df1c2(0x2ae)]=0x0;if(typeof _0x92fa6f[_0x2df1c2(0x32d)]!=='number')_0x92fa6f[_0x2df1c2(0x32d)]=0x0;if(typeof _0x92fa6f[_0x2df1c2(0x540)]!==_0x2df1c2(0x528))_0x92fa6f[_0x2df1c2(0x540)]=0x0;_0x92fa6f[_0x2df1c2(0x32d)]+=0x1;if(correct)_0x92fa6f['trainerCorrect']+=0x1;this['saveData'](),this[_0x2df1c2(0x4d6)]===_0x2df1c2(0x65d)&&typeof this[_0x2df1c2(0x54f)]===_0x2df1c2(0x241)&&this[_0x2df1c2(0x54f)]();}catch(_0x376249){console[_0x2df1c2(0x5e3)](_0x2df1c2(0x66e),_0x376249);}}[_0x3a406e(0x1f4)](_0x224122,_0x5cad8d){const _0x3aefd0=_0x3a406e,_0x42a99a=this['learningWords'][_0x3aefd0(0x312)](_0x54fa49=>_0x54fa49[_0x3aefd0(0x693)]===_0x224122[_0x3aefd0(0x693)]&&_0x54fa49[_0x3aefd0(0x4d9)]===_0x5cad8d);let _0x141f2c=_0x224122[_0x3aefd0(0x693)];_0x224122['forms']&&_0x224122[_0x3aefd0(0x5f3)][_0x3aefd0(0x201)]>0x0&&(_0x141f2c=_0x224122[_0x3aefd0(0x5f3)][_0x3aefd0(0x355)]('\x20→\x20'));const _0x4646ed=_0x3aefd0(0x3a3)+_0x224122['word'][_0x3aefd0(0x22a)](/[^a-z0-9]/gi,'_')+'-'+_0x5cad8d;return _0x3aefd0(0x6f1)+_0x4646ed+_0x3aefd0(0x1d7)+this['safeAttr'](_0x224122[_0x3aefd0(0x693)])+_0x3aefd0(0x59d)+this[_0x3aefd0(0x349)](_0x5cad8d)+_0x3aefd0(0x51c)+_0x141f2c+_0x3aefd0(0x5df)+_0x224122[_0x3aefd0(0x1dd)]+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<!--\x20ПРАВАЯ\x20КОЛОНКА\x20(Кнопки\x20скрыты\x20в\x20.word-header\x20в\x20старом\x20CSS,\x20здесь\x20выносим\x20их\x20явно\x20или\x20используем\x20display:contents\x20в\x20CSS)\x20-->\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20play-btn\x20sound-us-btn\x22\x20data-word-text=\x22'+this[_0x3aefd0(0x349)](_0x224122[_0x3aefd0(0x693)])+_0x3aefd0(0x1b3)+(_0x224122[_0x3aefd0(0x5f3)]?JSON['stringify'](_0x224122[_0x3aefd0(0x5f3)]):_0x3aefd0(0x284))+_0x3aefd0(0x4ca)+this[_0x3aefd0(0x349)](_0x224122[_0x3aefd0(0x693)])+_0x3aefd0(0x1b3)+(_0x224122[_0x3aefd0(0x5f3)]?JSON[_0x3aefd0(0x40f)](_0x224122[_0x3aefd0(0x5f3)]):_0x3aefd0(0x284))+_0x3aefd0(0x32c)+(_0x42a99a?'<button\x20class=\x22action-text-btn\x20remove\x20word-remove-btn\x22\x20data-word-text=\x22'+this['safeAttr'](_0x224122[_0x3aefd0(0x693)])+_0x3aefd0(0x59d)+this[_0x3aefd0(0x349)](_0x5cad8d)+_0x3aefd0(0x43b):_0x3aefd0(0x61e)+this[_0x3aefd0(0x349)](_0x224122[_0x3aefd0(0x693)])+'\x22\x20data-translation=\x22'+this['safeAttr'](_0x224122[_0x3aefd0(0x1dd)])+'\x22\x20data-level=\x22'+this[_0x3aefd0(0x349)](_0x5cad8d)+_0x3aefd0(0x1b3)+(_0x224122[_0x3aefd0(0x5f3)]?JSON[_0x3aefd0(0x40f)](_0x224122[_0x3aefd0(0x5f3)]):'null')+_0x3aefd0(0x30b))+_0x3aefd0(0x4f7);}[_0x3a406e(0x297)](){const _0x48567f=_0x3a406e,_0x5beb77=document[_0x48567f(0x669)](_0x48567f(0x2c9));if(!_0x5beb77)return;if(_0x5beb77[_0x48567f(0x5f0)][_0x48567f(0x234)]==='1')return;_0x5beb77[_0x48567f(0x208)](_0x48567f(0x561),_0x21d202=>{const _0x5d6406=_0x48567f,_0x27b837=_0x21d202[_0x5d6406(0x24b)]['closest']('.sound-us-btn,\x20.sound-uk-btn,\x20.word-add-btn,\x20.word-remove-btn');if(!_0x27b837)return;const _0x1865ed=_0x27b837[_0x5d6406(0x5c9)](_0x5d6406(0x3a0)),_0x23f88c=_0x1865ed?_0x1865ed[_0x5d6406(0x48c)](_0x5d6406(0x667)):null;if(_0x27b837[_0x5d6406(0x444)][_0x5d6406(0x1c3)](_0x5d6406(0x47a))||_0x27b837[_0x5d6406(0x444)]['contains'](_0x5d6406(0x6aa))){const _0x40720d=_0x27b837['getAttribute'](_0x5d6406(0x23b)),_0x158bae=_0x27b837[_0x5d6406(0x48c)]('data-forms');let _0xb2d427=null;if(_0x158bae&&_0x158bae!==_0x5d6406(0x284))try{_0xb2d427=JSON[_0x5d6406(0x6f4)](_0x158bae);}catch{}const _0x2c14d9=_0x27b837[_0x5d6406(0x444)][_0x5d6406(0x1c3)](_0x5d6406(0x6aa))?'uk':'us';this[_0x5d6406(0x64c)](_0x40720d,_0xb2d427,_0x2c14d9,_0x23f88c);return;}if(_0x27b837[_0x5d6406(0x444)][_0x5d6406(0x1c3)](_0x5d6406(0x403))){const _0x318ca4=_0x27b837[_0x5d6406(0x48c)](_0x5d6406(0x23b)),_0x862790=_0x27b837['getAttribute'](_0x5d6406(0x4f1)),_0x5c6d95=_0x27b837['getAttribute'](_0x5d6406(0x667)),_0x16f8cd=_0x27b837[_0x5d6406(0x48c)](_0x5d6406(0x2c6));let _0x2b3e35=null;if(_0x16f8cd&&_0x16f8cd!==_0x5d6406(0x284))try{_0x2b3e35=JSON[_0x5d6406(0x6f4)](_0x16f8cd);}catch{}this[_0x5d6406(0x5cf)](_0x318ca4,_0x862790,_0x5c6d95,_0x2b3e35);return;}if(_0x27b837[_0x5d6406(0x444)][_0x5d6406(0x1c3)](_0x5d6406(0x66b))){const _0x43bbc1=_0x27b837['getAttribute'](_0x5d6406(0x23b)),_0x328c0e=_0x27b837[_0x5d6406(0x48c)](_0x5d6406(0x667));this[_0x5d6406(0x46d)](_0x43bbc1,_0x328c0e);return;}}),_0x5beb77['dataset'][_0x48567f(0x234)]='1';}[_0x3a406e(0x349)](_0x6253df){const _0x9bd21e=_0x3a406e;if(!_0x6253df)return'';return String(_0x6253df)[_0x9bd21e(0x22a)](/"/g,_0x9bd21e(0x1c4))[_0x9bd21e(0x22a)](/'/g,_0x9bd21e(0x315));}[_0x3a406e(0x5cf)](_0x1f117,_0x1de8e6,_0x3aab38,_0x4fa45f=null){const _0x51bfd5=_0x3a406e;this[_0x51bfd5(0x25b)]();const _0x1016b4=this['learningWords'][_0x51bfd5(0x6ff)](_0x39cec2=>_0x39cec2['word']===_0x1f117&&_0x39cec2['level']===_0x3aab38);if(!_0x1016b4){const _0x336f35={'word':_0x1f117,'translation':_0x1de8e6,'level':_0x3aab38,'forms':_0x4fa45f||null,'isLearned':![],'addedAt':Date[_0x51bfd5(0x52e)]()};this[_0x51bfd5(0x27d)][_0x51bfd5(0x31d)](_0x336f35),this[_0x51bfd5(0x476)](_0x1f117),this['saveData'](),this[_0x51bfd5(0x4a7)](_0x1f117,_0x3aab38),this['updateLevelCounts'](),this['updateBulkToggleButton'](),this[_0x51bfd5(0x1bc)]('Слово\x20\x22'+_0x1f117+_0x51bfd5(0x4eb),_0x51bfd5(0x38d)),this[_0x51bfd5(0x4d6)]===_0x51bfd5(0x5de)&&(this[_0x51bfd5(0x67a)]=!![],this[_0x51bfd5(0x2cf)]());}else this[_0x51bfd5(0x1bc)](_0x51bfd5(0x637)+_0x1f117+_0x51bfd5(0x4f5),_0x51bfd5(0x65c));}[_0x3a406e(0x46d)](_0xbc3902,_0x19e5a9){const _0x2bfead=_0x3a406e;this[_0x2bfead(0x25b)]();const _0x20b881=this['learningWords'][_0x2bfead(0x351)](_0x385cbf=>_0x385cbf[_0x2bfead(0x693)]===_0xbc3902&&_0x385cbf[_0x2bfead(0x4d9)]===_0x19e5a9);_0x20b881!==-0x1&&(this[_0x2bfead(0x27d)][_0x2bfead(0x55f)](_0x20b881,0x1),this[_0x2bfead(0x5b8)](),this[_0x2bfead(0x4b6)](_0xbc3902,_0x19e5a9),this[_0x2bfead(0x2bb)](),this[_0x2bfead(0x6db)](),this[_0x2bfead(0x1bc)](_0x2bfead(0x637)+_0xbc3902+_0x2bfead(0x35b),_0x2bfead(0x38d)),this[_0x2bfead(0x4d6)]===_0x2bfead(0x5de)&&(this[_0x2bfead(0x67a)]=!![],this['renderLearningSection']()));}[_0x3a406e(0x4a7)](_0x4e5b88,_0x8f60f){const _0x2cb656=_0x3a406e,_0x4dd437=CSS&&CSS[_0x2cb656(0x435)]?CSS[_0x2cb656(0x435)](_0x4e5b88):_0x4e5b88,_0x5b3f53=CSS&&CSS[_0x2cb656(0x435)]?CSS[_0x2cb656(0x435)](_0x8f60f):_0x8f60f,_0x390092=document[_0x2cb656(0x3ad)]('.word-card[data-word=\x22'+_0x4dd437+'\x22][data-level=\x22'+_0x5b3f53+'\x22]');if(!_0x390092){if(this[_0x2cb656(0x3bb)]===_0x8f60f)this[_0x2cb656(0x6bd)](this[_0x2cb656(0x3bb)]);if(this[_0x2cb656(0x4bc)]===_0x8f60f)this['showCategoryWords'](this[_0x2cb656(0x4bc)]);return;}const _0x56171b=_0x390092[_0x2cb656(0x3ad)](_0x2cb656(0x54d));if(!_0x56171b)return;_0x56171b[_0x2cb656(0x66c)]=_0x2cb656(0x2e1)+this[_0x2cb656(0x349)](_0x4e5b88)+_0x2cb656(0x1e3)+this[_0x2cb656(0x349)](_0x4e5b88)+_0x2cb656(0x701)+this[_0x2cb656(0x349)](_0x4e5b88)+_0x2cb656(0x6b6)+this['safeAttr'](_0x8f60f)+_0x2cb656(0x4db);}['swapCardButtonToAdd'](_0x1725bf,_0x146a1f){const _0x340e72=_0x3a406e,_0x3cd15a=CSS&&CSS[_0x340e72(0x435)]?CSS[_0x340e72(0x435)](_0x1725bf):_0x1725bf,_0x29c843=CSS&&CSS['escape']?CSS['escape'](_0x146a1f):_0x146a1f,_0x2138c0=document['querySelector'](_0x340e72(0x1d8)+_0x3cd15a+_0x340e72(0x1ef)+_0x29c843+'\x22]');if(!_0x2138c0){if(this[_0x340e72(0x3bb)]===_0x146a1f)this[_0x340e72(0x6bd)](this[_0x340e72(0x3bb)]);if(this[_0x340e72(0x4bc)]===_0x146a1f)this[_0x340e72(0x33b)](this[_0x340e72(0x4bc)]);return;}const _0x316bc5=_0x2138c0['querySelector'](_0x340e72(0x54d));if(!_0x316bc5)return;const _0x17e912=_0x2138c0['querySelector']('.word-translation')?.['textContent']||'';_0x316bc5[_0x340e72(0x66c)]=_0x340e72(0x2e1)+this[_0x340e72(0x349)](_0x1725bf)+_0x340e72(0x1e3)+this[_0x340e72(0x349)](_0x1725bf)+_0x340e72(0x6cd)+this['safeAttr'](_0x1725bf)+_0x340e72(0x6b6)+this[_0x340e72(0x349)](_0x17e912)+_0x340e72(0x6b6)+this[_0x340e72(0x349)](_0x146a1f)+_0x340e72(0x259);}[_0x3a406e(0x1d2)](){const _0x166548=_0x3a406e;this[_0x166548(0x25b)]();const _0x70cfe=this[_0x166548(0x3bb)]||this[_0x166548(0x4bc)];if(!_0x70cfe)return;if(_0x70cfe===_0x166548(0x397)){this[_0x166548(0x1bc)](_0x166548(0x217),_0x166548(0x65c));return;}const _0x4cb445=oxfordWordsDatabase[_0x70cfe]||[];let _0x56cfd2=0x0;_0x4cb445[_0x166548(0x50b)](_0x41baf9=>{const _0x37d8bf=_0x166548,_0x340ec2=this[_0x37d8bf(0x27d)][_0x37d8bf(0x312)](_0x10c65c=>_0x10c65c[_0x37d8bf(0x693)]===_0x41baf9[_0x37d8bf(0x693)]&&_0x10c65c['level']===_0x70cfe);!_0x340ec2&&(this[_0x37d8bf(0x27d)]['push']({'word':_0x41baf9['word'],'translation':_0x41baf9['translation'],'level':_0x70cfe,'forms':_0x41baf9[_0x37d8bf(0x5f3)]||null,'isLearned':![],'addedAt':Date[_0x37d8bf(0x52e)]()}),this[_0x37d8bf(0x476)](_0x41baf9['word']),_0x56cfd2++);}),_0x56cfd2>0x0?(this[_0x166548(0x5b8)](),this[_0x166548(0x2bb)](),this[_0x166548(0x6db)](),this[_0x166548(0x1bc)](_0x166548(0x238)+_0x56cfd2+_0x166548(0x6a2),'success'),this['currentLevel']?this[_0x166548(0x6bd)](this['currentLevel']):this[_0x166548(0x33b)](this[_0x166548(0x4bc)]),this[_0x166548(0x4d6)]===_0x166548(0x5de)&&(this[_0x166548(0x67a)]=!![],this['renderLearningSection']())):this[_0x166548(0x1bc)]('Все\x20слова\x20уже\x20добавлены',_0x166548(0x65c));}[_0x3a406e(0x4fd)](){const _0x38cb07=_0x3a406e;this[_0x38cb07(0x25b)]();const _0x9707f3=this[_0x38cb07(0x3bb)]||this['currentCategory'];if(!_0x9707f3)return;const _0x32ed4e=this[_0x38cb07(0x27d)]['length'];this[_0x38cb07(0x27d)]=this[_0x38cb07(0x27d)][_0x38cb07(0x66a)](_0x5c8538=>_0x5c8538['level']!==_0x9707f3);const _0x443216=_0x32ed4e-this[_0x38cb07(0x27d)][_0x38cb07(0x201)];_0x443216>0x0&&(this['saveData'](),this[_0x38cb07(0x2bb)](),this[_0x38cb07(0x6db)](),this[_0x38cb07(0x1bc)](_0x38cb07(0x308)+_0x443216+_0x38cb07(0x2f3),_0x38cb07(0x38d)),this[_0x38cb07(0x3bb)]?this['showLevelWords'](this[_0x38cb07(0x3bb)]):this[_0x38cb07(0x33b)](this[_0x38cb07(0x4bc)]),this[_0x38cb07(0x4d6)]==='learning'&&(this[_0x38cb07(0x67a)]=!![],this[_0x38cb07(0x2cf)]()));}[_0x3a406e(0x27b)](_0x338dd4){const _0x238206=_0x3a406e,_0x579418=this[_0x238206(0x56e)][_0x338dd4];if(!_0x579418)return null;const _0x353450=typeof _0x579418['accScore']==='number'?_0x579418[_0x238206(0x407)]:0x0,_0x23f592=Math[_0x238206(0x662)](0x0,Math[_0x238206(0x28a)](0x64,_0x353450*0xa)),_0x31a6c0=_0x579418[_0x238206(0x478)]||_0x579418[_0x238206(0x69c)]+_0x579418['incorrect']||0x0;if(_0x31a6c0===0x0&&_0x23f592===0x0)return null;return{'pct':Math[_0x238206(0x30f)](_0x23f592),'total':_0x31a6c0,'correct':_0x579418[_0x238206(0x69c)]||0x0,'incorrect':_0x579418[_0x238206(0x256)]||0x0};}[_0x3a406e(0x645)](_0x32ef10){const _0x174c7c=_0x3a406e,_0x2b0aaa=this['getWordAccuracy'](_0x32ef10);if(!_0x2b0aaa)return'<span\x20class=\x22acc-badge\x20acc-none\x22\x20title=\x22нет\x20данных\x22>—</span>';const _0x2f491f=_0x2b0aaa[_0x174c7c(0x3c6)]>=0x55?_0x174c7c(0x4a1):_0x2b0aaa[_0x174c7c(0x3c6)]>=0x3c?_0x174c7c(0x490):_0x174c7c(0x277);return'<span\x20class=\x22acc-badge\x20'+_0x2f491f+_0x174c7c(0x6b5)+_0x2b0aaa['correct']+'/'+_0x2b0aaa['total']+'\x22>'+_0x2b0aaa[_0x174c7c(0x3c6)]+_0x174c7c(0x33c);}['initializeWordStats'](_0x2db7e3){const _0x57a895=_0x3a406e;if(!this['wordStats'][_0x2db7e3])this[_0x57a895(0x56e)][_0x2db7e3]={'correct':0x0,'incorrect':0x0,'lastReview':null,'nextReview':Date[_0x57a895(0x52e)](),'difficulty':0x0,'ef':2.5,'reps':0x0,'lapses':0x0,'interval':0x0,'phase':'learning','step':0x0,'firstSeenAt':null,'totalAnswers':0x0,'totalTimeMs':0x0,'accScore':0x0};else{const _0x2bb85f=this[_0x57a895(0x56e)][_0x2db7e3];if(_0x2bb85f['ef']==null)_0x2bb85f['ef']=2.5;if(_0x2bb85f[_0x57a895(0x586)]==null)_0x2bb85f[_0x57a895(0x586)]=0x0;if(_0x2bb85f['lapses']==null)_0x2bb85f[_0x57a895(0x2a7)]=0x0;if(_0x2bb85f[_0x57a895(0x252)]==null)_0x2bb85f['interval']=0x0;if(!_0x2bb85f['phase'])_0x2bb85f[_0x57a895(0x340)]=_0x57a895(0x5de);if(_0x2bb85f['step']==null)_0x2bb85f[_0x57a895(0x4be)]=0x0;if(_0x2bb85f[_0x57a895(0x322)]==null)_0x2bb85f[_0x57a895(0x322)]=null;if(_0x2bb85f[_0x57a895(0x478)]==null)_0x2bb85f[_0x57a895(0x478)]=0x0;if(_0x2bb85f[_0x57a895(0x1a2)]==null)_0x2bb85f[_0x57a895(0x1a2)]=0x0;if(_0x2bb85f[_0x57a895(0x407)]==null)_0x2bb85f[_0x57a895(0x407)]=0x0;}}['migrateStatsSchema'](){const _0x319238=_0x3a406e;(this[_0x319238(0x27d)]||[])['forEach'](_0x3348c9=>this[_0x319238(0x476)](_0x3348c9['word'])),this[_0x319238(0x5b8)]();}[_0x3a406e(0x5d0)](){const _0x405e95=_0x3a406e;try{const _0x4e24f8=new Date()[_0x405e95(0x2c3)](),_0x3faae3=JSON[_0x405e95(0x6f4)](localStorage[_0x405e95(0x557)](_0x405e95(0x519))||_0x405e95(0x284));if(!_0x3faae3||_0x3faae3['date']!==_0x4e24f8){const _0x1d146c={'date':_0x4e24f8,'newIntroduced':[],'answered':0x0};return localStorage[_0x405e95(0x42c)](_0x405e95(0x519),JSON[_0x405e95(0x40f)](_0x1d146c)),_0x1d146c;}return _0x3faae3;}catch{const _0xef1099={'date':new Date()[_0x405e95(0x2c3)](),'newIntroduced':[],'answered':0x0};return localStorage[_0x405e95(0x42c)](_0x405e95(0x519),JSON[_0x405e95(0x40f)](_0xef1099)),_0xef1099;}}['saveSrsDay'](){const _0x14d361=_0x3a406e;try{localStorage[_0x14d361(0x42c)](_0x14d361(0x519),JSON[_0x14d361(0x40f)](this['srsDay']));}catch{}}[_0x3a406e(0x46b)](){const _0x5010ad=_0x3a406e,_0x3250c3=new Date()['toDateString']();(!this[_0x5010ad(0x694)]||this['srsDay'][_0x5010ad(0x21e)]!==_0x3250c3)&&(this[_0x5010ad(0x694)]={'date':_0x3250c3,'newIntroduced':[],'answered':0x0},this['saveSrsDay']());}async[_0x3a406e(0x6fb)](_0x4f83ee){const _0x18d8f7=_0x3a406e;try{const _0x3bdee1=(_0x4f83ee?.[_0x18d8f7(0x485)]||'')['trim'](),_0x21e4f0=(_0x4f83ee?.[_0x18d8f7(0x267)]?.['ru']||'')[_0x18d8f7(0x6f9)]();if(!_0x3bdee1){this['showNotification'](_0x18d8f7(0x1f1),'warning');return;}if(!_0x21e4f0){this[_0x18d8f7(0x1bc)](_0x18d8f7(0x660),'warning');return;}const _0x2408b0=this[_0x18d8f7(0x6d9)][_0x18d8f7(0x312)](_0x4d8dc8=>_0x4d8dc8['word'][_0x18d8f7(0x6dc)]()===_0x3bdee1[_0x18d8f7(0x6dc)]());!_0x2408b0&&this[_0x18d8f7(0x6d9)]['push']({'word':_0x3bdee1,'translation':_0x21e4f0,'level':_0x18d8f7(0x397),'forms':null,'isCustom':!![],'addedAt':Date['now']()});const _0x209459=this[_0x18d8f7(0x27d)]['some'](_0x1c3b40=>_0x1c3b40[_0x18d8f7(0x693)][_0x18d8f7(0x6dc)]()===_0x3bdee1[_0x18d8f7(0x6dc)]()&&_0x1c3b40[_0x18d8f7(0x4d9)]==='ADDED');!_0x209459&&(this[_0x18d8f7(0x27d)][_0x18d8f7(0x31d)]({'word':_0x3bdee1,'translation':_0x21e4f0,'level':'ADDED','forms':null,'isCustom':!![],'isLearned':![],'addedAt':Date[_0x18d8f7(0x52e)]()}),this[_0x18d8f7(0x476)](_0x3bdee1)),this[_0x18d8f7(0x5b8)](),this[_0x18d8f7(0x2bb)](),this[_0x18d8f7(0x1bc)]('Добавлено\x20в\x20изучение:\x20'+_0x3bdee1,_0x18d8f7(0x38d)),this['currentSection']===_0x18d8f7(0x5de)&&(this[_0x18d8f7(0x67a)]=!![],this[_0x18d8f7(0x2cf)]()),document[_0x18d8f7(0x669)](_0x18d8f7(0x6d9))&&this[_0x18d8f7(0x54c)]();}catch(_0x2d5245){console[_0x18d8f7(0x2f9)](_0x18d8f7(0x2e3),_0x2d5245),this[_0x18d8f7(0x1bc)]('Не\x20удалось\x20добавить.\x20Попробуйте\x20ещё\x20раз',_0x18d8f7(0x524));}}[_0x3a406e(0x623)](){const _0x2e7818=_0x3a406e;this[_0x2e7818(0x25b)]();const _0x2999dd=document['getElementById'](_0x2e7818(0x426)),_0x1ecc60=document[_0x2e7818(0x669)]('newTranslation');if(!_0x2999dd||!_0x1ecc60)return;const _0x5cd6d6=_0x2999dd[_0x2e7818(0x5dd)][_0x2e7818(0x6f9)](),_0x50bae9=_0x1ecc60[_0x2e7818(0x5dd)][_0x2e7818(0x6f9)](),_0x192952=_0x2e7818(0x397);if(!_0x5cd6d6||!_0x50bae9){this[_0x2e7818(0x1bc)](_0x2e7818(0x500),_0x2e7818(0x524));return;}const _0xab82fd={'word':_0x5cd6d6,'translation':_0x50bae9,'level':_0x192952,'forms':null,'isCustom':!![],'addedAt':Date['now']()},_0x31e196=this[_0x2e7818(0x6d9)][_0x2e7818(0x312)](_0x197d44=>_0x197d44[_0x2e7818(0x693)][_0x2e7818(0x6dc)]()===_0x5cd6d6[_0x2e7818(0x6dc)]());if(!_0x31e196)this[_0x2e7818(0x6d9)]['push'](_0xab82fd);const _0x485143=this[_0x2e7818(0x27d)][_0x2e7818(0x312)](_0x4585ab=>_0x4585ab['word'][_0x2e7818(0x6dc)]()===_0x5cd6d6[_0x2e7818(0x6dc)]()&&_0x4585ab[_0x2e7818(0x4d9)]===_0x192952);if(!_0x485143)this[_0x2e7818(0x27d)]['push']({..._0xab82fd,'isLearned':![]});this[_0x2e7818(0x476)](_0x5cd6d6),this[_0x2e7818(0x5b8)](),this[_0x2e7818(0x2bb)](),_0x2999dd['value']='',_0x1ecc60[_0x2e7818(0x5dd)]='',this[_0x2e7818(0x1bc)]('Слово\x20\x22'+_0x5cd6d6+_0x2e7818(0x499),_0x2e7818(0x38d)),this[_0x2e7818(0x54c)](),this[_0x2e7818(0x4d6)]===_0x2e7818(0x5de)&&(this[_0x2e7818(0x67a)]=!![],this[_0x2e7818(0x2cf)]());}[_0x3a406e(0x514)](){const _0x1e9fc5=_0x3a406e;this[_0x1e9fc5(0x25b)]();const _0x4eae8c=document[_0x1e9fc5(0x669)](_0x1e9fc5(0x63c));if(!_0x4eae8c)return;const _0x5c83c=_0x4eae8c[_0x1e9fc5(0x5dd)]['trim'](),_0x545ce7=_0x1e9fc5(0x397);if(!_0x5c83c){this[_0x1e9fc5(0x1bc)]('Введите\x20слова\x20для\x20добавления!',_0x1e9fc5(0x524));return;}const _0x6deee1=_0x5c83c['split'](/\r?\n/)[_0x1e9fc5(0x4ef)](_0x2054a1=>_0x2054a1[_0x1e9fc5(0x6f9)]())[_0x1e9fc5(0x66a)](Boolean);let _0x439c18=0x0;const _0x2c9b9a=new Set(this[_0x1e9fc5(0x6d9)][_0x1e9fc5(0x4ef)](_0x4f4829=>''+_0x4f4829[_0x1e9fc5(0x693)]['toLowerCase']())),_0x507a7e=new Set(this['learningWords'][_0x1e9fc5(0x4ef)](_0x32d586=>_0x32d586[_0x1e9fc5(0x4d9)]+'::'+_0x32d586['word']['toLowerCase']()));_0x6deee1['forEach'](_0x258bbb=>{const _0x32b3ac=_0x1e9fc5,_0x45c5aa=_0x258bbb['split'](/\s*[-—:|\t]\s*/);if(_0x45c5aa[_0x32b3ac(0x201)]<0x2)return;const _0x3b59de=_0x45c5aa[0x0]['trim'](),_0x82a0b6=_0x45c5aa[_0x32b3ac(0x6c6)](0x1)[_0x32b3ac(0x355)](_0x32b3ac(0x67e))['trim']();if(!_0x3b59de||!_0x82a0b6)return;let _0x1f3b76=_0x3b59de,_0x23506d=null;if(_0x3b59de[_0x32b3ac(0x3ed)]('→')||_0x3b59de[_0x32b3ac(0x3ed)](',')){const _0x3be055=_0x3b59de[_0x32b3ac(0x3ed)]('→')?_0x3b59de[_0x32b3ac(0x3f9)]('→'):_0x3b59de['split'](','),_0x347b6d=_0x3be055['map'](_0x4aa970=>_0x4aa970['trim']())[_0x32b3ac(0x66a)](Boolean);_0x347b6d[_0x32b3ac(0x201)]>=0x2&&(_0x23506d=_0x347b6d,_0x1f3b76=_0x347b6d[0x0]);}const _0x29c296=''+_0x1f3b76[_0x32b3ac(0x6dc)]();if(!_0x2c9b9a[_0x32b3ac(0x61f)](_0x29c296)){const _0x3ad3fa={'word':_0x1f3b76,'translation':_0x82a0b6,'level':_0x545ce7,'forms':_0x23506d,'isCustom':!![],'addedAt':Date['now']()};this[_0x32b3ac(0x6d9)][_0x32b3ac(0x31d)](_0x3ad3fa),_0x2c9b9a[_0x32b3ac(0x6a3)](_0x29c296);}const _0x457624=_0x545ce7+'::'+_0x1f3b76[_0x32b3ac(0x6dc)]();!_0x507a7e['has'](_0x457624)&&(this[_0x32b3ac(0x27d)][_0x32b3ac(0x31d)]({'word':_0x1f3b76,'translation':_0x82a0b6,'level':_0x545ce7,'forms':_0x23506d,'isCustom':!![],'addedAt':Date[_0x32b3ac(0x52e)](),'isLearned':![]}),_0x507a7e[_0x32b3ac(0x6a3)](_0x457624),this[_0x32b3ac(0x476)](_0x1f3b76),_0x439c18++);}),_0x439c18>0x0?(this['saveData'](),this[_0x1e9fc5(0x2bb)](),_0x4eae8c[_0x1e9fc5(0x5dd)]='',this[_0x1e9fc5(0x1bc)](_0x1e9fc5(0x238)+_0x439c18+_0x1e9fc5(0x503),_0x1e9fc5(0x38d)),this[_0x1e9fc5(0x54c)](),this[_0x1e9fc5(0x4d6)]===_0x1e9fc5(0x5de)&&(this['suppressAutoSpeakOnce']=!![],this[_0x1e9fc5(0x2cf)]())):this['showNotification']('Новые\x20слова\x20не\x20найдены\x20(возможны\x20дубли)',_0x1e9fc5(0x65c));}['attachCustomWordsListeners'](){const _0xe95aa8=_0x3a406e,_0x1f538d=document[_0xe95aa8(0x669)](_0xe95aa8(0x6d9));if(!_0x1f538d)return;_0x1f538d['querySelectorAll']('.custom-sound-us-btn')['forEach'](_0x2043c5=>{_0x2043c5['addEventListener']('click',_0xfd6ed0=>{const _0x5c929c=_0x5b63;_0xfd6ed0[_0x5c929c(0x5eb)]();const _0x3b8d95=_0x2043c5[_0x5c929c(0x48c)]('data-word-text'),_0x1b500b=_0x2043c5['getAttribute'](_0x5c929c(0x2c6));let _0x22c6a9=null;if(_0x1b500b&&_0x1b500b!==_0x5c929c(0x284))try{_0x22c6a9=JSON[_0x5c929c(0x6f4)](_0x1b500b);}catch(_0x50a56a){console['log']('Forms\x20parse\x20error:',_0x50a56a);}this[_0x5c929c(0x64c)](_0x3b8d95,_0x22c6a9,'us');});}),_0x1f538d[_0xe95aa8(0x5f2)](_0xe95aa8(0x285))[_0xe95aa8(0x50b)](_0x5311a8=>{_0x5311a8['addEventListener']('click',_0x4058f1=>{const _0x4a7ebe=_0x5b63;_0x4058f1[_0x4a7ebe(0x5eb)]();const _0x9e7004=_0x5311a8['getAttribute'](_0x4a7ebe(0x23b)),_0x53f23b=_0x5311a8[_0x4a7ebe(0x48c)](_0x4a7ebe(0x2c6));let _0x52a81d=null;if(_0x53f23b&&_0x53f23b!=='null')try{_0x52a81d=JSON['parse'](_0x53f23b);}catch(_0x4cc6ea){console[_0x4a7ebe(0x48f)](_0x4a7ebe(0x567),_0x4cc6ea);}this[_0x4a7ebe(0x64c)](_0x9e7004,_0x52a81d,'uk');});}),_0x1f538d[_0xe95aa8(0x5f2)](_0xe95aa8(0x46e))[_0xe95aa8(0x50b)](_0x1fe2e8=>{const _0x1cc6ab=_0xe95aa8;_0x1fe2e8[_0x1cc6ab(0x208)]('click',_0x3c4317=>{const _0x5dbfad=_0x1cc6ab;_0x3c4317[_0x5dbfad(0x5eb)]();const _0x1d6790=_0x1fe2e8['getAttribute'](_0x5dbfad(0x23b));this['deleteCustomWord'](_0x1d6790);});});}[_0x3a406e(0x54c)](){const _0x10651e=_0x3a406e,_0x5b6ff5=document[_0x10651e(0x669)](_0x10651e(0x6d9)),_0x62a61f=_0x5b6ff5||document[_0x10651e(0x669)](_0x10651e(0x5d1));if(!_0x62a61f)return;if(this['customWords'][_0x10651e(0x201)]===0x0){_0x62a61f[_0x10651e(0x66c)]=_0x10651e(0x27a);return;}_0x62a61f[_0x10651e(0x66c)]=this['customWords'][_0x10651e(0x4ef)](_0x322edd=>'\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-card\x20custom-word-card\x22\x20data-word=\x22'+this['safeAttr'](_0x322edd[_0x10651e(0x693)])+_0x10651e(0x2be)+this['getEnglishDisplay'](_0x322edd)+_0x10651e(0x1e9)+_0x322edd['translation']+_0x10651e(0x2e2)+this[_0x10651e(0x349)](_0x322edd[_0x10651e(0x693)])+_0x10651e(0x1b3)+(_0x322edd[_0x10651e(0x5f3)]?JSON[_0x10651e(0x40f)](_0x322edd[_0x10651e(0x5f3)]):_0x10651e(0x284))+'\x27\x20title=\x22US\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-volume-up\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20play-btn\x20custom-sound-uk-btn\x22\x20data-word-text=\x22'+this[_0x10651e(0x349)](_0x322edd[_0x10651e(0x693)])+_0x10651e(0x1b3)+(_0x322edd[_0x10651e(0x5f3)]?JSON[_0x10651e(0x40f)](_0x322edd[_0x10651e(0x5f3)]):_0x10651e(0x284))+'\x27\x20title=\x22UK\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-headphones\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20remove-btn\x20custom-delete-btn\x22\x20data-word-text=\x22'+this[_0x10651e(0x349)](_0x322edd[_0x10651e(0x693)])+_0x10651e(0x55a))['join'](''),this[_0x10651e(0x32f)]();}[_0x3a406e(0x1b8)](_0x10c0fd){const _0x5cf17d=_0x3a406e;this[_0x5cf17d(0x25b)](),this[_0x5cf17d(0x6d9)]=this['customWords'][_0x5cf17d(0x66a)](_0x5a4ae9=>_0x5a4ae9['word']!==_0x10c0fd),this['learningWords']=this['learningWords']['filter'](_0x307b3d=>!(_0x307b3d[_0x5cf17d(0x693)]===_0x10c0fd&&_0x307b3d['level']===_0x5cf17d(0x397))),this['saveData'](),this['updateLevelCounts'](),this[_0x5cf17d(0x1bc)](_0x5cf17d(0x637)+_0x10c0fd+_0x5cf17d(0x1d5),_0x5cf17d(0x38d)),this[_0x5cf17d(0x54c)](),this['currentSection']===_0x5cf17d(0x5de)&&(this[_0x5cf17d(0x67a)]=!![],this[_0x5cf17d(0x2cf)]());}[_0x3a406e(0x2cf)](){const _0x28f104=_0x3a406e;this['stopCurrentAudio']();const _0x40ad9c=document[_0x28f104(0x669)]('learningWordsList'),_0x479997=document['getElementById'](_0x28f104(0x58e));if(!_0x40ad9c)return;if(_0x479997)_0x479997[_0x28f104(0x6e8)]=this[_0x28f104(0x27d)][_0x28f104(0x201)]+_0x28f104(0x69b);if(this[_0x28f104(0x27d)][_0x28f104(0x201)]===0x0&&this[_0x28f104(0x6a4)]!==_0x28f104(0x49a)){_0x40ad9c[_0x28f104(0x66c)]='\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22empty-state\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-book-open\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<h3>Добавьте\x20слова\x20из\x20\x22Списка\x20слов\x22,\x20чтобы\x20практиковаться</h3>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20';return;}if(this['currentMode']===_0x28f104(0x49a))this['renderSentenceBuilder']();else{if(this[_0x28f104(0x6a4)]===_0x28f104(0x6af))this[_0x28f104(0x61a)]();else this[_0x28f104(0x6a4)]==='quiz'?this['renderQuiz']():this[_0x28f104(0x275)]();}}[_0x3a406e(0x506)](_0x440f1f){const _0x797464=_0x3a406e;try{if(!_0x440f1f)return;if(_0x440f1f['querySelector'](_0x797464(0x265)))return;const _0x3471d9=document[_0x797464(0x1e6)](_0x797464(0x6d5));_0x3471d9[_0x797464(0x493)]=_0x797464(0x3e8),_0x3471d9[_0x797464(0x227)][_0x797464(0x2bf)]=_0x797464(0x4f2);const _0x585f6a=document[_0x797464(0x1e6)](_0x797464(0x481));_0x585f6a['id']=_0x797464(0x3d1),_0x585f6a['className']='btn\x20btn-primary',_0x585f6a[_0x797464(0x227)][_0x797464(0x3f3)]='700',_0x585f6a[_0x797464(0x66c)]=_0x797464(0x327),_0x3471d9[_0x797464(0x378)](_0x585f6a),_0x440f1f[_0x797464(0x6e0)](_0x797464(0x2b0),_0x3471d9);}catch(_0x5a0787){console[_0x797464(0x5e3)](_0x797464(0x501),_0x5a0787);}}[_0x3a406e(0x420)](_0x597a1e){const _0x1a38ba=_0x3a406e;this[_0x1a38ba(0x6a4)]=_0x597a1e,localStorage[_0x1a38ba(0x42c)](_0x1a38ba(0x6a4),_0x597a1e),this[_0x1a38ba(0x67a)]=!![],this[_0x1a38ba(0x2cf)]();}[_0x3a406e(0x542)](_0x470254){const _0x259fd5=_0x3a406e;this['currentPractice']=_0x470254,localStorage[_0x259fd5(0x42c)]('currentPractice',_0x470254),this['currentReviewIndex']=0x0,_0x470254==='endless'&&localStorage[_0x259fd5(0x316)](_0x259fd5(0x61b)),this[_0x259fd5(0x67a)]=!![],this['renderLearningSection']();}['insertMotivationButton'](_0x147e9d){const _0xfb43b6=_0x3a406e;if(!_0x147e9d)return;if(_0x147e9d['querySelector'](_0xfb43b6(0x4a9)))return;const _0x346496=document[_0xfb43b6(0x1e6)](_0xfb43b6(0x481));_0x346496['id']=_0xfb43b6(0x2a8),_0x346496[_0xfb43b6(0x493)]=_0xfb43b6(0x2d6),_0x346496['textContent']=_0xfb43b6(0x3fc),_0x346496['style'][_0xfb43b6(0x2bf)]='font-weight:700;margin-bottom:14px;',_0x346496['setAttribute'](_0xfb43b6(0x25d),_0xfb43b6(0x54b)),_0x346496[_0xfb43b6(0x208)]('click',()=>this[_0xfb43b6(0x417)]()),_0x147e9d['insertAdjacentElement'](_0xfb43b6(0x2b0),_0x346496);}[_0x3a406e(0x417)](_0x41ace6){const _0x9b0f83=_0x3a406e,_0x246c6a=document['createElement'](_0x9b0f83(0x6d5));_0x246c6a['id']=_0x9b0f83(0x585),_0x246c6a[_0x9b0f83(0x227)]['cssText']='position:fixed;inset:0;z-index:1000002;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;';const _0x15c243=document['createElement'](_0x9b0f83(0x6d5));_0x15c243[_0x9b0f83(0x227)][_0x9b0f83(0x2bf)]=_0x9b0f83(0x2d9);const _0x4bb8d6=document[_0x9b0f83(0x1e6)](_0x9b0f83(0x6d5));_0x4bb8d6['style']['cssText']=_0x9b0f83(0x1f5);const _0x263f5c=document[_0x9b0f83(0x1e6)]('div');_0x263f5c[_0x9b0f83(0x6e8)]=_0x9b0f83(0x28d),_0x263f5c['style'][_0x9b0f83(0x2bf)]=_0x9b0f83(0x584);const _0x2fa950=document[_0x9b0f83(0x1e6)](_0x9b0f83(0x481));_0x2fa950[_0x9b0f83(0x493)]=_0x9b0f83(0x3ff),_0x2fa950[_0x9b0f83(0x66c)]=_0x9b0f83(0x5d6),_0x2fa950[_0x9b0f83(0x563)]=()=>{const _0x21ccac=_0x9b0f83;_0x246c6a[_0x21ccac(0x25a)](),_0x41ace6&&typeof _0x41ace6===_0x21ccac(0x241)&&_0x41ace6();},_0x4bb8d6[_0x9b0f83(0x378)](_0x263f5c),_0x4bb8d6[_0x9b0f83(0x378)](_0x2fa950);const _0x4f06d4=Math[_0x9b0f83(0x30a)](Math[_0x9b0f83(0x513)]()*0x3d)+0x1,_0x33b431=document[_0x9b0f83(0x1e6)](_0x9b0f83(0x6d5));_0x33b431[_0x9b0f83(0x227)][_0x9b0f83(0x2bf)]=_0x9b0f83(0x26c);const _0x510836=document[_0x9b0f83(0x1e6)](_0x9b0f83(0x452));_0x510836['alt']='motivation',_0x510836[_0x9b0f83(0x39e)]='/m'+_0x4f06d4+_0x9b0f83(0x511),_0x510836['setAttribute'](_0x9b0f83(0x20f),String(_0x4f06d4)),_0x510836[_0x9b0f83(0x227)][_0x9b0f83(0x2bf)]=_0x9b0f83(0x5e4),_0x510836[_0x9b0f83(0x5b6)]=()=>this[_0x9b0f83(0x5b9)](_0x510836),_0x33b431[_0x9b0f83(0x378)](_0x510836),_0x15c243[_0x9b0f83(0x378)](_0x4bb8d6),_0x15c243[_0x9b0f83(0x378)](_0x33b431),_0x246c6a['appendChild'](_0x15c243),document[_0x9b0f83(0x673)][_0x9b0f83(0x378)](_0x246c6a),_0x246c6a[_0x9b0f83(0x208)](_0x9b0f83(0x561),_0x108184=>{const _0x49c52d=_0x9b0f83;_0x108184[_0x49c52d(0x24b)]===_0x246c6a&&(_0x246c6a[_0x49c52d(0x25a)](),_0x41ace6&&typeof _0x41ace6===_0x49c52d(0x241)&&_0x41ace6());});}['renderFlashcards'](){const _0x286ee8=_0x3a406e,_0x14d46f=document['getElementById'](_0x286ee8(0x629));this[_0x286ee8(0x579)]=Date[_0x286ee8(0x52e)]();if(!_0x14d46f)return;if(this[_0x286ee8(0x51d)]===_0x286ee8(0x233)){const _0x11c2fe=JSON['parse'](localStorage[_0x286ee8(0x557)]('currentSession')||'{}');typeof _0x11c2fe[_0x286ee8(0x647)]===_0x286ee8(0x528)&&(this[_0x286ee8(0x24c)]=_0x11c2fe[_0x286ee8(0x647)]);}const _0x12975c=this[_0x286ee8(0x1d0)]();if(_0x12975c[_0x286ee8(0x201)]===0x0){_0x14d46f[_0x286ee8(0x66c)]=_0x286ee8(0x23f);return;}const _0x53982d=_0x12975c[this[_0x286ee8(0x24c)]%_0x12975c[_0x286ee8(0x201)]];let _0x582b45=this[_0x286ee8(0x26d)](_0x53982d);this['lastFlashcardFrontWasRussian']=this[_0x286ee8(0x56b)](_0x582b45),_0x14d46f[_0x286ee8(0x66c)]=_0x286ee8(0x301)+_0x582b45+'\x20'+this[_0x286ee8(0x645)](_0x53982d[_0x286ee8(0x693)])+_0x286ee8(0x469)+this['safeAttr'](_0x53982d[_0x286ee8(0x693)])+_0x286ee8(0x1a8)+this[_0x286ee8(0x349)](_0x53982d['word'])+_0x286ee8(0x346)+_0x53982d['translation']+_0x286ee8(0x323)+(this['currentReviewIndex']+0x1)+_0x286ee8(0x307)+_0x12975c[_0x286ee8(0x201)]+'\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20',this['getPrimaryImageUrl'](_0x53982d)[_0x286ee8(0x3bd)](_0x2f204e=>{const _0x3c4adb=_0x286ee8,_0x426c79=_0x14d46f[_0x3c4adb(0x3ad)]('.flashcard-image');_0x426c79&&(_0x426c79[_0x3c4adb(0x39e)]=_0x2f204e,_0x426c79[_0x3c4adb(0x5b6)]=()=>this['handleImageError'](_0x426c79),_0x426c79[_0x3c4adb(0x3ae)]('data-loading'),_0x53982d[_0x3c4adb(0x4d9)]===_0x3c4adb(0x22c)&&_0x426c79[_0x3c4adb(0x444)][_0x3c4adb(0x6a3)](_0x3c4adb(0x2dd)));}),setTimeout(()=>{const _0x2a9cf0=_0x286ee8,_0x247814=_0x14d46f[_0x2a9cf0(0x3ad)]('.flashcard-sound-us'),_0x56ec48=_0x14d46f[_0x2a9cf0(0x3ad)](_0x2a9cf0(0x558));_0x247814&&_0x247814[_0x2a9cf0(0x208)](_0x2a9cf0(0x561),_0x3d2f01=>{const _0x235052=_0x2a9cf0;_0x3d2f01[_0x235052(0x5eb)](),this[_0x235052(0x64c)](_0x53982d[_0x235052(0x693)],_0x53982d['forms'],'us',_0x53982d[_0x235052(0x4d9)]);});_0x56ec48&&_0x56ec48[_0x2a9cf0(0x208)]('click',_0x288f48=>{const _0x437f7b=_0x2a9cf0;_0x288f48['stopPropagation'](),this['playWord'](_0x53982d[_0x437f7b(0x693)],_0x53982d[_0x437f7b(0x5f3)],'uk',_0x53982d[_0x437f7b(0x4d9)]);});const _0x3b341f=_0x14d46f[_0x2a9cf0(0x3ad)](_0x2a9cf0(0x512));_0x3b341f&&_0x3b341f[_0x2a9cf0(0x208)](_0x2a9cf0(0x561),()=>this[_0x2a9cf0(0x3c4)]());const _0x43a506=_0x14d46f['querySelector'](_0x2a9cf0(0x1ac));_0x43a506&&_0x43a506['addEventListener'](_0x2a9cf0(0x561),()=>this['playCurrentWord']());const _0x200d0d=_0x14d46f[_0x2a9cf0(0x3ad)](_0x2a9cf0(0x606)),_0x580f83=_0x14d46f['querySelector'](_0x2a9cf0(0x218));_0x200d0d&&_0x200d0d[_0x2a9cf0(0x208)](_0x2a9cf0(0x561),()=>this[_0x2a9cf0(0x337)](![])),_0x580f83&&_0x580f83[_0x2a9cf0(0x208)](_0x2a9cf0(0x561),()=>this[_0x2a9cf0(0x337)](!![]));},0x0),!this[_0x286ee8(0x539)]&&!this[_0x286ee8(0x67a)]&&this['currentSection']===_0x286ee8(0x5de)&&this['shouldAutoPronounce'](_0x53982d)&&setTimeout(()=>{const _0x45ecf6=_0x286ee8;this[_0x45ecf6(0x64c)](_0x53982d['word'],_0x53982d[_0x45ecf6(0x5f3)],'us',_0x53982d[_0x45ecf6(0x4d9)]);},0xfa),this[_0x286ee8(0x67a)]=![];}[_0x3a406e(0x3c4)](){const _0x117020=_0x3a406e,_0xaa2ef6=document['getElementById'](_0x117020(0x37c)),_0x2416e4=document[_0x117020(0x669)]('showAnswerBtn'),_0x57400b=document[_0x117020(0x669)](_0x117020(0x204)),_0x11545e=document[_0x117020(0x669)](_0x117020(0x232));if(_0xaa2ef6)_0xaa2ef6['classList'][_0x117020(0x25a)]('hidden');if(_0x2416e4)_0x2416e4['classList'][_0x117020(0x6a3)](_0x117020(0x569));if(_0x57400b)_0x57400b[_0x117020(0x444)][_0x117020(0x25a)]('hidden');if(_0x11545e)_0x11545e[_0x117020(0x444)]['remove'](_0x117020(0x569));if(this[_0x117020(0x539)]&&this['currentSection']===_0x117020(0x5de)){const _0x4f02ab=this['getWordsToReview'](),_0x45f5c0=_0x4f02ab[this['currentReviewIndex']%_0x4f02ab[_0x117020(0x201)]];this[_0x117020(0x34f)](_0x45f5c0)&&setTimeout(()=>{const _0x3820b6=_0x117020;this['playWord'](_0x45f5c0[_0x3820b6(0x693)],_0x45f5c0[_0x3820b6(0x5f3)],'us',_0x45f5c0['level']);},0xc8);}}[_0x3a406e(0x1c7)](){const _0x4cc32f=_0x3a406e,_0x2647bd=this[_0x4cc32f(0x1d0)](),_0x566546=_0x2647bd[this['currentReviewIndex']%_0x2647bd[_0x4cc32f(0x201)]];this[_0x4cc32f(0x64c)](_0x566546[_0x4cc32f(0x693)],_0x566546[_0x4cc32f(0x5f3)],'us',_0x566546['level']);}async['answerFlashcard'](_0x29a957){const _0x3d4409=_0x3a406e;await this[_0x3d4409(0x4d5)]();const _0x5c11c5=this[_0x3d4409(0x1d0)](),_0x237185=_0x5c11c5[this[_0x3d4409(0x24c)]%_0x5c11c5[_0x3d4409(0x201)]],_0x1ce0a1=this['_questionStart']?Date[_0x3d4409(0x52e)]()-this['_questionStart']:null;this[_0x3d4409(0x4b2)](_0x237185[_0x3d4409(0x693)],_0x29a957,_0x1ce0a1),this[_0x3d4409(0x199)](),this['currentReviewIndex']++,this[_0x3d4409(0x24c)]>=_0x5c11c5['length']&&this[_0x3d4409(0x51d)]===_0x3d4409(0x233)&&(this['currentReviewIndex']=0x0,this['showNotification']('Отличная\x20работа!\x20Все\x20слова\x20повторены!',_0x3d4409(0x38d))),this[_0x3d4409(0x61a)]();}[_0x3a406e(0x275)](){const _0x4489d2=_0x3a406e;document[_0x4489d2(0x2f1)]instanceof HTMLElement&&document[_0x4489d2(0x2f1)]['blur']();const _0x3ab142=document[_0x4489d2(0x669)](_0x4489d2(0x629));this[_0x4489d2(0x579)]=Date[_0x4489d2(0x52e)]();if(!_0x3ab142)return;if(this[_0x4489d2(0x51d)]===_0x4489d2(0x233)){const _0x2604b3=JSON[_0x4489d2(0x6f4)](localStorage['getItem'](_0x4489d2(0x61b))||'{}');typeof _0x2604b3[_0x4489d2(0x647)]==='number'&&(this[_0x4489d2(0x24c)]=_0x2604b3[_0x4489d2(0x647)]);}const _0x31ee83=this[_0x4489d2(0x1d0)]();if(_0x31ee83['length']===0x0){_0x3ab142[_0x4489d2(0x66c)]=_0x4489d2(0x23f);return;}const _0x43e384=_0x31ee83[this['currentReviewIndex']%_0x31ee83[_0x4489d2(0x201)]],_0x4e56bc=Math['random']()<0.5?_0x4489d2(0x4c9):'RU_EN',_0x163da5=_0x4e56bc==='EN_RU'?this[_0x4489d2(0x26d)](_0x43e384):_0x43e384[_0x4489d2(0x1dd)],_0x31cafe=_0x4e56bc===_0x4489d2(0x4c9)?_0x43e384['translation']:this[_0x4489d2(0x26d)](_0x43e384),_0x4d2ca9=this['buildQuizOptions'](_0x43e384,_0x4e56bc),_0x49bc5e=this['shuffle'](_0x4d2ca9);_0x3ab142[_0x4489d2(0x66c)]=_0x4489d2(0x203)+_0x43e384['level']+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22quiz-question\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x163da5+'\x20'+this[_0x4489d2(0x645)](_0x43e384[_0x4489d2(0x693)])+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22sound-actions\x22\x20style=\x22margin-left:8px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22mini-btn\x20quiz-sound-us\x22\x20data-word=\x22'+this['safeAttr'](_0x43e384[_0x4489d2(0x693)])+'\x22\x20title=\x22US\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-volume-up\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22mini-btn\x20quiz-sound-uk\x22\x20data-word=\x22'+this[_0x4489d2(0x349)](_0x43e384['word'])+_0x4489d2(0x4fc)+_0x49bc5e[_0x4489d2(0x4ef)](_0x2eca4c=>{const _0x452381=_0x4489d2,_0x22cb30=this[_0x452381(0x2e9)](_0x2eca4c)&&!this['isRussian'](_0x2eca4c),_0x253c2d=_0x2eca4c[_0x452381(0x3f9)]('→')[0x0][_0x452381(0x6f9)](),_0x267ecb=_0x22cb30?_0x452381(0x515)+this[_0x452381(0x349)](_0x253c2d)+'\x22\x20title=\x22US\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-volume-up\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22mini-btn\x20option-sound-uk\x22\x20data-word=\x22'+this[_0x452381(0x349)](_0x253c2d)+_0x452381(0x23c):'';return _0x452381(0x335)+this[_0x452381(0x349)](_0x2eca4c)+_0x452381(0x427)+_0x2eca4c+_0x452381(0x43c)+_0x267ecb+_0x452381(0x409);})[_0x4489d2(0x355)]('')+_0x4489d2(0x3dd)+(this[_0x4489d2(0x24c)]+0x1)+'\x20из\x20'+_0x31ee83[_0x4489d2(0x201)]+_0x4489d2(0x4b5),this[_0x4489d2(0x36b)](_0x43e384)[_0x4489d2(0x3bd)](_0xc6da95=>{const _0x43c6fd=_0x4489d2,_0x3c13c7=_0x3ab142[_0x43c6fd(0x3ad)](_0x43c6fd(0x575));_0x3c13c7&&(_0x3c13c7[_0x43c6fd(0x39e)]=_0xc6da95,_0x3c13c7[_0x43c6fd(0x5b6)]=()=>this[_0x43c6fd(0x314)](_0x3c13c7),_0x3c13c7[_0x43c6fd(0x3ae)](_0x43c6fd(0x55d)),_0x43e384[_0x43c6fd(0x4d9)]==='MEDICAL'&&_0x3c13c7['classList']['add'](_0x43c6fd(0x2dd)));}),setTimeout(()=>{const _0xacd786=_0x4489d2,_0x1f868b=_0x3ab142[_0xacd786(0x3ad)](_0xacd786(0x44f)),_0x142271=_0x3ab142[_0xacd786(0x3ad)](_0xacd786(0x329));_0x1f868b&&_0x1f868b['addEventListener']('click',_0x1a163f=>{const _0x24107d=_0xacd786;_0x1a163f[_0x24107d(0x5eb)]();const _0x4ea8f1=_0x1f868b[_0x24107d(0x48c)](_0x24107d(0x56a));this[_0x24107d(0x64c)](_0x4ea8f1,_0x43e384[_0x24107d(0x5f3)],'us',_0x43e384[_0x24107d(0x4d9)]);}),_0x142271&&_0x142271[_0xacd786(0x208)](_0xacd786(0x561),_0x4e5722=>{const _0x265a94=_0xacd786;_0x4e5722[_0x265a94(0x5eb)]();const _0x2d4717=_0x142271['getAttribute'](_0x265a94(0x56a));this['playWord'](_0x2d4717,_0x43e384[_0x265a94(0x5f3)],'uk',_0x43e384[_0x265a94(0x4d9)]);}),_0x3ab142[_0xacd786(0x5f2)](_0xacd786(0x320))[_0xacd786(0x50b)](_0x20d730=>{const _0xe82cfd=_0xacd786;_0x20d730[_0xe82cfd(0x208)](_0xe82cfd(0x561),_0x3ae19a=>{const _0x150605=_0xe82cfd;_0x3ae19a[_0x150605(0x5eb)]();const _0x573425=_0x20d730['getAttribute']('data-word');this[_0x150605(0x4c3)](_0x573425,'us');});}),_0x3ab142[_0xacd786(0x5f2)]('.option-sound-uk')['forEach'](_0x4cf027=>{const _0x358657=_0xacd786;_0x4cf027[_0x358657(0x208)](_0x358657(0x561),_0xbbbe51=>{const _0xaaac6a=_0x358657;_0xbbbe51[_0xaaac6a(0x5eb)]();const _0x141908=_0x4cf027[_0xaaac6a(0x48c)](_0xaaac6a(0x56a));this[_0xaaac6a(0x4c3)](_0x141908,'uk');});}),_0x3ab142[_0xacd786(0x5f2)](_0xacd786(0x373))['forEach'](_0x42fc63=>{const _0xde8ab3=_0xacd786;_0x42fc63[_0xde8ab3(0x208)](_0xde8ab3(0x561),()=>{const _0x2d238f=_0xde8ab3,_0x44ddf4=_0x42fc63[_0x2d238f(0x48c)](_0x2d238f(0x5f7));this[_0x2d238f(0x4bd)](_0x44ddf4,_0x31cafe,_0x43e384[_0x2d238f(0x693)],_0x4e56bc);});});},0x0),_0x4e56bc===_0x4489d2(0x4c9)&&!this[_0x4489d2(0x67a)]&&this[_0x4489d2(0x4d6)]==='learning'&&this[_0x4489d2(0x34f)](_0x43e384)&&setTimeout(()=>{const _0x5202a1=_0x4489d2;this[_0x5202a1(0x64c)](_0x43e384[_0x5202a1(0x693)],_0x43e384[_0x5202a1(0x5f3)],'us',_0x43e384[_0x5202a1(0x4d9)]);},0xc8),this[_0x4489d2(0x67a)]=![];}[_0x3a406e(0x200)](_0x2d02f0,_0x3063fb,_0xa6d11f){const _0x37ac33=_0x3a406e;this[_0x37ac33(0x64c)](_0x2d02f0,_0x3063fb,_0xa6d11f||'us');}[_0x3a406e(0x593)](_0x3f5564,_0x2e0721){const _0x2f1de9=_0x3a406e,_0x3a8c65=_0x2e0721===_0x2f1de9(0x4c9)?_0x3f5564[_0x2f1de9(0x1dd)]:this[_0x2f1de9(0x26d)](_0x3f5564),_0x59bf31=[_0x3a8c65],_0x1b2b42=[...this[_0x2f1de9(0x27d)]],_0x297c99=this[_0x2f1de9(0x58c)](_0x1b2b42);for(let _0x3e3ec2 of _0x297c99){if(_0x3e3ec2['word']!==_0x3f5564[_0x2f1de9(0x693)]){const _0x3758a4=_0x2e0721===_0x2f1de9(0x4c9)?_0x3e3ec2[_0x2f1de9(0x1dd)]:this[_0x2f1de9(0x26d)](_0x3e3ec2);!_0x59bf31[_0x2f1de9(0x3ed)](_0x3758a4)&&_0x59bf31['push'](_0x3758a4);}if(_0x59bf31[_0x2f1de9(0x201)]>=0x4)break;}if(_0x59bf31[_0x2f1de9(0x201)]<0x4){const _0x7ea65c=['A1','A2','B1','B2','C1','C2'],_0xbc1fd1=[_0x2f1de9(0x6ae),_0x2f1de9(0x331),_0x2f1de9(0x5db),_0x2f1de9(0x22c),_0x2f1de9(0x582)];for(let _0x3c90b0 of _0x7ea65c){const _0x45e30f=oxfordWordsDatabase[_0x3c90b0]||[],_0x6f225a=this['shuffle'](_0x45e30f);for(let _0x4630ec of _0x6f225a){const _0x59fa46=_0x2e0721==='EN_RU'?_0x4630ec['translation']:_0x4630ec[_0x2f1de9(0x5f3)]&&_0x4630ec[_0x2f1de9(0x5f3)][_0x2f1de9(0x201)]?_0x4630ec[_0x2f1de9(0x5f3)]['join'](_0x2f1de9(0x25c)):_0x4630ec['word'];!_0x59bf31[_0x2f1de9(0x3ed)](_0x59fa46)&&_0x59bf31['push'](_0x59fa46);if(_0x59bf31[_0x2f1de9(0x201)]>=0x4)break;}if(_0x59bf31[_0x2f1de9(0x201)]>=0x4)break;}for(let _0x26e023 of _0xbc1fd1){if(_0x59bf31[_0x2f1de9(0x201)]>=0x4)break;const _0x21d3e5=oxfordWordsDatabase[_0x26e023]||[],_0x1b6151=this['shuffle'](_0x21d3e5);for(let _0xa67a49 of _0x1b6151){const _0x79b4d1=_0x2e0721===_0x2f1de9(0x4c9)?_0xa67a49['translation']:_0xa67a49[_0x2f1de9(0x5f3)]&&_0xa67a49[_0x2f1de9(0x5f3)][_0x2f1de9(0x201)]?_0xa67a49[_0x2f1de9(0x5f3)][_0x2f1de9(0x355)](_0x2f1de9(0x25c)):_0xa67a49[_0x2f1de9(0x693)];if(!_0x59bf31[_0x2f1de9(0x3ed)](_0x79b4d1))_0x59bf31[_0x2f1de9(0x31d)](_0x79b4d1);if(_0x59bf31['length']>=0x4)break;}}}return _0x59bf31['slice'](0x0,0x4);}async[_0x3a406e(0x4bd)](_0x35472c,_0x5e84c9,_0xda8727,_0x3bb4ec){const _0x34f3a4=_0x3a406e,_0x571bba=_0x35472c===_0x5e84c9,_0x108d0e=document[_0x34f3a4(0x5f2)](_0x34f3a4(0x373));_0x108d0e[_0x34f3a4(0x50b)](_0x439e46=>{const _0x230d29=_0x34f3a4;_0x439e46[_0x230d29(0x227)][_0x230d29(0x2e5)]='none';const _0x5378ad=_0x439e46[_0x230d29(0x48c)](_0x230d29(0x5f7));_0x5378ad===_0x35472c&&_0x439e46[_0x230d29(0x444)]['add'](_0x571bba?'correct':_0x230d29(0x5a2)),_0x5378ad===_0x5e84c9&&!_0x571bba&&_0x439e46['classList'][_0x230d29(0x6a3)](_0x230d29(0x69c));});const _0x348435=this[_0x34f3a4(0x579)]?Date[_0x34f3a4(0x52e)]()-this[_0x34f3a4(0x579)]:null;this[_0x34f3a4(0x4b2)](_0xda8727,_0x571bba,_0x348435),this['recordDailyProgress']();const _0xc27b2f=this[_0x34f3a4(0x1d0)](),_0x1814fd=_0xc27b2f[_0x34f3a4(0x6ff)](_0x53d647=>_0x53d647[_0x34f3a4(0x693)]===_0xda8727);await this['waitForCurrentAudioToFinish'](),await this[_0x34f3a4(0x4d5)]();_0x3bb4ec==='RU_EN'&&this[_0x34f3a4(0x4d6)]===_0x34f3a4(0x5de)&&this[_0x34f3a4(0x34f)](_0x1814fd)?(await this[_0x34f3a4(0x266)](0xc8),_0x1814fd?await this[_0x34f3a4(0x64c)](_0x1814fd[_0x34f3a4(0x693)],_0x1814fd[_0x34f3a4(0x5f3)],'us',_0x1814fd['level']):await this[_0x34f3a4(0x4c3)](_0xda8727,'us')):await this[_0x34f3a4(0x266)](0x258);this[_0x34f3a4(0x24c)]++;if(this[_0x34f3a4(0x51d)]==='scheduled'){const _0x359747=JSON[_0x34f3a4(0x6f4)](localStorage[_0x34f3a4(0x557)](_0x34f3a4(0x61b))||'{}');_0x359747['currentIndex']=this[_0x34f3a4(0x24c)],localStorage['setItem']('currentSession',JSON[_0x34f3a4(0x40f)](_0x359747));}this[_0x34f3a4(0x24c)]>=_0xc27b2f[_0x34f3a4(0x201)]&&this[_0x34f3a4(0x51d)]===_0x34f3a4(0x233)&&(this[_0x34f3a4(0x24c)]=0x0,this[_0x34f3a4(0x1bc)]('Quiz\x20завершен!\x20Отличная\x20работа!',_0x34f3a4(0x38d))),this['renderQuiz']();}[_0x3a406e(0x210)](){const _0xf72d18=_0x3a406e,_0x53b2c1=document['getElementById'](_0xf72d18(0x629));if(!_0x53b2c1)return;const _0x4b6a25=this[_0xf72d18(0x51d)]===_0xf72d18(0x3da)?this[_0xf72d18(0x27d)][_0xf72d18(0x66a)](_0x3c4d95=>!_0x3c4d95['isLearned']):this[_0xf72d18(0x1d0)]();if(_0x4b6a25['length']===0x0){_0x53b2c1[_0xf72d18(0x66c)]=_0xf72d18(0x3c8);return;}_0x53b2c1['innerHTML']=_0x4b6a25['map'](_0x9d8735=>{const _0x48dd15=_0xf72d18,_0x13d7d1=this[_0x48dd15(0x26d)](_0x9d8735),_0x461cb9=this[_0x48dd15(0x645)](_0x9d8735[_0x48dd15(0x693)]);return _0x48dd15(0x2b6)+(_0x9d8735[_0x48dd15(0x2b9)]?_0x48dd15(0x5e0):'')+_0x48dd15(0x2c5)+_0x13d7d1+'\x20'+_0x461cb9+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20play-btn\x20list-sound-us\x22\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-word=\x22'+this['safeAttr'](_0x9d8735[_0x48dd15(0x693)])+_0x48dd15(0x5c5)+this[_0x48dd15(0x349)](_0x9d8735[_0x48dd15(0x4d9)])+_0x48dd15(0x38b)+(_0x9d8735['forms']?JSON['stringify'](_0x9d8735[_0x48dd15(0x5f3)]):_0x48dd15(0x284))+_0x48dd15(0x708)+this['safeAttr'](_0x9d8735['word'])+_0x48dd15(0x5c5)+this[_0x48dd15(0x349)](_0x9d8735[_0x48dd15(0x4d9)])+_0x48dd15(0x244)+(_0x9d8735[_0x48dd15(0x5f3)]?JSON[_0x48dd15(0x40f)](_0x9d8735[_0x48dd15(0x5f3)]):'null')+'\x27\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20title=\x22UK\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-headphones\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20'+(_0x9d8735[_0x48dd15(0x2b9)]?'add-btn':'remove-btn')+_0x48dd15(0x6ab)+this[_0x48dd15(0x349)](_0x9d8735['word'])+_0x48dd15(0x332)+(_0x9d8735[_0x48dd15(0x2b9)]?_0x48dd15(0x45e):_0x48dd15(0x48b))+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-'+(_0x9d8735[_0x48dd15(0x2b9)]?_0x48dd15(0x6e6):_0x48dd15(0x255))+_0x48dd15(0x2b1)+_0x9d8735['translation']+_0x48dd15(0x1af)+_0x9d8735[_0x48dd15(0x4d9)]+'</span>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20';})['join'](''),this[_0xf72d18(0x205)]();}[_0x3a406e(0x205)](){const _0x51eec3=_0x3a406e,_0x1a902a=document[_0x51eec3(0x669)](_0x51eec3(0x629));if(!_0x1a902a)return;_0x1a902a[_0x51eec3(0x5f2)](_0x51eec3(0x4ff))[_0x51eec3(0x50b)](_0x55df71=>{_0x55df71['addEventListener']('click',_0x28249f=>{const _0x4fee67=_0x5b63;_0x28249f['stopPropagation']();const _0x4c0ebd=_0x55df71[_0x4fee67(0x48c)]('data-word'),_0xfb122a=_0x55df71['getAttribute']('data-forms'),_0x100a5a=_0x55df71[_0x4fee67(0x48c)](_0x4fee67(0x667));let _0x1c2998=null;if(_0xfb122a&&_0xfb122a!==_0x4fee67(0x284))try{_0x1c2998=JSON['parse'](_0xfb122a);}catch{}this[_0x4fee67(0x64c)](_0x4c0ebd,_0x1c2998,'us',_0x100a5a);});}),_0x1a902a['querySelectorAll']('.list-sound-uk')[_0x51eec3(0x50b)](_0x1595f9=>{const _0x1da062=_0x51eec3;_0x1595f9[_0x1da062(0x208)](_0x1da062(0x561),_0x2879b2=>{const _0x33f344=_0x1da062;_0x2879b2[_0x33f344(0x5eb)]();const _0x195b53=_0x1595f9[_0x33f344(0x48c)](_0x33f344(0x56a)),_0x5c1663=_0x1595f9[_0x33f344(0x48c)](_0x33f344(0x2c6)),_0x28d6fa=_0x1595f9[_0x33f344(0x48c)](_0x33f344(0x667));let _0x551e63=null;if(_0x5c1663&&_0x5c1663!==_0x33f344(0x284))try{_0x551e63=JSON[_0x33f344(0x6f4)](_0x5c1663);}catch{}this[_0x33f344(0x64c)](_0x195b53,_0x551e63,'uk',_0x28d6fa);});}),_0x1a902a[_0x51eec3(0x5f2)]('.list-toggle-learned')[_0x51eec3(0x50b)](_0x15fb41=>{const _0x6c3b38=_0x51eec3;_0x15fb41[_0x6c3b38(0x208)](_0x6c3b38(0x561),_0x557dae=>{const _0x12ae40=_0x6c3b38;_0x557dae[_0x12ae40(0x5eb)]();const _0x85bb9=_0x15fb41[_0x12ae40(0x48c)](_0x12ae40(0x56a));this[_0x12ae40(0x21b)](_0x85bb9);});});}['showLearningWordsPopup'](){const _0x9a81ae=_0x3a406e,_0x3083f1=document['getElementById'](_0x9a81ae(0x4df));if(_0x3083f1)_0x3083f1[_0x9a81ae(0x25a)]();const _0x59789c=document[_0x9a81ae(0x1e6)]('div');_0x59789c['id']=_0x9a81ae(0x4df),_0x59789c[_0x9a81ae(0x493)]=_0x9a81ae(0x64f);const _0xa21edb=document['createElement']('div');_0xa21edb['className']=_0x9a81ae(0x2c8);const _0x321fd9=document[_0x9a81ae(0x1e6)](_0x9a81ae(0x6d5));_0x321fd9[_0x9a81ae(0x493)]=_0x9a81ae(0x5b0),_0x321fd9[_0x9a81ae(0x66c)]=_0x9a81ae(0x50c)+this[_0x9a81ae(0x27d)][_0x9a81ae(0x201)]+_0x9a81ae(0x1a1);const _0x21d10e=new Set(this['learningWords']['map'](_0x176082=>_0x176082[_0x9a81ae(0x4d9)]||''));_0x21d10e['delete']('');const _0x135074=Array[_0x9a81ae(0x421)](_0x21d10e)[_0x9a81ae(0x612)](),_0x5af132=document['createElement'](_0x9a81ae(0x6d5));_0x5af132[_0x9a81ae(0x493)]=_0x9a81ae(0x572);let _0x1d69bd='\x0a\x20\x20<option\x20value=\x22ALL\x22>Все\x20уровни\x20/\x20категории</option>\x0a\x20\x20<option\x20value=\x22STUDY_NOW\x22>Режим\x20заучивание</option>\x0a';_0x135074[_0x9a81ae(0x50b)](_0x999035=>{const _0x413be7=_0x9a81ae;_0x1d69bd+='<option\x20value=\x22'+this[_0x413be7(0x349)](_0x999035)+'\x22>'+_0x999035+_0x413be7(0x41a);}),_0x5af132['innerHTML']=_0x9a81ae(0x2a6)+_0x1d69bd+'</select>\x0a\x20\x20\x20\x20\x20\x20</label>\x0a\x20\x20\x20\x20\x20\x20<span\x20class=\x22words-popup-hint\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20Нажмите\x20на\x20корзину,\x20чтобы\x20удалить\x20слово.\x20Нажмите\x20на\x20карандаш,\x20чтобы\x20изменить\x20перевод.\x0a\x20\x20\x20\x20\x20\x20</span>\x0a\x20\x20\x20\x20';const _0x1b3f10=document[_0x9a81ae(0x1e6)](_0x9a81ae(0x6d5));_0x1b3f10['id']=_0x9a81ae(0x5f4),_0x1b3f10[_0x9a81ae(0x493)]=_0x9a81ae(0x2d4),_0xa21edb[_0x9a81ae(0x378)](_0x321fd9),_0xa21edb[_0x9a81ae(0x378)](_0x5af132),_0xa21edb[_0x9a81ae(0x378)](_0x1b3f10),_0x59789c[_0x9a81ae(0x378)](_0xa21edb),document['body'][_0x9a81ae(0x378)](_0x59789c);(this[_0x9a81ae(0x27d)]||[])[_0x9a81ae(0x201)]>0x1f4&&this[_0x9a81ae(0x63d)](_0x9a81ae(0x6eb),0x3e8);this[_0x9a81ae(0x675)](_0x9a81ae(0x20e));(this['learningWords']||[])[_0x9a81ae(0x201)]>0x1f4&&this[_0x9a81ae(0x684)]();const _0x2d4f90=()=>{const _0x15572a=_0x9a81ae;_0x59789c[_0x15572a(0x25a)](),this['currentPractice']=_0x15572a(0x233),localStorage[_0x15572a(0x42c)](_0x15572a(0x51d),_0x15572a(0x233)),document[_0x15572a(0x5f2)](_0x15572a(0x36f))[_0x15572a(0x50b)](_0x107c55=>{const _0x31e9ee=_0x15572a,_0x43e170=_0x107c55[_0x31e9ee(0x48c)](_0x31e9ee(0x2fe));_0x107c55[_0x31e9ee(0x444)][_0x31e9ee(0x4c2)](_0x31e9ee(0x40c),_0x43e170==='scheduled');}),this[_0x15572a(0x67a)]=!![],this[_0x15572a(0x2cf)]();};_0x59789c[_0x9a81ae(0x208)](_0x9a81ae(0x561),_0x42b6b2=>{const _0x3b0423=_0x9a81ae;if(_0x42b6b2[_0x3b0423(0x24b)]===_0x59789c)_0x2d4f90();});const _0x1c19d4=_0x321fd9['querySelector'](_0x9a81ae(0x5f6));if(_0x1c19d4)_0x1c19d4[_0x9a81ae(0x208)]('click',_0x2d4f90);const _0x1d4550=_0x5af132[_0x9a81ae(0x3ad)](_0x9a81ae(0x324));_0x1d4550&&_0x1d4550[_0x9a81ae(0x208)](_0x9a81ae(0x583),()=>{const _0x493459=_0x9a81ae;this[_0x493459(0x675)](_0x1d4550[_0x493459(0x5dd)]||_0x493459(0x20e));}),_0x1b3f10['addEventListener'](_0x9a81ae(0x561),_0x2a16d4=>{const _0xb06c3=_0x9a81ae,_0x2d266f=_0x2a16d4[_0xb06c3(0x24b)]['closest'](_0xb06c3(0x4e2));if(!_0x2d266f)return;const _0x1ece4e=_0x2d266f[_0xb06c3(0x48c)](_0xb06c3(0x56a)),_0x4a228c=_0x2d266f[_0xb06c3(0x48c)](_0xb06c3(0x667));if(!_0x1ece4e)return;if(_0x2d266f[_0xb06c3(0x444)][_0xb06c3(0x1c3)](_0xb06c3(0x5d7))||_0x2d266f[_0xb06c3(0x444)][_0xb06c3(0x1c3)](_0xb06c3(0x406))){const _0x474015=_0x2d266f[_0xb06c3(0x48c)](_0xb06c3(0x2c6));let _0x31716d=null;if(_0x474015&&_0x474015!==_0xb06c3(0x284))try{_0x31716d=JSON[_0xb06c3(0x6f4)](_0x474015);}catch{}const _0x1ac1b6=_0x2d266f['classList'][_0xb06c3(0x1c3)]('popup-sound-uk')?'uk':'us';this[_0xb06c3(0x64c)](_0x1ece4e,_0x31716d,_0x1ac1b6,_0x4a228c);}else{if(_0x2d266f[_0xb06c3(0x444)][_0xb06c3(0x1c3)](_0xb06c3(0x299))){this[_0xb06c3(0x46d)](_0x1ece4e,_0x4a228c);const _0x4fec7d=_0x2d266f['closest'](_0xb06c3(0x3a0));if(_0x4fec7d)_0x4fec7d['remove']();const _0x365dda=_0x321fd9['querySelector'](_0xb06c3(0x6e1));_0x365dda&&(_0x365dda[_0xb06c3(0x6e8)]=this[_0xb06c3(0x27d)]['length']+_0xb06c3(0x206));}else _0x2d266f[_0xb06c3(0x444)][_0xb06c3(0x1c3)]('popup-edit-btn')&&this[_0xb06c3(0x434)](_0x1ece4e,_0x4a228c,()=>{const _0x364c95=_0xb06c3;this[_0x364c95(0x675)](_0x1d4550?_0x1d4550[_0x364c95(0x5dd)]:_0x364c95(0x20e));});}},!![]);}['renderLearningWordsPopupList'](_0x4a8801='ALL'){const _0x4135d9=_0x3a406e,_0x504246=document['getElementById'](_0x4135d9(0x5f4));if(!_0x504246)return;let _0x334011;if(_0x4a8801==='STUDY_NOW'){const _0x308dc0=this[_0x4135d9(0x51d)];this[_0x4135d9(0x51d)]=_0x4135d9(0x233),_0x334011=this[_0x4135d9(0x1d0)]()[_0x4135d9(0x6c6)](),this[_0x4135d9(0x51d)]=_0x308dc0;}else _0x334011=this['learningWords']['slice'](),_0x4a8801&&_0x4a8801!==_0x4135d9(0x20e)&&(_0x334011=_0x334011[_0x4135d9(0x66a)](_0xa0ebc9=>(_0xa0ebc9[_0x4135d9(0x4d9)]||'')===_0x4a8801));if(_0x334011[_0x4135d9(0x201)]===0x0){_0x504246[_0x4135d9(0x66c)]=_0x4135d9(0x56d);return;}_0x334011[_0x4135d9(0x612)]((_0x9f7c7f,_0x5336b0)=>{const _0x1fdf18=_0x4135d9,_0x5ba9b2=(_0x9f7c7f['level']||'')[_0x1fdf18(0x19c)](_0x5336b0[_0x1fdf18(0x4d9)]||'');if(_0x5ba9b2!==0x0)return _0x5ba9b2;return(_0x9f7c7f['word']||'')[_0x1fdf18(0x19c)](_0x5336b0[_0x1fdf18(0x693)]||'');});const _0x179632=0x64,_0x2ee5cc=_0x334011['length'];let _0x59c80d=0x0;_0x504246[_0x4135d9(0x66c)]='';(this[_0x4135d9(0x60b)]||_0x2ee5cc>0x1f4)&&this[_0x4135d9(0x63d)](_0x4135d9(0x6eb),0x5dc);const _0xc7819f=()=>{const _0x3e060f=_0x4135d9,_0x546c30=_0x334011[_0x3e060f(0x6c6)](_0x59c80d,_0x59c80d+_0x179632);if(!_0x546c30['length'])return;const _0x404abd=_0x546c30[_0x3e060f(0x4ef)](_0x1366a2=>{const _0x233214=_0x3e060f,_0x477383=this['getEnglishDisplay'](_0x1366a2),_0x1b94c6=this[_0x233214(0x645)](_0x1366a2[_0x233214(0x693)]),_0x11f961=_0x1366a2['forms']?JSON['stringify'](_0x1366a2[_0x233214(0x5f3)])[_0x233214(0x22a)](/"/g,_0x233214(0x1c4)):_0x233214(0x284);return _0x233214(0x45f)+this['safeAttr'](_0x1366a2[_0x233214(0x693)])+'\x22\x20data-level=\x22'+this[_0x233214(0x349)](_0x1366a2[_0x233214(0x4d9)])+_0x233214(0x19e)+_0x477383+'\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x1b94c6+_0x233214(0x3ba)+_0x1366a2[_0x233214(0x4d9)]+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22word-trans-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x1366a2[_0x233214(0x1dd)]+_0x233214(0x6cc)+this[_0x233214(0x349)](_0x1366a2[_0x233214(0x693)])+_0x233214(0x63a)+_0x11f961+_0x233214(0x498)+this[_0x233214(0x349)](_0x1366a2[_0x233214(0x4d9)])+_0x233214(0x262)+this[_0x233214(0x349)](_0x1366a2[_0x233214(0x693)])+_0x233214(0x63a)+_0x11f961+'\x27\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-level=\x22'+this[_0x233214(0x349)](_0x1366a2[_0x233214(0x4d9)])+_0x233214(0x21a)+this[_0x233214(0x349)](_0x1366a2['word'])+'\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-level=\x22'+this[_0x233214(0x349)](_0x1366a2[_0x233214(0x4d9)])+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-pen\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20remove-btn\x20popup-delete-btn\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-word=\x22'+this['safeAttr'](_0x1366a2[_0x233214(0x693)])+_0x233214(0x4e3)+this[_0x233214(0x349)](_0x1366a2[_0x233214(0x4d9)])+_0x233214(0x5ef);})[_0x3e060f(0x355)]('');_0x504246[_0x3e060f(0x21c)](_0x3e060f(0x2ef),_0x404abd),_0x59c80d+=_0x546c30[_0x3e060f(0x201)];};_0xc7819f();(this[_0x4135d9(0x60b)]||_0x2ee5cc>0x1f4)&&this[_0x4135d9(0x684)]();if(_0x59c80d<_0x2ee5cc){const _0x46cdd5=new IntersectionObserver(_0x5b3855=>{const _0x1eecd1=_0x4135d9;if(_0x5b3855[0x0][_0x1eecd1(0x273)]){const _0x346b0a=document[_0x1eecd1(0x669)](_0x1eecd1(0x369));_0x346b0a&&(_0x46cdd5[_0x1eecd1(0x214)](_0x346b0a),_0x346b0a[_0x1eecd1(0x25a)]());(this[_0x1eecd1(0x60b)]||_0x2ee5cc>0x1f4)&&this['showGlobalLoader'](_0x1eecd1(0x4ea),0x3e8);_0xc7819f();(this['isAndroid']||_0x2ee5cc>0x1f4)&&this['hideGlobalLoader']();if(_0x59c80d<_0x2ee5cc){const _0x4bc368=document[_0x1eecd1(0x1e6)]('div');_0x4bc368['style'][_0x1eecd1(0x1a3)]=_0x1eecd1(0x55b),_0x4bc368['id']=_0x1eecd1(0x369),_0x504246[_0x1eecd1(0x378)](_0x4bc368),_0x46cdd5[_0x1eecd1(0x334)](_0x4bc368);}}},{'root':_0x504246,'rootMargin':_0x4135d9(0x496)}),_0x18fbd1=document[_0x4135d9(0x1e6)]('div');_0x18fbd1[_0x4135d9(0x227)][_0x4135d9(0x1a3)]=_0x4135d9(0x55b),_0x18fbd1['id']=_0x4135d9(0x369),_0x504246['appendChild'](_0x18fbd1),_0x46cdd5[_0x4135d9(0x334)](_0x18fbd1);}}['editLearningWord'](_0x57cacb,_0x1e38c7,_0x973755){const _0x6875f4=_0x3a406e,_0x24b01b=this[_0x6875f4(0x27d)][_0x6875f4(0x6ff)](_0x171130=>_0x171130['word']===_0x57cacb&&_0x171130[_0x6875f4(0x4d9)]===_0x1e38c7);if(!_0x24b01b)return;const _0x5468c5=prompt(_0x6875f4(0x6c0),_0x24b01b['translation']||'');if(_0x5468c5==null)return;const _0xb6da7c=_0x5468c5[_0x6875f4(0x6f9)]();if(!_0xb6da7c)return;_0x24b01b[_0x6875f4(0x1dd)]=_0xb6da7c,this[_0x6875f4(0x6d9)][_0x6875f4(0x50b)](_0x1c485b=>{const _0x4185d1=_0x6875f4;_0x1c485b[_0x4185d1(0x693)]===_0x57cacb&&_0x1c485b[_0x4185d1(0x4d9)]===_0x1e38c7&&(_0x1c485b[_0x4185d1(0x1dd)]=_0xb6da7c);}),this[_0x6875f4(0x5b8)]();if(typeof _0x973755===_0x6875f4(0x241))_0x973755();}['playWordFromList'](_0x3f3b25,_0x26ec9c,_0x8ad404){this['playWord'](_0x3f3b25,_0x26ec9c,_0x8ad404||'us');}[_0x3a406e(0x21b)](_0xcf4f5b){const _0x54162d=_0x3a406e;this[_0x54162d(0x25b)]();const _0x5205a8=this[_0x54162d(0x27d)]['find'](_0x3a20aa=>_0x3a20aa[_0x54162d(0x693)]===_0xcf4f5b);_0x5205a8&&(_0x5205a8[_0x54162d(0x2b9)]=!_0x5205a8[_0x54162d(0x2b9)],this['saveData'](),this[_0x54162d(0x1bc)](_0x5205a8['isLearned']?_0x54162d(0x6ca):_0x54162d(0x661),_0x54162d(0x38d)),this[_0x54162d(0x4d6)]===_0x54162d(0x5de)&&(this[_0x54162d(0x67a)]=!![],this['renderLearningSection']()));}[_0x3a406e(0x1d0)](){const _0x33bd67=_0x3a406e;if(this['currentPractice']==='endless')return this[_0x33bd67(0x27d)][_0x33bd67(0x66a)](_0x45f388=>!_0x45f388[_0x33bd67(0x2b9)]);const _0x42e96e=new Date()[_0x33bd67(0x2c3)]();let _0x2799b5=JSON[_0x33bd67(0x6f4)](localStorage['getItem'](_0x33bd67(0x240))||'{}');const _0x333f1f=_0x2799b5[_0x33bd67(0x41b)]||0xf;_0x2799b5['lastNewWordsDate']!==_0x42e96e&&(_0x2799b5[_0x33bd67(0x526)]=_0x42e96e,_0x2799b5[_0x33bd67(0x3ab)]=0x0,localStorage['setItem'](_0x33bd67(0x240),JSON[_0x33bd67(0x40f)](_0x2799b5)));let _0x529c8e=JSON[_0x33bd67(0x6f4)](localStorage['getItem'](_0x33bd67(0x61b))||'null');(!_0x529c8e||_0x529c8e[_0x33bd67(0x21e)]!==_0x42e96e)&&(_0x529c8e={'date':_0x42e96e,'shownWords':[],'currentIndex':0x0,'correctStreak':0x0,'totalCorrect':0x0});if(_0x529c8e[_0x33bd67(0x627)]['length']>0x0){let _0x4e5faa=_0x529c8e[_0x33bd67(0x627)][_0x33bd67(0x4ef)](_0x52e534=>this['learningWords']['find'](_0x378ba7=>_0x378ba7[_0x33bd67(0x693)]===_0x52e534))['filter'](Boolean);if(_0x4e5faa['length']>0x0)return _0x4e5faa;}const _0x260436=this[_0x33bd67(0x27d)]['filter'](_0x3a0bb1=>!_0x3a0bb1[_0x33bd67(0x2b9)]),_0x4f321c=_0x260436['filter'](_0x532e4d=>{const _0x351086=_0x33bd67,_0x4b7ff8=this['wordStats'][_0x532e4d[_0x351086(0x693)]];if(!_0x4b7ff8)return![];if(_0x4b7ff8[_0x351086(0x407)]>=0x8){const _0x2080ee=_0x4b7ff8['lastReview']?new Date(_0x4b7ff8[_0x351086(0x3a5)])[_0x351086(0x2c3)]():'';if(_0x2080ee===_0x42e96e)return![];}return _0x4b7ff8[_0x351086(0x478)]>0x0;})['sort']((_0x29787f,_0x40e564)=>{const _0x4b879d=_0x33bd67,_0x5b589b=(this[_0x4b879d(0x56e)][_0x29787f[_0x4b879d(0x693)]]||{})[_0x4b879d(0x407)]||0x0,_0x55f9bf=(this[_0x4b879d(0x56e)][_0x40e564['word']]||{})[_0x4b879d(0x407)]||0x0;return _0x5b589b-_0x55f9bf;});let _0x47ab39=!![];if(_0x4f321c['length']>0x5){const _0x4f3605=_0x4f321c[_0x33bd67(0x3d9)]((_0x4c3015,_0x5c00d3)=>_0x4c3015+((this[_0x33bd67(0x56e)][_0x5c00d3['word']]||{})[_0x33bd67(0x407)]||0x0),0x0),_0xe27bec=_0x4f3605/_0x4f321c[_0x33bd67(0x201)];_0xe27bec<0x5&&(_0x47ab39=![],console[_0x33bd67(0x48f)](_0x33bd67(0x44d),_0xe27bec));}let _0x1268e6=[];if(_0x47ab39){const _0xbc2a03=_0x333f1f-_0x2799b5[_0x33bd67(0x3ab)];_0xbc2a03>0x0&&(_0x1268e6=_0x260436[_0x33bd67(0x66a)](_0x55c60c=>{const _0x2287c1=_0x33bd67,_0x591a4d=this[_0x2287c1(0x56e)][_0x55c60c[_0x2287c1(0x693)]];return!_0x591a4d||_0x591a4d['totalAnswers']===0x0;})[_0x33bd67(0x612)]((_0x40d60f,_0x12ba0d)=>(_0x40d60f[_0x33bd67(0x4d9)]||'')['localeCompare'](_0x12ba0d[_0x33bd67(0x4d9)]||''))[_0x33bd67(0x6c6)](0x0,_0xbc2a03));}if(_0x4f321c[_0x33bd67(0x201)]===0x0&&_0x1268e6['length']===0x0)return[];let _0x46488a=[];return _0x46488a=_0x46488a['concat'](_0x4f321c[_0x33bd67(0x6c6)](0x0,0x19)),_0x46488a['length']<0x1e&&_0x1268e6[_0x33bd67(0x201)]>0x0&&(_0x46488a=_0x46488a[_0x33bd67(0x5ea)](_0x1268e6),_0x2799b5[_0x33bd67(0x3ab)]+=_0x1268e6[_0x33bd67(0x201)],localStorage['setItem'](_0x33bd67(0x240),JSON[_0x33bd67(0x40f)](_0x2799b5))),_0x46488a=this[_0x33bd67(0x58c)](_0x46488a),_0x529c8e[_0x33bd67(0x627)]=_0x46488a['map'](_0xb01d17=>_0xb01d17[_0x33bd67(0x693)]),_0x529c8e[_0x33bd67(0x647)]=0x0,localStorage[_0x33bd67(0x42c)](_0x33bd67(0x61b),JSON[_0x33bd67(0x40f)](_0x529c8e)),_0x46488a;}['updateWordStats'](_0x1c3070,_0x235292,_0x36db58=null){const _0x56f9c8=_0x3a406e;this['initializeWordStats'](_0x1c3070);const _0x31cea4=this[_0x56f9c8(0x56e)][_0x1c3070],_0x432e36=Date[_0x56f9c8(0x52e)]();_0x31cea4[_0x56f9c8(0x3a5)]=_0x432e36,_0x31cea4[_0x56f9c8(0x478)]=(_0x31cea4[_0x56f9c8(0x478)]||0x0)+0x1;if(_0x36db58!=null)_0x31cea4['totalTimeMs']=(_0x31cea4[_0x56f9c8(0x1a2)]||0x0)+_0x36db58;_0x235292?(_0x31cea4[_0x56f9c8(0x69c)]++,_0x31cea4[_0x56f9c8(0x4ad)]=Math['max'](0x0,(_0x31cea4['difficulty']||0x0)-0x1)):(_0x31cea4['incorrect']++,_0x31cea4['difficulty']=Math[_0x56f9c8(0x28a)](0x5,(_0x31cea4[_0x56f9c8(0x4ad)]||0x0)+0x1),_0x31cea4[_0x56f9c8(0x2a7)]=(_0x31cea4[_0x56f9c8(0x2a7)]||0x0)+0x1);if(_0x31cea4[_0x56f9c8(0x407)]==null)_0x31cea4[_0x56f9c8(0x407)]=0x0;_0x235292?_0x31cea4[_0x56f9c8(0x407)]=Math[_0x56f9c8(0x28a)](0xa,_0x31cea4['accScore']+0x1):_0x31cea4['accScore']=Math['max'](0x0,_0x31cea4[_0x56f9c8(0x407)]-0x1);if(this[_0x56f9c8(0x51d)]===_0x56f9c8(0x233)){let _0x2bcb9c=JSON['parse'](localStorage[_0x56f9c8(0x557)](_0x56f9c8(0x61b))||'{}');const _0x5663a4=new Date()['toDateString']();(!_0x2bcb9c['date']||_0x2bcb9c['date']!==_0x5663a4)&&(_0x2bcb9c={'date':_0x5663a4,'shownWords':[],'correctStreak':0x0,'totalCorrect':0x0}),_0x235292?(_0x2bcb9c[_0x56f9c8(0x4fe)]=(_0x2bcb9c[_0x56f9c8(0x4fe)]||0x0)+0x1,_0x2bcb9c[_0x56f9c8(0x311)]=(_0x2bcb9c[_0x56f9c8(0x311)]||0x0)+0x1,_0x2bcb9c['totalCorrect']>0x0&&_0x2bcb9c[_0x56f9c8(0x311)]%0xa===0x0&&(this['showNotification']('Отлично!\x20Добавлено\x20еще\x2010\x20слов\x20к\x20изучению!\x20Всего\x20в\x20пуле:\x20'+(0x28+_0x2bcb9c[_0x56f9c8(0x311)])+'\x20слов',_0x56f9c8(0x38d)),setTimeout(()=>{const _0x8e8a8f=_0x56f9c8;this[_0x8e8a8f(0x67a)]=!![],this['renderLearningSection']();},0x64))):_0x2bcb9c[_0x56f9c8(0x4fe)]=0x0,localStorage[_0x56f9c8(0x42c)](_0x56f9c8(0x61b),JSON['stringify'](_0x2bcb9c));}_0x31cea4[_0x56f9c8(0x35f)]=_0x432e36,_0x31cea4[_0x56f9c8(0x340)]=_0x56f9c8(0x6d7),this[_0x56f9c8(0x694)]=this[_0x56f9c8(0x694)]||this[_0x56f9c8(0x5d0)](),this[_0x56f9c8(0x694)]['answered']=(this[_0x56f9c8(0x694)][_0x56f9c8(0x716)]||0x0)+0x1,this['saveSrsDay'](),this[_0x56f9c8(0x5b8)]();}[_0x3a406e(0x199)](){const _0x405a01=_0x3a406e,_0x5ea470=new Date()[_0x405a01(0x2c3)](),_0xe7e073=this[_0x405a01(0x57e)]['find'](_0x369213=>_0x369213[_0x405a01(0x21e)]===_0x5ea470);if(_0xe7e073)_0xe7e073[_0x405a01(0x2ae)]++;else this[_0x405a01(0x57e)]['push']({'date':_0x5ea470,'count':0x1});this[_0x405a01(0x57e)]=this[_0x405a01(0x57e)][_0x405a01(0x6c6)](-0x7),this[_0x405a01(0x5b8)]();}[_0x3a406e(0x64d)](){const _0x46bdba=_0x3a406e;try{return JSON[_0x46bdba(0x6f4)](localStorage['getItem'](_0x46bdba(0x29a))||_0x46bdba(0x284));}catch{return null;}}[_0x3a406e(0x4ba)](_0x33b686){const _0x6c9dbe=_0x3a406e;try{localStorage[_0x6c9dbe(0x42c)](_0x6c9dbe(0x29a),JSON[_0x6c9dbe(0x40f)](_0x33b686));}catch{}}[_0x3a406e(0x431)](_0x2dd417){const _0xc60c19=_0x3a406e;if(!_0x2dd417)return null;const _0x4d5692=new Date(),_0x30455c=_0x2dd417['lastCare']?new Date(_0x2dd417[_0xc60c19(0x215)]):new Date(),_0x1193c6=Math['floor']((_0x4d5692-_0x30455c)/(0x3e8*0x3c*0x3c*0x18));if(_0x1193c6>0x0){_0x2dd417[_0xc60c19(0x650)]=Math['min'](0x64,_0x2dd417[_0xc60c19(0x650)]+0x19*_0x1193c6),_0x2dd417['thirst']=Math[_0xc60c19(0x28a)](0x64,_0x2dd417[_0xc60c19(0x55e)]+0x19*_0x1193c6);if(_0x2dd417['hunger']>=0x64||_0x2dd417['thirst']>=0x64)_0x2dd417[_0xc60c19(0x2f7)]=![];_0x2dd417[_0xc60c19(0x215)]=new Date()['toISOString']();}return _0x2dd417;}[_0x3a406e(0x374)](_0xd85851,_0x2edb73){const _0x48be72=_0x3a406e,_0x29e30a={'type':_0xd85851==='dog'?_0x48be72(0x4e8):_0x48be72(0x2fa),'name':(_0x2edb73||_0x48be72(0x67f))['slice'](0x0,0x12),'hunger':0x28,'thirst':0x28,'alive':!![],'lastCare':new Date()[_0x48be72(0x20d)]()};this[_0x48be72(0x4ba)](_0x29e30a),this[_0x48be72(0x54f)]();}[_0x3a406e(0x588)](){const _0x58f442=_0x3a406e;let _0x44eadc=this[_0x58f442(0x64d)]();if(!_0x44eadc)return;_0x44eadc=this[_0x58f442(0x431)](_0x44eadc)||_0x44eadc;if(!_0x44eadc[_0x58f442(0x2f7)]){this[_0x58f442(0x1bc)](_0x58f442(0x41c),_0x58f442(0x524));return;}_0x44eadc[_0x58f442(0x650)]=Math[_0x58f442(0x662)](0x0,_0x44eadc['hunger']-0x23),_0x44eadc['lastCare']=new Date()[_0x58f442(0x20d)](),this[_0x58f442(0x4ba)](_0x44eadc),this['renderProgress']();}[_0x3a406e(0x1cb)](){const _0x520f10=_0x3a406e;let _0x406955=this['getPetState']();if(!_0x406955)return;_0x406955=this[_0x520f10(0x431)](_0x406955)||_0x406955;if(!_0x406955['alive']){this[_0x520f10(0x1bc)]('Питомец\x20умер.\x20Оживите\x20его,\x20чтобы\x20продолжить.',_0x520f10(0x524));return;}_0x406955[_0x520f10(0x55e)]=Math[_0x520f10(0x662)](0x0,_0x406955['thirst']-0x23),_0x406955['lastCare']=new Date()['toISOString'](),this['setPetState'](_0x406955),this[_0x520f10(0x54f)]();}[_0x3a406e(0x1c5)](){const _0x17c8b5=_0x3a406e;let _0xa635f8=this[_0x17c8b5(0x64d)]();if(!_0xa635f8)return;_0xa635f8[_0x17c8b5(0x2f7)]=!![],_0xa635f8[_0x17c8b5(0x650)]=0x3c,_0xa635f8[_0x17c8b5(0x55e)]=0x3c,_0xa635f8[_0x17c8b5(0x215)]=new Date()[_0x17c8b5(0x20d)](),this['setPetState'](_0xa635f8),this[_0x17c8b5(0x54f)]();}[_0x3a406e(0x390)](){const _0xb9cf9f=_0x3a406e;let _0x336a01=this[_0xb9cf9f(0x64d)]();if(!_0x336a01)return;const _0x1a1cea=prompt(_0xb9cf9f(0x1ba),_0x336a01[_0xb9cf9f(0x38c)]||_0xb9cf9f(0x67f));if(!_0x1a1cea)return;_0x336a01[_0xb9cf9f(0x38c)]=_0x1a1cea[_0xb9cf9f(0x6c6)](0x0,0x12),this[_0xb9cf9f(0x4ba)](_0x336a01),this[_0xb9cf9f(0x54f)]();}[_0x3a406e(0x474)](){const _0x11f030=_0x3a406e,_0xe31e3f=prompt('Кого\x20выбрать?\x20Введите\x20\x22cat\x22\x20или\x20\x22dog\x22',_0x11f030(0x2fa));if(!_0xe31e3f||_0xe31e3f!==_0x11f030(0x2fa)&&_0xe31e3f!==_0x11f030(0x4e8))return;let _0x19a3c1=this[_0x11f030(0x64d)]()||{};_0x19a3c1[_0x11f030(0x3d7)]=_0xe31e3f,_0x19a3c1['lastCare']=new Date()['toISOString'](),this['setPetState'](_0x19a3c1),this[_0x11f030(0x54f)]();}[_0x3a406e(0x581)](){const _0x14b071=_0x3a406e;let _0x5013e7=this['getPetState']();if(_0x5013e7)_0x5013e7=this[_0x14b071(0x431)](_0x5013e7)||_0x5013e7;if(!_0x5013e7)return _0x14b071(0x342);const _0x28ebdb=_0x5013e7[_0x14b071(0x3d7)]==='dog'?_0x14b071(0x2f8):_0x14b071(0x1f6),_0x34dc08=_0x5013e7[_0x14b071(0x38c)]||_0x14b071(0x67f),_0x5aef43=0x64-Math[_0x14b071(0x662)](0x0,Math[_0x14b071(0x28a)](0x64,_0x5013e7[_0x14b071(0x650)])),_0x5c0763=0x64-Math[_0x14b071(0x662)](0x0,Math[_0x14b071(0x28a)](0x64,_0x5013e7[_0x14b071(0x55e)])),_0x128aad=!_0x5013e7['alive']?'<div\x20class=\x22pet-dead\x22>Питомец\x20умер...\x20Оживите,\x20чтобы\x20начать\x20заново.</div>':'';return'\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pet-widget\x22\x20data-testid=\x22pet-widget\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pet-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22'+_0x28ebdb+_0x14b071(0x4f6)+_0x34dc08+_0x14b071(0x42d)+(_0x5013e7[_0x14b071(0x3d7)]===_0x14b071(0x4e8)?'Щенок':_0x14b071(0x568))+_0x14b071(0x22f)+_0x128aad+_0x14b071(0x1d9)+_0x5aef43+_0x14b071(0x2f4)+_0x5aef43+'%\x22></div></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);\x22><span>Напоён</span><span>'+_0x5c0763+'%</span></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22pet-bar\x22><div\x20class=\x22pet-bar-fill\x22\x20style=\x22width:'+_0x5c0763+_0x14b071(0x26a)+(_0x5013e7[_0x14b071(0x2f7)]?_0x14b071(0x551):_0x14b071(0x19a))+_0x14b071(0x5bc);}[_0x3a406e(0x1b2)](){const _0x803494=_0x3a406e;let _0x15f999=JSON[_0x803494(0x6f4)](localStorage[_0x803494(0x557)]('currentSession')||'{}');const _0x392115=_0x15f999[_0x803494(0x311)]||0x0,_0xd01c21=0x14,_0x20ac62=Math['min'](0x64,Math[_0x803494(0x30f)](_0x392115/_0xd01c21*0x64)),_0x5ec833=_0x15f999[_0x803494(0x4fe)]||0x0,_0x193d67=this[_0x803494(0x27d)][_0x803494(0x66a)](_0x1d1bce=>{const _0x354662=_0x803494;if(_0x1d1bce[_0x354662(0x2b9)])return!![];const _0xd0ff7d=this[_0x354662(0x56e)][_0x1d1bce['word']];return _0xd0ff7d&&_0xd0ff7d[_0x354662(0x407)]>=0xa;})[_0x803494(0x201)],_0x514b38=[{'id':0x1,'icon':'🥉','name':'Новичок','desc':_0x803494(0x48d),'unlocked':_0x193d67>=0x5},{'id':0x2,'icon':'🥈','name':_0x803494(0x5ae),'desc':_0x803494(0x4dc),'unlocked':_0x193d67>=0x32},{'id':0x3,'icon':'🥇','name':_0x803494(0x57b),'desc':_0x803494(0x644),'unlocked':_0x193d67>=0xc8},{'id':0x4,'icon':'👑','name':_0x803494(0x620),'desc':_0x803494(0x4cd),'unlocked':_0x193d67>=0x1f4}];return _0x803494(0x3a8)+_0x5ec833+_0x803494(0x4e7)+_0x514b38[_0x803494(0x4ef)](_0x7d09b3=>_0x803494(0x221)+(_0x7d09b3[_0x803494(0x4c5)]?_0x803494(0x4c5):_0x803494(0x545))+_0x803494(0x5e8)+_0x7d09b3[_0x803494(0x3cb)]+_0x803494(0x325)+_0x7d09b3[_0x803494(0x38c)]+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22medal-desc\x22>'+_0x7d09b3[_0x803494(0x357)]+_0x803494(0x573))[_0x803494(0x355)]('')+_0x803494(0x333)+_0x392115+'/'+_0xd01c21+_0x803494(0x522)+_0x20ac62+_0x803494(0x47c)+(_0x20ac62>=0x64?'🎉\x20План\x20выполнен!\x20Ты\x20супер!':'Продолжай\x20учиться!')+_0x803494(0x33e);}[_0x3a406e(0x54f)](){const _0xbd2939=_0x3a406e,_0x31e333=document[_0xbd2939(0x669)](_0xbd2939(0x366));if(!_0x31e333)return;const _0x492a46=this['getPetWidgetHtml'](),_0x3f611f=this[_0xbd2939(0x1b2)](),_0x541c37=this[_0xbd2939(0x27d)][_0xbd2939(0x201)],_0x592dcb=this[_0xbd2939(0x27d)][_0xbd2939(0x66a)](_0x4eac40=>{const _0x3d4523=_0xbd2939;if(_0x4eac40[_0x3d4523(0x2b9)])return!![];const _0x2c9ddc=this[_0x3d4523(0x56e)][_0x4eac40[_0x3d4523(0x693)]];return _0x2c9ddc&&_0x2c9ddc[_0x3d4523(0x407)]>=0xa;})[_0xbd2939(0x201)],_0x2bc2f5=Math['max'](0x0,_0x541c37-_0x592dcb),_0x2f76c5=_0x541c37>0x0?Math[_0xbd2939(0x30f)](_0x592dcb/_0x541c37*0x64):0x0,_0x5720ba=['A1','A2','B1','B2','C1','C2',_0xbd2939(0x6ae),_0xbd2939(0x331),_0xbd2939(0x5db),_0xbd2939(0x22c),_0xbd2939(0x397)],_0x2ecb24={};_0x5720ba[_0xbd2939(0x50b)](_0x5cefed=>{const _0x18dcf3=_0xbd2939,_0xc86390=this['learningWords']['filter'](_0x6e3b62=>_0x6e3b62[_0x18dcf3(0x4d9)]===_0x5cefed)[_0x18dcf3(0x201)],_0x5b0931=this[_0x18dcf3(0x27d)][_0x18dcf3(0x66a)](_0x36c507=>{const _0x10d913=_0x18dcf3;if(_0x36c507['level']!==_0x5cefed)return![];if(_0x36c507[_0x10d913(0x2b9)])return!![];const _0x41fdc3=this[_0x10d913(0x56e)][_0x36c507['word']];return _0x41fdc3&&_0x41fdc3[_0x10d913(0x407)]>=0xa;})[_0x18dcf3(0x201)];_0xc86390>0x0&&(_0x2ecb24[_0x5cefed]={'total':_0xc86390,'learned':_0x5b0931,'pct':Math[_0x18dcf3(0x30f)](_0x5b0931/_0xc86390*0x64)});});const _0x36fbf6=new Date()[_0xbd2939(0x2c3)]();let _0x39f335=0x0,_0x468323=0x0,_0x1be4ca=0x0,_0x3bd7c3=0x0;(this[_0xbd2939(0x57e)]||[])[_0xbd2939(0x50b)](_0x841fe3=>{const _0x3e0796=_0xbd2939,_0x284653=_0x841fe3['trainerRepeats']||0x0,_0x45fa45=_0x841fe3[_0x3e0796(0x540)]||0x0;_0x1be4ca+=_0x284653,_0x3bd7c3+=_0x45fa45,_0x841fe3[_0x3e0796(0x21e)]===_0x36fbf6&&(_0x39f335=_0x284653,_0x468323=_0x45fa45);});const _0x361a06=this[_0xbd2939(0x57e)]||[],_0x49204f=_0x361a06[_0xbd2939(0x3d9)]((_0xb87ff7,_0x35d872)=>Math['max'](_0xb87ff7,_0x35d872[_0xbd2939(0x2ae)]||0x0),0x0)||0x1,_0x6f85f=_0x361a06['find'](_0x101ad9=>_0x101ad9['date']===_0x36fbf6),_0x5acc1c=_0x6f85f?_0x6f85f[_0xbd2939(0x2ae)]||0x0:0x0;_0x31e333[_0xbd2939(0x66c)]=_0xbd2939(0x609)+_0x492a46+'\x0a\x20\x20\x20\x20'+_0x3f611f+_0xbd2939(0x51a)+_0x592dcb+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>выучено</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-main-bar\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-main-bar-label\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>Всего\x20слов:\x20'+_0x541c37+_0xbd2939(0x2a3)+_0x2f76c5+_0xbd2939(0x1cd)+_0x2f76c5+_0xbd2939(0x4de)+_0x592dcb+_0xbd2939(0x4ae)+_0x2bc2f5+_0xbd2939(0x6e5)+_0x5acc1c+_0xbd2939(0x51e)+(Object[_0xbd2939(0x228)](_0x2ecb24)['length']===0x0?_0xbd2939(0x422):_0xbd2939(0x3d3)+Object[_0xbd2939(0x638)](_0x2ecb24)[_0xbd2939(0x4ef)](([_0x156ae7,_0x1503fc])=>'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22level-progress-item\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22level-progress-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22level-progress-label\x22>'+_0x156ae7+_0xbd2939(0x633)+_0x1503fc[_0xbd2939(0x5e0)]+_0xbd2939(0x3ce)+_0x1503fc[_0xbd2939(0x59f)]+_0xbd2939(0x213)+_0x1503fc[_0xbd2939(0x3c6)]+_0xbd2939(0x5c1))['join']('')+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20')+_0xbd2939(0x2a1)+_0x39f335+'\x20повторений\x20('+_0x468323+'\x20правильных)</strong>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>За\x207\x20дней</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<strong>'+_0x1be4ca+_0xbd2939(0x1f3)+_0x3bd7c3+'\x20правильных)</strong>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20<!--\x20Активность\x20за\x20неделю\x20-->\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-icon\x20icon-yellow\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-calendar-week\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-title\x22>Активность\x20за\x20неделю</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-card-subtitle\x22>Сколько\x20повторений\x20вы\x20делали\x20каждый\x20день</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20'+(_0x361a06[_0xbd2939(0x201)]===0x0?_0xbd2939(0x690):_0xbd2939(0x338)+_0x361a06[_0xbd2939(0x4ef)](_0x638ae4=>{const _0x5130af=_0xbd2939,_0xf0f93a=_0x638ae4['count']||0x0,_0x4bcd1e=Math['round'](_0xf0f93a/_0x49204f*0x64),_0x17f05f=new Date(_0x638ae4['date'])[_0x5130af(0x380)]('ru-RU',{'weekday':_0x5130af(0x263),'day':'numeric','month':_0x5130af(0x263)});return _0x5130af(0x6ef)+_0x17f05f+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22week-count\x22>'+_0xf0f93a+_0x5130af(0x62d)+_0x4bcd1e+_0x5130af(0x2f6);})['join']('')+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20')+_0xbd2939(0x3ea),this['attachPetHandlers']();}[_0x3a406e(0x352)](){const _0x27b1e3=_0x3a406e,_0x1240f7=document[_0x27b1e3(0x3ad)](_0x27b1e3(0x489)),_0xf695af=document['querySelector'](_0x27b1e3(0x379));_0x1240f7&&_0x1240f7[_0x27b1e3(0x208)](_0x27b1e3(0x561),()=>{const _0x9579c9=_0x27b1e3,_0x4cf3a9=document[_0x9579c9(0x669)](_0x9579c9(0x424)),_0x514a30=_0x4cf3a9?_0x4cf3a9[_0x9579c9(0x5dd)][_0x9579c9(0x6f9)]():_0x9579c9(0x67f);this[_0x9579c9(0x374)](_0x9579c9(0x2fa),_0x514a30||'Малыш');});_0xf695af&&_0xf695af[_0x27b1e3(0x208)](_0x27b1e3(0x561),()=>{const _0x6d1623=_0x27b1e3,_0x23a9d7=document[_0x6d1623(0x669)](_0x6d1623(0x424)),_0x5a988e=_0x23a9d7?_0x23a9d7['value'][_0x6d1623(0x6f9)]():_0x6d1623(0x67f);this[_0x6d1623(0x374)](_0x6d1623(0x4e8),_0x5a988e||'Малыш');});const _0x26b7f7=document[_0x27b1e3(0x3ad)](_0x27b1e3(0x692));_0x26b7f7&&_0x26b7f7[_0x27b1e3(0x208)](_0x27b1e3(0x561),()=>this['feedPet']());const _0x352989=document[_0x27b1e3(0x3ad)](_0x27b1e3(0x6d0));_0x352989&&_0x352989[_0x27b1e3(0x208)]('click',()=>this['waterPet']());const _0x484c3e=document[_0x27b1e3(0x3ad)](_0x27b1e3(0x4a0));_0x484c3e&&_0x484c3e['addEventListener'](_0x27b1e3(0x561),()=>this['renamePet']());const _0x38cb5a=document['querySelector']('.pet-switch-btn');_0x38cb5a&&_0x38cb5a[_0x27b1e3(0x208)](_0x27b1e3(0x561),()=>this[_0x27b1e3(0x474)]());const _0x4cca34=document[_0x27b1e3(0x3ad)](_0x27b1e3(0x5ad));_0x4cca34&&_0x4cca34[_0x27b1e3(0x208)](_0x27b1e3(0x561),()=>this[_0x27b1e3(0x1c5)]());}[_0x3a406e(0x291)](_0x4bbf3d,_0x45e644){const _0x22526b=_0x3a406e;if(this[_0x22526b(0x27d)][_0x22526b(0x66a)](_0x8de731=>!_0x8de731['isLearned'])[_0x22526b(0x201)]<0x3){this[_0x22526b(0x1bc)](_0x22526b(0x290),_0x22526b(0x524));return;}const _0x47c8a0=document['createElement'](_0x22526b(0x6d5));_0x47c8a0['id']=_0x22526b(0x5a8),_0x47c8a0[_0x22526b(0x227)][_0x22526b(0x2bf)]='position:fixed;inset:0;z-index:999999;background:linear-gradient(135deg,\x20#667eea\x200%,\x20#764ba2\x20100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;';const _0xbb5c5f=document['createElement'](_0x22526b(0x6d5));_0xbb5c5f[_0x22526b(0x227)][_0x22526b(0x2bf)]=_0x22526b(0x712);const _0x58324d=document[_0x22526b(0x1e6)](_0x22526b(0x481));_0x58324d[_0x22526b(0x66c)]=_0x22526b(0x60e),_0x58324d[_0x22526b(0x493)]=_0x22526b(0x3ff),_0x58324d[_0x22526b(0x227)]['marginBottom']=_0x22526b(0x347),_0x58324d['onclick']=()=>_0x47c8a0[_0x22526b(0x25a)]();const _0x15a40d=document[_0x22526b(0x1e6)]('h2');_0x15a40d[_0x22526b(0x6e8)]=_0x4bbf3d+_0x22526b(0x6fe),_0x15a40d[_0x22526b(0x227)][_0x22526b(0x2bf)]=_0x22526b(0x507);const _0x502297=document[_0x22526b(0x1e6)](_0x22526b(0x6d5));_0x502297['id']=_0x22526b(0x5f1);const _0x1110e1=document['createElement'](_0x22526b(0x6d5));_0x1110e1['id']='scoreGateDisplay',_0x1110e1['style'][_0x22526b(0x2bf)]='text-align:center;font-size:18px;font-weight:bold;margin-top:15px;color:#667eea;',_0x1110e1[_0x22526b(0x66c)]=_0x22526b(0x4d4),_0xbb5c5f[_0x22526b(0x378)](_0x58324d),_0xbb5c5f[_0x22526b(0x378)](_0x15a40d),_0xbb5c5f[_0x22526b(0x378)](_0x502297),_0xbb5c5f[_0x22526b(0x378)](_0x1110e1),_0x47c8a0['appendChild'](_0xbb5c5f),document[_0x22526b(0x673)][_0x22526b(0x378)](_0x47c8a0);let _0x3d950c=0x0;const _0x276997=()=>{const _0x4828bf=_0x22526b,_0x8072c2=this[_0x4828bf(0x3c1)]();if(!_0x8072c2){_0x502297[_0x4828bf(0x66c)]=_0x4828bf(0x43f);return;}const _0x483198=Math[_0x4828bf(0x513)]()<0.5?_0x4828bf(0x4c9):_0x4828bf(0x5ee),_0x2c28f7=_0x483198==='EN_RU'?this[_0x4828bf(0x26d)](_0x8072c2):_0x8072c2[_0x4828bf(0x1dd)],_0x23603a=_0x483198===_0x4828bf(0x4c9)?_0x8072c2[_0x4828bf(0x1dd)]:this[_0x4828bf(0x26d)](_0x8072c2),_0x40fb2c=this[_0x4828bf(0x593)](_0x8072c2,_0x483198),_0x23bb8d=this[_0x4828bf(0x58c)](_0x40fb2c);_0x502297[_0x4828bf(0x66c)]=_0x4828bf(0x6f5)+_0x2c28f7+_0x4828bf(0x2dc)+_0x23bb8d['map'](_0x327106=>{const _0x45bee6=_0x4828bf;return _0x45bee6(0x634)+this[_0x45bee6(0x349)](_0x327106)+'\x22\x20style=\x22padding:12px;border-radius:8px;border:2px\x20solid\x20var(--border-color);cursor:pointer;text-align:center;font-weight:600;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x327106+_0x45bee6(0x656);})[_0x4828bf(0x355)]('')+_0x4828bf(0x4f7);const _0x4f5d85=_0x502297[_0x4828bf(0x3ad)](_0x4828bf(0x587));_0x4f5d85&&(_0x4f5d85[_0x4828bf(0x563)]=_0x2b536d=>{const _0x298aa3=_0x4828bf;_0x2b536d['stopPropagation'](),this[_0x298aa3(0x64c)](_0x8072c2[_0x298aa3(0x693)],_0x8072c2['forms'],'us',_0x8072c2[_0x298aa3(0x4d9)]);}),_0x483198==='EN_RU'&&this[_0x4828bf(0x34f)](_0x8072c2)&&setTimeout(()=>{const _0x35b0fb=_0x4828bf;this[_0x35b0fb(0x64c)](_0x8072c2[_0x35b0fb(0x693)],_0x8072c2[_0x35b0fb(0x5f3)],'us',_0x8072c2['level']);},0x96),_0x502297[_0x4828bf(0x5f2)]('.quiz-option-gate')[_0x4828bf(0x50b)](_0x67c370=>{const _0x423d45=_0x4828bf;_0x67c370[_0x423d45(0x208)]('click',async()=>{const _0x3485e1=_0x423d45;_0x502297[_0x3485e1(0x5f2)]('.quiz-option-gate')[_0x3485e1(0x50b)](_0x60d918=>_0x60d918[_0x3485e1(0x227)]['pointerEvents']=_0x3485e1(0x488));const _0x17215b=_0x67c370[_0x3485e1(0x48c)](_0x3485e1(0x5f7)),_0x24e739=_0x17215b===_0x23603a;_0x24e739?_0x67c370[_0x3485e1(0x444)]['add'](_0x3485e1(0x449)):(_0x67c370[_0x3485e1(0x444)]['add'](_0x3485e1(0x5bb)),_0x502297[_0x3485e1(0x5f2)](_0x3485e1(0x368))[_0x3485e1(0x50b)](_0xea631b=>{const _0x3c0cc8=_0x3485e1;_0xea631b[_0x3c0cc8(0x48c)](_0x3c0cc8(0x5f7))===_0x23603a&&_0xea631b[_0x3c0cc8(0x444)]['add'](_0x3c0cc8(0x449));}));await this[_0x3485e1(0x4d5)]();_0x483198==='RU_EN'&&this[_0x3485e1(0x34f)](_0x8072c2)?(await this[_0x3485e1(0x266)](0xc8),await this[_0x3485e1(0x64c)](_0x8072c2[_0x3485e1(0x693)],_0x8072c2[_0x3485e1(0x5f3)],'us',_0x8072c2['level'])):await this[_0x3485e1(0x266)](0x258);if(_0x24e739){_0x3d950c++;const _0x3adbb4=document[_0x3485e1(0x669)](_0x3485e1(0x57c));if(_0x3adbb4)_0x3adbb4['textContent']=String(_0x3d950c);this[_0x3485e1(0x199)](),_0x3d950c>=0x3?(await this[_0x3485e1(0x266)](0x12c),_0x47c8a0[_0x3485e1(0x25a)](),this['openGameFullscreen'](_0x4bbf3d,_0x45e644)):_0x276997();}else setTimeout(()=>_0x276997(),0x320);});});};_0x276997();}['openGameFullscreen'](_0x4b06fa,_0x29845d){const _0x527e32=_0x3a406e,_0xed9224=_0x527e32(0x363),_0x413a9a=document[_0x527e32(0x1e6)](_0x527e32(0x6d5));_0x413a9a[_0x527e32(0x227)][_0x527e32(0x2bf)]='position:fixed;inset:0;z-index:999999;background:#000;',_0x413a9a['id']=_0xed9224;const _0x377312=document[_0x527e32(0x1e6)](_0x527e32(0x6d5));_0x377312[_0x527e32(0x493)]=_0x527e32(0x66d),_0x377312[_0x527e32(0x227)][_0x527e32(0x2bf)]='\x0a\x20\x20\x20\x20\x20\x20position:absolute;top:0;left:0;right:0;height:56px;background:rgba(255,255,255,0.96);\x0a\x20\x20\x20\x20\x20\x20display:flex;align-items:center;gap:8px;padding:8px\x2012px;z-index:1000000;box-shadow:0\x202px\x208px\x20rgba(0,0,0,0.15);\x0a\x20\x20\x20\x20';const _0x5899ec=document[_0x527e32(0x1e6)](_0x527e32(0x481));_0x5899ec[_0x527e32(0x493)]=_0x527e32(0x3ff),_0x5899ec[_0x527e32(0x227)][_0x527e32(0x2bf)]=_0x527e32(0x253),_0x5899ec['innerHTML']=_0x527e32(0x1bb),_0x5899ec[_0x527e32(0x563)]=()=>{const _0x2a33e1=_0x527e32;this[_0x2a33e1(0x2f5)](_0xed9224),_0x413a9a['remove']();};const _0x3bf59b=document[_0x527e32(0x1e6)](_0x527e32(0x6d5));_0x3bf59b[_0x527e32(0x227)][_0x527e32(0x2bf)]=_0x527e32(0x596),_0x3bf59b[_0x527e32(0x6e8)]=_0x527e32(0x43d)+_0x4b06fa,_0x377312[_0x527e32(0x378)](_0x5899ec),_0x377312[_0x527e32(0x378)](_0x3bf59b);const _0x56ab38=document[_0x527e32(0x1e6)](_0x527e32(0x1b4));_0x56ab38[_0x527e32(0x39e)]=_0x29845d,_0x56ab38[_0x527e32(0x227)][_0x527e32(0x2bf)]=_0x527e32(0x3a7),_0x56ab38['allow']=_0x527e32(0x20a),_0x413a9a[_0x527e32(0x378)](_0x377312),_0x413a9a[_0x527e32(0x378)](_0x56ab38),document[_0x527e32(0x673)]['appendChild'](_0x413a9a),this[_0x527e32(0x1bc)](_0x527e32(0x395)+_0x4b06fa+_0x527e32(0x3be),'success'),this[_0x527e32(0x518)](_0xed9224);}['showCatalogGame'](){const _0x2431e4=_0x3a406e;if(this[_0x2431e4(0x27d)][_0x2431e4(0x66a)](_0x4a20ac=>!_0x4a20ac['isLearned'])[_0x2431e4(0x201)]<0x4){this['showNotification'](_0x2431e4(0x283),_0x2431e4(0x524));return;}const _0x4def1b='catalogGameContainer',_0x4bb38c=document[_0x2431e4(0x1e6)]('div');_0x4bb38c['style']['cssText']=_0x2431e4(0x26f),_0x4bb38c['id']=_0x4def1b;const _0x25ec2f=document[_0x2431e4(0x1e6)](_0x2431e4(0x6d5));_0x25ec2f[_0x2431e4(0x493)]=_0x2431e4(0x66d),_0x25ec2f['style'][_0x2431e4(0x2bf)]=_0x2431e4(0x4d8);const _0x366c60=document[_0x2431e4(0x1e6)]('button');_0x366c60[_0x2431e4(0x493)]=_0x2431e4(0x3ff),_0x366c60[_0x2431e4(0x227)][_0x2431e4(0x2bf)]=_0x2431e4(0x253),_0x366c60[_0x2431e4(0x66c)]='<i\x20class=\x22fas\x20fa-arrow-left\x22></i>\x20Назад\x20в\x20приложение',_0x366c60[_0x2431e4(0x563)]=()=>{const _0x51238b=_0x2431e4;this[_0x51238b(0x2f5)](_0x4def1b),_0x4bb38c[_0x51238b(0x25a)]();};const _0x2713a8=document[_0x2431e4(0x1e6)](_0x2431e4(0x6d5));_0x2713a8[_0x2431e4(0x227)][_0x2431e4(0x2bf)]=_0x2431e4(0x596),_0x2713a8[_0x2431e4(0x6e8)]=_0x2431e4(0x1a9),_0x25ec2f[_0x2431e4(0x378)](_0x366c60),_0x25ec2f[_0x2431e4(0x378)](_0x2713a8);const _0x3a3f07=document['createElement']('iframe');_0x3a3f07[_0x2431e4(0x39e)]=_0x2431e4(0x42f),_0x3a3f07['style'][_0x2431e4(0x2bf)]=_0x2431e4(0x3a7),_0x3a3f07['allow']=_0x2431e4(0x20a),_0x4bb38c['appendChild'](_0x25ec2f),_0x4bb38c[_0x2431e4(0x378)](_0x3a3f07),document[_0x2431e4(0x673)][_0x2431e4(0x378)](_0x4bb38c),this['startGameQuizCycle'](_0x4def1b),setTimeout(()=>this['showOverlayQuiz'](_0x4def1b),0x3e8);}[_0x3a406e(0x518)](_0xed50d8){const _0x5dd67e=_0x3a406e;this[_0x5dd67e(0x2f5)](_0xed50d8);const _0x2b78bc=0x5*0x3c*0x3e8,_0x2f35a1=0xa*0x3e8,_0x4acf40=setTimeout(()=>{const _0x2b445c=_0x5dd67e;this[_0x2b445c(0x1bc)](_0x2b445c(0x5dc),'warning');},_0x2b78bc-_0x2f35a1),_0x9fbc2b=setTimeout(()=>{this['showOverlayQuiz'](_0xed50d8);},_0x2b78bc);this[_0x5dd67e(0x50e)][_0xed50d8]={'warningTimeoutId':_0x4acf40,'quizTimeoutId':_0x9fbc2b};}['clearGameQuizCycle'](_0x28103d){const _0x34a7e3=_0x3a406e,_0x2863ff=this['gameQuizIntervals'][_0x28103d];_0x2863ff&&(clearTimeout(_0x2863ff[_0x34a7e3(0x5e7)]),clearTimeout(_0x2863ff[_0x34a7e3(0x216)]),delete this['gameQuizIntervals'][_0x28103d]);}['showOverlayQuiz'](_0x2a722f){const _0x29194e=_0x3a406e;this[_0x29194e(0x2f5)](_0x2a722f);const _0x537e10=document[_0x29194e(0x669)](_0x2a722f);if(!_0x537e10)return;const _0x37cc12=document[_0x29194e(0x1e6)]('div');_0x37cc12[_0x29194e(0x493)]=_0x29194e(0x495),_0x37cc12[_0x29194e(0x227)][_0x29194e(0x2bf)]=_0x29194e(0x412);const _0x231817=document[_0x29194e(0x1e6)](_0x29194e(0x6d5));_0x231817[_0x29194e(0x227)][_0x29194e(0x2bf)]=_0x29194e(0x31b);const _0x7977a=document['createElement']('h2');_0x7977a[_0x29194e(0x6e8)]=_0x29194e(0x4d7),_0x7977a[_0x29194e(0x227)][_0x29194e(0x2bf)]='text-align:center;margin-bottom:20px;color:var(--text-primary);';const _0x784b75=document[_0x29194e(0x1e6)](_0x29194e(0x6d5));_0x784b75['id']=_0x29194e(0x24a)+_0x2a722f,_0x231817['appendChild'](_0x7977a),_0x231817['appendChild'](_0x784b75),_0x37cc12[_0x29194e(0x378)](_0x231817),_0x537e10['appendChild'](_0x37cc12);let _0x1e8888=0x0;const _0x302cfa=()=>{const _0x4e65df=_0x29194e,_0x5a4a83=this[_0x4e65df(0x3c1)]();if(!_0x5a4a83){_0x784b75[_0x4e65df(0x66c)]=_0x4e65df(0x39f);return;}const _0x553335=Math[_0x4e65df(0x513)]()<0.5?'EN_RU':'RU_EN',_0x30bd59=_0x553335==='EN_RU'?this['getEnglishDisplay'](_0x5a4a83):_0x5a4a83['translation'],_0x239a9d=_0x553335===_0x4e65df(0x4c9)?_0x5a4a83[_0x4e65df(0x1dd)]:this['getEnglishDisplay'](_0x5a4a83),_0x4e4ce7=this[_0x4e65df(0x593)](_0x5a4a83,_0x553335),_0x16d5df=this[_0x4e65df(0x58c)](_0x4e4ce7);_0x784b75[_0x4e65df(0x66c)]=_0x4e65df(0x1be)+_0x30bd59+_0x4e65df(0x2d1)+this[_0x4e65df(0x349)](_0x5a4a83['word'])+_0x4e65df(0x6b7)+(_0x5a4a83[_0x4e65df(0x5f3)]?JSON[_0x4e65df(0x40f)](_0x5a4a83[_0x4e65df(0x5f3)])[_0x4e65df(0x22a)](/"/g,_0x4e65df(0x1c4)):'null')+_0x4e65df(0x53b)+this[_0x4e65df(0x349)](_0x5a4a83[_0x4e65df(0x693)])+_0x4e65df(0x6b7)+(_0x5a4a83['forms']?JSON['stringify'](_0x5a4a83[_0x4e65df(0x5f3)])[_0x4e65df(0x22a)](/"/g,_0x4e65df(0x1c4)):_0x4e65df(0x284))+_0x4e65df(0x68b)+_0x1e8888+_0x4e65df(0x69a)+_0x16d5df[_0x4e65df(0x4ef)](_0x4e1334=>{const _0x2f9a19=_0x4e65df,_0x238786=this[_0x2f9a19(0x2e9)](_0x4e1334)&&!this[_0x2f9a19(0x56b)](_0x4e1334),_0x35eede=_0x4e1334['split']('→')[0x0][_0x2f9a19(0x6f9)](),_0x5ed1b7=_0x238786?_0x2f9a19(0x319)+this[_0x2f9a19(0x349)](_0x35eede)+'\x27,\x20\x27us\x27)\x22><i\x20class=\x22fas\x20fa-volume-up\x22></i></button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22mini-btn\x22\x20title=\x22UK\x22\x20onclick=\x22event.stopPropagation();\x20app.playSingleWordMp3(\x27'+this[_0x2f9a19(0x349)](_0x35eede)+_0x2f9a19(0x6ce):'';return _0x2f9a19(0x634)+this[_0x2f9a19(0x349)](_0x4e1334)+'\x22\x20style=\x22padding:12px;border-radius:8px;border:2px\x20solid\x20var(--border-color);background:var(--bg-secondary);cursor:pointer;text-align:center;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>'+_0x4e1334+'</span>'+_0x5ed1b7+_0x2f9a19(0x656);})[_0x4e65df(0x355)]('')+_0x4e65df(0x4f7),_0x553335===_0x4e65df(0x4c9)&&this['shouldAutoPronounce'](_0x5a4a83)&&setTimeout(()=>{const _0x15a6a1=_0x4e65df;if(_0x5a4a83[_0x15a6a1(0x5f3)]&&_0x5a4a83[_0x15a6a1(0x5f3)][_0x15a6a1(0x201)])this[_0x15a6a1(0x53e)](_0x5a4a83[_0x15a6a1(0x5f3)],'us');else{if(this[_0x15a6a1(0x6f3)](_0x5a4a83['word']))this['playPhraseTTS'](_0x5a4a83[_0x15a6a1(0x693)],'us');else this[_0x15a6a1(0x4c3)](_0x5a4a83['word'],'us');}},0x96),_0x784b75[_0x4e65df(0x5f2)](_0x4e65df(0x368))[_0x4e65df(0x50b)](_0x4467f2=>{const _0x2bcad9=_0x4e65df;_0x4467f2[_0x2bcad9(0x208)](_0x2bcad9(0x561),async()=>{const _0x5ddf93=_0x2bcad9,_0x26adfa=_0x4467f2['getAttribute'](_0x5ddf93(0x5f7)),_0x1af7da=_0x26adfa===_0x239a9d;await this['waitForCurrentAudioToFinish']();if(_0x553335==='RU_EN'&&this[_0x5ddf93(0x34f)](_0x5a4a83)){}else await this[_0x5ddf93(0x266)](0x258);_0x1af7da?(_0x1e8888++,this['recordDailyProgress'](),_0x1e8888>=0x4?(await this[_0x5ddf93(0x266)](0x12c),_0x37cc12[_0x5ddf93(0x25a)](),this['showNotification']('Отлично!\x20Продолжайте\x20играть!','success'),this[_0x5ddf93(0x518)](_0x2a722f)):_0x302cfa()):_0x302cfa();});});};_0x302cfa();}[_0x3a406e(0x58c)](_0x489a46){const _0x23484c=_0x3a406e,_0x1afd09=[..._0x489a46];for(let _0x1b4046=_0x1afd09['length']-0x1;_0x1b4046>0x0;_0x1b4046--){const _0xaa329f=Math[_0x23484c(0x30a)](Math[_0x23484c(0x513)]()*(_0x1b4046+0x1));[_0x1afd09[_0x1b4046],_0x1afd09[_0xaa329f]]=[_0x1afd09[_0xaa329f],_0x1afd09[_0x1b4046]];}return _0x1afd09;}[_0x3a406e(0x1bc)](_0x5e969e,_0x348759=_0x3a406e(0x65c)){const _0x11e5a5=_0x3a406e;let _0x4a29b8=document[_0x11e5a5(0x3ad)](_0x11e5a5(0x310));!_0x4a29b8&&(_0x4a29b8=document[_0x11e5a5(0x1e6)](_0x11e5a5(0x6d5)),_0x4a29b8[_0x11e5a5(0x493)]=_0x11e5a5(0x1c1),document[_0x11e5a5(0x673)][_0x11e5a5(0x378)](_0x4a29b8));const _0x10fe54=document[_0x11e5a5(0x1e6)](_0x11e5a5(0x6d5));_0x10fe54[_0x11e5a5(0x493)]=_0x11e5a5(0x69f)+_0x348759,_0x10fe54[_0x11e5a5(0x66c)]=_0x11e5a5(0x286)+_0x5e969e+'</span>',_0x4a29b8[_0x11e5a5(0x378)](_0x10fe54),setTimeout(()=>{const _0x39c49a=_0x11e5a5;_0x10fe54[_0x39c49a(0x227)]['transition']=_0x39c49a(0x384),_0x10fe54[_0x39c49a(0x227)][_0x39c49a(0x614)]='0',_0x10fe54[_0x39c49a(0x227)]['transform']=_0x39c49a(0x648),setTimeout(()=>_0x10fe54[_0x39c49a(0x25a)](),0x12c);},0xbb8);}[_0x3a406e(0x3c1)](){const _0x152234=_0x3a406e,_0x59965c=this['learningWords']['filter'](_0x12dd48=>!_0x12dd48[_0x152234(0x2b9)]);if(_0x59965c[_0x152234(0x201)]===0x0)return null;return _0x59965c[Math[_0x152234(0x30a)](Math[_0x152234(0x513)]()*_0x59965c['length'])];}[_0x3a406e(0x245)](){const _0x28f677=_0x3a406e;if(this[_0x28f677(0x456)])return;const _0x49b1c3=document['createElement'](_0x28f677(0x6d5));_0x49b1c3['id']=_0x28f677(0x4cb),_0x49b1c3[_0x28f677(0x493)]='global-loader-overlay',_0x49b1c3[_0x28f677(0x66c)]=_0x28f677(0x6bc),document[_0x28f677(0x673)][_0x28f677(0x378)](_0x49b1c3),this[_0x28f677(0x456)]=_0x49b1c3;}[_0x3a406e(0x63d)](_0x69062='Кот\x20Боб\x20загружает\x20для\x20вас\x20эту\x20страницу',_0x312e4a=0x5dc){const _0x2c740f=_0x3a406e;this[_0x2c740f(0x245)]();const _0x50c02a=this[_0x2c740f(0x456)][_0x2c740f(0x3ad)]('.global-loader-text-el');if(_0x50c02a)_0x50c02a[_0x2c740f(0x6e8)]=_0x69062;this[_0x2c740f(0x292)]=_0x312e4a,this[_0x2c740f(0x3b9)]=performance[_0x2c740f(0x52e)](),this[_0x2c740f(0x456)][_0x2c740f(0x444)]['add'](_0x2c740f(0x6cf));}[_0x3a406e(0x684)](){const _0x587885=_0x3a406e;if(!this[_0x587885(0x456)])return;const _0xd4e2fa=performance[_0x587885(0x52e)]()-(this[_0x587885(0x3b9)]||0x0),_0x1fef33=Math['max'](0x0,(this['loaderMinMs']||0x0)-_0xd4e2fa);clearTimeout(this[_0x587885(0x3cc)]),this[_0x587885(0x3cc)]=setTimeout(()=>{const _0x45e12=_0x587885;this['loaderEl'][_0x45e12(0x444)][_0x45e12(0x25a)](_0x45e12(0x6cf));},_0x1fef33);}[_0x3a406e(0x5e9)](){const _0xac0541=_0x3a406e;return{'A1':{'grammar':[{'id':'nouns','name':_0xac0541(0x613),'icon':_0xac0541(0x4b0)},{'id':'verbs','name':_0xac0541(0x3e2),'icon':_0xac0541(0x2e0)},{'id':_0xac0541(0x61d),'name':'Прилагательные','icon':_0xac0541(0x442)},{'id':_0xac0541(0x4e1),'name':_0xac0541(0x212),'icon':_0xac0541(0x4e5)},{'id':_0xac0541(0x590),'name':'Предлоги','icon':'fa-map-marker-alt'},{'id':'conjunctions','name':_0xac0541(0x6e9),'icon':_0xac0541(0x22d)},{'id':_0xac0541(0x410),'name':'Местоимения','icon':_0xac0541(0x59c)},{'id':'determiners','name':_0xac0541(0x27f),'icon':_0xac0541(0x5af)},{'id':_0xac0541(0x6d1),'name':'Модальные\x20глаголы','icon':_0xac0541(0x595)},{'id':'numbers','name':_0xac0541(0x6cb),'icon':_0xac0541(0x4cf)},{'id':'exclamations','name':'Междометия','icon':_0xac0541(0x33f)}],'topics':[{'id':_0xac0541(0x5cc),'name':_0xac0541(0x261),'icon':_0xac0541(0x5a0)},{'id':_0xac0541(0x6ad),'name':_0xac0541(0x4c0),'icon':_0xac0541(0x52f)},{'id':'home','name':_0xac0541(0x3a1),'icon':'fa-home'},{'id':_0xac0541(0x5a9),'name':_0xac0541(0x1c9),'icon':_0xac0541(0x2ab)},{'id':'body','name':'Тело\x20человека','icon':_0xac0541(0x64e)},{'id':_0xac0541(0x37b),'name':'Транспорт','icon':_0xac0541(0x5fa)},{'id':_0xac0541(0x3f7),'name':_0xac0541(0x472),'icon':'fa-building'},{'id':_0xac0541(0x697),'name':_0xac0541(0x29e),'icon':_0xac0541(0x594)},{'id':_0xac0541(0x1d3),'name':_0xac0541(0x1c6),'icon':_0xac0541(0x695)},{'id':_0xac0541(0x3d2),'name':'Образование','icon':_0xac0541(0x654)},{'id':_0xac0541(0x6e4),'name':_0xac0541(0x377),'icon':_0xac0541(0x306)},{'id':_0xac0541(0x3ef),'name':_0xac0541(0x668),'icon':_0xac0541(0x372)},{'id':_0xac0541(0x5e1),'name':_0xac0541(0x625),'icon':_0xac0541(0x516)},{'id':_0xac0541(0x2b7),'name':_0xac0541(0x6a6),'icon':'fa-leaf'},{'id':_0xac0541(0x1ca),'name':'Общение','icon':_0xac0541(0x6e7)},{'id':_0xac0541(0x36e),'name':_0xac0541(0x66f),'icon':_0xac0541(0x219)},{'id':_0xac0541(0x537),'name':_0xac0541(0x288),'icon':'fa-sun'},{'id':_0xac0541(0x30c),'name':'Покупки','icon':'fa-shopping-cart'},{'id':_0xac0541(0x326),'name':_0xac0541(0x1e8),'icon':_0xac0541(0x39d)},{'id':'general','name':_0xac0541(0x56c),'icon':'fa-list-alt'}]},'A2':{'grammar':[{'id':_0xac0541(0x432),'name':_0xac0541(0x613),'icon':'fa-cube'},{'id':_0xac0541(0x4d3),'name':'Глаголы','icon':'fa-bolt'},{'id':'adjectives','name':_0xac0541(0x599),'icon':_0xac0541(0x442)},{'id':_0xac0541(0x4e1),'name':_0xac0541(0x212),'icon':_0xac0541(0x4e5)},{'id':'prepositions','name':_0xac0541(0x34a),'icon':_0xac0541(0x68c)},{'id':_0xac0541(0x3c2),'name':_0xac0541(0x6e9),'icon':_0xac0541(0x22d)},{'id':'pronouns','name':_0xac0541(0x392),'icon':_0xac0541(0x59c)},{'id':'determiners','name':_0xac0541(0x27f),'icon':'fa-crosshairs'},{'id':_0xac0541(0x6d1),'name':_0xac0541(0x451),'icon':_0xac0541(0x595)},{'id':_0xac0541(0x696),'name':_0xac0541(0x6cb),'icon':'fa-sort-numeric-up'}],'topics':[{'id':_0xac0541(0x2c0),'name':_0xac0541(0x3a1),'icon':'fa-home'},{'id':'food','name':_0xac0541(0x294),'icon':_0xac0541(0x52f)},{'id':_0xac0541(0x1d3),'name':_0xac0541(0x41d),'icon':_0xac0541(0x695)},{'id':_0xac0541(0x3d2),'name':'Образование','icon':_0xac0541(0x223)},{'id':_0xac0541(0x1ea),'name':'Технологии','icon':'fa-laptop'},{'id':_0xac0541(0x37b),'name':_0xac0541(0x60f),'icon':_0xac0541(0x60d)},{'id':_0xac0541(0x5d4),'name':_0xac0541(0x710),'icon':_0xac0541(0x2df)},{'id':_0xac0541(0x2b7),'name':_0xac0541(0x6a6),'icon':_0xac0541(0x4ec)},{'id':_0xac0541(0x6e4),'name':'Развлечения','icon':_0xac0541(0x2d8)},{'id':_0xac0541(0x621),'name':_0xac0541(0x53a),'icon':_0xac0541(0x466)},{'id':_0xac0541(0x3ef),'name':'Эмоции','icon':_0xac0541(0x559)},{'id':'people','name':_0xac0541(0x4ab),'icon':_0xac0541(0x272)},{'id':_0xac0541(0x19d),'name':_0xac0541(0x6ea),'icon':_0xac0541(0x535)},{'id':'society','name':_0xac0541(0x1df),'icon':_0xac0541(0x5c0)},{'id':_0xac0541(0x53c),'name':'Бизнес','icon':_0xac0541(0x531)},{'id':'weather','name':_0xac0541(0x288),'icon':_0xac0541(0x443)},{'id':_0xac0541(0x5a9),'name':_0xac0541(0x1c9),'icon':_0xac0541(0x2ab)},{'id':'buildings','name':_0xac0541(0x554),'icon':_0xac0541(0x313)},{'id':'media','name':'СМИ','icon':_0xac0541(0x24d)},{'id':_0xac0541(0x486),'name':'Наука','icon':'fa-microscope'},{'id':_0xac0541(0x697),'name':_0xac0541(0x29e),'icon':_0xac0541(0x2a5)},{'id':_0xac0541(0x1ca),'name':'Общение','icon':'fa-comment-alt'},{'id':_0xac0541(0x69d),'name':_0xac0541(0x1a5),'icon':'fa-brain'},{'id':_0xac0541(0x36e),'name':_0xac0541(0x66f),'icon':_0xac0541(0x219)},{'id':_0xac0541(0x603),'name':_0xac0541(0x56c),'icon':_0xac0541(0x34b)}]},'B1':{'grammar':[{'id':'nouns','name':_0xac0541(0x613),'icon':'fa-cube'},{'id':_0xac0541(0x4d3),'name':'Глаголы','icon':_0xac0541(0x2e0)},{'id':'adjectives','name':'Прилагательные','icon':_0xac0541(0x442)},{'id':_0xac0541(0x4e1),'name':_0xac0541(0x212),'icon':_0xac0541(0x4e5)},{'id':'prepositions','name':'Предлоги','icon':_0xac0541(0x68c)},{'id':_0xac0541(0x3c2),'name':_0xac0541(0x6e9),'icon':_0xac0541(0x22d)},{'id':_0xac0541(0x410),'name':_0xac0541(0x392),'icon':'fa-user'},{'id':_0xac0541(0x3bc),'name':'Определители','icon':_0xac0541(0x5af)},{'id':_0xac0541(0x6d1),'name':_0xac0541(0x330),'icon':_0xac0541(0x595)}],'topics':[{'id':'abstract','name':_0xac0541(0x1a5),'icon':_0xac0541(0x717)},{'id':_0xac0541(0x2b7),'name':'Природа','icon':_0xac0541(0x4ec)},{'id':_0xac0541(0x486),'name':_0xac0541(0x688),'icon':_0xac0541(0x2ad)},{'id':_0xac0541(0x3dc),'name':_0xac0541(0x1df),'icon':_0xac0541(0x5e6)},{'id':_0xac0541(0x19d),'name':'Закон','icon':_0xac0541(0x5e2)},{'id':_0xac0541(0x53c),'name':_0xac0541(0x3f5),'icon':'fa-briefcase'},{'id':_0xac0541(0x3ef),'name':_0xac0541(0x632),'icon':_0xac0541(0x1f9)},{'id':_0xac0541(0x1d3),'name':'Работа','icon':_0xac0541(0x2d0)},{'id':_0xac0541(0x3d2),'name':'Образование','icon':'fa-university'},{'id':'communication','name':_0xac0541(0x530),'icon':_0xac0541(0x544)},{'id':_0xac0541(0x6e4),'name':_0xac0541(0x58b),'icon':_0xac0541(0x242)},{'id':_0xac0541(0x1ea),'name':_0xac0541(0x1b9),'icon':'fa-microchip'},{'id':_0xac0541(0x37b),'name':_0xac0541(0x4a4),'icon':_0xac0541(0x492)},{'id':_0xac0541(0x2c0),'name':_0xac0541(0x527),'icon':_0xac0541(0x4f0)},{'id':_0xac0541(0x5a9),'name':_0xac0541(0x1fd),'icon':_0xac0541(0x1a0)},{'id':_0xac0541(0x6ad),'name':_0xac0541(0x63f),'icon':'fa-pizza-slice'},{'id':_0xac0541(0x5d4),'name':'Здоровье','icon':_0xac0541(0x1cc)},{'id':_0xac0541(0x3b3),'name':_0xac0541(0x236),'icon':_0xac0541(0x6d8)},{'id':'religion','name':_0xac0541(0x2a0),'icon':'fa-pray'},{'id':_0xac0541(0x5aa),'name':_0xac0541(0x416),'icon':'fa-jet-fighter'},{'id':_0xac0541(0x326),'name':_0xac0541(0x207),'icon':_0xac0541(0x42b)},{'id':_0xac0541(0x36e),'name':_0xac0541(0x55c),'icon':_0xac0541(0x391)},{'id':_0xac0541(0x603),'name':'Общее','icon':_0xac0541(0x467)}]},'B2':{'grammar':[{'id':_0xac0541(0x432),'name':_0xac0541(0x613),'icon':_0xac0541(0x4b0)},{'id':'verbs','name':_0xac0541(0x3e2),'icon':_0xac0541(0x2e0)},{'id':_0xac0541(0x61d),'name':'Прилагательные','icon':_0xac0541(0x442)},{'id':_0xac0541(0x4e1),'name':_0xac0541(0x212),'icon':'fa-wind'},{'id':'prepositions','name':_0xac0541(0x34a),'icon':'fa-map-marker-alt'},{'id':_0xac0541(0x3c2),'name':'Союзы','icon':_0xac0541(0x22d)},{'id':_0xac0541(0x410),'name':_0xac0541(0x392),'icon':_0xac0541(0x59c)},{'id':'numbers','name':_0xac0541(0x6cb),'icon':'fa-sort-numeric-up'}],'topics':[{'id':_0xac0541(0x69d),'name':'Концепции','icon':_0xac0541(0x525)},{'id':'nature','name':_0xac0541(0x4d2),'icon':_0xac0541(0x3c5)},{'id':_0xac0541(0x486),'name':'Исследования','icon':_0xac0541(0x468)},{'id':'society','name':_0xac0541(0x4a5),'icon':'fa-landmark'},{'id':_0xac0541(0x19d),'name':'Право','icon':_0xac0541(0x535)},{'id':'business','name':_0xac0541(0x1ff),'icon':_0xac0541(0x247)},{'id':_0xac0541(0x3ef),'name':'Психология','icon':_0xac0541(0x1c2)},{'id':'work','name':_0xac0541(0x41d),'icon':'fa-id-card'},{'id':_0xac0541(0x3d2),'name':'Учеба','icon':'fa-user-graduate'},{'id':_0xac0541(0x1ca),'name':'Речь','icon':_0xac0541(0x343)},{'id':_0xac0541(0x6e4),'name':_0xac0541(0x2ec),'icon':_0xac0541(0x306)},{'id':'technology','name':_0xac0541(0x1f8),'icon':_0xac0541(0x6c1)},{'id':'transport','name':_0xac0541(0x39a),'icon':_0xac0541(0x348)},{'id':_0xac0541(0x2c0),'name':'Дом','icon':_0xac0541(0x550)},{'id':'food','name':_0xac0541(0x639),'icon':_0xac0541(0x356)},{'id':_0xac0541(0x5d4),'name':_0xac0541(0x19b),'icon':'fa-hospital'},{'id':'body','name':'Анатомия','icon':'fa-walking'},{'id':_0xac0541(0x3b3),'name':_0xac0541(0x68d),'icon':'fa-atom'},{'id':_0xac0541(0x411),'name':_0xac0541(0x402),'icon':'fa-church'},{'id':_0xac0541(0x5aa),'name':'Оборона','icon':_0xac0541(0x4b4)},{'id':'descriptions','name':'Характеристики','icon':'fa-tags'},{'id':_0xac0541(0x36e),'name':_0xac0541(0x608),'icon':'fa-play-circle'},{'id':_0xac0541(0x697),'name':'Периоды','icon':_0xac0541(0x470)},{'id':'space','name':_0xac0541(0x41f),'icon':_0xac0541(0x4c8)},{'id':_0xac0541(0x5cc),'name':_0xac0541(0x6ac),'icon':_0xac0541(0x5a0)},{'id':'clothing','name':_0xac0541(0x670),'icon':'fa-glasses'},{'id':_0xac0541(0x621),'name':_0xac0541(0x53a),'icon':_0xac0541(0x278)},{'id':_0xac0541(0x603),'name':_0xac0541(0x3d6),'icon':_0xac0541(0x574)}]},'C1':{'grammar':[{'id':'nouns','name':_0xac0541(0x613),'icon':_0xac0541(0x4b0)},{'id':_0xac0541(0x4d3),'name':'Глаголы','icon':_0xac0541(0x2e0)},{'id':_0xac0541(0x61d),'name':_0xac0541(0x599),'icon':_0xac0541(0x442)},{'id':'adverbs','name':_0xac0541(0x212),'icon':_0xac0541(0x4e5)},{'id':_0xac0541(0x590),'name':_0xac0541(0x34a),'icon':_0xac0541(0x68c)},{'id':'conjunctions','name':_0xac0541(0x6e9),'icon':_0xac0541(0x22d)}],'topics':[{'id':_0xac0541(0x69d),'name':'Абстракция','icon':_0xac0541(0x235)},{'id':_0xac0541(0x19d),'name':_0xac0541(0x4f4),'icon':_0xac0541(0x6d2)},{'id':'society','name':_0xac0541(0x4da),'icon':_0xac0541(0x3b8)},{'id':_0xac0541(0x5d4),'name':_0xac0541(0x248),'icon':_0xac0541(0x64e)},{'id':_0xac0541(0x486),'name':_0xac0541(0x688),'icon':_0xac0541(0x5c3)},{'id':_0xac0541(0x53c),'name':_0xac0541(0x67c),'icon':'fa-chart-pie'},{'id':_0xac0541(0x3d2),'name':_0xac0541(0x6bf),'icon':_0xac0541(0x52c)},{'id':_0xac0541(0x3ef),'name':_0xac0541(0x29c),'icon':_0xac0541(0x371)},{'id':_0xac0541(0x411),'name':_0xac0541(0x3b5),'icon':_0xac0541(0x5f8)},{'id':'military','name':'Война','icon':'fa-fighter-jet'},{'id':_0xac0541(0x2b7),'name':_0xac0541(0x4d2),'icon':_0xac0541(0x243)},{'id':_0xac0541(0x1ea),'name':_0xac0541(0x282),'icon':'fa-rocket'},{'id':'communication','name':_0xac0541(0x37f),'icon':_0xac0541(0x5c6)},{'id':_0xac0541(0x1d3),'name':_0xac0541(0x386),'icon':'fa-tasks'},{'id':'descriptions','name':_0xac0541(0x4a3),'icon':_0xac0541(0x29b)},{'id':_0xac0541(0x36e),'name':_0xac0541(0x1da),'icon':_0xac0541(0x254)},{'id':'time','name':'Хронология','icon':_0xac0541(0x5ac)},{'id':_0xac0541(0x3c7),'name':_0xac0541(0x47d),'icon':_0xac0541(0x287)},{'id':'entertainment','name':_0xac0541(0x2ec),'icon':'fa-palette'},{'id':'family','name':_0xac0541(0x6ba),'icon':_0xac0541(0x640)},{'id':'transport','name':_0xac0541(0x30d),'icon':'fa-truck-moving'},{'id':_0xac0541(0x3b3),'name':'Ресурсы','icon':_0xac0541(0x296)},{'id':_0xac0541(0x673),'name':_0xac0541(0x1d4),'icon':'fa-x-ray'},{'id':_0xac0541(0x603),'name':_0xac0541(0x40a),'icon':_0xac0541(0x2ee)}]},'C2':{'grammar':[{'id':_0xac0541(0x432),'name':_0xac0541(0x613),'icon':_0xac0541(0x4b0)},{'id':_0xac0541(0x4d3),'name':_0xac0541(0x3e2),'icon':_0xac0541(0x2e0)},{'id':_0xac0541(0x61d),'name':'Прилагательные','icon':_0xac0541(0x442)},{'id':'adverbs','name':_0xac0541(0x212),'icon':_0xac0541(0x4e5)}],'topics':[{'id':_0xac0541(0x401),'name':_0xac0541(0x509),'icon':_0xac0541(0x543)},{'id':_0xac0541(0x5fe),'name':'Личность','icon':'fa-fingerprint'},{'id':_0xac0541(0x1fc),'name':_0xac0541(0x25e),'icon':_0xac0541(0x5be)},{'id':'criticism','name':_0xac0541(0x2d2),'icon':_0xac0541(0x1b7)},{'id':_0xac0541(0x2ba),'name':_0xac0541(0x365),'icon':'fa-mask'},{'id':_0xac0541(0x3ef),'name':_0xac0541(0x632),'icon':_0xac0541(0x2b2)},{'id':_0xac0541(0x529),'name':'Интеллект','icon':_0xac0541(0x5b2)},{'id':_0xac0541(0x680),'name':_0xac0541(0x49e),'icon':_0xac0541(0x306)},{'id':_0xac0541(0x483),'name':_0xac0541(0x59a),'icon':_0xac0541(0x5ec)},{'id':'religion','name':_0xac0541(0x6b0),'icon':_0xac0541(0x6d4)},{'id':'philosophy','name':_0xac0541(0x636),'icon':_0xac0541(0x6bb)},{'id':_0xac0541(0x2fd),'name':_0xac0541(0x300),'icon':'fa-magic'},{'id':'abstract','name':'Метафизика','icon':_0xac0541(0x1ce)},{'id':_0xac0541(0x4ee),'name':_0xac0541(0x5d2),'icon':_0xac0541(0x24f)},{'id':'social','name':_0xac0541(0x4e0),'icon':_0xac0541(0x5ed)}]}};}[_0x3a406e(0x305)](_0x592c6a,_0x39a81d){const _0x51f4a7=_0x3a406e,_0x5e467d=document[_0x51f4a7(0x669)]('wordsList');if(!_0x5e467d)return;let _0x5d8e46=_0x51f4a7(0x3eb);_0x5d8e46+=_0x51f4a7(0x2db)+_0x592c6a+'\x27,\x20{\x20type:\x20\x27all\x27\x20})\x22>',_0x5d8e46+=_0x51f4a7(0x4c7),_0x5d8e46+=_0x51f4a7(0x3a2),_0x5d8e46+=_0x51f4a7(0x4e6),_0x5d8e46+=_0x51f4a7(0x1e4),_0x5d8e46+='</div>',_0x5d8e46+='<div\x20class=\x22grammar-grid\x22>';for(let _0x2d321f=0x0;_0x2d321f<_0x39a81d['grammar'][_0x51f4a7(0x201)];_0x2d321f++){const _0x2f8508=_0x39a81d[_0x51f4a7(0x475)][_0x2d321f];_0x5d8e46+=_0x51f4a7(0x5da)+_0x592c6a+_0x51f4a7(0x2ac)+_0x2f8508['id']+_0x51f4a7(0x70b),_0x5d8e46+=_0x51f4a7(0x70c)+_0x2f8508[_0x51f4a7(0x3cb)]+_0x51f4a7(0x67d),_0x5d8e46+=_0x51f4a7(0x4c6)+_0x2f8508[_0x51f4a7(0x38c)]+_0x51f4a7(0x3ca),_0x5d8e46+=_0x51f4a7(0x3ca);}_0x5d8e46+=_0x51f4a7(0x3ca),_0x5d8e46+='<div\x20class=\x22category-section-title\x22\x20style=\x22margin-top:\x2030px;\x22>',_0x5d8e46+=_0x51f4a7(0x659),_0x5d8e46+=_0x51f4a7(0x3ca),_0x5d8e46+='<div\x20class=\x22lessons-list\x22>';for(let _0x5ca378=0x0;_0x5ca378<_0x39a81d[_0x51f4a7(0x1d6)][_0x51f4a7(0x201)];_0x5ca378++){const _0x260ed4=_0x39a81d['topics'][_0x5ca378],_0x419337=_0x5ca378+0x1;_0x5d8e46+=_0x51f4a7(0x2bc)+_0x592c6a+_0x51f4a7(0x436)+_0x260ed4['id']+'\x27\x20})\x22>',_0x5d8e46+='<div\x20class=\x22lesson-number\x22>'+_0x419337+_0x51f4a7(0x3ca),_0x5d8e46+=_0x51f4a7(0x399),_0x5d8e46+=_0x51f4a7(0x23a)+_0x419337+_0x51f4a7(0x3ca),_0x5d8e46+=_0x51f4a7(0x2b5)+_0x260ed4['name']+_0x51f4a7(0x3ca),_0x5d8e46+='</div>',_0x5d8e46+=_0x51f4a7(0x224)+_0x260ed4[_0x51f4a7(0x3cb)]+_0x51f4a7(0x67d),_0x5d8e46+='</div>';}_0x5d8e46+='</div>',_0x5d8e46+=_0x51f4a7(0x610),_0x5d8e46+=_0x51f4a7(0x2da),_0x5d8e46+=_0x51f4a7(0x3ca),_0x5d8e46+=_0x51f4a7(0x3ca),_0x5e467d[_0x51f4a7(0x66c)]=_0x5d8e46;}[_0x3a406e(0x58a)](_0x48d316,_0x569634){const _0xc76e42=_0x3a406e,_0x3babee=document[_0xc76e42(0x669)](_0xc76e42(0x2c9)),_0x256e31=0x64;_0x3babee[_0xc76e42(0x66c)]='';const _0x480b1b=document['getElementById']('bulkToggleBtn');_0x480b1b&&(_0x480b1b['style'][_0xc76e42(0x1e7)]='inline-flex',this[_0xc76e42(0x6db)]());if(_0x48d316['length']<=_0x256e31){const _0x125a5e=document[_0xc76e42(0x4ac)](),_0x9ba6ac=document[_0xc76e42(0x1e6)](_0xc76e42(0x6d5));_0x9ba6ac[_0xc76e42(0x66c)]=_0x48d316[_0xc76e42(0x4ef)](_0x56f3f1=>this[_0xc76e42(0x1f4)](_0x56f3f1,_0x569634))[_0xc76e42(0x355)]('');while(_0x9ba6ac['firstChild'])_0x125a5e[_0xc76e42(0x378)](_0x9ba6ac['firstChild']);_0x3babee[_0xc76e42(0x378)](_0x125a5e),this['installWordsListDelegatedHandlers']();return;}let _0x435977=0x0;const _0x166c58=()=>{const _0x478436=_0xc76e42,_0x5a3a13=_0x48d316[_0x478436(0x6c6)](_0x435977,_0x435977+_0x256e31);if(_0x5a3a13[_0x478436(0x201)]===0x0)return;const _0x343b5a=_0x5a3a13['map'](_0x36d3b6=>this[_0x478436(0x1f4)](_0x36d3b6,_0x569634))[_0x478436(0x355)]('');_0x3babee[_0x478436(0x21c)]('beforeend',_0x343b5a),_0x435977+=_0x5a3a13[_0x478436(0x201)];};_0x166c58(),this[_0xc76e42(0x297)]();const _0xa9ee09=document[_0xc76e42(0x1e6)](_0xc76e42(0x6d5));_0xa9ee09[_0xc76e42(0x227)]['height']=_0xc76e42(0x344),_0x3babee['appendChild'](_0xa9ee09);const _0xbc2159=new IntersectionObserver(_0x36f366=>{const _0xf274e8=_0xc76e42;_0x36f366[0x0][_0xf274e8(0x273)]&&(_0x166c58(),_0x435977>=_0x48d316[_0xf274e8(0x201)]?(_0xbc2159['disconnect'](),_0xa9ee09[_0xf274e8(0x25a)]()):_0x3babee[_0xf274e8(0x378)](_0xa9ee09));},{'rootMargin':_0xc76e42(0x553)});_0xbc2159['observe'](_0xa9ee09);}[_0x3a406e(0x6bd)](_0x5c3c60,_0xe4e3e8=null){const _0x35dc96=_0x3a406e;this[_0x35dc96(0x25b)](),this[_0x35dc96(0x3bb)]=_0x5c3c60,this[_0x35dc96(0x4bc)]=null;const _0x3ad129=document[_0x35dc96(0x669)](_0x35dc96(0x31a)),_0x5ea27a=document['getElementById'](_0x35dc96(0x3b6)),_0x299a10=document[_0x35dc96(0x669)](_0x35dc96(0x2c9));typeof this[_0x35dc96(0x497)]==='function'&&this[_0x35dc96(0x497)](![]);if(_0x3ad129)_0x3ad129['classList']['remove'](_0x35dc96(0x569));const _0x440495=this[_0x35dc96(0x5e9)](),_0x2e5f57=_0x440495[_0x5c3c60];if(_0x2e5f57&&!_0xe4e3e8){if(_0x5ea27a)_0x5ea27a[_0x35dc96(0x6e8)]=_0x35dc96(0x2af)+_0x5c3c60;const _0xbcbc7f=document[_0x35dc96(0x669)](_0x35dc96(0x4b1));if(_0xbcbc7f)_0xbcbc7f[_0x35dc96(0x227)]['display']='none';this[_0x35dc96(0x305)](_0x5c3c60,_0x2e5f57),this[_0x35dc96(0x448)]();return;}const _0x3bfae8=document[_0x35dc96(0x669)](_0x35dc96(0x4b1));_0x3bfae8&&(_0x3bfae8[_0x35dc96(0x227)]['display']=_0x35dc96(0x59e),this[_0x35dc96(0x6db)]());let _0x489ac0=oxfordWordsDatabase[_0x5c3c60]||[];if(_0xe4e3e8&&_0xe4e3e8[_0x35dc96(0x3d7)]!==_0x35dc96(0x40b)){if(_0xe4e3e8['type']==='grammar'){_0x489ac0=_0x489ac0[_0x35dc96(0x66a)](_0x34f5ae=>_0x34f5ae[_0x35dc96(0x475)]===_0xe4e3e8['id']);if(_0x5ea27a)_0x5ea27a['textContent']=_0x5c3c60+_0x35dc96(0x1e1);}else{if(_0xe4e3e8[_0x35dc96(0x3d7)]===_0x35dc96(0x3e4)){_0x489ac0=_0x489ac0[_0x35dc96(0x66a)](_0x2fd529=>_0x2fd529[_0x35dc96(0x3e4)]===_0xe4e3e8['id']);const _0x30de02=_0x2e5f57[_0x35dc96(0x1d6)][_0x35dc96(0x6ff)](_0x4bfc9c=>_0x4bfc9c['id']===_0xe4e3e8['id'])?.['name']||_0x35dc96(0x68f);if(_0x5ea27a)_0x5ea27a[_0x35dc96(0x6e8)]=_0x5c3c60+_0x35dc96(0x3b1)+_0x30de02;}}}else{if(_0x5ea27a)_0x5ea27a['textContent']=_0x5c3c60+_0x35dc96(0x67e)+_0x489ac0['length']+_0x35dc96(0x69b);}_0x299a10&&(_0x299a10[_0x35dc96(0x66c)]='<div\x20style=\x22text-align:center;padding:20px;color:#999;\x22>Загрузка...</div>',this[_0x35dc96(0x63d)]('Кот\x20Боб\x20открывает\x20список...',0x320),requestAnimationFrame(()=>{const _0x1662c0=_0x35dc96;this['renderFilteredWordsList'](_0x489ac0,_0x5c3c60),setTimeout(()=>this[_0x1662c0(0x684)](),0x64);})),this['jumpToTopStrict']();}[_0x3a406e(0x5b7)](){const _0x3d48a6=_0x3a406e;this[_0x3d48a6(0x25b)](),this[_0x3d48a6(0x67a)]=!![];const _0x520a51=document[_0x3d48a6(0x669)](_0x3d48a6(0x2c9)),_0x5f0ae9=_0x520a51&&_0x520a51[_0x3d48a6(0x3ad)](_0x3d48a6(0x3a0)),_0xb726e=this[_0x3d48a6(0x3bb)]&&this[_0x3d48a6(0x5e9)]()[this[_0x3d48a6(0x3bb)]];if(_0x5f0ae9&&_0xb726e){this[_0x3d48a6(0x6bd)](this[_0x3d48a6(0x3bb)]);return;}this[_0x3d48a6(0x497)](!![]),this[_0x3d48a6(0x3bb)]=null,this[_0x3d48a6(0x4bc)]=null,document[_0x3d48a6(0x5f2)]('#levels\x20.auto-dict-top,\x20#levels\x20.auto-dict-inline')[_0x3d48a6(0x50b)](_0x120a83=>_0x120a83[_0x3d48a6(0x25a)]());}[_0x3a406e(0x350)](){const _0x2f299d=_0x3a406e,_0x58a8b9=document[_0x2f299d(0x3ad)](_0x2f299d(0x65f));if(_0x58a8b9)_0x58a8b9[_0x2f299d(0x25a)]();const _0xe8aa07=[{'el':_0x2f299d(0x268),'text':_0x2f299d(0x5b3),'pos':'top','action':()=>this['switchSection'](_0x2f299d(0x4f8))},{'el':'.nav-item[data-section=\x22learning\x22]','text':_0x2f299d(0x45a),'pos':_0x2f299d(0x3cd),'action':()=>this[_0x2f299d(0x321)](_0x2f299d(0x5de))},{'el':_0x2f299d(0x653),'text':_0x2f299d(0x4e9),'pos':_0x2f299d(0x3cd),'action':()=>this['switchSection'](_0x2f299d(0x6da))},{'el':_0x2f299d(0x54a),'text':_0x2f299d(0x447),'pos':_0x2f299d(0x3cd),'action':()=>this[_0x2f299d(0x321)](_0x2f299d(0x41e))},{'el':'.nav-item[data-section=\x22new-words\x22]','text':'Переводчик.\x20Введи\x20любое\x20слово,\x20и\x20я\x20создам\x20для\x20него\x20красивую\x20карточку.','pos':'top','action':()=>this[_0x2f299d(0x321)](_0x2f299d(0x445))},{'el':_0x2f299d(0x382),'text':_0x2f299d(0x446),'pos':_0x2f299d(0x3cd),'action':()=>this[_0x2f299d(0x321)]('progress')}];this['currentTutorialStep']=0x0,this[_0x2f299d(0x6df)](_0xe8aa07);}['showTutorialStep'](_0xc1a688){const _0x3864e0=_0x3a406e;document['querySelectorAll'](_0x3864e0(0x6ee))[_0x3864e0(0x50b)](_0x3bb626=>_0x3bb626[_0x3864e0(0x25a)]());if(this[_0x3864e0(0x6b3)]>=_0xc1a688[_0x3864e0(0x201)]){this[_0x3864e0(0x70d)]();return;}const _0x12fb98=_0xc1a688[this[_0x3864e0(0x6b3)]];_0x12fb98[_0x3864e0(0x34d)]&&typeof _0x12fb98[_0x3864e0(0x34d)]==='function'&&_0x12fb98['action'](),setTimeout(()=>{const _0x2fd3b7=_0x3864e0,_0x88fb4d=document[_0x2fd3b7(0x3ad)](_0x12fb98['el']);if(!_0x88fb4d||_0x88fb4d[_0x2fd3b7(0x24e)]===null){console[_0x2fd3b7(0x5e3)](_0x2fd3b7(0x602),_0x12fb98['el']),this[_0x2fd3b7(0x6b3)]++,this[_0x2fd3b7(0x6df)](_0xc1a688);return;}const _0x2ac544=_0x88fb4d[_0x2fd3b7(0x1eb)](),_0x85ff15=document[_0x2fd3b7(0x1e6)](_0x2fd3b7(0x6d5));_0x85ff15[_0x2fd3b7(0x493)]=_0x2fd3b7(0x63e),_0x85ff15[_0x2fd3b7(0x227)][_0x2fd3b7(0x2bf)]=_0x2fd3b7(0x5bd)+(_0x2ac544[_0x2fd3b7(0x3cd)]-0x8)+_0x2fd3b7(0x5cd)+(_0x2ac544['left']-0x8)+_0x2fd3b7(0x28f)+(_0x2ac544[_0x2fd3b7(0x6f7)]+0x10)+_0x2fd3b7(0x589)+(_0x2ac544[_0x2fd3b7(0x1a3)]+0x10)+_0x2fd3b7(0x367);const _0x3f302d=document[_0x2fd3b7(0x1e6)](_0x2fd3b7(0x6d5));_0x3f302d[_0x2fd3b7(0x493)]=_0x2fd3b7(0x2ff);let _0x54145c;const _0x17bff2=_0x12fb98[_0x2fd3b7(0x4b9)]==='top';if(_0x17bff2){_0x54145c=_0x2ac544[_0x2fd3b7(0x3cd)]-0xf0;if(_0x54145c<0x14)_0x54145c=_0x2ac544[_0x2fd3b7(0x50f)]+0x14;}else _0x54145c=_0x2ac544[_0x2fd3b7(0x50f)]+0x14;_0x3f302d[_0x2fd3b7(0x227)][_0x2fd3b7(0x2bf)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20fixed;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20top:\x20'+_0x54145c+'px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20left:\x2050%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateX(-50%);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20z-index:\x2099999;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20flex-direction:\x20column;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20300px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20pointer-events:\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20',_0x3f302d[_0x2fd3b7(0x66c)]=_0x2fd3b7(0x709)+_0x12fb98[_0x2fd3b7(0x26b)]+_0x2fd3b7(0x226)+(this['currentTutorialStep']+0x1)+'\x20из\x20'+_0xc1a688[_0x2fd3b7(0x201)]+_0x2fd3b7(0x663)+(_0x17bff2?_0x2fd3b7(0x665):'up')+_0x2fd3b7(0x578),document[_0x2fd3b7(0x673)]['appendChild'](_0x85ff15),document[_0x2fd3b7(0x673)]['appendChild'](_0x3f302d);const _0x90d14b=()=>{const _0x3f7217=_0x2fd3b7;this['currentTutorialStep']++,this[_0x3f7217(0x6df)](_0xc1a688);};document['getElementById'](_0x2fd3b7(0x21f))[_0x2fd3b7(0x563)]=_0x90d14b,_0x85ff15['onclick']=_0x1a6ba6=>{const _0x412d58=_0x2fd3b7;if(_0x1a6ba6[_0x412d58(0x24b)]===_0x85ff15)_0x90d14b();};},0x258);}[_0x3a406e(0x70d)](){const _0x2e5dfc=_0x3a406e,_0x44ea2b=document[_0x2e5dfc(0x1e6)](_0x2e5dfc(0x6d5));_0x44ea2b[_0x2e5dfc(0x493)]=_0x2e5dfc(0x63e),_0x44ea2b[_0x2e5dfc(0x227)][_0x2e5dfc(0x2bf)]=_0x2e5dfc(0x36d),_0x44ea2b[_0x2e5dfc(0x66c)]=_0x2e5dfc(0x383),document['body'][_0x2e5dfc(0x378)](_0x44ea2b);}static[_0x3a406e(0x1a4)](){const _0x27db79=_0x3a406e;if(document[_0x27db79(0x669)](_0x27db79(0x40d)))return;const _0x5c3486=document[_0x27db79(0x1e6)](_0x27db79(0x227));_0x5c3486['id']='app-extra-styles',_0x5c3486['textContent']=_0x27db79(0x3a4),document[_0x27db79(0x521)]['appendChild'](_0x5c3486);}}document[_0x3a406e(0x208)](_0x3a406e(0x415),()=>{const _0x4de9db=_0x3a406e,_0x4653df=localStorage[_0x4de9db(0x557)](_0x4de9db(0x3a9))||_0x4de9db(0x19f);document[_0x4de9db(0x463)][_0x4de9db(0x473)](_0x4de9db(0x702),_0x4653df),EnglishWordsApp[_0x4de9db(0x1a4)](),window[_0x4de9db(0x56f)]=new EnglishWordsApp();});
+class EnglishWordsApp {
+  constructor() {
+  this.isAndroid = /android/i.test((navigator.userAgent || '').toLowerCase());
+  this.grammarManager = new GrammarManager(this);
+  window.grammar = this.grammarManager;
+  this.loaderEl = null;
+  this.loaderStart = 0;
+  this.loaderMinMs = 0;
+  this.loaderTimer = null;
+
+  // Предварительная подгрузка Кота Боба для ВСЕХ устройств
+  const bobImg = new Image();
+  bobImg.src = '/loading.gif';
+  
+    this.currentSection = 'about';
+    this.currentLevel = null;
+    this.currentCategory = null;
+    this.learningWords = [];
+    this.customWords = [];
+    this.wordStats = {};
+    this.weeklyProgress = [];
+    this.currentMode = localStorage.getItem('currentMode') || 'quiz';
+    this.currentPractice = localStorage.getItem('currentPractice') || 'scheduled';
+    this.currentReviewIndex = 0;
+    this.sentenceBuilderState = {
+        currentSentence: null,
+        assembledWords: [],
+        correctOrder: [],
+        score: 0,
+        total: 0,
+        availableLevels: new Set()
+    };
+    this.showFilter = 'all';
+    this.gameQuizIntervals = {};
+    this.audioCtx = null;
+    
+    this.globalPlayer = new Audio();
+    this.globalPlayer.preload = 'auto'; 
+    
+    this.initMedicalImageCache();
+
+    // runtime flags
+    this.lastFlashcardFrontWasRussian = false;
+    this.currentAudio = null;
+    this.currentAudioPromise = null;
+    this.suppressAutoSpeakOnce = false;
+    
+    this.loadData();
+    this.muted = JSON.parse(localStorage.getItem('app_muted') || 'false');
+        // Глобальная скорость озвучки (0.5–1.5)
+    this.audioRate = parseFloat(localStorage.getItem('audio_rate') || '1');
+    if (isNaN(this.audioRate) || this.audioRate < 0.5 || this.audioRate > 1.5) {
+      this.audioRate = 1;
+    }
+    
+    this.srsConfig = {
+        dailyNew: 30,
+        dailyReview: 150,
+        activePool: 200,
+        learningSteps: [
+            10 * 60 * 1000,
+            60 * 60 * 1000,
+            4 * 60 * 60 * 1000
+        ],
+        graduateToDays: [1, 6],
+        minEase: 1.3
+    };
+    
+    this.srsDay = this.loadSrsDay();
+    this.migrateStatsSchema();
+    
+    this.initializeUI();
+    this.renderProgress();
+    this.syncModePracticeToggles();
+    this.installAudioUnlocker();
+    this.preloadAiChat();
+    
+        // "Воскрешение" звука при возврате в приложение на iOS
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            console.log('App became visible - trying to wake up audio');
+            
+            // 1. Будим AudioContext, если он уснул
+            if (this.audioCtx && this.audioCtx.state === 'suspended') {
+                this.audioCtx.resume().catch(e => console.log('Ctx resume fail', e));
+            }
+
+            // 2. Сбрасываем наш глобальный плеер, чтобы система поняла, что мы снова активны
+            // Не меняем src, просто убеждаемся, что он не в "подвешенном" состоянии
+            if (this.globalPlayer) {
+                // Если он проигрывал что-то и завис — пауза поможет сбросить состояние
+                try {
+                    // Не вызываем play(), иначе может заиграть старый звук.
+                    // Просто даем системе понять, что объект жив.
+                    this.globalPlayer.pause(); 
+                } catch(e) {}
+            }
+        }
+    });
+    
+    // Запуск проверки после инициализации
+    setTimeout(() => {
+        this.checkAndShowFirstRunOrMotivation();
+    }, 1000);
+    
+    // PWA Audio Warmup (Разблокировка звука при первом клике)
+    window.addEventListener('click', () => {
+        // 1. Будим AudioContext
+        if (this.audioCtx && this.audioCtx.state === 'suspended') {
+            this.audioCtx.resume().catch(e => console.log(e));
+        }
+        // 2. Будим HTML5 Audio (тишиной)
+        if (this.globalPlayer) {
+            // Короткий пустой звук (WAV)
+            const silentWav = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+            // Если плеер пустой, загружаем тишину и играем
+            if (!this.globalPlayer.src || this.globalPlayer.src === window.location.href) {
+                this.globalPlayer.src = silentWav;
+            }
+            this.globalPlayer.play().then(() => {
+                // Сразу ставим на паузу, чтобы не занимать канал
+                this.globalPlayer.pause(); 
+            }).catch(() => {});
+        }
+    }, { once: true });
+    
+  }
+
+// ==========================================
+// ONBOARDING WIZARD
+// ==========================================
+
+checkAndShowFirstRunOrMotivation() {
+    try {
+        // Проверяем, прошел ли пользователь Туториал (презентацию интерфейса)
+        const tutorialDone = localStorage.getItem('tutorial_complete_forever') === '1';
+        
+        if (!tutorialDone) {
+            // Сценарий 1: Новый пользователь -> Сначала показываем интерфейс
+            // Скрываем все секции, чтобы было чисто
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            // Переходим на главную (Learning), чтобы было что показывать
+            this.switchSection('learning');
+            
+            setTimeout(() => {
+                this.startAppTutorial();
+                // После завершения туториала мы предложим Визард (см. метод showTutorialFinish)
+            }, 500);
+        } 
+        else {
+            // Сценарий 2: Старичок -> Показываем мотивацию (если надо)
+            this.maybeShowDailyMotivation(() => {
+                // Если мотивация закрыта (или не показана), проверяем, не нужно ли запустить Визард
+                // Это на случай, если он пропустил его в первый раз, но флага еще нет
+                const wizardDone = localStorage.getItem('wizard_v2_completed') === '1';
+                if (!wizardDone) {
+                    // Можно предложить ненавязчиво, но пока оставим только кнопку в настройках,
+                    // чтобы не бесить пользователей
+                }
+            });
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+
+
+showOnboardingWizard() {
+    // Начальное состояние визарда
+    this.wizardState = {
+        step: 1,
+        totalSteps: 4,
+        data: {
+            experience: null, // 1-5
+            goal: null,       // 'travel', 'career', 'exam', 'fun'
+            subGoal: null,    // 'medical', 'it', etc.
+            pace: 15,         // words per day
+            focus: null       // 'basic', 'grammar', 'speaking', 'prof'
+        }
+    };
+
+    // Создаем DOM элементы
+    const overlay = document.createElement('div');
+    overlay.className = 'wizard-overlay';
+    overlay.id = 'onboardingWizard';
+    
+    overlay.innerHTML = `
+        <div class="wizard-header">
+            <div class="wizard-progress-track">
+                <div class="wizard-progress-fill" id="wizardProgress" style="width: 25%"></div>
+            </div>
+        </div>
+        <div class="wizard-content" id="wizardContent">
+            <!-- Контент шага рендерится тут -->
+        </div>
+        <div class="wizard-footer">
+            <button class="wizard-btn" id="wizardNextBtn" disabled>ПРОДОЛЖИТЬ</button>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    
+    // Биндим кнопку
+    document.getElementById('wizardNextBtn').addEventListener('click', () => this.nextWizardStep());
+    
+    // Рендерим первый шаг
+    this.renderWizardStep();
+}
+
+renderWizardStep() {
+    const content = document.getElementById('wizardContent');
+    const progress = document.getElementById('wizardProgress');
+    const nextBtn = document.getElementById('wizardNextBtn');
+    const step = this.wizardState.step;
+    
+    // Обновляем прогресс
+    progress.style.width = `${(step / this.wizardState.totalSteps) * 100}%`;
+    
+    // Для шага 4 (Мультивыбор) кнопка активна, если уже что-то выбрано
+    if (step === 4 && Array.isArray(this.wizardState.data.focus) && this.wizardState.data.focus.length > 0) {
+        nextBtn.disabled = false;
+    } else {
+        nextBtn.disabled = true;
+    }
+
+    let html = '';
+    let mascotText = '';
+
+    // --- ШАГ 1: ОПЫТ ---
+    if (step === 1) {
+        mascotText = "Привет! Я Кот Боб. Давай подберем идеальную программу. Какой у тебя опыт?";
+        html = `
+            <div class="wizard-options">
+                ${this._renderWizardCard(1, 'step1', 'Новичок (A1)', 'Знаю hello, cat. Сложные фразы — тёмный лес.')}
+                ${this._renderWizardCard(2, 'step1', 'Элементарный (A2)', 'Могу рассказать о себе простыми фразами.')}
+                ${this._renderWizardCard(3, 'step1', 'Средний (B1)', 'Понимаю смысл, но говорю с ошибками.')}
+                ${this._renderWizardCard(4, 'step1', 'Выше среднего (B2)', 'Смотрю сериалы, но хочу звучать как носитель.')}
+                ${this._renderWizardCard(5, 'step1', 'Продвинутый (C1-C2)', 'Для профи, спец. термины и сложные идиомы.')}
+            </div>
+        `;
+    }
+    
+    // --- ШАГ 2: ЦЕЛЬ ---
+    else if (step === 2) {
+        mascotText = "Для чего тебе английский прямо сейчас?";
+        html = `
+            <div class="wizard-options">
+                ${this._renderWizardCard('travel', 'step2', 'Путешествия и общение', '✈️ Разговорный язык')}
+                ${this._renderWizardCard('career', 'step2', 'Карьера и работа', '💼 IT, Медицина, Бизнес')}
+                ${this._renderWizardCard('exam', 'step2', 'Сдача экзамена', '🎓 ОГЭ, ЕГЭ, IELTS')}
+                ${this._renderWizardCard('fun', 'step2', 'Для себя', '🎬 Фильмы, тренировка памяти')}
+            </div>
+            <div id="subGoalContainer" style="margin-top:15px; display:none; border-top:2px solid var(--border-color); padding-top:15px;">
+                <div class="wizard-title" style="font-size:1.1rem; margin-bottom:10px;">Уточните направление:</div>
+                <div class="wizard-options sub-options">
+                     <!-- Рендерится динамически -->
+                </div>
+            </div>
+        `;
+    }
+
+    // --- ШАГ 3: ТЕМП ---
+    else if (step === 3) {
+        mascotText = "Сколько новых слов в день ты готов учить?";
+        html = `
+            <div class="wizard-options">
+                ${this._renderWizardCard(5, 'step3', 'Лайт (5 слов)', 'Для очень занятых')}
+                ${this._renderWizardCard(15, 'step3', 'Норма (15 слов)', 'Золотая середина')}
+                ${this._renderWizardCard(25, 'step3', 'Хардкор (25 слов)', 'Быстрый результат')}
+            </div>
+        `;
+    }
+
+    // --- ШАГ 4: ФОКУС (МУЛЬТИ-ВЫБОР) ---
+    else if (step === 4) {
+        const exp = this.wizardState.data.experience;
+        mascotText = "На чем сделаем упор? (Можно выбрать несколько)";
+        
+        const blockSpeaking = exp < 2; // Нельзя идиомы, если совсем новичок
+        const blockProf = exp < 3;     // Нельзя профи, если ниже среднего
+
+        html = `
+            <div class="wizard-options">
+                ${this._renderWizardCard('basic', 'step4', 'Базовый словарь', 'Самые важные слова для выживания')}
+                ${this._renderWizardCard('grammar', 'step4', 'Грамматика', 'Неправильные глаголы, Предлоги, Союзы')}
+                ${this._renderWizardCard('speaking', 'step4', 'Разговорная речь', 'Фразовые глаголы, Идиомы', blockSpeaking, 'Нужна база A2')}
+                ${this._renderWizardCard('prof', 'step4', 'Сложная лексика', 'Пословицы, редкие слова', blockProf, 'Нужна база B1')}
+            </div>
+            <div style="text-align:center; margin-top:10px; font-size:0.8rem; color:var(--text-secondary);">
+               Выберите один или несколько пунктов
+            </div>
+        `;
+    }
+
+    // Вставка в DOM
+    content.innerHTML = `
+        <div class="wizard-mascot-area">
+            <img src="/loading.gif" class="wizard-mascot-img" alt="Bob">
+            <div class="wizard-bubble">${mascotText}</div>
+        </div>
+        <div class="wizard-title">${this._getStepTitle(step)}</div>
+        ${html}
+    `;
+
+    // Если на 4 шаге уже были выбраны опции (при возврате назад), подсветим их
+    if (step === 4 && Array.isArray(this.wizardState.data.focus)) {
+        this.wizardState.data.focus.forEach(val => {
+            const card = content.querySelector(`[data-value="${val}"]`);
+            if(card) {
+                card.classList.add('active');
+                card.querySelector('i').className = 'fas fa-check-square'; // Квадратик для мультивыбора
+            }
+        });
+    }
+
+    this._attachWizardCardHandlers();
+}
+
+_renderWizardCard(value, group, title, desc, disabled = false, tooltip = '') {
+    const disabledAttr = disabled ? 'disabled' : '';
+    const tooltipHtml = disabled ? `<div class="wizard-tooltip">${tooltip}</div>` : '';
+    return `
+        <div class="wizard-card ${disabledAttr ? 'disabled' : ''}" data-group="${group}" data-value="${value}">
+            ${tooltipHtml}
+            <div class="wizard-card-text">
+                <div class="wizard-card-title">${title}</div>
+                <div class="wizard-card-desc">${desc}</div>
+            </div>
+            <div class="wizard-card-icon">
+                <i class="far fa-circle"></i> 
+            </div>
+        </div>
+    `;
+}
+
+_getStepTitle(step) {
+    if (step === 1) return 'Уровень владения';
+    if (step === 2) return 'Ваша цель';
+    if (step === 3) return 'Дневная цель';
+    if (step === 4) return 'Фокус обучения';
+    return '';
+}
+
+_attachWizardCardHandlers() {
+    const cards = document.querySelectorAll('.wizard-card:not(.disabled)');
+    cards.forEach(card => {
+        // Удаляем старые слушатели, чтобы не дублировать (клон ноды - хак)
+        const newCard = card.cloneNode(true);
+        card.parentNode.replaceChild(newCard, card);
+        
+        newCard.addEventListener('click', (e) => {
+            const group = newCard.dataset.group;
+            const val = newCard.dataset.value;
+
+            // --- ЛОГИКА ДЛЯ ШАГА 4 (МУЛЬТИ-ВЫБОР) ---
+            if (this.wizardState.step === 4) {
+                // Инициализируем массив, если нет
+                if (!Array.isArray(this.wizardState.data.focus)) {
+                    this.wizardState.data.focus = [];
+                }
+
+                if (newCard.classList.contains('active')) {
+                    // Если уже активна - убираем
+                    newCard.classList.remove('active');
+                    newCard.querySelector('i').className = 'far fa-square'; // Пустой квадрат
+                    this.wizardState.data.focus = this.wizardState.data.focus.filter(i => i !== val);
+                } else {
+                    // Если не активна - добавляем
+                    newCard.classList.add('active');
+                    newCard.querySelector('i').className = 'fas fa-check-square'; // Галочка в квадрате
+                    this.wizardState.data.focus.push(val);
+                }
+
+                // Кнопка "Далее" активна, если выбран хотя бы 1 пункт
+                document.getElementById('wizardNextBtn').disabled = (this.wizardState.data.focus.length === 0);
+                return;
+            }
+
+            // --- ЛОГИКА ДЛЯ ОСТАЛЬНЫХ ШАГОВ (ОДИНОЧНЫЙ ВЫБОР) ---
+            
+            // Сброс активных в этой группе
+            if (group === 'step2_sub') {
+                 document.querySelectorAll(`[data-group="step2_sub"]`).forEach(c => {
+                    c.classList.remove('active');
+                    c.querySelector('i').className = 'far fa-circle';
+                });
+                this.wizardState.data.subGoal = val;
+            } else {
+                document.querySelectorAll(`[data-group="${group}"]`).forEach(c => {
+                    c.classList.remove('active');
+                    c.querySelector('i').className = 'far fa-circle';
+                });
+            }
+
+            // Активация текущей
+            newCard.classList.add('active');
+            newCard.querySelector('i').className = 'fas fa-check-circle';
+            
+            // Сохранение данных
+            if (this.wizardState.step === 1) this.wizardState.data.experience = parseInt(val);
+            if (this.wizardState.step === 2) {
+                if (group === 'step2') {
+                    this.wizardState.data.goal = val;
+                    // Если выбрали Карьеру или Экзамен - показываем подменю
+                    if (val === 'career' || val === 'exam') {
+                        this._handleStep2SubOptions(val);
+                    } else {
+                        // Иначе скрываем подменю
+                        document.getElementById('subGoalContainer').style.display = 'none';
+                        this.wizardState.data.subGoal = null;
+                        document.getElementById('wizardNextBtn').disabled = false;
+                    }
+                }
+            }
+            if (this.wizardState.step === 3) this.wizardState.data.pace = parseInt(val);
+
+            // Разблокировка кнопки (кроме случая когда открылось подменю)
+            if (group !== 'step2' || (val !== 'career' && val !== 'exam')) {
+                document.getElementById('wizardNextBtn').disabled = false;
+            }
+        });
+    });
+}
+
+_handleStep2SubOptions(mainGoal) {
+    const container = document.getElementById('subGoalContainer');
+    const subOptions = container.querySelector('.sub-options');
+    
+    let html = '';
+    
+    if (mainGoal === 'career') {
+        html += this._renderWizardCard('MEDICAL', 'step2_sub', 'Медицина', 'Anatomy, Healthcare');
+        html += this._renderWizardCard('IT', 'step2_sub', 'IT и Технологии', 'Coding, Hardware, Internet');
+        html += this._renderWizardCard('BUSINESS', 'step2_sub', 'Бизнес', 'Finance, Management, Marketing');
+        html += this._renderWizardCard('LEGAL', 'step2_sub', 'Юриспруденция', 'Law, Court, Crime');
+    } else if (mainGoal === 'exam') {
+        // === ВОТ ТУТ МЫ КОНКРЕТИЗИРУЕМ ===
+        html += this._renderWizardCard('OGE', 'step2_sub', 'ОГЭ (9 класс)', 'Уровень A2-B1');
+        html += this._renderWizardCard('EGE', 'step2_sub', 'ЕГЭ (11 класс)', 'Уровень B1-B2');
+        html += this._renderWizardCard('IELTS', 'step2_sub', 'IELTS / TOEFL', 'Academic English');
+    }
+
+    if (html) {
+        subOptions.innerHTML = html;
+        container.style.display = 'block';
+        this.wizardState.data.subGoal = null; 
+        document.getElementById('wizardNextBtn').disabled = true; // Ждем выбора
+        
+        // Прокрутим вниз к опциям
+        setTimeout(() => {
+             container.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+        
+        this._attachWizardCardHandlers();
+    } else {
+        container.style.display = 'none';
+        this.wizardState.data.subGoal = null;
+        document.getElementById('wizardNextBtn').disabled = false;
+    }
+}
+
+nextWizardStep() {
+    if (this.wizardState.step < this.wizardState.totalSteps) {
+        this.wizardState.step++;
+        this.renderWizardStep();
+    } else {
+        this.finishWizard();
+    }
+}
+
+async finishWizard() {
+    const overlay = document.getElementById('onboardingWizard');
+    const data = this.wizardState.data;
+    
+    // 1. Формируем конфиг пользователя
+    const userConfig = {
+        experience: data.experience,
+        goal: data.goal,
+        subGoal: data.subGoal,
+        dailyLimit: data.pace,
+        focus: data.focus,
+        setupDate: new Date().toDateString(),
+        newWordsAddedToday: 0,
+        lastNewWordsDate: null,
+        pendingSpecialWords: [] 
+    };
+    
+    localStorage.setItem('userConfig', JSON.stringify(userConfig));
+    localStorage.setItem('first_run_completed', '1');
+
+    // 2. Показываем лоадер (Кот Боб)
+    if (overlay) {
+        overlay.innerHTML = `
+            <div style="text-align:center; padding:40px; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
+                <img src="/loading.gif" style="width:120px; margin-bottom:20px;">
+                <h2 style="margin-bottom:10px; font-weight:900;">Настраиваю программу...</h2>
+                <p style="color:var(--text-secondary)">Кот Боб подбирает слова под ваш уровень.</p>
+            </div>
+        `;
+    }
+
+    await this.delay(1500); // Пауза для эффекта
+    
+    // 3. Генерируем слова
+    this.generateInitialVocabulary(data, userConfig);
+    this.saveData();
+    
+    // 4. Удаляем Визард (Опросник)
+    if (overlay) overlay.remove();
+    localStorage.setItem('wizard_v2_completed', '1');
+    
+    // 5. Запускаем интерфейс приложения
+    this.initializeUI(); 
+    this.renderProgress();
+    this.syncModePracticeToggles();
+    
+    this.showNotification(`План готов! Ваша цель: ${data.pace} новых слов в день.`, 'success');
+    
+    // 6. Останавливаем лишние звуки
+    this.stopCurrentAudio();
+    this.suppressAutoSpeakOnce = true;
+
+    // 7. Переходим на экран обучения
+    this.switchSection('learning');
+    this.renderLearningSection();
+    
+    // === ГЛАВНОЕ ИЗМЕНЕНИЕ ===
+    // Запускаем инструкцию (Туториал) через полсекунды
+    setTimeout(() => {
+        this.startAppTutorial();
+        
+        // СТАВИМ "ВЕЧНЫЙ" ФЛАГ
+        // Это значит: "Пользователь прошел обучение, больше не показывать".
+        localStorage.setItem('tutorial_complete_forever', '1');
+        
+    }, 500);
+    // ==========================
+}
+
+// --- ГЛАВНЫЙ АЛГОРИТМ ПОДБОРА (Logic Engine) ---
+generateInitialVocabulary(data, config) {
+    const exp = data.experience;
+    const focusArray = Array.isArray(data.focus) ? data.focus : [data.focus]; // Работаем как с массивом
+    const wordsToAdd = [];
+    const pendingWords = [];
+
+    const add = (sourceLevel) => {
+        const db = oxfordWordsDatabase[sourceLevel] || [];
+        db.forEach(w => {
+            wordsToAdd.push({ ...w, level: sourceLevel, forms: w.forms || null });
+        });
+    };
+    
+    const addPending = (sourceLevel) => {
+        const db = oxfordWordsDatabase[sourceLevel] || [];
+        db.forEach(w => {
+            pendingWords.push({ ...w, level: sourceLevel });
+        });
+    };
+
+    // === 1. БАЗА ПО ОПЫТУ ===
+    if (exp === 1) add('A1'); 
+    else if (exp === 2) { add('A2'); add('B1'); }
+    else if (exp === 3) { add('B1'); add('B2'); }
+    else if (exp === 4) { add('B2'); add('C1'); }
+    else if (exp === 5) { add('C1'); add('C2'); }
+
+    // === 2. ЭКЗАМЕНЫ (УМНАЯ ЛОГИКА) ===
+    if (data.subGoal) {
+        const goal = data.subGoal;
+        
+        if (goal === 'OGE') {
+            // ОГЭ - это уровень A2-B1. Если человек новичок, даем A1+A2.
+            if (exp <= 2) { add('A1'); add('A2'); } 
+            else { add('A2'); add('B1'); }
+            this.showNotification('Добавлен словарный минимум для ОГЭ (A2-B1)', 'success');
+        }
+        else if (goal === 'EGE') {
+            // ЕГЭ - это B1-B2.
+            if (exp <= 2) { add('A2'); add('B1'); } // Подтягиваем базу
+            else { add('B1'); add('B2'); }
+            this.showNotification('Добавлен словарный минимум для ЕГЭ (B1-B2)', 'success');
+        }
+        else if (goal === 'IELTS' || goal === 'TOEFL') {
+            add('B2');
+            add('C1');
+            add('IELTS'); // Если есть такая категория в базе
+        }
+        else {
+            // Профессии (IT, MED, etc)
+            if (exp <= 2) {
+                addPending(goal);
+                this.showNotification(`Слова для ${goal} добавлены в очередь (нужна база)`, 'info');
+            } else {
+                add(goal);
+            }
+        }
+    }
+
+    // === 3. ФОКУС (МУЛЬТИ-ВЫБОР) ===
+    if (focusArray.includes('basic')) {
+        // Если выбрали "Базу", убедимся, что A1/A2 добавлены
+        if (exp > 2) { add('A1'); add('A2'); } 
+    }
+    if (focusArray.includes('grammar')) {
+        add('PREPOSITIONS');
+        add('IRREGULARS'); // Неправильные глаголы
+    }
+    if (focusArray.includes('speaking')) {
+        add('PHRASAL_VERBS');
+        add('IDIOMS');
+    }
+    if (focusArray.includes('prof')) {
+        add('PROVERBS');
+        if (exp >= 3) add('C1');
+    }
+
+    // Сохраняем очередь
+    config.pendingSpecialWords = pendingWords;
+    localStorage.setItem('userConfig', JSON.stringify(config));
+
+    // Фильтрация дублей и сохранение
+    let count = 0;
+    const uniqueSet = new Set();
+    
+    wordsToAdd.forEach(w => {
+        // Ключ уникальности: слово + уровень
+        const key = `${w.word}_${w.level}`;
+        
+        // Проверяем, нет ли уже такого слова в текущем списке обучения
+        const alreadyInLearning = this.learningWords.some(lw => lw.word === w.word && lw.level === w.level);
+        
+        if (!uniqueSet.has(key) && !alreadyInLearning) {
+            uniqueSet.add(key);
+            this.learningWords.push({
+                word: w.word,
+                translation: w.translation,
+                level: w.level,
+                forms: w.forms || null,
+                isLearned: false,
+                addedAt: Date.now()
+            });
+            this.initializeWordStats(w.word);
+            count++;
+        }
+    });
+    
+    console.log(`Wizard added ${count} unique words.`);
+}
+
+  // =========================
+  // Helpers: language & audio
+  // =========================
+  isRussian(text) { return /[а-яё]/i.test(text || ''); }
+  isEnglish(text) { return /[a-z]/i.test(text || ''); }
+  isMultiWord(text) { if (!text) return false; return /\s/.test(String(text).trim()); }
+  getEnglishDisplay(wordObj) {
+    if (!wordObj) return '';
+    if (wordObj.forms && Array.isArray(wordObj.forms) && wordObj.forms.length > 0) {
+      return wordObj.forms.join(' → ');
+    }
+    return wordObj.word;
+  }
+  getBaseEnglish(wordObj) {
+    if (!wordObj) return '';
+    return (wordObj.forms && wordObj.forms.length > 0) ? wordObj.forms[0] : wordObj.word;
+  }
+  isIrregularWord(wordObj) { return wordObj && wordObj.level === 'IRREGULARS'; }
+  shouldAutoPronounce(wordObj) { return !this.isIrregularWord(wordObj); }
+
+  delay(ms) { return new Promise(res => setTimeout(res, ms)); }
+  async waitForCurrentAudioToFinish() {
+    const p = this.currentAudioPromise;
+    if (p && typeof p.then === 'function') { try { await p; } catch {} }
+  }
+
+  cleanWordForAudio(raw) {
+    if (!raw) return '';
+    const w = String(raw).toLowerCase().trim();
+    const basic = w
+      .replace(/[\/]+/g, ' ')
+      .replace(/[^a-z\s'-]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    return basic;
+  }
+  sanitizeForSpeech(raw) {
+    if (!raw) return '';
+    return String(raw)
+      .toLowerCase()
+      .replace(/→/g, ' ')
+      .replace(/[\/]+/g, ' ')
+      .replace(/[^a-z\s'-]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+  buildAudioCandidates(baseWord) {
+    const cleaned = this.cleanWordForAudio(baseWord);
+    if (!cleaned) return [];
+    const noSpace = cleaned.replace(/\s+/g, '');
+    const firstToken = cleaned.split(' ')[0];
+    const uniq = [];
+    [cleaned, noSpace, firstToken].forEach(c => { if (c && !uniq.includes(c)) uniq.push(c); });
+    return uniq;
+  }
+  
+  buildAudioUrl(wordCandidate, region = 'us') {
+    const clean = (wordCandidate || '').toLowerCase();
+    return `https://wooordhunt.ru/data/sound/sow/${region}/${clean}.mp3`;
+  }
+  
+    // ==========================================================
+  // NEW AUDIO LOGIC: PREPOSITIONS, IDIOMS, PHRASAL , PROVERBS
+  // ==========================================================
+
+  // --- 1. ПРЕДЛОГИ (Prepositions) ---
+  // Имя файла: "at" -> "at", "run into" -> "run_into"
+  buildPrepositionFileName(phrase) {
+    if (!phrase) return '';
+    return String(phrase)
+      .toLowerCase()
+      .replace(/[^a-z\s]/g, '') // Убираем спецсимволы
+      .trim()
+      .replace(/\s+/g, '_');    // Пробелы в подчеркивания
+  }
+
+  // URL: bewords.ru/au/prepositions/us/at.mp3
+  buildPrepositionAudioUrl(fileName, region) {
+    const r = region === 'uk' ? 'uk' : 'us'; // Поддержка обоих регионов
+    return `https://bewords.ru/au/prepositions/${r}/${fileName}.mp3`;
+  }
+
+  async playPrepositionAudio(phrase, region) {
+    const file = this.buildPrepositionFileName(phrase);
+    if (!file) return false;
+    
+    const url = this.buildPrepositionAudioUrl(file, region);
+    
+    try {
+      await this.playMp3Url(url);
+      return true;
+    } catch (e) {
+      // TTS ОТКЛЮЧЕН: если файла нет, будет тишина
+      console.log('Preposition audio missing:', url);
+      return false; 
+    }
+  }
+
+  // --- 2. ФРАЗОВЫЕ ГЛАГОЛЫ (Phrasal Verbs) ---
+  buildPhrasalFileName(phrase) {
+    if (!phrase) return '';
+    return String(phrase)
+      .toLowerCase()
+      .replace(/[^a-z\s]/g, '')
+      .trim()
+      .replace(/\s+/g, '_');
+  }
+
+  // URL: bewords.ru/au/phrasal/us/look_up.mp3 (всегда US)
+  buildPhrasalAudioUrl(fileName) {
+    return `https://bewords.ru/au/phrasal/us/${fileName}.mp3`;
+  }
+
+  async playPhrasalAudio(phrase) {
+    const file = this.buildPhrasalFileName(phrase);
+    if (!file) return false;
+    
+    const url = this.buildPhrasalAudioUrl(file);
+    
+    try {
+      await this.playMp3Url(url);
+      return true;
+    } catch (e) {
+      console.log('Phrasal audio missing:', url);
+      return false;
+    }
+  }
+
+  // --- 3. ИДИОМЫ (Idioms) ---
+  buildIdiomFileName(phrase) {
+    if (!phrase) return '';
+    return String(phrase)
+      .toLowerCase()
+      .replace(/[^a-z\s]/g, '')
+      .trim()
+      .replace(/\s+/g, '_');
+  }
+
+  // URL: bewords.ru/au/idioms/us/break_a_leg.mp3 (всегда US)
+  buildIdiomAudioUrl(fileName) {
+    return `https://bewords.ru/au/idioms/us/${fileName}.mp3`;
+  }
+
+  async playIdiomAudio(phrase) {
+    const file = this.buildIdiomFileName(phrase);
+    if (!file) return false;
+    
+    const url = this.buildIdiomAudioUrl(file);
+    
+    try {
+      await this.playMp3Url(url);
+      return true;
+    } catch (e) {
+      console.log('Idiom audio missing:', url);
+      return false;
+    }
+  }
+  
+    // --- 4. ПОСЛОВИЦЫ (Proverbs) ---
+  buildProverbFileName(phrase) {
+    if (!phrase) return '';
+    return String(phrase)
+      .toLowerCase()
+      .replace(/[^a-z\s]/g, '') // Убираем запятые, точки, апострофы
+      .trim()
+      .replace(/\s+/g, '_');    // Пробелы меняем на нижнее подчеркивание
+  }
+
+  // URL: bewords.ru/au/proverbs/us/no_pain_no_gain.mp3
+  buildProverbAudioUrl(fileName) {
+    // Всегда берем папку 'us', независимо от нажатой кнопки
+    return `https://bewords.ru/au/proverbs/us/${fileName}.mp3`;
+  }
+
+  async playProverbAudio(phrase) {
+    const file = this.buildProverbFileName(phrase);
+    if (!file) return false;
+    
+    const url = this.buildProverbAudioUrl(file);
+    
+    try {
+      await this.playMp3Url(url);
+      return true;
+    } catch (e) {
+      // TTS ОТКЛЮЧЕН: если файла нет — тишина
+      console.log('Proverb audio missing:', url);
+      return false; 
+    }
+  }
+
+  // --- ГЛАВНЫЙ МЕТОД (Маршрутизатор аудио) ---
+  // Вызывается отовсюду: из списков, карточек, квизов и игрового шлюза
+  async playWord(word, forms = null, region = null, level = null) {
+    if (typeof forms === 'string') { forms = [forms]; }
+    const regionPref = (region === 'uk' || region === 'us') ? region : 'us';
+
+    // A. ПРЕДЛОГИ
+    if (level === 'PREPOSITIONS') {
+      await this.playPrepositionAudio(word, regionPref);
+      return;
+    }
+
+    // B. ИДИОМЫ
+    if (level === 'IDIOMS') {
+      await this.playIdiomAudio(word);
+      return;
+    }
+
+    // C. ФРАЗОВЫЕ ГЛАГОЛЫ
+    if (level === 'PHRASAL_VERBS') {
+      await this.playPhrasalAudio(word);
+      return;
+    }
+    
+    // D. ПОСЛОВИЦЫ
+    if (level === 'PROVERBS') {
+      // Игнорируем regionPref, внутри метода всегда стоит 'us'
+      await this.playProverbAudio(word);
+      return;
+    }
+
+    // E. СТАНДАРТНАЯ ЛОГИКА (Для A1-C2 и остальных)
+    
+    // Если слово состоит из частей через слэш (read/reading)
+    if ((!forms || !Array.isArray(forms) || forms.length === 0) &&
+        typeof word === 'string' && word.includes('/')) {
+      const parts = word.split('/').map(s => s.trim()).filter(Boolean);
+      if (parts.length > 1) {
+        await this.playFormsSequence(parts, regionPref);
+        return;
+      }
+    }
+
+    // Если переданы формы (go -> went -> gone)
+    if (forms && Array.isArray(forms) && forms.length) {
+      await this.playFormsSequence(forms, regionPref);
+      return;
+    }
+
+    // Если это фраза (но не спец. категория), используем TTS
+    if (this.isMultiWord(word)) {
+      await this.playPhraseTTS(word, regionPref);
+      return;
+    }
+
+    // Обычное одиночное слово (Wooordhunt)
+    await this.playSingleWordMp3(word, regionPref);
+  }
+  
+ stopCurrentAudio() {
+    // 1. Останавливаем HTML5 Audio (Глобальный плеер)
+    if (this.globalPlayer) {
+        this.globalPlayer.pause();
+        this.globalPlayer.currentTime = 0;
+        // ВАЖНО: Сбрасываем источник, чтобы плеер "забыл" последнее слово
+        this.globalPlayer.removeAttribute('src'); 
+        this.globalPlayer.load(); // Принудительная перезагрузка пустого состояния
+    }
+
+    // 2. Останавливаем TTS (синтез речи)
+    if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+    }
+
+    // 3. Сбрасываем текущий промис и флаги
+    this.currentAudioPromise = null;
+}
+
+playCorrectSound() {
+    if (this.muted) return;
+    
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        
+        const ctx = this.audioCtx || new AudioContext();
+        if (ctx.state === 'suspended') ctx.resume();
+
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        // 'sine' = Чистый, мягкий звук (как колокольчик или электронный "пилим")
+        osc.type = 'sine'; 
+        
+        // Частота: C6 (Высокая До) - классический звук успеха
+        osc.frequency.setValueAtTime(1046.50, now); 
+        
+        // Громкость: Резкий удар и плавное затухание (эффект колокола)
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.3, now + 0.02); // Быстрая атака
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5); // Длинный хвост
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.5);
+        
+    } catch (e) {
+        // error
+    }
+}
+
+  // MP3 play that resolves when playback finishes (no overlap)
+playMp3Url(url) {
+    if (this.muted) return Promise.resolve(false);
+
+    const p = new Promise((resolve, reject) => {
+        try {
+            // Используем глобальный плеер вместо new Audio()
+            const audio = this.globalPlayer;
+
+            // Сбрасываем предыдущее воспроизведение
+            audio.pause();
+            
+            // Важный хак для iOS: очистка src и принудительный load() сбрасывают буфер
+            // Но иногда вызов load() на пустом src вызывает ошибку, поэтому делаем аккуратно:
+            // audio.src = ''; 
+            // audio.load(); 
+
+            let endedOrFailed = false;
+
+            // Очистка слушателей от предыдущего запуска
+            audio.onended = null;
+            audio.onerror = null;
+            audio.oncanplaythrough = null;
+            audio.onloadeddata = null;
+
+            const cleanup = () => {
+                if (endedOrFailed) return;
+                endedOrFailed = true;
+                // Мы не удаляем слушатели здесь жестко, так как объект переиспользуется, 
+                // они перезапишутся при следующем вызове, но флаг endedOrFailed защитит промис.
+            };
+
+            // Навешиваем новые обработчики
+            audio.onended = () => {
+                cleanup();
+                resolve(true);
+            };
+
+            audio.onerror = (e) => {
+                cleanup();
+                // На iOS часто бывает ошибка AbortError при быстром переключении, это не страшно
+                console.warn('Audio playback error or aborted', e);
+                reject(new Error('Audio error'));
+            };
+            
+            // Обработчик готовности
+            audio.oncanplaythrough = async () => {
+               // Пытаемся воспроизвести
+               try {
+                   await audio.play();
+               } catch (err) {
+                   // Если ошибка NotAllowedError (нет жеста), реджектим
+                   cleanup();
+                   reject(err);
+               }
+            };
+
+            // Устанавливаем новый URL
+            audio.src = url;
+            
+            // Явный load() помогает iOS понять, что это новый ресурс
+            audio.load();
+
+            // Таймаут на случай зависания сети
+            setTimeout(() => {
+                if (!endedOrFailed && !audio.paused && audio.duration > 0 && !audio.ended) {
+                    // Если все еще играет - ок
+                } else if (!endedOrFailed && audio.paused) {
+                    // Если завис в паузе
+                    cleanup();
+                    reject(new Error('Audio timeout'));
+                }
+            }, 20000);
+
+        } catch (e) {
+            reject(e);
+        }
+    });
+
+    this.currentAudioPromise = p.finally(() => {
+        if (this.currentAudioPromise === p) this.currentAudioPromise = null;
+    });
+
+    return p;
+}
+
+  async ensureVoicesLoaded(timeoutMs = 1500) {
+    if (!('speechSynthesis' in window)) return;
+    if (window.speechSynthesis.getVoices().length > 0) return;
+    await new Promise(resolve => {
+      const t = setTimeout(resolve, timeoutMs);
+      const handler = () => { clearTimeout(t); window.speechSynthesis.removeEventListener('voiceschanged', handler); resolve(); };
+      window.speechSynthesis.addEventListener('voiceschanged', handler);
+    });
+  }
+  
+syncModePracticeToggles() {
+  const mode = this.currentMode;
+  const practice = this.currentPractice;
+  
+  // Синхронизируем кнопки режимов
+  document.querySelectorAll('.mode-btn').forEach(b => {
+    const btnMode = b.getAttribute('data-mode');
+    b.classList.toggle('active', btnMode === mode);
+  });
+  
+  // Синхронизируем кнопки практики
+  document.querySelectorAll('.practice-btn').forEach(b => {
+    const btnPractice = b.getAttribute('data-practice');
+    b.classList.toggle('active', btnPractice === practice);
+  });
+}
+  pickPreferredGoogleVoice(region = 'us') {
+    if (!('speechSynthesis' in window)) return null;
+    const voices = window.speechSynthesis.getVoices() || [];
+    if (!voices.length) return null;
+    const lc = s => (s || '').toLowerCase();
+    const isOnline = v => v && v.localService === false;
+    const namePrefsUK = ['google uk english male','google uk english','google english uk male','google en-gb'];
+    const namePrefsUS = ['google us english','google en-us','google english us'];
+    const langCheckUK = v => lc(v.lang).startsWith('en-gb');
+    const langCheckUS = v => lc(v.lang).startsWith('en-us') || lc(v.lang) === 'en';
+    const tryPick = (nameList, langCheck) => {
+      for (const pref of nameList) {
+        const found = voices.find(v => isOnline(v) && lc(v.name).includes(pref));
+        if (found) return found;
+      }
+      const onlineByLang = voices.find(v => isOnline(v) && langCheck(v));
+      if (onlineByLang) return onlineByLang;
+      const anyByLang = voices.find(v => langCheck(v));
+      if (anyByLang) return anyByLang;
+      const anyEnOnline = voices.find(v => isOnline(v) && lc(v.lang).startsWith('en'));
+      if (anyEnOnline) return anyEnOnline;
+      const anyEn = voices.find(v => lc(v.lang).startsWith('en'));
+      return anyEn || voices[0] || null;
+    };
+    return region === 'uk' ? tryPick(namePrefsUK, langCheckUK) : tryPick(namePrefsUS, langCheckUS);
+  }
+  async playPhraseTTS(text, region = 'us') {
+    if (this.muted) return false;
+    const phrase = this.sanitizeForSpeech(text);
+    if (!phrase) return false;
+    if (!('speechSynthesis' in window)) return false;
+
+    await this.ensureVoicesLoaded();
+    const voice = this.pickPreferredGoogleVoice(region === 'uk' ? 'uk' : 'us');
+
+    const baseRate = region === 'uk' ? 0.9 : 0.8;
+    const globalRate = this.audioRate || 1;
+    const rate = Math.min(2, Math.max(0.3, baseRate * globalRate));
+    const pitch = 1;
+
+    const p = new Promise((resolve) => {
+      const u = new SpeechSynthesisUtterance(phrase);
+      if (voice) { u.voice = voice; if (voice.lang) u.lang = voice.lang; } else { u.lang = region === 'uk' ? 'en-GB' : 'en-US'; }
+      u.rate = rate;
+      u.pitch = pitch;
+      u.onend = resolve;
+      u.onerror = resolve;
+
+      try { window.speechSynthesis.cancel(); } catch {}
+      window.speechSynthesis.speak(u);
+    });
+
+    this.currentAudioPromise = p.finally(() => {
+      if (this.currentAudioPromise === p) this.currentAudioPromise = null;
+    });
+
+    await p;
+    return true;
+  }
+
+  async playSingleWordMp3(word, regionPreferred = 'us') {
+    if (typeof word === 'string' && word.includes('/')) {
+      const parts = word.split('/').map(s => s.trim()).filter(Boolean);
+      if (parts.length > 1) {
+        for (const part of parts) {
+          await this._playSingleTokenMp3Only(part, regionPreferred);
+          await this.delay(200);
+        }
+        return true;
+      }
+    }
+    return this._playSingleTokenMp3Only(word, regionPreferred);
+  }
+  async _playSingleTokenMp3Only(word, regionPreferred = 'us') {
+    const candidates = this.buildAudioCandidates(word);
+    if (candidates.length === 0) return false;
+    
+    // ИЗМЕНЕНИЕ: Строго следуем региону, без авто-переключения
+    // Если нажали US — пробуем только US.
+    const tryRegions = [regionPreferred]; 
+
+    for (const cand of candidates) {
+      for (const region of tryRegions) {
+        try {
+          await this.playMp3Url(this.buildAudioUrl(cand, region));
+          return true;
+        } catch (e) {}
+      }
+    }
+    return false;
+}
+
+  async playFormsSequence(forms, regionPreferred = 'us') {
+    if (!forms || !forms.length) return false;
+    for (let i = 0; i < forms.length; i++) {
+      const form = forms[i];
+      await this.playSingleWordMp3(form, regionPreferred);
+      await this.delay(200);
+    }
+    return true;
+  }
+    
+
+  // =========================
+  // Image helpers
+  // =========================
+
+// Главный метод получения URL изображения
+async getPrimaryImageUrl(wordObj) {
+  // Проверяем, является ли это медицинской категорией
+  if (wordObj.level === 'MEDICAL' || wordObj.category === 'MEDICAL') {
+    // Сразу пытаемся получить медицинское изображение
+    const medicalImage = await this.getMedicalImageUrl(wordObj);
+    if (medicalImage && medicalImage.url) {
+      return medicalImage.url;
+    }
+    // Если не нашли медицинское изображение, возвращаем fallback
+    return this.getFallbackImageUrl();
+  }
+  
+  // Для остальных категорий используем существующую логику
+  const base = (this.getBaseEnglish(wordObj) || '').toLowerCase().trim();
+  return `https://britlex.ru/images/${encodeURIComponent(base)}.jpg`;
+}
+
+getFallbackImageUrl() {
+  const randomNum = Math.floor(Math.random() * 100) + 1;
+  return `/${randomNum}.jpg`;
+}
+
+handleMotivationImageError(img) {
+  const index = parseInt(img.dataset.index || '1');
+  const fallbackIndex = ((index % 61) || 61);
+  img.src = `/m${fallbackIndex}.jpg`;
+}
+
+// Упрощенный handleImageError
+async handleImageError(imgEl) {
+  // Если уже пробовали fallback
+  if (imgEl.dataset.fallbackTried) {
+    imgEl.onerror = null;
+    imgEl.src = '/nophoto.jpg';
+    return;
+  }
+  
+  
+  
+  // Пытаемся найти контекст слова
+  const card = imgEl.closest('.word-card, .flashcard, .quiz-container');
+  if (card) {
+    const level = card.querySelector('.word-level')?.textContent?.trim();
+    const wordText = card.querySelector('.word-text, .flashcard-title, .quiz-question')?.textContent?.trim();
+    
+    // Если это медицинское слово, пробуем еще раз
+    if (level === 'MEDICAL') {
+      const wordObj = this.findWordObject(wordText, level);
+      if (wordObj) {
+        const medicalImage = await this.getMedicalImageUrl(wordObj);
+        if (medicalImage && medicalImage.url && medicalImage.url !== imgEl.src) {
+          imgEl.src = medicalImage.url;
+          imgEl.dataset.imageSource = medicalImage.source;
+          imgEl.classList.add('medical-image');
+          return;
+        }
+      }
+    }
+  }
+  
+  // Используем fallback
+  imgEl.dataset.fallbackTried = '1';
+  imgEl.src = this.getFallbackImageUrl();
+}
+
+// Упрощенный поиск объекта слова
+findWordObject(wordText, level) {
+  if (!wordText) return null;
+  
+  // Очищаем текст от лишних символов
+  const cleanText = wordText.trim().toLowerCase();
+  
+  // Ищем в learningWords
+  let found = this.learningWords.find(w => {
+    const wordLower = (w.word || '').toLowerCase();
+    const englishLower = (this.getEnglishDisplay(w) || '').toLowerCase();
+    return (wordLower === cleanText || englishLower === cleanText) && 
+           (!level || w.level === level);
+  });
+  
+  if (found) return found;
+  
+  // Ищем в базе данных
+  if (level && oxfordWordsDatabase[level]) {
+    found = oxfordWordsDatabase[level].find(w => {
+      const wordLower = (w.word || '').toLowerCase();
+      const englishLower = (this.getEnglishDisplay(w) || '').toLowerCase();
+      return wordLower === cleanText || englishLower === cleanText;
+    });
+  }
+  
+  return found;
+}
+
+// Упрощенный метод получения медицинского изображения
+async getMedicalImageUrl(wordObj) {
+  if (!wordObj) return null;
+  
+  this.initMedicalImageCache();
+  
+  const word = (this.getBaseEnglish(wordObj) || wordObj.word || '').toLowerCase().trim();
+  const cacheKey = `medical_${word}`;
+  
+  // Проверяем кеш
+  if (this.medicalImageCache.has(cacheKey)) {
+    return this.medicalImageCache.get(cacheKey);
+  }
+  
+  // Прямое соответствие для известных медицинских терминов
+  const directMedicalImages = {
+    'heart': 'https://smart.servier.com/wp-content/uploads/2016/10/coeur.png',
+    'brain': 'https://smart.servier.com/wp-content/uploads/2016/10/cerveau.png',
+    'lungs': 'https://smart.servier.com/wp-content/uploads/2016/10/poumon_01.png',
+    'liver': 'https://smart.servier.com/wp-content/uploads/2016/10/foie.png',
+    'kidney': 'https://smart.servier.com/wp-content/uploads/2016/10/rein.png',
+    'stomach': 'https://smart.servier.com/wp-content/uploads/2016/10/estomac.png',
+    'eye': 'https://smart.servier.com/wp-content/uploads/2016/10/oeil.png',
+    'spine': 'https://smart.servier.com/wp-content/uploads/2016/10/colonne_01.png',
+    'large intestine': 'https://smart.servier.com/wp-content/uploads/2016/10/gros_intestin.png',
+    'small intestine': 'https://smart.servier.com/wp-content/uploads/2016/10/intestin_grele.png',
+    'pancreas': 'https://smart.servier.com/wp-content/uploads/2016/10/pancreas.png',
+    'skull': 'https://smart.servier.com/wp-content/uploads/2016/10/crane_01.png',
+    'tooth': 'https://smart.servier.com/wp-content/uploads/2016/10/dent.png',
+    'neuron': 'https://smart.servier.com/wp-content/uploads/2016/10/neurone.png',
+    'dna': 'https://smart.servier.com/wp-content/uploads/2016/10/adn.png',
+    'blood': 'https://smart.servier.com/wp-content/uploads/2016/10/sang.png',
+    'bone': 'https://smart.servier.com/wp-content/uploads/2016/10/os.png',
+    'muscle': 'https://smart.servier.com/wp-content/uploads/2016/10/muscle.png',
+    'nerve': 'https://smart.servier.com/wp-content/uploads/2016/10/nerf.png',
+    'artery': 'https://smart.servier.com/wp-content/uploads/2016/10/artere.png',
+    'vein': 'https://smart.servier.com/wp-content/uploads/2016/10/veine.png',
+    'skeleton': 'https://smart.servier.com/wp-content/uploads/2016/10/squelette.png',
+    'cell': 'https://smart.servier.com/wp-content/uploads/2016/10/cellule.png',
+    'bacteria': 'https://smart.servier.com/wp-content/uploads/2016/10/bacterie.png',
+    'virus': 'https://smart.servier.com/wp-content/uploads/2016/10/virus.png'
+  };
+  
+  // Проверяем прямое соответствие
+  if (directMedicalImages[word]) {
+    const imageUrl = directMedicalImages[word];
+    const available = await this.checkImageAvailability(imageUrl);
+    
+    if (available) {
+      const result = { url: imageUrl, source: 'Servier Medical Art' };
+      this.medicalImageCache.set(cacheKey, result);
+      this.saveMedicalImageCache();
+      return result;
+    }
+  }
+  
+  // Пробуем варианты написания
+  const searchTerms = this.prepareMedicalSearchTerms(word);
+  
+  for (const term of searchTerms) {
+    const urls = [
+      `https://smart.servier.com/wp-content/uploads/2016/10/${term}.png`,
+      `https://smart.servier.com/wp-content/uploads/2017/01/${term}.png`,
+    ];
+    
+    for (const url of urls) {
+      const available = await this.checkImageAvailability(url);
+      if (available) {
+        const result = { url: url, source: 'Servier Medical Art' };
+        this.medicalImageCache.set(cacheKey, result);
+        this.saveMedicalImageCache();
+        return result;
+      }
+    }
+  }
+  
+  // Возвращаем null если не нашли
+  return null;
+}
+
+// Упрощенная проверка доступности изображения
+checkImageAvailability(url, timeout = 3000) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    let timeoutId;
+    
+    const cleanup = () => {
+      clearTimeout(timeoutId);
+      img.onload = null;
+      img.onerror = null;
+    };
+    
+    img.onload = () => {
+      cleanup();
+      resolve(true);
+    };
+    
+    img.onerror = () => {
+      cleanup();
+      resolve(false);
+    };
+    
+    timeoutId = setTimeout(() => {
+      cleanup();
+      resolve(false);
+    }, timeout);
+    
+    img.src = url;
+  });
+}
+
+// Упрощенная подготовка поисковых терминов
+prepareMedicalSearchTerms(word) {
+  const terms = [];
+  const base = word.toLowerCase().trim();
+  
+  // Базовый термин
+  terms.push(base);
+  
+  // Варианты с подчеркиванием и дефисом
+  if (base.includes(' ')) {
+    terms.push(base.replace(/\s+/g, '_'));
+    terms.push(base.replace(/\s+/g, '-'));
+  }
+  
+  // Французские эквиваленты для Servier
+  const frenchMap = {
+    'heart': 'coeur',
+    'brain': 'cerveau',
+    'lungs': 'poumon',
+    'liver': 'foie',
+    'kidney': 'rein',
+    'stomach': 'estomac',
+    'eye': 'oeil',
+    'spine': 'colonne',
+    'large intestine': 'gros_intestin',
+    'small intestine': 'intestin_grele',
+    'pancreas': 'pancreas',
+    'skull': 'crane',
+    'tooth': 'dent',
+    'neuron': 'neurone',
+    'dna': 'adn',
+    'blood': 'sang',
+    'bone': 'os',
+    'muscle': 'muscle',
+    'nerve': 'nerf',
+    'artery': 'artere',
+    'vein': 'veine'
+  };
+  
+  if (frenchMap[base]) {
+    terms.push(frenchMap[base]);
+  }
+  
+  return terms;
+}
+
+// Инициализация кеша
+initMedicalImageCache() {
+  if (!this.medicalImageCache) {
+    this.medicalImageCache = new Map();
+    try {
+      const saved = localStorage.getItem('medicalImageCache');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        Object.entries(parsed).forEach(([key, value]) => {
+          this.medicalImageCache.set(key, value);
+        });
+      }
+    } catch (e) {
+      console.warn('Failed to load medical image cache:', e);
+    }
+  }
+}
+
+// Сохранение кеша
+saveMedicalImageCache() {
+  try {
+    const cacheObj = {};
+    this.medicalImageCache.forEach((value, key) => {
+      cacheObj[key] = value;
+    });
+    localStorage.setItem('medicalImageCache', JSON.stringify(cacheObj));
+  } catch (e) {
+    console.warn('Failed to save medical image cache:', e);
+  }
+}
+
+  // =========================
+  // Initialize UI and events
+  // =========================
+
+initializeUI() {
+    // Hide level selectors in "New words" section
+    const newLevelSel = document.getElementById('newLevel');
+    if (newLevelSel) { 
+        const grp = newLevelSel.closest('.form-group') || newLevelSel.parentElement; 
+        if (grp) grp.style.display = 'none'; 
+        else newLevelSel.style.display = 'none'; 
+    }
+    const bulkLevelSel = document.getElementById('bulkLevel');
+    if (bulkLevelSel) { 
+        const grp2 = bulkLevelSel.closest('.form-group') || bulkLevelSel.parentElement; 
+        if (grp2) grp2.style.display = 'none'; 
+        else bulkLevelSel.style.display = 'none'; 
+    }
+
+    // Settings button
+    const settingsBtn = document.getElementById('settingsBtn');
+    if (settingsBtn) settingsBtn.addEventListener('click', () => this.showSettingsModal());
+
+    // Support button
+    const supportBtn = document.getElementById('supportBtn');
+    if (supportBtn) supportBtn.addEventListener('click', () => this.showSupportModal());
+
+    // Navigation buttons
+    document.querySelectorAll('.nav-item').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const section = e.currentTarget.getAttribute('data-section');
+        if (section) this.switchSection(section);
+      });
+    });
+
+    // Level cards
+document.querySelectorAll('.level-card[data-level]').forEach(card => {
+card.addEventListener('click', (e) => {
+const level = e.currentTarget.getAttribute('data-level');
+if (level) {
+      this.showLevelWords(level);    // ← ВАЖНО: вызываем переход
+    }
+});
+});
+    // Category cards
+    document.querySelectorAll('.level-card[data-category]').forEach(card => {
+      card.addEventListener('click', (e) => {
+        // Если карточка "скоро" — не реагируем на клик
+        if (e.currentTarget.classList.contains('coming-soon')) return;
+
+        const cat = e.currentTarget.getAttribute('data-category');
+        if (!cat) return;
+if (cat === 'ADDED') {
+  this.showAddedWordsCategory();
+} else if (cat === 'STUDY_NOW') {
+  this.showStudyNowWords();        // пункт 2 ниже
+} else {
+  this.showCategoryWords(cat);
+}
+      });
+    });
+
+    // Back to levels
+    const backBtn = document.getElementById('backToLevels');
+    if (backBtn) backBtn.addEventListener('click', () => this.backToLevels());
+
+    // Add word button (manual)
+    const addWordBtn = document.getElementById('addWordBtn');
+    if (addWordBtn) addWordBtn.addEventListener('click', () => this.addSingleWord());
+
+    // Bulk add button
+    const bulkAddBtn = document.getElementById('bulkAddBtn');
+    if (bulkAddBtn) bulkAddBtn.addEventListener('click', () => this.bulkAddWords());
+    
+// Переключение форм загрузки
+const tabSingle = document.getElementById('uploadTabSingle');
+const tabBulk = document.getElementById('uploadTabBulk');
+const singleForm = document.getElementById('singleAddForm');
+const bulkForm = document.getElementById('bulkAddForm');
+const singleHelp = document.getElementById('singleHelp');
+const bulkHelp = document.getElementById('bulkHelp');
+
+function showUploadTab(tab) {
+if (!tabSingle || !tabBulk || !singleForm || !bulkForm) return;
+tabSingle.classList.toggle('active', tab === 'single');
+tabBulk.classList.toggle('active', tab === 'bulk');
+singleForm.style.display = tab === 'single' ? '' : 'none';
+bulkForm.style.display = tab === 'bulk' ? '' : 'none';
+if (singleHelp) singleHelp.style.display = tab === 'single' ? '' : 'none';
+if (bulkHelp) bulkHelp.style.display = tab === 'bulk' ? '' : 'none';
+}
+if (tabSingle && tabBulk) {
+tabSingle.addEventListener('click', () => showUploadTab('single'));
+tabBulk.addEventListener('click', () => showUploadTab('bulk'));
+showUploadTab('single'); // по умолчанию
+}
+
+    // Mode toggle buttons - ВАЖНО!
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const mode = e.currentTarget.getAttribute('data-mode');
+        if (!mode) return;
+        
+        this.currentMode = mode;
+        localStorage.setItem('currentMode', this.currentMode);
+        
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+        
+        const practiceToggle = document.querySelector('.practice-toggle');
+        if (practiceToggle) {
+          if (mode === 'trainer') {
+            practiceToggle.style.display = 'none';
+          } else {
+            practiceToggle.style.display = 'flex';
+            if (this.currentPractice === 'list') {
+              this.currentPractice = 'scheduled';
+              localStorage.setItem('currentPractice', 'scheduled');
+              document.querySelectorAll('.practice-btn').forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-practice') === 'scheduled');
+              });
+            }
+          }
+        }
+        
+        this.suppressAutoSpeakOnce = true;
+        this.renderLearningSection();
+      });
+    });
+
+    // Practice toggle buttons - ВАЖНО!
+    document.querySelectorAll('.practice-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const practice = e.currentTarget.getAttribute('data-practice');
+        if (!practice) return;
+        
+        if (practice === 'list') {
+          // Открываем попап со всеми словами вместо смены режима
+          this.showLearningWordsPopup();
+
+          // Подсветим «Список» пока открыт попап
+          document.querySelectorAll('.practice-btn').forEach(b => b.classList.remove('active'));
+          e.currentTarget.classList.add('active');
+          return;
+        }
+        
+        this.currentPractice = practice;
+        localStorage.setItem('currentPractice', practice);
+        
+        document.querySelectorAll('.practice-btn').forEach(b => b.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+        
+        this.currentReviewIndex = 0;
+        if (practice === 'endless') {
+          localStorage.removeItem('currentSession');
+        }
+        
+        this.suppressAutoSpeakOnce = true;
+        this.renderLearningSection();
+      });
+    });
+
+    // Bulk Toggle button
+    const bulkToggle = document.getElementById('bulkToggleBtn');
+    if (bulkToggle) {
+      bulkToggle.addEventListener('click', () => {
+        const wantRemove = bulkToggle.dataset.state === 'all-added';
+        if (wantRemove) this.removeAllLevelWords();
+        else this.addAllLevelWords();
+      });
+    }
+
+    // Game buttons
+    const surfBtn = document.getElementById('surfStartBtn');
+    if (surfBtn) surfBtn.addEventListener('click', () => this.showQuizGateForGame('Subway', 'subway.html'));
+    
+    const doodleBtn = document.getElementById('doodleStartBtn');
+    if (doodleBtn) doodleBtn.addEventListener('click', () => this.showQuizGateForGame('Flying Bird', 'doodle-jump.html'));
+    
+    const game2048Btn = document.getElementById('game2048StartBtn');
+    if (game2048Btn) game2048Btn.addEventListener('click', () => this.showQuizGateForGame('2048', '2048.html'));
+    
+    const rocketBtn = document.getElementById('rocketStartBtn');
+    if (rocketBtn) rocketBtn.addEventListener('click', () => this.showQuizGateForGame('Panda', 'rocket-soccer.html'));
+    
+    const ninjaBtn = document.getElementById('ninjaStartBtn');
+    if (ninjaBtn) ninjaBtn.addEventListener('click', () => this.showQuizGateForGame('ninja', 'ninja.html'));
+    
+    const catalogBtn = document.getElementById('catalogStartBtn');
+    if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('Geo-Dash', 'dash.html'));
+    
+    const learningLamp = document.getElementById('learningHelpLamp');
+if (learningLamp) {
+  learningLamp.addEventListener('click', () => this.showLearningHelpModal());
+}
+
+    this.updateLevelCounts();
+    this.renderLearningSection();
+    this.renderCustomWords();
+    
+    setTimeout(() => {
+      document.querySelectorAll('.mode-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-mode') === this.currentMode);
+      });
+      document.querySelectorAll('.practice-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-practice') === this.currentPractice);
+      });
+    }, 100);
+    window.onAddToStudy = (payload) => this.handleTranslatorAdd(payload);
+        // Запрос уведомлений через 10 секунд после старта, чтобы не пугать сразу
+    setTimeout(() => this.requestNotificationPermission(), 10000);
+}
+
+  // Daily Motivation once per day
+  
+maybeShowDailyMotivation(callback) {
+    try {
+        const firstDone = localStorage.getItem('first_run_completed') === '1';
+        if (!firstDone) {
+            console.log('First run not completed - skipping motivation');
+            if (callback && typeof callback === 'function') {
+                callback();
+            }
+            return;
+        }
+
+        const today = new Date().toDateString();
+        const lastShown = localStorage.getItem('motivation_last_shown');
+        
+        console.log('Checking daily motivation - today:', today, 'last shown:', lastShown);
+        
+        if (lastShown !== today) {
+            // Показываем мотивацию
+            setTimeout(() => {
+                this.showMotivationPopup(() => {
+                    localStorage.setItem('motivation_last_shown', today);
+                    if (callback && typeof callback === 'function') {
+                        callback();
+                    }
+                });
+            }, 600);
+        } else {
+            // Мотивация уже была сегодня
+            console.log('Motivation already shown today');
+            if (callback && typeof callback === 'function') {
+                callback();
+            }
+        }
+    } catch (e) {
+        console.error('Error in maybeShowDailyMotivation:', e);
+        if (callback && typeof callback === 'function') {
+            callback();
+        }
+    }
+}
+
+  // Unlock audio on first user gesture (PWA fix)
+installAudioUnlocker() {
+    let unlocked = false;
+    const unlock = async () => {
+        if (unlocked) return;
+        try {
+            // 1. Разблокировка Web Audio API
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if (AC) {
+                if (!this.audioCtx) this.audioCtx = new AC();
+                if (this.audioCtx.state === 'suspended') await this.audioCtx.resume();
+                // Пустой буфер
+                const buffer = this.audioCtx.createBuffer(1, 1, 22050);
+                const source = this.audioCtx.createBufferSource();
+                source.buffer = buffer;
+                source.connect(this.audioCtx.destination);
+                source.start(0);
+            }
+
+            // 2. Разблокировка HTML5 Audio (Наш синглтон)
+            if (this.globalPlayer) {
+                // Играем тишину через наш основной плеер
+                const originalSrc = this.globalPlayer.src;
+                this.globalPlayer.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+                await this.globalPlayer.play();
+                this.globalPlayer.pause();
+                this.globalPlayer.currentTime = 0;
+                // Если там что-то было, не возвращаем src сразу, лучше пусть будет пустой до реального клика
+            }
+            
+            unlocked = true;
+        } catch (e) {
+            console.warn('Audio unlock partial success:', e);
+        }
+
+        if (unlocked) {
+            ['touchstart', 'touchend', 'click', 'pointerdown'].forEach(evt => 
+                document.removeEventListener(evt, unlock, true)
+            );
+        }
+    };
+    
+    ['touchstart', 'touchend', 'click', 'pointerdown'].forEach(evt => 
+        document.addEventListener(evt, unlock, true)
+    );
+}
+  
+
+  // Preload AI chat iframe eagerly (no lazy)
+  preloadAiChat() {
+    const iframe = document.getElementById('aiChatFrame');
+    if (iframe) {
+      try { iframe.loading = 'eager'; } catch {}
+      // ensure not recreated anywhere else
+    }
+  }
+
+  // =========
+  // Storage
+  // =========
+  loadData() {
+    try {
+      this.learningWords = JSON.parse(localStorage.getItem('learningWords') || '[]');
+      this.customWords = JSON.parse(localStorage.getItem('customWords') || '[]');
+      this.wordStats = JSON.parse(localStorage.getItem('wordStats') || '{}');
+      this.weeklyProgress = JSON.parse(localStorage.getItem('weeklyProgress') || '[]');
+    } catch (e) {
+      console.error('Error loading data:', e);
+      this.learningWords = [];
+      this.customWords = [];
+      this.wordStats = {};
+      this.weeklyProgress = [];
+    }
+  }
+  saveData() {
+    try {
+      localStorage.setItem('learningWords', JSON.stringify(this.learningWords));
+      localStorage.setItem('customWords', JSON.stringify(this.customWords));
+      localStorage.setItem('wordStats', JSON.stringify(this.wordStats));
+      localStorage.setItem('weeklyProgress', JSON.stringify(this.weeklyProgress));
+    } catch (e) { console.error('Error saving data:', e); }
+  }
+
+  // =========
+  // Theme
+  // =========
+toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+}
+  
+  toggleSound(btnEl) {
+  this.muted = !this.muted;
+  localStorage.setItem('app_muted', JSON.stringify(this.muted));
+  
+  if (btnEl) {
+    const icon = btnEl.querySelector('i');
+    if (icon) {
+      icon.className = this.muted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+    }
+    btnEl.innerHTML = `
+      <i class="fas fa-${this.muted ? 'volume-mute' : 'volume-up'}"></i> 
+      ${this.muted ? 'Включить звук' : 'Отключить звук'}
+    `;
+  }
+  
+  this.showNotification(this.muted ? 'Звук отключен' : 'Звук включен', 'info');
+}
+
+    // =========
+  // Support (New Beautiful Popup)
+  // =========
+  showSupportModal() {
+    const overlay = document.createElement('div');
+    overlay.className = 'donate-modal-overlay';
+    
+    const percent = 45; 
+    
+    overlay.innerHTML = `
+      <div class="donate-popup-card">
+        <button class="donate-close-absolute" id="closeDonateBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="donate-heart-icon">❤️</div>
+        
+        <h2 class="donate-title">Внесите свой вклад в <span>Bewords</span></h2>
+        
+        <p class="donate-desc">
+            Я разрабатываю это приложение в одиночку. 
+            Здесь нет рекламы и платных подписок. 
+            Ваш донат помогает оплачивать серверы и работу над новыми функциями.
+        </p>
+        
+        <div class="donate-goal-box">
+            <div class="donate-goal-header">
+                <span>Цель: Оплата серверов</span>
+                <span>${percent}%</span>
+            </div>
+            <div class="donate-track">
+                <div class="donate-fill" style="width: 0%"></div>
+            </div>
+            <div style="font-size: 11px; color: #aaa; margin-top: 8px; font-weight:600;">
+               Осталось немного, чтобы закрыть расходы на этот месяц! 🔥
+            </div>
+        </div>
+        
+        <a href="https://pay.cloudtips.ru/p/8f56d7d3" target="_blank" class="donate-main-btn">
+            <i class="fas fa-heart"></i> Поддержать автора
+        </a>
+        
+        <div class="donate-secure">
+            <i class="fas fa-lock"></i> Безопасная оплата через CloudTips (Тинькофф)
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    // Анимация появления (Fade In + Scale Up)
+    requestAnimationFrame(() => {
+        overlay.classList.add('visible');
+    });
+
+    // Анимация прогресс-бара (через 200мс после открытия)
+    setTimeout(() => {
+        const fill = overlay.querySelector('.donate-fill');
+        if (fill) fill.style.width = `${percent}%`;
+    }, 200);
+
+    // Логика закрытия
+    const close = () => {
+        overlay.classList.remove('visible');
+        setTimeout(() => overlay.remove(), 300); // Ждем окончания анимации CSS
+    };
+
+    overlay.querySelector('#closeDonateBtn').addEventListener('click', close);
+    
+    // Закрытие по клику на фон (вне карточки)
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) close();
+    });
+  }
+  
+  showLearningHelpModal() {
+  const overlay = document.createElement('div');
+  overlay.className = 'grammar-modal show';
+  overlay.innerHTML = `
+    <div class="grammar-modal-content">
+      <div class="grammar-modal-header">
+        <div class="grammar-modal-title">
+          <span>📚</span>
+          <span>Как работают режимы практики</span>
+        </div>
+        <button class="grammar-close-btn" aria-label="Закрыть">&times;</button>
+      </div>
+      <div class="grammar-modal-body">
+        <div class="grammar-section">
+          <div class="grammar-section-title">
+            <i class="fas fa-bullseye"></i>
+            <span>Заучивание</span>
+          </div>
+          <p>
+            Подходит для изучения новых слов. Система даёт ограниченный пул (около 40 слов)
+            и постепенно добавляет новые, когда вы отвечаете правильно. Добавили 500 слов?
+            Не страшно — сначала увидите ~20, потом ещё 10, ещё 10 и т.д.
+          </p>
+        </div>
+        <div class="grammar-section">
+          <div class="grammar-section-title">
+            <i class="fas fa-redo"></i>
+            <span>Повторение</span>
+          </div>
+          <p>
+            Показывает все незавершённые слова по кругу. Удобно, если хотите просто «погонять» всю
+            лексику без ограничений.
+          </p>
+        </div>
+        <div class="grammar-section">
+          <div class="grammar-section-title">
+            <i class="fas fa-list"></i>
+            <span>Список</span>
+          </div>
+          <p>
+            Открывает полный список слов, которые вы учите. Отсюда можно удалять слова, слушать
+            озвучку и редактировать переводы.
+          </p>
+        </div>
+        <div class="grammar-tip">
+          <div class="grammar-tip-title">💡 Совет</div>
+          <p>
+            Начинайте с режима <strong>Заучивание</strong>, чтобы не перегружать память. Когда слова
+            стали знакомыми — переходите в <strong>Повторение</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+  `;
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay || e.target.classList.contains('grammar-close-btn')) {
+      overlay.remove();
+    }
+  });
+  document.body.appendChild(overlay);
+}
+
+// =========
+// Info (О приложении)
+// =========
+showInfoModal() { 
+  const modal = document.createElement('div'); 
+  modal.className = 'info-modal'; 
+  modal.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;'; 
+  modal.innerHTML = `
+    <div class="info-modal-content" style="background:var(--bg-primary);border-radius:16px;padding:30px;max-width:800px;width:100%;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;"> 
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;"> 
+        <h2 style="margin:0;color:var(--text-primary);">О приложении</h2> 
+        <button data-testid="info-close" onclick="this.closest('.info-modal').remove()" style="background:transparent;border:none;font-size:24px;cursor:pointer;color:var(--text-secondary);width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.2s;"> 
+          <i class="fas fa-times"></i> 
+        </button> 
+      </div> 
+      ${this.getAboutContentHtml()} 
+      <div style="margin-top:20px;text-align:center;"> 
+        <button class="btn btn-secondary" onclick="this.closest('.info-modal').remove()">Закрыть</button> 
+      </div> 
+    </div>
+  `; 
+  modal.addEventListener('click', (e) => { 
+    if (e.target === modal) modal.remove(); 
+  }); 
+  document.body.appendChild(modal); 
+}
+
+getAboutContentHtml() { 
+  return `
+    <div class="about-content"> 
+      <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;"> 
+        <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;"> 
+          <i class="fas fa-graduation-cap" style="color:white;"></i> 
+        </div> 
+        <h3 style="margin-bottom:8px;color:var(--text-primary);">Изучение по уровням</h3> 
+        <p style="color:var(--text-secondary);margin:0;">Структурированное изучение английских слов от начального до продвинутого уровня (A1–C2)</p> 
+      </div> 
+      <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;"> 
+        <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;"> 
+          <i class="fas fa-volume-up" style="color:white;"></i> 
+        </div> 
+        <h3 style="margin-bottom:8px;color:var(--text-primary);">Произношение</h3> 
+        <p style="color:var(--text-secondary);margin:0;">Прослушивание правильного произношения слов (британский и американский акценты)</p> 
+      </div> 
+      <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;"> 
+        <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;"> 
+          <i class="fas fa-gamepad" style="color:white;"></i> 
+        </div> 
+        <h3 style="margin-bottom:8px;color:var(--text-primary);">Учите английские слова играя в игры</h3> 
+        <p style="color:var(--text-secondary);margin:0;">Играйте в разные увлекательные игры! Спустя время у вас будет появляться quiz, на который нужно ответить правильно, чтобы продолжить играть.</p> 
+      </div> 
+      <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;"> 
+        <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;"> 
+          <i class="fas fa-laugh-beam" style="color:white;"></i> 
+        </div> 
+        <h3 style="margin-bottom:8px;color:var(--text-primary);">Позитивная атмосфера обучения</h3> 
+        <p style="color:var(--text-secondary);margin:0;">Добавлены смешные картинки и мемы для мотивации и интереса.</p> 
+      </div> 
+      <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;"> 
+        <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;"> 
+          <i class="fas fa-chart-line" style="color:white;"></i> 
+        </div> 
+        <h3 style="margin-bottom:8px;color:var(--text-primary);">Отслеживание прогресса</h3> 
+        <p style="color:var(--text-secondary);margin:0;">Учет изученных слов и прогресс по уровням</p> 
+      </div> 
+      <div class="author-info" style="background:var(--bg-secondary);padding:20px;border-radius:12px;border-left:4px solid #7c3aed;"> 
+        <h3 style="margin-bottom:8px;color:var(--text-primary);">Об авторе методики</h3> 
+        <p style="color:var(--text-secondary);margin-bottom:12px;">Приложение создано на основе методики <strong>Абдуррахима Бердиева</strong>.</p> 
+        <a href="https://berdiyev-eng.ru" target="_blank" class="author-link btn btn-primary" style="text-decoration:none;display:inline-block;"> 
+          <i class="fas fa-external-link-alt"></i> Узнать больше об авторе 
+        </a> 
+      </div> 
+    </div>
+  `; 
+}
+
+// =========
+// Settings Modal
+// =========
+
+showSettingsModal() { 
+  const modal = document.createElement('div'); 
+  modal.className = 'settings-modal'; 
+  modal.style.cssText = 'position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;'; 
+  modal.innerHTML = `
+    <div class="settings-content" style="background:var(--bg-primary);border-radius:16px;padding:20px;max-width:520px;width:100%;box-shadow:var(--shadow-lg);"> 
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;"> 
+        <h2 style="margin:0;color:var(--text-primary)">Настройки</h2> 
+        <button class="btn btn-secondary settings-close-btn" data-testid="settings-close">
+          <i class="fas fa-times"></i>
+        </button> 
+      </div> 
+      <div id="settingsMenu"> 
+        <button class="btn btn-primary" onclick="window.open('about.html', '_blank')" style="width:100%;margin-bottom:10px;">
+          <i class="fas fa-info-circle"></i> О приложении
+        </button> 
+        <button class="btn btn-primary settings-theme-btn" data-testid="settings-theme" style="width:100%;margin-bottom:10px;">
+          <i class="fas fa-adjust"></i> Переключить тему
+        </button> 
+        <button class="btn btn-primary settings-audio-btn" data-testid="settings-audio" style="width:100%;margin-bottom:10px;">
+          <i class="fas fa-volume-up"></i> Настройки аудио
+        </button>
+        <button class="btn btn-primary" onclick="window.open('app.html', '_blank')" style="width:100%;margin-bottom:10px;">
+          <i class="fas fa-download"></i> Установка приложения
+        </button>
+        <button class="btn btn-primary" onclick="app.startAppTutorial()" style="width:100%; margin-bottom:10px;">
+   <i class="fas fa-question-circle"></i> Инструкция
+</button>
+        <button class="btn btn-success" onclick="app.showOnboardingWizard(); document.querySelector('.settings-modal').remove();" style="width:100%; margin-bottom:10px;">
+           <i class="fas fa-magic"></i> Подобрать программу
+        </button>
+        <button class="btn btn-primary" onclick="app.requestNotificationPermission()" style="width:100%; margin-bottom:10px;">
+           <i class="fas fa-bell"></i> Включить напоминания
+        </button>
+      </div>
+      <div id="settingsInnerPage" style="display:none;"></div>
+      <div id="installGuide" style="display:none;"></div>
+    </div>
+  `; 
+  
+  document.body.appendChild(modal);
+  
+  // Добавляем обработчики через addEventListener
+  const closeBtn = modal.querySelector('.settings-close-btn');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => modal.remove());
+  }
+  
+  const themeBtn = modal.querySelector('.settings-theme-btn');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      this.toggleTheme();
+      this.showNotification('Тема изменена!', 'success');
+    });
+  }
+  
+  const audioBtn = modal.querySelector('.settings-audio-btn');
+  if (audioBtn) {
+    audioBtn.addEventListener('click', () => this.openAudioSettingsInSettings(audioBtn));
+  }
+  
+  // Закрытие по клику на overlay
+  modal.addEventListener('click', (e) => { 
+    if (e.target === modal) modal.remove(); 
+  }); 
+}
+
+openInstallGuideInSettings(btnEl) {
+    const wrap = btnEl.closest('.settings-content');
+    if (!wrap) return;
+    
+    const menu = wrap.querySelector('#settingsMenu');
+    const guide = wrap.querySelector('#installGuide');
+    if (!guide || !menu) return;
+    
+    menu.style.display = 'none';
+    wrap.querySelector('#settingsInnerPage').style.display = 'none';
+    guide.style.display = 'block';
+    
+    guide.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <h3 style="margin:0;color:var(--text-primary)">Инструкция по установке</h3>
+            <button class="btn btn-secondary install-guide-back-btn">
+              <i class="fas fa-arrow-left"></i> Назад
+            </button>
+        </div>
+        <div style="border:1px solid var(--border-color);border-radius:12px;overflow:hidden;height:60vh;">
+            <iframe src="app.html" style="width:100%;height:100%;border:0;background:var(--bg-secondary);" title="Инструкция по установке"></iframe>
+        </div>
+    `;
+    
+    // Добавляем обработчик для кнопки "Назад"
+    const backBtn = guide.querySelector('.install-guide-back-btn');
+    if (backBtn) {
+      backBtn.addEventListener('click', () => {
+        guide.style.display = 'none';
+        menu.style.display = 'block';
+      });
+    }
+}
+
+openAboutInSettings(btnEl) { 
+  const wrap = btnEl.closest('.settings-content'); 
+  if (!wrap) return;
+
+  const menu = wrap.querySelector('#settingsMenu');
+  const inner = wrap.querySelector('#settingsInnerPage');
+  const guide = wrap.querySelector('#installGuide');
+  if (!menu || !inner) return;
+
+  menu.style.display = 'none';
+  if (guide) guide.style.display = 'none';
+  inner.style.display = 'block';
+
+  inner.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <h3 style="margin:0;color:var(--text-primary)">О приложении</h3>
+      <button class="btn btn-secondary" data-testid="settings-about-back-btn" onclick="
+        const p=this.closest('.settings-content');
+        p.querySelector('#settingsInnerPage').style.display='none';
+        p.querySelector('#settingsMenu').style.display='block';
+      ">
+        <i class="fas fa-arrow-left"></i> Назад
+      </button>
+    </div>
+    <div style="max-height:60vh;overflow:auto;border:1px solid var(--border-color);border-radius:12px;padding:14px;background:var(--bg-secondary);" data-testid="settings-about-content">
+      ${this.getAboutContentHtml()}
+    </div>
+  `;
+}
+
+openAudioSettingsInSettings(btnEl) {
+  const wrap = btnEl.closest('.settings-content');
+  if (!wrap) return;
+
+  const menu = wrap.querySelector('#settingsMenu');
+  const inner = wrap.querySelector('#settingsInnerPage');
+  const guide = wrap.querySelector('#installGuide');
+  if (!menu || !inner) return;
+
+  menu.style.display = 'none';
+  if (guide) guide.style.display = 'none';
+  inner.style.display = 'block';
+
+  const rate = this.audioRate || 1;
+  const muted = this.muted;
+
+  inner.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <h3 style="margin:0;color:var(--text-primary)">Настройки аудио</h3>
+      <button class="btn btn-secondary" data-testid="settings-audio-back-btn">
+        <i class="fas fa-arrow-left"></i> Назад
+      </button>
+    </div>
+    <div style="max-height:60vh;overflow:auto;border:1px solid var(--border-color);border-radius:12px;padding:14px;background:var(--bg-secondary);" data-testid="settings-audio-content">
+      <div style="margin-bottom:16px;">
+        <h4 style="margin:0 0 6px;color:var(--text-primary);">Скорость воспроизведения</h4>
+        <p style="margin:0 0 10px;color:var(--text-secondary);font-size:0.85rem;">
+          Настройте, насколько медленно или быстро будут озвучиваться слова и предложения.
+        </p>
+        <input type="range"
+               id="audioRateSlider"
+               min="0.5"
+               max="1.5"
+               step="0.1"
+               value="${rate.toFixed(1)}"
+               style="width:100%;">
+        <div style="margin-top:6px;font-size:0.85rem;color:var(--text-secondary);">
+          Текущая скорость: <strong><span id="audioRateValue">${rate.toFixed(1)}</span>x</strong>
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--border-color);padding-top:12px;margin-top:8px;">
+        <h4 style="margin:0 0 6px;color:var(--text-primary);">Звук</h4>
+        <p style="margin:0 0 10px;color:var(--text-secondary);font-size:0.85rem;">
+          Вы можете временно полностью выключить звук в приложении.
+        </p>
+        <button class="btn btn-primary" id="audioMuteToggleBtn">
+          <i class="fas fa-${muted ? 'volume-mute' : 'volume-up'}"></i>
+          ${muted ? 'Включить звук' : 'Отключить звук'}
+        </button>
+      </div>
+    </div>
+  `;
+
+  const backBtn = inner.querySelector('[data-testid="settings-audio-back-btn"]');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => {
+      inner.style.display = 'none';
+      menu.style.display = 'block';
+    });
+  }
+
+  const slider = inner.querySelector('#audioRateSlider');
+  const valueEl = inner.querySelector('#audioRateValue');
+  if (slider && valueEl) {
+    slider.addEventListener('input', () => {
+      const v = parseFloat(slider.value) || 1;
+      this.audioRate = Math.min(1.5, Math.max(0.5, v));
+      localStorage.setItem('audio_rate', String(this.audioRate));
+      valueEl.textContent = this.audioRate.toFixed(1);
+    });
+  }
+
+  const muteBtn = inner.querySelector('#audioMuteToggleBtn');
+  if (muteBtn) {
+    muteBtn.addEventListener('click', () => {
+      this.toggleSound(muteBtn);
+    });
+  }
+}
+
+  // =========
+  // Sections
+  // =========
+switchSection(section) {
+    // Простой скролл без анимации для мобильных
+    window.scrollTo(0, 0);
+
+    this.currentSection = section;
+    this.stopCurrentAudio();
+
+    // ДОБАВИТЬ эти строки для исправления багов отображения
+    document.querySelectorAll('.content-section').forEach(s => {
+        s.classList.remove('active');
+        s.style.display = 'none'; // ДОБАВИТЬ
+    });
+    
+    const targetSection = document.getElementById(section);
+    if (targetSection) {
+        targetSection.classList.add('active');
+        targetSection.style.display = 'block'; // ДОБАВИТЬ
+    }
+
+    document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+    const activeBtn = document.querySelector(`[data-section="${section}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    if (section === 'levels') {
+      this.backToLevels();
+      this.updateLevelCounts(); // ДОБАВИТЬ
+    }
+    
+        if (section === 'learning') {
+      // === СБРОС ФИЛЬТРА ТЕМЫ ===
+      // Если пользователь нажал "Изучаю" в меню, он хочет общий режим.
+      // Сбрасываем фильтр конкретной темы грамматики.
+      this.sentenceBuilderState.filterTopic = null; 
+      this.sentenceBuilderState.currentSentence = null; // Сбрасываем текущее предложение, чтобы загрузилось новое
+      // ==========================
+
+      // Синхронизация кнопок режима
+      setTimeout(() => {
+        document.querySelectorAll('.mode-btn').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-mode') === this.currentMode);
+        });
+        document.querySelectorAll('.practice-btn').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-practice') === this.currentPractice);
+        });
+        
+        // Скрываем practice toggle для тренажера
+        const practiceToggle = document.querySelector('.practice-toggle');
+        if (practiceToggle) {
+          if (this.currentMode === 'trainer') {
+            // Для тренажера оставляем видимыми (или скрываем, как решишь)
+          } else {
+            practiceToggle.style.display = 'flex';
+          }
+        }
+      }, 50);
+      this.renderLearningSection();
+    }
+    
+        if (section === 'grammar') {
+        // Скрываем детальный просмотр, если он был открыт
+        const detail = document.getElementById('grammarDetail');
+        if (detail) detail.classList.add('hidden');
+        
+        // Запускаем рендер корня (список уровней)
+        if (this.grammarManager) {
+            this.grammarManager.renderRoot();
+        }
+    }
+    
+    
+    if (section === 'progress') this.renderProgress();
+    
+    if (section === 'new-words') {
+      const newLevelSel = document.getElementById('newLevel');
+      if (newLevelSel) { 
+        const grp = newLevelSel.closest('.form-group') || newLevelSel.parentElement; 
+        if (grp) grp.style.display = 'none'; 
+        else newLevelSel.style.display = 'none'; 
+      }
+      const bulkLevelSel = document.getElementById('bulkLevel');
+      if (bulkLevelSel) { 
+        const grp2 = bulkLevelSel.closest('.form-group') || bulkLevelSel.parentElement; 
+        if (grp2) grp2.style.display = 'none'; 
+        else bulkLevelSel.style.display = 'none'; 
+      }
+      this.renderCustomWords();
+    }
+    // Инициализируем обработчики переводчика (делегирование кликов)
+if (typeof window.initBewordsTranslator === 'function') {
+setTimeout(() => window.initBewordsTranslator(), 0);
+}
+}
+
+     startGrammarPractice(topicId) {
+    // 1. Находим контейнеры
+    const listContainer = document.getElementById('grammarList');
+    const detailContainer = document.getElementById('grammarDetail');
+    
+    if (!detailContainer) return;
+
+    // === ВОТ ЭТО ИСПРАВЛЕНИЕ ===
+    // Скрываем список тем и показываем блок с тренажером
+    if (listContainer) listContainer.classList.add('hidden');
+    detailContainer.classList.remove('hidden');
+    // ============================
+
+    // 2. Устанавливаем тему
+    this.sentenceBuilderState.filterTopic = topicId;
+    
+    // Проверка на наличие предложений
+    if (!window.sentencesByTopic || !window.sentencesByTopic[topicId]) {
+        // Если предложений нет - показываем уведомление, но не ломаем интерфейс
+        this.showNotification('Для этой темы пока нет упражнений', 'warning');
+        
+        // Возвращаем пользователя назад в список или теорию
+        if (listContainer) listContainer.classList.remove('hidden');
+        detailContainer.classList.add('hidden');
+        return;
+    }
+    
+    const sentences = window.sentencesByTopic[topicId];
+
+    // Выбираем случайное предложение
+    this.sentenceBuilderState.currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
+    this.sentenceBuilderState.assembledWords = [];
+    this.sentenceBuilderState.correctOrder = this.sentenceBuilderState.currentSentence.en.split(' ');
+    
+    const state = this.sentenceBuilderState;
+    const shuffledWords = [...state.correctOrder].sort(() => Math.random() - 0.5);
+
+    // 3. Рендерим Тренажер
+    detailContainer.innerHTML = `
+        <div class="grammar-detail-header">
+            <!-- Кнопка назад возвращает к Теории этого же урока -->
+            <button class="btn btn-secondary" onclick="window.grammar.renderLesson('${this.grammarManager.currentLevel}', '${topicId}')">
+                <i class="fas fa-arrow-left"></i> К теории
+            </button>
+            <h3 style="margin:0; font-size:1.1rem;">Тренировка</h3>
+        </div>
+        
+        <div class="grammar-content" style="padding-top:0;">
+            <div class="sentence-builder-container" style="box-shadow:none; border:none; background:transparent; padding:0;">
+              
+              <div class="sentence-instruction" style="margin-bottom:1rem;">
+                <div class="sentence-instruction-text" style="font-size:1.1rem;">Переведите предложение</div>
+                <div class="grammar-lamp pulse" id="grammarLampBtn">💡</div>
+              </div>
+              
+              <div class="russian-sentence-box">
+                <span class="russian-text">${state.currentSentence.ru}</span>
+              </div>
+              
+              <div class="sentence-answer-area" id="grammarAnswerArea">
+                <div class="assembled-sentence" id="grammarAssembledSentence"></div>
+              </div>
+              
+              <div class="sentence-word-pool" id="grammarWordPool">
+                ${shuffledWords.map((word, index) => {
+                  return `
+                    <button class="sentence-word" 
+                            data-word="${this.safeAttr(word)}"
+                            data-index="${index}">
+                      ${word}
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+              
+              <button class="sentence-check-btn" id="grammarCheckBtn" disabled>Проверить</button>
+              
+              <div class="sentence-feedback" id="grammarFeedback" style="display: none;"></div>
+            </div>
+        </div>
+    `;
+
+    // 4. Навешиваем обработчики
+    this.attachGrammarTrainerEvents(detailContainer, topicId);
+    
+    window.scrollTo(0,0);
+  }
+
+attachGrammarTrainerEvents(container, topicId) {
+    // Обработчик клика по словам
+    const wordButtons = container.querySelectorAll('.sentence-word');
+    wordButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (btn.disabled) return;
+            const word = btn.getAttribute('data-word');
+            const index = parseInt(btn.getAttribute('data-index'));
+            
+            // Логика выбора (копируем упрощенную логику из основного тренажера)
+            this.handleGrammarWordSelect(word, index, container);
+        });
+    });
+
+    // Кнопка Проверить
+    const checkBtn = container.querySelector('#grammarCheckBtn');
+    if (checkBtn) {
+        checkBtn.addEventListener('click', () => this.checkGrammarSentence(container, topicId));
+    }
+
+    // Лампочка
+    const lamp = container.querySelector('#grammarLampBtn');
+    if (lamp) {
+        lamp.addEventListener('click', () => this.showSentenceGrammarModal());
+    }
+}
+
+handleGrammarWordSelect(word, index, container) {
+    const state = this.sentenceBuilderState;
+    const wordKey = `${word}_${index}`;
+    
+    // Проверяем порядок
+    const nextPos = state.assembledWords.length;
+    const expected = (state.correctOrder[nextPos] || '').toLowerCase().trim();
+    const clicked = (word || '').toLowerCase().trim();
+
+    if (clicked !== expected) {
+        const area = container.querySelector('#grammarAnswerArea');
+        area.classList.add('incorrect');
+        setTimeout(() => area.classList.remove('incorrect'), 300);
+        return;
+    }
+
+    // === ОЗВУЧКА СЛОВА (ОСТАВЛЯЕМ) ===
+    this.playSingleWordMp3(word, 'us').catch(()=>{});
+    // ================================
+
+    // Добавляем
+    state.assembledWords.push(wordKey);
+    
+    // Обновляем UI
+    const area = container.querySelector('#grammarAssembledSentence');
+    area.textContent = state.assembledWords.map(w => w.split('_')[0]).join(' ');
+    
+    const btn = container.querySelector(`[data-index="${index}"]`);
+    if (btn) {
+        btn.classList.add('used');
+        btn.disabled = true;
+    }
+    
+    // Активируем проверку
+    const checkBtn = container.querySelector('#grammarCheckBtn');
+    checkBtn.disabled = false;
+    
+    // Авто-проверка
+    if (state.assembledWords.length === state.correctOrder.length) {
+        setTimeout(() => this.checkGrammarSentence(container, this.sentenceBuilderState.filterTopic), 500);
+    }
+}
+
+checkGrammarSentence(container, topicId) {
+    const state = this.sentenceBuilderState;
+    const feedback = container.querySelector('#grammarFeedback');
+    
+    state.score++; 
+    this.incrementTrainerCounters({ correct: true });
+
+    // ДЕРЗКИЕ И ВЕСЕЛЫЕ КОМПЛИМЕНТЫ ОТ БОБА
+    const compliments = [
+        "Гениально! 🌟",
+        "Красавчик! 😎",
+        "Ты машина! 🤖",
+        "Мозг — огонь! 🔥",
+        "Легче легкого! 🥱",
+        "Да ты профи! 🎓",
+        "Боб одобряет! 😺",
+        "В точку! 🎯",
+        "Не остановить! 🚀",
+        "Изи катка! 🎮",
+        "Ты это сделал! 🙌",
+    ];
+    
+    const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
+
+    feedback.className = 'sentence-feedback correct';
+    
+    // HTML с Бобом
+    feedback.innerHTML = `
+        <img src="/instruction.png" class="feedback-bob" alt="Bob">
+        <div>${randomCompliment}</div>
+    `;
+    
+    feedback.style.display = 'block';
+    
+    // ЗВУК ВКЛЮЧЕН (как ты просил)
+    this.playCorrectSound(); 
+
+    // Пауза 2 сек, чтобы насладиться похвалой Боба
+    setTimeout(() => {
+        this.startGrammarPractice(topicId); 
+    }, 2000);
+}
+
+
+  // =========
+  // Levels & Categories
+  // =========
+    updateLevelCounts() {
+    const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+    levels.forEach(level => {
+      const words = oxfordWordsDatabase[level] || [];
+      const countEl = document.querySelector(`[data-level="${level}"] .word-count`);
+      if (countEl) countEl.textContent = `${words.length} слов`;
+    });
+
+    // Обычные категории
+    const setCatCount = (catKey, selector) => {
+      const words = oxfordWordsDatabase[catKey] || [];
+      const countEl = document.querySelector(`${selector} .word-count`);
+      if (countEl) countEl.textContent = `${words.length} слов`;
+    };
+
+    setCatCount('IRREGULARS', '[data-category="IRREGULARS"]');
+    setCatCount('PHRASAL_VERBS', '[data-category="PHRASAL_VERBS"]');
+    setCatCount('IDIOMS', '[data-category="IDIOMS"]');
+    setCatCount('PREPOSITIONS', '[data-category="PREPOSITIONS"]');
+    setCatCount('MEDICAL', '[data-category="MEDICAL"]');
+
+    const addedCard = document.querySelector('[data-category="ADDED"] .word-count');
+    if (addedCard) addedCard.textContent = `${this.customWords.length} слов`;
+
+    // Экзамены — если нет слов, делаем карточку "coming soon"
+    const setExamCount = (key) => {
+      const words = oxfordWordsDatabase[key] || [];
+      const card = document.querySelector(`.level-card[data-category="${key}"]`);
+      const countEl = card ? card.querySelector('.word-count') : null;
+      if (!card || !countEl) return;
+      
+      if (words.length === 0) {
+        countEl.textContent = 'Скоро';
+        card.classList.add('coming-soon');
+      } else {
+        countEl.textContent = `${words.length} слов`;
+        card.classList.remove('coming-soon');
+      }
+    };
+
+    ['EGE','OGE','IELTS','TOEFL','PROVERBS','IT','BUSINESS','LEGAL'].forEach(setExamCount);
+  }
+
+toggleLevelsIndexVisibility(showIndex) {
+  const levelsSection = document.getElementById('levels');
+  if (!levelsSection) return;
+
+  // Вешаем/снимаем класс режима списка
+  levelsSection.classList.toggle('list-open', !showIndex);
+
+  // Показ/скрытие контейнера со словами
+  const wordsContainer = document.getElementById('wordsContainer');
+  if (wordsContainer) {
+    wordsContainer.classList.toggle('hidden', showIndex);
+  }
+
+  // Дополнительно: прячем любые заголовки "Слова по уровням" / "Категории"
+  // на случай если у них другие классы
+  const hideByText = ['слова по уровням', 'категории'];
+  levelsSection.querySelectorAll('h1,h2,h3,h4').forEach(h => {
+    const t = (h.textContent || '').trim().toLowerCase();
+    const match = hideByText.some(x => t.includes(x));
+    if (match) {
+      h.style.display = showIndex ? '' : 'none';
+    }
+  });
+}
+
+jumpToTopStrict(attempts = 3) {
+  try {
+    const main = document.querySelector('.main-content');
+    const prev = main ? main.style.scrollBehavior : '';
+    if (main) main.style.scrollBehavior = 'auto';
+
+    const doScroll = () => {
+      if (main) main.scrollTop = 0;
+      // страхуемся на всякий случай
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    doScroll(); // сразу
+    let n = 1;
+    const again = () => {
+      if (n++ >= attempts) {
+        if (main) main.style.scrollBehavior = prev;
+        return;
+      }
+      requestAnimationFrame(() => {
+        doScroll();
+        setTimeout(again, 0);
+      });
+    };
+    again();
+  } catch (e) {}
+}
+
+scrollMainToTop() {
+  // Прокрутка главного контейнера контента
+  const main = document.querySelector('.main-content');
+  if (main) {
+    main.scrollTop = 0; // мгновенно, без анимации
+  } else {
+    // фолбэк
+    window.scrollTo(0, 0);
+  }
+}
+
+  showCategoryWords(category) {
+    this.stopCurrentAudio();
+    this.currentCategory = category;
+    this.currentLevel = null; // Сбрасываем уровень, чтобы кнопка назад работала правильно
+
+    const words = oxfordWordsDatabase[category] || [];
+    const container = document.getElementById('wordsContainer');
+    const title = document.getElementById('currentLevelTitle');
+    const wordsList = document.getElementById('wordsList');
+
+    if (typeof this.toggleLevelsIndexVisibility === 'function') {
+      this.toggleLevelsIndexVisibility(false);
+    }
+    if (container) container.classList.remove('hidden');
+
+    const categoryName =
+      category === 'IRREGULARS' ? 'Неправильные глаголы' :
+      category === 'PHRASAL_VERBS' ? 'Фразовые глаголы' :
+      category === 'IDIOMS' ? 'Идиомы' :
+      category === 'PROVERBS' ? 'Пословицы и поговорки' :
+      category === 'MEDICAL' ? 'Медицинский английский' :
+      category === 'PREPOSITIONS' ? 'Предлоги' :
+      category;
+
+    if (title) title.textContent = `${categoryName} - ${words.length} слов`;
+
+    if (wordsList) {
+        // Используем наш улучшенный рендер, который теперь включает кнопку "Учить все"
+        this.renderFilteredWordsList(words, category);
+    }
+
+    this.jumpToTopStrict();
+  }
+
+
+  // =========
+  // Bulk toggle (Добавить все / Удалить все)
+  // =========
+  
+  updateBulkToggleButton() {
+    const btn = document.getElementById('bulkToggleBtn');
+    if (!btn) return;
+
+    const source = this.currentLevel || this.currentCategory;
+    
+    // 1. Для "Мои слова" (ADDED) кнопка не нужна (или всегда неактивна)
+    if (!source || source === 'ADDED') {
+      this._setBulkButtonState(btn, 'add', 'Учить все', true);
+      return;
+    }
+
+    // Берем базу
+    const dbWords = oxfordWordsDatabase[source] || [];
+    if (dbWords.length === 0) {
+      this._setBulkButtonState(btn, 'add', 'Учить все', true);
+      return;
+    }
+
+    // 2. БЫСТРАЯ ПРОВЕРКА ПО КОЛИЧЕСТВУ
+    // Считаем, сколько слов этого уровня есть у пользователя
+    const userCount = this.learningWords.reduce((acc, w) => {
+      return (w.level === source) ? acc + 1 : acc;
+    }, 0);
+
+    // Если у пользователя слов столько же или больше, чем в базе -> Считаем, что ВСЕ ДОБАВЛЕНО.
+    // Это решает проблему "одного битого слова", из-за которого кнопка глючила.
+    if (userCount >= dbWords.length) {
+      this._setBulkButtonState(btn, 'remove', 'Удалить все', false);
+      return;
+    }
+
+    // 3. ЕСЛИ КОЛИЧЕСТВО НЕ СОВПАЛО -> ТОЧНАЯ ПРОВЕРКА ЧЕРЕЗ SET (Очень быстрая)
+    // Создаем набор "ключей" слов пользователя для мгновенного поиска: "cat"
+    const userWordsSet = new Set();
+    for (let i = 0; i < this.learningWords.length; i++) {
+      const w = this.learningWords[i];
+      if (w.level === source) {
+        userWordsSet.add(w.word.toLowerCase().trim());
+      }
+    }
+
+    // Проверяем, есть ли каждое слово из базы в наборе пользователя
+    const allAdded = dbWords.every(dbW => {
+      // Пропускаем пустые, если есть
+      if (!dbW.word) return true; 
+      return userWordsSet.has(dbW.word.toLowerCase().trim());
+    });
+
+    if (allAdded) {
+      this._setBulkButtonState(btn, 'remove', 'Удалить все', false);
+    } else {
+      this._setBulkButtonState(btn, 'add', 'Учить все', false);
+    }
+  }
+
+  // Вспомогательный метод для смены вида кнопки
+  _setBulkButtonState(btn, type, text, disabled) {
+    btn.textContent = text;
+    btn.title = text;
+    btn.disabled = disabled;
+    
+    if (type === 'remove') {
+      btn.classList.remove('add');
+      btn.classList.add('remove');
+      btn.dataset.state = 'all-added';
+    } else {
+      btn.classList.remove('remove');
+      btn.classList.add('add');
+      btn.dataset.state = 'not-all';
+    }
+  }
+  
+  // ==================== SENTENCE BUILDER METHODS ====================
+
+getAvailableLevelsFromWords() {
+  const levels = new Set();
+  
+  this.learningWords.forEach(word => {
+    if (word.level) {
+      // Проверяем стандартные уровни A1-C2
+      if (/^[ABC]\d$/.test(word.level)) {
+        levels.add(word.level);
+      } 
+      // Проверяем категории
+      else if (word.level === 'MEDICAL') {
+        levels.add('MEDICAL');
+      }
+      // ДОБАВЬТЕ ЭТУ ПРОВЕРКУ:
+      else if (word.level === 'PREPOSITIONS') {
+        levels.add('PREPOSITIONS');
+      }
+      // Можно добавить и другие категории при необходимости:
+      else if (word.level === 'IRREGULARS') {
+        levels.add('IRREGULARS');
+      }
+      else if (word.level === 'PHRASAL_VERBS') {
+        levels.add('PHRASAL_VERBS');
+      }
+      else if (word.level === 'IDIOMS') {
+        levels.add('IDIOMS');
+      }
+      else if (word.level === 'PROVERBS') {
+      levels.add('PROVERBS');
+      }
+    }
+  });
+  
+  return levels;
+}
+
+loadSentencesForLevels() {
+  // 1. Если включен фильтр по теме Грамматики (из startGrammarPractice)
+  if (this.sentenceBuilderState.filterTopic) {
+      const topicId = this.sentenceBuilderState.filterTopic;
+      
+      // Предполагаем, что в window.sentencesByTopic лежат массивы предложений по ID
+      // Тебе нужно будет создать такую структуру в sentences-data.js
+      if (window.sentencesByTopic && window.sentencesByTopic[topicId]) {
+          return window.sentencesByTopic[topicId];
+      } else {
+          // Фолбэк, если предложений по теме нет
+          console.warn(`No sentences found for topic: ${topicId}`);
+          return []; 
+      }
+  }
+
+  // 2. Если фильтра нет — работаем как раньше (Берем предложения по уровням слов пользователя)
+  const availableLevels = this.getAvailableLevelsFromWords();
+  let sentences = [];
+  
+  if (availableLevels.size === 0) return [];
+  
+  availableLevels.forEach(level => {
+    if (window.sentencesByLevel && window.sentencesByLevel[level]) {
+      sentences = sentences.concat(
+        window.sentencesByLevel[level].map(s => ({...s, level}))
+      );
+    }
+  });
+  
+  return sentences;
+}
+
+renderSentenceBuilder() {
+  const sentences = this.loadSentencesForLevels();
+  
+  if (sentences.length === 0) {
+    return `
+      <div class="empty-state">
+        <i class="fas fa-book-open"></i>
+        <h3>Для вас пока нет подходящих упражнений</h3>
+        <p>Добавьте слова из готовых списков в разделе «Списки» или воспользуйтесь другим режимом практики (Quiz, Флешкарточки).</p>
+        <button class="btn btn-primary" onclick="app.switchSection('levels')">
+          Перейти к спискам слов
+        </button>
+      </div>
+    `;
+  }
+  
+  if (!this.sentenceBuilderState.currentSentence) {
+    this.sentenceBuilderState.currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
+    this.sentenceBuilderState.assembledWords = [];
+    this.sentenceBuilderState.correctOrder = this.sentenceBuilderState.currentSentence.en.split(' ');
+  }
+  
+  const state = this.sentenceBuilderState;
+  const shuffledWords = [...state.correctOrder].sort(() => Math.random() - 0.5);
+  
+  const container = document.getElementById('learningWordsList');
+  if (!container) return '';
+  
+  // Очищаем контейнер и создаем элементы через DOM
+  container.innerHTML = `
+    <div class="sentence-builder-container">
+      <div class="sentence-instruction">
+        <div class="sentence-instruction-icon">✏️</div>
+        <div class="sentence-instruction-text">Переведите на английский</div>
+        <div class="grammar-lamp pulse" id="grammarLampBtn" title="Грамматическая подсказка">💡</div>
+      </div>
+      
+      <div class="russian-sentence-box">
+        <span class="russian-text">${state.currentSentence.ru}</span>
+        <span class="sentence-level-badge level-${state.currentSentence.level}">${state.currentSentence.level}</span>
+      </div>
+      
+      <div class="sentence-answer-area ${state.assembledWords.length > 0 ? 'has-content' : ''}" id="sentenceAnswerArea">
+        <div class="assembled-sentence" id="assembledSentence">
+          ${state.assembledWords.map(w => w.split('_')[0]).join(' ')}
+        </div>
+      </div>
+      
+      <div class="sentence-hint">${this.getSentenceHint()}</div>
+      
+      <div class="sentence-word-pool" id="sentenceWordPool">
+        ${shuffledWords.map((word, index) => {
+          const wordKey = `${word}_${index}`;
+          const isUsed = state.assembledWords.some(w => w === wordKey);
+          return `
+            <button class="sentence-word ${isUsed ? 'used' : ''}" 
+                    data-word="${this.safeAttr(word)}"
+                    data-index="${index}"
+                    ${isUsed ? 'disabled' : ''}>
+              ${word}
+            </button>
+          `;
+        }).join('')}
+      </div>
+      
+      <div class="sentence-controls">
+        <button class="sentence-control-btn sentence-clear-btn" id="sentenceClearBtn">
+          🔄 Сбросить
+        </button>
+        <button class="sentence-control-btn sentence-skip-btn" id="sentenceSkipBtn">
+          ⏭️ Пропустить
+        </button>
+      </div>
+      
+      <button class="sentence-check-btn" 
+              ${state.assembledWords.length === 0 ? 'disabled' : ''}
+              id="sentenceCheckBtn">
+        Проверить
+      </button>
+      
+      <div class="sentence-feedback" id="sentenceFeedback" style="display: none;"></div>
+    </div>
+  `;
+  
+  // Добавляем обработчики событий через addEventListener
+  setTimeout(() => {
+    // Кнопки слов
+    const wordButtons = container.querySelectorAll('.sentence-word');
+    wordButtons.forEach(btn => {
+      if (!btn.disabled) {
+        btn.addEventListener('click', () => {
+          const word = btn.getAttribute('data-word');
+          const index = parseInt(btn.getAttribute('data-index'));
+          this.selectSentenceWord(word, index);
+        });
+      }
+    });
+    
+    // Кнопка грамматики
+    const grammarBtn = container.querySelector('#grammarLampBtn');
+    if (grammarBtn) {
+      grammarBtn.addEventListener('click', () => this.showSentenceGrammarModal());
+    }
+    
+    // Кнопка очистки
+    const clearBtn = container.querySelector('#sentenceClearBtn');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => this.clearSentence());
+    }
+    
+    // Кнопка пропуска
+    const skipBtn = container.querySelector('#sentenceSkipBtn');
+    if (skipBtn) {
+      skipBtn.addEventListener('click', () => this.skipSentence());
+    }
+    
+    // Кнопка проверки
+    const checkBtn = container.querySelector('#sentenceCheckBtn');
+    if (checkBtn) {
+      checkBtn.addEventListener('click', () => this.checkSentence());
+    }
+  }, 0);
+  
+  return ''; // Возвращаем пустую строку, так как уже заполнили innerHTML
+}
+
+selectSentenceWord(word, index) {
+  const state = this.sentenceBuilderState;
+  const wordKey = `${word}_${index}`;
+  
+  // Уже использовано это конкретное слово
+  if (state.assembledWords.some(w => w === wordKey)) return;
+
+  // Проверяем, какое слово должно быть следующим по порядку
+  const nextPos = state.assembledWords.length;
+  const expected = (state.correctOrder[nextPos] || '').toLowerCase().trim();
+  const clicked = (word || '').toLowerCase().trim();
+
+  // Если слово не то, которое ожидается — не добавляем, только даём лёгкую "ошибку"
+  if (clicked !== expected) {
+    const answerArea = document.getElementById('sentenceAnswerArea');
+    if (answerArea) {
+      answerArea.classList.add('incorrect');
+      setTimeout(() => answerArea.classList.remove('incorrect'), 300);
+    }
+    return;
+  }
+  
+  // Сюда попадаем только если слово правильное по порядку
+  state.assembledWords.push(wordKey);
+  
+  // Обновляем отображение собранного предложения
+  const assembledDiv = document.getElementById('assembledSentence');
+  if (assembledDiv) {
+    assembledDiv.textContent = state.assembledWords.map(w => w.split('_')[0]).join(' ');
+  }
+  
+  // Помечаем кнопку как использованную
+  const container = document.getElementById('learningWordsList');
+  if (container) {
+    const button = container.querySelector(`[data-index="${index}"][data-word="${this.safeAttr(word)}"]`);
+    if (button) {
+      button.classList.add('used');
+      button.disabled = true;
+    }
+  }
+  
+  // Активируем кнопку проверки
+  const checkBtn = document.getElementById('sentenceCheckBtn');
+  if (checkBtn) {
+    checkBtn.disabled = false;
+  }
+  
+  // Добавляем стиль к области ответа
+  const answerArea = document.getElementById('sentenceAnswerArea');
+  if (answerArea) {
+    answerArea.classList.add('has-content');
+  }
+  
+  // Озвучиваем слово (если нужно)
+  try {
+    this.playSingleWordMp3(word, 'us').catch(err => {
+      console.log('Audio playback failed:', err);
+    });
+  } catch (e) {
+    console.log('Audio error:', e);
+  }
+  
+  // Автоматическая проверка, если все слова использованы
+  if (state.assembledWords.length === state.correctOrder.length) {
+    setTimeout(() => this.checkSentence(), 500);
+  }
+}
+
+clearSentence() {
+  this.sentenceBuilderState.assembledWords = [];
+  
+  // Очищаем отображение
+  const assembledDiv = document.getElementById('assembledSentence');
+  if (assembledDiv) {
+    assembledDiv.textContent = '';
+  }
+  
+  // Возвращаем все кнопки в исходное состояние
+  document.querySelectorAll('.sentence-word').forEach(btn => {
+    btn.classList.remove('used');
+    btn.disabled = false;
+  });
+  
+  // Деактивируем кнопку проверки
+  const checkBtn = document.getElementById('sentenceCheckBtn');
+  if (checkBtn) {
+    checkBtn.disabled = true;
+  }
+  
+  // Убираем стиль у области ответа
+  const answerArea = document.getElementById('sentenceAnswerArea');
+  if (answerArea) {
+    answerArea.classList.remove('has-content');
+  }
+}
+
+skipSentence() {
+  const sentences = this.loadSentencesForLevels();
+  if (sentences.length > 0) {
+    this.sentenceBuilderState.currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
+    this.sentenceBuilderState.assembledWords = [];
+    this.sentenceBuilderState.correctOrder = this.sentenceBuilderState.currentSentence.en.split(' ');
+  }
+  this.renderLearningSection();
+}
+
+checkSentence() {
+  const state = this.sentenceBuilderState;
+  const userAnswer = state.assembledWords.map(w => w.split('_')[0]).join(' ').toLowerCase();
+  const correctAnswer = state.correctOrder.join(' ').toLowerCase();
+  
+  const isCorrect = userAnswer === correctAnswer;
+  const feedback = document.getElementById('sentenceFeedback');
+  
+  this.incrementTrainerCounters({ correct: isCorrect });
+  this.recordDailyProgress();
+  
+  if (feedback) {
+    if (isCorrect) {
+      state.score++;
+      
+      // === НОВАЯ ЛОГИКА: POP-UP С БОБОМ (Как в Грамматике) ===
+      const compliments = [
+        "Супер! 🔥", "Так держать! 🚀", "Идеально! ✨",
+        "Ты крут! 😎", "В точку! 🎯", "Боб доволен! 😺"
+      ];
+      const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
+
+      feedback.className = 'sentence-feedback correct'; // Используем новый класс
+      feedback.innerHTML = `
+          <img src="/instruction.png" class="feedback-bob" alt="Bob">
+          <div>${randomCompliment}</div>
+      `;
+      
+      // Включаем Flex для центрирования
+      feedback.style.display = 'flex'; 
+      
+      // Звук
+      this.playCorrectSound();
+
+      setTimeout(() => {
+        feedback.style.display = 'none'; // Скрываем перед следующим
+        this.skipSentence(); // Грузим новый вопрос
+      }, 2000);
+      
+    } else {
+      // ОШИБКА (Оставляем красную плашку, но можно тоже сделать с Бобом, если хочешь)
+      // Пока оставим старый стиль для ошибки, чтобы было понятно, что не так
+      feedback.className = 'sentence-feedback incorrect';
+      feedback.innerHTML = `
+          <div style="font-size:1.2rem; color:white; margin-bottom:10px;">❌ Ошибка!</div>
+          <div style="font-size:1rem; color:white;">Правильно: <strong>${state.correctOrder.join(' ')}</strong></div>
+      `;
+      feedback.style.display = 'flex';
+      
+      // Даем больше времени прочитать ошибку
+      setTimeout(() => {
+          feedback.style.display = 'none';
+      }, 3500);
+    }
+    
+    state.total++;
+  }
+}
+
+getSentenceHint() {
+  const sentence = this.sentenceBuilderState.currentSentence;
+  if (!sentence) return '';
+  
+  const en = sentence.en.toLowerCase();
+  
+  if (en.includes('?')) {
+    if (/^(do|does|did|will|can|should|must)/.test(en)) {
+      return 'Вопрос: Auxiliary/Modal + Subject + Verb...?';
+    } else if (/^(what|where|when|why|how|who)/.test(en)) {
+      return 'Специальный вопрос: Wh-word + Auxiliary + Subject + Verb...?';
+    }
+  } else if (en.includes("n't") || en.includes("not")) {
+    return 'Отрицание: Subject + Auxiliary + not + Verb...';
+  } else {
+    return 'Утверждение: Subject + Verb (+ Object)';
+  }
+  
+  return '';
+}
+
+playSentenceSound() {
+  const state = this.sentenceBuilderState;
+  if (!state.currentSentence) return;
+  
+  this.playPhraseTTS(state.currentSentence.en, 'us');
+}
+
+showSentenceGrammarModal() {
+  // Получаем текущее предложение
+  const currentSent = this.sentenceBuilderState.currentSentence;
+  
+  // Пытаемся найти тему
+  let foundTopic = null;
+  
+  // Вариант А: Если включен фильтр темы (мы пришли из Грамматики)
+  if (this.sentenceBuilderState.filterTopic) {
+      const topicId = this.sentenceBuilderState.filterTopic;
+      foundTopic = this._findTopicById(topicId);
+  } 
+  // Вариант Б: Если мы в общем режиме, но у предложения прописан topicId (в базе данных)
+  else if (currentSent && currentSent.topicId) {
+      foundTopic = this._findTopicById(currentSent.topicId);
+  }
+
+  // Если тему нашли — показываем её контент
+  if (foundTopic) {
+      const modal = document.createElement('div');
+      modal.className = 'grammar-modal show';
+      modal.innerHTML = `
+        <div class="grammar-modal-content">
+          <div class="grammar-modal-header">
+            <div class="grammar-modal-title">
+              <span>🎓</span>
+              <span style="font-size:1rem;">${foundTopic.title}</span>
+            </div>
+            <button class="grammar-close-btn" onclick="this.closest('.grammar-modal').remove()">&times;</button>
+          </div>
+          <div class="grammar-modal-body">
+            ${foundTopic.content} 
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      return;
+  }
+
+  // Фолбэк: Стандартная подсказка (если тема не определена)
+  const modal = document.createElement('div');
+  modal.className = 'grammar-modal show';
+  modal.innerHTML = `
+    <div class="grammar-modal-content">
+      <div class="grammar-modal-header">
+        <div class="grammar-modal-title">
+          <span>💡</span>
+          <span>Подсказка</span>
+        </div>
+        <button class="grammar-close-btn" onclick="this.closest('.grammar-modal').remove()">&times;</button>
+      </div>
+      <div class="grammar-modal-body">
+        <p>К сожалению, для этого предложения не привязано конкретное правило.</p>
+        <div class="grammar-tip">
+           <div class="grammar-tip-title">Общий совет</div>
+           <p>В английском строгий порядок слов: <strong>Кто + Делает + Что/Где/Когда</strong>.</p>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+// Вспомогательный метод для поиска темы в grammar.js
+_findTopicById(id) {
+    if (!this.grammarManager || !this.grammarManager.data) return null;
+    const allLevels = this.grammarManager.data;
+    for (const lvl in allLevels) {
+        const t = allLevels[lvl].find(x => x.id === id);
+        if (t) return t;
+    }
+    return null;
+}
+
+incrementTrainerCounters({ correct = false } = {}) {
+  try {
+    const today = new Date().toDateString();
+
+    if (!Array.isArray(this.weeklyProgress)) {
+      this.weeklyProgress = [];
+    }
+    let day = this.weeklyProgress.find(d => d.date === today);
+    if (!day) {
+      day = { date: today, count: 0, trainerRepeats: 0, trainerCorrect: 0 };
+      this.weeklyProgress.push(day);
+    }
+    if (typeof day.count !== 'number') day.count = 0;
+    if (typeof day.trainerRepeats !== 'number') day.trainerRepeats = 0;
+    if (typeof day.trainerCorrect !== 'number') day.trainerCorrect = 0;
+
+    day.trainerRepeats += 1;
+    if (correct) day.trainerCorrect += 1;
+
+    this.saveData();
+
+    if (this.currentSection === 'progress' && typeof this.renderProgress === 'function') {
+      this.renderProgress();
+    }
+  } catch (e) {
+    console.warn('incrementTrainerCounters error:', e);
+  }
+}
+
+// ==================== END SENTENCE BUILDER ====================
+
+  // =========
+  // Word cards
+  // =========
+
+  createWordCard(wordObj, level) {
+      const isInLearning = this.learningWords.some(w => w.word === wordObj.word && w.level === level);
+
+      let displayText = wordObj.word;
+      if (wordObj.forms && wordObj.forms.length > 0) {
+        displayText = wordObj.forms.join(' → ');
+      }
+
+      const cardId = `card-${wordObj.word.replace(/[^a-z0-9]/gi, '_')}-${level}`;
+
+      // НОВАЯ HTML СТРУКТУРА (КОМПАКТНАЯ)
+      return `
+        <div class="word-card" id="${cardId}" data-word="${this.safeAttr(wordObj.word)}" data-level="${this.safeAttr(level)}">
+          
+          <!-- ЛЕВАЯ КОЛОНКА -->
+          <div class="word-info-wrapper">
+             <div class="word-text">${displayText}</div>
+             <div class="word-translation">${wordObj.translation}</div>
+          </div>
+
+          <!-- ПРАВАЯ КОЛОНКА (Кнопки скрыты в .word-header в старом CSS, здесь выносим их явно или используем display:contents в CSS) -->
+          <div class="word-actions">
+             <button class="action-btn play-btn sound-us-btn" data-word-text="${this.safeAttr(wordObj.word)}" data-forms='${wordObj.forms ? JSON.stringify(wordObj.forms) : 'null'}' title="US">
+                <i class="fas fa-volume-up"></i>
+             </button>
+             <button class="action-btn play-btn sound-uk-btn" data-word-text="${this.safeAttr(wordObj.word)}" data-forms='${wordObj.forms ? JSON.stringify(wordObj.forms) : 'null'}' title="UK">
+                <i class="fas fa-headphones"></i>
+             </button>
+             ${isInLearning ?
+               `<button class="action-text-btn remove word-remove-btn" data-word-text="${this.safeAttr(wordObj.word)}" data-level="${this.safeAttr(level)}" title="Удалить из изучаемых">
+                  <!-- Текст скрыт CSS, иконка через ::after -->
+               </button>` :
+               `<button class="action-text-btn add word-add-btn" data-word-text="${this.safeAttr(wordObj.word)}" data-translation="${this.safeAttr(wordObj.translation)}" data-level="${this.safeAttr(level)}" data-forms='${wordObj.forms ? JSON.stringify(wordObj.forms) : 'null'}' title="Добавить в изучаемые">
+                  <!-- Текст скрыт CSS, иконка через ::after -->
+               </button>`
+             }
+          </div>
+        </div>
+      `;
+  }
+
+installWordsListDelegatedHandlers() {
+  const list = document.getElementById('wordsList');
+  if (!list) return;
+  // Чтобы не навешивать повторно
+  if (list.dataset.delegated === '1') return;
+
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('.sound-us-btn, .sound-uk-btn, .word-add-btn, .word-remove-btn');
+    if (!btn) return;
+
+    // Определяем уровень/категорию из карточки
+    const card = btn.closest('.word-card');
+    const cardLevel = card ? card.getAttribute('data-level') : null;
+
+    // Звук US/UK
+    if (btn.classList.contains('sound-us-btn') || btn.classList.contains('sound-uk-btn')) {
+      const wordText = btn.getAttribute('data-word-text');
+      const formsStr = btn.getAttribute('data-forms');
+      let forms = null;
+      if (formsStr && formsStr !== 'null') {
+        try { forms = JSON.parse(formsStr); } catch {}
+      }
+      const region = btn.classList.contains('sound-uk-btn') ? 'uk' : 'us';
+      this.playWord(wordText, forms, region, cardLevel); // <- ПЕРЕДАЁМ level
+      return;
+    }
+
+    // Добавить слово
+    if (btn.classList.contains('word-add-btn')) {
+      const wordText = btn.getAttribute('data-word-text');
+      const translation = btn.getAttribute('data-translation');
+      const level = btn.getAttribute('data-level');
+      const formsStr = btn.getAttribute('data-forms');
+      let forms = null;
+      if (formsStr && formsStr !== 'null') { try { forms = JSON.parse(formsStr); } catch {} }
+      this.addWordToLearning(wordText, translation, level, forms);
+      return;
+    }
+
+    // Удалить слово
+    if (btn.classList.contains('word-remove-btn')) {
+      const wordText = btn.getAttribute('data-word-text');
+      const level = btn.getAttribute('data-level');
+      this.removeWordFromLearning(wordText, level);
+      return;
+    }
+  });
+
+  list.dataset.delegated = '1';
+}
+
+safeAttr(str) { 
+    if (!str) return ''; 
+    return String(str).replace(/"/g, '&quot;').replace(/'/g, '&#39;'); 
+}
+
+  // =========
+  // Learning list (add/remove with instant UI swap)
+  // =========
+  addWordToLearning(word, translation, level, forms = null) {
+    this.stopCurrentAudio();
+
+    const existingWord = this.learningWords.find(w => w.word === word && w.level === level);
+    if (!existingWord) {
+      const newWord = { word, translation, level, forms: forms || null, isLearned: false, addedAt: Date.now() };
+      this.learningWords.push(newWord);
+      this.initializeWordStats(word);
+      this.saveData();
+      this.swapCardButtonToRemove(word, level);
+      this.updateLevelCounts();
+      this.updateBulkToggleButton();
+      this.showNotification(`Слово "${word}" добавлено в изучаемые!`, 'success');
+
+      if (this.currentSection === 'learning') {
+        this.suppressAutoSpeakOnce = true;
+        this.renderLearningSection();
+      }
+    } else {
+      this.showNotification(`Слово "${word}" уже в изучаемых`, 'info');
+    }
+  }
+  removeWordFromLearning(word, level) {
+    this.stopCurrentAudio();
+
+    const index = this.learningWords.findIndex(w => w.word === word && w.level === level);
+    if (index !== -1) {
+      this.learningWords.splice(index, 1);
+      this.saveData();
+
+      this.swapCardButtonToAdd(word, level);
+      this.updateLevelCounts();
+      this.updateBulkToggleButton();
+      this.showNotification(`Слово "${word}" удалено из изучаемых`, 'success');
+
+      if (this.currentSection === 'learning') {
+        this.suppressAutoSpeakOnce = true;
+        this.renderLearningSection();
+      }
+    }
+  }
+  swapCardButtonToRemove(word, level) {
+    const selWord = (CSS && CSS.escape) ? CSS.escape(word) : word;
+    const selLevel = (CSS && CSS.escape) ? CSS.escape(level) : level;
+    const card = document.querySelector(`.word-card[data-word="${selWord}"][data-level="${selLevel}"]`);
+    if (!card) { if (this.currentLevel === level) this.showLevelWords(this.currentLevel); if (this.currentCategory === level) this.showCategoryWords(this.currentCategory); return; }
+    const actions = card.querySelector('.word-actions');
+    if (!actions) return;
+    actions.innerHTML = `
+      <button class="action-btn play-btn" title="US" onclick="app.playWord('${this.safeAttr(word)}', null, 'us')"><i class="fas fa-volume-up"></i></button>
+      <button class="action-btn play-btn" title="UK" onclick="app.playWord('${this.safeAttr(word)}', null, 'uk')"><i class="fas fa-headphones"></i></button>
+      <button class="action-text-btn remove" data-testid="word-remove-btn" onclick="app.removeWordFromLearning('${this.safeAttr(word)}', '${this.safeAttr(level)}')" title="Удалить из изучаемых">Удалить</button>
+    `;
+  }
+  swapCardButtonToAdd(word, level) {
+    const selWord = (CSS && CSS.escape) ? CSS.escape(word) : word;
+    const selLevel = (CSS && CSS.escape) ? CSS.escape(level) : level;
+    const card = document.querySelector(`.word-card[data-word="${selWord}"][data-level="${selLevel}"]`);
+    if (!card) { if (this.currentLevel === level) this.showLevelWords(this.currentLevel); if (this.currentCategory === level) this.showCategoryWords(this.currentCategory); return; }
+    const actions = card.querySelector('.word-actions');
+    if (!actions) return;
+    const translation = card.querySelector('.word-translation')?.textContent || '';
+    actions.innerHTML = `
+      <button class="action-btn play-btn" title="US" onclick="app.playWord('${this.safeAttr(word)}', null, 'us')"><i class="fas fa-volume-up"></i></button>
+      <button class="action-btn play-btn" title="UK" onclick="app.playWord('${this.safeAttr(word)}', null, 'uk')"><i class="fas fa-headphones"></i></button>
+      <button class="action-text-btn add" data-testid="word-add-btn" onclick="app.addWordToLearning('${this.safeAttr(word)}', '${this.safeAttr(translation)}', '${this.safeAttr(level)}', null)" title="Добавить в изучаемые">Учить</button>
+    `;
+  }
+
+  addAllLevelWords() {
+    this.stopCurrentAudio();
+
+    const source = this.currentLevel || this.currentCategory;
+    if (!source) return;
+    if (source === 'ADDED') {
+      this.showNotification('Для категории «Добавленные слова» массовое добавление не доступно', 'info');
+      return;
+    }
+
+    const words = oxfordWordsDatabase[source] || [];
+    let addedCount = 0;
+
+    words.forEach(word => {
+      const exists = this.learningWords.some(w => w.word === word.word && w.level === source);
+      if (!exists) {
+        this.learningWords.push({
+          word: word.word,
+          translation: word.translation,
+          level: source,
+          forms: word.forms || null,
+          isLearned: false,
+          addedAt: Date.now()
+        });
+        this.initializeWordStats(word.word);
+        addedCount++;
+      }
+    });
+
+    if (addedCount > 0) {
+      this.saveData();
+      this.updateLevelCounts();
+      this.updateBulkToggleButton();
+      this.showNotification(`Добавлено ${addedCount} слов в изучаемые!`, 'success');
+      this.currentLevel ? this.showLevelWords(this.currentLevel) : this.showCategoryWords(this.currentCategory);
+
+      if (this.currentSection === 'learning') {
+        this.suppressAutoSpeakOnce = true;
+        this.renderLearningSection();
+      }
+    } else {
+      this.showNotification('Все слова уже добавлены', 'info');
+    }
+  }
+  removeAllLevelWords() {
+    this.stopCurrentAudio();
+
+    const source = this.currentLevel || this.currentCategory;
+    if (!source) return;
+
+    const initialLength = this.learningWords.length;
+    this.learningWords = this.learningWords.filter(w => w.level !== source);
+    const removedCount = initialLength - this.learningWords.length;
+
+    if (removedCount > 0) {
+      this.saveData();
+      this.updateLevelCounts();
+      this.updateBulkToggleButton();
+      this.showNotification(`Удалено ${removedCount} слов из изучаемых`, 'success');
+      this.currentLevel ? this.showLevelWords(this.currentLevel) : this.showCategoryWords(this.currentCategory);
+
+      if (this.currentSection === 'learning') {
+        this.suppressAutoSpeakOnce = true;
+        this.renderLearningSection();
+      }
+    }
+  }
+  
+getWordAccuracy(word) {
+  const s = this.wordStats[word];
+  if (!s) return null;
+
+  const score = typeof s.accScore === 'number' ? s.accScore : 0;
+  const pct = Math.max(0, Math.min(100, score * 10)); // 0..100 шагом 10
+
+  const total = s.totalAnswers || (s.correct + s.incorrect) || 0;
+  if (total === 0 && pct === 0) return null; // совсем нет данных — не показываем
+
+  return {
+    pct: Math.round(pct),
+    total,
+    correct: s.correct || 0,
+    incorrect: s.incorrect || 0
+  };
+}
+
+getAccuracyBadgeHtml(word) {
+  const acc = this.getWordAccuracy(word);
+  if (!acc) return '<span class="acc-badge acc-none" title="нет данных">—</span>';
+  const cls = acc.pct >= 85 ? 'acc-good' : acc.pct >= 60 ? 'acc-mid' : 'acc-bad';
+  return `<span class="acc-badge ${cls}" title="${acc.correct}/${acc.total}">${acc.pct}%</span>`;
+}
+
+initializeWordStats(word) {
+if (!this.wordStats[word]) {
+  this.wordStats[word] = {
+    correct: 0,
+    incorrect: 0,
+    lastReview: null,
+    nextReview: Date.now(),
+    difficulty: 0, // 0..5
+    ef: 2.5, // ease factor (SM-2)
+    reps: 0,
+    lapses: 0,
+    interval: 0,
+    phase: 'learning',
+    step: 0,
+    firstSeenAt: null,
+    totalAnswers: 0,
+    totalTimeMs: 0,
+    accScore: 0 // 0..10 — наш новый счётчик точности
+  };
+} else {
+  const s = this.wordStats[word];
+  if (s.ef == null) s.ef = 2.5;
+  if (s.reps == null) s.reps = 0;
+  if (s.lapses == null) s.lapses = 0;
+  if (s.interval == null) s.interval = 0;
+  if (!s.phase) s.phase = 'learning';
+  if (s.step == null) s.step = 0;
+  if (s.firstSeenAt == null) s.firstSeenAt = null;
+  if (s.totalAnswers == null) s.totalAnswers = 0;
+  if (s.totalTimeMs == null) s.totalTimeMs = 0;
+  if (s.accScore == null) s.accScore = 0; // чтобы старые данные тоже получили поле
+}
+}
+
+migrateStatsSchema() {
+(this.learningWords || []).forEach(w => this.initializeWordStats(w.word));
+this.saveData();
+}
+
+loadSrsDay() {
+try {
+const today = new Date().toDateString();
+const raw = JSON.parse(localStorage.getItem('srsDayV1') || 'null');
+if (!raw || raw.date !== today) {
+const fresh = { date: today, newIntroduced: [], answered: 0 };
+localStorage.setItem('srsDayV1', JSON.stringify(fresh));
+return fresh;
+}
+return raw;
+} catch {
+const fresh = { date: new Date().toDateString(), newIntroduced: [], answered: 0 };
+localStorage.setItem('srsDayV1', JSON.stringify(fresh));
+return fresh;
+}
+}
+saveSrsDay() {
+try { localStorage.setItem('srsDayV1', JSON.stringify(this.srsDay)); } catch {}
+}
+resetSrsDayIfNeeded() {
+const today = new Date().toDateString();
+if (!this.srsDay || this.srsDay.date !== today) {
+this.srsDay = { date: today, newIntroduced: [], answered: 0 };
+this.saveSrsDay();
+}
+}
+
+  // =========
+  // Add words (manual and bulk) -> ADDED category
+  // =========
+  
+// Добавление из переводчика (EN + RU -> уровень ADDED)
+async handleTranslatorAdd(payload) {
+try {
+const en = (payload?.term || '').trim();
+const ru = (payload?.meta?.ru || '').trim();
+if (!en) { this.showNotification('Не удалось определить английское слово','warning'); return; }
+if (!ru) { this.showNotification('Не удалось определить перевод на русский','warning'); return; }
+
+// В customWords (для списка), если ещё нет
+const existsCustom = this.customWords.some(w => w.word.toLowerCase() === en.toLowerCase());
+if (!existsCustom) {
+  this.customWords.push({ word: en, translation: ru, level: 'ADDED', forms: null, isCustom: true, addedAt: Date.now() });
+}
+
+// В learningWords как ADDED (если ещё нет)
+const existsLearn = this.learningWords.some(w => w.word.toLowerCase() === en.toLowerCase() && w.level === 'ADDED');
+if (!existsLearn) {
+  this.learningWords.push({ word: en, translation: ru, level: 'ADDED', forms: null, isCustom: true, isLearned: false, addedAt: Date.now() });
+  this.initializeWordStats(en);
+}
+
+this.saveData();
+this.updateLevelCounts();
+this.showNotification(`Добавлено в изучение: ${en}`, 'success');
+
+if (this.currentSection === 'learning') {
+  this.suppressAutoSpeakOnce = true;
+  this.renderLearningSection();
+}
+if (document.getElementById('customWords')) {
+  this.renderCustomWords();
+}
+} catch (e) {
+console.error('handleTranslatorAdd error', e);
+this.showNotification('Не удалось добавить. Попробуйте ещё раз','warning');
+}
+}
+  
+  addSingleWord() {
+    this.stopCurrentAudio();
+
+    const wordInput = document.getElementById('newWord');
+    const translationInput = document.getElementById('newTranslation');
+
+    if (!wordInput || !translationInput) return;
+
+    const word = wordInput.value.trim();
+    const translation = translationInput.value.trim();
+    const level = 'ADDED';
+
+    if (!word || !translation) {
+      this.showNotification('Заполните все поля!', 'warning');
+      return;
+    }
+
+    const newWord = {
+      word,
+      translation,
+      level,
+      forms: null,
+      isCustom: true,
+      addedAt: Date.now()
+    };
+
+    const exists = this.customWords.some(w => w.word.toLowerCase() === word.toLowerCase());
+    if (!exists) this.customWords.push(newWord);
+
+    const existsLearn = this.learningWords.some(w => w.word.toLowerCase() === word.toLowerCase() && w.level === level);
+    if (!existsLearn) this.learningWords.push({ ...newWord, isLearned: false });
+
+    this.initializeWordStats(word);
+    this.saveData();
+    this.updateLevelCounts();
+
+    wordInput.value = '';
+    translationInput.value = '';
+
+    this.showNotification(`Слово "${word}" добавлено в «Добавленные слова»!`, 'success');
+    this.renderCustomWords();
+
+    if (this.currentSection === 'learning') {
+      this.suppressAutoSpeakOnce = true;
+      this.renderLearningSection();
+    }
+  }
+
+  bulkAddWords() {
+    this.stopCurrentAudio();
+
+    const textarea = document.getElementById('bulkTextarea');
+    if (!textarea) return;
+
+    const text = textarea.value.trim();
+    const level = 'ADDED';
+    if (!text) {
+      this.showNotification('Введите слова для добавления!', 'warning');
+      return;
+    }
+
+    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+    let addedCount = 0;
+
+    const seen = new Set(this.customWords.map(w => `${w.word.toLowerCase()}`));
+    const seenLearn = new Set(this.learningWords.map(w => `${w.level}::${w.word.toLowerCase()}`));
+
+    lines.forEach(line => {
+      const parts = line.split(/\s*[-—:|\t]\s*/);
+      if (parts.length < 2) return;
+
+      const left = parts[0].trim();
+      const translation = parts.slice(1).join(' - ').trim();
+      if (!left || !translation) return;
+
+      let word = left;
+      let forms = null;
+      if (left.includes('→') || left.includes(',')) {
+        const rawForms = left.includes('→') ? left.split('→') : left.split(',');
+        const cleanedForms = rawForms.map(f => f.trim()).filter(Boolean);
+        if (cleanedForms.length >= 2) {
+          forms = cleanedForms;
+          word = cleanedForms[0];
+        }
+      }
+
+      const customKey = `${word.toLowerCase()}`;
+      if (!seen.has(customKey)) {
+        const newWord = { word, translation, level, forms, isCustom: true, addedAt: Date.now() };
+        this.customWords.push(newWord);
+        seen.add(customKey);
+      }
+      const learnKey = `${level}::${word.toLowerCase()}`;
+      if (!seenLearn.has(learnKey)) {
+        this.learningWords.push({ word, translation, level, forms, isCustom: true, addedAt: Date.now(), isLearned: false });
+        seenLearn.add(learnKey);
+        this.initializeWordStats(word);
+        addedCount++;
+      }
+    });
+
+    if (addedCount > 0) {
+      this.saveData();
+      this.updateLevelCounts();
+      textarea.value = '';
+      this.showNotification(`Добавлено ${addedCount} слов в «Добавленные слова»!`, 'success');
+      this.renderCustomWords();
+
+      if (this.currentSection === 'learning') {
+        this.suppressAutoSpeakOnce = true;
+        this.renderLearningSection();
+      }
+    } else {
+      this.showNotification('Новые слова не найдены (возможны дубли)', 'info');
+    }
+  }
+  
+  attachCustomWordsListeners() {
+    const container = document.getElementById('customWords');
+    if (!container) return;
+
+    // Обработчики для кнопок звука US
+    container.querySelectorAll('.custom-sound-us-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const wordText = btn.getAttribute('data-word-text');
+        const formsStr = btn.getAttribute('data-forms');
+        let forms = null;
+        
+        if (formsStr && formsStr !== 'null') {
+          try {
+            forms = JSON.parse(formsStr);
+          } catch (e) {
+            console.log('Forms parse error:', e);
+          }
+        }
+        
+        this.playWord(wordText, forms, 'us');
+      });
+    });
+
+    // Обработчики для кнопок звука UK
+    container.querySelectorAll('.custom-sound-uk-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const wordText = btn.getAttribute('data-word-text');
+        const formsStr = btn.getAttribute('data-forms');
+        let forms = null;
+        
+        if (formsStr && formsStr !== 'null') {
+          try {
+            forms = JSON.parse(formsStr);
+          } catch (e) {
+            console.log('Forms parse error:', e);
+          }
+        }
+        
+        this.playWord(wordText, forms, 'uk');
+      });
+    });
+
+    // Обработчики для кнопок удаления ???
+    container.querySelectorAll('.custom-delete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const wordText = btn.getAttribute('data-word-text');
+        this.deleteCustomWord(wordText);
+      });
+    });
+}
+
+  // --- В app.js (Часть 2) ЗАМЕНИТЕ renderCustomWords НА ЭТО: ---
+
+  renderCustomWords() {
+    const container = document.getElementById('customWords'); // или 'newWordsList'
+    // Проверка обоих ID, так как в HTML может быть по-разному
+    const list = container || document.getElementById('newWordsList');
+    
+    if (!list) return;
+
+    if (this.customWords.length === 0) {
+      list.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-plus-circle"></i>
+          <h3>Нет добавленных слов</h3>
+        </div>
+      `;
+      return;
+    }
+
+    list.innerHTML = this.customWords.map(word => `
+      <div class="word-card custom-word-card" data-word="${this.safeAttr(word.word)}">
+        
+        <!-- ЛЕВАЯ КОЛОНКА -->
+        <div class="word-info-wrapper">
+           <div class="word-text">${this.getEnglishDisplay(word)}</div>
+           <div class="word-translation">${word.translation}</div>
+        </div>
+
+        <!-- ПРАВАЯ КОЛОНКА -->
+        <div class="word-actions">
+           <button class="action-btn play-btn custom-sound-us-btn" data-word-text="${this.safeAttr(word.word)}" data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}' title="US">
+              <i class="fas fa-volume-up"></i>
+           </button>
+           <button class="action-btn play-btn custom-sound-uk-btn" data-word-text="${this.safeAttr(word.word)}" data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}' title="UK">
+              <i class="fas fa-headphones"></i>
+           </button>
+           <button class="action-btn remove-btn custom-delete-btn" data-word-text="${this.safeAttr(word.word)}" title="Удалить навсегда">
+              <i class="fas fa-trash"></i>
+           </button>
+        </div>
+      </div>
+    `).join('');
+    
+    this.attachCustomWordsListeners();
+  }
+  
+  deleteCustomWord(word) {
+    this.stopCurrentAudio();
+    this.customWords = this.customWords.filter(w => w.word !== word);
+    this.learningWords = this.learningWords.filter(w => !(w.word === word && w.level === 'ADDED'));
+    this.saveData();
+    this.updateLevelCounts();
+    this.showNotification(`Слово "${word}" удалено`, 'success');
+    this.renderCustomWords();
+
+    if (this.currentSection === 'learning') {
+      this.suppressAutoSpeakOnce = true;
+      this.renderLearningSection();
+    }
+  }
+  
+
+  // =========
+  // Learning UI
+  // =========
+renderLearningSection() {
+  this.stopCurrentAudio();
+  const container = document.getElementById('learningWordsList');
+  const countEl = document.getElementById('learningCount');
+  if (!container) return;
+
+  if (countEl) countEl.textContent = `${this.learningWords.length} слов`;
+
+  // Проверяем пустой список
+  if (this.learningWords.length === 0 && this.currentMode !== 'trainer') {
+    container.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-book-open"></i>
+        <h3>Добавьте слова из "Списка слов", чтобы практиковаться</h3>
+      </div>
+    `;
+    return;
+  }
+
+  // Рендерим в зависимости от режима
+  if (this.currentMode === 'trainer') {
+    // ДЛЯ ТРЕНАЖЕРА НЕ ИСПОЛЬЗУЕМ innerHTML =
+    this.renderSentenceBuilder(); // Метод сам заполняет container
+  } else if (this.currentMode === 'flashcards') {
+    this.renderFlashcards();
+  } else if (this.currentMode === 'quiz') {
+    this.renderQuiz();
+  } else {
+    this.renderQuiz();
+  }
+}
+
+insertAutoDictionaryButtonInLearning(containerEl) {
+  try {
+    if (!containerEl) return;
+    if (containerEl.querySelector('#autoDictInlineBtn')) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'auto-dict-inline';
+    wrap.style.cssText = 'display:flex;justify-content:center;margin:12px 0;';
+
+    const btn = document.createElement('button');
+    btn.id = 'autoDictInlineBtn';
+    btn.className = 'btn btn-primary';
+    btn.style.fontWeight = '700';
+    btn.innerHTML = '<i class="fas fa-magic"></i> Подобрать словарь под тебя';
+
+    wrap.appendChild(btn);
+    containerEl.insertAdjacentElement('afterbegin', wrap);
+  } catch (e) {
+    console.warn('insertAutoDictionaryButtonInLearning error:', e);
+  }
+}
+// Добавить новые методы для переключения режимов
+switchLearningMode(mode) {
+  this.currentMode = mode;
+  localStorage.setItem('currentMode', mode);
+  this.suppressAutoSpeakOnce = true;
+  this.renderLearningSection();
+}
+
+switchPracticeMode(practice) {
+  this.currentPractice = practice;
+  localStorage.setItem('currentPractice', practice);
+  this.currentReviewIndex = 0;
+  if (practice === 'endless') {
+    localStorage.removeItem('currentSession');
+  }
+  this.suppressAutoSpeakOnce = true;
+  this.renderLearningSection();
+}
+
+  // =========
+  // Motivation UI (popup)
+  // =========
+  insertMotivationButton(containerEl) {
+    if (!containerEl) return;
+    if (containerEl.querySelector('#motivationBtn')) return;
+
+    const btn = document.createElement('button');
+    btn.id = 'motivationBtn';
+    btn.className = 'btn btn-primary';
+    btn.textContent = 'ПОЛУЧИТЬ ЗАРЯД МОТИВАЦИИ 💪';
+    btn.style.cssText = 'font-weight:700;margin-bottom:14px;';
+    btn.setAttribute('data-testid', 'motivation-btn');
+    btn.addEventListener('click', () => this.showMotivationPopup());
+
+    containerEl.insertAdjacentElement('afterbegin', btn);
+  }
+  showMotivationPopup(onClose) {
+    const overlay = document.createElement('div');
+    overlay.id = 'motivationOverlay';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:1000002;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;';
+
+    const modal = document.createElement('div');
+    modal.style.cssText = 'background:var(--bg-primary);border-radius:16px;padding:16px;max-width:800px;width:90%;max-height:90vh;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;gap:12px;';
+
+    const header = document.createElement('div');
+    header.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:10px;';
+
+    const title = document.createElement('div');
+    title.textContent = 'ТВОЯ МОТИВАЦИЯ НА СЕГОДНЯ :';
+    title.style.cssText = 'font-weight:900;font-size:18px;color:var(--text-primary);';
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'btn btn-secondary';
+    closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+    closeBtn.onclick = () => {
+        overlay.remove();
+        if (onClose && typeof onClose === 'function') {
+            onClose();
+        }
+    };
+
+    header.appendChild(title);
+    header.appendChild(closeBtn);
+
+    const n = Math.floor(Math.random() * 61) + 1;
+    const imgWrap = document.createElement('div');
+    imgWrap.style.cssText = 'width:100%;display:flex;align-items:center;justify-content:center;';
+
+    const img = document.createElement('img');
+    img.alt = 'motivation';
+    img.src = `/m${n}.jpg`;
+    img.setAttribute('data-index', String(n));
+    img.style.cssText = 'max-width:100%;max-height:70vh;height:auto;object-fit:contain;display:block;border-radius:10px;';
+    img.onerror = () => this.handleMotivationImageError(img);
+
+    imgWrap.appendChild(img);
+
+    modal.appendChild(header);
+    modal.appendChild(imgWrap);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    overlay.addEventListener('click', (e) => { 
+        if (e.target === overlay) {
+            overlay.remove();
+            if (onClose && typeof onClose === 'function') {
+                onClose();
+            }
+        }
+    });
+}
+
+  // =========
+  // Flashcards / Quiz / List (unchanged core except autoplay rules)
+  // =========
+renderFlashcards() {
+    const container = document.getElementById('learningWordsList');
+    this._questionStart = Date.now();
+    if (!container) return;
+    
+    // === ДОБАВИТЬ ЭТО ===
+if (this.currentPractice === 'scheduled') {
+  const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+  // Берем индекс из сессии, если он там есть
+  if (typeof session.currentIndex === 'number') {
+    this.currentReviewIndex = session.currentIndex;
+  }
+}
+// ====================
+
+    const wordsToReview = this.getWordsToReview();
+    if (wordsToReview.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-check-circle"></i>
+          <h3>Все слова повторены!</h3>
+          <p>Отличная работа! Возвращайтесь позже для новых повторений</p>
+        </div>
+      `;
+      return;
+    }
+
+    const word = wordsToReview[this.currentReviewIndex % wordsToReview.length];
+
+    let displayWord = this.getEnglishDisplay(word);
+    this.lastFlashcardFrontWasRussian = this.isRussian(displayWord);
+
+    container.innerHTML = `
+      <div class="flashcard" data-testid="flashcard">
+        <img src="/nophoto.jpg" alt="flashcard" class="flashcard-image" data-loading="true">
+        <div class="flashcard-body">
+          <h3 class="flashcard-title">
+            ${displayWord} ${this.getAccuracyBadgeHtml(word.word)}
+            <span class="sound-actions">
+              <button class="mini-btn flashcard-sound-us" data-word="${this.safeAttr(word.word)}" title="US">
+                <i class="fas fa-volume-up"></i>
+              </button>
+              <button class="mini-btn flashcard-sound-uk" data-word="${this.safeAttr(word.word)}" title="UK">
+                <i class="fas fa-headphones"></i>
+              </button>
+            </span>
+          </h3>
+          <p class="flashcard-subtitle">Нажмите, чтобы увидеть перевод</p>
+          <div class="flashcard-answer hidden" id="flashcardAnswer">
+            <div class="review-translation">${word.translation}</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-primary" id="showAnswerBtn" data-testid="flashcard-show-answer">
+              <i class="fas fa-eye"></i> Показать ответ
+            </button>
+          </div>
+          <div class="answer-buttons hidden" id="answerButtons">
+            <button class="btn btn-danger" id="flashcardWrongBtn" data-testid="flashcard-wrong">
+              <i class="fas fa-times"></i> Не знал
+            </button>
+            <button class="btn btn-success" id="flashcardCorrectBtn" data-testid="flashcard-correct">
+              <i class="fas fa-check"></i> Знал
+            </button>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:15px;color:var(--text-secondary);">
+        Карточка ${this.currentReviewIndex + 1} из ${wordsToReview.length}
+      </div>
+    `;
+    
+    // Загрузка изображения
+    this.getPrimaryImageUrl(word).then(imageUrl => {
+      const img = container.querySelector('.flashcard-image');
+      if (img) {
+        img.src = imageUrl;
+        img.onerror = () => this.handleImageError(img);
+        img.removeAttribute('data-loading');
+        if (word.level === 'MEDICAL') {
+          img.classList.add('medical-image');
+        }
+      }
+    });
+
+    // Добавляем обработчики через addEventListener
+    setTimeout(() => {
+      // Кнопки звука
+      const soundUsBtn = container.querySelector('.flashcard-sound-us');
+      const soundUkBtn = container.querySelector('.flashcard-sound-uk');
+      
+      if (soundUsBtn) {
+        soundUsBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.playWord(word.word, word.forms, 'us', word.level);
+        });
+      }
+      
+      if (soundUkBtn) {
+        soundUkBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.playWord(word.word, word.forms, 'uk', word.level);
+        });
+      }
+      
+      // Кнопка показа ответа
+      const showBtn = container.querySelector('#showAnswerBtn');
+      if (showBtn) {
+        showBtn.addEventListener('click', () => this.showFlashcardAnswer());
+      }
+      
+      // Кнопка воспроизведения
+      const playBtn = container.querySelector('#playFlashcardBtn');
+      if (playBtn) {
+        playBtn.addEventListener('click', () => this.playCurrentWord());
+      }
+      
+      // Кнопки ответов
+      const wrongBtn = container.querySelector('#flashcardWrongBtn');
+      const correctBtn = container.querySelector('#flashcardCorrectBtn');
+      
+      if (wrongBtn) {
+        wrongBtn.addEventListener('click', () => this.answerFlashcard(false));
+      }
+      
+      if (correctBtn) {
+        correctBtn.addEventListener('click', () => this.answerFlashcard(true));
+      }
+    }, 0);
+
+    // Автоматическое произношение
+    if (!this.lastFlashcardFrontWasRussian && !this.suppressAutoSpeakOnce && this.currentSection === 'learning' && this.shouldAutoPronounce(word)) {
+      setTimeout(() => {
+        this.playWord(word.word, word.forms, 'us', word.level);
+      }, 250);
+    }
+    this.suppressAutoSpeakOnce = false;
+}
+  showFlashcardAnswer() {
+    const answer = document.getElementById('flashcardAnswer');
+    const showBtn = document.getElementById('showAnswerBtn');
+    const playBtn = document.getElementById('playFlashcardBtn');
+    const answerBtns = document.getElementById('answerButtons');
+
+    if (answer) answer.classList.remove('hidden');
+    if (showBtn) showBtn.classList.add('hidden');
+    if (playBtn) playBtn.classList.remove('hidden');
+    if (answerBtns) answerBtns.classList.remove('hidden');
+
+    if (this.lastFlashcardFrontWasRussian && this.currentSection === 'learning') {
+      const wordsToReview = this.getWordsToReview();
+      const word = wordsToReview[this.currentReviewIndex % wordsToReview.length];
+      if (this.shouldAutoPronounce(word)) {
+        setTimeout(() => {
+          this.playWord(word.word, word.forms, 'us', word.level);
+        }, 200);
+      }
+    }
+  }
+    playCurrentWord() {
+    const wordsToReview = this.getWordsToReview();
+    const word = wordsToReview[this.currentReviewIndex % wordsToReview.length];
+    this.playWord(word.word, word.forms, 'us', word.level);
+  }
+  async answerFlashcard(correct) {
+    await this.waitForCurrentAudioToFinish();
+
+    const wordsToReview = this.getWordsToReview();
+    const word = wordsToReview[this.currentReviewIndex % wordsToReview.length];
+
+    const rt = this._questionStart ? (Date.now() - this._questionStart) : null;
+this.updateWordStats(word.word, correct, rt);
+    this.recordDailyProgress();
+
+    this.currentReviewIndex++;
+
+    if (this.currentReviewIndex >= wordsToReview.length && this.currentPractice === 'scheduled') {
+      this.currentReviewIndex = 0;
+      this.showNotification('Отличная работа! Все слова повторены!', 'success');
+    }
+
+    this.renderFlashcards();
+  }
+
+  renderQuiz() {
+     if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+    }
+    const container = document.getElementById('learningWordsList');
+    this._questionStart = Date.now();
+    if (!container) return;
+    
+    // === ДОБАВИТЬ ЭТО ===
+if (this.currentPractice === 'scheduled') {
+  const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+  // Берем индекс из сессии, если он там есть
+  if (typeof session.currentIndex === 'number') {
+    this.currentReviewIndex = session.currentIndex;
+  }
+}
+// ====================
+
+    const wordsToReview = this.getWordsToReview();
+    if (wordsToReview.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-check-circle"></i>
+          <h3>Все слова повторены!</h3>
+          <p>Отличная работа! Возвращайтесь позже для новых повторений</p>
+        </div>
+      `;
+      return;
+    }
+
+    const word = wordsToReview[this.currentReviewIndex % wordsToReview.length];
+
+    const direction = Math.random() < 0.5 ? 'EN_RU' : 'RU_EN';
+    const questionText = direction === 'EN_RU' ? this.getEnglishDisplay(word) : word.translation;
+    const correctAnswer = direction === 'EN_RU' ? word.translation : this.getEnglishDisplay(word);
+
+    const options = this.buildQuizOptions(word, direction);
+    const shuffled = this.shuffle(options);
+
+    container.innerHTML = `
+      <div class="quiz-container" data-testid="quiz-container">
+        <img src="/nophoto.jpg" alt="quiz" class="quiz-image" data-loading="true">
+        <span class="word-level" style="display:none">${word.level}</span>
+        <div class="quiz-question">
+          ${questionText} ${this.getAccuracyBadgeHtml(word.word)}
+          <span class="sound-actions" style="margin-left:8px;">
+            <button class="mini-btn quiz-sound-us" data-word="${this.safeAttr(word.word)}" title="US">
+              <i class="fas fa-volume-up"></i>
+            </button>
+            <button class="mini-btn quiz-sound-uk" data-word="${this.safeAttr(word.word)}" title="UK">
+              <i class="fas fa-headphones"></i>
+            </button>
+          </span>
+        </div>
+        <div class="quiz-sub">Выберите правильный перевод</div>
+        <div class="quiz-options" id="quizOptions">
+          ${shuffled.map(opt => {
+            const isEnglishOpt = this.isEnglish(opt) && !this.isRussian(opt);
+            const baseForSound = opt.split('→')[0].trim();
+            const soundBtns = isEnglishOpt ? `
+              <span class="option-sound">
+                <button class="mini-btn option-sound-us" data-word="${this.safeAttr(baseForSound)}" title="US">
+                  <i class="fas fa-volume-up"></i>
+                </button>
+                <button class="mini-btn option-sound-uk" data-word="${this.safeAttr(baseForSound)}" title="UK">
+                  <i class="fas fa-headphones"></i>
+                </button>
+              </span>
+            ` : '';
+            return `
+              <div class="quiz-option" data-answer="${this.safeAttr(opt)}">
+                <div class="quiz-option-inner">
+                  <span>${opt}</span>
+                  ${soundBtns}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+        <div style="text-align:center;margin-top:15px;color:var(--text-secondary);">
+          Вопрос ${this.currentReviewIndex + 1} из ${wordsToReview.length}
+        </div>
+      </div>
+    `;
+    
+    // Загрузка изображения
+    this.getPrimaryImageUrl(word).then(imageUrl => {
+      const img = container.querySelector('.quiz-image');
+      if (img) {
+        img.src = imageUrl;
+        img.onerror = () => this.handleImageError(img);
+        img.removeAttribute('data-loading');
+        if (word.level === 'MEDICAL') {
+          img.classList.add('medical-image');
+        }
+      }
+    });
+
+    // Добавляем обработчики через addEventListener
+    setTimeout(() => {
+      // Кнопки звука для вопроса
+      const soundUsBtn = container.querySelector('.quiz-sound-us');
+      const soundUkBtn = container.querySelector('.quiz-sound-uk');
+      
+      if (soundUsBtn) {
+        soundUsBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const w = soundUsBtn.getAttribute('data-word');
+          this.playWord(w, word.forms, 'us', word.level);
+        });
+      }
+      if (soundUkBtn) {
+        soundUkBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const w = soundUkBtn.getAttribute('data-word');
+          this.playWord(w, word.forms, 'uk', word.level);
+        });
+      }
+      
+      // Кнопки звука для опций
+      container.querySelectorAll('.option-sound-us').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const w = btn.getAttribute('data-word');
+          this.playSingleWordMp3(w, 'us');
+        });
+      });
+      
+      container.querySelectorAll('.option-sound-uk').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const w = btn.getAttribute('data-word');
+          this.playSingleWordMp3(w, 'uk');
+        });
+      });
+      
+      // Обработчики для выбора ответа
+      container.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          const selected = opt.getAttribute('data-answer');
+          this.selectQuizOption(selected, correctAnswer, word.word, direction);
+        });
+      });
+    }, 0);
+
+    // Автоматическое произношение
+    if (direction === 'EN_RU' && !this.suppressAutoSpeakOnce && this.currentSection === 'learning' && this.shouldAutoPronounce(word)) {
+      setTimeout(() => {
+        this.playWord(word.word, word.forms, 'us', word.level);
+      }, 200);
+    }
+    this.suppressAutoSpeakOnce = false;
+}
+
+  quizPlayQuestion(word, forms, region) { this.playWord(word, forms, region || 'us'); }
+
+  buildQuizOptions(word, direction) {
+    const correctAnswer = direction === 'EN_RU' ? word.translation : this.getEnglishDisplay(word);
+    const options = [correctAnswer];
+
+    const allWords = [...this.learningWords];
+    const shuffled = this.shuffle(allWords);
+
+    for (let w of shuffled) {
+      if (w.word !== word.word) {
+        const wrongOption = direction === 'EN_RU' ? w.translation : this.getEnglishDisplay(w);
+        if (!options.includes(wrongOption)) { options.push(wrongOption); }
+      }
+      if (options.length >= 4) break;
+    }
+
+    if (options.length < 4) {
+      const allLevels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+      const allCats = ['IRREGULARS', 'PHRASAL_VERBS', 'IDIOMS' , 'MEDICAL','PROVERBS'];
+      for (let level of allLevels) {
+        const levelWords = (oxfordWordsDatabase[level] || []);
+        const shuffledLevel = this.shuffle(levelWords);
+        for (let w of shuffledLevel) {
+          const wrongOption = direction === 'EN_RU' ? w.translation : (w.forms && w.forms.length ? w.forms.join(' → ') : w.word);
+          if (!options.includes(wrongOption)) { options.push(wrongOption); }
+          if (options.length >= 4) break;
+        }
+        if (options.length >= 4) break;
+      }
+      for (let cat of allCats) {
+        if (options.length >= 4) break;
+        const catWords = (oxfordWordsDatabase[cat] || []);
+        const shuffledCat = this.shuffle(catWords);
+        for (let w of shuffledCat) {
+          const wrongOption = direction === 'EN_RU' ? w.translation : (w.forms && w.forms.length ? w.forms.join(' → ') : w.word);
+          if (!options.includes(wrongOption)) options.push(wrongOption);
+          if (options.length >= 4) break;
+        }
+      }
+    }
+
+    return options.slice(0, 4);
+  }
+
+  async selectQuizOption(selected, correct, wordToPlay, direction) {
+    const isCorrect = selected === correct;
+    const options = document.querySelectorAll('.quiz-option');
+
+    options.forEach(opt => {
+      opt.style.pointerEvents = 'none';
+      const answer = opt.getAttribute('data-answer');
+      if (answer === selected) { opt.classList.add(isCorrect ? 'correct' : 'wrong'); }
+      if (answer === correct && !isCorrect) { opt.classList.add('correct'); }
+    });
+     const rt = this._questionStart ? (Date.now() - this._questionStart) : null;
+this.updateWordStats(wordToPlay, isCorrect, rt);
+    this.recordDailyProgress();
+
+    const wordsToReview = this.getWordsToReview();
+    const wordObj = wordsToReview.find(w => w.word === wordToPlay);
+
+    await this.waitForCurrentAudioToFinish();
+
+    await this.waitForCurrentAudioToFinish();
+
+    if (direction === 'RU_EN' && this.currentSection === 'learning' && this.shouldAutoPronounce(wordObj)) {
+      await this.delay(200);
+      if (wordObj) {
+        await this.playWord(wordObj.word, wordObj.forms, 'us', wordObj.level);
+      } else {
+        await this.playSingleWordMp3(wordToPlay, 'us');
+      }
+    } else {
+      await this.delay(600);
+    }
+
+    this.currentReviewIndex++;
+    
+    if (this.currentPractice === 'scheduled') {
+  const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+  session.currentIndex = this.currentReviewIndex; // Сохраняем позицию
+  localStorage.setItem('currentSession', JSON.stringify(session));
+}
+    
+    if (this.currentReviewIndex >= wordsToReview.length && this.currentPractice === 'scheduled') {
+      this.currentReviewIndex = 0;
+      this.showNotification('Quiz завершен! Отличная работа!', 'success');
+    }
+    this.renderQuiz();
+  }
+
+// --- ЗАМЕНИТЬ renderWordsList ЦЕЛИКОМ ---
+renderWordsList() {
+  const container = document.getElementById('learningWordsList');
+  if (!container) return;
+
+  const wordsToShow = this.currentPractice === 'endless' ? 
+    this.learningWords.filter(w => !w.isLearned) : 
+    this.getWordsToReview();
+
+  if (wordsToShow.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-check-circle"></i>
+        <h3>Нет слов для отображения</h3>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = wordsToShow.map(word => {
+    const displayWord = this.getEnglishDisplay(word);
+    const accuracyBadge = this.getAccuracyBadgeHtml(word.word);
+    // ВАЖНО: Передаем data-level в кнопки
+    return `
+      <div class="word-card ${word.isLearned ? 'learned' : ''}">
+        <div class="word-header">
+          <div class="word-text">${displayWord} ${accuracyBadge}</div>
+          <div class="word-actions">
+            <button class="action-btn play-btn list-sound-us" 
+                    data-word="${this.safeAttr(word.word)}"
+                    data-level="${this.safeAttr(word.level)}" 
+                    data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}'
+                    title="US">
+              <i class="fas fa-volume-up"></i>
+            </button>
+            <button class="action-btn play-btn list-sound-uk" 
+                    data-word="${this.safeAttr(word.word)}"
+                    data-level="${this.safeAttr(word.level)}"
+                    data-forms='${word.forms ? JSON.stringify(word.forms) : 'null'}'
+                    title="UK">
+              <i class="fas fa-headphones"></i>
+            </button>
+            <button class="action-btn ${word.isLearned ? 'add-btn' : 'remove-btn'} list-toggle-learned"
+                    data-word="${this.safeAttr(word.word)}"
+                    title="${word.isLearned ? 'Вернуть в изучение' : 'Отметить выученным'}">
+              <i class="fas fa-${word.isLearned ? 'undo' : 'check'}"></i>
+            </button>
+          </div>
+        </div>
+        <div class="word-translation">${word.translation}</div>
+        <span class="word-level">${word.level}</span>
+      </div>
+    `;
+  }).join('');
+  
+  // Добавляем обработчики
+  this.attachWordsListHandlers();
+}
+// Добавьте новый метод:
+attachWordsListHandlers() {
+  const container = document.getElementById('learningWordsList');
+  if (!container) return;
+  
+  // Кнопки звука US
+  container.querySelectorAll('.list-sound-us').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.getAttribute('data-word');
+      const formsStr = btn.getAttribute('data-forms');
+      // БЕРЕМ УРОВЕНЬ ПРЯМО ИЗ КНОПКИ
+      const level = btn.getAttribute('data-level'); 
+      
+      let forms = null;
+      if (formsStr && formsStr !== 'null') {
+        try { forms = JSON.parse(formsStr); } catch {}
+      }
+      
+      this.playWord(word, forms, 'us', level);
+    });
+  });
+  
+  // Кнопки звука UK
+  container.querySelectorAll('.list-sound-uk').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.getAttribute('data-word');
+      const formsStr = btn.getAttribute('data-forms');
+      // БЕРЕМ УРОВЕНЬ ПРЯМО ИЗ КНОПКИ
+      const level = btn.getAttribute('data-level');
+      
+      let forms = null;
+      if (formsStr && formsStr !== 'null') {
+        try { forms = JSON.parse(formsStr); } catch {}
+      }
+      
+      this.playWord(word, forms, 'uk', level);
+    });
+  });
+  
+  // Кнопки toggle learned
+  container.querySelectorAll('.list-toggle-learned').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.getAttribute('data-word');
+      this.toggleWordLearned(word);
+    });
+  });
+}
+// Pop up список слов
+
+  showLearningWordsPopup() {
+    // Удалим старый попап, если он есть
+    const existing = document.getElementById('learningWordsPopup');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'learningWordsPopup';
+    overlay.className = 'words-popup-overlay';
+
+    const box = document.createElement('div');
+    box.className = 'words-popup';
+
+    const header = document.createElement('div');
+    header.className = 'words-popup-header';
+    header.innerHTML = `
+      <div class="words-popup-title">
+        <h3>Все слова</h3>
+        <p>${this.learningWords.length} слов в изучении</p>
+      </div>
+      <button class="btn btn-secondary words-popup-close-btn">
+        <i class="fas fa-arrow-left"></i> Назад
+      </button>
+    `;
+
+    // Формируем фильтр по уровням / категориям
+    const levelsSet = new Set(this.learningWords.map(w => w.level || ''));
+    levelsSet.delete('');
+    const levels = Array.from(levelsSet).sort();
+
+    const filterRow = document.createElement('div');
+    filterRow.className = 'words-popup-filters';
+let optionsHtml = `
+  <option value="ALL">Все уровни / категории</option>
+  <option value="STUDY_NOW">Режим заучивание</option>
+`;
+levels.forEach(l => {
+  optionsHtml += `<option value="${this.safeAttr(l)}">${l}</option>`;
+});
+    filterRow.innerHTML = `
+      <label>
+        Уровень:
+        <select id="wordsPopupFilter">${optionsHtml}</select>
+      </label>
+      <span class="words-popup-hint">
+        Нажмите на корзину, чтобы удалить слово. Нажмите на карандаш, чтобы изменить перевод.
+      </span>
+    `;
+
+    const list = document.createElement('div');
+    list.id = 'wordsPopupList';
+    list.className = 'words-popup-list';
+
+box.appendChild(header);
+box.appendChild(filterRow);
+box.appendChild(list);
+overlay.appendChild(box);
+document.body.appendChild(overlay);
+
+// Если слов очень много — показываем кота Боба при открытии
+if ((this.learningWords || []).length > 500) {
+  this.showGlobalLoader('Кот Боб загружает для вас список слов...', 1000);
+}
+
+// Первичный рендер
+this.renderLearningWordsPopupList('ALL');
+
+// Спрячем лоадер после первой отрисовки
+if ((this.learningWords || []).length > 500) {
+  this.hideGlobalLoader();
+}
+
+    const close = () => {
+      overlay.remove();
+      // Возвращаем режим "Заучивание" (scheduled)
+      this.currentPractice = 'scheduled';
+      localStorage.setItem('currentPractice', 'scheduled');
+      // Подсветка кнопок практики
+      document.querySelectorAll('.practice-btn').forEach(b => {
+        const p = b.getAttribute('data-practice');
+        b.classList.toggle('active', p === 'scheduled');
+      });
+      // Перерисовать блок "Изучаю"
+      this.suppressAutoSpeakOnce = true;
+      this.renderLearningSection();
+    };
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) close();
+    });
+    const closeBtn = header.querySelector('.words-popup-close-btn');
+    if (closeBtn) closeBtn.addEventListener('click', close);
+
+    const filterSelect = filterRow.querySelector('#wordsPopupFilter');
+    if (filterSelect) {
+      filterSelect.addEventListener('change', () => {
+        this.renderLearningWordsPopupList(filterSelect.value || 'ALL');
+      });
+    }
+
+    // Делегирование кликов внутри списка
+    list.addEventListener('click', (e) => {
+      const btn = e.target.closest('.popup-sound-us, .popup-sound-uk, .popup-edit-btn, .popup-delete-btn');
+      if (!btn) return;
+      
+      const word = btn.getAttribute('data-word');
+      const level = btn.getAttribute('data-level'); // <-- Получаем уровень
+      if (!word) return;
+
+      if (btn.classList.contains('popup-sound-us') || btn.classList.contains('popup-sound-uk')) {
+        const formsStr = btn.getAttribute('data-forms');
+        let forms = null;
+        if (formsStr && formsStr !== 'null') {
+          try { forms = JSON.parse(formsStr); } catch {}
+        }
+        const region = btn.classList.contains('popup-sound-uk') ? 'uk' : 'us';
+        
+        // ИСПРАВЛЕНИЕ: Передаем 'level' четвертым аргументом!
+        this.playWord(word, forms, region, level);
+
+      } else if (btn.classList.contains('popup-delete-btn')) {
+        this.removeWordFromLearning(word, level);
+        const card = btn.closest('.word-card');
+        if (card) card.remove();
+
+        // обновим счётчик в заголовке
+        const titleCount = header.querySelector('.words-popup-title p');
+        if (titleCount) {
+          titleCount.textContent = `${this.learningWords.length} слов в изучении`;
+        }
+
+      } else if (btn.classList.contains('popup-edit-btn')) {
+        this.editLearningWord(word, level, () => {
+          this.renderLearningWordsPopupList(filterSelect ? filterSelect.value : 'ALL');
+        });
+      }
+    }, true);
+  }
+
+  renderLearningWordsPopupList(filterLevel = 'ALL') {
+  const list = document.getElementById('wordsPopupList');
+  if (!list) return;
+
+  let words;
+
+  if (filterLevel === 'STUDY_NOW') {
+    // берём только слова из текущего пула "заучивание"
+    const prevPractice = this.currentPractice;
+    this.currentPractice = 'scheduled';
+    words = this.getWordsToReview().slice();
+    this.currentPractice = prevPractice;
+  } else {
+    words = this.learningWords.slice();
+    if (filterLevel && filterLevel !== 'ALL') {
+      words = words.filter(w => (w.level || '') === filterLevel);
+    }
+  }
+
+  if (words.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <h3>Нет слов для отображения</h3>
+        <p>Попробуйте выбрать другой уровень или добавьте слова из раздела "Списки".</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Сортируем по уровню, затем по слову
+  words.sort((a,b) => {
+    const la = (a.level || '').localeCompare(b.level || '');
+    if (la !== 0) return la;
+    return (a.word || '').localeCompare(b.word || '');
+  });
+
+  const BATCH_SIZE = 100;           // максимум 100 слов за раз
+  const total = words.length;
+  let rendered = 0;
+
+  list.innerHTML = '';              // очищаем список
+
+  // ВАЖНО: если много слов — показываем Боба и здесь тоже
+  if (this.isAndroid || total > 500) {
+    this.showGlobalLoader('Кот Боб загружает для вас список слов...', 1500);
+  }
+
+  const renderBatch = () => {
+    const slice = words.slice(rendered, rendered + BATCH_SIZE);
+    if (!slice.length) return;
+
+    const html = slice.map(w => {
+        const display = this.getEnglishDisplay(w);
+        const accBadge = this.getAccuracyBadgeHtml(w.word);
+        const formsJson = w.forms ? JSON.stringify(w.forms).replace(/"/g, '&quot;') : 'null';
+        
+        // === НОВЫЙ КОМПАКТНЫЙ HTML ===
+        return `
+          <div class="word-card word-card-compact popup-word-card" data-word="${this.safeAttr(w.word)}" data-level="${this.safeAttr(w.level)}">
+            
+            <!-- ЛЕВАЯ КОЛОНКА: ТЕКСТ -->
+            <div class="word-info-col">
+              <div class="word-text-row">
+                ${display} 
+                ${accBadge}
+                <span class="tiny-level-badge">${w.level}</span>
+              </div>
+              <div class="word-trans-row">
+                ${w.translation}
+              </div>
+            </div>
+
+            <!-- ПРАВАЯ КОЛОНКА: КНОПКИ -->
+            <div class="word-actions-row">
+              <button class="action-btn play-btn popup-sound-us"
+                      data-word="${this.safeAttr(w.word)}"
+                      data-forms='${formsJson}'
+                      data-level="${this.safeAttr(w.level)}"
+                      title="US">
+                <i class="fas fa-volume-up"></i>
+              </button>
+              <button class="action-btn play-btn popup-sound-uk"
+                      data-word="${this.safeAttr(w.word)}"
+                      data-forms='${formsJson}'
+                      data-level="${this.safeAttr(w.level)}"
+                      title="UK">
+                <i class="fas fa-headphones"></i>
+              </button>
+              <button class="action-btn popup-edit-btn"
+                      data-word="${this.safeAttr(w.word)}"
+                      data-level="${this.safeAttr(w.level)}">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button class="action-btn remove-btn popup-delete-btn"
+                      data-word="${this.safeAttr(w.word)}"
+                      data-level="${this.safeAttr(w.level)}">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+
+          </div>
+        `;
+        // ==============================
+      }).join('');
+
+    list.insertAdjacentHTML('beforeend', html);
+    rendered += slice.length;
+  };
+
+  // Рендерим первую порцию
+  renderBatch();
+
+  // Прячем лоадер после первой партии
+  if (this.isAndroid || total > 500) {
+    this.hideGlobalLoader();
+  }
+
+  if (rendered < total) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        // 1. Удаляем старый "датчик"
+        const oldS = document.getElementById('words-popup-sentinel');
+        if (oldS) {
+          observer.unobserve(oldS);
+          oldS.remove();
+        }
+
+        // 2. Анимация
+        if (this.isAndroid || total > 500) {
+          this.showGlobalLoader('Кот Боб загружает ещё слова...', 1000);
+        }
+
+        // 3. Рендер следующей пачки
+        renderBatch();
+
+        // 4. Скрываем анимацию
+        if (this.isAndroid || total > 500) {
+          this.hideGlobalLoader();
+        }
+
+        // 5. Новый датчик, если ещё есть слова
+        if (rendered < total) {
+          const newS = document.createElement('div');
+          newS.style.height = '40px';
+          newS.id = 'words-popup-sentinel';
+          list.appendChild(newS);
+          observer.observe(newS);
+        }
+      }
+    }, { 
+      root: list,         // Скроллим внутри попапа
+      rootMargin: '400px' // Грузим заранее
+    });
+
+    // Создаем первый датчик
+    const s = document.createElement('div');
+    s.style.height = '40px';
+    s.id = 'words-popup-sentinel';
+    list.appendChild(s);
+    observer.observe(s);
+  }
+} 
+
+  editLearningWord(word, level, onDone) {
+    const item = this.learningWords.find(w => w.word === word && w.level === level);
+    if (!item) return;
+
+    const newTr = prompt('Измените перевод слова:', item.translation || '');
+    if (newTr == null) return; // отмена
+    const trimmed = newTr.trim();
+    if (!trimmed) return;
+
+    item.translation = trimmed;
+
+    // Если это пользовательское слово, обновим и в customWords
+    this.customWords.forEach(cw => {
+      if (cw.word === word && cw.level === level) {
+        cw.translation = trimmed;
+      }
+    });
+
+    this.saveData();
+    if (typeof onDone === 'function') onDone();
+  }
+
+  playWordFromList(word, forms, region) { this.playWord(word, forms, region || 'us'); }
+  toggleWordLearned(word) {
+    this.stopCurrentAudio();
+    const wordObj = this.learningWords.find(w => w.word === word);
+    if (wordObj) {
+      wordObj.isLearned = !wordObj.isLearned;
+      this.saveData();
+      this.showNotification(wordObj.isLearned ? 'Слово отмечено как выученное!' : 'Слово возвращено в изучение','success');
+      if (this.currentSection === 'learning') {
+        this.suppressAutoSpeakOnce = true;
+        this.renderLearningSection();
+      }
+    }
+  }
+
+  // =========
+  // Review logic
+  // =========
+getWordsToReview() {
+  // 1. Режим "Endless" — без ограничений
+  if (this.currentPractice === 'endless') {
+    return this.learningWords.filter(w => !w.isLearned);
+  }
+
+  // 2. Режим "Заучивание" (Scheduled) — СТРОГАЯ ЛОГИКА
+  const today = new Date().toDateString();
+  
+  // Загружаем конфиг пользователя
+  let userConfig = JSON.parse(localStorage.getItem('userConfig') || '{}');
+  // Дефолтный лимит, если конфига нет
+  const dailyLimit = userConfig.dailyLimit || 15; 
+
+  // Сброс счетчика нового дня
+  if (userConfig.lastNewWordsDate !== today) {
+      userConfig.lastNewWordsDate = today;
+      userConfig.newWordsAddedToday = 0;
+      localStorage.setItem('userConfig', JSON.stringify(userConfig));
+  }
+
+  // Пытаемся достать текущую сессию
+  let session = JSON.parse(localStorage.getItem('currentSession') || 'null');
+
+  // Если сессии нет или она вчерашняя — создаем новую
+  if (!session || session.date !== today) {
+    session = {
+      date: today,
+      shownWords: [],
+      currentIndex: 0, 
+      correctStreak: 0,
+      totalCorrect: 0
+    };
+  }
+
+  // --- ВОЗВРАТ СОХРАНЕННОЙ СЕССИИ ---
+  if (session.shownWords.length > 0) {
+    let restoredWords = session.shownWords.map(wText => 
+      this.learningWords.find(lw => lw.word === wText)
+    ).filter(Boolean); 
+    if (restoredWords.length > 0) return restoredWords;
+  }
+
+  // --- ГЕНЕРАЦИЯ НОВОГО ПУЛА ---
+  
+  const activeWords = this.learningWords.filter(w => !w.isLearned);
+  
+  // 1. Сначала отбираем слова на ПОВТОРЕНИЕ (уже видели, accScore > 0)
+  // Сортируем: самые "плохие" (низкий accScore) идут первыми
+  const reviewCandidates = activeWords
+      .filter(w => {
+          const s = this.wordStats[w.word];
+          // Если статистики нет — это новое слово, пропускаем этот фильтр
+          if (!s) return false; 
+          // Если accScore >= 8 (хорошо знаем) и видели сегодня — не показываем
+          if (s.accScore >= 8) {
+             const lastSeen = s.lastReview ? new Date(s.lastReview).toDateString() : '';
+             if (lastSeen === today) return false;
+          }
+          // Берем только те, что уже учили (totalAnswers > 0)
+          return s.totalAnswers > 0;
+      })
+      .sort((a, b) => {
+          const sa = (this.wordStats[a.word] || {}).accScore || 0;
+          const sb = (this.wordStats[b.word] || {}).accScore || 0;
+          return sa - sb;
+      });
+
+  // 2. Проверяем "Качество" базы (средний балл повторения)
+  // Если слов на повторение много и средний балл низкий — новые не даем!
+  let canAddNew = true;
+  if (reviewCandidates.length > 5) {
+      const totalScore = reviewCandidates.reduce((acc, w) => acc + ((this.wordStats[w.word]||{}).accScore || 0), 0);
+      const avgScore = totalScore / reviewCandidates.length;
+      // Если средняя точность меньше 5 (50%), блокируем новые слова
+      if (avgScore < 5) {
+          canAddNew = false;
+          console.log('Blocking new words: avg score is too low', avgScore);
+      }
+  }
+
+  // 3. Отбираем НОВЫЕ слова (ни разу не учили)
+  let newCandidates = [];
+  if (canAddNew) {
+      // Сколько еще можно добавить сегодня?
+      const slotsLeft = dailyLimit - userConfig.newWordsAddedToday;
+      
+      if (slotsLeft > 0) {
+          newCandidates = activeWords
+              .filter(w => {
+                  const s = this.wordStats[w.word];
+                  // Новое слово: статистики нет или ответов 0
+                  return !s || s.totalAnswers === 0;
+              })
+              // Сортируем по уровню (сначала A1, потом A2...)
+              .sort((a, b) => (a.level || '').localeCompare(b.level || ''))
+              .slice(0, slotsLeft); // БЕРЕМ НЕ БОЛЬШЕ ЛИМИТА
+      }
+  }
+
+  // Если вообще нет слов (всё выучили)
+  if (reviewCandidates.length === 0 && newCandidates.length === 0) return [];
+
+  // 4. Собираем пул: Сначала повторение, потом новые
+  // Ограничиваем размер сессии (например, 30 слов за подход)
+  let finalPool = [];
+  
+  // Заполняем повторением
+  finalPool = finalPool.concat(reviewCandidates.slice(0, 25));
+  
+  // Добиваем новыми (если есть место и лимит позволяет)
+  if (finalPool.length < 30 && newCandidates.length > 0) {
+      finalPool = finalPool.concat(newCandidates);
+      
+      // ОБНОВЛЯЕМ СЧЕТЧИК НОВЫХ СЛОВ
+      userConfig.newWordsAddedToday += newCandidates.length;
+      localStorage.setItem('userConfig', JSON.stringify(userConfig));
+  }
+  
+  // Перемешиваем
+  finalPool = this.shuffle(finalPool);
+
+  // Сохраняем в сессию
+  session.shownWords = finalPool.map(w => w.word);
+  session.currentIndex = 0;
+  localStorage.setItem('currentSession', JSON.stringify(session));
+
+  return finalPool;
+}
+
+updateWordStats(word, correct, responseTimeMs = null) {
+  this.initializeWordStats(word);
+  const s = this.wordStats[word];
+  const now = Date.now();
+
+  s.lastReview = now;
+  s.totalAnswers = (s.totalAnswers || 0) + 1;
+  if (responseTimeMs != null) s.totalTimeMs = (s.totalTimeMs || 0) + responseTimeMs;
+
+  // Обновляем статистику правильных/неправильных ответов
+  if (correct) {
+    s.correct++;
+    s.difficulty = Math.max(0, (s.difficulty || 0) - 1);
+  } else {
+    s.incorrect++;
+    s.difficulty = Math.min(5, (s.difficulty || 0) + 1);
+    s.lapses = (s.lapses || 0) + 1;
+  }
+  // Обновляем "точность" 0..10
+if (s.accScore == null) s.accScore = 0;
+if (correct) {
+  s.accScore = Math.min(10, s.accScore + 1);  // +10%
+} else {
+  s.accScore = Math.max(0, s.accScore - 1);   // -10%
+}
+
+  // Обновляем сессию для режима "запланировано"
+  if (this.currentPractice === 'scheduled') {
+    let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+    const today = new Date().toDateString();
+    
+    // Проверяем, что сессия актуальна
+    if (!session.date || session.date !== today) {
+      session = {
+        date: today,
+        shownWords: [],
+        correctStreak: 0,
+        totalCorrect: 0
+      };
+    }
+    
+    if (correct) {
+      session.correctStreak = (session.correctStreak || 0) + 1;
+      session.totalCorrect = (session.totalCorrect || 0) + 1;
+      
+      // Каждые 10 правильных ответов добавляем 10 слов
+      if (session.totalCorrect > 0 && session.totalCorrect % 10 === 0) {
+        this.showNotification(`Отлично! Добавлено еще 10 слов к изучению! Всего в пуле: ${40 + session.totalCorrect} слов`, 'success');
+        // Обновляем текущий список слов
+        setTimeout(() => {
+          this.suppressAutoSpeakOnce = true;
+          this.renderLearningSection();
+        }, 100);
+      }
+    } else {
+      session.correctStreak = 0;
+    }
+    
+    localStorage.setItem('currentSession', JSON.stringify(session));
+  }
+
+  // Простая логика для следующего показа (без интервалов)
+  s.nextReview = now; // Всегда доступно для повторения
+  s.phase = 'review'; // Все слова в фазе повторения
+  
+  // Учитываем дневной прогресс
+  this.srsDay = this.srsDay || this.loadSrsDay();
+  this.srsDay.answered = (this.srsDay.answered || 0) + 1;
+  this.saveSrsDay();
+
+  this.saveData();
+}
+
+  recordDailyProgress() {
+    const today = new Date().toDateString();
+    const existing = this.weeklyProgress.find(p => p.date === today);
+    if (existing) existing.count++;
+    else this.weeklyProgress.push({ date: today, count: 1 });
+    this.weeklyProgress = this.weeklyProgress.slice(-7);
+    this.saveData();
+  }
+  
+getPetState() {
+    try {
+        return JSON.parse(localStorage.getItem('pet_state_v1') || 'null');
+    } catch {
+        return null;
+    }
+}
+
+setPetState(state) {
+    try {
+        localStorage.setItem('pet_state_v1', JSON.stringify(state));
+    } catch {}
+}
+
+ensurePetDecay(pet) {
+    if (!pet) return null;
+    const today = new Date();
+    const last = pet.lastCare ? new Date(pet.lastCare) : new Date();
+    const days = Math.floor((today - last) / (1000 * 60 * 60 * 24));
+    if (days > 0) {
+        pet.hunger = Math.min(100, pet.hunger + 25 * days);
+        pet.thirst = Math.min(100, pet.thirst + 25 * days);
+        if (pet.hunger >= 100 || pet.thirst >= 100) pet.alive = false;
+        pet.lastCare = new Date().toISOString();
+    }
+    return pet;
+}
+
+choosePet(type, name) {
+    const pet = {
+        type: (type === 'dog' ? 'dog' : 'cat'),
+        name: (name || 'Малыш').slice(0, 18),
+        hunger: 40,
+        thirst: 40,
+        alive: true,
+        lastCare: new Date().toISOString()
+    };
+    this.setPetState(pet);
+    this.renderProgress();
+}
+
+feedPet() {
+    let pet = this.getPetState();
+    if (!pet) return;
+    pet = this.ensurePetDecay(pet) || pet;
+    if (!pet.alive) {
+        this.showNotification('Питомец умер. Оживите его, чтобы продолжить.', 'warning');
+        return;
+    }
+    pet.hunger = Math.max(0, pet.hunger - 35);
+    pet.lastCare = new Date().toISOString();
+    this.setPetState(pet);
+    this.renderProgress();
+}
+
+waterPet() {
+    let pet = this.getPetState();
+    if (!pet) return;
+    pet = this.ensurePetDecay(pet) || pet;
+    if (!pet.alive) {
+        this.showNotification('Питомец умер. Оживите его, чтобы продолжить.', 'warning');
+        return;
+    }
+    pet.thirst = Math.max(0, pet.thirst - 35);
+    pet.lastCare = new Date().toISOString();
+    this.setPetState(pet);
+    this.renderProgress();
+}
+
+revivePet() {
+    let pet = this.getPetState();
+    if (!pet) return;
+    pet.alive = true;
+    pet.hunger = 60;
+    pet.thirst = 60;
+    pet.lastCare = new Date().toISOString();
+    this.setPetState(pet);
+    this.renderProgress();
+}
+
+renamePet() {
+    let pet = this.getPetState();
+    if (!pet) return;
+    const name = prompt('Введите имя питомца', pet.name || 'Малыш');
+    if (!name) return;
+    pet.name = name.slice(0, 18);
+    this.setPetState(pet);
+    this.renderProgress();
+}
+
+switchPet() {
+    const type = prompt('Кого выбрать? Введите "cat" или "dog"', 'cat');
+    if (!type || (type !== 'cat' && type !== 'dog')) return;
+    let pet = this.getPetState() || {};
+    pet.type = type;
+    pet.lastCare = new Date().toISOString();
+    this.setPetState(pet);
+    this.renderProgress();
+}
+
+getPetWidgetHtml() {
+    let pet = this.getPetState();
+    if (pet) pet = this.ensurePetDecay(pet) || pet;
+
+    if (!pet) {
+        return `
+            <div class="pet-widget" data-testid="pet-widget">
+                <div class="pet-header">
+                    <img src="/kitten.png" class="pet-avatar" alt="pet">
+                    <div>
+                        <div class="pet-title">Заведи питомца!</div>
+                        <div style="color:var(--text-secondary);font-size:13px;">Выбери котёнка или щенка — заботься о нём каждый день!</div>
+                    </div>
+                </div>
+                <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:8px;">
+                    <div>
+                        <label style="display:block;font-size:12px;margin-bottom:6px;color:var(--text-secondary)">Кого выбираем?</label>
+                        <div style="display:flex;gap:8px;">
+                            <button class="btn btn-secondary pet-choose-cat">Котёнок</button>
+                            <button class="btn btn-secondary pet-choose-dog">Щенок</button>
+                        </div>
+                    </div>
+                    <div style="flex:1;">
+                        <label style="display:block;font-size:12px;margin-bottom:6px;color:var(--text-secondary)">Имя питомца</label>
+                        <input id="petNameInput" style="width:100%;padding:8px;border:1px solid var(--border-color);border-radius:8px;background:var(--bg-primary);color:var(--text-primary);" placeholder="Малыш" />
+                    </div>
+                </div>
+                <div style="color:var(--text-secondary);font-size:12px;">Подсказка: если не ухаживать ежедневно — питомец может сбежать на улицу 🥺</div>
+            </div>
+        `;
+    }
+
+    const avatar = pet.type === 'dog' ? '/puppy.png' : '/kitten.png';
+    const name = pet.name || 'Малыш';
+    const hungerPct = 100 - Math.max(0, Math.min(100, pet.hunger));
+    const thirstPct = 100 - Math.max(0, Math.min(100, pet.thirst));
+    const deadHtml = !pet.alive ? `<div class="pet-dead">Питомец умер... Оживите, чтобы начать заново.</div>` : '';
+
+    return `
+        <div class="pet-widget" data-testid="pet-widget">
+            <div class="pet-header">
+                <img src="${avatar}" class="pet-avatar" alt="pet">
+                <div>
+                    <div class="pet-title">${name}</div>
+                    <div style="color:var(--text-secondary);font-size:12px;">${pet.type === 'dog' ? 'Щенок' : 'Котёнок'}</div>
+                </div>
+            </div>
+            ${deadHtml}
+            <div class="pet-bars">
+                <div>
+                    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);"><span>Сытость</span><span>${hungerPct}%</span></div>
+                    <div class="pet-bar"><div class="pet-bar-fill" style="width:${hungerPct}%"></div></div>
+                </div>
+                <div>
+                    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);"><span>Напоён</span><span>${thirstPct}%</span></div>
+                    <div class="pet-bar"><div class="pet-bar-fill" style="width:${thirstPct}%;background:linear-gradient(90deg,#22d3ee,#3b82f6)"></div></div>
+                </div>
+            </div>
+            <div class="pet-actions">
+                ${pet.alive ? `
+                    <button class="btn btn-primary pet-feed-btn">Покормить</button>
+                    <button class="btn btn-primary pet-water-btn">Напоить</button>
+                    <button class="btn btn-secondary pet-rename-btn">Переименовать</button>
+                    <button class="btn btn-secondary pet-switch-btn">Сменить питомца</button>
+                ` : `
+                    <button class="btn btn-primary pet-revive-btn">Оживить</button>
+                    <button class="btn btn-secondary pet-switch-btn">Сменить питомца</button>
+                `}
+            </div>
+        </div>
+    `;
+}
+
+
+  // === ВОТ ЭТОТ НОВЫЙ КОД ВСТАВЛЯЕМ ===
+ getAchievementsWidgetHtml() {
+  // Загружаем данные
+  let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+  const todayCorrect = session.totalCorrect || 0;
+  const goal = 20;
+  const progressPct = Math.min(100, Math.round((todayCorrect / goal) * 100));
+  const streak = session.correctStreak || 0;
+    // Считаем выученным, если стоит галочка ИЛИ если точность (accScore) достигла 10
+  const totalLearned = this.learningWords.filter(w => {
+      if (w.isLearned) return true;
+      const s = this.wordStats[w.word];
+      return s && s.accScore >= 10;
+  }).length;
+
+  // Медали
+  const medals = [
+    { id: 1, icon: '🥉', name: 'Новичок', desc: '5 слов', unlocked: totalLearned >= 5 },
+    { id: 2, icon: '🥈', name: 'Студент', desc: '50 слов', unlocked: totalLearned >= 50 },
+    { id: 3, icon: '🥇', name: 'Мастер', desc: '200 слов', unlocked: totalLearned >= 200 },
+    { id: 4, icon: '👑', name: 'Легенда', desc: '500 слов', unlocked: totalLearned >= 500 },
+  ];
+
+  // Возвращаем HTML, используя класс "progress-card" как у других блоков
+  return `
+    <div class="progress-card">
+      
+      <!-- Красивая шапка как у других карточек -->
+      <div class="progress-card-header">
+        <div class="progress-card-icon icon-gold">
+          <i class="fas fa-trophy"></i>
+        </div>
+        <div>
+          <div class="progress-card-title">Достижения</div>
+          <div class="progress-card-subtitle">
+             Серия побед: <span style="color:#d97706; font-weight:800;">${streak} 🔥</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Сетка медалей -->
+      <div class="medals-grid">
+        ${medals.map(m => `
+          <div class="medal-card ${m.unlocked ? 'unlocked' : 'locked'}">
+            <div class="medal-icon">${m.icon}</div>
+            <div class="medal-name">${m.name}</div>
+            <div class="medal-desc">${m.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- Полоска цели (в стиле приложения) -->
+      <div style="margin-top: 16px; padding-top: 12px; border-top: 2px solid var(--border-color);">
+        <div class="progress-main-bar-label" style="margin-bottom: 6px;">
+          <span style="font-weight:800; color:var(--text-primary);">Цель на день</span>
+          <span style="font-weight:700; color:var(--text-secondary);">${todayCorrect}/${goal}</span>
+        </div>
+        <div class="progress-main-bar-track" style="height:10px;">
+          <div class="progress-main-bar-fill" style="width: ${progressPct}%; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
+        </div>
+        <div style="text-align:center; font-size:12px; margin-top:6px; color:var(--text-secondary); font-weight:600;">
+           ${progressPct >= 100 ? '🎉 План выполнен! Ты супер!' : 'Продолжай учиться!'}
+        </div>
+      </div>
+
+    </div>
+  `;
+}
+
+
+// =========
+// Progress
+// =========
+  
+renderProgress() {
+  const container = document.getElementById('progressContent');
+  if (!container) return;
+
+  const petHtml = this.getPetWidgetHtml();
+  const achievementsHtml = this.getAchievementsWidgetHtml();
+
+  const totalWords = this.learningWords.length;
+  const learnedWords = this.learningWords.filter(w => {
+      if (w.isLearned) return true;
+      const s = this.wordStats[w.word];
+      return s && s.accScore >= 10;
+  }).length;
+  const inProgress = Math.max(0, totalWords - learnedWords);
+  const learnedPct = totalWords > 0 ? Math.round(learnedWords / totalWords * 100) : 0;
+
+  // Прогресс по уровням / категориям
+  const levelKeys = ['A1','A2','B1','B2','C1','C2','IRREGULARS','PHRASAL_VERBS','IDIOMS','MEDICAL','ADDED'];
+  const levelProgress = {};
+  levelKeys.forEach(level => {
+    const total = this.learningWords.filter(w => w.level === level).length;
+        const learned = this.learningWords.filter(w => {
+        if (w.level !== level) return false;
+        if (w.isLearned) return true;
+        const s = this.wordStats[w.word];
+        return s && s.accScore >= 10;
+    }).length;
+    if (total > 0) {
+      levelProgress[level] = {
+        total,
+        learned,
+        pct: Math.round(learned / total * 100)
+      };
+    }
+  });
+
+  // Статистика тренажёра предложений
+  const todayKey = new Date().toDateString();
+  let trainerToday = 0, trainerTodayCorrect = 0, trainerWeek = 0, trainerWeekCorrect = 0;
+  (this.weeklyProgress || []).forEach(d => {
+    const rep = d.trainerRepeats || 0;
+    const cor = d.trainerCorrect || 0;
+    trainerWeek += rep;
+    trainerWeekCorrect += cor;
+    if (d.date === todayKey) {
+      trainerToday = rep;
+      trainerTodayCorrect = cor;
+    }
+  });
+
+  // Общая активность за неделю (по count)
+  const weekArr = this.weeklyProgress || [];
+  const maxCount = weekArr.reduce((m,d) => Math.max(m, d.count || 0), 0) || 1;
+  const todayActivity = weekArr.find(d => d.date === todayKey);
+  const todayRepeats = todayActivity ? (todayActivity.count || 0) : 0;
+
+  container.innerHTML = `
+    ${petHtml}
+    ${achievementsHtml}
+    <div class="progress-grid">
+      <!-- Общий прогресс -->
+      <div class="progress-card progress-card-main">
+        <div class="progress-card-header">
+          <div class="progress-card-icon icon-green">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div>
+            <div class="progress-card-title">Общий прогресс</div>
+            <div class="progress-card-subtitle">Ваш личный словарный запас в Bewords</div>
+          </div>
+        </div>
+        <div class="progress-main-row">
+          <div class="progress-main-number">
+            ${learnedWords}
+            <span>выучено</span>
+          </div>
+          <div class="progress-main-bar">
+            <div class="progress-main-bar-label">
+              <span>Всего слов: ${totalWords}</span>
+              <span>${learnedPct}%</span>
+            </div>
+            <div class="progress-main-bar-track">
+              <div class="progress-main-bar-fill" style="width:${learnedPct}%;"></div>
+            </div>
+            <div class="progress-main-bar-legend">
+              <span><span class="dot dot-learned"></span>Выучено: ${learnedWords}</span>
+              <span><span class="dot dot-active"></span>В процессе: ${inProgress}</span>
+            </div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span>Повторений сегодня</span>
+          <strong>${todayRepeats}</strong>
+        </div>
+      </div>
+
+      <!-- По уровням / категориям -->
+      <div class="progress-card">
+        <div class="progress-card-header">
+          <div class="progress-card-icon icon-blue">
+            <i class="fas fa-layer-group"></i>
+          </div>
+          <div>
+            <div class="progress-card-title">По уровням и категориям</div>
+            <div class="progress-card-subtitle">Где вы продвинулись больше всего</div>
+          </div>
+        </div>
+        ${
+          Object.keys(levelProgress).length === 0
+          ? `<p class="progress-empty-text">Вы ещё не добавили слова — начните с раздела «Списки».</p>`
+          : `
+            <div class="level-progress-list">
+              ${Object.entries(levelProgress).map(([level, data]) => `
+                <div class="level-progress-item">
+                  <div class="level-progress-header">
+                    <span class="level-progress-label">${level}</span>
+                    <span class="level-progress-count">${data.learned} / ${data.total}</span>
+                  </div>
+                  <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill" style="width:${data.pct}%;"></div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `
+        }
+      </div>
+
+      <!-- Тренажёр предложений -->
+      <div class="progress-card">
+        <div class="progress-card-header">
+          <div class="progress-card-icon icon-purple">
+            <i class="fas fa-keyboard"></i>
+          </div>
+          <div>
+            <div class="progress-card-title">Тренажёр предложений</div>
+            <div class="progress-card-subtitle">Ваш прогресс в режиме «Тренажер»</div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span>Сегодня</span>
+          <strong>${trainerToday} повторений (${trainerTodayCorrect} правильных)</strong>
+        </div>
+        <div class="progress-row">
+          <span>За 7 дней</span>
+          <strong>${trainerWeek} повторений (${trainerWeekCorrect} правильных)</strong>
+        </div>
+      </div>
+      
+            <!-- Грамматика (Новый блок) -->
+      <div class="progress-card">
+        <div class="progress-card-header">
+          <div class="progress-card-icon icon-purple"> <!-- Фиолетовая иконка -->
+            <i class="fas fa-university"></i>
+          </div>
+          <div>
+            <div class="progress-card-title">Грамматика</div>
+            <div class="progress-card-subtitle">Пройдено тем и упражнений</div>
+          </div>
+        </div>
+        
+        <div style="display:flex; gap:10px; margin-top:10px;">
+            <!-- Плашка за сегодня -->
+            <div style="flex:1; background:var(--bg-tertiary); border-radius:12px; padding:10px; text-align:center;">
+                <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">За сегодня</div>
+                <div style="font-size:1.4rem; font-weight:900; color:var(--primary-color);">
+                    ${trainerTodayCorrect} <span style="font-size:0.9rem;">предл.</span>
+                </div>
+            </div>
+            
+            <!-- Плашка за неделю -->
+            <div style="flex:1; background:var(--bg-tertiary); border-radius:12px; padding:10px; text-align:center;">
+                <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">За неделю</div>
+                <div style="font-size:1.4rem; font-weight:900; color:#8b5cf6;">
+                    ${trainerWeekCorrect} <span style="font-size:0.9rem;">предл.</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top:12px; font-size:0.85rem; color:var(--text-secondary); text-align:center;">
+           <i class="fas fa-check-circle" style="color:#10b981"></i> Каждое правильное предложение — шаг к C2!
+        </div>
+      </div>
+
+      <!-- Активность за неделю -->
+      <div class="progress-card">
+        <div class="progress-card-header">
+          <div class="progress-card-icon icon-yellow">
+            <i class="fas fa-calendar-week"></i>
+          </div>
+          <div>
+            <div class="progress-card-title">Активность за неделю</div>
+            <div class="progress-card-subtitle">Сколько повторений вы делали каждый день</div>
+          </div>
+        </div>
+        ${
+          weekArr.length === 0
+          ? `<p class="progress-empty-text">Пока нет данных об активности — начните практику.</p>`
+          : `
+            <div class="week-activity-list">
+              ${weekArr.map(day => {
+                const count = day.count || 0;
+                const pct = Math.round(count / maxCount * 100);
+                const label = new Date(day.date).toLocaleDateString('ru-RU', {
+                  weekday: 'short',
+                  day: 'numeric',
+                  month: 'short'
+                });
+                return `
+                  <div class="week-activity-item">
+                    <div class="week-activity-header">
+                      <span class="week-label">${label}</span>
+                      <span class="week-count">${count}</span>
+                    </div>
+                    <div class="week-bar">
+                      <div class="week-bar-fill" style="width:${pct}%;"></div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          `
+        }
+      </div>
+    </div>
+  `;
+
+  // обработчики для питомца
+  this.attachPetHandlers();
+}
+
+// Добавьте новый метод после renderProgress:
+attachPetHandlers() {
+    // Выбор питомца
+    const catBtn = document.querySelector('.pet-choose-cat');
+    const dogBtn = document.querySelector('.pet-choose-dog');
+    
+    if (catBtn) {
+        catBtn.addEventListener('click', () => {
+            const nameInput = document.getElementById('petNameInput');
+            const name = nameInput ? nameInput.value.trim() : 'Малыш';
+            this.choosePet('cat', name || 'Малыш');
+        });
+    }
+    
+    if (dogBtn) {
+        dogBtn.addEventListener('click', () => {
+            const nameInput = document.getElementById('petNameInput');
+            const name = nameInput ? nameInput.value.trim() : 'Малыш';
+            this.choosePet('dog', name || 'Малыш');
+        });
+    }
+    
+    // Кнопки действий
+    const feedBtn = document.querySelector('.pet-feed-btn');
+    if (feedBtn) {
+        feedBtn.addEventListener('click', () => this.feedPet());
+    }
+    
+    const waterBtn = document.querySelector('.pet-water-btn');
+    if (waterBtn) {
+        waterBtn.addEventListener('click', () => this.waterPet());
+    }
+    
+    const renameBtn = document.querySelector('.pet-rename-btn');
+    if (renameBtn) {
+        renameBtn.addEventListener('click', () => this.renamePet());
+    }
+    
+    const switchBtn = document.querySelector('.pet-switch-btn');
+    if (switchBtn) {
+        switchBtn.addEventListener('click', () => this.switchPet());
+    }
+    
+    const reviveBtn = document.querySelector('.pet-revive-btn');
+    if (reviveBtn) {
+        reviveBtn.addEventListener('click', () => this.revivePet());
+    }
+}
+
+  // =========
+  // Games (gate + overlays) with irregulars auto disabled
+  // =========
+    showQuizGateForGame(gameName, gameFile) {
+    if (this.learningWords.filter(w => !w.isLearned).length < 3) {
+      this.showNotification('Чтобы играть, добавьте минимум 3 слова из "списка слов" в «Изучаю»', 'warning');
+      return;
+    }
+
+    const overlay = document.createElement('div');
+    overlay.id = 'gameQuizOverlay';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:999999;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;';
+
+    const gameContainer = document.createElement('div');
+    // Убрали жесткий color:#333, чтобы CSS мог управлять цветом в темной теме
+    gameContainer.style.cssText = 'background:var(--bg-primary);border-radius:16px;padding:20px;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);';
+
+
+  const bobImg = document.createElement('img');
+    bobImg.src = '/instruction.png'; // Картинка с указкой
+    bobImg.className = 'bob-helper-img'; // Класс из Шага 1
+    gameContainer.appendChild(bobImg);
+
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '<i class="fas fa-times"></i> Закрыть';
+    closeBtn.className = 'btn btn-secondary';
+    closeBtn.style.marginBottom = '10px';
+    closeBtn.onclick = () => overlay.remove();
+
+    const gameTitle = document.createElement('h2');
+    gameTitle.textContent = `${gameName} - Quiz`;
+    gameTitle.style.cssText = 'text-align:center;margin-bottom:20px; font-weight:800;';
+
+    const quizContainer = document.createElement('div');
+    quizContainer.id = 'quizGateContainer';
+
+    const scoreDisplay = document.createElement('div');
+    scoreDisplay.id = 'scoreGateDisplay';
+    scoreDisplay.style.cssText = 'text-align:center;font-size:18px;font-weight:bold;margin-top:15px;color:#667eea;';
+    scoreDisplay.innerHTML = 'Правильных ответов: <span id="gateScore">0</span>/3';
+
+    gameContainer.appendChild(closeBtn);
+    gameContainer.appendChild(gameTitle);
+    gameContainer.appendChild(quizContainer);
+    gameContainer.appendChild(scoreDisplay);
+    overlay.appendChild(gameContainer);
+    document.body.appendChild(overlay);
+
+    let correctCount = 0;
+    const showNextQuestion = () => {
+      const word = this.getRandomLearningWord();
+      if (!word) {
+        quizContainer.innerHTML = '<div style="text-align:center;padding:20px;">Недостаточно слов</div>';
+        return;
+      }
+      const direction = Math.random() < 0.5 ? 'EN_RU' : 'RU_EN';
+      const questionText = direction === 'EN_RU' ? this.getEnglishDisplay(word) : word.translation;
+      const correct = direction === 'EN_RU' ? word.translation : this.getEnglishDisplay(word);
+      const options = this.buildQuizOptions(word, direction);
+      const shuffled = this.shuffle(options);
+
+      // Генерируем HTML кнопок. Обрати внимание: убрали инлайн стили background/border
+      quizContainer.innerHTML = `
+        <div style="margin-bottom:15px;text-align:center;">
+          <div style="font-size:20px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px;">
+            ${questionText}
+            <span class="sound-actions">
+               <button class="mini-btn gate-sound-btn" data-region="us"><i class="fas fa-volume-up"></i></button>
+            </span>
+          </div>
+          <div style="font-size:14px;opacity:0.8;margin-bottom:12px;">
+            Выберите правильный вариант
+          </div>
+          <div class="quiz-options" style="display:grid;gap:10px;">
+            ${shuffled.map(opt => {
+              return `<div class="quiz-option-gate" data-answer="${this.safeAttr(opt)}" style="padding:12px;border-radius:8px;border:2px solid var(--border-color);cursor:pointer;text-align:center;font-weight:600;">
+                ${opt}
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+      `;
+
+      // Обработчик звука вопроса (используем playWord для поддержки идиом/фразовых)
+      const soundBtn = quizContainer.querySelector('.gate-sound-btn');
+      if(soundBtn) {
+          soundBtn.onclick = (e) => {
+              e.stopPropagation();
+              // Task 3 & 4: playWord сам разберется (идиома, фразовый или обычное слово)
+              this.playWord(word.word, word.forms, 'us', word.level); 
+          };
+      }
+
+      // Авто-озвучка
+      if (direction === 'EN_RU' && this.shouldAutoPronounce(word)) {
+        setTimeout(() => {
+           this.playWord(word.word, word.forms, 'us', word.level);
+        }, 150);
+      }
+
+      // Логика клика по ответу (ЧЕРЕЗ КЛАССЫ, а не стили)
+      quizContainer.querySelectorAll('.quiz-option-gate').forEach(opt => {
+        opt.addEventListener('click', async () => {
+          // Блокируем повторные клики
+          quizContainer.querySelectorAll('.quiz-option-gate').forEach(b => b.style.pointerEvents = 'none');
+
+          const chosen = opt.getAttribute('data-answer');
+          const isCorrect = chosen === correct;
+
+          // Добавляем классы для стилизации (см. CSS)
+          if (isCorrect) {
+              opt.classList.add('gate-correct');
+          } else {
+              opt.classList.add('gate-wrong');
+              // Подсветим правильный
+              quizContainer.querySelectorAll('.quiz-option-gate').forEach(o => {
+                  if (o.getAttribute('data-answer') === correct) {
+                      o.classList.add('gate-correct');
+                  }
+              });
+          }
+
+          await this.waitForCurrentAudioToFinish();
+
+          // Озвучка при ответе (если был русский вопрос)
+          if (direction === 'RU_EN' && this.shouldAutoPronounce(word)) {
+             await this.delay(200);
+             await this.playWord(word.word, word.forms, 'us', word.level);
+          } else {
+             await this.delay(600);
+          }
+
+          if (isCorrect) {
+            correctCount++;
+            const scoreEl = document.getElementById('gateScore');
+            if (scoreEl) scoreEl.textContent = String(correctCount);
+            this.recordDailyProgress();
+
+            if (correctCount >= 3) {
+              await this.delay(300);
+              overlay.remove();
+              this.openGameFullscreen(gameName, gameFile);
+            } else {
+              showNextQuestion();
+            }
+          } else {
+            // При ошибке даем шанс исправиться или следующий вопрос (сейчас следующий)
+            setTimeout(() => showNextQuestion(), 800);
+          }
+        });
+      });
+    };
+    showNextQuestion();
+  }
+
+  openGameFullscreen(gameName, gameFile) {
+    const containerId = 'gameFullscreenContainer';
+    const gameContainer = document.createElement('div');
+    gameContainer.style.cssText = 'position:fixed;inset:0;z-index:999999;background:#000;';
+    gameContainer.id = containerId;
+
+    const header = document.createElement('div');
+    header.className = 'game-header';
+    header.style.cssText = `
+      position:absolute;top:0;left:0;right:0;height:56px;background:rgba(255,255,255,0.96);
+      display:flex;align-items:center;gap:8px;padding:8px 12px;z-index:1000000;box-shadow:0 2px 8px rgba(0,0,0,0.15);
+    `;
+
+    const backBtn = document.createElement('button');
+    backBtn.className = 'btn btn-secondary';
+    backBtn.style.cssText = 'font-weight:600;';
+    backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Назад в приложение';
+    backBtn.onclick = () => {
+      this.clearGameQuizCycle(containerId);
+      gameContainer.remove();
+    };
+
+    const title = document.createElement('div');
+    title.style.cssText = 'font-weight:700;color:#333;';
+    title.textContent = `Игра: ${gameName}`;
+
+    header.appendChild(backBtn);
+    header.appendChild(title);
+
+    const iframe = document.createElement('iframe');
+    iframe.src = gameFile;
+    iframe.style.cssText = 'position:absolute;top:56px;left:0;width:100%;height:calc(100% - 56px);border:none;';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+
+    gameContainer.appendChild(header);
+    gameContainer.appendChild(iframe);
+    document.body.appendChild(gameContainer);
+
+    this.showNotification(`Игра ${gameName} запущена! Приятной игры!`, 'success');
+
+    this.startGameQuizCycle(containerId);
+  }
+
+  showCatalogGame() {
+    if (this.learningWords.filter(w => !w.isLearned).length < 4) {
+      this.showNotification('Чтобы играть, добавьте минимум 4 слова в «Изучаю»', 'warning');
+      return;
+    }
+
+    const containerId = 'catalogGameContainer';
+    const gameContainer = document.createElement('div');
+    gameContainer.style.cssText = 'position:fixed;inset:0;z-index:999999;background:#000;';
+    gameContainer.id = containerId;
+
+    const header = document.createElement('div');
+    header.className = 'game-header';
+    header.style.cssText = `
+      position:absolute;top:0;left:0;right:0;height:56px;background:rgba(255,255,255,0.96);
+      display:flex;align-items:center;gap:8px;padding:8px 12px;z-index:1000000;box-shadow:0 2px 8px rgba(0,0,0,0.15);
+    `;
+
+    const backBtn = document.createElement('button');
+    backBtn.className = 'btn btn-secondary';
+    backBtn.style.cssText = 'font-weight:600;';
+    backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Назад в приложение';
+    backBtn.onclick = () => {
+      this.clearGameQuizCycle(containerId);
+      gameContainer.remove();
+    };
+
+    const title = document.createElement('div');
+    title.style.cssText = 'font-weight:700;color:#333;';
+    title.textContent = 'Игротека';
+
+    header.appendChild(backBtn);
+    header.appendChild(title);
+
+    const iframe = document.createElement('iframe');
+    iframe.src = 'dash.html';
+    iframe.style.cssText = 'position:absolute;top:56px;left:0;width:100%;height:calc(100% - 56px);border:none;';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+
+    gameContainer.appendChild(header);
+    gameContainer.appendChild(iframe);
+    document.body.appendChild(gameContainer);
+
+    this.startGameQuizCycle(containerId);
+    setTimeout(() => this.showOverlayQuiz(containerId), 1000);
+  }
+
+  startGameQuizCycle(containerId) {
+  this.clearGameQuizCycle(containerId); // 1) убираем старые таймеры
+
+  const QUIZ_DELAY = 5 * 60 * 1000;      // 5 минут
+  const WARNING_DELAY = 10 * 1000;       // предупреждение за 10 секунд
+
+  const warningTimeoutId = setTimeout(() => {
+    this.showNotification('Через 10 секунд появится Quiz! Поставьте игру на паузу.', 'warning');
+  }, QUIZ_DELAY - WARNING_DELAY);
+
+  const quizTimeoutId = setTimeout(() => {
+    this.showOverlayQuiz(containerId);   // 2) через 5 минут показываем quiz
+  }, QUIZ_DELAY);
+
+  // сохраняем таймеры, чтобы потом их отменить
+  this.gameQuizIntervals[containerId] = { warningTimeoutId, quizTimeoutId };
+}
+  clearGameQuizCycle(containerId) {
+    const timers = this.gameQuizIntervals[containerId];
+    if (timers) {
+      clearTimeout(timers.warningTimeoutId);
+      clearTimeout(timers.quizTimeoutId);
+      delete this.gameQuizIntervals[containerId];
+    }
+  }
+
+  showOverlayQuiz(containerId) {
+    this.clearGameQuizCycle(containerId); 
+    const host = document.getElementById(containerId);
+    if (!host) return;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'game-quiz-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:1000001;background:rgba(0,0,0,0.95);display:flex;align-items:center;justify-content:center;padding:20px;';
+
+    const quizBox = document.createElement('div');
+    quizBox.style.cssText = 'background:var(--bg-primary);border-radius:16px;padding:30px;max-width:520px;width:90%;box-shadow:var(--shadow-lg);';
+
+    const title = document.createElement('h2');
+    title.textContent = 'Время повторить слова!';
+    title.style.cssText = 'text-align:center;margin-bottom:20px;color:var(--text-primary);';
+
+    const quizContent = document.createElement('div');
+    quizContent.id = `overlayQuizContent_${containerId}`;
+
+    quizBox.appendChild(title);
+    quizBox.appendChild(quizContent);
+    overlay.appendChild(quizBox);
+    host.appendChild(overlay);
+
+    let quizCorrect = 0;
+    const showQuestion = () => {
+      const word = this.getRandomLearningWord();
+      if (!word) {
+        quizContent.innerHTML = '<div style="text-align:center;color:var(--text-secondary);">Недостаточно слов</div>';
+        return;
+      }
+      const direction = Math.random() < 0.5 ? 'EN_RU' : 'RU_EN';
+      const questionText = direction === 'EN_RU' ? this.getEnglishDisplay(word) : word.translation;
+      const correct = direction === 'EN_RU' ? word.translation : this.getEnglishDisplay(word);
+      const options = this.buildQuizOptions(word, direction);
+      const shuffled = this.shuffle(options);
+
+      quizContent.innerHTML = `
+        <div style="text-align:center;margin-bottom:20px;">
+          <div style="font-size:24px;font-weight:700;color:var(--text-primary);margin-bottom:12px;">
+            ${questionText}
+            <span class="sound-actions" style="margin-left:8px;">
+              <button class="mini-btn" title="US" onclick="app.playWord('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'us')"><i class="fas fa-volume-up"></i></button>
+              <button class="mini-btn" title="UK" onclick="app.playWord('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'uk')"><i class="fas fa-headphones"></i></button>
+            </span>
+          </div>
+          <div style="font-size:14px;color:var(--text-secondary);margin-bottom:10px;">Выбрано правильных: ${quizCorrect}/4</div>
+          <div class="quiz-options" style="display:grid;gap:10px;">
+            ${shuffled.map(opt => {
+              const isEnglishOpt = this.isEnglish(opt) && !this.isRussian(opt);
+              const baseForSound = opt.split('→')[0].trim();
+              const soundBtns = isEnglishOpt ? `
+                <span class="option-sound">
+                  <button class="mini-btn" title="US" onclick="event.stopPropagation(); app.playSingleWordMp3('${this.safeAttr(baseForSound)}', 'us')"><i class="fas fa-volume-up"></i></button>
+                  <button class="mini-btn" title="UK" onclick="event.stopPropagation(); app.playSingleWordMp3('${this.safeAttr(baseForSound)}', 'uk')"><i class="fas fa-headphones"></i></button>
+                </span>
+              ` : '';
+              return `<div class="quiz-option-gate" data-answer="${this.safeAttr(opt)}" style="padding:12px;border-radius:8px;border:2px solid var(--border-color);background:var(--bg-secondary);cursor:pointer;text-align:center;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                <span>${opt}</span>${soundBtns}
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+      `;
+
+      if (direction === 'EN_RU' && this.shouldAutoPronounce(word)) {
+        setTimeout(() => {
+          if (word.forms && word.forms.length) this.playFormsSequence(word.forms, 'us');
+          else if (this.isMultiWord(word.word)) this.playPhraseTTS(word.word, 'us');
+          else this.playSingleWordMp3(word.word, 'us');
+        }, 150);
+      }
+
+      quizContent.querySelectorAll('.quiz-option-gate').forEach(opt => {
+  opt.addEventListener('click', async () => {
+    const chosen = opt.getAttribute('data-answer');
+    const isCorrect = chosen === correct;
+
+    // ... оформление правильного/неправильного варианта ...
+
+    await this.waitForCurrentAudioToFinish();
+
+    if (direction === 'RU_EN' && this.shouldAutoPronounce(word)) {
+      // ... озвучка ...
+    } else {
+      await this.delay(600);
+    }
+
+    if (isCorrect) {
+      quizCorrect++;
+      this.recordDailyProgress();
+
+      if (quizCorrect >= 4) {
+        await this.delay(300);
+        overlay.remove();
+        this.showNotification('Отлично! Продолжайте играть!', 'success');
+        this.startGameQuizCycle(containerId); // ← ВАЖНО: запускаем новый цикл
+      } else {
+        showQuestion();
+      }
+    } else {
+      showQuestion();
+    }
+  });
+});
+    };
+    showQuestion();
+  }
+      
+  // =========
+  // Utils
+  // =========
+  shuffle(array) {
+    const result = [...array];
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result;
+  }
+    showNotification(msg, type = 'info') {
+      // 1. Ищем или создаем контейнер
+      let container = document.querySelector('.toast-container');
+      if (!container) {
+          container = document.createElement('div');
+          container.className = 'toast-container';
+          document.body.appendChild(container);
+      }
+
+      // 2. Создаем уведомление с классами
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`; // type: success, error, warning, info
+      toast.innerHTML = `<span>${msg}</span>`;
+      
+      // 3. Добавляем в контейнер
+      container.appendChild(toast);
+      
+      // 4. Удаляем через 3 секунды с анимацией исчезновения
+      setTimeout(() => {
+          toast.style.transition = 'all 0.3s ease';
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateY(-20px) scale(0.9)';
+          setTimeout(() => toast.remove(), 300);
+      }, 3000);
+  }
+  
+  getRandomLearningWord() {
+    const availableWords = this.learningWords.filter(w => !w.isLearned);
+    if (availableWords.length === 0) return null;
+    return availableWords[Math.floor(Math.random() * availableWords.length)];
+  }
+  
+    createGlobalLoader() {
+    if (this.loaderEl) return;
+    const overlay = document.createElement('div');
+    overlay.id = 'globalLoader';
+    overlay.className = 'global-loader-overlay';
+    overlay.innerHTML = `
+      <div class="global-loader-box">
+        <img src="/loading.gif" alt="Кот Боб загружает..." />
+        <div class="global-loader-title">Загрузка...</div>
+        <div class="global-loader-text global-loader-text-el">
+          Кот Боб загружает для вас эту страницу
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    this.loaderEl = overlay;
+  }
+
+  showGlobalLoader(message = 'Кот Боб загружает для вас эту страницу', minDurationMs = 1500) {
+    this.createGlobalLoader();
+    const textEl = this.loaderEl.querySelector('.global-loader-text-el');
+    if (textEl) textEl.textContent = message;
+    this.loaderMinMs = minDurationMs;
+    this.loaderStart = performance.now();
+    this.loaderEl.classList.add('show');
+  }
+
+  hideGlobalLoader() {
+    if (!this.loaderEl) return; // Оставили только проверку существования элемента
+    const elapsed = performance.now() - (this.loaderStart || 0);
+    const delay = Math.max(0, (this.loaderMinMs || 0) - elapsed);
+    clearTimeout(this.loaderTimer);
+    this.loaderTimer = setTimeout(() => {
+      this.loaderEl.classList.remove('show');
+    }, delay);
+  }
+  
+  // =================================================
+  // 1. КОНФИГУРАЦИЯ КАТЕГОРИЙ (A1-C2)
+  // =================================================
+ 
+    getLevelCategoriesConfig() {
+    return {
+      "A1": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" },
+          { "id": "pronouns", "name": "Местоимения", "icon": "fa-user" },
+          { "id": "determiners", "name": "Определители", "icon": "fa-crosshairs" },
+          { "id": "modal_verbs", "name": "Модальные глаголы", "icon": "fa-magic" },
+          { "id": "numbers", "name": "Числительные", "icon": "fa-sort-numeric-up" },
+          { "id": "exclamations", "name": "Междометия", "icon": "fa-comment-dots" }
+        ],
+        "topics": [
+          { "id": "family", "name": "Семья", "icon": "fa-users" },
+          { "id": "food", "name": "Еда и напитки", "icon": "fa-utensils" },
+          { "id": "home", "name": "Дом и быт", "icon": "fa-home" },
+          { "id": "clothing", "name": "Одежда", "icon": "fa-tshirt" },
+          { "id": "body", "name": "Тело человека", "icon": "fa-heartbeat" },
+          { "id": "transport", "name": "Транспорт", "icon": "fa-car" },
+          { "id": "places", "name": "Места и здания", "icon": "fa-building" },
+          { "id": "time", "name": "Время", "icon": "fa-clock" },
+          { "id": "work", "name": "Работа", "icon": "fa-briefcase" },
+          { "id": "education", "name": "Образование", "icon": "fa-graduation-cap" },
+          { "id": "entertainment", "name": "Развлечения", "icon": "fa-theater-masks" },
+          { "id": "emotions", "name": "Эмоции", "icon": "fa-smile" },
+          { "id": "colors", "name": "Цвета", "icon": "fa-rainbow" },
+          { "id": "nature", "name": "Природа", "icon": "fa-leaf" },
+          { "id": "communication", "name": "Общение", "icon": "fa-comments" },
+          { "id": "actions", "name": "Действия", "icon": "fa-running" },
+          { "id": "weather", "name": "Погода", "icon": "fa-sun" },
+          { "id": "shopping", "name": "Покупки", "icon": "fa-shopping-cart" },
+          { "id": "descriptions", "name": "Описания", "icon": "fa-star" },
+          { "id": "general", "name": "Общие слова", "icon": "fa-list-alt" }
+        ]
+      },
+      "A2": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" },
+          { "id": "pronouns", "name": "Местоимения", "icon": "fa-user" },
+          { "id": "determiners", "name": "Определители", "icon": "fa-crosshairs" },
+          { "id": "modal_verbs", "name": "Модальные глаголы", "icon": "fa-magic" },
+          { "id": "numbers", "name": "Числительные", "icon": "fa-sort-numeric-up" }
+        ],
+        "topics": [
+          { "id": "home", "name": "Дом и быт", "icon": "fa-home" },
+          { "id": "food", "name": "Еда и кухня", "icon": "fa-utensils" },
+          { "id": "work", "name": "Карьера", "icon": "fa-briefcase" },
+          { "id": "education", "name": "Образование", "icon": "fa-book" },
+          { "id": "technology", "name": "Технологии", "icon": "fa-laptop" },
+          { "id": "transport", "name": "Транспорт", "icon": "fa-plane" },
+          { "id": "health", "name": "Здоровье", "icon": "fa-medkit" },
+          { "id": "nature", "name": "Природа", "icon": "fa-tree" },
+          { "id": "entertainment", "name": "Развлечения", "icon": "fa-gamepad" },
+          { "id": "sports", "name": "Спорт", "icon": "fa-futbol" },
+          { "id": "emotions", "name": "Эмоции", "icon": "fa-laugh" },
+          { "id": "people", "name": "Люди", "icon": "fa-user-friends" },
+          { "id": "law", "name": "Закон", "icon": "fa-gavel" },
+          { "id": "society", "name": "Общество", "icon": "fa-city" },
+          { "id": "business", "name": "Бизнес", "icon": "fa-chart-line" },
+          { "id": "weather", "name": "Погода", "icon": "fa-cloud-sun" },
+          { "id": "clothing", "name": "Одежда", "icon": "fa-tshirt" },
+          { "id": "buildings", "name": "Здания", "icon": "fa-hotel" },
+          { "id": "media", "name": "СМИ", "icon": "fa-newspaper" },
+          { "id": "science", "name": "Наука", "icon": "fa-microscope" },
+          { "id": "time", "name": "Время", "icon": "fa-hourglass-half" },
+          { "id": "communication", "name": "Общение", "icon": "fa-comment-alt" },
+          { "id": "abstract", "name": "Абстрактное", "icon": "fa-brain" },
+          { "id": "actions", "name": "Действия", "icon": "fa-running" },
+          { "id": "general", "name": "Общие слова", "icon": "fa-list" }
+        ]
+      },
+      "B1": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" },
+          { "id": "pronouns", "name": "Местоимения", "icon": "fa-user" },
+          { "id": "determiners", "name": "Определители", "icon": "fa-crosshairs" },
+          { "id": "modal_verbs", "name": "Модальные", "icon": "fa-magic" }
+        ],
+        "topics": [
+          { "id": "abstract", "name": "Абстрактное", "icon": "fa-cloud" },
+          { "id": "nature", "name": "Природа", "icon": "fa-tree" },
+          { "id": "science", "name": "Наука", "icon": "fa-flask" },
+          { "id": "society", "name": "Общество", "icon": "fa-globe" },
+          { "id": "law", "name": "Закон", "icon": "fa-balance-scale" },
+          { "id": "business", "name": "Бизнес", "icon": "fa-briefcase" },
+          { "id": "emotions", "name": "Чувства", "icon": "fa-heart" },
+          { "id": "work", "name": "Работа", "icon": "fa-laptop-code" },
+          { "id": "education", "name": "Образование", "icon": "fa-university" },
+          { "id": "communication", "name": "Язык", "icon": "fa-language" },
+          { "id": "entertainment", "name": "Искусство", "icon": "fa-music" },
+          { "id": "technology", "name": "Техно", "icon": "fa-microchip" },
+          { "id": "transport", "name": "Путешествия", "icon": "fa-suitcase-rolling" },
+          { "id": "home", "name": "Быт", "icon": "fa-couch" },
+          { "id": "clothing", "name": "Стиль", "icon": "fa-hat-cowboy" },
+          { "id": "food", "name": "Кулинария", "icon": "fa-pizza-slice" },
+          { "id": "health", "name": "Здоровье", "icon": "fa-stethoscope" },
+          { "id": "materials", "name": "Материалы", "icon": "fa-layer-group" },
+          { "id": "religion", "name": "Религия", "icon": "fa-pray" },
+          { "id": "military", "name": "Армия", "icon": "fa-jet-fighter" },
+          { "id": "descriptions", "name": "Качества", "icon": "fa-feather-alt" },
+          { "id": "actions", "name": "Процессы", "icon": "fa-cogs" },
+          { "id": "general", "name": "Общее", "icon": "fa-th-list" }
+        ]
+      },
+      "B2": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" },
+          { "id": "pronouns", "name": "Местоимения", "icon": "fa-user" },
+          { "id": "numbers", "name": "Числительные", "icon": "fa-sort-numeric-up" }
+        ],
+        "topics": [
+          { "id": "abstract", "name": "Концепции", "icon": "fa-lightbulb" },
+          { "id": "nature", "name": "Экология", "icon": "fa-leaf" },
+          { "id": "science", "name": "Исследования", "icon": "fa-dna" },
+          { "id": "society", "name": "Политика", "icon": "fa-landmark" },
+          { "id": "law", "name": "Право", "icon": "fa-gavel" },
+          { "id": "business", "name": "Финансы", "icon": "fa-coins" },
+          { "id": "emotions", "name": "Психология", "icon": "fa-brain" },
+          { "id": "work", "name": "Карьера", "icon": "fa-id-card" },
+          { "id": "education", "name": "Учеба", "icon": "fa-user-graduate" },
+          { "id": "communication", "name": "Речь", "icon": "fa-bullhorn" },
+          { "id": "entertainment", "name": "Культура", "icon": "fa-theater-masks" },
+          { "id": "technology", "name": "Медиа", "icon": "fa-wifi" },
+          { "id": "transport", "name": "Логистика", "icon": "fa-shipping-fast" },
+          { "id": "home", "name": "Дом", "icon": "fa-door-open" },
+          { "id": "food", "name": "Гастрономия", "icon": "fa-wine-glass" },
+          { "id": "health", "name": "Медицина", "icon": "fa-hospital" },
+          { "id": "body", "name": "Анатомия", "icon": "fa-walking" },
+          { "id": "materials", "name": "Вещества", "icon": "fa-atom" },
+          { "id": "religion", "name": "Духовность", "icon": "fa-church" },
+          { "id": "military", "name": "Оборона", "icon": "fa-shield-alt" },
+          { "id": "descriptions", "name": "Характеристики", "icon": "fa-tags" },
+          { "id": "actions", "name": "Активность", "icon": "fa-play-circle" },
+          { "id": "time", "name": "Периоды", "icon": "fa-calendar-alt" },
+          { "id": "space", "name": "Пространство", "icon": "fa-arrows-alt" },
+          { "id": "family", "name": "Отношения", "icon": "fa-users" },
+          { "id": "clothing", "name": "Имидж", "icon": "fa-glasses" },
+          { "id": "sports", "name": "Спорт", "icon": "fa-basketball-ball" },
+          { "id": "general", "name": "Общее", "icon": "fa-clipboard-list" }
+        ]
+      },
+      "C1": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" },
+          { "id": "prepositions", "name": "Предлоги", "icon": "fa-map-marker-alt" },
+          { "id": "conjunctions", "name": "Союзы", "icon": "fa-link" }
+        ],
+        "topics": [
+          { "id": "abstract", "name": "Абстракция", "icon": "fa-shapes" },
+          { "id": "law", "name": "Юриспруденция", "icon": "fa-balance-scale-right" },
+          { "id": "society", "name": "Социум", "icon": "fa-users-cog" },
+          { "id": "health", "name": "Здравоохранение", "icon": "fa-heartbeat" },
+          { "id": "science", "name": "Наука", "icon": "fa-vial" },
+          { "id": "business", "name": "Экономика", "icon": "fa-chart-pie" },
+          { "id": "education", "name": "Академия", "icon": "fa-scroll" },
+          { "id": "emotions", "name": "Психика", "icon": "fa-head-side-virus" },
+          { "id": "religion", "name": "Вера", "icon": "fa-om" },
+          { "id": "military", "name": "Война", "icon": "fa-fighter-jet" },
+          { "id": "nature", "name": "Экология", "icon": "fa-globe-americas" },
+          { "id": "technology", "name": "Инновации", "icon": "fa-rocket" },
+          { "id": "communication", "name": "Диалог", "icon": "fa-comments-dollar" },
+          { "id": "work", "name": "Менеджмент", "icon": "fa-tasks" },
+          { "id": "descriptions", "name": "Нюансы", "icon": "fa-highlighter" },
+          { "id": "actions", "name": "Операции", "icon": "fa-project-diagram" },
+          { "id": "time", "name": "Хронология", "icon": "fa-history" },
+          { "id": "space", "name": "Локация", "icon": "fa-map-marked-alt" },
+          { "id": "entertainment", "name": "Культура", "icon": "fa-palette" },
+          { "id": "family", "name": "Родство", "icon": "fa-baby-carriage" },
+          { "id": "transport", "name": "Перевозки", "icon": "fa-truck-moving" },
+          { "id": "materials", "name": "Ресурсы", "icon": "fa-oil-can" },
+          { "id": "body", "name": "Физиология", "icon": "fa-x-ray" },
+          { "id": "general", "name": "Прочее", "icon": "fa-folder-open" }
+        ]
+      },
+      "C2": {
+        "grammar": [
+          { "id": "nouns", "name": "Существительные", "icon": "fa-cube" },
+          { "id": "verbs", "name": "Глаголы", "icon": "fa-bolt" },
+          { "id": "adjectives", "name": "Прилагательные", "icon": "fa-palette" },
+          { "id": "adverbs", "name": "Наречия", "icon": "fa-wind" }
+        ],
+        "topics": [
+          { "id": "rhetoric", "name": "Риторика", "icon": "fa-quote-right" },
+          { "id": "character", "name": "Личность", "icon": "fa-fingerprint" },
+          { "id": "morality", "name": "Этика", "icon": "fa-yin-yang" },
+          { "id": "criticism", "name": "Критика", "icon": "fa-pen-fancy" },
+          { "id": "deception", "name": "Обман", "icon": "fa-mask" },
+          { "id": "emotions", "name": "Чувства", "icon": "fa-heart-broken" },
+          { "id": "intellect", "name": "Интеллект", "icon": "fa-chess" },
+          { "id": "behavior", "name": "Поведение", "icon": "fa-theater-masks" },
+          { "id": "conflict", "name": "Конфликт", "icon": "fa-fist-raised" },
+          { "id": "religion", "name": "Теология", "icon": "fa-khanda" },
+          { "id": "philosophy", "name": "Философия", "icon": "fa-book-open" },
+          { "id": "appearance", "name": "Облик", "icon": "fa-magic" },
+          { "id": "abstract", "name": "Метафизика", "icon": "fa-infinity" },
+          { "id": "literary", "name": "Литература", "icon": "fa-feather" },
+          { "id": "social", "name": "Интеракция", "icon": "fa-handshake" }
+        ]
+      }
+    };
+  }
+
+  // 2. ОТРИСОВКА МЕНЮ КАТЕГОРИЙ (БЕЗОПАСНАЯ ВЕРСИЯ)
+   renderLevelCategoriesMenu(level, config) {
+    const list = document.getElementById('wordsList');
+    if (!list) return;
+
+    let html = '<div class="category-menu-container">';
+    
+    html += '<button class="show-all-btn" onclick="window.app.showLevelWords(\'' + level + '\', { type: \'all\' })">';
+    html += '<i class="fas fa-layer-group"></i> Показать все слова списка';
+    html += '</button>';
+    
+    html += '<div class="category-section-title">';
+    html += '<i class="fas fa-shapes"></i> Грамматика';
+    html += '</div>';
+    html += '<div class="grammar-grid">';
+    
+    for (let i = 0; i < config.grammar.length; i++) {
+        const g = config.grammar[i];
+        html += '<div class="grammar-cat-card" onclick="window.app.showLevelWords(\'' + level + '\', { type: \'grammar\', id: \'' + g.id + '\' })">';
+        html += '<div class="grammar-icon"><i class="fas ' + g.icon + '"></i></div>';
+        html += '<div class="grammar-name">' + g.name + '</div>';
+        html += '</div>';
+    }
+    
+    html += '</div>';
+    
+    html += '<div class="category-section-title" style="margin-top: 30px;">';
+    html += '<i class="fas fa-graduation-cap"></i> Тематические уроки';
+    html += '</div>';
+    html += '<div class="lessons-list">';
+    
+    for (let i = 0; i < config.topics.length; i++) {
+        const t = config.topics[i];
+        const lessonNum = i + 1;
+        html += '<div class="lesson-card" onclick="window.app.showLevelWords(\'' + level + '\', { type: \'topic\', id: \'' + t.id + '\' })">';
+        html += '<div class="lesson-number">' + lessonNum + '</div>';
+        html += '<div class="lesson-info">';
+        html += '<div class="lesson-label">Урок ' + lessonNum + '</div>';
+        html += '<div class="lesson-title">' + t.name + '</div>';
+        html += '</div>';
+        html += '<div class="lesson-icon"><i class="fas ' + t.icon + '"></i></div>';
+        html += '</div>';
+    }
+    
+    html += '</div>';
+    html += '<div style="text-align: center; margin-top: 30px; color: var(--text-muted); font-size: 0.9rem;">';
+    html += '<p>Проходите уроки последовательно для лучшего результата!</p>';
+    html += '</div>';
+    html += '</div>';
+    
+    list.innerHTML = html;
+  }
+
+  // =================================================
+  // 3. РЕНДЕР СПИСКА СЛОВ (С ленивой загрузкой)
+  // =================================================
+   renderFilteredWordsList(words, level) {
+      const wordsList = document.getElementById('wordsList');
+      const BATCH_SIZE = 100;
+      
+      wordsList.innerHTML = '';
+
+      // === ФИКС КНОПКИ "УЧИТЬ ВСЕ" ===
+      const bulkBtn = document.getElementById('bulkToggleBtn');
+      if(bulkBtn) {
+          bulkBtn.style.display = 'inline-flex'; // Показываем кнопку
+          this.updateBulkToggleButton();         // Обновляем её состояние
+      }
+      // ===============================
+
+      // Если слов мало, рендерим сразу
+      if (words.length <= BATCH_SIZE) {
+          const fragment = document.createDocumentFragment();
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = words.map(w => this.createWordCard(w, level)).join('');
+          while (tempDiv.firstChild) fragment.appendChild(tempDiv.firstChild);
+          wordsList.appendChild(fragment);
+          
+          this.installWordsListDelegatedHandlers();
+          return;
+      }
+      
+      // Ленивая загрузка
+      let loaded = 0;
+      const renderBatch = () => {
+          const batch = words.slice(loaded, loaded + BATCH_SIZE);
+          if(batch.length === 0) return;
+          const html = batch.map(w => this.createWordCard(w, level)).join('');
+          wordsList.insertAdjacentHTML('beforeend', html);
+          loaded += batch.length;
+      };
+      
+      renderBatch();
+      this.installWordsListDelegatedHandlers();
+      
+      const sentinel = document.createElement('div');
+      sentinel.style.height = '50px';
+      wordsList.appendChild(sentinel);
+      
+      const observer = new IntersectionObserver(entries => {
+          if(entries[0].isIntersecting) {
+              renderBatch();
+              if(loaded >= words.length) {
+                  observer.disconnect();
+                  sentinel.remove();
+              } else {
+                  wordsList.appendChild(sentinel);
+              }
+          }
+      }, { rootMargin: '200px' });
+      
+      observer.observe(sentinel);
+  }
+
+  // =================================================
+  // 4. ГЛАВНАЯ ФУНКЦИЯ ПОКАЗА (Маршрутизатор Меню/Список)
+  // =================================================
+   showLevelWords(level, filter = null) {
+    this.stopCurrentAudio();
+    this.currentLevel = level;
+    this.currentCategory = null;
+    
+    const container = document.getElementById('wordsContainer');
+    const title = document.getElementById('currentLevelTitle');
+    const wordsList = document.getElementById('wordsList');
+
+    if (typeof this.toggleLevelsIndexVisibility === 'function') {
+        this.toggleLevelsIndexVisibility(false);
+    }
+    if (container) container.classList.remove('hidden');
+    
+    // Проверяем конфиг
+    const config = this.getLevelCategoriesConfig();
+    const levelConfig = config[level];
+
+    // 1. ПОКАЗЫВАЕМ МЕНЮ КАТЕГОРИЙ (если нет фильтра) -> Тут Боб не нужен, меню легкое
+    if (levelConfig && !filter) {
+        if (title) title.textContent = `Уровень ${level}`;
+        const bulkBtn = document.getElementById('bulkToggleBtn');
+        if(bulkBtn) bulkBtn.style.display = 'none';
+
+        this.renderLevelCategoriesMenu(level, levelConfig);
+        this.jumpToTopStrict();
+        return;
+    }
+
+    // 2. ПОКАЗЫВАЕМ СПИСОК СЛОВ -> ТУТ НУЖЕН БОБ
+    const bulkBtn = document.getElementById('bulkToggleBtn');
+    if(bulkBtn) {
+        bulkBtn.style.display = 'inline-flex';
+        this.updateBulkToggleButton();
+    }
+
+    let words = oxfordWordsDatabase[level] || [];
+    
+    if (filter && filter.type !== 'all') {
+        if (filter.type === 'grammar') {
+            words = words.filter(w => w.grammar === filter.id);
+            if (title) title.textContent = `${level} • Грамматика`;
+        } else if (filter.type === 'topic') {
+            words = words.filter(w => w.topic === filter.id);
+            const catName = levelConfig.topics.find(t => t.id === filter.id)?.name || 'Урок';
+            if (title) title.textContent = `${level} • ${catName}`;
+        }
+    } else {
+        if (title) title.textContent = `${level} - ${words.length} слов`;
+    }
+    
+    if (wordsList) {
+        // === ДОБАВЛЯЕМ БОБА ===
+        wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
+        this.showGlobalLoader('Кот Боб открывает список...', 800);
+
+        // Рендерим с небольшой задержкой, чтобы Боб успел появиться
+        requestAnimationFrame(() => {
+             this.renderFilteredWordsList(words, level);
+             
+             // Скрываем Боба после рендера (внутри renderFilteredWordsList это может быть не сделано)
+             setTimeout(() => this.hideGlobalLoader(), 100);
+        });
+        // ======================
+    }
+    
+    this.jumpToTopStrict();
+  }
+
+  // =================================================
+  // 5. КНОПКА НАЗАД (С улучшенной логикой)
+  // =================================================
+    backToLevels() {
+    // 1. Жестко останавливаем любой звук
+    this.stopCurrentAudio();
+    
+    // 2. Сбрасываем флаг авто-озвучки, чтобы при следующем входе всё было чисто
+    this.suppressAutoSpeakOnce = true; 
+
+    const list = document.getElementById('wordsList');
+    const isShowingList = list && list.querySelector('.word-card'); // Если есть карточки - значит мы в списке
+    const hasCategories = this.currentLevel && this.getLevelCategoriesConfig()[this.currentLevel];
+
+    // Если мы внутри категории (списка слов) — вернуться в МЕНЮ категорий
+    if (isShowingList && hasCategories) {
+        // Вызываем меню категорий
+        this.showLevelWords(this.currentLevel); 
+        return;
+    }
+
+    // Иначе — выход на главную страницу уровней
+    this.toggleLevelsIndexVisibility(true);
+    this.currentLevel = null;
+    this.currentCategory = null;
+
+    // Убираем возможные остатки авто-словаря (на всякий случай)
+    document.querySelectorAll('#levels .auto-dict-top, #levels .auto-dict-inline')
+      .forEach(n => n.remove());
+  }
+  
+      startAppTutorial() {
+    const settingsModal = document.querySelector('.settings-modal');
+    if (settingsModal) settingsModal.remove();
+
+    const steps = [
+      // 1. Списки
+      { 
+        el: '.nav-item[data-section="levels"]', 
+        text: 'Раздел "Списки". Здесь вся библиотека слов: по уровням, темам и грамматика.',
+        pos: 'top',
+        action: () => this.switchSection('levels')
+      },
+      // 2. Обучение (Главная)
+      { 
+        el: '.nav-item[data-section="learning"]', 
+        text: 'Главный экран "Изучаю". Здесь твои карточки, квизы и тренажер предложений.',
+        pos: 'top',
+        action: () => this.switchSection('learning')
+      },
+      // 3. Игры (если есть кнопка в меню)
+      {
+        el: '.nav-item[data-section="games"]', // <-- ПРОВЕРЬ СЕЛЕКТОР КНОПКИ ИГР
+        text: 'Игротека! Учись играючи. Аркады, гонки и головоломки со словами.',
+        pos: 'top',
+        action: () => this.switchSection('games') // <-- ПРОВЕРЬ ID СЕКЦИИ
+      },
+      // 4. ИИ Чат (если есть кнопка)
+      {
+        el: '.nav-item[data-section="ai-chat"]', // <-- ПРОВЕРЬ СЕЛЕКТОР
+        text: 'Умный ИИ-собеседник. Потренируй диалог или попроси объяснить правило.',
+        pos: 'top',
+        action: () => this.switchSection('ai-chat') // <-- ПРОВЕРЬ ID
+      },
+      // 5. Переводчик
+      {
+        el: '.nav-item[data-section="new-words"]', 
+        text: 'Переводчик. Введи любое слово, и я создам для него красивую карточку.',
+        pos: 'top',
+        action: () => this.switchSection('new-words')
+      },
+      // 6. Прогресс
+      { 
+        el: '.nav-item[data-section="progress"]', 
+        text: 'Прогресс и Питомец. Заходи каждый день, чтобы кормить его своими знаниями!',
+        pos: 'top',
+        action: () => this.switchSection('progress')
+      }
+    ];
+
+    this.currentTutorialStep = 0;
+    // Начинаем с первого шага
+    this.showTutorialStep(steps);
+  }
+
+   showTutorialStep(steps) {
+    // 1. Удаляем старые элементы (оверлей и боба)
+    document.querySelectorAll('.tutorial-overlay, .tutorial-bob-container').forEach(e => e.remove());
+
+    // 2. Если шаги кончились -> Финиш
+    if (this.currentTutorialStep >= steps.length) {
+        this.showTutorialFinish();
+        return;
+    }
+
+    const step = steps[this.currentTutorialStep];
+
+    // 3. Выполняем действие (переключение вкладки)
+    if (step.action && typeof step.action === 'function') {
+        step.action();
+    }
+
+    // 4. Ждем 500мс, пока интерфейс обновится
+    setTimeout(() => {
+        const element = document.querySelector(step.el);
+
+        // Если элемента нет — пропускаем шаг рекурсивно
+        if (!element || element.offsetParent === null) {
+            console.warn('Tutorial: Element not found or hidden:', step.el);
+            this.currentTutorialStep++;
+            this.showTutorialStep(steps); // Рекурсия
+            return;
+        }
+
+        // 5. Рисуем подсветку (Overlay)
+        const rect = element.getBoundingClientRect();
+        const overlay = document.createElement('div');
+        overlay.className = 'tutorial-overlay';
+        
+        // Тень с "дыркой" через box-shadow
+        overlay.style.cssText = `
+            position: fixed;
+            top: ${rect.top - 8}px;
+            left: ${rect.left - 8}px;
+            width: ${rect.width + 16}px;
+            height: ${rect.height + 16}px;
+            border-radius: 16px;
+            box-shadow: 0 0 0 9999px rgba(0,0,0,0.75); 
+            z-index: 99998;
+            pointer-events: auto; 
+            cursor: pointer;
+            transition: all 0.4s ease;
+        `;
+
+        // 6. Рисуем Боба и Бабл
+        const container = document.createElement('div');
+        container.className = 'tutorial-bob-container';
+        
+        let topPos;
+        const isTop = step.pos === 'top';
+        
+        // Вычисляем позицию Боба
+        if (isTop) {
+            topPos = rect.top - 240; // Над элементом
+            if (topPos < 20) topPos = rect.bottom + 20; // Если не влезает — вниз
+        } else {
+            topPos = rect.bottom + 20; // Под элементом
+        }
+
+        container.style.cssText = `
+            position: fixed;
+            top: ${topPos}px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            pointer-events: auto;
+        `;
+
+        // HTML Боба
+        container.innerHTML = `
+            <div class="tutorial-bubble" style="animation: popIn 0.3s ease;">
+                <p>${step.text}</p>
+                <div class="tutorial-controls">
+                    <span style="font-size:12px; color:#999; font-weight:600;">${this.currentTutorialStep + 1} из ${steps.length}</span>
+                    <button class="btn btn-primary btn-sm" id="tutNextBtn">Далее</button>
+                </div>
+                <div class="bubble-arrow ${isTop ? 'down' : 'up'}"></div>
+            </div>
+            <img src="/instruction.png" class="bob-img" style="width:110px; height:auto; margin-top:-12px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));">
+        `;
+
+        document.body.appendChild(overlay);
+        document.body.appendChild(container);
+
+        // 7. Обработчики кликов
+        const next = () => {
+            this.currentTutorialStep++;
+            this.showTutorialStep(steps);
+        };
+
+        document.getElementById('tutNextBtn').onclick = next;
+        
+        // Клик по затемнению тоже переключает шаг
+        overlay.onclick = (e) => {
+            if (e.target === overlay) next();
+        };
+
+    }, 600); // Задержка для плавности
+  }
+  
+    requestNotificationPermission() {
+    if (!('Notification' in window)) return;
+    
+    Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+            this.showNotification('Уведомления включены! Боб будет напоминать о словах.', 'success');
+            this.scheduleBobReminders();
+        }
+    });
+  }
+
+  scheduleBobReminders() {
+    // Проверка раз в час
+    setInterval(() => {
+        // Если страница скрыта (пользователь не в приложении)
+        if (document.hidden && Notification.permission === 'granted') {
+            const now = new Date();
+            // Не беспокоить ночью (с 22:00 до 08:00)
+            if (now.getHours() >= 22 || now.getHours() < 8) return;
+
+            const phrases = [
+                "Эй! Слова остывают! 🔥",
+                "Твой питомец хочет кушать 😿",
+                "Зайди на 5 минут, не ленись!",
+                "Time to study! Let's go!"
+            ];
+            
+            // Шанс 10% каждый час (чтобы не спамить), или проверяй lastVisit
+            if (Math.random() < 0.1) {
+                new Notification('BeWords', {
+                    body: phrases[Math.floor(Math.random() * phrases.length)],
+                    icon: '/icon-192.png',
+                    vibrate: [200, 100, 200]
+                });
+            }
+        }
+    }, 60 * 60 * 1000); 
+  }
+
+   showTutorialFinish() {
+      const overlay = document.createElement('div');
+      overlay.className = 'tutorial-overlay';
+      overlay.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:99999; display:flex; align-items:center; justify-content:center;';
+      
+      // Ставим флаг, что туториал пройден
+      localStorage.setItem('tutorial_complete_forever', '1');
+      
+      overlay.innerHTML = `
+        <div style="background:white; padding:30px; border-radius:20px; text-align:center; max-width:320px; animation: popIn 0.4s;">
+            <img src="/instruction.png" style="width:100px; margin-bottom:15px;">
+            <h2 style="margin-bottom:10px; color:#333;">Ты готов! 🚀</h2>
+            <p style="color:#666; margin-bottom:20px;">Хочешь, я подберу слова специально для твоего уровня?</p>
+            
+            <button class="btn btn-success" id="finishWizardBtn" style="width:100%; margin-bottom:10px;">
+               <i class="fas fa-magic"></i> Подобрать программу
+            </button>
+            
+            <button class="btn btn-secondary" onclick="this.closest('.tutorial-overlay').remove()" style="width:100%;">
+               Я сам выберу
+            </button>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      
+      // Обработчик для кнопки Визарда
+      document.getElementById('finishWizardBtn').onclick = () => {
+          overlay.remove();
+          this.showOnboardingWizard();
+      };
+  }
+
+static injectStylesOnce() {
+    if (document.getElementById('app-extra-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'app-extra-styles';
+    style.textContent = ` 
+@keyframes slideDown {
+    from { transform: translate(-50%, -100%); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+}
+@keyframes slideUp {
+    from { transform: translate(-50%, 0); opacity: 1; }
+    to { transform: translate(-50%, -100%); opacity: 0; }
+}
+.sound-actions .mini-btn, .option-sound .mini-btn {
+    border:none; 
+    background: var(--bg-tertiary, #f0f2f5); 
+    padding:4px 6px; 
+    border-radius:6px; 
+    cursor:pointer; 
+    color:#333; 
+}
+.quiz-option .quiz-option-inner {
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+    gap:8px; 
+}
+
+/* Подсветка активного пункта меню во время тура */
+.bottom-nav .nav-item.nav-highlight {
+    position: relative;
+    box-shadow: 0 0 0 6px rgba(99,102,241,0.3);
+    border-radius: 12px;
+}
+
+/* Мини-игра питомец (прогресс) */
+.pet-widget{
+    background:var(--bg-secondary);
+    border:1px solid var(--border-color);
+    border-radius:14px;
+    padding:12px;
+    margin-bottom:14px;
+}
+.pet-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+.pet-avatar{
+    width:56px;
+    height:56px;
+    object-fit:contain;
+    border-radius:10px;
+    background:#fff;
+    border:1px solid var(--border-color);
+}
+.pet-title{
+    font-weight:800;
+    color:var(--text-primary);
+}
+.pet-bars{
+    display:grid;
+    gap:8px;
+    margin:8px 0 10px;
+}
+.pet-bar{
+    height:10px;
+    background:#e5e7eb;
+    border-radius:8px;
+    overflow:hidden;
+}
+.pet-bar-fill{
+    height:100%;
+    background:linear-gradient(90deg,#10b981,#22d3ee);
+}
+.pet-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+.pet-dead{
+    color:#ef4444;
+    font-weight:700;
+    margin:8px 0;
+}
+/* Стили для бейджей точности */
+.acc-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+.acc-none { background: #e5e7eb; color: #374151; }
+.acc-good { background: #d1fae5; color: #065f46; }
+.acc-mid { background: #fef3c7; color: #92400e; }
+.acc-bad { background: #fee2e2; color: #991b1b; }
+`;
+    document.head.appendChild(style);
+}
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+
+  EnglishWordsApp.injectStylesOnce();
+  window.app = new EnglishWordsApp();
+});
