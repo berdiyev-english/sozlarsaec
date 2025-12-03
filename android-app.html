@@ -610,7 +610,7 @@ body {
             <div class="games-grid">
         <!-- Старые игры -->
         <div class="game-card">
-          <img src="race.jpg" alt="Subway" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <img src="subway.jpg" alt="Subway" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
             <h3>Subway Surfers</h3>
             <button class="btn btn-primary" id="surfStartBtn">Старт</button>
@@ -620,7 +620,7 @@ body {
         <div class="game-card">
           <img src="bird.jpg" alt="Bird" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
-            <h3>Flying Bird</h3>
+            <h3>Flying Bob</h3>
             <button class="btn btn-primary" id="doodleStartBtn">Старт</button>
           </div>
         </div>
@@ -636,7 +636,7 @@ body {
         <div class="game-card">
           <img src="match3.jpg" alt="Panda" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
-            <h3>Daddy Panda</h3>
+            <h3>Bubble shoot</h3>
             <button class="btn btn-primary" id="rocketStartBtn">Старт</button>
           </div>
         </div>
@@ -661,15 +661,15 @@ body {
         <div class="game-card">
           <img src="checkers.jpg" alt="Checkers" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
-            <h3>Шашки против Боба</h3>
-            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Checkers', 'checker.html')">Старт</button>
+            <h3>Шашки с Бобом</h3>
+            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Checkers', 'checkers.html')">Старт</button>
           </div>
         </div>
 
         <div class="game-card">
           <img src="chess.jpg" alt="Chess" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
-            <h3>Шахматы против Боба</h3>
+            <h3>Шахматы с Бобом</h3>
             <button class="btn btn-primary" onclick="app.showQuizGateForGame('Chess', 'chess.html')">Старт</button>
           </div>
         </div>
@@ -686,7 +686,7 @@ body {
           <img src="brain.jpg" alt="Brain" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
             <h3>Brain Trainer</h3>
-            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Brain', 'Brain.html')">Старт</button>
+            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Brain', 'brain.html')">Старт</button>
           </div>
         </div>
 
@@ -786,124 +786,6 @@ body {
     
     document.body.appendChild(toast);
   }
-</script>
-<script>
-let iframeCheckInterval;
-let checkAttempts = 0;
-
-// Проверка загрузки iframe для AI Chat
-function checkIframeLoad() {
-  const iframe = document.getElementById('aiChatFrame');
-  const vpnMessage = document.getElementById('vpnMessage');
-  
-  if (!iframe || !vpnMessage) return;
-  
-  // Сбрасываем предыдущие проверки
-  if (iframeCheckInterval) {
-    clearInterval(iframeCheckInterval);
-  }
-  checkAttempts = 0;
-  
-  // Скрываем сообщение изначально
-  vpnMessage.classList.remove('show');
-  iframe.classList.remove('has-error');
-  
-  // Проверяем загрузку каждые 500мс
-  iframeCheckInterval = setInterval(() => {
-    checkAttempts++;
-    
-    // Проверяем признаки загрузки
-    const rect = iframe.getBoundingClientRect();
-    const isVisible = rect.width > 0 && rect.height > 0;
-    const hasContent = iframe.contentWindow !== null;
-    
-    // Если прошло 5 попыток (2.5 секунды) и iframe не загрузился
-    if (checkAttempts >= 5) {
-      clearInterval(iframeCheckInterval);
-      
-      // Пытаемся проверить доступность iframe
-      try {
-        // Если можем получить доступ к window, значит загрузился
-        if (iframe.contentWindow && iframe.contentWindow.location) {
-          console.log('Iframe loaded successfully');
-          vpnMessage.classList.remove('show');
-          iframe.classList.remove('has-error');
-        }
-      } catch (e) {
-        // Cross-origin блокировка - это может быть нормально для внешних iframe
-        // Проверяем по размерам
-        if (!isVisible) {
-          // Показываем сообщение об ошибке
-          console.log('Iframe failed to load - showing VPN message');
-          vpnMessage.classList.add('show');
-          iframe.classList.add('has-error');
-        }
-      }
-    }
-  }, 500);
-  
-  // Дополнительная проверка через событие error
-  iframe.onerror = function() {
-    clearInterval(iframeCheckInterval);
-    vpnMessage.classList.add('show');
-    iframe.classList.add('has-error');
-  };
-}
-
-// Функция повторной попытки загрузки
-function retryLoadingChat() {
-  const iframe = document.getElementById('aiChatFrame');
-  const vpnMessage = document.getElementById('vpnMessage');
-  
-  if (iframe && vpnMessage) {
-    // Скрываем сообщение
-    vpnMessage.classList.remove('show');
-    iframe.classList.remove('has-error');
-    
-    // Перезагружаем iframe
-    const currentSrc = iframe.src;
-    iframe.src = 'about:blank';
-    
-    setTimeout(() => {
-      iframe.src = currentSrc;
-      // Запускаем проверку заново
-      setTimeout(checkIframeLoad, 100);
-    }, 100);
-  }
-}
-
-// Запускаем проверку при переключении на вкладку AI Chat
-document.addEventListener('DOMContentLoaded', function() {
-  // Ждем загрузки приложения
-  setTimeout(() => {
-    const originalSwitchSection = window.app && window.app.switchSection;
-    
-    if (originalSwitchSection) {
-      window.app.switchSection = function(section) {
-        originalSwitchSection.call(window.app, section);
-        
-        if (section === 'ai-chat') {
-          // Запускаем проверку при каждом переходе на вкладку
-          setTimeout(checkIframeLoad, 100);
-        }
-      };
-    }
-    
-    // Проверяем если пользователь сразу на этой вкладке
-    const aiChatSection = document.querySelector('#ai-chat');
-    if (aiChatSection && aiChatSection.classList.contains('active')) {
-      checkIframeLoad();
-    }
-  }, 1000);
-});
-
-// Также запускаем проверку при загрузке страницы
-window.addEventListener('load', function() {
-  const aiChatSection = document.querySelector('#ai-chat');
-  if (aiChatSection && aiChatSection.classList.contains('active')) {
-    checkIframeLoad();
-  }
-});
 </script>
 <script>
 (function(){
