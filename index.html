@@ -607,22 +607,21 @@ body {
         Новая эра обучения началась с "Bewords"<br>
       </p>
 
-      <div class="games-grid">
+            <div class="games-grid">
+        <!-- Старые игры -->
         <div class="game-card">
-          <img src="race.jpg" alt="Subway Surfers" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <img src="race.jpg" alt="Subway" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
             <h3>Subway Surfers</h3>
-            <p>Убегай от злого охранника. </p>
-            <button class="btn btn-primary" id="surfStartBtn" data-testid="surf-start-btn">Старт</button>
+            <button class="btn btn-primary" id="surfStartBtn">Старт</button>
           </div>
         </div>
 
         <div class="game-card">
-          <img src="bird.jpg" alt="Doodle Jump" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <img src="bird.jpg" alt="Bird" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
             <h3>Flying Bird</h3>
-            <p>Полетай за знаменитую птицу.</p>
-            <button class="btn btn-primary" id="doodleStartBtn" data-testid="doodle-start-btn">Старт</button>
+            <button class="btn btn-primary" id="doodleStartBtn">Старт</button>
           </div>
         </div>
 
@@ -630,91 +629,121 @@ body {
           <img src="2048.jpg" alt="2048" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
             <h3>2048</h3>
-            <p>Классическая головоломка. Собери плитку 2048!</p>
-            <button class="btn btn-primary" id="game2048StartBtn" data-testid="2048-start-btn">Старт</button>
+            <button class="btn btn-primary" id="game2048StartBtn">Старт</button>
           </div>
         </div>
 
         <div class="game-card">
-          <img src="match3.jpg" alt="Rocket Soccer Derby" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <img src="match3.jpg" alt="Panda" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
             <h3>Daddy Panda</h3>
-            <p>Помоги папе панде спасти своих детей</p>
-            <button class="btn btn-primary" id="rocketStartBtn" data-testid="rocket-start-btn">Старт</button>
-          </div>
-        </div>
-
-          <div class="game-card">
-          <img src="ninja.jpg" alt="ninja" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>Fruit Ninja</h3>
-            <p>Режь фрукты и избегай бомб — это все, что нужно знать, чтобы начать играть в захватывающую игру Fruit Ninja!</p>
-            <button class="btn btn-primary" id="ninjaStartBtn" data-testid="ninja-start-btn">Старт</button>
+            <button class="btn btn-primary" id="rocketStartBtn">Старт</button>
           </div>
         </div>
 
         <div class="game-card">
-          <img src="dash.jpg" alt="Каталог игр" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <img src="ninja.jpg" alt="Ninja" class="game-cover" onerror="this.src='nophoto.jpg'">
           <div class="game-info">
-            <h3>Geometry-dash</h3>
-            <p>Знаменитая игра с прыгающем кубиком.</p>
-            <button class="btn btn-primary" id="catalogStartBtn" data-testid="catalog-start-btn">Старт</button>
+            <h3>Fruit Ninja</h3>
+            <button class="btn btn-primary" id="ninjaStartBtn">Старт</button>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <img src="dash.jpg" alt="Dash" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>Geo-Dash</h3>
+            <button class="btn btn-primary" id="catalogStartBtn">Старт</button>
+          </div>
+        </div>
+
+        <!-- НОВЫЕ ИГРЫ -->
+        <div class="game-card">
+          <img src="checkers.jpg" alt="Checkers" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>Checkers</h3>
+            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Checkers', 'Checker.html')">Старт</button>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <img src="chess.jpg" alt="Chess" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>Chess</h3>
+            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Chess', 'Chess.html')">Старт</button>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <img src="cosmos.jpg" alt="Cosmos" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>Cosmos</h3>
+            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Cosmos', 'Cosmos.html')">Старт</button>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <img src="brain.jpg" alt="Brain" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>Brain Trainer</h3>
+            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Brain', 'Brain.html')">Старт</button>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <img src="merge.jpg" alt="Merge" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>Merge</h3>
+            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Merge', 'Merge.html')">Старт</button>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <img src="tile.jpg" alt="Tile" class="game-cover" onerror="this.src='nophoto.jpg'">
+          <div class="game-info">
+            <h3>Tile Match</h3>
+            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Tile', 'tile.html')">Старт</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- AI Chat -->
-<section id="ai-chat" class="content-section">
-  <div class="ai-chat-description">
-    <h3>Ваш персональный AI-помощник для изучения английского на базе Chat GPT</h3>
-    <p>Задавайте вопросы, практикуйте разговорный английский, получайте объяснения грамматики и помощь с переводом. AI-учитель доступен 24/7 и всегда готов помочь!</p> <br>
-    <h3>Если не отображается чат включите VPN 🌐</h3>
-  </div>
-
-  <div class="ai-chat-container">
-    <iframe
-      id="aiChatFrame"
-      src="https://www.yeschat.ai/i/gpts-2OToO9hERt-English-Teacher"
-      class="ai-chat-iframe"
-      title="AI English Teacher"
-      allow="microphone">
-    </iframe>
-  </div>
-  
-  <!-- VPN сообщение всегда под iframe -->
-  <div id="vpnMessage" class="vpn-message">
-    <div class="vpn-icon">🌍</div>
-    <div class="vpn-content">
-      <h4>Упс! AI Chat временно недоступен</h4>
-      <p>Чтобы загрузить AI Chat, включите VPN</p>
-      <button class="vpn-retry-btn" onclick="retryLoadingChat()">
-        <i class="fas fa-redo"></i> Попробовать снова
-      </button>
-    </div>
-  </div>
-</section>
+    <!-- Grammar Section (Replaces AI Chat) -->
+    <section id="grammar" class="content-section">
+      <div class="section-header">
+        <h2>Грамматика</h2>
+        <p style="color:var(--text-secondary); font-size:0.9rem;">От простого к сложному</p>
+      </div>
+      
+      <!-- Сюда JS будет рендерить темы -->
+      <div id="grammarList" class="grammar-topics-grid"></div>
+      
+      <!-- Сюда JS будет рендерить открытый урок -->
+      <div id="grammarDetail" class="hidden"></div>
+    </section>
   </main>
 
 <nav class="bottom-nav" id="bottomNav">
-  <button class="nav-item active" type="button" data-section="levels" data-testid="nav-levels">
+  <button class="nav-item active" type="button" data-section="levels">
     <i class="fas fa-layer-group"></i><span>Списки</span>
   </button>
-  <button class="nav-item" type="button" data-section="learning" data-testid="nav-learning">
+  <button class="nav-item" type="button" data-section="learning">
     <i class="fas fa-book-reader"></i><span>Изучаю</span>
   </button>
-  <button class="nav-item" type="button" data-section="new-words" data-testid="nav-new-words">
-    <i class="fas fa-plus"></i><span>Загрузить</span>
+  <!-- НОВЫЙ ПУНКТ -->
+  <button class="nav-item" type="button" data-section="grammar">
+    <i class="fas fa-university"></i><span>Тренажер</span>
   </button>
-  <button class="nav-item" type="button" data-section="progress" data-testid="nav-progress">
-    <i class="fas fa-chart-line"></i><span>Прогресс</span>
+  <button class="nav-item" type="button" data-section="new-words">
+    <i class="fas fa-plus"></i><span>Загруз.</span>
   </button>
-  <button class="nav-item" type="button" data-section="games" data-testid="nav-games">
+  <button class="nav-item" type="button" data-section="progress">
+    <i class="fas fa-chart-line"></i><span>Прогр.</span>
+  </button>
+  <button class="nav-item" type="button" data-section="games">
     <i class="fas fa-gamepad"></i><span>Игры</span>
   </button>
-  <button class="nav-item" type="button" data-section="ai-chat" data-testid="nav-ai-chat">
-    <i class="fas fa-robot"></i><span>ИИ</span>
-  </button>
+  <!-- AI CHAT УДАЛЕН -->
 </nav>
 </div>
 
@@ -722,6 +751,7 @@ body {
 
 <script src="oxford_words_data.js"></script>
 <script src="sentences-data.js"></script>
+<script src="grammar.js"></script> 
 <script src="app.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
@@ -1299,4 +1329,3 @@ function setLang(from, to){
 </body>
 
 </html>
-
