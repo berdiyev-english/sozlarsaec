@@ -1674,8 +1674,6 @@ if (learningLamp) {
       });
     }, 100);
     window.onAddToStudy = (payload) => this.handleTranslatorAdd(payload);
-        // Запрос уведомлений через 10 секунд после старта, чтобы не пугать сразу
-    setTimeout(() => this.requestNotificationPermission(), 10000);
 }
 
   // Daily Motivation once per day
@@ -6781,21 +6779,26 @@ attachPetHandlers() {
     }, 600); // Задержка для плавности
   }
   
-     requestNotificationPermission() {
+    requestNotificationPermission() {
     if (!('Notification' in window)) {
-        this.showNotification('Ваш браузер не поддерживает уведомления', 'warning');
+        this.showNotification('Уведомления не поддерживаются', 'warning');
         return;
     }
     
+    // Запрашиваем права
     Notification.requestPermission().then(permission => {
         if (permission === 'granted') {
-            this.showNotification('Уведомления включены! Боб будет напоминать о словах.', 'success');
+            localStorage.setItem('notifications_disabled', 'false');
+            this.showNotification('Уведомления включены! ✅', 'success');
             this.scheduleBobReminders();
+        } else if (permission === 'denied') {
+            this.showNotification('Доступ запрещен. Включите в настройках телефона ⚙️', 'warning');
         } else {
-            this.showNotification('Вы запретили уведомления. Включите их в настройках браузера.', 'warning');
+            // Если просто закрыли окно
+            this.showNotification('Нужно разрешить доступ, чтобы Боб мог писать', 'info');
         }
     });
-  }
+}
 
   scheduleBobReminders() {
     // Проверка раз в час
