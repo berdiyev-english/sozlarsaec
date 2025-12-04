@@ -1643,22 +1643,22 @@ document.querySelectorAll('.mode-btn').forEach(btn => {
 
     // Game buttons
     const surfBtn = document.getElementById('surfStartBtn');
-    if (surfBtn) surfBtn.addEventListener('click', () => this.showQuizGateForGame('Subway', 'subway.html'));
+    if (surfBtn) surfBtn.addEventListener('click', () => this.showQuizGateForGame('Subway surfers', 'subway.html'));
     
     const doodleBtn = document.getElementById('doodleStartBtn');
-    if (doodleBtn) doodleBtn.addEventListener('click', () => this.showQuizGateForGame('Flying Bird', 'doodle-jump.html'));
+    if (doodleBtn) doodleBtn.addEventListener('click', () => this.showQuizGateForGame('Flying Bob', 'doodle-jump.html'));
     
     const game2048Btn = document.getElementById('game2048StartBtn');
     if (game2048Btn) game2048Btn.addEventListener('click', () => this.showQuizGateForGame('2048', '2048.html'));
     
     const rocketBtn = document.getElementById('rocketStartBtn');
-    if (rocketBtn) rocketBtn.addEventListener('click', () => this.showQuizGateForGame('Panda', 'rocket-soccer.html'));
+    if (rocketBtn) rocketBtn.addEventListener('click', () => this.showQuizGateForGame('Bubble shoot', 'rocket-soccer.html'));
     
     const ninjaBtn = document.getElementById('ninjaStartBtn');
     if (ninjaBtn) ninjaBtn.addEventListener('click', () => this.showQuizGateForGame('ninja', 'ninja.html'));
     
     const catalogBtn = document.getElementById('catalogStartBtn');
-    if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('Geo-Dash', 'dash.html'));
+    if (catalogBtn) catalogBtn.addEventListener('click', () => this.showQuizGateForGame('Geometry Dash', 'dash.html'));
     
     const learningLamp = document.getElementById('learningHelpLamp');
 if (learningLamp) {
@@ -2093,33 +2093,86 @@ showSettingsModal() {
   document.body.appendChild(modal);
   
  // Логика кнопки уведомлений
+  // Внутри showSettingsModal (app.js)
+
+  // Логика кнопки уведомлений (СУПЕР-ВЕРСИЯ)
   const notifyBtn = modal.querySelector('#notifyToggleBtn');
   if (notifyBtn) {
-      // Проверяем текущее состояние и меняем текст кнопки
-      const isDisabled = localStorage.getItem('notifications_disabled') === 'true';
-      const isGranted = Notification.permission === 'granted';
       
-      if (isGranted && !isDisabled) {
-          notifyBtn.innerHTML = '<i class="fas fa-bell-slash"></i> Отключить уведомления';
-          notifyBtn.className = 'btn btn-secondary'; // Серый цвет
-      } else {
-          notifyBtn.innerHTML = '<i class="fas fa-bell"></i> Включить уведомления';
-          notifyBtn.className = 'btn btn-primary'; // Зеленый цвет
-      }
+      // Функция обновления вида кнопки
+      const updateBtnState = () => {
+          const perm = Notification.permission;
+          const appDisabled = localStorage.getItem('notifications_disabled') === 'true';
 
-      notifyBtn.onclick = () => {
-          if (isGranted && !isDisabled) {
-              // Выключаем
-              localStorage.setItem('notifications_disabled', 'true');
-              notifyBtn.innerHTML = '<i class="fas fa-bell"></i> Включить уведомления';
-              notifyBtn.className = 'btn btn-primary';
-              this.showNotification('Уведомления отключены', 'info');
+          if (perm === 'granted') {
+              // Разрешено браузером
+              if (appDisabled) {
+                  // Но выключено в приложении
+                  notifyBtn.innerHTML = '<i class="fas fa-bell"></i> Включить уведомления';
+                  notifyBtn.className = 'btn btn-primary';
+              } else {
+                  // Все работает
+                  notifyBtn.innerHTML = '<i class="fas fa-check"></i> Уведомления активны';
+                  notifyBtn.className = 'btn btn-success';
+              }
+          } else if (perm === 'denied') {
+              // Заблокировано
+              notifyBtn.innerHTML = '<i class="fas fa-ban"></i> Доступ запрещен (Нажми)';
+              notifyBtn.className = 'btn btn-danger';
           } else {
-              // Включаем
-              localStorage.setItem('notifications_disabled', 'false');
-              this.requestNotificationPermission();
-              // Текст обновится, если разрешение дадут
-              modal.remove(); // Закрываем модалку, чтобы обновить состояние при следующем открытии
+              // Default (еще не спрашивали)
+              notifyBtn.innerHTML = '<i class="fas fa-bell"></i> Разрешить уведомления';
+              notifyBtn.className = 'btn btn-primary';
+          }
+      };
+
+      // Инициализация кнопки
+      updateBtnState();
+
+      // Обработчик клика
+      notifyBtn.onclick = () => {
+          const perm = Notification.permission;
+          const appDisabled = localStorage.getItem('notifications_disabled') === 'true';
+
+          // 1. Если уже разрешено — просто переключаем настройку внутри приложения
+          if (perm === 'granted') {
+              if (appDisabled) {
+                  localStorage.setItem('notifications_disabled', 'false');
+                  this.showNotification('Уведомления включены!', 'success');
+              } else {
+                  localStorage.setItem('notifications_disabled', 'true');
+                  this.showNotification('Уведомления приостановлены', 'info');
+              }
+              updateBtnState();
+          } 
+          
+          // 2. Если ЕЩЕ НЕ СПРАШИВАЛИ (default) — запрашиваем
+          else if (perm === 'default') {
+              Notification.requestPermission().then(newPerm => {
+                  if (newPerm === 'granted') {
+                      localStorage.setItem('notifications_disabled', 'false');
+                      this.showNotification('Ура! Боб на связи! 🚀', 'success');
+                      this.scheduleBobReminders();
+                  } else {
+                      this.showNotification('Эх, Боб не сможет писать...', 'warning');
+                  }
+                  updateBtnState();
+              });
+          }
+          
+          // 3. Если ЗАБЛОКИРОВАНО (denied)
+          else {
+              // Мы пытаемся спросить, но скорее всего браузер откажет сразу
+              Notification.requestPermission().then(newPerm => {
+                  if (newPerm === 'granted') {
+                      // О чудо, сработало!
+                      localStorage.setItem('notifications_disabled', 'false');
+                      updateBtnState();
+                  } else {
+                      // Не сработало — показываем инструкцию
+                      alert('Браузер заблокировал запрос уведомлений.\n\nКак включить:\n1. Нажмите на значок замка 🔒 или настроек ⚙️ в строке адреса.\n2. Найдите "Уведомления".\n3. Выберите "Разрешить".');
+                  }
+              });
           }
       };
   }
@@ -2437,7 +2490,7 @@ setTimeout(() => window.initBewordsTranslator(), 0);
         </div>
        
         <div class="grammar-content" style="padding-top: 20px;">
-            <div class="sentence-builder-container" style="box-shadow:none; border:none; background:transparent; padding:0;">
+            <div class="sentence-builder-container" style="box-shadow:none; border:none; background:transparent; padding:0; overflow: visible !important; border-radius: 0 !important;">
               
               <div class="sentence-instruction" style="margin-bottom:1rem;">
                 <div class="sentence-instruction-text" style="font-size:1.1rem;">Переведите предложение</div>
@@ -2508,7 +2561,7 @@ handleGrammarWordSelect(word, index, container) {
     const state = this.sentenceBuilderState;
     const wordKey = `${word}_${index}`;
     
-    // Проверяем порядок
+    // Проверяем порядок (как было)
     const nextPos = state.assembledWords.length;
     const expected = (state.correctOrder[nextPos] || '').toLowerCase().trim();
     const clicked = (word || '').toLowerCase().trim();
@@ -2520,9 +2573,7 @@ handleGrammarWordSelect(word, index, container) {
         return;
     }
 
-    // === ОЗВУЧКА СЛОВА (ОСТАВЛЯЕМ) ===
     this.playSingleWordMp3(word, 'us').catch(()=>{});
-    // ================================
 
     // Добавляем
     state.assembledWords.push(wordKey);
@@ -2537,18 +2588,26 @@ handleGrammarWordSelect(word, index, container) {
         btn.disabled = true;
     }
     
-    // Активируем проверку
+    // === ИСПРАВЛЕНИЕ ===
+    // Активируем кнопку ТОЛЬКО если длина совпадает
     const checkBtn = container.querySelector('#grammarCheckBtn');
-    checkBtn.disabled = false;
-    
-    // Авто-проверка
     if (state.assembledWords.length === state.correctOrder.length) {
+        checkBtn.disabled = false;
+        
+        // Авто-проверка через 0.5 сек
         setTimeout(() => this.checkGrammarSentence(container, this.sentenceBuilderState.filterTopic), 500);
+    } else {
+        checkBtn.disabled = true;
     }
 }
 
 checkGrammarSentence(container, topicId) {
     const state = this.sentenceBuilderState;
+    
+        if (state.assembledWords.length !== state.correctOrder.length) {
+        return;
+    }
+    
     const feedback = container.querySelector('#grammarFeedback');
     
     state.score++; 
@@ -5676,119 +5735,106 @@ attachPetHandlers() {
   // =========
   // Games (gate + overlays) with irregulars auto disabled
   // =========
-    showQuizGateForGame(gameName, gameFile) {
+  showQuizGateForGame(gameName, gameFile) {
+    // 1. Проверка слов
     if (this.learningWords.filter(w => !w.isLearned).length < 3) {
       this.showNotification('Чтобы играть, добавьте минимум 3 слова из "списка слов" в «Изучаю»', 'warning');
       return;
     }
 
+    // 2. Оверлей
     const overlay = document.createElement('div');
     overlay.id = 'gameQuizOverlay';
     overlay.style.cssText = 'position:fixed;inset:0;z-index:999999;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;';
 
+    // 3. Карточка (Контейнер)
     const gameContainer = document.createElement('div');
-    // Убрали жесткий color:#333, чтобы CSS мог управлять цветом в темной теме
-    gameContainer.style.cssText = 'background:var(--bg-primary);border-radius:16px;padding:20px;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);';
+    // Убрали overflow:visible, так как Боб теперь внутри
+    gameContainer.style.cssText = 'background:var(--bg-primary); border-radius:24px; padding:24px; max-width:480px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,0.3); animation: popIn 0.3s ease; display:flex; flex-direction:column;';
 
-
-    const bobImg = document.createElement('img');
-    bobImg.src = '/instruction.png'; 
-    // Явные стили, чтобы он точно встал куда надо
-    bobImg.style.cssText = 'position:absolute; top:-80px; right:-20px; width:100px; height:auto; z-index:10; filter:drop-shadow(0 5px 10px rgba(0,0,0,0.3)); pointer-events:none;';
-    gameContainer.appendChild(bobImg);
-
+    // 4. Кнопка Закрыть
     const closeBtn = document.createElement('button');
     closeBtn.innerHTML = '<i class="fas fa-times"></i> Закрыть';
     closeBtn.className = 'btn btn-secondary';
-    closeBtn.style.marginBottom = '10px';
+    closeBtn.style.marginBottom = '15px';
+    closeBtn.style.alignSelf = 'flex-start'; // Кнопка слева
     closeBtn.onclick = () => overlay.remove();
 
-    const gameTitle = document.createElement('h2');
-    gameTitle.textContent = `${gameName} - Quiz`;
-    gameTitle.style.cssText = 'text-align:center;margin-bottom:20px; font-weight:800;';
-
+    // 5. Контейнер контента
     const quizContainer = document.createElement('div');
     quizContainer.id = 'quizGateContainer';
     
-    // СТАРТОВЫЙ ЭКРАН
+    // === ЭКРАН 1: ИНТРО С БОБОМ ВНУТРИ ===
     quizContainer.innerHTML = `
-        <div style="text-align:center; padding:20px;">
-            <img src="/instruction.png" style="width:100px; margin-bottom:15px; filter:drop-shadow(0 5px 10px rgba(0,0,0,0.2));">
-            <h3 style="margin-bottom:10px; font-weight:800;">Доступ к игре</h3>
-            <p style="color:var(--text-secondary); margin-bottom:20px; font-size:0.95rem;">
-                Боб охраняет эту игру! 😼<br>
-                Ответь правильно на 3 вопроса, чтобы пройти.
+        <div style="text-align:center; padding:10px;">
+            <!-- БОБ ЗДЕСЬ (ВНУТРИ) -->
+            <img src="/instruction.png" style="width:120px; height:auto; margin-bottom:15px; filter:drop-shadow(0 5px 10px rgba(0,0,0,0.15));">
+            
+            <h3 style="margin-bottom:10px; font-weight:900; font-size:1.4rem; color:var(--text-primary);">
+                Боб охраняет игру!
+            </h3>
+            
+            <p style="color:var(--text-secondary); margin-bottom:20px; font-size:1.1rem; line-height:1.5;">
+                Чтобы запустить <b>${gameName}</b>,<br>переведи 3 слова правильно.
             </p>
-            <button class="btn btn-primary" id="startGateBtn" style="width:100%; font-size:1.1rem; padding:12px;">
+            
+            <button class="btn btn-primary" id="startGateBtn" style="width:100%; font-size:1.1rem; padding:14px; font-weight:800; box-shadow:0 4px 0 rgba(0,0,0,0.2);">
                 Погнали! 🚀
             </button>
         </div>
     `;
 
-    // ОБРАБОТЧИК ЗАПУСКА
-    setTimeout(() => {
-        const startBtn = document.getElementById('startGateBtn');
-        if (startBtn) {
-            startBtn.onclick = () => {
-                showNextQuestion(); // <-- ВОТ ТУТ ЗАПУСКАЕМ ВОПРОСЫ
-            };
-        }
-    }, 50);
-
-    const scoreDisplay = document.createElement('div');
-    scoreDisplay.id = 'scoreGateDisplay';
-    scoreDisplay.style.cssText = 'text-align:center;font-size:18px;font-weight:bold;margin-top:15px;color:#667eea;';
-    scoreDisplay.innerHTML = 'Правильных ответов: <span id="gateScore">0</span>/3';
-
     gameContainer.appendChild(closeBtn);
-    gameContainer.appendChild(gameTitle);
     gameContainer.appendChild(quizContainer);
-    gameContainer.appendChild(scoreDisplay);
     overlay.appendChild(gameContainer);
     document.body.appendChild(overlay);
 
+    // 6. Логика Квиза
     let correctCount = 0;
+
     const showNextQuestion = () => {
       const word = this.getRandomLearningWord();
-      if (!word) {
-        quizContainer.innerHTML = '<div style="text-align:center;padding:20px;">Недостаточно слов</div>';
-        return;
-      }
+      if (!word) return; 
+
       const direction = Math.random() < 0.5 ? 'EN_RU' : 'RU_EN';
       const questionText = direction === 'EN_RU' ? this.getEnglishDisplay(word) : word.translation;
       const correct = direction === 'EN_RU' ? word.translation : this.getEnglishDisplay(word);
       const options = this.buildQuizOptions(word, direction);
       const shuffled = this.shuffle(options);
 
-      // Генерируем HTML кнопок. Обрати внимание: убрали инлайн стили background/border
+      // === ЭКРАН 2: ВОПРОС + СЧЕТЧИК ВНУТРИ ===
       quizContainer.innerHTML = `
-        <div style="margin-bottom:15px;text-align:center;">
-          <div style="font-size:20px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px;">
+        <div style="margin-bottom:5px; text-align:center;">
+          <!-- Вопрос -->
+          <div style="font-size:24px; font-weight:700; margin-bottom:20px; display:flex; align-items:center; justify-content:center; gap:10px; color:var(--text-primary);">
             ${questionText}
             <span class="sound-actions">
-               <button class="mini-btn gate-sound-btn" data-region="us"><i class="fas fa-volume-up"></i></button>
+               <button class="mini-btn gate-sound-btn"><i class="fas fa-volume-up"></i></button>
             </span>
           </div>
-          <div style="font-size:14px;opacity:0.8;margin-bottom:12px;">
-            Выберите правильный вариант
-          </div>
-          <div class="quiz-options" style="display:grid;gap:10px;">
+
+          <!-- Варианты -->
+          <div class="quiz-options" style="display:grid; gap:10px; margin-bottom:20px;">
             ${shuffled.map(opt => {
-              return `<div class="quiz-option-gate" data-answer="${this.safeAttr(opt)}" style="padding:12px;border-radius:8px;border:2px solid var(--border-color);cursor:pointer;text-align:center;font-weight:600;">
+              return `<div class="quiz-option-gate" data-answer="${this.safeAttr(opt)}" style="padding:14px; border-radius:12px; border:2px solid var(--border-color); cursor:pointer; text-align:center; font-weight:700; font-size:1rem;">
                 ${opt}
               </div>`;
             }).join('')}
           </div>
+
+          <!-- СЧЕТЧИК ТЕПЕРЬ ТУТ (Темный текст) -->
+          <div style="font-size:1rem; font-weight:700; color:var(--text-secondary); border-top:2px solid var(--border-color); padding-top:15px;">
+             Правильных ответов: <span style="color:var(--primary-color); font-size:1.2rem;">${correctCount}</span>/3
+          </div>
         </div>
       `;
 
-      // Обработчик звука вопроса (используем playWord для поддержки идиом/фразовых)
+      // Обработчик звука
       const soundBtn = quizContainer.querySelector('.gate-sound-btn');
       if(soundBtn) {
           soundBtn.onclick = (e) => {
               e.stopPropagation();
-              // Task 3 & 4: playWord сам разберется (идиома, фразовый или обычное слово)
-              this.playWord(word.word, word.forms, 'us', word.level); 
+              this.playWord(word.word, word.forms, 'us', word.level);
           };
       }
 
@@ -5799,7 +5845,7 @@ attachPetHandlers() {
         }, 150);
       }
 
-      // Логика клика по ответу (ЧЕРЕЗ КЛАССЫ, а не стили)
+      // Обработчики ответов
       quizContainer.querySelectorAll('.quiz-option-gate').forEach(opt => {
         opt.addEventListener('click', async () => {
           // Блокируем повторные клики
@@ -5808,22 +5854,18 @@ attachPetHandlers() {
           const chosen = opt.getAttribute('data-answer');
           const isCorrect = chosen === correct;
 
-          // Добавляем классы для стилизации (см. CSS)
           if (isCorrect) {
               opt.classList.add('gate-correct');
+              this.playCorrectSound();
           } else {
               opt.classList.add('gate-wrong');
-              // Подсветим правильный
               quizContainer.querySelectorAll('.quiz-option-gate').forEach(o => {
-                  if (o.getAttribute('data-answer') === correct) {
-                      o.classList.add('gate-correct');
-                  }
+                  if (o.getAttribute('data-answer') === correct) o.classList.add('gate-correct');
               });
           }
 
           await this.waitForCurrentAudioToFinish();
 
-          // Озвучка при ответе (если был русский вопрос)
           if (direction === 'RU_EN' && this.shouldAutoPronounce(word)) {
              await this.delay(200);
              await this.playWord(word.word, word.forms, 'us', word.level);
@@ -5833,26 +5875,36 @@ attachPetHandlers() {
 
           if (isCorrect) {
             correctCount++;
-            const scoreEl = document.getElementById('gateScore');
-            if (scoreEl) scoreEl.textContent = String(correctCount);
             this.recordDailyProgress();
 
             if (correctCount >= 3) {
-              await this.delay(300);
+              // Показываем успех
+              quizContainer.innerHTML = `
+                  <div style="text-align:center; padding:20px;">
+                      <i class="fas fa-check-circle" style="font-size:60px; color:#4ade80; margin-bottom:20px; display:block;"></i>
+                      <h3 style="color:var(--text-primary);">Отлично!</h3>
+                      <p style="color:var(--text-secondary);">Запускаю игру...</p>
+                  </div>
+              `;
+              await this.delay(1000);
               overlay.remove();
               this.openGameFullscreen(gameName, gameFile);
             } else {
               showNextQuestion();
             }
           } else {
-            // При ошибке даем шанс исправиться или следующий вопрос (сейчас следующий)
             setTimeout(() => showNextQuestion(), 800);
           }
         });
       });
     };
-    showNextQuestion();
-  }
+
+    // 7. Запуск по кнопке
+    setTimeout(() => {
+        const startBtn = document.getElementById('startGateBtn');
+        if (startBtn) startBtn.onclick = () => showNextQuestion();
+    }, 50);
+}
 
   openGameFullscreen(gameName, gameFile) {
     const containerId = 'gameFullscreenContainer';
@@ -6631,7 +6683,23 @@ attachPetHandlers() {
     // Убираем возможные остатки авто-словаря (на всякий случай)
     document.querySelectorAll('#levels .auto-dict-top, #levels .auto-dict-inline')
       .forEach(n => n.remove());
+      
+      // Попытка запросить уведомления на первом же клике после визарда
+const autoAskNotify = () => {
+    if (Notification.permission === 'default') {
+        Notification.requestPermission().then(p => {
+            if (p === 'granted') {
+                localStorage.setItem('notifications_disabled', 'false');
+                this.showNotification('Отлично! Я буду напоминать о словах', 'success');
+            }
+        });
+    }
+    document.removeEventListener('click', autoAskNotify);
+};
+document.addEventListener('click', autoAskNotify, { once: true });
+      
   }
+  
   
       startAppTutorial() {
     const settingsModal = document.querySelector('.settings-modal');
