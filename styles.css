@@ -5461,76 +5461,93 @@ box-shadow: var(--shadow-md);
   background: #1f2937;
 }
 
-/* === POP-UP РЕЗУЛЬТАТА (FIXED) === */
+/* === POP-UP РЕЗУЛЬТАТА (НОВЫЙ СТИЛЬ: БЕЛАЯ КАРТОЧКА) === */
 
 .sentence-builder-container {
     position: relative !important;
-    overflow: hidden !important; /* Возвращаем hidden, чтобы не ломало верстку */
+    /* Убираем overflow:hidden, чтобы тень поп-апа была видна красиво */
+    overflow: visible !important; 
 }
 
 .sentence-feedback {
-    /* Позиционирование */
+    /* Позиционирование по центру */
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
+    z-index: 100 !important;
     
     /* Размеры */
-    width: 280px !important;
+    width: 85% !important;
+    max-width: 320px !important;
     height: auto !important;
-    min-height: 200px !important; /* Чтобы не сплющивался */
+    min-height: 180px !important;
     
-    /* Внешний вид */
-    background: linear-gradient(135deg, #58cc02, #23a500) !important;
-    border: 4px solid #fff !important;
+    /* === СТИЛЬ КАРТОЧКИ === */
+    /* Фон берется из темы (Белый или Темный) */
+    background: var(--bg-primary) !important; 
+    
+    /* Большая красивая тень */
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3) !important;
     border-radius: 24px !important;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
-    z-index: 9999 !important;
     
-    /* Flexbox для центрирования */
-    display: none; /* JS переключит на flex */
+    /* Flexbox */
+    display: none; 
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 20px !important;
+    padding: 24px !important;
     text-align: center !important;
     
     /* Анимация */
     animation: popInFeedback 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Когда активен (JS добавляет display: flex) */
-.sentence-feedback.visible {
+/* Показ элемента (JS ставит style="display:block" или добавляет класс) */
+.sentence-feedback[style*="display: block"],
+.sentence-feedback.visible,
+.sentence-feedback.correct,
+.sentence-feedback.incorrect {
     display: flex !important;
 }
 
-/* Текст внутри */
+/* === ЗЕЛЕНАЯ РАМКА (УСПЕХ) === */
+.sentence-feedback.correct {
+    border: 4px solid var(--success-color) !important; 
+}
+
+/* === КРАСНАЯ РАМКА (ОШИБКА) === */
+.sentence-feedback.incorrect {
+    border: 4px solid var(--danger-color) !important;
+}
+
+/* === ТЕКСТ ВНУТРИ === */
 .sentence-feedback div {
-    color: white !important;
-    font-size: 1.5rem !important;
+    /* Цвет текста адаптивный (Черный/Белый) */
+    color: var(--text-primary) !important;
+    font-size: 1.3rem !important;
     font-weight: 900 !important;
-    margin-top: 10px !important;
-    line-height: 1.2 !important;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    margin-top: 12px !important;
+    line-height: 1.3 !important;
+    text-shadow: none !important; /* Без теней */
 }
 
 /* Картинка Боба */
 .feedback-bob {
-    width: 100px !important;
-    height: 100px !important;
+    width: 110px !important;
+    height: 110px !important;
     object-fit: contain !important;
-    filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)) !important;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)) !important;
     display: block !important;
-    margin: 0 auto !important;
+    margin: 0 auto 5px auto !important;
 }
 
 /* Анимация */
 @keyframes popInFeedback {
-    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-    80% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    80% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
     100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
-
 /* === ФИКС ЧЕРНОЙ ПОЛОСЫ СНИЗУ НА ПК === */
 @media (min-width: 768px) {
     
@@ -5556,3 +5573,4 @@ box-shadow: var(--shadow-md);
         border-bottom: none !important;
     }
 }
+
