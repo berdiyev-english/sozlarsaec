@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <title>Bob's Bubbles - Шарики Боба</title>
+    <title>Bob's Bubbles</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         * {
@@ -1032,18 +1032,18 @@
             const rect = getCanvasRect();
             
             let angle = Math.atan2(targetY - startY, targetX - startX);
-            if (angle > -0.2) angle = -0.2;
-            if (angle < -Math.PI + 0.2) angle = -Math.PI + 0.2;
+            if (angle > -0.1) angle = -0.1;
+            if (angle < -Math.PI + 0.1) angle = -Math.PI + 0.1;
             
             let dx = Math.cos(angle);
             let dy = Math.sin(angle);
             
             let cx = startX;
             let cy = startY;
-            let distRemaining = 1500; 
+            let distRemaining = 1200; 
             
             // High precision raymarch
-            const step = RADIUS * 0.5; // Smaller steps for accuracy
+            const step = RADIUS * 0.8; // Slightly larger for perf, but accurate enough
             
             for(let i=0; i<400; i++) {
                 cx += dx * step;
