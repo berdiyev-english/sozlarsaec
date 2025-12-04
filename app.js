@@ -443,7 +443,6 @@ _handleStep2SubOptions(mainGoal) {
         html += this._renderWizardCard('BUSINESS', 'step2_sub', 'Бизнес', 'Finance, Management, Marketing');
         html += this._renderWizardCard('LEGAL', 'step2_sub', 'Юриспруденция', 'Law, Court, Crime');
     } else if (mainGoal === 'exam') {
-        // === ВОТ ТУТ МЫ КОНКРЕТИЗИРУЕМ ===
         html += this._renderWizardCard('OGE', 'step2_sub', 'ОГЭ (9 класс)', 'Уровень A2-B1');
         html += this._renderWizardCard('EGE', 'step2_sub', 'ЕГЭ (11 класс)', 'Уровень B1-B2');
         html += this._renderWizardCard('IELTS', 'step2_sub', 'IELTS / TOEFL', 'Academic English');
@@ -964,6 +963,10 @@ playCorrectSound() {
   // MP3 play that resolves when playback finishes (no overlap)
 playMp3Url(url) {
     if (this.muted) return Promise.resolve(false);
+    
+    if (this.audioCtx && this.audioCtx.state === 'suspended') {
+        this.audioCtx.resume().catch(()=>{});
+    }
 
     const p = new Promise((resolve, reject) => {
         try {
@@ -1561,38 +1564,39 @@ showUploadTab('single'); // по умолчанию
 }
 
     // Mode toggle buttons - ВАЖНО!
-    document.querySelectorAll('.mode-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const mode = e.currentTarget.getAttribute('data-mode');
-        if (!mode) return;
-        
-        this.currentMode = mode;
-        localStorage.setItem('currentMode', this.currentMode);
-        
-        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-        e.currentTarget.classList.add('active');
-        
-        const practiceToggle = document.querySelector('.practice-toggle');
-        if (practiceToggle) {
-          if (mode === 'trainer') {
-            practiceToggle.style.display = 'none';
-          } else {
-            practiceToggle.style.display = 'flex';
-            if (this.currentPractice === 'list') {
-              this.currentPractice = 'scheduled';
-              localStorage.setItem('currentPractice', 'scheduled');
-              document.querySelectorAll('.practice-btn').forEach(b => {
-                b.classList.toggle('active', b.getAttribute('data-practice') === 'scheduled');
-              });
-            }
-          }
-        }
-        
-        this.suppressAutoSpeakOnce = true;
-        this.renderLearningSection();
-      });
-    });
+
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const mode = e.currentTarget.getAttribute('data-mode');
+    if (!mode) return;
+    
+    // Сохраняем текущий режим
+    this.currentMode = mode;
+    localStorage.setItem('currentMode', this.currentMode);
+    
+    // == ВАЖНО: Не сбрасываем currentReviewIndex, чтобы остаться на том же слове ==
+    // Но удаляем lastFlashcardFrontWasRussian, чтобы сбросить состояние карточки
+    this.lastFlashcardFrontWasRussian = false; 
+
+    // Обновляем UI кнопок
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    e.currentTarget.classList.add('active');
+    
+    // Логика переключателя "Scheduled/Endless" (оставляем как было)
+    const practiceToggle = document.querySelector('.practice-toggle');
+    if (practiceToggle) {
+      if (mode === 'trainer') {
+        practiceToggle.style.display = 'none';
+      } else {
+        practiceToggle.style.display = 'flex';
+      }
+    }
+    
+    this.suppressAutoSpeakOnce = true;
+    this.renderLearningSection();
+  });
+});
 
     // Practice toggle buttons - ВАЖНО!
     document.querySelectorAll('.practice-btn').forEach(btn => {
@@ -1721,47 +1725,46 @@ maybeShowDailyMotivation(callback) {
 
   // Unlock audio on first user gesture (PWA fix)
 installAudioUnlocker() {
-    let unlocked = false;
     const unlock = async () => {
-        if (unlocked) return;
-        try {
-            // 1. Разблокировка Web Audio API
-            const AC = window.AudioContext || window.webkitAudioContext;
-            if (AC) {
-                if (!this.audioCtx) this.audioCtx = new AC();
-                if (this.audioCtx.state === 'suspended') await this.audioCtx.resume();
-                // Пустой буфер
-                const buffer = this.audioCtx.createBuffer(1, 1, 22050);
-                const source = this.audioCtx.createBufferSource();
-                source.buffer = buffer;
-                source.connect(this.audioCtx.destination);
-                source.start(0);
+        // 1. Разблокировка Web Audio API
+        if (this.audioCtx && this.audioCtx.state === 'suspended') {
+            try {
+                await this.audioCtx.resume();
+                console.log('AudioContext resumed via touch');
+            } catch (e) {
+                console.warn('AudioContext resume failed', e);
             }
-
-            // 2. Разблокировка HTML5 Audio (Наш синглтон)
-            if (this.globalPlayer) {
-                // Играем тишину через наш основной плеер
-                const originalSrc = this.globalPlayer.src;
-                this.globalPlayer.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
-                await this.globalPlayer.play();
-                this.globalPlayer.pause();
-                this.globalPlayer.currentTime = 0;
-                // Если там что-то было, не возвращаем src сразу, лучше пусть будет пустой до реального клика
-            }
-            
-            unlocked = true;
-        } catch (e) {
-            console.warn('Audio unlock partial success:', e);
+        } else if (!this.audioCtx) {
+             // Если контекста нет, создаем его
+             const AC = window.AudioContext || window.webkitAudioContext;
+             if (AC) this.audioCtx = new AC();
         }
 
-        if (unlocked) {
-            ['touchstart', 'touchend', 'click', 'pointerdown'].forEach(evt => 
+        // 2. Разблокировка HTML5 Audio (для длинных mp3)
+        if (this.globalPlayer) {
+            // Проигрываем микро-тишину, чтобы iOS "разрешил" этому тегу играть звуки
+            if (!this.globalPlayer.src || this.globalPlayer.src === window.location.href) {
+                 this.globalPlayer.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+            }
+            try {
+                await this.globalPlayer.play();
+                this.globalPlayer.pause();
+                // Не сбрасываем currentTime в 0, просто пауза
+            } catch(e) {}
+        }
+        
+        // Не удаляем слушатель сразу! На iOS иногда нужно несколько тапов.
+        // Удалим только если точно уверены, что все работает, или оставим "пассивным".
+        // Но для чистоты, удалим после успешного resume
+        if (this.audioCtx && this.audioCtx.state === 'running') {
+            ['touchstart', 'touchend', 'click'].forEach(evt => 
                 document.removeEventListener(evt, unlock, true)
             );
         }
     };
     
-    ['touchstart', 'touchend', 'click', 'pointerdown'].forEach(evt => 
+    // Вешаем на все виды взаимодействий
+    ['touchstart', 'touchend', 'click', 'keydown'].forEach(evt => 
         document.addEventListener(evt, unlock, true)
     );
 }
@@ -2432,8 +2435,8 @@ setTimeout(() => window.initBewordsTranslator(), 0);
             </button>
             <h3 style="margin:0; font-size:1.1rem;">Тренировка</h3>
         </div>
-        
-        <div class="grammar-content" style="padding-top:0;">
+       
+        <div class="grammar-content" style="padding-top: 20px;">
             <div class="sentence-builder-container" style="box-shadow:none; border:none; background:transparent; padding:0;">
               
               <div class="sentence-instruction" style="margin-bottom:1rem;">
@@ -4070,14 +4073,6 @@ renderFlashcards() {
     this._questionStart = Date.now();
     if (!container) return;
     
-    // === ДОБАВИТЬ ЭТО ===
-if (this.currentPractice === 'scheduled') {
-  const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
-  // Берем индекс из сессии, если он там есть
-  if (typeof session.currentIndex === 'number') {
-    this.currentReviewIndex = session.currentIndex;
-  }
-}
 // ====================
 
     const wordsToReview = this.getWordsToReview();
@@ -4255,15 +4250,7 @@ this.updateWordStats(word.word, correct, rt);
     const container = document.getElementById('learningWordsList');
     this._questionStart = Date.now();
     if (!container) return;
-    
-    // === ДОБАВИТЬ ЭТО ===
-if (this.currentPractice === 'scheduled') {
-  const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
-  // Берем индекс из сессии, если он там есть
-  if (typeof session.currentIndex === 'number') {
-    this.currentReviewIndex = session.currentIndex;
-  }
-}
+
 // ====================
 
     const wordsToReview = this.getWordsToReview();
@@ -5704,9 +5691,10 @@ attachPetHandlers() {
     gameContainer.style.cssText = 'background:var(--bg-primary);border-radius:16px;padding:20px;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);';
 
 
-  const bobImg = document.createElement('img');
-    bobImg.src = '/instruction.png'; // Картинка с указкой
-    bobImg.className = 'bob-helper-img'; // Класс из Шага 1
+    const bobImg = document.createElement('img');
+    bobImg.src = '/instruction.png'; 
+    // Явные стили, чтобы он точно встал куда надо
+    bobImg.style.cssText = 'position:absolute; top:-80px; right:-20px; width:100px; height:auto; z-index:10; filter:drop-shadow(0 5px 10px rgba(0,0,0,0.3)); pointer-events:none;';
     gameContainer.appendChild(bobImg);
 
     const closeBtn = document.createElement('button');
@@ -5992,7 +5980,9 @@ attachPetHandlers() {
     overlay.style.cssText = 'position:fixed;inset:0;z-index:1000001;background:rgba(0,0,0,0.95);display:flex;align-items:center;justify-content:center;padding:20px;';
 
     const quizBox = document.createElement('div');
-    quizBox.style.cssText = 'background:var(--bg-primary);border-radius:16px;padding:30px;max-width:520px;width:90%;box-shadow:var(--shadow-lg);';
+    // Важно: background задается через CSS для поддержки тем, тут только база
+    quizBox.className = 'quiz-box-overlay'; 
+    quizBox.style.cssText = 'background:var(--bg-primary);border-radius:16px;padding:30px;max-width:520px;width:90%;box-shadow:var(--shadow-lg);position:relative;';
 
     const title = document.createElement('h2');
     title.textContent = 'Время повторить слова!';
@@ -6007,10 +5997,12 @@ attachPetHandlers() {
     host.appendChild(overlay);
 
     let quizCorrect = 0;
+    
     const showQuestion = () => {
       const word = this.getRandomLearningWord();
       if (!word) {
-        quizContent.innerHTML = '<div style="text-align:center;color:var(--text-secondary);">Недостаточно слов</div>';
+        quizContent.innerHTML = '<div style="text-align:center;color:var(--text-secondary);">Недостаточно слов для игры. Добавьте слова в "Изучаю".</div>';
+        setTimeout(() => { overlay.remove(); }, 3000);
         return;
       }
       const direction = Math.random() < 0.5 ? 'EN_RU' : 'RU_EN';
@@ -6023,73 +6015,98 @@ attachPetHandlers() {
         <div style="text-align:center;margin-bottom:20px;">
           <div style="font-size:24px;font-weight:700;color:var(--text-primary);margin-bottom:12px;">
             ${questionText}
-            <span class="sound-actions" style="margin-left:8px;">
-              <button class="mini-btn" title="US" onclick="app.playWord('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'us')"><i class="fas fa-volume-up"></i></button>
-              <button class="mini-btn" title="UK" onclick="app.playWord('${this.safeAttr(word.word)}', ${word.forms ? JSON.stringify(word.forms).replace(/"/g, '&quot;') : 'null'}, 'uk')"><i class="fas fa-headphones"></i></button>
-            </span>
           </div>
-          <div style="font-size:14px;color:var(--text-secondary);margin-bottom:10px;">Выбрано правильных: ${quizCorrect}/4</div>
+          <div style="font-size:14px;color:var(--text-secondary);margin-bottom:10px;">Нужно правильных подряд: ${quizCorrect}/4</div>
           <div class="quiz-options" style="display:grid;gap:10px;">
             ${shuffled.map(opt => {
-              const isEnglishOpt = this.isEnglish(opt) && !this.isRussian(opt);
-              const baseForSound = opt.split('→')[0].trim();
-              const soundBtns = isEnglishOpt ? `
-                <span class="option-sound">
-                  <button class="mini-btn" title="US" onclick="event.stopPropagation(); app.playSingleWordMp3('${this.safeAttr(baseForSound)}', 'us')"><i class="fas fa-volume-up"></i></button>
-                  <button class="mini-btn" title="UK" onclick="event.stopPropagation(); app.playSingleWordMp3('${this.safeAttr(baseForSound)}', 'uk')"><i class="fas fa-headphones"></i></button>
-                </span>
-              ` : '';
-              return `<div class="quiz-option-gate" data-answer="${this.safeAttr(opt)}" style="padding:12px;border-radius:8px;border:2px solid var(--border-color);background:var(--bg-secondary);cursor:pointer;text-align:center;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;">
-                <span>${opt}</span>${soundBtns}
+              // Не добавляем сюда кнопки звука, чтобы не перегружать DOM и клики
+              return `<div class="quiz-option-gate" data-answer="${this.safeAttr(opt)}" style="padding:14px;border-radius:12px;border:2px solid var(--border-color);cursor:pointer;text-align:center;font-weight:700;">
+                ${opt}
               </div>`;
             }).join('')}
           </div>
         </div>
       `;
 
+      // Безопасная авто-озвучка с таймаутом
       if (direction === 'EN_RU' && this.shouldAutoPronounce(word)) {
         setTimeout(() => {
-          if (word.forms && word.forms.length) this.playFormsSequence(word.forms, 'us');
-          else if (this.isMultiWord(word.word)) this.playPhraseTTS(word.word, 'us');
-          else this.playSingleWordMp3(word.word, 'us');
+           this.playWord(word.word, word.forms, 'us', word.level).catch(()=>{});
         }, 150);
       }
 
-      quizContent.querySelectorAll('.quiz-option-gate').forEach(opt => {
-  opt.addEventListener('click', async () => {
-    const chosen = opt.getAttribute('data-answer');
-    const isCorrect = chosen === correct;
+      const optionBtns = quizContent.querySelectorAll('.quiz-option-gate');
+      optionBtns.forEach(opt => {
+        opt.addEventListener('click', async (e) => {
+            e.stopPropagation(); // Остановить всплытие
+            
+            // 1. Блокируем все кнопки мгновенно
+            optionBtns.forEach(btn => btn.style.pointerEvents = 'none');
 
-    // ... оформление правильного/неправильного варианта ...
+            const chosen = opt.getAttribute('data-answer');
+            const isCorrect = chosen === correct;
 
-    await this.waitForCurrentAudioToFinish();
+            // 2. Визуальная реакция
+            if (isCorrect) {
+                opt.classList.add('gate-correct');
+                // Звук успеха
+                this.playCorrectSound();
+            } else {
+                opt.classList.add('gate-wrong');
+                // Подсветка правильного
+                optionBtns.forEach(b => {
+                    if (b.getAttribute('data-answer') === correct) b.classList.add('gate-correct');
+                });
+                // Вибрация на телефоне (если поддерживается)
+                if (navigator.vibrate) navigator.vibrate(200);
+            }
 
-    if (direction === 'RU_EN' && this.shouldAutoPronounce(word)) {
-      // ... озвучка ...
-    } else {
-      await this.delay(600);
-    }
+            // 3. Ждем аудио (но не вечно!)
+            // Создаем промис-таймаут, чтобы если аудио зависнет, мы продолжили через 1 сек
+            const audioWait = this.waitForCurrentAudioToFinish();
+            const timeout = new Promise(r => setTimeout(r, 1000));
+            await Promise.race([audioWait, timeout]);
 
-    if (isCorrect) {
-      quizCorrect++;
-      this.recordDailyProgress();
+            // 4. Озвучка правильного ответа (если надо)
+            if (direction === 'RU_EN' && this.shouldAutoPronounce(word)) {
+                this.playWord(word.word, word.forms, 'us', word.level).catch(()=>{});
+                await this.delay(800); // Даем время послушать
+            } else {
+                await this.delay(500);
+            }
 
-      if (quizCorrect >= 4) {
-        await this.delay(300);
-        overlay.remove();
-        this.showNotification('Отлично! Продолжайте играть!', 'success');
-        this.startGameQuizCycle(containerId); // ← ВАЖНО: запускаем новый цикл
-      } else {
-        showQuestion();
-      }
-    } else {
-      showQuestion();
-    }
-  });
-});
+            // 5. Логика перехода
+            if (isCorrect) {
+                quizCorrect++;
+                // Обновляем прогресс (опционально)
+                this.updateWordStats(word.word, true);
+                
+                if (quizCorrect >= 4) {
+                    overlay.innerHTML = `
+                        <div style="text-align:center; color:white;">
+                            <i class="fas fa-check-circle" style="font-size:60px; color:#4ade80; margin-bottom:20px;"></i>
+                            <h2>Отлично!</h2>
+                            <p>Игра продолжается...</p>
+                        </div>
+                    `;
+                    await this.delay(1500);
+                    overlay.remove();
+                    this.startGameQuizCycle(containerId); // Запускаем таймер заново
+                } else {
+                    showQuestion();
+                }
+            } else {
+                // Если ошибка — сбрасываем счетчик или просто след вопрос
+                // quizCorrect = 0; // Можно раскомментировать для хардкора
+                this.updateWordStats(word.word, false);
+                showQuestion();
+            }
+        });
+      });
     };
+    
     showQuestion();
-  }
+}
       
   // =========
   // Utils
@@ -6779,27 +6796,35 @@ attachPetHandlers() {
     }, 600); // Задержка для плавности
   }
   
-    requestNotificationPermission() {
+requestNotificationPermission() {
     if (!('Notification' in window)) {
-        this.showNotification('Уведомления не поддерживаются', 'warning');
+        this.showNotification('Уведомления не поддерживаются вашим браузером', 'warning');
         return;
     }
     
-    // Запрашиваем права
+    // Проверка для iOS PWA: уведомления работают только если приложение добавлено на экран
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.navigator.standalone || (window.matchMedia('(display-mode: standalone)').matches);
+    
+    if (isIOS && !isStandalone) {
+         this.showNotification('На iPhone уведомления работают только если добавить приложение "На экран домой"', 'info');
+         return;
+    }
+
     Notification.requestPermission().then(permission => {
         if (permission === 'granted') {
             localStorage.setItem('notifications_disabled', 'false');
-            this.showNotification('Уведомления включены! ✅', 'success');
+            this.showNotification('Уведомления включены! Боб будет напоминать о словах.', 'success');
+            // Сразу пробуем отправить тестовое, чтобы убедиться (через 5 сек)
+            setTimeout(() => {
+                 if(document.hidden) new Notification('Bewords', { body: 'Проверка связи! 🚀' });
+            }, 5000);
             this.scheduleBobReminders();
         } else if (permission === 'denied') {
-            this.showNotification('Доступ запрещен. Включите в настройках телефона ⚙️', 'warning');
-        } else {
-            // Если просто закрыли окно
-            this.showNotification('Нужно разрешить доступ, чтобы Боб мог писать', 'info');
+            this.showNotification('Вы запретили уведомления. Включите их в настройках телефона.', 'warning');
         }
     });
 }
-
   scheduleBobReminders() {
     // Проверка раз в час
     setInterval(() => {
