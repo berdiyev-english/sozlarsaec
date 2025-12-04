@@ -434,6 +434,7 @@
         let currentBubble = null;
         let nextBubble = null; // Store object { colorIdx }
         let bullet = null;
+        let lastFiredColor = -1;
         let score = 0;
         let level = 1;
         let maxLevel = parseInt(localStorage.getItem('bobBubblesMaxLevel')) || 1;
@@ -547,13 +548,18 @@
             bubbles = [];
             particles = [];
             bullet = null;
+            lastFiredColor = -1;
             shotsFired = 0;
             
-            // Difficulty scaling
-            colorsInPlay = Math.min(3 + Math.floor((level - 1) / 2), COLORS.length);
-            shotsUntilRow = Math.max(8 - Math.floor(level / 2), 3);
+            // Difficulty scaling - OPTIMIZED FOR SPEED (EASIER)
+            // Limit max colors to 5 even at high levels for faster matching
+            colorsInPlay = Math.min(3 + Math.floor((level - 1) / 3), 5);
             
-            const startRows = Math.min(4 + Math.floor(level / 3), 9);
+            // Ceiling drops much slower now (gives time to clear without pressure)
+            shotsUntilRow = 15; 
+            
+            // Start with fewer rows so levels end faster
+            const startRows = Math.min(3 + Math.floor(level / 4), 7);
             
             // Fill grid
             for(let r=0; r<startRows; r++) {
@@ -573,6 +579,8 @@
             }
             
             // Setup Shooter
+            nextBubble = null; 
+            currentBubble = null;
             prepareNextShot();
             prepareNextShot(); // Call twice to fill current and next
             
@@ -582,88 +590,94 @@
             drawNextBubble();
         }
 
-        // SMART "CALCULATED" ALGORITHM v2
+        // SMART "CALCULATED" ALGORITHM v5 (STRICT MAX 2 REPEATS)
         function prepareNextShot() {
-            // 1. Analyze Board Deeply
-            const counts = {}; // Total count of each color
-            const bottomColors = new Set(); // Colors available at the very bottom (reachable)
+            const counts = {};
+            const onBoard = new Set();
+            const reachable = new Set();
             let totalBubbles = 0;
-            let lowestRow = -1;
             
-            // Scan grid to find bottom-most row
+            // 1. Scan Grid
+            let lowestRowIndex = -1;
             for(let r=0; r<bubbles.length; r++) {
-                if(bubbles[r] && bubbles[r].some(b => b)) {
-                    lowestRow = r;
-                    for(let c=0; c<bubbles[r].length; c++) {
-                        if(bubbles[r][c]) {
-                            const color = bubbles[r][c].colorIdx;
-                            counts[color] = (counts[color] || 0) + 1;
-                            totalBubbles++;
-                        }
+                if(!bubbles[r]) continue;
+                let hasBubbles = false;
+                for(let c=0; c<bubbles[r].length; c++) {
+                    if(bubbles[r][c]) {
+                        hasBubbles = true;
+                        const color = bubbles[r][c].colorIdx;
+                        counts[color] = (counts[color] || 0) + 1;
+                        onBoard.add(color);
+                        totalBubbles++;
                     }
                 }
+                if(hasBubbles) lowestRowIndex = r;
             }
 
-            // Identify reachable colors (Look at the bottom 3 rows with bubbles)
-            // This ensures we give you colors you can actually hit immediately.
-            if (lowestRow >= 0) {
-                for(let r=lowestRow; r>=Math.max(0, lowestRow-2); r--) {
-                    if(bubbles[r]) {
-                        bubbles[r].forEach(b => {
-                            if(b) bottomColors.add(b.colorIdx);
-                        });
-                    }
-                }
+            // 2. Identify Reachable
+            if (lowestRowIndex !== -1) {
+                 const startCheck = Math.max(0, lowestRowIndex - 3);
+                 for(let r=lowestRowIndex; r>=startCheck; r--) {
+                     if(bubbles[r]) {
+                         bubbles[r].forEach(b => {
+                             if(b) reachable.add(b.colorIdx);
+                         });
+                     }
+                 }
             }
 
+            const distinctArr = Array.from(onBoard);
+            const reachableArr = Array.from(reachable);
             let chosenColor;
-            const distinctColors = Object.keys(counts).map(Number);
-            
-            // --- DECISION LOGIC (Strict & Helpful) ---
 
-            if (totalBubbles === 0) {
-                 // Board empty
-                 chosenColor = Math.floor(Math.random() * colorsInPlay);
+            if (distinctArr.length === 0) {
+                chosenColor = Math.floor(Math.random() * colorsInPlay);
             } 
-            else if (totalBubbles < 20) {
-                // --- ENDGAME MODE (Strict Help) ---
-                // If fewer than 20 bubbles, ONLY give colors that exist.
-                // If a color has < 3 bubbles left, FORCE that color to help clear it.
-                
-                const nearlyGone = distinctColors.filter(c => counts[c] <= 3);
-                
-                if (nearlyGone.length > 0) {
-                    // Give the color that is nearly gone to finish it off
-                    chosenColor = nearlyGone[Math.floor(Math.random() * nearlyGone.length)];
-                } else {
-                    // Otherwise just give any existing color
-                    chosenColor = distinctColors[Math.floor(Math.random() * distinctColors.length)];
-                }
-            }
             else {
-                // --- NORMAL MODE ---
-                // 90% chance: Give a color from the BOTTOM rows (playable).
-                // 10% chance: Give any color on board (to prep for future).
-                const bottomArr = Array.from(bottomColors);
+                // --- Constraint Logic ---
+                let validOptions = distinctArr;
                 
-                if (bottomArr.length > 0 && Math.random() < 0.9) {
-                     chosenColor = bottomArr[Math.floor(Math.random() * bottomArr.length)];
-                } else if (distinctColors.length > 0) {
-                     chosenColor = distinctColors[Math.floor(Math.random() * distinctColors.length)];
-                } else {
-                     chosenColor = Math.floor(Math.random() * colorsInPlay);
+                // If we have more than 1 color choice, apply the "Max 2 Repeats" rule
+                if (distinctArr.length > 1) {
+                     // Check if last fired was X, current is X. If so, forbids X.
+                     if (lastFiredColor !== -1 && currentBubble && lastFiredColor === currentBubble.colorIdx) {
+                         validOptions = distinctArr.filter(c => c !== lastFiredColor);
+                     }
+                }
+                if (validOptions.length === 0) validOptions = distinctArr;
+
+                // --- Selection Logic ---
+                const isEndgame = (totalBubbles < 30 || distinctArr.length <= 2);
+                
+                if (isEndgame) {
+                    // Sort options by count (help clear low count colors)
+                    const sortedByNeed = validOptions.sort((a,b) => counts[a] - counts[b]);
+                    const bestOptions = sortedByNeed.filter(c => reachable.has(c));
+                    
+                    if (bestOptions.length > 0) {
+                        // Pick randomly from best options to prevent looping
+                        const range = Math.min(bestOptions.length, 2);
+                        chosenColor = bestOptions[Math.floor(Math.random() * range)];
+                    } else {
+                        const range = Math.min(sortedByNeed.length, 2);
+                        chosenColor = sortedByNeed[Math.floor(Math.random() * range)];
+                    }
+                } 
+                else {
+                    const reachableValid = validOptions.filter(c => reachable.has(c));
+                    if (reachableValid.length > 0) {
+                        if (Math.random() < 0.9) {
+                            chosenColor = reachableValid[Math.floor(Math.random() * reachableValid.length)];
+                        } else {
+                            chosenColor = validOptions[Math.floor(Math.random() * validOptions.length)];
+                        }
+                    } else {
+                        chosenColor = validOptions[Math.floor(Math.random() * validOptions.length)];
+                    }
                 }
             }
             
-            // Final Safety: Ensure we never give a color that doesn't exist if board is not empty
-            if (distinctColors.length > 0 && !distinctColors.includes(chosenColor)) {
-                 // If logic failed, fallback to a valid bottom color or any valid color
-                 const bottomArr = Array.from(bottomColors);
-                 if (bottomArr.length > 0) chosenColor = bottomArr[0];
-                 else chosenColor = distinctColors[0];
-            }
-
-            // Shift queue
+            // Queue Logic
             const rect = getCanvasRect();
             if (!currentBubble) {
                 currentBubble = {
@@ -734,6 +748,8 @@
                 draw: Bubble.prototype.draw,
                 scale: 1
             };
+            
+            lastFiredColor = bullet.colorIdx;
             
             prepareNextShot();
         }
@@ -1339,4 +1355,3 @@
     </script>
 </body>
 </html>
-
