@@ -1,5 +1,5 @@
 /* Bewords Service Worker - Offline Mode */
-const CACHE_NAME = 'bewords-cache-v7';
+const CACHE_NAME = 'bewords-cache-v8';
 
 // Список файлов, которые нужно сохранить СРАЗУ
 const STATIC_ASSETS = [
@@ -7,6 +7,8 @@ const STATIC_ASSETS = [
   '/index.html',
   '/style.css',  // Если есть внешний файл
   '/app.js',     // Твой основной скрипт (если он внешний)
+  '/grammar.js',
+  '/sentences-data.js',
   '/loading.gif',
   '/kitten.png',
   '/puppy.png',
