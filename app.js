@@ -6729,10 +6729,10 @@ document.addEventListener('click', autoAskNotify, { once: true });
       },
       // 4. ИИ Чат (если есть кнопка)
       {
-        el: '.nav-item[data-section="ai-chat"]', // <-- ПРОВЕРЬ СЕЛЕКТОР
-        text: 'Умный ИИ-собеседник. Потренируй диалог или попроси объяснить правило.',
+        el: '.nav-item[data-section="grammar"]', // <-- ПРОВЕРЬ СЕЛЕКТОР
+        text: 'Практикуй грамматику без ограничений',
         pos: 'top',
-        action: () => this.switchSection('ai-chat') // <-- ПРОВЕРЬ ID
+        action: () => this.switchSection('grammar') // <-- ПРОВЕРЬ ID
       },
       // 5. Переводчик
       {
@@ -7067,3 +7067,4 @@ document.addEventListener('DOMContentLoaded', () => {
   EnglishWordsApp.injectStylesOnce();
   window.app = new EnglishWordsApp();
 });
+
