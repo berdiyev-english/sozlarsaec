@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <title>Bob's Bubbles</title>
+    <title>Bob's Bubbles - Шарики Боба</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         * {
@@ -133,14 +133,17 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 15px 20px;
-            padding-right: 80px; /* Space for pause button */
+            height: 80px;
+            padding: 0 20px;
             display: flex;
-            justify-content: flex-start; /* Align left to avoid pause btn overlap */
-            gap: 20px;
+            justify-content: flex-start;
             align-items: center;
+            gap: 15px;
             pointer-events: none;
-            z-index: 10;
+            z-index: 15;
+            background: rgba(15, 12, 41, 0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
         }
 
         .hud-item {
@@ -151,8 +154,6 @@
             font-weight: bold;
             font-size: 1.1rem;
             border: 1px solid rgba(255,255,255,0.15);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -160,8 +161,8 @@
         
         #pauseBtn {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 18px;
+            right: 20px;
             width: 44px;
             height: 44px;
             background: rgba(255, 255, 255, 0.15);
@@ -175,7 +176,7 @@
             font-size: 1.2rem;
             cursor: pointer;
             pointer-events: auto;
-            z-index: 15;
+            z-index: 25;
             backdrop-filter: blur(5px);
             transition: all 0.2s;
         }
@@ -415,6 +416,7 @@
         let RADIUS = 0;
         let BUBBLE_DIA = 0;
         let ROW_HEIGHT = 0;
+        const TOP_OFFSET = 80; // Space for HUD
         
         const COLORS = [
             { start: '#ff6b8a', end: '#ee0979', glow: '#ee0979' },      // Pink
@@ -488,7 +490,7 @@
             const offsetX = isEven ? 0 : RADIUS;
             return {
                 x: c * BUBBLE_DIA + RADIUS + offsetX,
-                y: r * ROW_HEIGHT + RADIUS
+                y: r * ROW_HEIGHT + RADIUS + TOP_OFFSET
             };
         }
 
@@ -756,7 +758,7 @@
                 }
                 
                 // Ceiling
-                if (bullet.y < RADIUS) {
+                if (bullet.y < RADIUS + TOP_OFFSET) {
                     snapBubble();
                 } 
                 // Collision with bubbles
@@ -809,7 +811,7 @@
             let minDist = Infinity;
             
             // Check grid cells near the bullet impact
-            const approxR = Math.round(bullet.y / ROW_HEIGHT);
+            const approxR = Math.round((bullet.y - TOP_OFFSET) / ROW_HEIGHT);
             const approxC = Math.round(bullet.x / BUBBLE_DIA);
             
             const range = 2;
@@ -1065,8 +1067,8 @@
                 }
                 
                 // Ceiling
-                if (cy < RADIUS) {
-                    points.push({x: cx, y: RADIUS});
+                if (cy < RADIUS + TOP_OFFSET) {
+                    points.push({x: cx, y: RADIUS + TOP_OFFSET});
                     break;
                 }
                 
@@ -1222,17 +1224,20 @@
             gameState = 'levelup';
             playSound('win');
             
+            // Save Progress
+            localStorage.setItem('bobBubblesCurrentLevel', level + 1);
+
             toggleScreens('levelUp');
             document.getElementById('levelCompleteNum').textContent = level;
             document.getElementById('levelScore').textContent = score;
             
-            // Stars Logic
+            // Stars Logic - Always 3 Stars
             const stars = [document.getElementById('star1'), document.getElementById('star2'), document.getElementById('star3')];
             stars.forEach(s => s.classList.remove('active'));
             
             setTimeout(() => stars[0].classList.add('active'), 300);
-            if (score > level * 500) setTimeout(() => stars[1].classList.add('active'), 800);
-            if (score > level * 1000) setTimeout(() => stars[2].classList.add('active'), 1300);
+            setTimeout(() => stars[1].classList.add('active'), 600);
+            setTimeout(() => stars[2].classList.add('active'), 900);
         }
 
         function gameOver() {
@@ -1286,9 +1291,15 @@
         // --- Buttons ---
         document.getElementById('startBtn').addEventListener('click', () => {
             initAudio();
-            initLevel(1);
+            // Load saved level
+            const savedLevel = parseInt(localStorage.getItem('bobBubblesCurrentLevel')) || 1;
+            initLevel(savedLevel);
             score = 0; scoreVal.textContent = 0;
         });
+
+        // Update start button text
+        const savedLvl = parseInt(localStorage.getItem('bobBubblesCurrentLevel')) || 1;
+        if(savedLvl > 1) document.getElementById('startBtn').textContent = `▶ УРОВЕНЬ ${savedLvl}`;
         
         document.getElementById('pauseBtn').addEventListener('click', () => {
             gameState = 'paused';
@@ -1311,7 +1322,7 @@
         
         document.getElementById('restartBtn').addEventListener('click', () => {
              score = 0; scoreVal.textContent = 0;
-             initLevel(1);
+             initLevel(level); // Restart current level
         });
         
         const toMenu = () => {
