@@ -6089,11 +6089,13 @@ attachPetHandlers() {
 
       const optionBtns = quizContent.querySelectorAll('.quiz-option-gate');
       optionBtns.forEach(opt => {
-        opt.addEventListener('click', async (e) => {
-            e.stopPropagation(); // Остановить всплытие
+                opt.addEventListener('click', async (e) => {
+            e.stopPropagation();
             
             // 1. Блокируем все кнопки мгновенно
-            optionBtns.forEach(btn => btn.style.pointerEvents = 'none');
+            // Используем quizContent, так как он доступен в этой области видимости
+            const allOpts = quizContent.querySelectorAll('.quiz-option-gate');
+            allOpts.forEach(btn => btn.style.pointerEvents = 'none');
 
             const chosen = opt.getAttribute('data-answer');
             const isCorrect = chosen === correct;
@@ -6101,55 +6103,57 @@ attachPetHandlers() {
             // 2. Визуальная реакция
             if (isCorrect) {
                 opt.classList.add('gate-correct');
-                // Звук успеха
                 this.playCorrectSound();
             } else {
                 opt.classList.add('gate-wrong');
                 // Подсветка правильного
-                optionBtns.forEach(b => {
+                allOpts.forEach(b => {
                     if (b.getAttribute('data-answer') === correct) b.classList.add('gate-correct');
                 });
-                // Вибрация на телефоне (если поддерживается)
-                if (navigator.vibrate) navigator.vibrate(200);
             }
 
-            // 3. Ждем аудио (но не вечно!)
-            // Создаем промис-таймаут, чтобы если аудио зависнет, мы продолжили через 1 сек
-            const audioWait = this.waitForCurrentAudioToFinish();
-            const timeout = new Promise(r => setTimeout(r, 1000));
-            await Promise.race([audioWait, timeout]);
+            // 3. Ждем завершения предыдущих звуков
+            await this.waitForCurrentAudioToFinish();
 
-            // 4. Озвучка правильного ответа (если надо)
+            // 4. ОЗВУЧКА (С фиксом для фраз)
             if (direction === 'RU_EN' && this.shouldAutoPronounce(word)) {
-                this.playWord(word.word, word.forms, 'us', word.level).catch(()=>{});
-                await this.delay(800); // Даем время послушать
+                await this.delay(300); // Пауза перед стартом
+                
+                // Озвучиваем и ждем завершения (await важен!)
+                await this.playWord(word.word, word.forms, 'us', word.level).catch(()=>{});
+                
+                // ФИКС: Если это фраза (есть пробел), даем еще 0.8 сек тишины
+                if (word.word.trim().includes(' ')) {
+                    await this.delay(800); 
+                }
             } else {
-                await this.delay(500);
+                // Если без озвучки — просто ждем, чтобы человек осознал ответ
+                await this.delay(1000);
             }
 
             // 5. Логика перехода
             if (isCorrect) {
                 quizCorrect++;
-                // Обновляем прогресс (опционально)
                 this.updateWordStats(word.word, true);
                 
                 if (quizCorrect >= 4) {
-                    overlay.innerHTML = `
-                        <div style="text-align:center; color:white;">
-                            <i class="fas fa-check-circle" style="font-size:60px; color:#4ade80; margin-bottom:20px;"></i>
-                            <h2>Отлично!</h2>
-                            <p>Игра продолжается...</p>
+                    // === ВАЖНО: quizContent, а не overlay. Иначе будет белое на белом ===
+                    quizContent.innerHTML = `
+                        <div style="text-align:center; padding:30px 10px;">
+                            <i class="fas fa-check-circle" style="font-size:60px; color:#4ade80; margin-bottom:20px; display:block;"></i>
+                            <h2 style="margin-bottom:10px; font-weight:900; color:var(--text-primary);">Отлично!</h2>
+                            <p style="color:var(--text-secondary); font-size:1.1rem;">Продолжайте играть...</p>
                         </div>
                     `;
+                    
                     await this.delay(1500);
                     overlay.remove();
-                    this.startGameQuizCycle(containerId); // Запускаем таймер заново
+                    this.startGameQuizCycle(containerId); 
                 } else {
                     showQuestion();
                 }
             } else {
-                // Если ошибка — сбрасываем счетчик или просто след вопрос
-                // quizCorrect = 0; // Можно раскомментировать для хардкора
+                // Ошибка
                 this.updateWordStats(word.word, false);
                 showQuestion();
             }
@@ -6730,7 +6734,7 @@ document.addEventListener('click', autoAskNotify, { once: true });
       // 4. ИИ Чат (если есть кнопка)
       {
         el: '.nav-item[data-section="grammar"]', // <-- ПРОВЕРЬ СЕЛЕКТОР
-        text: 'Практикуй грамматику без ограничений',
+        text: 'Практикуйте грамматику без ограничений',
         pos: 'top',
         action: () => this.switchSection('grammar') // <-- ПРОВЕРЬ ID
       },
@@ -7061,10 +7065,20 @@ static injectStylesOnce() {
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
-  const savedTheme = localStorage.getItem('theme') || 'light';
+  // 1. Проверяем сохраненную настройку
+  let savedTheme = localStorage.getItem('theme');
+
+  // 2. Если настройки нет — проверяем систему (Телефона)
+  if (!savedTheme) {
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      savedTheme = systemDark ? 'dark' : 'light';
+      // Сохраняем, чтобы не прыгало потом
+      localStorage.setItem('theme', savedTheme);
+  }
+
+  // 3. Применяем
   document.documentElement.setAttribute('data-theme', savedTheme);
 
   EnglishWordsApp.injectStylesOnce();
   window.app = new EnglishWordsApp();
 });
-
