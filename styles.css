@@ -5575,130 +5575,116 @@ box-shadow: var(--shadow-md);
 }
 
 /* ==========================================================================
-   ЗИМНИЙ ВАЙБ: ULTIMATE EDITION 
-   =================================== */
+   ЗИМНИЙ ВАЙБ: ФИНАЛЬНЫЕ ИСПРАВЛЕНИЯ 
+   ========================================================================== */
 
-/* 1. СТИЛИ ИЗ INDEX.HTML (Баннер и кнопки) */
-.app-install-banner {
-    position: fixed; top: 0; left: 0; right: 0;
-    background: linear-gradient(135deg, #58CC02 0%, #89E219 100%);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15); z-index: 10000; padding: 10px 15px;
-    animation: slideDown 0.3s ease-out; display: none;
-}
-.app-install-banner.show { display: block; }
-@keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-.banner-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.banner-close {
-    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-    background: rgba(255,255,255,0.2); border: none; color: white; font-size: 24px;
-    width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; opacity: 0.9;
-}
-.banner-info { display: flex; align-items: center; gap: 12px; flex: 1; }
-.banner-icon { width: 45px; height: 45px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-.banner-text h4 { margin: 0; color: white; font-size: 15px; font-weight: 700; margin-bottom: 2px; }
-.banner-text p { margin: 0; color: white; font-size: 12px; opacity: 0.95; }
-.banner-install-btn {
-    background: white; color: #58CC02; padding: 7px 18px; border-radius: 10px;
-    text-decoration: none; font-weight: 700; font-size: 14px; white-space: nowrap; margin-right: 35px;
-}
-body.banner-shown { padding-top: 50px; }
-body.banner-shown .app-header { top: 50px; }
-@media (max-width: 480px) {
-    .app-install-banner { padding: 8px 10px; }
-    body.banner-shown { padding-top: 20px; }
-    body.banner-shown .app-header { top: 20px; }
-}
-@media (min-width: 1024px) { .app-install-banner { display: none !important; } }
-
-.action-text-btn {
-    border: 1px solid var(--border-color); background: var(--bg-secondary);
-    padding: 6px 10px; border-radius: 8px; font-weight: 600; cursor: pointer; color: var(--text-primary);
-}
-.action-text-btn.add { border-color: #10b981; color: #10b981; background: #ecfdf5; }
-.action-text-btn.remove { border-color: #ef4444; color: #ef4444; background: #fee2e2; }
-/* Фикс кнопок для темной темы */
-[data-theme="dark"] .action-text-btn.add { background: rgba(16, 185, 129, 0.1); }
-[data-theme="dark"] .action-text-btn.remove { background: rgba(239, 68, 68, 0.1); }
-
-.info-btn, .theme-toggle { display: none !important; }
-.settings-btn {
-    background: var(--bg-secondary); border: 1px solid var(--border-color);
-    border-radius: 12px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
-    cursor: pointer; color: var(--text-primary);
+/* 1. ПЕРЕКРАШИВАЕМ ИНТЕРФЕЙС В СИНИЙ (ЛЕДЯНОЙ) ЦВЕТ */
+:root {
+    /* Меняем главный зеленый на голубой (#0ea5e9) */
+    --primary-color: #0ea5e9 !important; 
+    --primary-dark: #0284c7 !important;
 }
 
-/* 2. ШАПКА СО СНЕГОМ И ГЛУБИНОЙ */
+/* 2. ЗИМНЯЯ ШАПКА + БЕЛЫЙ СНЕГ */
 .app-header {
-    position: sticky; top: 0;
-    /* Зимний ночной градиент для шапки (работает и в светлой и в темной теме хорошо) */
-    background: radial-gradient(circle at bottom, #1b6a9e 0%, #0c4a6e 100%);
-    border-bottom: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    overflow: visible !important; 
+    position: sticky;
+    top: 0;
     z-index: 1000;
+    /* Темно-синий фон (ночное небо), чтобы белый снег был виден */
+    background: radial-gradient(circle at 50% 100%, #1b6a9e 0%, #0f172a 100%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    overflow: hidden !important; /* Скрываем вылетающий снег */
 }
 
-/* Свисающие сугробы */
-.app-header::after {
-    content: ""; position: absolute; bottom: -15px; left: 0; width: 100%; height: 20px;
-    background: 
-        radial-gradient(10px 10px at 15px 0px, #ffffff 90%, transparent) repeat-x,
-        radial-gradient(12px 12px at 45px 0px, rgba(255,255,255,0.9) 90%, transparent) repeat-x,
-        radial-gradient(8px 12px at 75px -2px, rgba(255,255,255,0.95) 90%, transparent) repeat-x;
-    background-size: 90px 20px; z-index: 101; filter: drop-shadow(0 4px 2px rgba(0,0,0,0.1)); pointer-events: none;
-}
-/* В темной теме сугробы чуть темнее, чтобы не резало глаз */
-[data-theme="dark"] .app-header::after { opacity: 0.8; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.5)); }
-
-/* Падающий снег в шапке */
+/* Генерация снега */
 .app-header::before {
-    content: ""; position: absolute; top: -100px; left: 0; right: 0; bottom: 0; height: 300%; z-index: 1; pointer-events: none;
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: 0; right: 0; height: 300%;
+    z-index: 1; pointer-events: none;
+    /* Чисто белые снежинки */
     background-image: 
-        radial-gradient(2px 2px at 20% 30%, #fff, transparent), radial-gradient(2px 2px at 40% 70%, #fff, transparent),
-        radial-gradient(2px 2px at 60% 40%, #fff, transparent), radial-gradient(2px 2px at 80% 90%, #fff, transparent),
-        radial-gradient(3px 3px at 10% 10%, rgba(255,255,255,0.8), transparent), radial-gradient(3px 3px at 50% 50%, rgba(255,255,255,0.8), transparent),
-        radial-gradient(3px 3px at 90% 90%, rgba(255,255,255,0.8), transparent),
-        radial-gradient(4px 4px at 30% 20%, rgba(255,255,255,0.5), transparent), radial-gradient(5px 5px at 70% 80%, rgba(255,255,255,0.4), transparent);
+        radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(3px 3px at 60% 40%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(3px 3px at 80% 90%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(4px 4px at 50% 50%, rgba(255,255,255,0.6), transparent);
     background-size: 200px 200px, 300px 300px, 400px 400px;
-    animation: snowFallHeader 10s linear infinite;
+    animation: snowFallHeader 12s linear infinite;
 }
-@keyframes snowFallHeader { 0% { background-position: 0 0, 0 0, 0 0; } 100% { background-position: 0 200px, 0 300px, 0 400px; } }
-.header-content { position: relative; z-index: 10; }
-.app-title { text-shadow: 0 0 10px rgba(255,255,255,0.6); }
 
-/* 3. ЗИМНИЕ ХОВЕРЫ (С ФИКСОМ ДЛЯ ТЕМНОЙ ТЕМЫ) */
-@media (hover: hover) {
-    /* Светлая тема (Стандартный зимний ховер) */
-    .level-card:hover, .game-card:hover, .word-card:hover {
-        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
-        border-color: #7dd3fc !important;
-        box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.15), 0 0 10px rgba(186, 230, 253, 0.4) !important;
-        transform: translateY(-4px);
-    }
+@keyframes snowFallHeader {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100px); }
+}
 
-    /* === ВАЖНЫЙ ФИКС ДЛЯ ТЕМНОЙ ТЕМЫ === */
-    /* Используем темный зимний градиент, чтобы текст оставался читаемым */
-    [data-theme="dark"] .level-card:hover, 
-    [data-theme="dark"] .game-card:hover, 
-    [data-theme="dark"] .word-card:hover {
-        /* Темно-синяя ночь вместо белого снега */
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important; 
-        border-color: #38bdf8 !important; /* Ярко-голубая неоновая граница */
-        box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.15), 0 0 15px rgba(56, 189, 248, 0.1) !important;
-    }
+/* Белый текст заголовка */
+.app-title {
+    color: #ffffff !important;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    position: relative; z-index: 10;
+}
 
-    /* Принудительно красим текст в светлый при наведении в темной теме */
-    [data-theme="dark"] .level-card:hover h3,
-    [data-theme="dark"] .word-card:hover .word-text,
-    [data-theme="dark"] .game-card:hover h3 {
-        color: #f0f9ff !important;
-    }
-    
-    [data-theme="dark"] .level-card:hover p,
-    [data-theme="dark"] .word-card:hover .word-translation {
-        color: #cbd5e1 !important; /* Светло-серый для описания */
-    }
+/* Кнопки в шапке (полупрозрачные) */
+.settings-btn, .support-btn {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    color: #fff !important;
+    z-index: 10;
+}
+
+/* 3. МОБИЛЬНЫЙ ИНТЕРФЕЙС (УБИРАЕМ ЗЕЛЕНЫЙ) */
+
+/* Нижнее меню - активный пункт синий */
+.nav-item.active {
+    background: linear-gradient(135deg, #0ea5e9, #2563eb) !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4) !important;
+}
+
+/* Переключатели (Quiz, Cards) - синие */
+.mode-btn.active, 
+.practice-btn.active, 
+.upload-btn.active,
+.tr-lang-btn.active {
+    background: linear-gradient(135deg, #0ea5e9, #2563eb) !important;
+    color: white !important;
+    box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3) !important;
+}
+
+/* Кнопки (Добавить, Старт) - синие */
+.btn-primary,
+.add-word-btn,
+.sentence-check-btn,
+.add-btn {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
+    border-color: #0284c7 !important;
+}
+
+/* Убираем зеленый цвет при нажатии пальцем (Tap highlight) */
+* {
+    -webkit-tap-highlight-color: rgba(14, 165, 233, 0.1) !important;
+}
+
+/* Поля ввода - синяя обводка */
+input:focus, select:focus, textarea:focus {
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2) !important;
+    outline: none !important;
+}
+
+/* 4. ОБЩИЙ ФОН СТРАНИЦЫ (ЗИМНИЙ) */
+body {
+    /* Легкий голубой лед вместо зеленого */
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%) !important;
+    overflow-x: hidden; /* Убираем горизонтальную прокрутку */
+}
+
+/* Темная тема - Ночь */
+[data-theme="dark"] body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
 }
 
 /* ==========================================================================
