@@ -5575,36 +5575,30 @@ box-shadow: var(--shadow-md);
 }
 
 /* ==========================================================================
-   ЗИМНИЙ ВАЙБ: ФИНАЛЬНАЯ ВЕРСИЯ (СИНИЙ + СНЕГ + ФИКС ПК)
+   ЗИМНИЙ ВАЙБ: ULTIMATE (СЕРДЦЕ + СНЕЖИНКА + ФИКСЫ)
    ========================================================================== */
 
-/* 1. ПЕРЕКРАШИВАЕМ ИНТЕРФЕЙС В СИНИЙ (ЛЕДЯНОЙ) ЦВЕТ */
+/* 1. ПЕРЕКРАШИВАЕМ ГЛАВНЫЙ ЦВЕТ В СИНИЙ */
 :root {
-    /* Меняем главный зеленый на голубой (#0ea5e9) */
     --primary-color: #0ea5e9 !important; 
     --primary-dark: #0284c7 !important;
 }
 
 /* 2. ЗИМНЯЯ ШАПКА + БЕЛЫЙ СНЕГ */
 .app-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    /* Темно-синий фон (ночное небо) */
+    position: sticky; top: 0; z-index: 1000;
+    /* Ночное небо */
     background: radial-gradient(circle at 50% 100%, #1b6a9e 0%, #0f172a 100%) !important;
-    /* Используем border вместо shadow, чтобы overflow:hidden не обрезал тень */
     border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
     box-shadow: none !important; 
-    overflow: hidden !important; /* Скрываем вылетающий снег */
+    overflow: hidden !important; 
 }
 
 /* Генерация снега */
 .app-header::before {
-    content: "";
-    position: absolute;
+    content: ""; position: absolute;
     top: -100%; left: 0; right: 0; height: 300%;
     z-index: 1; pointer-events: none;
-    /* Чисто белые снежинки */
     background-image: 
         radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.9), transparent),
         radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.9), transparent),
@@ -5614,28 +5608,48 @@ box-shadow: var(--shadow-md);
     background-size: 200px 200px, 300px 300px, 400px 400px;
     animation: snowFallHeader 12s linear infinite;
 }
+@keyframes snowFallHeader { 0% { transform: translateY(0); } 100% { transform: translateY(100px); } }
 
-@keyframes snowFallHeader {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(100px); }
-}
-
-/* Белый текст заголовка */
+/* 3. НАЗВАНИЕ + МАГИЧЕСКАЯ СНЕЖИНКА ❄️ */
 .app-title {
     color: #ffffff !important;
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
     position: relative; z-index: 10;
+    display: flex; align-items: center; gap: 8px; /* Выравнивание */
 }
 
-/* Кнопки в шапке (полупрозрачные) */
+/* Добавляем снежинку через CSS */
+.app-title::after {
+    content: "\f2dc"; /* Код иконки снежинки FontAwesome */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 0.9em;
+    color: #7dd3fc; /* Ледяной голубой цвет */
+    text-shadow: 0 0 15px rgba(125, 211, 252, 0.9); /* Свечение */
+    animation: magicSpin 8s linear infinite; /* Медленное вращение */
+}
+
+@keyframes magicSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 4. КНОПКИ В ШАПКЕ + КРАСНОЕ СЕРДЦЕ ❤️ */
 .settings-btn, .support-btn {
     background: rgba(255, 255, 255, 0.15) !important;
     border-color: rgba(255, 255, 255, 0.3) !important;
-    color: #fff !important;
+    color: #fff !important; /* Шестеренка белая */
     z-index: 10;
 }
 
-/* 3. МОБИЛЬНЫЙ ИНТЕРФЕЙС (СИНИЙ ВМЕСТО ЗЕЛЕНОГО) */
+/* Делаем сердце внутри кнопки красным */
+.support-btn i {
+    color: #ff4b4b !important; /* Ярко-красный */
+    filter: drop-shadow(0 0 8px rgba(255, 75, 75, 0.8)); /* Красное свечение */
+    transform: scale(1.1);
+}
+
+/* 5. МОБИЛЬНЫЙ ИНТЕРФЕЙС (СИНИЙ) */
 .nav-item.active {
     background: linear-gradient(135deg, #0ea5e9, #2563eb) !important;
     border-color: #2563eb !important;
@@ -5645,7 +5659,6 @@ box-shadow: var(--shadow-md);
 .mode-btn.active, .practice-btn.active, .upload-btn.active, .tr-lang-btn.active {
     background: linear-gradient(135deg, #0ea5e9, #2563eb) !important;
     color: white !important;
-    box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3) !important;
 }
 
 .btn-primary, .add-word-btn, .sentence-check-btn, .add-btn {
@@ -5661,34 +5674,19 @@ input:focus, select:focus, textarea:focus {
     outline: none !important;
 }
 
-/* 4. ОБЩИЙ ФОН СТРАНИЦЫ (ЗИМНИЙ) */
-body {
-    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%) !important;
-    overflow-x: hidden;
-}
-[data-theme="dark"] body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
-}
+/* 6. ФОНЫ */
+body { background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%) !important; overflow-x: hidden; }
+[data-theme="dark"] body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important; }
 
-/* 5. ИСПРАВЛЕНИЕ ДЛЯ ПК (Чтобы шапка не обрезалась и была скругленной) */
+/* 7. ФИКС ДЛЯ ПК (СКРУГЛЕНИЕ ШАПКИ) */
 @media (min-width: 768px) {
     .app-header {
-        /* Возвращаем скругление углов сверху, чтобы вписывалась в контейнер */
         border-radius: 24px 24px 0 0 !important;
-        /* Увеличиваем высоту, чтобы контент не резался */
         min-height: 80px !important;
-        display: flex;
-        align-items: center;
+        display: flex; align-items: center;
     }
-    
-    .header-content {
-        width: 100%;
-    }
-    
-    /* Добавляем тень контейнеру, а не шапке, чтобы не обрезалась */
-    .app-container {
-        border: 1px solid rgba(255,255,255,0.2);
-    }
+    .header-content { width: 100%; }
+    .app-container { border: 1px solid rgba(255,255,255,0.2); }
 }
 
 /* ==========================================================================
