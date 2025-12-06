@@ -1932,7 +1932,7 @@ toggleTheme() {
             Система учитывает не только правильность, но и <strong>скорость вашего ответа</strong>.
           </p>
           <ul style="margin: 10px 0 10px 20px; color:var(--text-secondary); font-size:0.95rem;">
-             <li><strong>Микро-сессии:</strong> Слова подаются пачками по 10-15 штук, чтобы не перегружать когнитивный ресурс (Закон Миллера).</li>
+             <li><strong>Микро-сессии:</strong> Слова подаются пачками по 10 штук, чтобы не перегружать когнитивный ресурс (Закон Миллера).</li>
              <li><strong>Круговая тренировка:</strong> Слово не уйдет, пока вы не ответите правильно <strong>2 раза подряд</strong> (или 3, если ошиблись).</li>
              <li><strong>Долгосрочная память:</strong> Если вы ответили мгновенно — слово вернется через неделю. Если думали долго — завтра.</li>
           </ul>
@@ -1980,6 +1980,19 @@ toggleTheme() {
     }
   });
   document.body.appendChild(overlay);
+}
+
+showStudyNowWords() {
+    // Переключаем режим на "Заучивание"
+    this.currentPractice = 'scheduled';
+    localStorage.setItem('currentPractice', 'scheduled');
+    // Идем в обучение
+    this.switchSection('learning');
+}
+
+// 3. Метод для кнопки "Мои добавленные" (на всякий случай)
+showAddedWordsCategory() {
+    this.showCategoryWords('ADDED');
 }
 
 // =========
@@ -2335,36 +2348,31 @@ setTimeout(() => window.initBewordsTranslator(), 0);
 }
 }
 
-     startGrammarPractice(topicId) {
-    // 1. Находим контейнеры
+// === ЗАМЕНИТЬ startGrammarPractice ===
+
+// === ВСТАВИТЬ ВМЕСТО startGrammarPractice (ЧАСТЬ 1/3) ===
+
+startGrammarPractice(topicId) {
     const listContainer = document.getElementById('grammarList');
     const detailContainer = document.getElementById('grammarDetail');
     
     if (!detailContainer) return;
 
-    // === ВОТ ЭТО ИСПРАВЛЕНИЕ ===
-    // Скрываем список тем и показываем блок с тренажером
+    // Переключаем видимость ВНУТРИ раздела Грамматика
     if (listContainer) listContainer.classList.add('hidden');
     detailContainer.classList.remove('hidden');
-    // ============================
 
-    // 2. Устанавливаем тему
+    // Настраиваем тему
     this.sentenceBuilderState.filterTopic = topicId;
     
-    // Проверка на наличие предложений
     if (!window.sentencesByTopic || !window.sentencesByTopic[topicId]) {
-        // Если предложений нет - показываем уведомление, но не ломаем интерфейс
         this.showNotification('Для этой темы пока нет упражнений', 'warning');
-        
-        // Возвращаем пользователя назад в список или теорию
         if (listContainer) listContainer.classList.remove('hidden');
         detailContainer.classList.add('hidden');
         return;
     }
     
     const sentences = window.sentencesByTopic[topicId];
-
-    // Выбираем случайное предложение
     this.sentenceBuilderState.currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
     this.sentenceBuilderState.assembledWords = [];
     this.sentenceBuilderState.correctOrder = this.sentenceBuilderState.currentSentence.en.split(' ');
@@ -2372,10 +2380,13 @@ setTimeout(() => window.initBewordsTranslator(), 0);
     const state = this.sentenceBuilderState;
     const shuffledWords = [...state.correctOrder].sort(() => Math.random() - 0.5);
 
-    // 3. Рендерим Тренажер
+    // Исправление undefined (проверка уровня)
+    const levelBadge = state.currentSentence.level 
+        ? `<span class="sentence-level-badge level-${state.currentSentence.level}">${state.currentSentence.level}</span>` 
+        : '';
+
     detailContainer.innerHTML = `
         <div class="grammar-detail-header">
-            <!-- Кнопка назад возвращает к Теории этого же урока -->
             <button class="btn btn-secondary" onclick="window.grammar.renderLesson('${this.grammarManager.currentLevel}', '${topicId}')">
                 <i class="fas fa-arrow-left"></i> К теории
             </button>
@@ -2392,6 +2403,7 @@ setTimeout(() => window.initBewordsTranslator(), 0);
               
               <div class="russian-sentence-box">
                 <span class="russian-text">${state.currentSentence.ru}</span>
+                ${levelBadge}
               </div>
               
               <div class="sentence-answer-area" id="grammarAnswerArea">
@@ -2399,15 +2411,13 @@ setTimeout(() => window.initBewordsTranslator(), 0);
               </div>
               
               <div class="sentence-word-pool" id="grammarWordPool">
-                ${shuffledWords.map((word, index) => {
-                  return `
+                ${shuffledWords.map((word, index) => `
                     <button class="sentence-word" 
                             data-word="${this.safeAttr(word)}"
                             data-index="${index}">
                       ${word}
                     </button>
-                  `;
-                }).join('')}
+                `).join('')}
               </div>
               
               <button class="sentence-check-btn" id="grammarCheckBtn" disabled>Проверить</button>
@@ -2417,33 +2427,27 @@ setTimeout(() => window.initBewordsTranslator(), 0);
         </div>
     `;
 
-    // 4. Навешиваем обработчики
     this.attachGrammarTrainerEvents(detailContainer, topicId);
     
     window.scrollTo(0,0);
-  }
+}
 
 attachGrammarTrainerEvents(container, topicId) {
-    // Обработчик клика по словам
     const wordButtons = container.querySelectorAll('.sentence-word');
     wordButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             if (btn.disabled) return;
             const word = btn.getAttribute('data-word');
             const index = parseInt(btn.getAttribute('data-index'));
-            
-            // Логика выбора (копируем упрощенную логику из основного тренажера)
             this.handleGrammarWordSelect(word, index, container);
         });
     });
 
-    // Кнопка Проверить
     const checkBtn = container.querySelector('#grammarCheckBtn');
     if (checkBtn) {
         checkBtn.addEventListener('click', () => this.checkGrammarSentence(container, topicId));
     }
 
-    // Лампочка
     const lamp = container.querySelector('#grammarLampBtn');
     if (lamp) {
         lamp.addEventListener('click', () => this.showSentenceGrammarModal());
@@ -2454,7 +2458,6 @@ handleGrammarWordSelect(word, index, container) {
     const state = this.sentenceBuilderState;
     const wordKey = `${word}_${index}`;
     
-    // Проверяем порядок (как было)
     const nextPos = state.assembledWords.length;
     const expected = (state.correctOrder[nextPos] || '').toLowerCase().trim();
     const clicked = (word || '').toLowerCase().trim();
@@ -2468,10 +2471,8 @@ handleGrammarWordSelect(word, index, container) {
 
     this.playSingleWordMp3(word, 'us').catch(()=>{});
 
-    // Добавляем
     state.assembledWords.push(wordKey);
     
-    // Обновляем UI
     const area = container.querySelector('#grammarAssembledSentence');
     area.textContent = state.assembledWords.map(w => w.split('_')[0]).join(' ');
     
@@ -2481,13 +2482,9 @@ handleGrammarWordSelect(word, index, container) {
         btn.disabled = true;
     }
     
-    // === ИСПРАВЛЕНИЕ ===
-    // Активируем кнопку ТОЛЬКО если длина совпадает
     const checkBtn = container.querySelector('#grammarCheckBtn');
     if (state.assembledWords.length === state.correctOrder.length) {
         checkBtn.disabled = false;
-        
-        // Авто-проверка через 0.5 сек
         setTimeout(() => this.checkGrammarSentence(container, this.sentenceBuilderState.filterTopic), 500);
     } else {
         checkBtn.disabled = true;
@@ -2497,7 +2494,7 @@ handleGrammarWordSelect(word, index, container) {
 checkGrammarSentence(container, topicId) {
     const state = this.sentenceBuilderState;
     
-        if (state.assembledWords.length !== state.correctOrder.length) {
+    if (state.assembledWords.length !== state.correctOrder.length) {
         return;
     }
     
@@ -2506,37 +2503,22 @@ checkGrammarSentence(container, topicId) {
     state.score++; 
     this.incrementTrainerCounters({ correct: true });
 
-    // ДЕРЗКИЕ И ВЕСЕЛЫЕ КОМПЛИМЕНТЫ ОТ БОБА
     const compliments = [
-        "Гениально! 🌟",
-        "Красавчик! 😎",
-        "Ты машина! 🤖",
-        "Мозг — огонь! 🔥",
-        "Легче легкого! 🥱",
-        "Да ты профи! 🎓",
-        "Боб одобряет! 😺",
-        "В точку! 🎯",
-        "Не остановить! 🚀",
-        "Изи катка! 🎮",
-        "Ты это сделал! 🙌",
+        "Гениально! 🌟", "Красавчик! 😎", "Ты машина! 🤖",
+        "Мозг — огонь! 🔥", "Боб одобряет! 😺", "В точку! 🎯"
     ];
     
     const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
 
     feedback.className = 'sentence-feedback correct';
-    
-    // HTML с Бобом
     feedback.innerHTML = `
         <img src="/instruction.png" class="feedback-bob" alt="Bob">
         <div>${randomCompliment}</div>
     `;
-    
     feedback.style.display = 'block';
     
-    // ЗВУК ВКЛЮЧЕН (как ты просил)
     this.playCorrectSound(); 
 
-    // Пауза 2 сек, чтобы насладиться похвалой Боба
     setTimeout(() => {
         this.startGrammarPractice(topicId); 
     }, 2000);
@@ -2871,10 +2853,10 @@ renderSentenceBuilder() {
         <div class="grammar-lamp pulse" id="grammarLampBtn" title="Грамматическая подсказка">💡</div>
       </div>
       
-      <div class="russian-sentence-box">
-        <span class="russian-text">${state.currentSentence.ru}</span>
-        <span class="sentence-level-badge level-${state.currentSentence.level}">${state.currentSentence.level}</span>
-      </div>
+     <div class="russian-sentence-box">
+  <span class="russian-text">${state.currentSentence.ru}</span>
+  ${state.currentSentence.level ? `<span class="sentence-level-badge level-${state.currentSentence.level}">${state.currentSentence.level}</span>` : ''}
+</div>
       
       <div class="sentence-answer-area ${state.assembledWords.length > 0 ? 'has-content' : ''}" id="sentenceAnswerArea">
         <div class="assembled-sentence" id="assembledSentence">
@@ -4046,60 +4028,51 @@ switchPracticeMode(practice) {
   // =========
   // Flashcards / Quiz / List (unchanged core except autoplay rules)
   // =========
+// === ЗАМЕНИТЬ renderFlashcards (ИСПРАВЛЕННАЯ ВЕРСИЯ) ===
+
 renderFlashcards() {
     const container = document.getElementById('learningWordsList');
     this._questionStart = Date.now();
-    
     if (!container) return;
 
-    // === 1. ПОЛУЧАЕМ СЛОВО ДЛЯ ПОКАЗА ===
     let word = null;
     let wordsLeft = 0;
+    // ВЫНОСИМ session НАРУЖУ
+    let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
 
     if (this.currentPractice === 'endless') {
-        // СТАРАЯ ЛОГИКА ДЛЯ БЕСКОНЕЧНОГО РЕЖИМА
         const words = this.getWordsToReview();
         if (words.length === 0) {
-            container.innerHTML = `<div class="empty-state">Нет слов для повторения</div>`;
+            container.innerHTML = `<div class="empty-state">Нет слов</div>`;
             return;
         }
         word = words[this.currentReviewIndex % words.length];
-        wordsLeft = words.length; // В бесконечном режиме это просто общее кол-во
+        wordsLeft = words.length;
     } else {
-        // НОВАЯ ЛОГИКА (ОЧЕРЕДЬ) ДЛЯ РЕЖИМА ЗАУЧИВАНИЕ
-        let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
-        
-        // Если очереди нет, пробуем создать её (вызываем getWordsToReview)
+        // Тут мы обновляем session, если её не было
         if (!session.queue || session.queue.length === 0) {
             const newWords = this.getWordsToReview();
             if (newWords.length > 0) {
-                // Рекурсия: очередь создалась, запускаем рендер заново
-                this.renderFlashcards();
+                this.renderFlashcards(); // Рестарт
                 return;
             } else {
-                // Если слов нет вообще (или сессия закончена)
-                if (session.date) {
-                     this.renderSessionSummary();
-                } else {
-                     container.innerHTML = `<div class="empty-state">На сегодня слов нет!</div>`;
-                }
+                if (session.date) this.renderSessionSummary();
+                else container.innerHTML = `<div class="empty-state">Пусто</div>`;
                 return;
             }
         }
         
-        // Берем ПЕРВОЕ слово из очереди
         const queueItem = session.queue[0];
         word = this.learningWords.find(w => w.word === queueItem.word);
         wordsLeft = session.queue.length;
     }
-    // ==========================================
 
-    if (!word) return; // На всякий случай
+    if (!word) return;
 
     let displayWord = this.getEnglishDisplay(word);
     this.lastFlashcardFrontWasRussian = this.isRussian(displayWord);
 
-    // РИСУЕМ КАРТОЧКУ
+    // HTML
     container.innerHTML = `
       <div class="flashcard" data-testid="flashcard">
         <img src="/nophoto.jpg" alt="flashcard" class="flashcard-image" data-loading="true">
@@ -4107,9 +4080,7 @@ renderFlashcards() {
           <h3 class="flashcard-title">
             ${displayWord} ${this.getAccuracyBadgeHtml(word.word)}
             <span class="sound-actions">
-              <button class="mini-btn flashcard-sound-us" data-word="${this.safeAttr(word.word)}" title="US">
-                <i class="fas fa-volume-up"></i>
-              </button>
+              <button class="mini-btn flashcard-sound-us" data-word="${this.safeAttr(word.word)}"><i class="fas fa-volume-up"></i></button>
             </span>
           </h3>
           <p class="flashcard-subtitle">Нажмите, чтобы увидеть перевод</p>
@@ -4117,22 +4088,19 @@ renderFlashcards() {
             <div class="review-translation">${word.translation}</div>
           </div>
           <div class="card-actions">
-            <button class="btn btn-primary" id="showAnswerBtn">
-              <i class="fas fa-eye"></i> Показать ответ
-            </button>
+            <button class="btn btn-primary" id="showAnswerBtn"><i class="fas fa-eye"></i> Показать ответ</button>
           </div>
           <div class="answer-buttons hidden" id="answerButtons">
-            <button class="btn btn-danger" id="flashcardWrongBtn">
-              <i class="fas fa-times"></i> Не знал
-            </button>
-            <button class="btn btn-success" id="flashcardCorrectBtn">
-              <i class="fas fa-check"></i> Знал
-            </button>
+            <button class="btn btn-danger" id="flashcardWrongBtn"><i class="fas fa-times"></i> Не знал</button>
+            <button class="btn btn-success" id="flashcardCorrectBtn"><i class="fas fa-check"></i> Знал</button>
           </div>
         </div>
       </div>
       <div style="text-align:center;margin-top:15px;color:var(--text-secondary);">
-        ${this.currentPractice === 'endless' ? 'Бесконечный режим' : `Осталось слов в очереди: <strong>${wordsLeft}</strong>`}
+         ${this.currentPractice === 'endless' 
+           ? 'Бесконечный режим' 
+           : `Круг ${session.currentRound || 1}/3 • Осталось слов: <strong>${session.queue ? session.queue.length : wordsLeft}</strong>`
+         }
       </div>
     `;
     
@@ -4141,37 +4109,27 @@ renderFlashcards() {
       const img = container.querySelector('.flashcard-image');
       if (img) {
           img.src = url;
-          img.onerror = () => this.handleImageError(img); 
+          img.onerror = () => this.handleImageError(img);
           img.removeAttribute('data-loading');
           if (word.level === 'MEDICAL') img.classList.add('medical-image');
       }
     });
 
-    // Навешиваем обработчики (звук, кнопки)
+    // Обработчики
     setTimeout(() => {
       const soundUsBtn = container.querySelector('.flashcard-sound-us');
-      if (soundUsBtn) {
-        soundUsBtn.addEventListener('click', (e) => {
+      if (soundUsBtn) soundUsBtn.onclick = (e) => {
           e.stopPropagation();
           this.playWord(word.word, word.forms, 'us', word.level);
-        });
-      }
+      };
       
-      const showBtn = container.querySelector('#showAnswerBtn');
-      if (showBtn) showBtn.addEventListener('click', () => this.showFlashcardAnswer());
-      
-      const wrongBtn = container.querySelector('#flashcardWrongBtn');
-      if (wrongBtn) wrongBtn.addEventListener('click', () => this.answerFlashcard(false));
-      
-      const correctBtn = container.querySelector('#flashcardCorrectBtn');
-      if (correctBtn) correctBtn.addEventListener('click', () => this.answerFlashcard(true));
+      document.getElementById('showAnswerBtn').onclick = () => this.showFlashcardAnswer();
+      document.getElementById('flashcardWrongBtn').onclick = () => this.answerFlashcard(false);
+      document.getElementById('flashcardCorrectBtn').onclick = () => this.answerFlashcard(true);
     }, 0);
 
-    // Авто-произношение
     if (!this.lastFlashcardFrontWasRussian && !this.suppressAutoSpeakOnce && this.currentSection === 'learning' && this.shouldAutoPronounce(word)) {
-      setTimeout(() => {
-        this.playWord(word.word, word.forms, 'us', word.level);
-      }, 250);
+      setTimeout(() => this.playWord(word.word, word.forms, 'us', word.level), 250);
     }
     this.suppressAutoSpeakOnce = false;
 }
@@ -4207,86 +4165,84 @@ renderFlashcards() {
 async answerFlashcard(correct) {
     await this.waitForCurrentAudioToFinish();
 
-    // 1. Получаем текущую очередь
     let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
     if (!session.queue || session.queue.length === 0) {
-        // Если очередь пуста (каким-то чудом), перезагружаем
-        this.renderSessionSummary();
+        // Ситуация смены круга (редкая, но возможная)
+        this.handleRoundTransition(session);
         return;
     }
 
-    // Берем ПЕРВОЕ слово из очереди
-    const currentItem = session.queue[0]; 
-    const wordObj = this.learningWords.find(w => w.word === currentItem.word);
+    const currentItem = session.queue[0];
     
-    // 2. Считаем статистику (глобальную)
+    // Статистика (SM-2) - обновляем всегда
     const rt = this._questionStart ? (Date.now() - this._questionStart) : 0;
-    this.updateWordStats(currentItem.word, correct, rt); // Глобальный SRS работает как обычно
+    this.updateWordStats(currentItem.word, correct, rt);
+    this.recordDailyProgress();
 
-    // 3. ЛОГИКА КРУГОВОЙ ТРЕНИРОВКИ
+    // === ЛОГИКА 3 КРУГОВ ===
     if (correct) {
         currentItem.combo++;
         session.totalCorrectInSession++;
-        
-        // Если достигли цели (2 или 3 раза подряд)
-        if (currentItem.combo >= currentItem.target) {
-            // УДАЛЯЕМ слово из очереди (оно выучено на сегодня)
-            session.queue.shift(); 
-            this.showNotification(`Молодец! Осталось: ${session.queue.length}`, 'success');
+
+        // Сколько нужно побед подряд?
+        // Если есть штраф (была ошибка) -> 2 раза. Если нет -> 1 раз.
+        const target = currentItem.penalty ? 2 : 1;
+
+        if (currentItem.combo >= target) {
+            // УСПЕХ: Удаляем из текущего круга
+            session.queue.shift();
         } else {
-            // Если еще не достигли -> Перемещаем в КОНЕЦ очереди
+            // ЕЩЕ НЕ ВСЁ: Переносим в конец, нужно закрепить
             session.queue.shift();
             session.queue.push(currentItem);
+            this.showNotification('Правильно! Закрепим ещё раз.', 'info');
         }
     } else {
         // ОШИБКА
-        currentItem.combo = 0;      // Сброс комбо
-        currentItem.target = 3;     // Наказание: теперь нужно 3 раза подряд
+        currentItem.combo = 0;
+        currentItem.penalty = true; // Включаем режим "штрафа"
         
-        // Перемещаем в КОНЕЦ очереди (или чуть ближе, через 2-3 слова)
+        // Вставляем через 2 позиции (чтобы спросить скоро)
         session.queue.shift();
-        // Вставляем через 2 позиции (интервальное повторение внутри сессии)
         const insertIndex = Math.min(session.queue.length, 2);
         session.queue.splice(insertIndex, 0, currentItem);
         
-        this.showNotification('Ошибка! Теперь нужно 3 раза правильно', 'warning');
+        this.showNotification('Ошибка! Теперь ответь 2 раза подряд.', 'warning');
     }
 
-    // 4. Сохраняем состояние
     localStorage.setItem('currentSession', JSON.stringify(session));
 
-    // 5. Проверяем финиш
+    // ПРОВЕРКА: ЗАКОНЧИЛСЯ ЛИ КРУГ?
     if (session.queue.length === 0) {
-        this.renderSessionSummary();
+        this.handleRoundTransition(session);
     } else {
-        // Рендерим следующее слово (оно теперь первое в session.queue)
-        this.currentReviewIndex = 0; // Всегда берем нулевой элемент, так как мы сдвигаем массив
+        this.currentReviewIndex = 0;
         this.renderFlashcards();
     }
 }
 
-  renderQuiz() {
+  // === ЗАМЕНИТЬ renderQuiz ===
+
+renderQuiz() {
     if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
     const container = document.getElementById('learningWordsList');
     this._questionStart = Date.now();
-    
     if (!container) return;
 
-    // === 1. ПОЛУЧАЕМ СЛОВО ДЛЯ ПОКАЗА (ТОЧНО ТАК ЖЕ, КАК В FLASHCARDS) ===
     let word = null;
     let wordsLeft = 0;
+    // ВЫНОСИМ session НАРУЖУ
+    let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
 
     if (this.currentPractice === 'endless') {
         const words = this.getWordsToReview();
         if (words.length === 0) {
-            container.innerHTML = `<div class="empty-state">Нет слов для повторения</div>`;
+            container.innerHTML = `<div class="empty-state">Нет слов</div>`;
             return;
         }
         word = words[this.currentReviewIndex % words.length];
         wordsLeft = words.length;
     } else {
-        let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
-        
         if (!session.queue || session.queue.length === 0) {
             const newWords = this.getWordsToReview();
             if (newWords.length > 0) {
@@ -4294,7 +4250,7 @@ async answerFlashcard(correct) {
                 return;
             } else {
                 if (session.date) this.renderSessionSummary();
-                else container.innerHTML = `<div class="empty-state">На сегодня слов нет!</div>`;
+                else container.innerHTML = `<div class="empty-state">Пусто</div>`;
                 return;
             }
         }
@@ -4303,82 +4259,68 @@ async answerFlashcard(correct) {
         word = this.learningWords.find(w => w.word === queueItem.word);
         wordsLeft = session.queue.length;
     }
-    // ==========================================
 
     if (!word) return;
 
     const direction = Math.random() < 0.5 ? 'EN_RU' : 'RU_EN';
     const questionText = direction === 'EN_RU' ? this.getEnglishDisplay(word) : word.translation;
     const correctAnswer = direction === 'EN_RU' ? word.translation : this.getEnglishDisplay(word);
-
     const options = this.buildQuizOptions(word, direction);
     const shuffled = this.shuffle(options);
 
-    // РИСУЕМ КВИЗ
     container.innerHTML = `
       <div class="quiz-container" data-testid="quiz-container">
         <img src="/nophoto.jpg" alt="quiz" class="quiz-image" data-loading="true">
         <div class="quiz-question">
           ${questionText} ${this.getAccuracyBadgeHtml(word.word)}
           <span class="sound-actions" style="margin-left:8px;">
-            <button class="mini-btn quiz-sound-us" data-word="${this.safeAttr(word.word)}" title="US">
-              <i class="fas fa-volume-up"></i>
-            </button>
+            <button class="mini-btn quiz-sound-us"><i class="fas fa-volume-up"></i></button>
           </span>
         </div>
         <div class="quiz-sub">Выберите правильный перевод</div>
         <div class="quiz-options">
-          ${shuffled.map(opt => {
-            return `
+          ${shuffled.map(opt => `
               <div class="quiz-option" data-answer="${this.safeAttr(opt)}">
-                <div class="quiz-option-inner">
-                  <span>${opt}</span>
-                </div>
+                <div class="quiz-option-inner"><span>${opt}</span></div>
               </div>
-            `;
-          }).join('')}
+          `).join('')}
         </div>
         <div style="text-align:center;margin-top:15px;color:var(--text-secondary);">
-           ${this.currentPractice === 'endless' ? 'Бесконечный режим' : `Осталось слов в очереди: <strong>${wordsLeft}</strong>`}
+           ${this.currentPractice === 'endless' 
+             ? 'Бесконечный режим' 
+             : `Круг ${session.currentRound || 1}/3 • Осталось слов: <strong>${session.queue ? session.queue.length : wordsLeft}</strong>`
+           }
         </div>
       </div>
     `;
     
-    // Картинка
     this.getPrimaryImageUrl(word).then(url => {
       const img = container.querySelector('.quiz-image');
       if (img) {
           img.src = url;
-          img.onerror = () => this.handleImageError(img); 
+          img.onerror = () => this.handleImageError(img);
           img.removeAttribute('data-loading');
           if (word.level === 'MEDICAL') img.classList.add('medical-image');
       }
     });
 
-    // Обработчики
     setTimeout(() => {
       const soundUsBtn = container.querySelector('.quiz-sound-us');
-      if (soundUsBtn) {
-        soundUsBtn.addEventListener('click', (e) => {
+      if (soundUsBtn) soundUsBtn.onclick = (e) => {
           e.stopPropagation();
           this.playWord(word.word, word.forms, 'us', word.level);
-        });
-      }
+      };
       
       container.querySelectorAll('.quiz-option').forEach(opt => {
-        opt.addEventListener('click', () => {
+        opt.onclick = () => {
           const selected = opt.getAttribute('data-answer');
-          // Вызываем ОБНОВЛЕННЫЙ selectQuizOption
           this.selectQuizOption(selected, correctAnswer, word.word, direction);
-        });
+        };
       });
     }, 0);
 
-    // Авто-произношение
     if (direction === 'EN_RU' && !this.suppressAutoSpeakOnce && this.currentSection === 'learning' && this.shouldAutoPronounce(word)) {
-      setTimeout(() => {
-        this.playWord(word.word, word.forms, 'us', word.level);
-      }, 250);
+      setTimeout(() => this.playWord(word.word, word.forms, 'us', word.level), 250);
     }
     this.suppressAutoSpeakOnce = false;
 }
@@ -4428,8 +4370,7 @@ async answerFlashcard(correct) {
     return options.slice(0, 4);
   }
 
-  async selectQuizOption(selected, correct, wordToPlay, direction) {
-    // 1. Визуальная обработка ответа (красим кнопки)
+ async selectQuizOption(selected, correct, wordToPlay, direction) {
     const isCorrect = selected === correct;
     const options = document.querySelectorAll('.quiz-option');
     options.forEach(opt => {
@@ -4439,56 +4380,46 @@ async answerFlashcard(correct) {
       if (answer === correct && !isCorrect) { opt.classList.add('correct'); }
     });
 
-    // 2. Загружаем СЕССИЮ и ОЧЕРЕДЬ
     let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
     if (!session.queue || session.queue.length === 0) {
-        this.renderSessionSummary();
-        return;
+         this.handleRoundTransition(session);
+         return;
     }
-    
-    // Работаем с ПЕРВЫМ элементом очереди (текущее слово)
+
     const currentItem = session.queue[0];
 
-    // 3. Обновляем ГЛОБАЛЬНУЮ статистику (SM-2)
     const rt = this._questionStart ? (Date.now() - this._questionStart) : 0;
     this.updateWordStats(wordToPlay, isCorrect, rt);
     this.recordDailyProgress();
 
-    // 4. ЛОГИКА КРУГОВОЙ ТРЕНИРОВКИ (QUEUE LOGIC)
+    // === ЛОГИКА 3 КРУГОВ ===
     if (isCorrect) {
         currentItem.combo++;
         session.totalCorrectInSession = (session.totalCorrectInSession || 0) + 1;
-        
-        if (currentItem.combo >= currentItem.target) {
-            // УСПЕХ: Удаляем из очереди
+        const target = currentItem.penalty ? 2 : 1; // Если был штраф - 2 раза
+
+        if (currentItem.combo >= target) {
             session.queue.shift();
-            this.showNotification(`Молодец! Осталось: ${session.queue.length}`, 'success');
         } else {
-            // ЕЩЕ МАЛО: В конец очереди
             session.queue.shift();
             session.queue.push(currentItem);
+            this.showNotification('Верно! Нужно закрепить.', 'info');
         }
     } else {
-        // ОШИБКА: Сброс и наказание
         currentItem.combo = 0;
-        currentItem.target = 3; // Теперь нужно 3 раза подряд
-        
-        // Вставляем обратно через 2 позиции (чтобы скоро повторить)
+        currentItem.penalty = true; // Штраф
         session.queue.shift();
         const insertIndex = Math.min(session.queue.length, 2);
         session.queue.splice(insertIndex, 0, currentItem);
-        
-        this.showNotification('Ошибка! Теперь нужно 3 раза правильно', 'warning');
+        this.showNotification('Ошибка! Теперь ответь правильно на это слово 2 раза подряд.', 'warning');
     }
-    
-    // Сохраняем изменения в очереди
+
     localStorage.setItem('currentSession', JSON.stringify(session));
 
-    // 5. Аудио и задержка (UX)
+    // Аудио
     const wordObj = this.learningWords.find(w => w.word === wordToPlay);
     await this.waitForCurrentAudioToFinish();
-    await this.waitForCurrentAudioToFinish(); // на всякий случай
-
+    await this.waitForCurrentAudioToFinish();
     if (direction === 'RU_EN' && this.currentSection === 'learning' && this.shouldAutoPronounce(wordObj)) {
       await this.delay(200);
       if (wordObj) await this.playWord(wordObj.word, wordObj.forms, 'us', wordObj.level);
@@ -4497,18 +4428,70 @@ async answerFlashcard(correct) {
       await this.delay(600);
     }
 
-    // 6. ПРОВЕРКА ФИНИША
+    // Переход
     if (session.queue.length === 0) {
-        // Очередь пуста — победа!
-        this.renderSessionSummary();
+        this.handleRoundTransition(session);
     } else {
-        // Продолжаем (рендерим первый элемент новой очереди)
-        this.currentReviewIndex = 0; 
+        this.currentReviewIndex = 0;
         this.currentMode === 'quiz' ? this.renderQuiz() : this.renderFlashcards();
     }
 }
 
-// --- ЗАМЕНИТЬ renderWordsList ЦЕЛИКОМ ---
+// === ИСПРАВЛЕННЫЙ handleRoundTransition (Часть 3) ===
+
+handleRoundTransition(session) {
+    // 1. Проверка финиша (3 круга)
+    if (session.currentRound >= 3) {
+        this.renderSessionSummary();
+        return;
+    }
+
+    // 2. Следующий круг
+    session.currentRound++;
+    
+    // Перезаряжаем очередь
+    session.queue = session.originalWords.map(w => ({
+        word: w,
+        combo: 0,
+        penalty: false
+    }));
+    
+    localStorage.setItem('currentSession', JSON.stringify(session));
+    
+    // 3. Показываем заставку и ЗАПУСКАЕМ ПРАВИЛЬНЫЙ РЕЖИМ
+    this.showOverlayNotification(`Круг ${session.currentRound} из 3`, 'Поехали!', () => {
+        this.currentReviewIndex = 0;
+        
+        // === ВОТ ЗДЕСЬ БЫЛА ОШИБКА ===
+        if (this.currentMode === 'quiz') {
+            this.renderQuiz();
+        } else {
+            this.renderFlashcards();
+        }
+        // ==============================
+    });
+}
+
+showOverlayNotification(title, sub, callback) {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;animation:fadeIn 0.3s;';
+    overlay.innerHTML = `
+        <div style="font-size:3rem;margin-bottom:10px;animation:scaleUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">${title}</div>
+        <div style="font-size:1.5rem;opacity:0.9;">${sub}</div>
+    `;
+    document.body.appendChild(overlay);
+    
+    setTimeout(() => {
+        overlay.style.opacity = '0';
+        overlay.style.transition = 'opacity 0.3s';
+        setTimeout(() => {
+            overlay.remove();
+            if(callback) callback();
+        }, 300);
+    }, 1500);
+}
+
+
 renderWordsList() {
   const container = document.getElementById('learningWordsList');
   if (!container) return;
@@ -4962,7 +4945,7 @@ if ((this.learningWords || []).length > 500) {
   // =========
 
 getWordsToReview() {
-  // 1. Если режим "Бесконечный" - возвращаем всё
+  // 1. Бесконечный режим (без изменений)
   if (this.currentPractice === 'endless') {
     return this.learningWords.filter(w => !w.isLearned);
   }
@@ -4970,52 +4953,66 @@ getWordsToReview() {
   // 2. Проверяем АКТИВНУЮ сессию
   let session = JSON.parse(localStorage.getItem('currentSession') || 'null');
   
-  // Если сессия есть и в ней остались слова, которые еще не добиты (combo < target)
+  // Если сессия есть и она валидна (есть очередь)
   if (session && session.queue && session.queue.length > 0) {
-      // Возвращаем только те слова, которые еще в очереди
       const queueWords = session.queue.map(item => {
           const wObj = this.learningWords.find(w => w.word === item.word);
           return wObj ? { ...wObj, _sessionData: item } : null;
       }).filter(Boolean);
-      
       if (queueWords.length > 0) return queueWords;
   }
 
-  // 3. ГЕНЕРИРУЕМ НОВУЮ ПАЧКУ (Если старая кончилась)
+  // 3. СОЗДАЕМ НОВУЮ СЕССИЮ
   const now = Date.now();
+  const userConfig = JSON.parse(localStorage.getItem('userConfig') || '{}');
   
-  // (Тут старая логика отбора слов: dueWords + newWords)
-  // ... копируем логику фильтрации из прошлого ответа ...
-  // НО! Лимит теперь 10
-  
-  // Упрощенный пример сборки пула (вставь сюда свою логику фильтров):
+  // Логика отбора (просроченные + новые) - копируем как было
   const dueWords = this.learningWords.filter(w => !w.isLearned && this.wordStats[w.word]?.nextReview <= now);
-  let finalPool = dueWords.slice(0, 10); // МАКСИМУМ 10 СЛОВ
+  let finalPool = dueWords.slice(0, 10); // Лимит 10 слов
   
   if (finalPool.length < 10) {
-      // Добиваем новыми
-      const newOnes = this.learningWords.filter(w => !w.isLearned && (!this.wordStats[w.word] || this.wordStats[w.word].totalAnswers === 0)).slice(0, 10 - finalPool.length);
-      finalPool = [...finalPool, ...newOnes];
+      const dailyLimit = userConfig.dailyLimit || 15;
+      const addedToday = userConfig.newWordsAddedToday || 0;
+      const canAdd = Math.min(5, dailyLimit - addedToday); // Максимум 5 новых за раз
+      
+      if (canAdd > 0) {
+          const newOnes = this.learningWords
+            .filter(w => !w.isLearned && (!this.wordStats[w.word] || this.wordStats[w.word].totalAnswers === 0))
+            .sort((a, b) => (a.level || '').localeCompare(b.level || ''))
+            .slice(0, 10 - finalPool.length);
+          
+          finalPool = [...finalPool, ...newOnes];
+          
+          if (newOnes.length > 0) {
+              userConfig.newWordsAddedToday = addedToday + newOnes.length;
+              localStorage.setItem('userConfig', JSON.stringify(userConfig));
+          }
+      }
   }
 
   if (finalPool.length === 0) return [];
 
-  // 4. Инициализируем структуру "Круговой тренировки"
+  // === НОВАЯ СТРУКТУРА СЕССИИ ===
+  // Сохраняем исходные слова (строки), чтобы использовать их в Круге 2 и 3
+  const originalWords = finalPool.map(w => w.word);
+
+  // Очередь для Круга 1
   const queue = finalPool.map(w => ({
       word: w.word,
       combo: 0,
-      target: 2 // По умолчанию нужно 2 раза подряд правильно
+      penalty: false // Флаг "штрафа"
   }));
 
   session = {
       date: new Date().toDateString(),
+      originalWords: originalWords, // Запоминаем базу
       queue: queue,
+      currentRound: 1, // Круг 1 из 3
       totalCorrectInSession: 0
   };
   localStorage.setItem('currentSession', JSON.stringify(session));
 
-  // Возвращаем слова с прицепленными данными сессии
-  return finalPool.map(w => ({ ...w, _sessionData: { word: w.word, combo: 0, target: 2 } }));
+  return finalPool.map(w => ({ ...w, _sessionData: { word: w.word, combo: 0, penalty: false } }));
 }
 
 renderSessionSummary() {
@@ -6483,57 +6480,96 @@ showNotification(msg, type = 'info') {
   }
 
   // 2. ОТРИСОВКА МЕНЮ КАТЕГОРИЙ (БЕЗОПАСНАЯ ВЕРСИЯ)
-   renderLevelCategoriesMenu(level, config) {
+
+renderLevelCategoriesMenu(level, config) {
     const list = document.getElementById('wordsList');
     if (!list) return;
 
     let html = '<div class="category-menu-container">';
     
-    html += '<button class="show-all-btn" onclick="window.app.showLevelWords(\'' + level + '\', { type: \'all\' })">';
-    html += '<i class="fas fa-layer-group"></i> Показать все слова списка';
-    html += '</button>';
+    // Кнопка "Показать все"
+    html += `
+      <button class="show-all-btn btn-menu-action" data-type="all">
+          <i class="fas fa-layer-group"></i> Показать все слова списка
+      </button>
+    `;
     
-    html += '<div class="category-section-title">';
-    html += '<i class="fas fa-shapes"></i> Грамматика';
-    html += '</div>';
-    html += '<div class="grammar-grid">';
-    
-    for (let i = 0; i < config.grammar.length; i++) {
-        const g = config.grammar[i];
-        html += '<div class="grammar-cat-card" onclick="window.app.showLevelWords(\'' + level + '\', { type: \'grammar\', id: \'' + g.id + '\' })">';
-        html += '<div class="grammar-icon"><i class="fas ' + g.icon + '"></i></div>';
-        html += '<div class="grammar-name">' + g.name + '</div>';
+    // Грамматика
+    if (config.grammar && config.grammar.length > 0) {
+        html += `
+          <div class="category-section-title">
+             <i class="fas fa-shapes"></i> Грамматика
+          </div>
+          <div class="grammar-grid">
+        `;
+        
+        config.grammar.forEach(g => {
+            html += `
+              <div class="grammar-cat-card btn-menu-action" data-type="grammar" data-id="${g.id}">
+                  <div class="grammar-icon"><i class="fas ${g.icon}"></i></div>
+                  <div class="grammar-name">${g.name}</div>
+              </div>
+            `;
+        });
         html += '</div>';
     }
     
-    html += '</div>';
-    
-    html += '<div class="category-section-title" style="margin-top: 30px;">';
-    html += '<i class="fas fa-graduation-cap"></i> Тематические уроки';
-    html += '</div>';
-    html += '<div class="lessons-list">';
-    
-    for (let i = 0; i < config.topics.length; i++) {
-        const t = config.topics[i];
-        const lessonNum = i + 1;
-        html += '<div class="lesson-card" onclick="window.app.showLevelWords(\'' + level + '\', { type: \'topic\', id: \'' + t.id + '\' })">';
-        html += '<div class="lesson-number">' + lessonNum + '</div>';
-        html += '<div class="lesson-info">';
-        html += '<div class="lesson-label">Урок ' + lessonNum + '</div>';
-        html += '<div class="lesson-title">' + t.name + '</div>';
+    // Темы (Уроки)
+    if (config.topics && config.topics.length > 0) {
+        html += `
+          <div class="category-section-title" style="margin-top: 30px;">
+             <i class="fas fa-graduation-cap"></i> Тематические уроки
+          </div>
+          <div class="lessons-list">
+        `;
+        
+        config.topics.forEach((t, idx) => {
+            const lessonNum = idx + 1;
+            html += `
+              <div class="lesson-card btn-menu-action" data-type="topic" data-id="${t.id}">
+                  <div class="lesson-number">${lessonNum}</div>
+                  <div class="lesson-info">
+                      <div class="lesson-label">Урок ${lessonNum}</div>
+                      <div class="lesson-title">${t.name}</div>
+                  </div>
+                  <div class="lesson-icon"><i class="fas ${t.icon}"></i></div>
+              </div>
+            `;
+        });
         html += '</div>';
-        html += '<div class="lesson-icon"><i class="fas ' + t.icon + '"></i></div>';
-        html += '</div>';
+        
+        html += `
+          <div style="text-align: center; margin-top: 30px; color: var(--text-muted); font-size: 0.9rem;">
+             <p>Проходите уроки последовательно для лучшего результата!</p>
+          </div>
+        `;
     }
     
-    html += '</div>';
-    html += '<div style="text-align: center; margin-top: 30px; color: var(--text-muted); font-size: 0.9rem;">';
-    html += '<p>Проходите уроки последовательно для лучшего результата!</p>';
-    html += '</div>';
-    html += '</div>';
+    html += '</div>'; // Закрываем category-menu-container
     
     list.innerHTML = html;
-  }
+
+    // === ВЕШАЕМ ОБРАБОТЧИК (ИСПРАВЛЕННЫЙ) ===
+    if (this._menuHandler) list.removeEventListener('click', this._menuHandler);
+
+    this._menuHandler = (e) => {
+        const btn = e.target.closest('.btn-menu-action');
+        if (!btn) return;
+
+        const type = btn.getAttribute('data-type');
+        const id = btn.getAttribute('data-id');
+
+        // Если тип "all", передаем только тип
+        if (type === 'all') {
+            this.showLevelWords(level, { type: 'all' });
+        } else {
+            // Иначе передаем тип и ID
+            this.showLevelWords(level, { type, id });
+        }
+    };
+
+    list.addEventListener('click', this._menuHandler);
+}
 
   // =================================================
   // 3. РЕНДЕР СПИСКА СЛОВ (С ленивой загрузкой)
@@ -6599,75 +6635,78 @@ showNotification(msg, type = 'info') {
   // =================================================
   // 4. ГЛАВНАЯ ФУНКЦИЯ ПОКАЗА (Маршрутизатор Меню/Список)
   // =================================================
-   showLevelWords(level, filter = null) {
-    this.currentFilter = filter;
+
+showLevelWords(level, filter = null) {
     this.stopCurrentAudio();
+    
     this.currentLevel = level;
     this.currentCategory = null;
-    
-    const container = document.getElementById('wordsContainer');
+    this.currentFilter = filter;
+
+    const levelsSection = document.getElementById('levels');
+    const wordsContainer = document.getElementById('wordsContainer');
     const title = document.getElementById('currentLevelTitle');
     const wordsList = document.getElementById('wordsList');
 
-    if (typeof this.toggleLevelsIndexVisibility === 'function') {
-        this.toggleLevelsIndexVisibility(false);
+    if (levelsSection) levelsSection.classList.add('list-open');
+    if (wordsContainer) {
+        wordsContainer.classList.remove('hidden');
+        wordsContainer.style.display = 'block';
     }
-    if (container) container.classList.remove('hidden');
-    
-    // Проверяем конфиг
-    const config = this.getLevelCategoriesConfig();
-    const levelConfig = config[level];
 
-    // 1. ПОКАЗЫВАЕМ МЕНЮ КАТЕГОРИЙ (если нет фильтра) -> Тут Боб не нужен, меню легкое
-    if (levelConfig && !filter) {
+    const config = this.getLevelCategoriesConfig();
+    const levelConfig = config ? config[level] : null;
+
+    // === ИСПРАВЛЕННОЕ УСЛОВИЕ ===
+    // Показываем МЕНЮ только если НЕТ фильтра
+    // (Если filter.type === 'all', мы должны идти в ветку Б - показывать список)
+    if (levelConfig && (!filter || !filter.type)) {
         if (title) title.textContent = `Уровень ${level}`;
         const bulkBtn = document.getElementById('bulkToggleBtn');
-        if(bulkBtn) bulkBtn.style.display = 'none';
+        if (bulkBtn) bulkBtn.style.display = 'none';
 
         this.renderLevelCategoriesMenu(level, levelConfig);
         this.jumpToTopStrict();
         return;
     }
+    // ============================
 
-    // 2. ПОКАЗЫВАЕМ СПИСОК СЛОВ -> ТУТ НУЖЕН БОБ
-    const bulkBtn = document.getElementById('bulkToggleBtn');
-    if(bulkBtn) {
-        bulkBtn.style.display = 'inline-flex';
-        this.updateBulkToggleButton();
-    }
-
+    // ВЕТКА Б: СПИСОК СЛОВ
     let words = oxfordWordsDatabase[level] || [];
     
-    if (filter && filter.type !== 'all') {
-        if (filter.type === 'grammar') {
+    if (filter) {
+        if (filter.type === 'all') {
+            if (title) title.textContent = `Все слова ${level}`;
+        } else if (filter.type === 'grammar') {
             words = words.filter(w => w.grammar === filter.id);
             if (title) title.textContent = `${level} • Грамматика`;
         } else if (filter.type === 'topic') {
             words = words.filter(w => w.topic === filter.id);
-            const catName = levelConfig.topics.find(t => t.id === filter.id)?.name || 'Урок';
-            if (title) title.textContent = `${level} • ${catName}`;
+            const topicName = levelConfig?.topics?.find(t => t.id === filter.id)?.name || 'Урок';
+            if (title) title.textContent = `${level} • ${topicName}`;
         }
     } else {
-        if (title) title.textContent = `${level} - ${words.length} слов`;
+        if (title) title.textContent = `${level}`;
     }
-    
-    if (wordsList) {
-        // === ДОБАВЛЯЕМ БОБА ===
-        wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
-        this.showGlobalLoader('Кот Боб открывает список...', 800);
 
-        // Рендерим с небольшой задержкой, чтобы Боб успел появиться
-        requestAnimationFrame(() => {
+    const bulkBtn = document.getElementById('bulkToggleBtn');
+    if (bulkBtn) {
+        bulkBtn.style.display = 'inline-flex';
+        this.updateBulkToggleButton();
+    }
+
+    if (wordsList) {
+        wordsList.innerHTML = '<div style="text-align:center;padding:20px;color:#999;">Загрузка...</div>';
+        if (words.length > 100) this.showGlobalLoader('Кот Боб открывает список...', 600);
+        
+        setTimeout(() => {
              this.renderFilteredWordsList(words, level);
-             
-             // Скрываем Боба после рендера (внутри renderFilteredWordsList это может быть не сделано)
-             setTimeout(() => this.hideGlobalLoader(), 100);
-        });
-        // ======================
+             this.hideGlobalLoader();
+        }, 100);
     }
     
     this.jumpToTopStrict();
-  }
+}
 
   // =================================================
   // 5. КНОПКА НАЗАД (С улучшенной логикой)
