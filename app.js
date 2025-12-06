@@ -1986,102 +1986,9 @@ toggleTheme() {
 // Info (О приложении)
 // =========
 
-showInfoModal() { 
-  const modal = document.createElement('div'); 
-  modal.className = 'info-modal'; 
-  // Подняли z-index для надежности
-  modal.style.cssText = 'position:fixed;inset:0;z-index:9999999;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;'; 
-  
-  modal.innerHTML = `
-    <div class="info-modal-content" style="background:var(--bg-primary);border-radius:16px;padding:30px;max-width:800px;width:100%;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;position:relative;"> 
-      
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;"> 
-        <h2 style="margin:0;color:var(--text-primary);">О приложении</h2> 
-        <!-- Добавили класс close-action -->
-        <button class="info-close-btn close-action" style="background:transparent;border:none;font-size:24px;cursor:pointer;color:var(--text-secondary);width:40px;height:40px;display:flex;align-items:center;justify-content:center;"> 
-          <i class="fas fa-times"></i> 
-        </button> 
-      </div> 
-      
-      ${this.getAboutContentHtml()} 
-      
-      <div style="margin-top:20px;text-align:center;"> 
-        <!-- Добавили класс close-action -->
-        <button class="btn btn-secondary close-action">Закрыть</button> 
-      </div> 
-    </div>
-  `; 
-  
-  document.body.appendChild(modal); 
-
-  // === НОВЫЙ ЕДИНЫЙ ОБРАБОТЧИК ===
-  modal.addEventListener('click', (e) => {
-    // Закрываем, если клик по фону (modal) ИЛИ по кнопке закрытия (close-action)
-    if (e.target === modal || e.target.closest('.close-action')) {
-        modal.remove();
-    }
-  });
-}
-
-getAboutContentHtml() { 
-  return `
-    <div class="about-content"> 
-      <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;"> 
-        <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;"> 
-          <i class="fas fa-graduation-cap" style="color:white;"></i> 
-        </div> 
-        <h3 style="margin-bottom:8px;color:var(--text-primary);">Изучение по уровням</h3> 
-        <p style="color:var(--text-secondary);margin:0;">Структурированное изучение английских слов от начального до продвинутого уровня (A1–C2)</p> 
-      </div> 
-      <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;"> 
-        <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;"> 
-          <i class="fas fa-volume-up" style="color:white;"></i> 
-        </div> 
-        <h3 style="margin-bottom:8px;color:var(--text-primary);">Произношение</h3> 
-        <p style="color:var(--text-secondary);margin:0;">Прослушивание правильного произношения слов (британский и американский акценты)</p> 
-      </div> 
-      <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;"> 
-        <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;"> 
-          <i class="fas fa-gamepad" style="color:white;"></i> 
-        </div> 
-        <h3 style="margin-bottom:8px;color:var(--text-primary);">Учите английские слова играя в игры</h3> 
-        <p style="color:var(--text-secondary);margin:0;">Играйте в разные увлекательные игры! Спустя время у вас будет появляться quiz, на который нужно ответить правильно, чтобы продолжить играть.</p> 
-      </div> 
-      <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;"> 
-        <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;"> 
-          <i class="fas fa-laugh-beam" style="color:white;"></i> 
-        </div> 
-        <h3 style="margin-bottom:8px;color:var(--text-primary);">Позитивная атмосфера обучения</h3> 
-        <p style="color:var(--text-secondary);margin:0;">Добавлены смешные картинки и мемы для мотивации и интереса.</p> 
-      </div> 
-      <div class="feature-card" style="background:var(--bg-secondary);padding:20px;border-radius:12px;margin-bottom:15px;"> 
-        <div class="feature-icon" style="width:60px;height:60px;background:#7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;"> 
-          <i class="fas fa-chart-line" style="color:white;"></i> 
-        </div> 
-        <h3 style="margin-bottom:8px;color:var(--text-primary);">Отслеживание прогресса</h3> 
-        <p style="color:var(--text-secondary);margin:0;">Учет изученных слов и прогресс по уровням</p> 
-      </div> 
-      <div class="author-info" style="background:var(--bg-secondary);padding:20px;border-radius:12px;border-left:4px solid #7c3aed;"> 
-        <h3 style="margin-bottom:8px;color:var(--text-primary);">Об авторе методики</h3> 
-        <p style="color:var(--text-secondary);margin-bottom:12px;">Приложение создано на основе методики <strong>Абдуррахима Бердиева</strong>.</p> 
-        <a href="https://berdiyev-eng.ru" target="_blank" class="author-link btn btn-primary" style="text-decoration:none;display:inline-block;"> 
-          <i class="fas fa-external-link-alt"></i> Узнать больше об авторе 
-        </a> 
-      </div> 
-    </div>
-  `; 
-}
-
-// =========
-// Settings Modal
-// =========
-
-// === ПОЛНОСТЬЮ ЗАМЕНИ СТАРЫЙ showSettingsModal НА ЭТОТ ===
-
 showSettingsModal() { 
   const modal = document.createElement('div'); 
   modal.className = 'settings-modal'; 
-  // Подняли z-index до небес
   modal.style.cssText = 'position:fixed;inset:0;z-index:9999999;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;'; 
   
   modal.innerHTML = `
@@ -2089,14 +1996,12 @@ showSettingsModal() {
       
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;"> 
         <h2 style="margin:0;color:var(--text-primary)">Настройки</h2> 
-        <!-- Добавили класс btn-action и data-action -->
         <button class="btn btn-secondary settings-close-btn btn-action" data-action="close" style="width:40px;height:40px;padding:0;display:flex;align-items:center;justify-content:center;">
           <i class="fas fa-times"></i>
         </button> 
       </div> 
 
       <div id="settingsMenu"> 
-        <!-- Все кнопки теперь имеют data-action вместо onclick -->
         <button class="btn btn-primary btn-action" data-action="about" style="width:100%;margin-bottom:10px;">
           <i class="fas fa-info-circle"></i> О приложении
         </button> 
@@ -2127,24 +2032,25 @@ showSettingsModal() {
   
   document.body.appendChild(modal);
 
-  // === НОВЫЙ ЕДИНЫЙ ОБРАБОТЧИК (РЕШАЕТ ПРОБЛЕМУ PWA) ===
+  // === ЕДИНЫЙ ОБРАБОТЧИК ===
   modal.addEventListener('click', (e) => {
-    // 1. Клик по фону -> Закрыть
     if (e.target === modal) {
         modal.remove();
         return;
     }
 
-    // 2. Ищем кнопку, на которую нажали (даже если нажали на иконку внутри)
     const btn = e.target.closest('.btn-action');
-    if (!btn) return; // Нажали не на кнопку
+    if (!btn) return;
 
     const action = btn.getAttribute('data-action');
 
-    // 3. Выполняем действие
     if (action === 'close') {
         modal.remove();
     } 
+    else if (action === 'about') {
+        // === ИСПРАВЛЕНО: ОТКРЫТИЕ ВНЕШНЕЙ ССЫЛКИ ===
+        window.open('https://bewords.ru/about', '_blank');
+    }
     else if (action === 'theme') {
         this.toggleTheme();
         this.showNotification('Тема изменена!', 'success');
@@ -2152,17 +2058,11 @@ showSettingsModal() {
     else if (action === 'audio') {
         this.openAudioSettingsInSettings(btn);
     }
-    else if (action === 'about') {
-        // Лучше использовать внутренний метод, чтобы не блокировалось попап-блокером
-        this.openAboutInSettings(btn); 
-    }
     else if (action === 'install') {
         this.openInstallGuideInSettings(btn);
     }
     else if (action === 'tutorial') {
         this.startAppTutorial();
-        // Можно закрыть модалку, чтобы не мешала
-        // modal.remove(); 
     }
     else if (action === 'wizard') {
         modal.remove();
@@ -2170,7 +2070,7 @@ showSettingsModal() {
     }
   });
 
-  // Логика кнопки уведомлений (оставляем, она работает через ID, это ок)
+  // Логика кнопки уведомлений (оставляем старую рабочую версию)
   try {
       const notifyBtn = modal.querySelector('#notifyToggleBtn');
       if (notifyBtn) {
@@ -2197,18 +2097,8 @@ showSettingsModal() {
 
           notifyBtn.onclick = () => {
               const perm = Notification.permission;
-              const appDisabled = localStorage.getItem('notifications_disabled') === 'true';
-
-              if (perm === 'granted') {
-                  if (appDisabled) {
-                      localStorage.setItem('notifications_disabled', 'false');
-                      this.showNotification('Уведомления включены!', 'success');
-                  } else {
-                      localStorage.setItem('notifications_disabled', 'true');
-                      this.showNotification('Уведомления приостановлены', 'info');
-                  }
-                  updateBtnState();
-              } else if (perm === 'default') {
+              // ... твоя стандартная логика уведомлений ...
+              if (perm === 'default') {
                   Notification.requestPermission().then(newPerm => {
                       if (newPerm === 'granted') {
                           localStorage.setItem('notifications_disabled', 'false');
@@ -2217,13 +2107,23 @@ showSettingsModal() {
                       }
                       updateBtnState();
                   });
+              } else if (perm === 'granted') {
+                   // переключалка
+                   const appDisabled = localStorage.getItem('notifications_disabled') === 'true';
+                   localStorage.setItem('notifications_disabled', appDisabled ? 'false' : 'true');
+                   this.showNotification(appDisabled ? 'Уведомления включены!' : 'Уведомления выключены', 'info');
+                   updateBtnState();
               } else {
-                   alert('Браузер заблокировал уведомления. Включите их в настройках телефона.');
+                   alert('Включите уведомления в настройках браузера/телефона.');
               }
           };
       }
   } catch(e) {}
 }
+
+// =========
+// Settings Modal
+// =========
 
 openInstallGuideInSettings(btnEl) {
     const wrap = btnEl.closest('.settings-content');
@@ -2257,36 +2157,6 @@ openInstallGuideInSettings(btnEl) {
         menu.style.display = 'block';
       });
     }
-}
-
-openAboutInSettings(btnEl) { 
-  const wrap = btnEl.closest('.settings-content'); 
-  if (!wrap) return;
-
-  const menu = wrap.querySelector('#settingsMenu');
-  const inner = wrap.querySelector('#settingsInnerPage');
-  const guide = wrap.querySelector('#installGuide');
-  if (!menu || !inner) return;
-
-  menu.style.display = 'none';
-  if (guide) guide.style.display = 'none';
-  inner.style.display = 'block';
-
-  inner.innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-      <h3 style="margin:0;color:var(--text-primary)">О приложении</h3>
-      <button class="btn btn-secondary" data-testid="settings-about-back-btn" onclick="
-        const p=this.closest('.settings-content');
-        p.querySelector('#settingsInnerPage').style.display='none';
-        p.querySelector('#settingsMenu').style.display='block';
-      ">
-        <i class="fas fa-arrow-left"></i> Назад
-      </button>
-    </div>
-    <div style="max-height:60vh;overflow:auto;border:1px solid var(--border-color);border-radius:12px;padding:14px;background:var(--bg-secondary);" data-testid="settings-about-content">
-      ${this.getAboutContentHtml()}
-    </div>
-  `;
 }
 
 openAudioSettingsInSettings(btnEl) {
