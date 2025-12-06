@@ -4141,6 +4141,7 @@ renderFlashcards() {
       const img = container.querySelector('.flashcard-image');
       if (img) {
           img.src = url;
+          img.onerror = () => this.handleImageError(img); 
           img.removeAttribute('data-loading');
           if (word.level === 'MEDICAL') img.classList.add('medical-image');
       }
@@ -4348,6 +4349,7 @@ async answerFlashcard(correct) {
       const img = container.querySelector('.quiz-image');
       if (img) {
           img.src = url;
+          img.onerror = () => this.handleImageError(img); 
           img.removeAttribute('data-loading');
           if (word.level === 'MEDICAL') img.classList.add('medical-image');
       }
