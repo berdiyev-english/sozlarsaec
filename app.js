@@ -1915,55 +1915,67 @@ toggleTheme() {
     <div class="grammar-modal-content">
       <div class="grammar-modal-header">
         <div class="grammar-modal-title">
-          <span>📚</span>
-          <span>Как работают режимы практики</span>
+          <span>🧠</span>
+          <span>Как это работает</span>
         </div>
         <button class="grammar-close-btn" aria-label="Закрыть">&times;</button>
       </div>
       <div class="grammar-modal-body">
+        
         <div class="grammar-section">
           <div class="grammar-section-title">
-            <i class="fas fa-bullseye"></i>
-            <span>Заучивание</span>
+            <i class="fas fa-brain" style="color:#10b981;"></i>
+            <span>Умное Заучивание (SRS)</span>
           </div>
           <p>
-            Подходит для изучения новых слов. Система даёт ограниченный пул (около 40 слов)
-            и постепенно добавляет новые, когда вы отвечаете правильно. Добавили 500 слов?
-            Не страшно — сначала увидите ~20, потом ещё 10, ещё 10 и т.д.
+            Это основной режим, работающий на базе <strong>интервальных повторений (SM-2)</strong>. 
+            Система учитывает не только правильность, но и <strong>скорость вашего ответа</strong>.
           </p>
+          <ul style="margin: 10px 0 10px 20px; color:var(--text-secondary); font-size:0.95rem;">
+             <li><strong>Микро-сессии:</strong> Слова подаются пачками по 10-15 штук, чтобы не перегружать когнитивный ресурс (Закон Миллера).</li>
+             <li><strong>Круговая тренировка:</strong> Слово не уйдет, пока вы не ответите правильно <strong>2 раза подряд</strong> (или 3, если ошиблись).</li>
+             <li><strong>Долгосрочная память:</strong> Если вы ответили мгновенно — слово вернется через неделю. Если думали долго — завтра.</li>
+          </ul>
         </div>
+
         <div class="grammar-section">
           <div class="grammar-section-title">
-            <i class="fas fa-redo"></i>
-            <span>Повторение</span>
+            <i class="fas fa-infinity" style="color:#6366f1;"></i>
+            <span>Бесконечное Повторение</span>
           </div>
           <p>
-            Показывает все незавершённые слова по кругу. Удобно, если хотите просто «погонять» всю
-            лексику без ограничений.
+            Режим <strong>«Мозговой штурм»</strong>. Игнорирует умные интервалы и показывает все слова, которые еще не отмечены галочкой «Выучено».
+            <br><br>
+            Используйте его, если хотите устроить себе жесткий экзамен или просто повторить весь объем лексики за один раз.
           </p>
         </div>
+
         <div class="grammar-section">
           <div class="grammar-section-title">
-            <i class="fas fa-list"></i>
-            <span>Список</span>
+            <i class="fas fa-database" style="color:#f59e0b;"></i>
+            <span>Список (База знаний)</span>
           </div>
           <p>
-            Открывает полный список слов, которые вы учите. Отсюда можно удалять слова, слушать
-            озвучку и редактировать переводы.
+            Ваш центр управления. Здесь можно увидеть все добавленные слова, отредактировать переводы, прослушать произношение или удалить ненужное.
           </p>
         </div>
+
         <div class="grammar-tip">
-          <div class="grammar-tip-title">💡 Совет</div>
+          <div class="grammar-tip-title">💡 Совет от разработчика</div>
           <p>
-            Начинайте с режима <strong>Заучивание</strong>, чтобы не перегружать память. Когда слова
-            стали знакомыми — переходите в <strong>Повторение</strong>.
+            Не пытайтесь выучить 100 слов за день — это неэффективно.
+            <br>
+            Доверьтесь алгоритму в режиме <strong>«Заучивание»</strong>. Заходите каждый день на 15 минут. 
+            Система сама подсунет нужное слово ровно в тот момент, когда вы начнете его забывать. Это самый быстрый путь к результату.
           </p>
         </div>
+
       </div>
     </div>
   `;
+  
   overlay.addEventListener('click', (e) => {
-    if (e.target === overlay || e.target.classList.contains('grammar-close-btn')) {
+    if (e.target === overlay || e.target.closest('.grammar-close-btn')) {
       overlay.remove();
     }
   });
@@ -1973,28 +1985,42 @@ toggleTheme() {
 // =========
 // Info (О приложении)
 // =========
+
 showInfoModal() { 
   const modal = document.createElement('div'); 
   modal.className = 'info-modal'; 
-  modal.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;'; 
+  // Подняли z-index для надежности
+  modal.style.cssText = 'position:fixed;inset:0;z-index:9999999;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;'; 
+  
   modal.innerHTML = `
-    <div class="info-modal-content" style="background:var(--bg-primary);border-radius:16px;padding:30px;max-width:800px;width:100%;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;"> 
+    <div class="info-modal-content" style="background:var(--bg-primary);border-radius:16px;padding:30px;max-width:800px;width:100%;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;position:relative;"> 
+      
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;"> 
         <h2 style="margin:0;color:var(--text-primary);">О приложении</h2> 
-        <button data-testid="info-close" onclick="this.closest('.info-modal').remove()" style="background:transparent;border:none;font-size:24px;cursor:pointer;color:var(--text-secondary);width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.2s;"> 
+        <!-- Добавили класс close-action -->
+        <button class="info-close-btn close-action" style="background:transparent;border:none;font-size:24px;cursor:pointer;color:var(--text-secondary);width:40px;height:40px;display:flex;align-items:center;justify-content:center;"> 
           <i class="fas fa-times"></i> 
         </button> 
       </div> 
+      
       ${this.getAboutContentHtml()} 
+      
       <div style="margin-top:20px;text-align:center;"> 
-        <button class="btn btn-secondary" onclick="this.closest('.info-modal').remove()">Закрыть</button> 
+        <!-- Добавили класс close-action -->
+        <button class="btn btn-secondary close-action">Закрыть</button> 
       </div> 
     </div>
   `; 
-  modal.addEventListener('click', (e) => { 
-    if (e.target === modal) modal.remove(); 
-  }); 
+  
   document.body.appendChild(modal); 
+
+  // === НОВЫЙ ЕДИНЫЙ ОБРАБОТЧИК ===
+  modal.addEventListener('click', (e) => {
+    // Закрываем, если клик по фону (modal) ИЛИ по кнопке закрытия (close-action)
+    if (e.target === modal || e.target.closest('.close-action')) {
+        modal.remove();
+    }
+  });
 }
 
 getAboutContentHtml() { 
@@ -2050,156 +2076,153 @@ getAboutContentHtml() {
 // Settings Modal
 // =========
 
+// === ПОЛНОСТЬЮ ЗАМЕНИ СТАРЫЙ showSettingsModal НА ЭТОТ ===
+
 showSettingsModal() { 
   const modal = document.createElement('div'); 
   modal.className = 'settings-modal'; 
-  modal.style.cssText = 'position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;'; 
+  // Подняли z-index до небес
+  modal.style.cssText = 'position:fixed;inset:0;z-index:9999999;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;'; 
+  
   modal.innerHTML = `
-    <div class="settings-content" style="background:var(--bg-primary);border-radius:16px;padding:20px;max-width:520px;width:100%;box-shadow:var(--shadow-lg);"> 
+    <div class="settings-content" style="background:var(--bg-primary);border-radius:16px;padding:20px;max-width:520px;width:100%;box-shadow:var(--shadow-lg);position:relative;"> 
+      
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;"> 
         <h2 style="margin:0;color:var(--text-primary)">Настройки</h2> 
-        <button class="btn btn-secondary settings-close-btn" data-testid="settings-close">
+        <!-- Добавили класс btn-action и data-action -->
+        <button class="btn btn-secondary settings-close-btn btn-action" data-action="close" style="width:40px;height:40px;padding:0;display:flex;align-items:center;justify-content:center;">
           <i class="fas fa-times"></i>
         </button> 
       </div> 
+
       <div id="settingsMenu"> 
-        <button class="btn btn-primary" onclick="window.open('about.html', '_blank')" style="width:100%;margin-bottom:10px;">
+        <!-- Все кнопки теперь имеют data-action вместо onclick -->
+        <button class="btn btn-primary btn-action" data-action="about" style="width:100%;margin-bottom:10px;">
           <i class="fas fa-info-circle"></i> О приложении
         </button> 
-        <button class="btn btn-primary settings-theme-btn" data-testid="settings-theme" style="width:100%;margin-bottom:10px;">
+        <button class="btn btn-primary btn-action" data-action="theme" style="width:100%;margin-bottom:10px;">
           <i class="fas fa-adjust"></i> Переключить тему
         </button> 
-        <button class="btn btn-primary settings-audio-btn" data-testid="settings-audio" style="width:100%;margin-bottom:10px;">
+        <button class="btn btn-primary btn-action" data-action="audio" style="width:100%;margin-bottom:10px;">
           <i class="fas fa-volume-up"></i> Настройки аудио
         </button>
-        <button class="btn btn-primary" onclick="window.open('app.html', '_blank')" style="width:100%;margin-bottom:10px;">
+        <button class="btn btn-primary btn-action" data-action="install" style="width:100%;margin-bottom:10px;">
           <i class="fas fa-download"></i> Установка приложения
         </button>
-        <button class="btn btn-primary" onclick="app.startAppTutorial()" style="width:100%; margin-bottom:10px;">
-   <i class="fas fa-question-circle"></i> Инструкция
-</button>
-        <button class="btn btn-success" onclick="app.showOnboardingWizard(); document.querySelector('.settings-modal').remove();" style="width:100%; margin-bottom:10px;">
+        <button class="btn btn-primary btn-action" data-action="tutorial" style="width:100%; margin-bottom:10px;">
+           <i class="fas fa-question-circle"></i> Инструкция
+        </button>
+        <button class="btn btn-success btn-action" data-action="wizard" style="width:100%; margin-bottom:10px;">
            <i class="fas fa-magic"></i> Подобрать программу
         </button>
         <button class="btn btn-primary" id="notifyToggleBtn" style="width:100%; margin-bottom:10px;">
            <i class="fas fa-bell"></i> Управление уведомлениями
         </button>
       </div>
+      
       <div id="settingsInnerPage" style="display:none;"></div>
       <div id="installGuide" style="display:none;"></div>
     </div>
   `; 
   
   document.body.appendChild(modal);
-  
- // Логика кнопки уведомлений
-  // Внутри showSettingsModal (app.js)
 
-  // Логика кнопки уведомлений (СУПЕР-ВЕРСИЯ)
-  const notifyBtn = modal.querySelector('#notifyToggleBtn');
-  if (notifyBtn) {
-      
-      // Функция обновления вида кнопки
-      const updateBtnState = () => {
-          const perm = Notification.permission;
-          const appDisabled = localStorage.getItem('notifications_disabled') === 'true';
+  // === НОВЫЙ ЕДИНЫЙ ОБРАБОТЧИК (РЕШАЕТ ПРОБЛЕМУ PWA) ===
+  modal.addEventListener('click', (e) => {
+    // 1. Клик по фону -> Закрыть
+    if (e.target === modal) {
+        modal.remove();
+        return;
+    }
 
-          if (perm === 'granted') {
-              // Разрешено браузером
-              if (appDisabled) {
-                  // Но выключено в приложении
-                  notifyBtn.innerHTML = '<i class="fas fa-bell"></i> Включить уведомления';
-                  notifyBtn.className = 'btn btn-primary';
-              } else {
-                  // Все работает
-                  notifyBtn.innerHTML = '<i class="fas fa-check"></i> Уведомления активны';
-                  notifyBtn.className = 'btn btn-success';
-              }
-          } else if (perm === 'denied') {
-              // Заблокировано
-              notifyBtn.innerHTML = '<i class="fas fa-ban"></i> Доступ запрещен (Нажми)';
-              notifyBtn.className = 'btn btn-danger';
-          } else {
-              // Default (еще не спрашивали)
-              notifyBtn.innerHTML = '<i class="fas fa-bell"></i> Разрешить уведомления';
-              notifyBtn.className = 'btn btn-primary';
-          }
-      };
+    // 2. Ищем кнопку, на которую нажали (даже если нажали на иконку внутри)
+    const btn = e.target.closest('.btn-action');
+    if (!btn) return; // Нажали не на кнопку
 
-      // Инициализация кнопки
-      updateBtnState();
+    const action = btn.getAttribute('data-action');
 
-      // Обработчик клика
-      notifyBtn.onclick = () => {
-          const perm = Notification.permission;
-          const appDisabled = localStorage.getItem('notifications_disabled') === 'true';
+    // 3. Выполняем действие
+    if (action === 'close') {
+        modal.remove();
+    } 
+    else if (action === 'theme') {
+        this.toggleTheme();
+        this.showNotification('Тема изменена!', 'success');
+    }
+    else if (action === 'audio') {
+        this.openAudioSettingsInSettings(btn);
+    }
+    else if (action === 'about') {
+        // Лучше использовать внутренний метод, чтобы не блокировалось попап-блокером
+        this.openAboutInSettings(btn); 
+    }
+    else if (action === 'install') {
+        this.openInstallGuideInSettings(btn);
+    }
+    else if (action === 'tutorial') {
+        this.startAppTutorial();
+        // Можно закрыть модалку, чтобы не мешала
+        // modal.remove(); 
+    }
+    else if (action === 'wizard') {
+        modal.remove();
+        this.showOnboardingWizard();
+    }
+  });
 
-          // 1. Если уже разрешено — просто переключаем настройку внутри приложения
-          if (perm === 'granted') {
-              if (appDisabled) {
-                  localStorage.setItem('notifications_disabled', 'false');
-                  this.showNotification('Уведомления включены!', 'success');
-              } else {
-                  localStorage.setItem('notifications_disabled', 'true');
-                  this.showNotification('Уведомления приостановлены', 'info');
-              }
-              updateBtnState();
-          } 
-          
-          // 2. Если ЕЩЕ НЕ СПРАШИВАЛИ (default) — запрашиваем
-          else if (perm === 'default') {
-              Notification.requestPermission().then(newPerm => {
-                  if (newPerm === 'granted') {
-                      localStorage.setItem('notifications_disabled', 'false');
-                      this.showNotification('Ура! Боб на связи! 🚀', 'success');
-                      this.scheduleBobReminders();
+  // Логика кнопки уведомлений (оставляем, она работает через ID, это ок)
+  try {
+      const notifyBtn = modal.querySelector('#notifyToggleBtn');
+      if (notifyBtn) {
+          const updateBtnState = () => {
+              const perm = Notification.permission;
+              const appDisabled = localStorage.getItem('notifications_disabled') === 'true';
+              if (perm === 'granted') {
+                  if (appDisabled) {
+                      notifyBtn.innerHTML = '<i class="fas fa-bell"></i> Включить уведомления';
+                      notifyBtn.className = 'btn btn-primary';
                   } else {
-                      this.showNotification('Эх, Боб не сможет писать...', 'warning');
+                      notifyBtn.innerHTML = '<i class="fas fa-check"></i> Уведомления активны';
+                      notifyBtn.className = 'btn btn-success';
+                  }
+              } else if (perm === 'denied') {
+                  notifyBtn.innerHTML = '<i class="fas fa-ban"></i> Доступ запрещен (Нажми)';
+                  notifyBtn.className = 'btn btn-danger';
+              } else {
+                  notifyBtn.innerHTML = '<i class="fas fa-bell"></i> Разрешить уведомления';
+                  notifyBtn.className = 'btn btn-primary';
+              }
+          };
+          updateBtnState();
+
+          notifyBtn.onclick = () => {
+              const perm = Notification.permission;
+              const appDisabled = localStorage.getItem('notifications_disabled') === 'true';
+
+              if (perm === 'granted') {
+                  if (appDisabled) {
+                      localStorage.setItem('notifications_disabled', 'false');
+                      this.showNotification('Уведомления включены!', 'success');
+                  } else {
+                      localStorage.setItem('notifications_disabled', 'true');
+                      this.showNotification('Уведомления приостановлены', 'info');
                   }
                   updateBtnState();
-              });
-          }
-          
-          // 3. Если ЗАБЛОКИРОВАНО (denied)
-          else {
-              // Мы пытаемся спросить, но скорее всего браузер откажет сразу
-              Notification.requestPermission().then(newPerm => {
-                  if (newPerm === 'granted') {
-                      // О чудо, сработало!
-                      localStorage.setItem('notifications_disabled', 'false');
+              } else if (perm === 'default') {
+                  Notification.requestPermission().then(newPerm => {
+                      if (newPerm === 'granted') {
+                          localStorage.setItem('notifications_disabled', 'false');
+                          this.showNotification('Ура! Боб на связи! 🚀', 'success');
+                          this.scheduleBobReminders();
+                      }
                       updateBtnState();
-                  } else {
-                      // Не сработало — показываем инструкцию
-                      alert('Браузер заблокировал запрос уведомлений.\n\nКак включить:\n1. Нажмите на значок замка 🔒 или настроек ⚙️ в строке адреса.\n2. Найдите "Уведомления".\n3. Выберите "Разрешить".');
-                  }
-              });
-          }
-      };
-  }
-  
-  // Добавляем обработчики через addEventListener
-  const closeBtn = modal.querySelector('.settings-close-btn');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => modal.remove());
-  }
-  
-  const themeBtn = modal.querySelector('.settings-theme-btn');
-  if (themeBtn) {
-    themeBtn.addEventListener('click', () => {
-      this.toggleTheme();
-      this.showNotification('Тема изменена!', 'success');
-    });
-  }
-  
-  const audioBtn = modal.querySelector('.settings-audio-btn');
-  if (audioBtn) {
-    audioBtn.addEventListener('click', () => this.openAudioSettingsInSettings(audioBtn));
-  }
-  
-  // Закрытие по клику на overlay
-  modal.addEventListener('click', (e) => { 
-    if (e.target === modal) modal.remove(); 
-  }); 
+                  });
+              } else {
+                   alert('Браузер заблокировал уведомления. Включите их в настройках телефона.');
+              }
+          };
+      }
+  } catch(e) {}
 }
 
 openInstallGuideInSettings(btnEl) {
@@ -2806,46 +2829,42 @@ scrollMainToTop() {
     if (!btn) return;
 
     const source = this.currentLevel || this.currentCategory;
-    
-    // 1. Для "Мои слова" (ADDED) кнопка не нужна (или всегда неактивна)
     if (!source || source === 'ADDED') {
       this._setBulkButtonState(btn, 'add', 'Учить все', true);
       return;
     }
 
     // Берем базу
-    const dbWords = oxfordWordsDatabase[source] || [];
+    let dbWords = oxfordWordsDatabase[source] || [];
+    
+    // === ФИКС: УЧИТЫВАЕМ ФИЛЬТР ===
+    if (this.currentFilter && this.currentFilter.type !== 'all') {
+        if (this.currentFilter.type === 'grammar') {
+            dbWords = dbWords.filter(w => w.grammar === this.currentFilter.id);
+        } else if (this.currentFilter.type === 'topic') {
+            dbWords = dbWords.filter(w => w.topic === this.currentFilter.id);
+        }
+    }
+    // ==============================
+
     if (dbWords.length === 0) {
       this._setBulkButtonState(btn, 'add', 'Учить все', true);
       return;
     }
 
-    // 2. БЫСТРАЯ ПРОВЕРКА ПО КОЛИЧЕСТВУ
-    // Считаем, сколько слов этого уровня есть у пользователя
-    const userCount = this.learningWords.reduce((acc, w) => {
-      return (w.level === source) ? acc + 1 : acc;
-    }, 0);
-
-    // Если у пользователя слов столько же или больше, чем в базе -> Считаем, что ВСЕ ДОБАВЛЕНО.
-    // Это решает проблему "одного битого слова", из-за которого кнопка глючила.
-    if (userCount >= dbWords.length) {
-      this._setBulkButtonState(btn, 'remove', 'Удалить все', false);
-      return;
-    }
-
-    // 3. ЕСЛИ КОЛИЧЕСТВО НЕ СОВПАЛО -> ТОЧНАЯ ПРОВЕРКА ЧЕРЕЗ SET (Очень быстрая)
-    // Создаем набор "ключей" слов пользователя для мгновенного поиска: "cat"
+    // Проверяем наличие слов у пользователя
+    // Создаем набор "ключей" слов пользователя для мгновенного поиска
     const userWordsSet = new Set();
     for (let i = 0; i < this.learningWords.length; i++) {
       const w = this.learningWords[i];
+      // Проверяем уровень, чтобы не путать омонимы с разных уровней
       if (w.level === source) {
         userWordsSet.add(w.word.toLowerCase().trim());
       }
     }
 
-    // Проверяем, есть ли каждое слово из базы в наборе пользователя
+    // Проверяем, есть ли ВСЕ слова из (отфильтрованной) базы в наборе пользователя
     const allAdded = dbWords.every(dbW => {
-      // Пропускаем пустые, если есть
       if (!dbW.word) return true; 
       return userWordsSet.has(dbW.word.toLowerCase().trim());
     });
@@ -2855,7 +2874,7 @@ scrollMainToTop() {
     } else {
       this._setBulkButtonState(btn, 'add', 'Учить все', false);
     }
-  }
+}
 
   // Вспомогательный метод для смены вида кнопки
   _setBulkButtonState(btn, type, text, disabled) {
@@ -3542,73 +3561,103 @@ safeAttr(str) {
     `;
   }
 
-  addAllLevelWords() {
+ // === ВСТАВИТЬ ВО 2-Ю ЧАСТЬ (Вместо старого addAllLevelWords) ===
+
+addAllLevelWords() {
     this.stopCurrentAudio();
 
+    // 1. Определяем источник (Уровень или Категория)
     const source = this.currentLevel || this.currentCategory;
     if (!source) return;
     if (source === 'ADDED') {
-      this.showNotification('Для категории «Добавленные слова» массовое добавление не доступно', 'info');
-      return;
+        this.showNotification('Массовое добавление здесь недоступно', 'info');
+        return;
     }
 
-    const words = oxfordWordsDatabase[source] || [];
+    // 2. Получаем ВСЕ слова уровня
+    let words = oxfordWordsDatabase[source] || [];
+
+    // 3. ВАЖНО: Применяем текущий фильтр (если мы внутри урока)
+    // Мы должны сохранить текущий фильтр где-то при входе.
+    // Давай предположим, что мы сохраняем его в this.currentFilter
+    // (Нужно будет добавить сохранение в showLevelWords, см. ниже)
+    if (this.currentFilter && this.currentFilter.type !== 'all') {
+        if (this.currentFilter.type === 'grammar') {
+            words = words.filter(w => w.grammar === this.currentFilter.id);
+        } else if (this.currentFilter.type === 'topic') {
+            words = words.filter(w => w.topic === this.currentFilter.id);
+        }
+    }
+
     let addedCount = 0;
 
     words.forEach(word => {
-      const exists = this.learningWords.some(w => w.word === word.word && w.level === source);
-      if (!exists) {
-        this.learningWords.push({
-          word: word.word,
-          translation: word.translation,
-          level: source,
-          forms: word.forms || null,
-          isLearned: false,
-          addedAt: Date.now()
-        });
-        this.initializeWordStats(word.word);
-        addedCount++;
-      }
+        const exists = this.learningWords.some(w => w.word === word.word && w.level === source);
+        if (!exists) {
+            this.learningWords.push({
+                word: word.word,
+                translation: word.translation,
+                level: source,
+                forms: word.forms || null,
+                grammar: word.grammar || null, // Сохраняем метку урока
+                topic: word.topic || null,     // Сохраняем метку урока
+                isLearned: false,
+                addedAt: Date.now()
+            });
+            this.initializeWordStats(word.word);
+            addedCount++;
+        }
     });
 
     if (addedCount > 0) {
-      this.saveData();
-      this.updateLevelCounts();
-      this.updateBulkToggleButton();
-      this.showNotification(`Добавлено ${addedCount} слов в изучаемые!`, 'success');
-      this.currentLevel ? this.showLevelWords(this.currentLevel) : this.showCategoryWords(this.currentCategory);
-
-      if (this.currentSection === 'learning') {
-        this.suppressAutoSpeakOnce = true;
-        this.renderLearningSection();
-      }
+        this.saveData();
+        this.updateLevelCounts();
+        this.updateBulkToggleButton(); // Обновит кнопку на "Удалить все"
+        this.showNotification(`Добавлено ${addedCount} слов!`, 'success');
+        
+        // Обновляем список на экране
+        this.currentLevel ? this.showLevelWords(this.currentLevel, this.currentFilter) : this.showCategoryWords(this.currentCategory);
     } else {
-      this.showNotification('Все слова уже добавлены', 'info');
+        this.showNotification('Все слова из этого раздела уже добавлены', 'info');
     }
-  }
+}
+
   removeAllLevelWords() {
     this.stopCurrentAudio();
 
     const source = this.currentLevel || this.currentCategory;
     if (!source) return;
 
+    // === ФИКС: УЧИТЫВАЕМ ФИЛЬТР ПРИ УДАЛЕНИИ ===
+    let filterFn = (w) => w.level === source; // По умолчанию удаляем весь уровень
+    
+    if (this.currentFilter && this.currentFilter.type !== 'all') {
+        if (this.currentFilter.type === 'grammar') {
+            // Удаляем только слова этого урока грамматики
+            filterFn = (w) => w.level === source && w.grammar === this.currentFilter.id;
+        } else if (this.currentFilter.type === 'topic') {
+            // Удаляем только слова этой темы
+            filterFn = (w) => w.level === source && w.topic === this.currentFilter.id;
+        }
+    }
+    // ===========================================
+
     const initialLength = this.learningWords.length;
-    this.learningWords = this.learningWords.filter(w => w.level !== source);
+    // Оставляем только те слова, которые НЕ попадают под фильтр удаления
+    this.learningWords = this.learningWords.filter(w => !filterFn(w));
+    
     const removedCount = initialLength - this.learningWords.length;
 
     if (removedCount > 0) {
       this.saveData();
       this.updateLevelCounts();
       this.updateBulkToggleButton();
-      this.showNotification(`Удалено ${removedCount} слов из изучаемых`, 'success');
-      this.currentLevel ? this.showLevelWords(this.currentLevel) : this.showCategoryWords(this.currentCategory);
-
-      if (this.currentSection === 'learning') {
-        this.suppressAutoSpeakOnce = true;
-        this.renderLearningSection();
-      }
+      this.showNotification(`Удалено ${removedCount} слов`, 'success');
+      
+      // Обновляем список
+      this.currentLevel ? this.showLevelWords(this.currentLevel, this.currentFilter) : this.showCategoryWords(this.currentCategory);
     }
-  }
+}
   
 getWordAccuracy(word) {
   const s = this.wordStats[word];
@@ -4130,27 +4179,57 @@ switchPracticeMode(practice) {
 renderFlashcards() {
     const container = document.getElementById('learningWordsList');
     this._questionStart = Date.now();
-    if (!container) return;
     
-// ====================
+    if (!container) return;
 
-    const wordsToReview = this.getWordsToReview();
-    if (wordsToReview.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <i class="fas fa-check-circle"></i>
-          <h3>Все слова повторены!</h3>
-          <p>Отличная работа! Возвращайтесь позже для новых повторений</p>
-        </div>
-      `;
-      return;
+    // === 1. ПОЛУЧАЕМ СЛОВО ДЛЯ ПОКАЗА ===
+    let word = null;
+    let wordsLeft = 0;
+
+    if (this.currentPractice === 'endless') {
+        // СТАРАЯ ЛОГИКА ДЛЯ БЕСКОНЕЧНОГО РЕЖИМА
+        const words = this.getWordsToReview();
+        if (words.length === 0) {
+            container.innerHTML = `<div class="empty-state">Нет слов для повторения</div>`;
+            return;
+        }
+        word = words[this.currentReviewIndex % words.length];
+        wordsLeft = words.length; // В бесконечном режиме это просто общее кол-во
+    } else {
+        // НОВАЯ ЛОГИКА (ОЧЕРЕДЬ) ДЛЯ РЕЖИМА ЗАУЧИВАНИЕ
+        let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+        
+        // Если очереди нет, пробуем создать её (вызываем getWordsToReview)
+        if (!session.queue || session.queue.length === 0) {
+            const newWords = this.getWordsToReview();
+            if (newWords.length > 0) {
+                // Рекурсия: очередь создалась, запускаем рендер заново
+                this.renderFlashcards();
+                return;
+            } else {
+                // Если слов нет вообще (или сессия закончена)
+                if (session.date) {
+                     this.renderSessionSummary();
+                } else {
+                     container.innerHTML = `<div class="empty-state">На сегодня слов нет!</div>`;
+                }
+                return;
+            }
+        }
+        
+        // Берем ПЕРВОЕ слово из очереди
+        const queueItem = session.queue[0];
+        word = this.learningWords.find(w => w.word === queueItem.word);
+        wordsLeft = session.queue.length;
     }
+    // ==========================================
 
-    const word = wordsToReview[this.currentReviewIndex % wordsToReview.length];
+    if (!word) return; // На всякий случай
 
     let displayWord = this.getEnglishDisplay(word);
     this.lastFlashcardFrontWasRussian = this.isRussian(displayWord);
 
+    // РИСУЕМ КАРТОЧКУ
     container.innerHTML = `
       <div class="flashcard" data-testid="flashcard">
         <img src="/nophoto.jpg" alt="flashcard" class="flashcard-image" data-loading="true">
@@ -4161,9 +4240,6 @@ renderFlashcards() {
               <button class="mini-btn flashcard-sound-us" data-word="${this.safeAttr(word.word)}" title="US">
                 <i class="fas fa-volume-up"></i>
               </button>
-              <button class="mini-btn flashcard-sound-uk" data-word="${this.safeAttr(word.word)}" title="UK">
-                <i class="fas fa-headphones"></i>
-              </button>
             </span>
           </h3>
           <p class="flashcard-subtitle">Нажмите, чтобы увидеть перевод</p>
@@ -4171,44 +4247,38 @@ renderFlashcards() {
             <div class="review-translation">${word.translation}</div>
           </div>
           <div class="card-actions">
-            <button class="btn btn-primary" id="showAnswerBtn" data-testid="flashcard-show-answer">
+            <button class="btn btn-primary" id="showAnswerBtn">
               <i class="fas fa-eye"></i> Показать ответ
             </button>
           </div>
           <div class="answer-buttons hidden" id="answerButtons">
-            <button class="btn btn-danger" id="flashcardWrongBtn" data-testid="flashcard-wrong">
+            <button class="btn btn-danger" id="flashcardWrongBtn">
               <i class="fas fa-times"></i> Не знал
             </button>
-            <button class="btn btn-success" id="flashcardCorrectBtn" data-testid="flashcard-correct">
+            <button class="btn btn-success" id="flashcardCorrectBtn">
               <i class="fas fa-check"></i> Знал
             </button>
           </div>
         </div>
       </div>
       <div style="text-align:center;margin-top:15px;color:var(--text-secondary);">
-        Карточка ${this.currentReviewIndex + 1} из ${wordsToReview.length}
+        ${this.currentPractice === 'endless' ? 'Бесконечный режим' : `Осталось слов в очереди: <strong>${wordsLeft}</strong>`}
       </div>
     `;
     
-    // Загрузка изображения
-    this.getPrimaryImageUrl(word).then(imageUrl => {
+    // Загрузка картинки
+    this.getPrimaryImageUrl(word).then(url => {
       const img = container.querySelector('.flashcard-image');
       if (img) {
-        img.src = imageUrl;
-        img.onerror = () => this.handleImageError(img);
-        img.removeAttribute('data-loading');
-        if (word.level === 'MEDICAL') {
-          img.classList.add('medical-image');
-        }
+          img.src = url;
+          img.removeAttribute('data-loading');
+          if (word.level === 'MEDICAL') img.classList.add('medical-image');
       }
     });
 
-    // Добавляем обработчики через addEventListener
+    // Навешиваем обработчики (звук, кнопки)
     setTimeout(() => {
-      // Кнопки звука
       const soundUsBtn = container.querySelector('.flashcard-sound-us');
-      const soundUkBtn = container.querySelector('.flashcard-sound-uk');
-      
       if (soundUsBtn) {
         soundUsBtn.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -4216,39 +4286,17 @@ renderFlashcards() {
         });
       }
       
-      if (soundUkBtn) {
-        soundUkBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.playWord(word.word, word.forms, 'uk', word.level);
-        });
-      }
-      
-      // Кнопка показа ответа
       const showBtn = container.querySelector('#showAnswerBtn');
-      if (showBtn) {
-        showBtn.addEventListener('click', () => this.showFlashcardAnswer());
-      }
+      if (showBtn) showBtn.addEventListener('click', () => this.showFlashcardAnswer());
       
-      // Кнопка воспроизведения
-      const playBtn = container.querySelector('#playFlashcardBtn');
-      if (playBtn) {
-        playBtn.addEventListener('click', () => this.playCurrentWord());
-      }
-      
-      // Кнопки ответов
       const wrongBtn = container.querySelector('#flashcardWrongBtn');
+      if (wrongBtn) wrongBtn.addEventListener('click', () => this.answerFlashcard(false));
+      
       const correctBtn = container.querySelector('#flashcardCorrectBtn');
-      
-      if (wrongBtn) {
-        wrongBtn.addEventListener('click', () => this.answerFlashcard(false));
-      }
-      
-      if (correctBtn) {
-        correctBtn.addEventListener('click', () => this.answerFlashcard(true));
-      }
+      if (correctBtn) correctBtn.addEventListener('click', () => this.answerFlashcard(true));
     }, 0);
 
-    // Автоматическое произношение
+    // Авто-произношение
     if (!this.lastFlashcardFrontWasRussian && !this.suppressAutoSpeakOnce && this.currentSection === 'learning' && this.shouldAutoPronounce(word)) {
       setTimeout(() => {
         this.playWord(word.word, word.forms, 'us', word.level);
@@ -4256,6 +4304,7 @@ renderFlashcards() {
     }
     this.suppressAutoSpeakOnce = false;
 }
+
   showFlashcardAnswer() {
     const answer = document.getElementById('flashcardAnswer');
     const showBtn = document.getElementById('showAnswerBtn');
@@ -4282,49 +4331,110 @@ renderFlashcards() {
     const word = wordsToReview[this.currentReviewIndex % wordsToReview.length];
     this.playWord(word.word, word.forms, 'us', word.level);
   }
-  async answerFlashcard(correct) {
+  // === ВСТАВИТЬ ВО 2-Ю ЧАСТЬ ===
+
+async answerFlashcard(correct) {
     await this.waitForCurrentAudioToFinish();
 
-    const wordsToReview = this.getWordsToReview();
-    const word = wordsToReview[this.currentReviewIndex % wordsToReview.length];
-
-    const rt = this._questionStart ? (Date.now() - this._questionStart) : null;
-this.updateWordStats(word.word, correct, rt);
-    this.recordDailyProgress();
-
-    this.currentReviewIndex++;
-
-    if (this.currentReviewIndex >= wordsToReview.length && this.currentPractice === 'scheduled') {
-      this.currentReviewIndex = 0;
-      this.showNotification('Отличная работа! Все слова повторены!', 'success');
+    // 1. Получаем текущую очередь
+    let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+    if (!session.queue || session.queue.length === 0) {
+        // Если очередь пуста (каким-то чудом), перезагружаем
+        this.renderSessionSummary();
+        return;
     }
 
-    this.renderFlashcards();
-  }
+    // Берем ПЕРВОЕ слово из очереди
+    const currentItem = session.queue[0]; 
+    const wordObj = this.learningWords.find(w => w.word === currentItem.word);
+    
+    // 2. Считаем статистику (глобальную)
+    const rt = this._questionStart ? (Date.now() - this._questionStart) : 0;
+    this.updateWordStats(currentItem.word, correct, rt); // Глобальный SRS работает как обычно
+
+    // 3. ЛОГИКА КРУГОВОЙ ТРЕНИРОВКИ
+    if (correct) {
+        currentItem.combo++;
+        session.totalCorrectInSession++;
+        
+        // Если достигли цели (2 или 3 раза подряд)
+        if (currentItem.combo >= currentItem.target) {
+            // УДАЛЯЕМ слово из очереди (оно выучено на сегодня)
+            session.queue.shift(); 
+            this.showNotification(`Молодец! Осталось: ${session.queue.length}`, 'success');
+        } else {
+            // Если еще не достигли -> Перемещаем в КОНЕЦ очереди
+            session.queue.shift();
+            session.queue.push(currentItem);
+        }
+    } else {
+        // ОШИБКА
+        currentItem.combo = 0;      // Сброс комбо
+        currentItem.target = 3;     // Наказание: теперь нужно 3 раза подряд
+        
+        // Перемещаем в КОНЕЦ очереди (или чуть ближе, через 2-3 слова)
+        session.queue.shift();
+        // Вставляем через 2 позиции (интервальное повторение внутри сессии)
+        const insertIndex = Math.min(session.queue.length, 2);
+        session.queue.splice(insertIndex, 0, currentItem);
+        
+        this.showNotification('Ошибка! Теперь нужно 3 раза правильно', 'warning');
+    }
+
+    // 4. Сохраняем состояние
+    localStorage.setItem('currentSession', JSON.stringify(session));
+
+    // 5. Проверяем финиш
+    if (session.queue.length === 0) {
+        this.renderSessionSummary();
+    } else {
+        // Рендерим следующее слово (оно теперь первое в session.queue)
+        this.currentReviewIndex = 0; // Всегда берем нулевой элемент, так как мы сдвигаем массив
+        this.renderFlashcards();
+    }
+}
 
   renderQuiz() {
-     if (document.activeElement instanceof HTMLElement) {
-        document.activeElement.blur();
-    }
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
     const container = document.getElementById('learningWordsList');
     this._questionStart = Date.now();
+    
     if (!container) return;
 
-// ====================
+    // === 1. ПОЛУЧАЕМ СЛОВО ДЛЯ ПОКАЗА (ТОЧНО ТАК ЖЕ, КАК В FLASHCARDS) ===
+    let word = null;
+    let wordsLeft = 0;
 
-    const wordsToReview = this.getWordsToReview();
-    if (wordsToReview.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <i class="fas fa-check-circle"></i>
-          <h3>Все слова повторены!</h3>
-          <p>Отличная работа! Возвращайтесь позже для новых повторений</p>
-        </div>
-      `;
-      return;
+    if (this.currentPractice === 'endless') {
+        const words = this.getWordsToReview();
+        if (words.length === 0) {
+            container.innerHTML = `<div class="empty-state">Нет слов для повторения</div>`;
+            return;
+        }
+        word = words[this.currentReviewIndex % words.length];
+        wordsLeft = words.length;
+    } else {
+        let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+        
+        if (!session.queue || session.queue.length === 0) {
+            const newWords = this.getWordsToReview();
+            if (newWords.length > 0) {
+                this.renderQuiz();
+                return;
+            } else {
+                if (session.date) this.renderSessionSummary();
+                else container.innerHTML = `<div class="empty-state">На сегодня слов нет!</div>`;
+                return;
+            }
+        }
+        
+        const queueItem = session.queue[0];
+        word = this.learningWords.find(w => w.word === queueItem.word);
+        wordsLeft = session.queue.length;
     }
+    // ==========================================
 
-    const word = wordsToReview[this.currentReviewIndex % wordsToReview.length];
+    if (!word) return;
 
     const direction = Math.random() < 0.5 ? 'EN_RU' : 'RU_EN';
     const questionText = direction === 'EN_RU' ? this.getEnglishDisplay(word) : word.translation;
@@ -4333,117 +4443,70 @@ this.updateWordStats(word.word, correct, rt);
     const options = this.buildQuizOptions(word, direction);
     const shuffled = this.shuffle(options);
 
+    // РИСУЕМ КВИЗ
     container.innerHTML = `
       <div class="quiz-container" data-testid="quiz-container">
         <img src="/nophoto.jpg" alt="quiz" class="quiz-image" data-loading="true">
-        <span class="word-level" style="display:none">${word.level}</span>
         <div class="quiz-question">
           ${questionText} ${this.getAccuracyBadgeHtml(word.word)}
           <span class="sound-actions" style="margin-left:8px;">
             <button class="mini-btn quiz-sound-us" data-word="${this.safeAttr(word.word)}" title="US">
               <i class="fas fa-volume-up"></i>
             </button>
-            <button class="mini-btn quiz-sound-uk" data-word="${this.safeAttr(word.word)}" title="UK">
-              <i class="fas fa-headphones"></i>
-            </button>
           </span>
         </div>
         <div class="quiz-sub">Выберите правильный перевод</div>
-        <div class="quiz-options" id="quizOptions">
+        <div class="quiz-options">
           ${shuffled.map(opt => {
-            const isEnglishOpt = this.isEnglish(opt) && !this.isRussian(opt);
-            const baseForSound = opt.split('→')[0].trim();
-            const soundBtns = isEnglishOpt ? `
-              <span class="option-sound">
-                <button class="mini-btn option-sound-us" data-word="${this.safeAttr(baseForSound)}" title="US">
-                  <i class="fas fa-volume-up"></i>
-                </button>
-                <button class="mini-btn option-sound-uk" data-word="${this.safeAttr(baseForSound)}" title="UK">
-                  <i class="fas fa-headphones"></i>
-                </button>
-              </span>
-            ` : '';
             return `
               <div class="quiz-option" data-answer="${this.safeAttr(opt)}">
                 <div class="quiz-option-inner">
                   <span>${opt}</span>
-                  ${soundBtns}
                 </div>
               </div>
             `;
           }).join('')}
         </div>
         <div style="text-align:center;margin-top:15px;color:var(--text-secondary);">
-          Вопрос ${this.currentReviewIndex + 1} из ${wordsToReview.length}
+           ${this.currentPractice === 'endless' ? 'Бесконечный режим' : `Осталось слов в очереди: <strong>${wordsLeft}</strong>`}
         </div>
       </div>
     `;
     
-    // Загрузка изображения
-    this.getPrimaryImageUrl(word).then(imageUrl => {
+    // Картинка
+    this.getPrimaryImageUrl(word).then(url => {
       const img = container.querySelector('.quiz-image');
       if (img) {
-        img.src = imageUrl;
-        img.onerror = () => this.handleImageError(img);
-        img.removeAttribute('data-loading');
-        if (word.level === 'MEDICAL') {
-          img.classList.add('medical-image');
-        }
+          img.src = url;
+          img.removeAttribute('data-loading');
+          if (word.level === 'MEDICAL') img.classList.add('medical-image');
       }
     });
 
-    // Добавляем обработчики через addEventListener
+    // Обработчики
     setTimeout(() => {
-      // Кнопки звука для вопроса
       const soundUsBtn = container.querySelector('.quiz-sound-us');
-      const soundUkBtn = container.querySelector('.quiz-sound-uk');
-      
       if (soundUsBtn) {
         soundUsBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          const w = soundUsBtn.getAttribute('data-word');
-          this.playWord(w, word.forms, 'us', word.level);
-        });
-      }
-      if (soundUkBtn) {
-        soundUkBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const w = soundUkBtn.getAttribute('data-word');
-          this.playWord(w, word.forms, 'uk', word.level);
+          this.playWord(word.word, word.forms, 'us', word.level);
         });
       }
       
-      // Кнопки звука для опций
-      container.querySelectorAll('.option-sound-us').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const w = btn.getAttribute('data-word');
-          this.playSingleWordMp3(w, 'us');
-        });
-      });
-      
-      container.querySelectorAll('.option-sound-uk').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const w = btn.getAttribute('data-word');
-          this.playSingleWordMp3(w, 'uk');
-        });
-      });
-      
-      // Обработчики для выбора ответа
       container.querySelectorAll('.quiz-option').forEach(opt => {
         opt.addEventListener('click', () => {
           const selected = opt.getAttribute('data-answer');
+          // Вызываем ОБНОВЛЕННЫЙ selectQuizOption
           this.selectQuizOption(selected, correctAnswer, word.word, direction);
         });
       });
     }, 0);
 
-    // Автоматическое произношение
+    // Авто-произношение
     if (direction === 'EN_RU' && !this.suppressAutoSpeakOnce && this.currentSection === 'learning' && this.shouldAutoPronounce(word)) {
       setTimeout(() => {
         this.playWord(word.word, word.forms, 'us', word.level);
-      }, 200);
+      }, 250);
     }
     this.suppressAutoSpeakOnce = false;
 }
@@ -4494,51 +4557,84 @@ this.updateWordStats(word.word, correct, rt);
   }
 
   async selectQuizOption(selected, correct, wordToPlay, direction) {
+    // 1. Визуальная обработка ответа (красим кнопки)
     const isCorrect = selected === correct;
     const options = document.querySelectorAll('.quiz-option');
-
     options.forEach(opt => {
       opt.style.pointerEvents = 'none';
       const answer = opt.getAttribute('data-answer');
       if (answer === selected) { opt.classList.add(isCorrect ? 'correct' : 'wrong'); }
       if (answer === correct && !isCorrect) { opt.classList.add('correct'); }
     });
-     const rt = this._questionStart ? (Date.now() - this._questionStart) : null;
-this.updateWordStats(wordToPlay, isCorrect, rt);
+
+    // 2. Загружаем СЕССИЮ и ОЧЕРЕДЬ
+    let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+    if (!session.queue || session.queue.length === 0) {
+        this.renderSessionSummary();
+        return;
+    }
+    
+    // Работаем с ПЕРВЫМ элементом очереди (текущее слово)
+    const currentItem = session.queue[0];
+
+    // 3. Обновляем ГЛОБАЛЬНУЮ статистику (SM-2)
+    const rt = this._questionStart ? (Date.now() - this._questionStart) : 0;
+    this.updateWordStats(wordToPlay, isCorrect, rt);
     this.recordDailyProgress();
 
-    const wordsToReview = this.getWordsToReview();
-    const wordObj = wordsToReview.find(w => w.word === wordToPlay);
+    // 4. ЛОГИКА КРУГОВОЙ ТРЕНИРОВКИ (QUEUE LOGIC)
+    if (isCorrect) {
+        currentItem.combo++;
+        session.totalCorrectInSession = (session.totalCorrectInSession || 0) + 1;
+        
+        if (currentItem.combo >= currentItem.target) {
+            // УСПЕХ: Удаляем из очереди
+            session.queue.shift();
+            this.showNotification(`Молодец! Осталось: ${session.queue.length}`, 'success');
+        } else {
+            // ЕЩЕ МАЛО: В конец очереди
+            session.queue.shift();
+            session.queue.push(currentItem);
+        }
+    } else {
+        // ОШИБКА: Сброс и наказание
+        currentItem.combo = 0;
+        currentItem.target = 3; // Теперь нужно 3 раза подряд
+        
+        // Вставляем обратно через 2 позиции (чтобы скоро повторить)
+        session.queue.shift();
+        const insertIndex = Math.min(session.queue.length, 2);
+        session.queue.splice(insertIndex, 0, currentItem);
+        
+        this.showNotification('Ошибка! Теперь нужно 3 раза правильно', 'warning');
+    }
+    
+    // Сохраняем изменения в очереди
+    localStorage.setItem('currentSession', JSON.stringify(session));
 
+    // 5. Аудио и задержка (UX)
+    const wordObj = this.learningWords.find(w => w.word === wordToPlay);
     await this.waitForCurrentAudioToFinish();
-
-    await this.waitForCurrentAudioToFinish();
+    await this.waitForCurrentAudioToFinish(); // на всякий случай
 
     if (direction === 'RU_EN' && this.currentSection === 'learning' && this.shouldAutoPronounce(wordObj)) {
       await this.delay(200);
-      if (wordObj) {
-        await this.playWord(wordObj.word, wordObj.forms, 'us', wordObj.level);
-      } else {
-        await this.playSingleWordMp3(wordToPlay, 'us');
-      }
+      if (wordObj) await this.playWord(wordObj.word, wordObj.forms, 'us', wordObj.level);
+      else await this.playSingleWordMp3(wordToPlay, 'us');
     } else {
       await this.delay(600);
     }
 
-    this.currentReviewIndex++;
-    
-    if (this.currentPractice === 'scheduled') {
-  const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
-  session.currentIndex = this.currentReviewIndex; // Сохраняем позицию
-  localStorage.setItem('currentSession', JSON.stringify(session));
-}
-    
-    if (this.currentReviewIndex >= wordsToReview.length && this.currentPractice === 'scheduled') {
-      this.currentReviewIndex = 0;
-      this.showNotification('Quiz завершен! Отличная работа!', 'success');
+    // 6. ПРОВЕРКА ФИНИША
+    if (session.queue.length === 0) {
+        // Очередь пуста — победа!
+        this.renderSessionSummary();
+    } else {
+        // Продолжаем (рендерим первый элемент новой очереди)
+        this.currentReviewIndex = 0; 
+        this.currentMode === 'quiz' ? this.renderQuiz() : this.renderFlashcards();
     }
-    this.renderQuiz();
-  }
+}
 
 // --- ЗАМЕНИТЬ renderWordsList ЦЕЛИКОМ ---
 renderWordsList() {
@@ -4992,205 +5088,245 @@ if ((this.learningWords || []).length > 500) {
   // =========
   // Review logic
   // =========
+
 getWordsToReview() {
-  // 1. Режим "Endless" — без ограничений
+  // 1. Если режим "Бесконечный" - возвращаем всё
   if (this.currentPractice === 'endless') {
     return this.learningWords.filter(w => !w.isLearned);
   }
 
-  // 2. Режим "Заучивание" (Scheduled) — СТРОГАЯ ЛОГИКА
-  const today = new Date().toDateString();
-  
-  // Загружаем конфиг пользователя
-  let userConfig = JSON.parse(localStorage.getItem('userConfig') || '{}');
-  // Дефолтный лимит, если конфига нет
-  const dailyLimit = userConfig.dailyLimit || 15; 
-
-  // Сброс счетчика нового дня
-  if (userConfig.lastNewWordsDate !== today) {
-      userConfig.lastNewWordsDate = today;
-      userConfig.newWordsAddedToday = 0;
-      localStorage.setItem('userConfig', JSON.stringify(userConfig));
-  }
-
-  // Пытаемся достать текущую сессию
+  // 2. Проверяем АКТИВНУЮ сессию
   let session = JSON.parse(localStorage.getItem('currentSession') || 'null');
-
-  // Если сессии нет или она вчерашняя — создаем новую
-  if (!session || session.date !== today) {
-    session = {
-      date: today,
-      shownWords: [],
-      currentIndex: 0, 
-      correctStreak: 0,
-      totalCorrect: 0
-    };
-  }
-
-  // --- ВОЗВРАТ СОХРАНЕННОЙ СЕССИИ ---
-  if (session.shownWords.length > 0) {
-    let restoredWords = session.shownWords.map(wText => 
-      this.learningWords.find(lw => lw.word === wText)
-    ).filter(Boolean); 
-    if (restoredWords.length > 0) return restoredWords;
-  }
-
-  // --- ГЕНЕРАЦИЯ НОВОГО ПУЛА ---
   
-  const activeWords = this.learningWords.filter(w => !w.isLearned);
-  
-  // 1. Сначала отбираем слова на ПОВТОРЕНИЕ (уже видели, accScore > 0)
-  // Сортируем: самые "плохие" (низкий accScore) идут первыми
-  const reviewCandidates = activeWords
-      .filter(w => {
-          const s = this.wordStats[w.word];
-          // Если статистики нет — это новое слово, пропускаем этот фильтр
-          if (!s) return false; 
-          // Если accScore >= 8 (хорошо знаем) и видели сегодня — не показываем
-          if (s.accScore >= 8) {
-             const lastSeen = s.lastReview ? new Date(s.lastReview).toDateString() : '';
-             if (lastSeen === today) return false;
-          }
-          // Берем только те, что уже учили (totalAnswers > 0)
-          return s.totalAnswers > 0;
-      })
-      .sort((a, b) => {
-          const sa = (this.wordStats[a.word] || {}).accScore || 0;
-          const sb = (this.wordStats[b.word] || {}).accScore || 0;
-          return sa - sb;
-      });
-
-  // 2. Проверяем "Качество" базы (средний балл повторения)
-  // Если слов на повторение много и средний балл низкий — новые не даем!
-  let canAddNew = true;
-  if (reviewCandidates.length > 5) {
-      const totalScore = reviewCandidates.reduce((acc, w) => acc + ((this.wordStats[w.word]||{}).accScore || 0), 0);
-      const avgScore = totalScore / reviewCandidates.length;
-      // Если средняя точность меньше 5 (50%), блокируем новые слова
-      if (avgScore < 5) {
-          canAddNew = false;
-          console.log('Blocking new words: avg score is too low', avgScore);
-      }
-  }
-
-  // 3. Отбираем НОВЫЕ слова (ни разу не учили)
-  let newCandidates = [];
-  if (canAddNew) {
-      // Сколько еще можно добавить сегодня?
-      const slotsLeft = dailyLimit - userConfig.newWordsAddedToday;
+  // Если сессия есть и в ней остались слова, которые еще не добиты (combo < target)
+  if (session && session.queue && session.queue.length > 0) {
+      // Возвращаем только те слова, которые еще в очереди
+      const queueWords = session.queue.map(item => {
+          const wObj = this.learningWords.find(w => w.word === item.word);
+          return wObj ? { ...wObj, _sessionData: item } : null;
+      }).filter(Boolean);
       
-      if (slotsLeft > 0) {
-          newCandidates = activeWords
-              .filter(w => {
-                  const s = this.wordStats[w.word];
-                  // Новое слово: статистики нет или ответов 0
-                  return !s || s.totalAnswers === 0;
-              })
-              // Сортируем по уровню (сначала A1, потом A2...)
-              .sort((a, b) => (a.level || '').localeCompare(b.level || ''))
-              .slice(0, slotsLeft); // БЕРЕМ НЕ БОЛЬШЕ ЛИМИТА
-      }
+      if (queueWords.length > 0) return queueWords;
   }
 
-  // Если вообще нет слов (всё выучили)
-  if (reviewCandidates.length === 0 && newCandidates.length === 0) return [];
-
-  // 4. Собираем пул: Сначала повторение, потом новые
-  // Ограничиваем размер сессии (например, 30 слов за подход)
-  let finalPool = [];
+  // 3. ГЕНЕРИРУЕМ НОВУЮ ПАЧКУ (Если старая кончилась)
+  const now = Date.now();
   
-  // Заполняем повторением
-  finalPool = finalPool.concat(reviewCandidates.slice(0, 25));
+  // (Тут старая логика отбора слов: dueWords + newWords)
+  // ... копируем логику фильтрации из прошлого ответа ...
+  // НО! Лимит теперь 10
   
-  // Добиваем новыми (если есть место и лимит позволяет)
-  if (finalPool.length < 30 && newCandidates.length > 0) {
-      finalPool = finalPool.concat(newCandidates);
-      
-      // ОБНОВЛЯЕМ СЧЕТЧИК НОВЫХ СЛОВ
-      userConfig.newWordsAddedToday += newCandidates.length;
-      localStorage.setItem('userConfig', JSON.stringify(userConfig));
+  // Упрощенный пример сборки пула (вставь сюда свою логику фильтров):
+  const dueWords = this.learningWords.filter(w => !w.isLearned && this.wordStats[w.word]?.nextReview <= now);
+  let finalPool = dueWords.slice(0, 10); // МАКСИМУМ 10 СЛОВ
+  
+  if (finalPool.length < 10) {
+      // Добиваем новыми
+      const newOnes = this.learningWords.filter(w => !w.isLearned && (!this.wordStats[w.word] || this.wordStats[w.word].totalAnswers === 0)).slice(0, 10 - finalPool.length);
+      finalPool = [...finalPool, ...newOnes];
   }
-  
-  // Перемешиваем
-  finalPool = this.shuffle(finalPool);
 
-  // Сохраняем в сессию
-  session.shownWords = finalPool.map(w => w.word);
-  session.currentIndex = 0;
+  if (finalPool.length === 0) return [];
+
+  // 4. Инициализируем структуру "Круговой тренировки"
+  const queue = finalPool.map(w => ({
+      word: w.word,
+      combo: 0,
+      target: 2 // По умолчанию нужно 2 раза подряд правильно
+  }));
+
+  session = {
+      date: new Date().toDateString(),
+      queue: queue,
+      totalCorrectInSession: 0
+  };
   localStorage.setItem('currentSession', JSON.stringify(session));
 
-  return finalPool;
+  // Возвращаем слова с прицепленными данными сессии
+  return finalPool.map(w => ({ ...w, _sessionData: { word: w.word, combo: 0, target: 2 } }));
 }
 
-updateWordStats(word, correct, responseTimeMs = null) {
+renderSessionSummary() {
+    const container = document.getElementById('learningWordsList');
+    if (!container) return;
+
+    // 1. Данные сессии
+    let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+    const correctCount = session.totalCorrectInSession || 0;
+    localStorage.removeItem('currentSession'); // Чистим сессию
+
+    // 2. ЛОГИКА "СЛЕДУЮЩИЙ УРОК"
+    let nextLessonHtml = '';
+    let nextLessonAction = null;
+
+    // Если мы сейчас фильтруем по Теме (Уроку)
+    if (this.currentFilter && this.currentFilter.type === 'topic' && this.currentLevel) {
+        const level = this.currentLevel;
+        const currentTopicId = this.currentFilter.id;
+        
+        // Берем все слова этого урока из базы
+        const dbWords = oxfordWordsDatabase[level] || [];
+        const topicWords = dbWords.filter(w => w.topic === currentTopicId);
+        const total = topicWords.length;
+
+        if (total > 0) {
+            // Считаем, сколько мы УЖЕ знаем
+            const learnedCount = this.learningWords.filter(lw => 
+                lw.level === level && 
+                lw.topic === currentTopicId && 
+                (lw.isLearned || (this.wordStats[lw.word] && this.wordStats[lw.word].accScore >= 8))
+            ).length;
+
+            // Если прошли больше 80% урока
+            if ((learnedCount / total) > 0.8) {
+                // Ищем следующий урок в конфиге
+                const config = this.getLevelCategoriesConfig()[level];
+                if (config && config.topics) {
+                    const idx = config.topics.findIndex(t => t.id === currentTopicId);
+                    // Если это не последний урок
+                    if (idx !== -1 && idx < config.topics.length - 1) {
+                        const nextTopic = config.topics[idx + 1];
+                        
+                        // Генерируем HTML кнопки
+                        nextLessonHtml = `
+                            <div style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border-color);">
+                                <div style="color:#10b981; font-weight:bold; margin-bottom:10px;">
+                                    <i class="fas fa-check"></i> Урок "${config.topics[idx].name}" пройден!
+                                </div>
+                                <button id="nextLessonBtn" class="btn btn-success" style="width:100%; padding:16px;">
+                                   Вперед к уроку "${nextTopic.name}" <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        `;
+                        
+                        // Запоминаем действие
+                        nextLessonAction = () => {
+                            // Переключаем фильтр на следующий урок
+                            this.showLevelWords(level, { type: 'topic', id: nextTopic.id });
+                            // Сразу добавляем слова нового урока (опционально, можно просто открыть список)
+                            // this.addAllLevelWords(); 
+                        };
+                    }
+                }
+            }
+        }
+    }
+
+    // 3. Рендер HTML
+    container.innerHTML = `
+        <div class="session-summary" style="text-align:center; padding:40px 20px; animation: slideDown 0.5s;">
+            <img src="/instruction.png" style="width:130px; margin-bottom:20px;">
+            <h2 style="font-size:2rem; font-weight:900; margin-bottom:10px; color:var(--text-primary);">Тренировка окончена!</h2>
+            <p style="color:var(--text-secondary); margin-bottom:30px; font-size:1.1rem;">Очередь пуста. Слова отработаны!</p>
+
+            <div style="background:var(--bg-secondary); padding:20px; border-radius:16px; display:inline-block; margin-bottom:30px;">
+                <div style="font-size:2.5rem; font-weight:900; color:#10b981; line-height:1;">${correctCount}</div>
+                <div style="font-size:0.9rem; color:var(--text-secondary); margin-top:5px;">Правильных ответов</div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:15px; max-width:320px; margin:0 auto;">
+                <button class="btn btn-primary" id="sessNextBtn" style="padding:16px; font-size:1.1rem;">
+                    <i class="fas fa-redo"></i> Учить следующие 10
+                </button>
+                <button class="btn btn-secondary" id="sessHomeBtn" style="padding:16px;">
+                    <i class="fas fa-list"></i> Вернуться к спискам
+                </button>
+                ${nextLessonHtml}
+            </div>
+        </div>
+    `;
+
+    // 4. Обработчики
+    setTimeout(() => {
+        document.getElementById('sessNextBtn').onclick = () => {
+            this.currentReviewIndex = 0;
+            this.renderLearningSection(); 
+        };
+        document.getElementById('sessHomeBtn').onclick = () => {
+            this.switchSection('levels');
+        };
+        if (nextLessonAction) {
+            const btn = document.getElementById('nextLessonBtn');
+            if (btn) btn.onclick = nextLessonAction;
+        }
+    }, 50);
+}
+
+updateWordStats(word, correct, responseTimeMs = 0) {
   this.initializeWordStats(word);
   const s = this.wordStats[word];
   const now = Date.now();
 
-  s.lastReview = now;
-  s.totalAnswers = (s.totalAnswers || 0) + 1;
-  if (responseTimeMs != null) s.totalTimeMs = (s.totalTimeMs || 0) + responseTimeMs;
+  // 1. Оценка качества ответа (0-5)
+  let grade = 0;
+  if (!correct) {
+    grade = 0; // Забыл
+  } else {
+    // < 2 сек = Идеально (5), < 5 сек = Хорошо (4), иначе = Нормально (3)
+    if (responseTimeMs < 2000) grade = 5;
+    else if (responseTimeMs < 5000) grade = 4;
+    else grade = 3;
+  }
 
-  // Обновляем статистику правильных/неправильных ответов
-  if (correct) {
+  // 2. Алгоритм интервалов (SM-2)
+  if (grade >= 3) {
+    // ПРАВИЛЬНО
+    if (s.reps === 0) s.interval = 1;       // 1 день
+    else if (s.reps === 1) s.interval = 6;  // 6 дней
+    else s.interval = Math.round(s.interval * s.ef); // Рост по экспоненте
+
+    s.reps += 1;
+    // Корректировка "лёгкости" слова
+    s.ef = s.ef + (0.1 - (5 - grade) * (0.08 + (5 - grade) * 0.02));
+    if (s.ef < 1.3) s.ef = 1.3; 
+    
     s.correct++;
     s.difficulty = Math.max(0, (s.difficulty || 0) - 1);
   } else {
+    // ОШИБКА
+    s.reps = 0;     // Сброс
+    s.interval = 1; // Завтра повторить
     s.incorrect++;
     s.difficulty = Math.min(5, (s.difficulty || 0) + 1);
     s.lapses = (s.lapses || 0) + 1;
   }
-  // Обновляем "точность" 0..10
-if (s.accScore == null) s.accScore = 0;
-if (correct) {
-  s.accScore = Math.min(10, s.accScore + 1);  // +10%
-} else {
-  s.accScore = Math.max(0, s.accScore - 1);   // -10%
-}
 
-  // Обновляем сессию для режима "запланировано"
-  if (this.currentPractice === 'scheduled') {
-    let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
-    const today = new Date().toDateString();
-    
-    // Проверяем, что сессия актуальна
-    if (!session.date || session.date !== today) {
-      session = {
-        date: today,
-        shownWords: [],
-        correctStreak: 0,
-        totalCorrect: 0
-      };
-    }
-    
-    if (correct) {
-      session.correctStreak = (session.correctStreak || 0) + 1;
-      session.totalCorrect = (session.totalCorrect || 0) + 1;
-      
-      // Каждые 10 правильных ответов добавляем 10 слов
-      if (session.totalCorrect > 0 && session.totalCorrect % 10 === 0) {
-        this.showNotification(`Отлично! Добавлено еще 10 слов к изучению! Всего в пуле: ${40 + session.totalCorrect} слов`, 'success');
-        // Обновляем текущий список слов
-        setTimeout(() => {
-          this.suppressAutoSpeakOnce = true;
-          this.renderLearningSection();
-        }, 100);
+  // 3. Расчет следующей даты
+  const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+  // Если ошибка, ставим повтор "скоро" (через 10 минут в теории, но тут ставим на сейчас)
+  if (grade < 3) s.nextReview = now + (10 * 60 * 1000);
+  else s.nextReview = now + (s.interval * ONE_DAY_MS);
+
+  s.lastReview = now;
+  s.totalAnswers = (s.totalAnswers || 0) + 1;
+  if (responseTimeMs) s.totalTimeMs = (s.totalTimeMs || 0) + responseTimeMs;
+  
+  // Оценка точности для бейджиков (0..10)
+  if (s.accScore == null) s.accScore = 0;
+  if (correct) s.accScore = Math.min(10, s.accScore + 1);
+  else s.accScore = Math.max(0, s.accScore - 2);
+
+  // 4. Авто-выучивание (если интервал > 21 дня)
+  if (s.interval > 21 && !this.learningWords.find(w => w.word === word).isLearned) {
+      const wObj = this.learningWords.find(w => w.word === word);
+      if (wObj) {
+          wObj.isLearned = true;
+          this.showNotification(`Слово "${word}" полностью усвоено! 🎓`, 'success');
       }
-    } else {
-      session.correctStreak = 0;
-    }
-    
-    localStorage.setItem('currentSession', JSON.stringify(session));
   }
 
-  // Простая логика для следующего показа (без интервалов)
-  s.nextReview = now; // Всегда доступно для повторения
-  s.phase = 'review'; // Все слова в фазе повторения
-  
-  // Учитываем дневной прогресс
-  this.srsDay = this.srsDay || this.loadSrsDay();
-  this.srsDay.answered = (this.srsDay.answered || 0) + 1;
-  this.saveSrsDay();
+  // 5. Сохраняем сессию (для экрана итогов)
+  if (this.currentPractice === 'scheduled') {
+    let session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+    if (correct) {
+       session.sessionCorrect = (session.sessionCorrect || 0) + 1;
+       session.correctStreak = (session.correctStreak || 0) + 1;
+       session.totalCorrect = (session.totalCorrect || 0) + 1;
+    } else {
+       session.correctStreak = 0;
+    }
+    localStorage.setItem('currentSession', JSON.stringify(session));
+  }
 
   this.saveData();
 }
@@ -6175,31 +6311,33 @@ attachPetHandlers() {
     }
     return result;
   }
-    showNotification(msg, type = 'info') {
-      // 1. Ищем или создаем контейнер
-      let container = document.querySelector('.toast-container');
-      if (!container) {
-          container = document.createElement('div');
-          container.className = 'toast-container';
-          document.body.appendChild(container);
-      }
 
-      // 2. Создаем уведомление с классами
-      const toast = document.createElement('div');
-      toast.className = `toast ${type}`; // type: success, error, warning, info
-      toast.innerHTML = `<span>${msg}</span>`;
-      
-      // 3. Добавляем в контейнер
-      container.appendChild(toast);
-      
-      // 4. Удаляем через 3 секунды с анимацией исчезновения
-      setTimeout(() => {
-          toast.style.transition = 'all 0.3s ease';
-          toast.style.opacity = '0';
-          toast.style.transform = 'translateY(-20px) scale(0.9)';
-          setTimeout(() => toast.remove(), 300);
-      }, 3000);
-  }
+showNotification(msg, type = 'info') {
+    // 1. Удаляем ВСЕ старые уведомления мгновенно
+    const oldToasts = document.querySelectorAll('.toast-container');
+    oldToasts.forEach(el => el.remove());
+
+    // 2. Создаем новый контейнер
+    let container = document.createElement('div');
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+
+    // 3. Создаем уведомление
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `<span>${msg}</span>`;
+    
+    // 4. Показываем
+    container.appendChild(toast);
+    
+    // 5. Удаляем через 2.5 секунды
+    setTimeout(() => {
+        toast.style.transition = 'all 0.3s ease';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-20px) scale(0.9)';
+        setTimeout(() => container.remove(), 300);
+    }, 2500);
+}
   
   getRandomLearningWord() {
     const availableWords = this.learningWords.filter(w => !w.isLearned);
@@ -6590,6 +6728,7 @@ attachPetHandlers() {
   // 4. ГЛАВНАЯ ФУНКЦИЯ ПОКАЗА (Маршрутизатор Меню/Список)
   // =================================================
    showLevelWords(level, filter = null) {
+    this.currentFilter = filter;
     this.stopCurrentAudio();
     this.currentLevel = level;
     this.currentCategory = null;
