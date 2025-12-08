@@ -40,6 +40,78 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+  
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #eef4f6;
+    z-index: 999999; /* Увеличиваем z-index чтобы был выше всего */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease-out, visibility 0.8s;
+}
+
+/* Класс, который мы добавим скриптом, чтобы скрыть экран */
+#preloader.done {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Контейнер для кота */
+.loader-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Наш Кот */
+.loader-cat {
+    width: 250px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    animation: duo-breathe 1.5s ease-in-out infinite alternate;
+}
+
+/* Сама анимация увеличения/уменьшения */
+@keyframes duo-breathe {
+    0% {
+        transform: scale(1) translateY(0);
+    }
+    100% {
+        transform: scale(1.05) translateY(-5px);
+    }
+}
+
+/* Полоска загрузки */
+.loading-bar-container {
+    width: 200px;
+    height: 6px;
+    background: #dcdcdc;
+    border-radius: 3px;
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.loading-bar {
+    height: 100%;
+    width: 0%;
+    background: #2ecc71;
+    border-radius: 3px;
+    animation: fill-bar 2s ease-in-out forwards;
+}
+
+@keyframes fill-bar {
+    0% { width: 0%; }
+    50% { width: 60%; }
+    100% { width: 100%; }
+}
+  
   .app-install-banner {
     position: fixed;
     top: 0;
@@ -322,6 +394,18 @@ body {
 <!-- /Yandex.Metrika counter -->
 </head>
 <body>
+    
+      <div id="preloader">
+      <div class="loader-content">
+          <img src="https://bewords.ru/bob_in_winter.jpg" alt="Bewords Cat" class="loader-cat">
+          
+          <!-- Полоска прогресса -->
+          <div class="loading-bar-container">
+              <div class="loading-bar"></div>
+          </div>
+      </div>
+  </div>
+    
   <!-- App Install Banner -->
 <div id="appInstallBanner" class="app-install-banner">
   <div class="banner-content">
@@ -1208,7 +1292,44 @@ function setLang(from, to){
     if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){ return false; } // Ctrl+U
   }
 </script>
+<script>
+// Скрываем основной контент до загрузки
+document.addEventListener('DOMContentLoaded', function() {
+    // Основной контент скрываем до полной загрузки
+    document.querySelector('.app-container').style.visibility = 'hidden';
+});
+
+// Функция скрытия прелоадера
+function hidePreloader() {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        // Добавляем класс, который делает прозрачность 0
+        preloader.classList.add('done');
+        
+        // Показываем основной контент
+        document.querySelector('.app-container').style.visibility = 'visible';
+        
+        // Удаляем элемент из DOM после завершения анимации
+        setTimeout(() => {
+            if (preloader.parentNode) {
+                preloader.style.display = 'none';
+            }
+        }, 800);
+    }
+}
+
+// Ждем загрузки ВСЕХ ресурсов
+window.addEventListener('load', function() {
+    // Минимальное время показа прелоадера - 2.5 секунды
+    setTimeout(hidePreloader, 2500);
+});
+
+// Фолбэк: если что-то пошло не так, все равно скрыть через 4 секунды
+setTimeout(function() {
+    hidePreloader();
+}, 4000);
+</script>
+
 </body>
 
 </html>
-
