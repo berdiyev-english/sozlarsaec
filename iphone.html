@@ -3,7 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- Заголовок для вкладки браузера (пользователь видит это при чтении инструкции) -->
   <title>Установи BeWords на iPhone!</title>
+
+  <!-- ========================================== -->
+  <!-- НАСТРОЙКИ ДЛЯ ЭКРАНА "ДОМОЙ" (PWA ДЛЯ iOS) -->
+  <!-- ========================================== -->
+  
+  <!-- Короткое имя, которое будет под иконкой на рабочем столе -->
+  <meta name="apple-mobile-web-app-title" content="BeWords">
+  
+  <!-- Иконка приложения (iOS берет её отсюда) -->
+  <link rel="apple-touch-icon" href="https://bewords.ru/icon-192.png">
+  
+  <!-- Обязательный тег! Открывает сайт как приложение (без кнопок и строки поиска Safari) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  
+  <!-- Цвет статус-бара (где часы и батарея) -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- ========================================== -->
+
+  <!-- СКРИПТ ПРОВЕРКИ PWA -->
+  <script>
+    // Проверяем, открыт ли сайт как приложение с домашнего экрана
+    var isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+    
+    // Если да, сразу перенаправляем в основное приложение
+    if (isStandalone) {
+      localStorage.setItem('pwa_launched', 'true');
+      window.location.replace("https://bewords.ru");
+    }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -163,7 +196,7 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="mainContainer">
 
     <div class="header">
       <img src="https://bewords.ru/icon-192.png" alt="BeWords" class="header-logo">
@@ -180,9 +213,14 @@
   </div>
 
   <script>
+    // Скрываем интерфейс инструкции, если скрипт в head не успел отработать
+    // и страница уже открылась как PWA
+    if (window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches) {
+      document.getElementById('mainContainer').style.display = 'none';
+    }
+
     /* ═══════ SVG inline icons for steps ═══════ */
     const IC = {
-      /* iOS Share button — square tray with arrow up */
       share: '<span class="ic"><svg viewBox="0 0 24 24" fill="none">'
         + '<path d="M7 9H5.5A1.5 1.5 0 004 10.5v9A1.5 1.5 0 005.5 21h13'
         + 'a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0018.5 9H17" '
@@ -191,13 +229,11 @@
         + '<path d="M8.5 6L12 2.5 15.5 6" stroke="#007AFF" stroke-width="1.8" '
         + 'stroke-linecap="round" stroke-linejoin="round"/></svg></span>',
 
-      /* Add to Home Screen — plus in rounded square */
       addHome: '<span class="ic"><svg viewBox="0 0 24 24" fill="none">'
         + '<rect x="3" y="3" width="18" height="18" rx="3" stroke="#007AFF" stroke-width="1.8"/>'
         + '<path d="M12 8v8M8 12h8" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round"/>'
         + '</svg></span>',
 
-      /* Three-dots vertical menu */
       dots: '<span class="ic"><svg viewBox="0 0 24 24">'
         + '<circle cx="12" cy="5" r="2" fill="#555"/>'
         + '<circle cx="12" cy="12" r="2" fill="#555"/>'
@@ -233,7 +269,7 @@
         name: 'Safari',
         steps: [
           'Открой <strong>bewords.ru</strong> в браузере Safari',
-          'Нажми кнопку «Поделиться» ' + IC.share + ' внизу экрана',
+          'Нажми «Поделиться» ' + IC.share + ' внизу (или сначала на ' + IC.dots + ' справа внизу, затем «Поделиться»)',
           'Пролистай вниз и нажми ' + IC.addHome + ' «На экран "Домой"»',
           'Нажми <strong>«Добавить»</strong> в правом верхнем углу',
         ],
@@ -286,7 +322,6 @@
 
     /* ═══════ Render ═══════ */
     function render() {
-      /* — tabs — */
       var tabsHtml = '';
       for (var k in BROWSERS) {
         var b = BROWSERS[k];
@@ -305,7 +340,6 @@
         });
       });
 
-      /* — steps — */
       var data = BROWSERS[current];
       var html = '<div class="steps">';
 
@@ -317,7 +351,6 @@
       });
       html += '</div>';
 
-      /* — done block — */
       html += '<div class="done">'
         + '<img src="https://bewords.ru/icon-192.png" alt="BeWords" class="done-img">'
         + '<div class="done-info"><h3>'
@@ -328,7 +361,6 @@
         + '<p>Открой <strong>BeWords</strong> с рабочего стола</p>'
         + '</div></div>';
 
-      /* — tip — */
       html += '<div class="tip">'
         + '<span class="tip-ic"><svg viewBox="0 0 24 24" fill="none">'
         + '<circle cx="12" cy="12" r="10" fill="#FFD93D"/>'
