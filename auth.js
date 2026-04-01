@@ -204,10 +204,17 @@ class AuthManager {
         const mainBtnText = this.isLoginMode ? 'Войти в аккаунт' : 'Создать аккаунт';
 
         modal.innerHTML = `
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
-                <h2 style="margin:0;">BeWords</h2>
-                <button class="btn btn-secondary close-auth" style="padding:5px 10px;"><i class="fas fa-times"></i></button>
-            </div>
+    
+        <!-- Заголовок + кнопка закрытия -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <h2 style="margin:0;">BeWords</h2>
+        <button class="btn btn-secondary close-auth" style="padding:5px 10px;"><i class="fas fa-times"></i></button>
+    </div>
+    
+    <!-- Подзаголовок сразу под заголовком -->
+    <p style="color:var(--text-secondary); font-size:0.9rem; margin:0 0 15px 0; line-height:1.3;">
+        Создай аккаунт, чтобы сохранять свои слова и прогресс.
+    </p>
             
             ${hookHtml}
 
@@ -235,7 +242,10 @@ class AuthManager {
 
             <button class="btn btn-primary" id="mainAuthBtn" style="width:100%; font-weight:900; margin-bottom:10px; padding:14px; font-size:1.1rem; box-shadow: 0 4px 0 rgba(0,0,0,0.2);">${mainBtnText}</button>
             
-            ${this.isLoginMode ? `<div style="text-align:center; margin-top:10px;"><button id="forgotBtn" style="background:none; border:none; color:var(--text-secondary); text-decoration:underline; cursor:pointer; font-size:0.9rem;">Забыли пароль?</button></div>` : ''}
+            ${this.isLoginMode 
+    ? `<div style="text-align:center; margin-top:10px;"><button id="forgotBtn" style="background:none; border:none; color:var(--text-secondary); text-decoration:underline; cursor:pointer; font-size:0.9rem;">Забыли пароль?</button></div>` 
+    : `<div style="text-align:center; margin-top:10px;"><button id="switchToLoginBtn" style="background:none; border:none; color:var(--text-secondary); text-decoration:underline; cursor:pointer; font-size:0.9rem;">Уже есть аккаунт?</button></div>`
+}
         `;
 
         document.getElementById('tabRegister').onclick = () => { this.isLoginMode = false; this.renderModalInner(); };
@@ -246,8 +256,16 @@ class AuthManager {
         };
 
         if (this.isLoginMode) {
-            document.getElementById('forgotBtn').onclick = () => { this.isResetMode = true; this.renderModalInner(); };
-        }
+    document.getElementById('forgotBtn').onclick = () => { 
+        this.isResetMode = true; 
+        this.renderModalInner(); 
+    };
+} else {
+    document.getElementById('switchToLoginBtn').onclick = () => { 
+        this.isLoginMode = true; 
+        this.renderModalInner(); 
+    };
+}
     }
 
     showUpdatePasswordModal() {
