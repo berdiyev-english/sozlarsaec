@@ -2,305 +2,443 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Установи BeWords на Android!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://bewords.ru/icon-192.png" as="image">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    body{
+      font-family:'Nunito',-apple-system,BlinkMacSystemFont,sans-serif;
+      background:linear-gradient(160deg,#4facfe 0%,#00f2fe 100%);
+      min-height:100vh;
+      min-height:-webkit-fill-available;
+      padding:20px;
+      -webkit-font-smoothing:antialiased;
     }
 
-    body {
-      font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(135deg, #58cc02 0%, #89e219 100%);
-      min-height: 100vh;
-      padding: 20px;
+    .container{max-width:480px;margin:0 auto}
+
+    /* ======== HEADER ======== */
+    .header{text-align:center;padding:16px 0 24px;animation:headerIn .6s ease}
+    @keyframes headerIn{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+
+    .header-logo{
+      width:80px;height:80px;
+      border-radius:20px;
+      box-shadow:0 8px 28px rgba(0,0,0,.2);
+      margin-bottom:14px;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
+    .header h1{
+      color:#fff;font-size:1.65em;font-weight:900;
+      line-height:1.25;text-shadow:0 2px 8px rgba(0,0,0,.13);
     }
 
-    .header {
-      text-align: center;
-      margin-bottom: 40px;
-      animation: bounce 2s infinite;
+    .header .sub{
+      color:rgba(255,255,255,.85);font-size:.92em;
+      font-weight:700;margin-top:5px;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    /* ======== CARD ======== */
+    .card{
+      background:#fff;border-radius:22px;padding:22px;
+      box-shadow:0 16px 50px rgba(0,0,0,.1);
+      animation:cardIn .5s .15s ease both;
+    }
+    @keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ======== DOWNLOAD SECTION ======== */
+    .dl-section{
+      text-align:center;
+      background:linear-gradient(135deg,#eaf5ff,#d6ecff);
+      border-radius:16px;
+      padding:24px 18px 20px;
+      margin-bottom:20px;
     }
 
-    h1 {
-      color: white;
-      font-size: 2.5em;
-      font-weight: 800;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-      margin-bottom: 10px;
+    .dl-icon{
+      width:90px;height:90px;
+      margin:0 auto 16px;
+      background:linear-gradient(135deg,#4facfe,#00d4ff);
+      border-radius:22px;
+      display:flex;align-items:center;justify-content:center;
+      animation:float 3s ease-in-out infinite;
+      box-shadow:0 8px 24px rgba(79,172,254,.3);
     }
 
-    .app-name {
-      background: white;
-      color: #58cc02;
-      padding: 5px 15px;
-      border-radius: 20px;
-      display: inline-block;
-      font-weight: 800;
-      margin-top: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+    .dl-icon svg{width:50px;height:50px}
+
+    .dl-title{
+      color:#333;font-size:1.3em;font-weight:900;margin-bottom:6px;
+    }
+    .dl-desc{
+      color:#666;font-size:.88em;font-weight:600;
+      line-height:1.55;margin-bottom:18px;
     }
 
-    .main-card {
-      background: white;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    /* ======== BUTTONS AREA ======== */
+    .btn-group{
+      display:flex;flex-direction:column;gap:10px;
+      align-items:center;
     }
 
-    .android-download-card {
-      text-align: center;
-      padding: 40px 30px;
-      background: linear-gradient(135deg, #e8ffd8 0%, #f0ffe8 100%);
-      border-radius: 20px;
+    .dl-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      background:linear-gradient(135deg,#4facfe 0%,#00d4ff 100%);
+      color:#fff;padding:14px 28px;border-radius:14px;
+      text-decoration:none;font-family:inherit;
+      font-size:1.02em;font-weight:800;
+      border:none;cursor:pointer;
+      box-shadow:0 4px 0 #2d8ed9;
+      transition:all .15s ease;
+      -webkit-tap-highlight-color:transparent;
+      width:100%;max-width:300px;justify-content:center;
+    }
+    .dl-btn:hover{background:linear-gradient(135deg,#3a9ef0 0%,#00c0e8 100%)}
+    .dl-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #2d8ed9}
+    .dl-btn svg{width:22px;height:22px;flex-shrink:0}
+
+    .divider-or{
+      display:flex;align-items:center;gap:10px;
+      width:100%;max-width:300px;
+      color:#aab;font-size:.75em;font-weight:800;
+      text-transform:uppercase;letter-spacing:.5px;
+    }
+    .divider-or::before,.divider-or::after{
+      content:'';flex:1;height:1.5px;
+      background:linear-gradient(90deg,transparent,#cde,transparent);
     }
 
-    .android-icon {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 25px;
-      background: linear-gradient(135deg, #58cc02 0%, #89e219 100%);
-      border-radius: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: float 3s ease-in-out infinite;
-      box-shadow: 0 10px 30px rgba(88, 204, 2, 0.3);
+    .rustore-btn{
+      display:inline-flex;align-items:center;gap:10px;
+      background:#fff;color:#333;
+      padding:13px 24px;border-radius:14px;
+      text-decoration:none;font-family:inherit;
+      font-size:.95em;font-weight:800;
+      border:2.5px solid #e0e0e0;cursor:pointer;
+      transition:all .15s ease;
+      -webkit-tap-highlight-color:transparent;
+      width:100%;max-width:300px;justify-content:center;
+    }
+    .rustore-btn:hover{border-color:#0077FF;background:#f8fbff}
+    .rustore-btn:active{transform:translateY(2px)}
+
+    .rustore-logo{
+      width:28px;height:28px;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .rustore-logo svg{width:100%;height:100%}
+
+    .rustore-text{display:flex;flex-direction:column;line-height:1.2;text-align:left}
+    .rustore-text .small{font-size:.65em;font-weight:700;color:#888}
+    .rustore-text .big{font-size:1em;font-weight:900;color:#333}
+
+    /* ======== SECTION LABEL ======== */
+    .section-label{
+      font-size:.7em;color:#aaa;font-weight:800;
+      text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    /* ======== TABS ======== */
+    .method-tabs{
+      display:flex;gap:6px;margin-bottom:16px;
+    }
+    .mtab{
+      flex:1;display:flex;align-items:center;justify-content:center;gap:5px;
+      padding:9px 8px;border:2px solid #eaeaea;border-radius:10px;
+      background:#fff;cursor:pointer;
+      font-family:inherit;font-size:.75em;font-weight:700;color:#999;
+      transition:all .15s ease;outline:none;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .mtab:hover{border-color:#4facfe;color:#4facfe}
+    .mtab.active{border-color:#4facfe;background:#f0f7ff;color:#4facfe}
+    .mtab-icon{width:16px;height:16px;display:flex;flex-shrink:0}
+    .mtab-icon svg{width:100%;height:100%}
+
+    /* ======== STEPS ======== */
+    .steps-wrap{animation:fadeUp .35s ease}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+    .step{
+      display:flex;gap:13px;position:relative;padding-bottom:18px;
+    }
+    .step:last-child{padding-bottom:0}
+
+    .step::after{
+      content:'';position:absolute;
+      left:16px;top:38px;bottom:0;
+      width:2px;background:#e4f0ff;border-radius:1px;
+    }
+    .step:last-child::after{display:none}
+
+    .snum{
+      width:34px;height:34px;min-width:34px;
+      background:linear-gradient(135deg,#4facfe,#00d4ff);
+      color:#fff;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;font-size:.9em;
+      position:relative;z-index:1;
+      box-shadow:0 3px 10px rgba(79,172,254,.28);
     }
 
-    .android-icon svg {
-      width: 70px;
-      height: 70px;
-      fill: white;
+    .sbody{
+      flex:1;padding-top:6px;
+      font-size:.9em;line-height:1.55;color:#444;font-weight:600;
+    }
+    .sbody strong{color:#4facfe;font-weight:800}
+
+    /* ======== INLINE ICON BADGE ======== */
+    .ic{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:28px;height:28px;
+      background:#f2f7ff;border:1.5px solid #d6e6ff;border-radius:7px;
+      vertical-align:middle;margin:0 3px;padding:4px;
+    }
+    .ic svg{width:100%;height:100%}
+
+    /* ======== DONE BLOCK ======== */
+    .done{
+      display:flex;align-items:center;gap:14px;
+      background:linear-gradient(135deg,#eaf5ff,#d6ecff);
+      border:2px solid #4facfe;border-radius:16px;
+      padding:16px 18px;margin-top:22px;
     }
 
-    .android-title {
-      color: #333;
-      font-size: 1.8em;
-      font-weight: 800;
-      margin-bottom: 15px;
+    .done-img{
+      width:52px;height:52px;min-width:52px;
+      border-radius:14px;
+      box-shadow:0 4px 14px rgba(79,172,254,.25);
     }
 
-    .android-description {
-      color: #666;
-      font-size: 1.1em;
-      margin-bottom: 30px;
-      line-height: 1.6;
+    .done-info h3{
+      font-size:1.1em;font-weight:900;color:#4facfe;
+      display:flex;align-items:center;gap:6px;
     }
+    .done-info h3 svg{width:22px;height:22px;flex-shrink:0}
 
-    .download-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #58cc02 0%, #89e219 100%);
-      color: white;
-      padding: 18px 40px;
-      border-radius: 15px;
-      text-decoration: none;
-      font-size: 1.2em;
-      font-weight: 700;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 0 #46A302;
-      border: none;
-      cursor: pointer;
+    .done-info p{
+      font-size:.85em;font-weight:700;color:#666;margin-top:3px;
     }
+    .done-info p strong{color:#333}
 
-    .download-btn:hover {
-      background: linear-gradient(135deg, #46A302 0%, #78d412 100%);
-      transform: translateY(2px);
-      box-shadow: 0 2px 0 #358F01;
+    /* ======== TIP ======== */
+    .tip{
+      display:flex;align-items:flex-start;gap:10px;
+      background:#fffce6;border:1.5px solid #ffe680;border-radius:12px;
+      padding:12px 14px;margin-top:14px;
+      font-size:.78em;color:#7a6c00;font-weight:600;line-height:1.5;
     }
+    .tip-ic{width:20px;height:20px;min-width:20px;flex-shrink:0}
+    .tip-ic svg{width:100%;height:100%}
 
-    .download-btn:active {
-      transform: translateY(4px);
-      box-shadow: none;
-    }
+    /* hide content */
+    .hidden{display:none}
 
-    .download-btn svg {
-      width: 24px;
-      height: 24px;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
-
-    .install-steps {
-      margin-top: 30px;
-      padding-top: 30px;
-      border-top: 2px dashed #58cc02;
-    }
-
-    .install-steps-title {
-      color: #333;
-      font-size: 1.3em;
-      font-weight: 800;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .install-step {
-      background: white;
-      border-radius: 15px;
-      padding: 15px 20px;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-
-    .install-step:hover {
-      transform: translateX(5px);
-    }
-
-    .install-step-number {
-      background: #58cc02;
-      color: white;
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      flex-shrink: 0;
-    }
-
-    .install-step-text {
-      color: #333;
-      font-weight: 600;
-      font-size: 1em;
-    }
-
-    .tip-box {
-      background: linear-gradient(135deg, #ffd93d 0%, #ffed4e 100%);
-      border-radius: 15px;
-      padding: 20px;
-      margin-top: 20px;
-      color: #333;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .tip-icon {
-      width: 40px;
-      height: 40px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .tip-icon svg {
-      width: 24px;
-      height: 24px;
-      fill: #ffd93d;
-    }
-
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2em;
-      }
-
-      .android-title {
-        font-size: 1.5em;
-      }
-
-      .android-description {
-        font-size: 1em;
-      }
+    @media(max-width:380px){
+      body{padding:14px}
+      .card{padding:16px}
+      .header h1{font-size:1.35em}
+      .dl-section{padding:18px 14px 16px}
     }
   </style>
 </head>
 <body>
-
   <div class="container">
+
     <div class="header">
-      <h1>Установи приложение!</h1>
-      <div class="app-name">BeWords.ru</div>
+      <img src="https://bewords.ru/icon-192.png" alt="BeWords" class="header-logo">
+      <h1>Установи BeWords<br>на Android</h1>
+      <p class="sub">выбери удобный способ</p>
     </div>
 
-    <div class="main-card">
-      <div class="android-download-card">
-        <div class="android-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M17.6 9.48L19.44 3.3C19.55 2.95 19.33 2.59 18.96 2.5C18.62 2.38 18.26 2.61 18.14 2.96L16.26 9.21C14.93 8.8 13.5 8.58 12 8.58C10.5 8.58 9.07 8.8 7.74 9.21L5.86 2.96C5.74 2.61 5.38 2.38 5.04 2.5C4.67 2.59 4.45 2.95 4.56 3.3L6.4 9.48C2.85 11.07 0.5 14.34 0.5 18.26H23.5C23.5 14.34 21.15 11.07 17.6 9.48ZM7.5 16.76C6.95 16.76 6.5 16.31 6.5 15.76C6.5 15.21 6.95 14.76 7.5 14.76C8.05 14.76 8.5 15.21 8.5 15.76C8.5 16.31 8.05 16.76 7.5 16.76ZM16.5 16.76C15.95 16.76 15.5 16.31 15.5 15.76C15.5 15.21 15.95 14.76 16.5 14.76C17.05 14.76 17.5 15.21 17.5 15.76C17.5 16.31 17.05 16.76 16.5 16.76Z"/>
+    <div class="card">
+
+      <!-- Download section -->
+      <div class="dl-section">
+        <div class="dl-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 16L12 4" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M7.5 11.5L12 16L16.5 11.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 17v1.5A1.5 1.5 0 005.5 20h13a1.5 1.5 0 001.5-1.5V17" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        
-        <h2 class="android-title">BeWords для Android</h2>
-        <p class="android-description">
-          Скачай APK-файл и установи BeWords на свой Android телефон.<br>
-          Учи слова где угодно и когда угодно! 🚀
-        </p>
-        
-        <a href="BeWords.apk" class="download-btn" download>
-          <svg viewBox="0 0 24 24" fill="white">
-            <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/>
-          </svg>
-          Скачать BeWords.apk
-        </a>
+        <h2 class="dl-title">BeWords для Android</h2>
+        <p class="dl-desc">Скачай и установи BeWords<br>на свой Android-телефон</p>
 
-        <div class="install-steps">
-          <div class="install-steps-title">📱 Как установить приложение:</div>
-          
-          <div class="install-step">
-            <div class="install-step-number">1</div>
-            <div class="install-step-text">Нажми кнопку "Скачать" и дождись загрузки APK-файла</div>
-          </div>
-          
-          <div class="install-step">
-            <div class="install-step-number">2</div>
-            <div class="install-step-text">Открой файл BeWords.apk из папки "Загрузки"</div>
-          </div>
-          
-          <div class="install-step">
-            <div class="install-step-number">3</div>
-            <div class="install-step-text">Разреши установку из неизвестных источников (если попросит)</div>
-          </div>
-          
-          <div class="install-step">
-            <div class="install-step-number">4</div>
-            <div class="install-step-text">Нажми "Установить" и дождись завершения</div>
-          </div>
-          
-          <div class="install-step">
-            <div class="install-step-number">5</div>
-            <div class="install-step-text">Запусти BeWords и начни учить слова! 🎉</div>
-          </div>
-        </div>
-
-        <div class="tip-box">
-          <div class="tip-icon">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        <div class="btn-group">
+          <!-- APK button -->
+          <a href="BeWords.apk" class="dl-btn" download>
+            <svg viewBox="0 0 24 24" fill="white">
+              <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/>
             </svg>
-          </div>
-          <span><strong>Важно:</strong> Если Android блокирует установку, зайди в Настройки → Безопасность и разреши установку из этого источника</span>
+            Скачать BeWords.apk
+          </a>
+
+          <div class="divider-or">или</div>
+
+          <!-- RuStore button -->
+          <a href="https://www.rustore.ru/catalog/app/co.median.android.jbnxzdr" class="rustore-btn" target="_blank" rel="noopener">
+            <span class="rustore-logo">
+              <!-- RuStore logo -->
+              <svg viewBox="0 0 32 32" fill="none">
+                <defs>
+                  <linearGradient id="rs1" x1="0" y1="0" x2="32" y2="32">
+                    <stop offset="0%" stop-color="#0077FF"/>
+                    <stop offset="100%" stop-color="#00C1FF"/>
+                  </linearGradient>
+                </defs>
+                <rect width="32" height="32" rx="8" fill="url(#rs1)"/>
+                <path d="M10 8h5.5a5 5 0 010 10H14v6h-4V8z" fill="#fff"/>
+                <rect x="14" y="14" width="4" height="4" rx="1" fill="#fff" opacity=".6"/>
+                <path d="M17.5 18l4.5 6h-4.5L14 18" fill="#fff" opacity=".85"/>
+              </svg>
+            </span>
+            <span class="rustore-text">
+              <span class="small">Скачать из</span>
+              <span class="big">RuStore</span>
+            </span>
+          </a>
         </div>
       </div>
+
+      <!-- Method tabs -->
+      <p class="section-label">Инструкция по установке</p>
+
+      <div class="method-tabs">
+        <button class="mtab active" onclick="showMethod('apk')">
+          <span class="mtab-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" fill="#4facfe"/>
+            </svg>
+          </span>
+          Через APK
+        </button>
+        <button class="mtab" onclick="showMethod('rustore')">
+          <span class="mtab-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="2" width="20" height="20" rx="4" fill="#0077FF"/>
+              <path d="M8 6h4a3.5 3.5 0 010 7h-1v5H8V6z" fill="#fff"/>
+              <path d="M12.5 13l3 5H12l-1-2" fill="#fff" opacity=".85"/>
+            </svg>
+          </span>
+          Через RuStore
+        </button>
+      </div>
+
+      <!-- APK Steps -->
+      <div class="steps-wrap" id="apk-steps">
+        <div class="step">
+          <div class="snum">1</div>
+          <div class="sbody">
+            Нажми кнопку <strong>«Скачать BeWords.apk»</strong> выше и дождись загрузки файла
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 16L12 4" stroke="#4facfe" stroke-width="2" stroke-linecap="round"/><path d="M7.5 11.5L12 16L16.5 11.5" stroke="#4facfe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17v1.5A1.5 1.5 0 005.5 20h13a1.5 1.5 0 001.5-1.5V17" stroke="#4facfe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="snum">2</div>
+          <div class="sbody">
+            Открой файл <strong>BeWords.apk</strong> из уведомлений или из папки
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M3 7h4l2-3h6l2 3h4v12a1 1 0 01-1 1H4a1 1 0 01-1-1V7z" stroke="#4facfe" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 12h8M12 12v5" stroke="#4facfe" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            <strong>«Загрузки»</strong>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="snum">3</div>
+          <div class="sbody">
+            Если появится предупреждение — нажми <strong>«Настройки»</strong> и разреши установку из этого источника
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3z" stroke="#4facfe" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#4facfe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="snum">4</div>
+          <div class="sbody">
+            Нажми <strong>«Установить»</strong> и дождись завершения установки
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#4facfe" stroke-width="1.8"/><path d="M8 12l3 3 5-5" stroke="#4facfe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RuStore Steps -->
+      <div class="steps-wrap hidden" id="rustore-steps">
+        <div class="step">
+          <div class="snum">1</div>
+          <div class="sbody">
+            Нажми кнопку <strong>«Скачать из RuStore»</strong> выше — откроется страница приложения в RuStore
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="snum">2</div>
+          <div class="sbody">
+            Если у тебя ещё нет RuStore — установи его по подсказке на экране, затем вернись на страницу BeWords
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" stroke="#4facfe" stroke-width="1.8"/><path d="M8 6h4a3 3 0 010 6h-1v4H8V6z" fill="#4facfe" opacity=".6"/></svg></span>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="snum">3</div>
+          <div class="sbody">
+            Нажми <strong>«Установить»</strong> на странице BeWords в RuStore
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#4facfe" stroke-width="1.8"/><path d="M12 8v8M8 12h8" stroke="#4facfe" stroke-width="2" stroke-linecap="round"/></svg></span>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="snum">4</div>
+          <div class="sbody">
+            Дождись завершения загрузки и установки — всё произойдёт автоматически
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#4facfe" stroke-width="1.8"/><path d="M8 12l3 3 5-5" stroke="#4facfe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Done block -->
+      <div class="done">
+        <img src="https://bewords.ru/icon-192.png" alt="BeWords" class="done-img">
+        <div class="done-info">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" fill="#4facfe"/>
+              <path d="M8 12.5l2.5 3 5.5-6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Готово!
+          </h3>
+          <p>Открой <strong>BeWords</strong> с рабочего стола</p>
+        </div>
+      </div>
+
+      <!-- Tip -->
+      <div class="tip">
+        <span class="tip-ic">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" fill="#FFD93D"/>
+            <path d="M12 8h.01M12 12v4" stroke="#7A6C00" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span><strong>Совет:</strong> Установка через RuStore проще — не нужно разрешать неизвестные источники. Если ставишь APK и Android блокирует — зайди в Настройки → Безопасность.</span>
+      </div>
+
     </div>
   </div>
 
+  <script>
+    function showMethod(method) {
+      document.querySelectorAll('.mtab').forEach(function(t){ t.classList.remove('active') });
+      event.currentTarget.classList.add('active');
+
+      document.getElementById('apk-steps').classList.toggle('hidden', method !== 'apk');
+      document.getElementById('rustore-steps').classList.toggle('hidden', method !== 'rustore');
+    }
+  </script>
 </body>
 </html>
