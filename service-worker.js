@@ -13,6 +13,7 @@ const STATIC_ASSETS = [
   '/kitten.png',
   '/puppy.png',
   '/nophoto.jpg',
+  '/bob_in_spring.jpg',
   '/m1.jpg',     // Закешируем хотя бы пару мотиваций
   '/m2.jpg',
   '/m3.jpg'
