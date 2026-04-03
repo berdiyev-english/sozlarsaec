@@ -40,78 +40,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-  
-#preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #eef4f6;
-    z-index: 999999; /* Увеличиваем z-index чтобы был выше всего */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.8s ease-out, visibility 0.8s;
-}
-
-/* Класс, который мы добавим скриптом, чтобы скрыть экран */
-#preloader.done {
-    opacity: 0;
-    visibility: hidden;
-}
-
-/* Контейнер для кота */
-.loader-content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Наш Кот */
-.loader-cat {
-    width: 250px;
-    height: auto;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    animation: duo-breathe 1.5s ease-in-out infinite alternate;
-}
-
-/* Сама анимация увеличения/уменьшения */
-@keyframes duo-breathe {
-    0% {
-        transform: scale(1) translateY(0);
-    }
-    100% {
-        transform: scale(1.05) translateY(-5px);
-    }
-}
-
-/* Полоска загрузки */
-.loading-bar-container {
-    width: 200px;
-    height: 6px;
-    background: #dcdcdc;
-    border-radius: 3px;
-    margin-top: 30px;
-    overflow: hidden;
-}
-
-.loading-bar {
-    height: 100%;
-    width: 0%;
-    background: #2ecc71;
-    border-radius: 3px;
-    animation: fill-bar 2s ease-in-out forwards;
-}
-
-@keyframes fill-bar {
-    0% { width: 0%; }
-    50% { width: 60%; }
-    100% { width: 100%; }
-}
-  
   .app-install-banner {
     position: fixed;
     top: 0;
@@ -297,43 +225,7 @@ body {
     .app-install-banner {
       display: none !important;
     }
-  }
-    /* AI Chat Iframe Styles */
-    .ai-chat-container {
-      width: 100%;
-      height: calc(100vh - 200px);
-      min-height: 500px;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .ai-chat-iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      background: var(--bg-secondary);
-    }
-    .ai-chat-description {
-      background: var(--bg-secondary);
-      padding: 1rem;
-      border-radius: 12px;
-      border-left: 4px solid var(--accent-primary);
-      margin-bottom: 1rem;
-    }
-    .ai-chat-description h3 {
-      margin: 0 0 0.5rem 0;
-      color: var(--text-primary);
-      font-size: 1.1rem;
-    }
-    .ai-chat-description p {
-      margin: 0;
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-
+  } 
     /* Header */
     .info-btn, .theme-toggle { display: none !important; }
     .settings-btn {
@@ -368,16 +260,72 @@ body {
     .action-text-btn.remove { border-color: #ef4444; color: #ef4444; background: #fee2e2; }
     .action-text-btn:hover { filter: brightness(0.98); }
 
-    /* Mobile adaptations */
-    @media (max-width: 768px) {
-      .ai-chat-container { height: calc(100vh - 180px); min-height: 400px; }
-      .ai-chat-description { padding: 0.75rem; }
-      .ai-chat-description h3 { font-size: 1rem; }
-      .ai-chat-description p { font-size: 0.9rem; }
+    #preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #eef4f6;
+    z-index: 999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease-out, visibility 0.8s;
+}
+
+#preloader.done {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loader-cat {
+    width: 250px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    animation: duo-breathe 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes duo-breathe {
+    0% {
+        transform: scale(1) translateY(0);
     }
-    @media (max-width: 480px) {
-      .ai-chat-container { height: calc(100vh - 160px); min-height: 350px; }
+    100% {
+        transform: scale(1.05) translateY(-5px);
     }
+}
+
+.loading-bar-container {
+    width: 200px;
+    height: 6px;
+    background: #dcdcdc;
+    border-radius: 3px;
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.loading-bar {
+    height: 100%;
+    width: 0%;
+    background: #2ecc71;
+    border-radius: 3px;
+    animation: fill-bar 2s ease-in-out forwards;
+}
+
+@keyframes fill-bar {
+    0% { width: 0%; }
+    50% { width: 60%; }
+    100% { width: 100%; }
+}
+
   </style>
   <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
@@ -394,18 +342,16 @@ body {
 <!-- /Yandex.Metrika counter -->
 </head>
 <body>
-    
-      <div id="preloader">
-      <div class="loader-content">
-          <img src="https://bewords.ru/bob_in_winter.jpg" alt="Bewords Cat" class="loader-cat">
-          
-          <!-- Полоска прогресса -->
-          <div class="loading-bar-container">
-              <div class="loading-bar"></div>
-          </div>
-      </div>
-  </div>
-    
+  <div id="preloader">
+    <div class="loader-content">
+        <img src="https://bewords.ru/bob_in_spring.jpg" alt="Bewords Cat" class="loader-cat">
+        
+        <!-- Полоска прогресса -->
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+</div>
   <!-- App Install Banner -->
 <div id="appInstallBanner" class="app-install-banner">
   <div class="banner-content">
@@ -434,11 +380,14 @@ body {
       </div>
       <div class="header-actions">
         <button class="support-btn" id="supportBtn" data-testid="support-btn" title="Поддержать проект">
-          <i class="fas fa-heart"></i>
+          <i class="fas fa-gift" style="color: #f59e0b; font-size: 1.1rem;"></i>
         </button>
         <button class="settings-btn" id="settingsBtn" data-testid="settings-btn" title="Настройки">
           <i class="fas fa-cog"></i>
         </button>
+        <button id="profileBtn" class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; padding: 0;">
+      <i class="fas fa-user"></i>
+      </button>
       </div>
     </div>
   </header>
@@ -832,7 +781,7 @@ body {
 </div>
 
 <audio id="audioPlayer" preload="none"></audio>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="oxford_words_data.js"></script>
 <script src="sentences-data.js"></script>
 <script src="grammar.js"></script> 
@@ -1292,10 +1241,10 @@ function setLang(from, to){
     if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){ return false; } // Ctrl+U
   }
 </script>
+<script src="auth.js"></script>
 <script>
 // Скрываем основной контент до загрузки
 document.addEventListener('DOMContentLoaded', function() {
-    // Основной контент скрываем до полной загрузки
     document.querySelector('.app-container').style.visibility = 'hidden';
 });
 
@@ -1303,13 +1252,9 @@ document.addEventListener('DOMContentLoaded', function() {
 function hidePreloader() {
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        // Добавляем класс, который делает прозрачность 0
         preloader.classList.add('done');
-        
-        // Показываем основной контент
         document.querySelector('.app-container').style.visibility = 'visible';
         
-        // Удаляем элемент из DOM после завершения анимации
         setTimeout(() => {
             if (preloader.parentNode) {
                 preloader.style.display = 'none';
@@ -1320,16 +1265,14 @@ function hidePreloader() {
 
 // Ждем загрузки ВСЕХ ресурсов
 window.addEventListener('load', function() {
-    // Минимальное время показа прелоадера - 2.5 секунды
-    setTimeout(hidePreloader, 2500);
+    setTimeout(hidePreloader, 2500); // Минимум 2.5 секунды
 });
 
-// Фолбэк: если что-то пошло не так, все равно скрыть через 4 секунды
+// Фолбэк: если что-то пошло не так
 setTimeout(function() {
     hidePreloader();
 }, 4000);
 </script>
-
 </body>
 
 </html>
