@@ -30,6 +30,7 @@ class AuthManager {
             });
         }
 
+        // ПОЛНЫЙ КОД АВТОРИЗАЦИИ (БЕЗ ПРОПУСКОВ)
         supabaseClient.auth.onAuthStateChange((event, session) => {
             this.currentUser = session ? session.user : null;
             
@@ -60,12 +61,26 @@ class AuthManager {
             this.isRecoveringPassword = true;
             this.showUpdatePasswordModal();
         }
+
+        // ==========================================
+        // ЗАЩИТА №1: Сохраняем при закрытии PWA
+        // ==========================================
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden' && this.currentUser) {
+                console.log('Юзер свернул приложение, экстренно сохраняем в облако...');
+                this.syncToCloud();
+            }
+        });
     }
 
+    // ==========================================
+    // ЗАЩИТА №2: Таймер на 1 минуту вместо 2 секунд!
+    // ==========================================
     triggerCloudSave() {
         if (!this.currentUser || this.isDownloading) return; 
         clearTimeout(this.syncTimer);
-        this.syncTimer = setTimeout(() => this.syncToCloud(), 2000);
+        // Сохраняем не чаще, чем раз в 60 секунд (60000 мс)
+        this.syncTimer = setTimeout(() => this.syncToCloud(), 60000);
     }
 
     async syncToCloud() {
@@ -256,16 +271,16 @@ class AuthManager {
         };
 
         if (this.isLoginMode) {
-    document.getElementById('forgotBtn').onclick = () => { 
-        this.isResetMode = true; 
-        this.renderModalInner(); 
-    };
-} else {
-    document.getElementById('switchToLoginBtn').onclick = () => { 
-        this.isLoginMode = true; 
-        this.renderModalInner(); 
-    };
-}
+            document.getElementById('forgotBtn').onclick = () => { 
+                this.isResetMode = true; 
+                this.renderModalInner(); 
+            };
+        } else {
+            document.getElementById('switchToLoginBtn').onclick = () => { 
+                this.isLoginMode = true; 
+                this.renderModalInner(); 
+            };
+        }
     }
 
     showUpdatePasswordModal() {
