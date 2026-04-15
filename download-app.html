@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>BeWords — Учи английский с удовольствием</title>
+  <meta name="description" content="Бесплатное приложение для изучения английского. Умное повторение, игры, озвучка. Без рекламы.">
+  
+  <!-- Force browser detection meta -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      /* 🎨 Light Blue Color Palette */
+      --primary: #0ea5e9;
+      --primary-dark: #0284c7;
+      --primary-light: #7dd3fc;
+      --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
+      --card-bg: #ffffff;
+      --accent: #22d3ee;
+      --accent-dark: #06b6d4;
+      --text: #0c4a6e;
+      --text-secondary: #38bdf8;
+      --text-muted: #64748b;
+      --success: #10b981;
+      --success-light: #d1fae5;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --shadow: 0 8px 32px rgba(14, 165, 233, 0.12);
+      --shadow-hover: 0 16px 48px rgba(14, 165, 233, 0.2);
+      --radius: 20px;
+      --radius-lg: 28px;
+      --radius-xl: 36px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    @media (max-width: 480px) {
+      html { font-size: 14px; }
+    }
+
+    body {
+      font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--bg-gradient);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* === BROWSER REDIRECT OVERLAY === */
+    .browser-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(12, 74, 110, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .browser-overlay.active {
+      display: flex;
+    }
+
+    .browser-modal {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .browser-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .browser-modal h3 {
+      font-size: 1.4rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .browser-modal p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .browser-steps {
+      background: #f0f9ff;
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .browser-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .browser-step:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-num {
+      background: var(--primary);
+      color: white;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .btn-open-browser {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(14, 165, 233, 0.4);
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .btn-open-browser:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(14, 165, 233, 0.5);
+    }
+
+    .btn-skip {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      padding: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      text-decoration: underline;
+    }
+
+    /* === STICKY HEADER === */
+    .sticky-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 20px rgba(14, 165, 233, 0.1);
+      animation: headerSlide 0.4s ease;
+    }
+
+    @keyframes headerSlide {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 900;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    }
+
+    .btn-install {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-install:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(14, 165, 233, 0.5);
+    }
+
+    /* === HERO === */
+    .hero {
+      padding: 120px 16px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      color: var(--primary);
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 14px;
+      line-height: 1.15;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero {
+      background: white;
+      color: var(--primary);
+      padding: 14px 28px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 1rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .btn-hero:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary-light);
+    }
+
+    .btn-hero.secondary {
+      background: rgba(255, 255, 255, 0.6);
+      color: var(--text);
+    }
+
+    .btn-hero.secondary:hover {
+      background: white;
+    }
+
+    /* Floating elements */
+    .floating {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.4;
+      animation: float 6s infinite ease-in-out;
+    }
+
+    .floating:nth-child(1) { top: 15%; left: 8%; font-size: 1.5rem; animation-delay: 0s; }
+    .floating:nth-child(2) { top: 25%; right: 10%; font-size: 1.8rem; animation-delay: 1s; }
+    .floating:nth-child(3) { bottom: 30%; left: 12%; font-size: 1.3rem; animation-delay: 2s; }
+    .floating:nth-child(4) { bottom: 20%; right: 8%; font-size: 1.6rem; animation-delay: 0.5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    /* === STATS === */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 0 16px;
+      max-width: 800px;
+      margin: 0 auto 50px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 18px 22px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+      max-width: 180px;
+      border-bottom: 4px solid var(--primary);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* === SECTIONS === */
+    section {
+      padding: 60px 16px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 900;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .section-header h2 span {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+      font-weight: 600;
+    }
+
+    /* === COMPARISON === */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 700px) {
+      .comparison-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+    }
+
+    .compare-card {
+      padding: 24px;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .compare-card.before {
+      border: 2px solid #fecaca;
+      background: #fff5f5;
+    }
+
+    .compare-card.after {
+      border: 2px solid #bbf7d0;
+      background: #f0fdf4;
+    }
+
+    .compare-title {
+      font-weight: 900;
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .compare-card.before .compare-title {
+      color: #dc2626;
+    }
+
+    .compare-card.after .compare-title {
+      color: var(--success);
+    }
+
+    .compare-list {
+      list-style: none;
+    }
+
+    .compare-list li {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .compare-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .compare-list li i {
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .compare-card.before li i {
+      color: #f87171;
+    }
+
+    .compare-card.after li i {
+      color: #34d399;
+    }
+
+    /* === FEATURES === */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 500px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 800px) {
+      .features-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .feature-box {
+      background: white;
+      padding: 22px 18px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary-light);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin: 0 auto 14px;
+      box-shadow: 0 6px 16px rgba(14, 165, 233, 0.15);
+    }
+
+    .feature-box h3 {
+      font-weight: 800;
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .feature-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* === AUTHOR === */
+    .author-section {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      border: 2px solid var(--primary-light);
+    }
+
+    .author-photo-wrapper {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 18px;
+      position: relative;
+    }
+
+    .author-photo {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid white;
+      box-shadow: 0 8px 24px rgba(14, 165, 233, 0.2);
+    }
+
+    .author-badge {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      background: var(--primary);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      border: 3px solid white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .quote {
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.6;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .author-name {
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .author-title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    /* === REVIEWS === */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 600px) {
+      .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .reviews-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .review-card {
+      background: white;
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 2px solid #e0f2fe;
+      transition: all 0.3s ease;
+    }
+
+    .review-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .stars {
+      color: var(--warning);
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .review-text {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .reviewer-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: white;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .reviewer-info strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .reviewer-info span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* === DONATE === */
+    .donate-card {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 3px solid var(--warning);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .donate-icon {
+      font-size: 2.8rem;
+      margin-bottom: 14px;
+      animation: heartbeat 1.5s infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.2); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.1); }
+      60% { transform: scale(1); }
+    }
+
+    .donate-card h3 {
+      font-size: 1.4rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .donate-card h3 span {
+      color: var(--warning);
+    }
+
+    .donate-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height: 1.5;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .donate-progress {
+      background: white;
+      padding: 12px 16px;
+      border-radius: 14px;
+      max-width: 350px;
+      margin: 0 auto 18px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .progress-track {
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--warning), #fbbf24);
+      border-radius: 8px;
+      transition: width 1s ease;
+    }
+
+    .btn-donate {
+      background: linear-gradient(135deg, var(--warning), #f59e0b);
+      color: white;
+      padding: 14px 36px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 800;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-donate:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 32px rgba(245, 158, 11, 0.5);
+    }
+
+    .donate-note {
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* === INSTALL SECTION (BOTTOM) === */
+    .install-section {
+      background: white;
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+      padding: 40px 16px 60px;
+      margin-top: 40px;
+      box-shadow: 0 -10px 40px rgba(14, 165, 233, 0.1);
+      position: relative;
+    }
+
+    .install-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 5px;
+      background: #e5e7eb;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .install-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .install-header h2 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .install-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    /* Platform Tabs */
+    .platform-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .platform-tab {
+      background: #f0f9ff;
+      border: 2px solid transparent;
+      border-radius: 14px;
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 140px;
+      max-width: 200px;
+      justify-content: center;
+    }
+
+    .platform-tab:hover {
+      background: #e0f2fe;
+      transform: translateY(-2px);
+    }
+
+    .platform-tab.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 8px 24px rgba(14, 165, 233, 0.35);
+      transform: scale(1.02);
+    }
+
+    .platform-tab svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* Install Content */
+    .install-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .install-content.active {
+      display: block;
+    }
+
+    /* Android Card */
+    .android-card {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border: 2px solid #86efac;
+      border-radius: var(--radius-lg);
+      padding: 28px 20px;
+      text-align: center;
+    }
+
+    .android-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 16px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.2);
+    }
+
+    .android-icon svg {
+      width: 40px;
+      height: 40px;
+      fill: #10b981;
+    }
+
+    .android-card h3 {
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .android-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .download-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #1a1a1a;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+    }
+
+    .rustore-icon {
+      font-weight: 900;
+      color: #ff005c;
+      background: white;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .btn-direct {
+      background: linear-gradient(135deg, var(--success), #059669);
+    }
+
+    .btn-direct:hover {
+      box-shadow: 0 10px 28px rgba(16, 185, 129, 0.4);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.8rem;
+      margin: 12px auto;
+      max-width: 280px;
+      gap: 12px;
+      opacity: 0.7;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: #d1d5db;
+      border-radius: 2px;
+    }
+
+    .security-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 14px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .security-note i {
+      color: var(--success);
+    }
+
+    /* iOS Browser Grid */
+    .browser-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 500px) {
+      .browser-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .browser-card {
+      background: #f0f9ff;
+      border: 2px solid transparent;
+      border-radius: 14px;
+      padding: 14px 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .browser-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+      background: #e0f2fe;
+    }
+
+    .browser-card.active {
+      border-color: var(--primary);
+      background: #e0f2fe;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+    }
+
+    .browser-icon {
+      width: 42px;
+      height: 42px;
+      margin: 0 auto 8px;
+    }
+
+    .browser-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .browser-name {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 0.85rem;
+    }
+
+    /* Steps */
+    .steps {
+      background: #f8fafc;
+      border-radius: var(--radius);
+      padding: 12px;
+      border: 2px solid #e0f2fe;
+    }
+
+    .step {
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: white;
+      border-radius: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    .step:last-child {
+      margin-bottom: 0;
+    }
+
+    .step:hover {
+      transform: translateX(4px);
+    }
+
+    .step-number {
+      background: var(--step-color, var(--primary));
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .step-text {
+      color: var(--text);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .step-text strong {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .no-selection {
+      text-align: center;
+      padding: 28px 20px;
+      background: #f8fafc;
+      border-radius: var(--radius);
+      border: 2px dashed #cbd5e1;
+    }
+
+    .mascot {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      animation: bounce 2s infinite;
+    }
+
+    /* === FOOTER === */
+    .footer {
+      background: white;
+      padding: 30px 16px 40px;
+      text-align: center;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-copyright {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    .footer-copyright strong {
+      color: var(--primary);
+    }
+
+    /* === UTILS === */
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mb-16 { margin-bottom: 16px; }
+    .mb-20 { margin-bottom: 20px; }
+    .mb-24 { margin-bottom: 24px; }
+
+    /* === RESPONSIVE FIXES === */
+    @media (max-width: 480px) {
+      .sticky-header {
+        padding: 10px 12px;
+      }
+
+      .logo {
+        font-size: 1.1rem;
+      }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+      }
+
+      .btn-install {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
+
+      .hero {
+        padding: 110px 12px 50px;
+      }
+
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .hero p {
+        font-size: 0.95rem;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-hero {
+        width: 100%;
+        max-width: 260px;
+        justify-content: center;
+        padding: 12px 20px;
+      }
+
+      .stats-bar {
+        gap: 10px;
+        padding: 0 12px;
+      }
+
+      .stat-card {
+        padding: 14px 16px;
+        min-width: 100px;
+      }
+
+      .stat-number {
+        font-size: 1.5rem;
+      }
+
+      .stat-label {
+        font-size: 0.7rem;
+      }
+
+      section {
+        padding: 48px 12px;
+      }
+
+      .section-header h2 {
+        font-size: 1.4rem;
+      }
+
+      .section-header p {
+        font-size: 0.9rem;
+      }
+
+      .compare-card {
+        padding: 18px 16px;
+      }
+
+      .compare-title {
+        font-size: 1rem;
+      }
+
+      .compare-list li {
+        font-size: 0.88rem;
+      }
+
+      .feature-box {
+        padding: 18px 14px;
+      }
+
+      .feature-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 1.3rem;
+      }
+
+      .feature-box h3 {
+        font-size: 0.9rem;
+      }
+
+      .feature-box p {
+        font-size: 0.8rem;
+      }
+
+      .author-section {
+        padding: 26px 18px;
+      }
+
+      .author-photo-wrapper {
+        width: 120px;
+        height: 120px;
+      }
+
+      .quote {
+        font-size: 0.92rem;
+      }
+
+      .review-card {
+        padding: 16px;
+      }
+
+      .review-text {
+        font-size: 0.85rem;
+      }
+
+      .donate-card {
+        padding: 26px 18px;
+      }
+
+      .donate-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .donate-text {
+        font-size: 0.88rem;
+      }
+
+      .btn-donate {
+        padding: 12px 28px;
+        font-size: 0.95rem;
+      }
+
+      .install-section {
+        padding: 32px 12px 50px;
+      }
+
+      .install-header h2 {
+        font-size: 1.4rem;
+      }
+
+      .platform-tabs {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .platform-tab {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .android-card {
+        padding: 22px 16px;
+      }
+
+      .android-icon {
+        width: 60px;
+        height: 60px;
+      }
+
+      .android-icon svg {
+        width: 34px;
+        height: 34px;
+      }
+
+      .android-card h3 {
+        font-size: 1.15rem;
+      }
+
+      .download-btn {
+        padding: 12px 18px;
+        font-size: 0.9rem;
+        max-width: 250px;
+      }
+
+      .browser-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .browser-card {
+        padding: 12px 8px;
+      }
+
+      .browser-icon {
+        width: 36px;
+        height: 36px;
+      }
+
+      .browser-name {
+        font-size: 0.8rem;
+      }
+
+      .step {
+        padding: 10px 12px;
+        gap: 10px;
+      }
+
+      .step-number {
+        width: 24px;
+        height: 24px;
+        font-size: 0.8rem;
+      }
+
+      .step-text {
+        font-size: 0.85rem;
+      }
+
+      .footer-links {
+        gap: 12px;
+      }
+
+      .footer-links a {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Safe area for iPhone with notch */
+    @supports (padding: max(0px)) {
+      .sticky-header {
+        padding-top: max(12px, env(safe-area-inset-top));
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+      }
+
+      .hero {
+        padding-top: calc(100px + env(safe-area-inset-top));
+      }
+
+      .install-section {
+        padding-bottom: max(50px, env(safe-area-inset-bottom));
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔒 Browser Redirect Overlay -->
+  <div class="browser-overlay" id="browserOverlay">
+    <div class="browser-modal">
+      <div class="browser-icon">🌐</div>
+      <h3>Откройте в браузере</h3>
+      <p>Для корректной установки приложения откройте эту страницу в Safari или Chrome</p>
+      
+      <div class="browser-steps" id="browserSteps">
+        <!-- Steps injected by JS -->
+      </div>
+      
+      <button class="btn-open-browser" onclick="openInBrowser()">
+        <i class="fas fa-external-link-alt"></i> Открыть в браузере
+      </button>
+      
+      <button class="btn-skip" onclick="skipBrowserCheck()">
+        Продолжить anyway
+      </button>
+    </div>
+  </div>
+
+  <!-- 🔝 Sticky Header -->
+  <header class="sticky-header">
+    <a href="#" class="logo">
+      <div class="logo-icon">B</div>
+      BeWords
+    </a>
+    <a href="#install" class="btn-install" onclick="scrollToInstall(event)">
+      <i class="fas fa-download"></i>
+      <span>Установить</span>
+    </a>
+  </header>
+
+  <!-- 🎯 Hero -->
+  <section class="hero">
+    <div class="floating"><i class="fas fa-star"></i></div>
+    <div class="floating"><i class="fas fa-heart"></i></div>
+    <div class="floating"><i class="fas fa-book"></i></div>
+    <div class="floating"><i class="fas fa-comment"></i></div>
+    
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fas fa-bolt"></i>
+        Бесплатно • Без рекламы • С душой
+      </div>
+      <h1>Учи английский, который <span>запомнится</span></h1>
+      <p>Умное повторение, живая озвучка и игры — всё в одном приложении. Начни говорить уверенно уже через 2 недели!</p>
+      <div class="hero-cta">
+        <a href="#install" class="btn-hero" onclick="scrollToInstall(event)">
+          <i class="fas fa-download"></i>
+          Скачать бесплатно
+        </a>
+        <a href="#features" class="btn-hero secondary">
+          <i class="fas fa-play"></i>
+          Узнать больше
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📊 Stats -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <span class="stat-number">10000+</span>
+      <span class="stat-label">Пользователей</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">8000+</span>
+      <span class="stat-label">Слов в базе</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">100%</span>
+      <span class="stat-label">Бесплатно</span>
+    </div>
+  </div>
+
+  <!-- ⚡ Comparison -->
+  <section>
+    <div class="section-header">
+      <h2>Как меняется жизнь с <span>BeWords</span></h2>
+    </div>
+    <div class="comparison-grid">
+      <div class="compare-card before">
+        <div class="compare-title">
+          <i class="fas fa-times-circle"></i> До BeWords
+        </div>
+        <ul class="compare-list">
+          <li><i class="fas fa-minus"></i> Страх говорить на английском</li>
+          <li><i class="fas fa-minus"></i> Слова вылетают из головы</li>
+          <li><i class="fas fa-minus"></i> Скучная зубрёжка</li>
+          <li><i class="fas fa-minus"></i> Непонятная грамматика</li>
+        </ul>
+      </div>
+      <div class="compare-card after">
+        <div class="compare-title">
+          <i class="fas fa-check-circle"></i> С BeWords
+        </div>
+        <ul class="compare-list">
+          <li><i class="fas fa-check"></i> Свободное общение в путешествиях</li>
+          <li><i class="fas fa-check"></i> Умное повторение — слова запоминаются сами</li>
+          <li><i class="fas fa-check"></i> Игры, Кот Боб и весёлая атмосфера</li>
+          <li><i class="fas fa-check"></i> Карьерный рост и новые возможности</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✨ Features -->
+  <section id="features">
+    <div class="section-header">
+      <h2>Почему это <span>работает?</span></h2>
+      <p>Научный подход + удовольствие от процесса</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-box">
+        <div class="feature-icon"><i class="fas fa-brain"></i></div>
+        <h3>Метод интервалов</h3>
+        <p>Алгоритм сам знает, когда повторить слово, чтобы оно осталось в памяти навсегда.</p>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon"><i class="fas fa-gamepad"></i></div>
+        <h3>Игрофикация</h3>
+        <p>Учи слова, играя в мини-игры прямо внутри приложения. Никакой скуки!</p>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon"><i class="fas fa-volume-up"></i></div>
+        <h3>Живая озвучка</h3>
+        <p>Американское и британское произношение для каждого слова и примера.</p>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon"><i class="fas fa-cat"></i></div>
+        <h3>Кот Боб</h3>
+        <p>Твой пушистый помощник, который поддержит и мотивирует на каждом шаге.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 👨‍🏫 Author -->
+  <section>
+    <div class="author-section">
+      <div class="author-photo-wrapper">
+        <img src="https://static.tildacdn.info/tild6137-3239-4731-b932-343437323234/__1.jpg" alt="Автор" class="author-photo" onerror="this.src='https://ui-avatars.com/api/?name=AB&background=0ea5e9&color=fff&size=140'">
+        <div class="author-badge"><i class="fas fa-pen"></i></div>
+      </div>
+      <blockquote class="quote">
+        «Я создал BeWords, потому что сам прошёл путь от полного непонимания до свободного владения. Хотел сделать инструмент, который убирает боль от обучения и добавляет радость. Здесь нет рекламы и подписок — знания должны быть доступны каждому.»
+      </blockquote>
+      <div class="author-name">Бердиев Абдуррахим</div>
+      <div class="author-title">Аспирант педагогических наук • Основатель BeWords</div>
+    </div>
+  </section>
+
+  <!-- 💬 Reviews -->
+  <section>
+    <div class="section-header">
+      <h2>Отзывы <span>пользователей</span></h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+        <p class="review-text">«Лучшее приложение! Благодаря режиму заучивания я наконец-то перестал забывать слова. Кот Боб — это любовь! ❤️»</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar" style="background:#ce82ff">A</div>
+          <div class="reviewer-info"><strong>Анна С.</strong><span>Москва</span></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+        <p class="review-text">«Играю в метро по пути на работу. За месяц словарный запас вырос на 300 слов. Интерфейс очень приятный.»</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar" style="background:#0ea5e9">M</div>
+          <div class="reviewer-info"><strong>Максим Д.</strong><span>СПб</span></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+        <p class="review-text">«Бесплатно и без рекламы — это сейчас редкость. Огромное спасибо автору за такой труд!»</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar" style="background:#f59e0b">E</div>
+          <div class="reviewer-info"><strong>Елена В.</strong><span>Казань</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📥 INSTALL SECTION (BOTTOM) -->
+  <section id="install" class="install-section">
+    <div class="install-header">
+      <h2>Установи BeWords</h2>
+      <p>Выбери свою платформу и начни учиться</p>
+    </div>
+
+    <!-- Platform Tabs -->
+    <div class="platform-tabs">
+      <div class="platform-tab active" onclick="selectPlatform('ios')">
+        <svg viewBox="0 0 24 24"><path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09997 22C7.78997 22.05 6.79997 20.68 5.95997 19.47C4.24997 17 2.93997 12.45 4.69997 9.39C5.56997 7.87 7.12997 6.91 8.81997 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/></svg>
+        <span>iPhone / iPad</span>
+      </div>
+      <div class="platform-tab" onclick="selectPlatform('android')">
+        <svg viewBox="0 0 24 24"><path d="M17.6 9.48L19.44 3.3C19.55 2.95 19.33 2.59 18.96 2.5C18.62 2.38 18.26 2.61 18.14 2.96L16.26 9.21C14.93 8.8 13.5 8.58 12 8.58C10.5 8.58 9.07 8.8 7.74 9.21L5.86 2.96C5.74 2.61 5.38 2.38 5.04 2.5C4.67 2.59 4.45 2.95 4.56 3.3L6.4 9.48C2.85 11.07 0.5 14.34 0.5 18.26H23.5C23.5 14.34 21.15 11.07 17.6 9.48ZM7.5 16.76C6.95 16.76 6.5 16.31 6.5 15.76C6.5 15.21 6.95 14.76 7.5 14.76C8.05 14.76 8.5 15.21 8.5 15.76C8.5 16.31 8.05 16.76 7.5 16.76ZM16.5 16.76C15.95 16.76 15.5 16.31 15.5 15.76C15.5 15.21 15.95 14.76 16.5 14.76C17.05 14.76 17.5 15.21 17.5 15.76C17.5 16.31 17.05 16.76 16.5 16.76Z"/></svg>
+        <span>Android</span>
+      </div>
+    </div>
+
+    <!-- iOS Content -->
+    <div id="ios-content" class="install-content active">
+      <p class="text-center mb-16" style="font-weight:700; color:var(--text); font-size:0.95rem;">Через какой браузер сидишь?</p>
+      
+      <div class="browser-grid">
+        <div class="browser-card" onclick="selectBrowser('ios', 'safari', event)">
+          <div class="browser-icon">
+            <svg viewBox="0 0 24 24">
+              <defs><linearGradient id="saf" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00c9ff"/><stop offset="100%" style="stop-color:#92fe9d"/></linearGradient></defs>
+              <circle cx="12" cy="12" r="10" fill="url(#saf)"/>
+              <circle cx="12" cy="12" r="2" fill="white"/>
+              <line x1="12" y1="12" x2="12" y2="3" stroke="white" stroke-width="1.5"/>
+              <line x1="12" y1="12" x2="17" y2="17" stroke="red" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="browser-name">Safari</div>
+        </div>
+        <div class="browser-card" onclick="selectBrowser('ios', 'chrome', event)">
+          <div class="browser-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" fill="#4285f4"/>
+              <circle cx="12" cy="12" r="5" fill="white"/>
+              <circle cx="12" cy="12" r="4" fill="#4285f4"/>
+              <path d="M12,2 L12,7" stroke="white" stroke-width="2"/>
+              <path d="M12,12 L20.5,8" stroke="#ea4335" stroke-width="2"/>
+              <path d="M12,12 L6,19" stroke="#34a853" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="browser-name">Chrome</div>
+        </div>
+        <div class="browser-card" onclick="selectBrowser('ios', 'yandex', event)">
+          <div class="browser-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="4" fill="#FF0000"/>
+              <text x="12" y="17" font-family="Arial" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Я</text>
+            </svg>
+          </div>
+          <div class="browser-name">Яндекс</div>
+        </div>
+        <div class="browser-card" onclick="selectBrowser('ios', 'opera', event)">
+          <div class="browser-icon">
+            <svg viewBox="0 0 24 24">
+              <ellipse cx="12" cy="12" rx="9" ry="10" fill="#FF1B2D"/>
+              <ellipse cx="12" cy="12" rx="6" ry="9" fill="white"/>
+              <ellipse cx="12" cy="12" rx="4" ry="8" fill="#FF1B2D"/>
+            </svg>
+          </div>
+          <div class="browser-name">Opera</div>
+        </div>
+      </div>
+
+      <div id="ios-instructions">
+        <div class="no-selection">
+          <div class="mascot">👇</div>
+          <p style="font-size:0.95rem; font-weight:700; color:var(--text-muted);">Выбери браузер выше, чтобы увидеть инструкцию</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Android Content -->
+    <div id="android-content" class="install-content">
+      <div class="android-card">
+        <div class="android-icon">
+          <svg viewBox="0 0 24 24"><path d="M17.6 9.48L19.44 3.3C19.55 2.95 19.33 2.59 18.96 2.5C18.62 2.38 18.26 2.61 18.14 2.96L16.26 9.21C14.93 8.8 13.5 8.58 12 8.58C10.5 8.58 9.07 8.8 7.74 9.21L5.86 2.96C5.74 2.61 5.38 2.38 5.04 2.5C4.67 2.59 4.45 2.95 4.56 3.3L6.4 9.48C2.85 11.07 0.5 14.34 0.5 18.26H23.5C23.5 14.34 21.15 11.07 17.6 9.48ZM7.5 16.76C6.95 16.76 6.5 16.31 6.5 15.76C6.5 15.21 6.95 14.76 7.5 14.76C8.05 14.76 8.5 15.21 8.5 15.76C8.5 16.31 8.05 16.76 7.5 16.76ZM16.5 16.76C15.95 16.76 15.5 16.31 15.5 15.76C15.5 15.21 15.95 14.76 16.5 14.76C17.05 14.76 17.5 15.21 17.5 15.76C17.5 16.31 17.05 16.76 16.5 16.76Z"/></svg>
+        </div>
+        <h3>Установить на Android</h3>
+        <p>Выбери удобный способ загрузки</p>
+        
+        <a href="https://www.rustore.ru/catalog/app/co.median.android.jbnxzdr" target="_blank" class="download-btn">
+          <div class="rustore-icon">R</div>
+          <span>Скачать из RuStore</span>
+        </a>
+        
+        <div class="divider">ИЛИ</div>
+        
+        <a href="/BeWords.apk" target="_blank" class="download-btn btn-direct">
+          <i class="fas fa-download"></i>
+          <span>Скачать APK с сайта</span>
+        </a>
+        
+        <div class="security-note">
+          <i class="fas fa-shield-check"></i>
+          Проверено и безопасно
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🦶 Footer -->
+  <footer class="footer">
+    <p class="footer-copyright">
+      &copy; 2026 <strong>BeWords.ru</strong> • Создано с ❤️ в России
+    </p>
+  </footer>
+
+  <!-- 🧠 JavaScript -->
+  <script>
+    // === BROWSER DETECTION & REDIRECT ===
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    
+    function isInAppBrowser() {
+      // Telegram
+      if (ua.includes('Telegram')) return { app: 'Telegram', os: getOS() };
+      // Instagram
+      if (ua.includes('Instagram')) return { app: 'Instagram', os: getOS() };
+      // Facebook
+      if (ua.includes('FBAN') || ua.includes('FBAV')) return { app: 'Facebook', os: getOS() };
+      // TikTok
+      if (ua.includes('TikTok')) return { app: 'TikTok', os: getOS() };
+      // VK
+      if (ua.includes('VK')) return { app: 'VK', os: getOS() };
+      // WhatsApp
+      if (ua.includes('WhatsApp')) return { app: 'WhatsApp', os: getOS() };
+      
+      return null;
+    }
+
+    function getOS() {
+      if (/android/i.test(ua)) return 'android';
+      if (/iPad|iPhone|iPod/.test(ua)) return 'ios';
+      return 'other';
+    }
+
+    function getBrowserSteps(app, os) {
+      if (os === 'ios') {
+        return [
+          { icon: '⋯', text: 'Нажми на три точки или меню в углу' },
+          { icon: '🌐', text: 'Выбери «Открыть в Safari»' },
+          { icon: '✅', text: 'Готово! Устанавливай приложение' }
+        ];
+      } else {
+        return [
+          { icon: '⋯', text: 'Нажми на три точки в углу' },
+          { icon: '🌐', text: 'Выбери «Открыть в браузере»' },
+          { icon: '✅', text: 'Готово! Устанавливай приложение' }
+        ];
+      }
+    }
+
+    function showBrowserOverlay() {
+      const inApp = isInAppBrowser();
+      if (!inApp) return;
+      
+      // Check if user already skipped
+      if (localStorage.getItem('bewords_skip_browser_check') === '1') return;
+      
+      const steps = getBrowserSteps(inApp.app, inApp.os);
+      const stepsHtml = steps.map((s, i) => 
+        `<div class="browser-step"><div class="step-num">${i + 1}</div><div>${s.text}</div></div>`
+      ).join('');
+      
+      document.getElementById('browserSteps').innerHTML = stepsHtml;
+      document.getElementById('browserOverlay').classList.add('active');
+      
+      // Try auto-open for iOS Telegram
+      if (inApp.app === 'Telegram' && inApp.os === 'ios') {
+        // Attempt to open in Safari using custom scheme
+        setTimeout(() => {
+          window.location.href = 'https://t.me/open?url=' + encodeURIComponent(window.location.href);
+        }, 3000);
+      }
+    }
+
+    function openInBrowser() {
+      const url = window.location.href;
+      const inApp = isInAppBrowser();
+      
+      // Try different methods based on app/OS
+      if (inApp?.os === 'ios') {
+        // iOS: try to open in Safari
+        window.location.href = url;
+      } else if (inApp?.os === 'android') {
+        // Android: try intent
+        window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
+      }
+      
+      // Fallback: just try to open
+      window.open(url, '_blank');
+    }
+
+    function skipBrowserCheck() {
+      localStorage.setItem('bewords_skip_browser_check', '1');
+      document.getElementById('browserOverlay').classList.remove('active');
+    }
+
+    // === SCROLL & INSTALL ===
+    function scrollToInstall(e) {
+      e.preventDefault();
+      document.getElementById('install').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // === PLATFORM SWITCHING ===
+    function selectPlatform(platform) {
+      document.querySelectorAll('.platform-tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelector(`.platform-tab[onclick*='${platform}']`).classList.add('active');
+      
+      document.querySelectorAll('.install-content').forEach(c => c.classList.remove('active'));
+      document.getElementById(`${platform}-content`).classList.add('active');
+      
+      if (platform === 'ios') {
+        document.querySelectorAll('.browser-card').forEach(c => c.classList.remove('active'));
+        document.getElementById('ios-instructions').innerHTML = `
+          <div class="no-selection">
+            <div class="mascot">👇</div>
+            <p style="font-size:0.95rem; font-weight:700; color:var(--text-muted);">Выбери браузер выше, чтобы увидеть инструкцию</p>
+          </div>
+        `;
+      }
+    }
+
+    // === IOS INSTRUCTIONS ===
+    const instructions = {
+      ios: {
+        safari: {
+          steps: [
+            'Нажми <strong>«Поделиться»</strong> (квадрат со стрелкой) внизу',
+            'Пролистай и найди <strong>«На экран Домой»</strong>',
+            'Нажми <strong>«Добавить»</strong> в правом верхнем углу',
+            'Готово! Иконка BeWords на твоём экране 🎉'
+          ],
+          color: '#0ea5e9'
+        },
+        chrome: {
+          steps: [
+            'Нажми <strong>три точки</strong> (...) в углу',
+            'Выбери <strong>«Поделиться»</strong>',
+            'Найди <strong>«На экран Домой»</strong>',
+            'Подтверди — и всё готово! 🚀'
+          ],
+          color: '#4285f4'
+        },
+        yandex: {
+          steps: [
+            'Нажми меню <strong>(три точки)</strong>',
+            'Выбери <strong>«Поделиться»</strong>',
+            'Нажми <strong>«На экран Домой»</strong>',
+            'Готово! Приложение всегда под рукой ✨'
+          ],
+          color: '#ff0000'
+        },
+        opera: {
+          steps: [
+            'Нажми красную <strong>«O»</strong>',
+            'Выбери <strong>«Поделиться»</strong>',
+            'Найди <strong>«Добавить на главный экран»</strong>',
+            'Подтверди — и BeWords у тебя! 🎊'
+          ],
+          color: '#ff1b2d'
+        }
+      }
+    };
+
+    function selectBrowser(platform, browser, event) {
+      event.currentTarget.closest('.browser-grid').querySelectorAll('.browser-card').forEach(c => c.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      
+      const data = instructions[platform][browser];
+      let html = `<div class="steps" style="border-color:${data.color}">`;
+      
+      data.steps.forEach((text, i) => {
+        html += `
+          <div class="step">
+            <div class="step-number" style="background:${data.color}">${i + 1}</div>
+            <div class="step-text">${text}</div>
+          </div>
+        `;
+      });
+      html += '</div>';
+      
+      const container = document.getElementById('ios-instructions');
+      container.style.opacity = '0';
+      setTimeout(() => {
+        container.innerHTML = html;
+        container.style.transition = 'opacity 0.25s';
+        container.style.opacity = '1';
+      }, 150);
+    }
+
+    // === INIT ===
+    document.addEventListener('DOMContentLoaded', () => {
+      // Auto-detect platform
+      const os = getOS();
+      if (os === 'android') {
+        selectPlatform('android');
+      }
+      
+      // Show browser overlay if needed
+      showBrowserOverlay();
+      
+      // Animate progress bar
+      const progress = document.querySelector('.progress-fill');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const width = progress.style.width;
+            progress.style.width = '0';
+            setTimeout(() => progress.style.width = width, 100);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      observer.observe(document.querySelector('.donate-card'));
+    });
+
+    // Force links to open in new tab
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[target="_blank"]');
+      if (link) {
+        e.preventDefault();
+        window.open(link.href, '_blank', 'noopener,noreferrer');
+      }
+    });
+  </script>
+
+</body>
+</html>
