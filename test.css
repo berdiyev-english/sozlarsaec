@@ -5427,7 +5427,7 @@ box-shadow: var(--shadow-md);
 
 /* ОДИН Цветок вместо снежинок */
 .app-title::after {
-    content: "🌸"; /* Один красивый цветок */
+    content: ""; /* Один красивый цветок */
     font-size: 0.7em; 
     display: block;
     margin-top: 2px;
@@ -5666,4 +5666,552 @@ body.modal-open {
     max-width: 100% !important;
     margin: 0 !important;
   }
+}
+
+/* Плавная анимация при наведении */
+
+/* Круглый фон + тень */
+.endless-settings-gear {
+  display: inline-flex;
+  align-items: left;
+  justify-content: center;
+  width: 22px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-secondary, #f0f2f5);
+  color: var(--text-secondary, #666);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Лечим пробивание кликов сквозь модалки */
+.words-popup-overlay, .import-modal-overlay {
+    pointer-events: auto !important;
+    z-index: 100000 !important;
+}
+.words-popup, .import-modal-content {
+    pointer-events: auto !important;
+}
+/* ============================================================
+LEARNING PATH
+============================================================ */
+.learning-top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: white;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  border-bottom: 2px solid #e5e5e5;
+}
+
+[data-theme="dark"] .learning-top-bar {
+  background: #1f2937;
+  border-bottom-color: #374151;
+}
+
+.learning-stats-left {
+  display: flex;
+  gap: 12px;
+}
+
+.stat-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f0f9ff;
+  color: #1cb0f6;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  border: 2px solid #d0ebfa;
+}
+
+[data-theme="dark"] .stat-pill {
+  background: #0c4a6e;
+  color: #60a5fa;
+  border-color: #075985;
+}
+
+.learning-actions-right {
+  display: flex;
+  gap: 10px;
+}
+
+.learning-actions-right .share-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #e5e5e5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #afafaf;
+  transition: all 0.2s;
+  box-shadow: 0 4px 0 0 #e5e5e5;
+}
+
+.learning-actions-right .share-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 0 #e5e5e5;
+}
+
+.learning-actions-right .share-btn:hover {
+  color: var(--blue, #1cb0f6);
+  border-color: #d0ebfa;
+  box-shadow: 0 4px 0 0 #d0ebfa;
+}
+
+[data-theme="dark"] .learning-actions-right .share-btn {
+  background: #374151;
+  border-color: #4b5563;
+  color: #9ca3af;
+  box-shadow: 0 4px 0 0 #4b5563;
+}
+
+/* === PATH WRAPPER (Зеленая дорожка) === */
+.path-wrapper {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: linear-gradient(180deg, #a2e85c 0%, #89d146 100%);
+}
+
+[data-theme="dark"] .path-wrapper {
+  background: linear-gradient(180deg, #1e3a1e 0%, #0f280f 100%);
+}
+
+.map-container {
+  position: relative;
+  width: 100%;
+  margin-top: 40px;
+}
+
+/* === NODES === */
+.node {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.node-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: transform 0.1s;
+}
+
+.node-btn svg {
+  width: 36px;
+  height: 36px;
+}
+
+.node-btn:active { transform: translateY(4px); }
+
+.node.completed .node-btn {
+  background-color: var(--blue, #1cb0f6);
+  box-shadow: 0 6px 0 0 var(--blue-shadow, #1899d6);
+}
+.node.completed .node-btn svg { fill: white; }
+.node.completed:active .node-btn { box-shadow: 0 2px 0 0 var(--blue-shadow, #1899d6); }
+
+.node.active .node-btn {
+  background-color: var(--blue, #1cb0f6);
+  box-shadow: 0 6px 0 0 var(--blue-shadow, #1899d6);
+}
+.node.active .node-btn svg { fill: white; }
+.node.active:active .node-btn { box-shadow: 0 2px 0 0 var(--blue-shadow, #1899d6); }
+
+.node.active::before {
+  content: '';
+  position: absolute;
+  top: -12px; left: -12px;
+  right: -12px; bottom: -18px;
+  border: 4px solid var(--blue, #1cb0f6);
+  border-radius: 50%;
+  z-index: -1;
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+  0%   { border-color: rgba(28,176,246,1); transform: scale(1); opacity: 1; }
+  50%  { border-color: rgba(28,176,246,0.5); transform: scale(1.05); opacity: 0.8; }
+  100% { border-color: rgba(28,176,246,1); transform: scale(1); opacity: 1; }
+}
+
+.node.locked .node-btn {
+  background-color: #e5e5e5;
+  box-shadow: 0 6px 0 0 #cecece;
+}
+.node.locked .node-btn svg { fill: #afafaf; }
+.node.locked:active .node-btn { box-shadow: 0 2px 0 0 #cecece; }
+
+/* Game node (special) */
+.node.game-node .node-btn {
+  background: linear-gradient(135deg, #ce82ff, #a568d3);
+  box-shadow: 0 6px 0 0 #8b4fc4;
+}
+.node.game-node .node-btn svg { fill: white; }
+
+.cat-mascot {
+  position: absolute;
+  width: 110px;
+  height: auto;
+  z-index: 15;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 6px 4px rgba(0,0,0,0.15));
+  animation: idleCat 3s ease-in-out infinite;
+}
+
+@keyframes idleCat {
+  0%, 100% { transform: translate(-50%, -50%) rotate(-2deg); }
+  50%      { transform: translate(-50%, -55%) rotate(2deg); }
+}
+
+/* === ACTIVE TRAINING CONTAINER === */
+.active-training-container {
+  padding: 20px;
+}
+
+.back-to-path-btn {
+  margin-bottom: 20px;
+}
+
+/* === DICTATION EXERCISE === */
+.dictation-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.dictation-play-btn {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1cb0f6, #0099db);
+  border: none;
+  color: white;
+  font-size: 3rem;
+  cursor: pointer;
+  margin: 20px auto;
+  box-shadow: 0 8px 0 #0077b6;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dictation-play-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 4px 0 #0077b6;
+}
+
+.dictation-input {
+  width: 100%;
+  padding: 16px;
+  border: 3px solid var(--border-color);
+  border-radius: 16px;
+  font-size: 1.3rem;
+  text-align: center;
+  font-weight: 700;
+  margin: 20px 0;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.dictation-input:focus {
+  outline: none;
+  border-color: var(--blue, #1cb0f6);
+  box-shadow: 0 0 0 4px rgba(28, 176, 246, 0.2);
+}
+
+/* === VOICE EXERCISE === */
+.voice-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.voice-record-btn {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff4b4b, #ff6b6b);
+  border: none;
+  color: white;
+  font-size: 3rem;
+  cursor: pointer;
+  margin: 20px auto;
+  box-shadow: 0 8px 0 #c92a2a;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voice-record-btn.recording {
+  animation: voicePulse 1s infinite;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+@keyframes voicePulse {
+  0%, 100% { box-shadow: 0 8px 0 #c92a2a, 0 0 0 0 rgba(239,68,68,0.5); }
+  50% { box-shadow: 0 8px 0 #c92a2a, 0 0 0 25px rgba(239,68,68,0); }
+}
+
+/* === TRAINING MODE MODAL === */
+.training-mode-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s;
+}
+
+.training-mode-card {
+  background: var(--bg-primary);
+  border-radius: 24px;
+  padding: 24px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.mode-option {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 3px solid var(--border-color);
+  border-radius: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+}
+
+.mode-option:hover {
+  border-color: var(--blue, #1cb0f6);
+  transform: translateX(4px);
+}
+
+.mode-option.selected {
+  border-color: var(--blue, #1cb0f6);
+  background: rgba(28, 176, 246, 0.08);
+}
+
+.mode-option-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.mode-option-title {
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.mode-option-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* Mobile adaptation */
+@media (max-width: 380px) {
+  .node-btn {
+    width: 60px;
+    height: 60px;
+  }
+  .node-btn svg {
+    width: 30px;
+    height: 30px;
+  }
+  .cat-mascot {
+    width: 90px !important;
+  }
+  .stat-pill {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Показываем кота для отладки */
+.cat-mascot {
+  display: block !important;
+  opacity: 1 !important;
+  z-index: 100 !important;
+}
+
+/* Убедимся что декорации видны */
+.environment svg {
+  display: block !important;
+}
+
+/* Путь должен быть виден */
+.map-container svg path {
+  stroke-width: 20 !important;
+  opacity: 1 !important;
+}
+
+/* ============================================================
+FIX: ИДЕАЛЬНЫЕ ОТСТУПЫ И ФОНЫ
+============================================================ */
+
+/* 1. Убираем ВСЕ отступы у родительских контейнеров */
+#learning, 
+.main-content {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  background: transparent !important;
+}
+
+/* 2. Белая панель — на всю ширину и прилипает к самому верху */
+.learning-top-bar {
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  border-radius: 0 !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 50 !important;
+  box-sizing: border-box !important;
+}
+
+/* 3. Зеленая дорожка — зеленая только она, без отступов */
+#learning .path-wrapper {
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  border-radius: 0 !important;
+  min-height: calc(100vh - 70px) !important;
+  box-sizing: border-box !important;
+  
+  /* ВНИМАНИЕ СЮДА: последнее значение (180px) — это пустое место в самом низу дорожки */
+  padding: 60px 0 180px 0 !important; 
+}
+
+#learning .map-container {
+  margin-top: 20px !important; 
+  /* Добавляем еще немного места конкретно под картой */
+  padding-bottom: 100px !important; 
+}
+
+/* 4. Контейнер активной тренировки — БЕЛЫЙ ФОН, без отступов */
+.active-training-container {
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  border-radius: 0 !important;
+  min-height: calc(100vh - 70px) !important;
+  background: white !important; /* Белый фон */
+  box-sizing: border-box !important;
+}
+
+[data-theme="dark"] .active-training-container {
+  background: #111827 !important; /* Темный фон для ночной темы */
+}
+
+/* === ФИКС: КОНТЕНТ НЕ ОБРЕЗАЕТСЯ СНИЗУ === */
+
+/* Увеличиваем отступ снизу для всех секций */
+.main-content {
+    padding-bottom: 160px !important;  /* Было 100px, увеличиваем */
+}
+
+/* На мобильных — ещё больше, т.к. навигация выше */
+@media (max-width: 480px) {
+    .main-content {
+        padding-bottom: 180px !important;  /* Было 140px */
+    }
+}
+
+/* На iOS — ещё больше запас */
+@supports (-webkit-touch-callout: none) {
+    .main-content {
+        padding-bottom: 200px !important;
+    }
+}
+
+/* На десктопе */
+@media (min-width: 768px) {
+    .main-content {
+        padding-bottom: 140px !important;  /* Было 120px */
+    }
+}
+
+/* Убедимся, что нижняя навигация не перекрывает контент */
+.bottom-nav {
+    z-index: 1000 !important;
+}
+
+/* Фикс для секции learning (чтобы дорожка не ломала общий layout) */
+#learning {
+    min-height: auto !important;
+}
+.learning-top-bar {
+  position: fixed !important; 
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 100 !important; 
+}
+/* 1. Спускаем саму зеленую зону ниже из-под белой панели */
+#learning .path-wrapper {
+  padding-top: 120px !important; /* Увеличили с 80 до 120 */
+}
+
+/* 2. Спускаем сами уроки (первый кружок) еще чуть ниже от края травы */
+#learning .map-container {
+  margin-top: 60px !important; /* Раньше было 20 или 40 */
+}
+
+#floating-active-arrow {
+  position: fixed; bottom: 90px; right: 20px;
+  width: 50px; height: 50px; border-radius: 50%;
+  background: var(--blue, #1cb0f6); color: white;
+  border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3), 0 4px 0 #1899d6;
+  font-size: 1.5rem; display: flex; justify-content: center; align-items: center;
+  cursor: pointer; z-index: 99;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+  transform: scale(0) translateY(50px); opacity: 0; pointer-events: none;
+}
+#floating-active-arrow.visible {
+  transform: scale(1) translateY(0); opacity: 1; pointer-events: auto;
+}
+#floating-active-arrow:active {
+  transform: scale(0.9) translateY(4px); box-shadow: 0 0px 0 #1899d6;
 }
