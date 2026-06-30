@@ -385,17 +385,19 @@ body {
         <button class="settings-btn" id="settingsBtn" data-testid="settings-btn" title="Настройки">
           <i class="fas fa-cog"></i>
         </button>
-        <button id="profileBtn" class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; padding: 0;">
-      <i class="fas fa-user"></i>
-      </button>
+<button id="profileBtn" 
+  class="btn btn-primary" 
+  style="border-radius: 50%; width: 40px; height: 40px; padding: 0;">
+  <i class="fas fa-user"></i>
+</button>
       </div>
     </div>
   </header>
 
   <main class="main-content">
     <!-- Levels + Categories -->
-    <section id="levels" class="content-section active">
-      <div class="section-header">
+     <section id="levels" class="content-section active">
+      <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
         <h2>Слова по уровням</h2>
       </div>
 
@@ -543,7 +545,7 @@ body {
       </div>
 
       <!-- Words List (levels or categories) -->
-      <div id="wordsContainer" class="words-container hidden">
+   <div id="wordsContainer" class="words-container hidden">
         <div class="words-header">
           <button class="back-btn" id="backToLevels" data-testid="back-to-levels" onclick="window.app && app.backToLevels()">
             <i class="fas fa-arrow-left"></i>
@@ -562,42 +564,112 @@ body {
 
 <!-- Learning -->
 <section id="learning" class="content-section">
-  <div class="section-header">
-    <h2>Изучаю</h2>
-    <div class="section-stats"><span id="learningCount">0 слов</span></div>
-  </div>
-
-<div class="learning-instruction-box">
-  <div class="learning-instruction-row">
-    <div class="learning-instruction-label">
-      Инструкция
-      <span class="learning-instruction-arrow">нажмите на лампочку  → </span>
+  <!-- ШАПКА С КНОПКАМИ -->
+  <div class="learning-top-bar">
+    <div class="learning-stats-left">
+      <div class="stat-pill" title="Слов в изучении">
+        <i class="fas fa-book"></i>
+        <span id="learningCount">0</span>
+      </div>
+      <div class="stat-pill" title="Пройдено уроков">
+        <i class="fas fa-check-circle" style="color:#58cc02;"></i>
+        <span id="completedLessonsCount">0</span>
+      </div>
     </div>
-    <button type="button" id="learningHelpLamp" class="grammar-lamp" title="Показать инструкцию по режимам">
-      💡
-    </button>
+    <div class="learning-actions-right">
+      <button id="gamesToggleBtn" class="share-btn" title="Игры">
+        <i class="fas fa-gamepad"></i>
+      </button>
+      <button id="shareFromLearningBtn" class="share-btn" title="Поделиться словами">
+        <i class="fas fa-share-alt"></i>
+      </button>
+    </div>
   </div>
-</div>
 
-<div class="toggles-row">
-  <div class="mode-toggle" role="tablist" aria-label="study mode">
-    <button class="mode-btn active" data-mode="quiz" id="modeQuiz" data-testid="mode-quiz">Quiz</button>
-    <button class="mode-btn" data-mode="flashcards" id="modeFlashcards" data-testid="mode-flashcards">Флешкарточки</button>
-    <button class="mode-btn" data-mode="trainer" id="modeTrainer" data-testid="mode-trainer">Тренажер</button>
+  <!-- === ДОРОЖКА DUOLINGO-STYLE === -->
+  <div class="path-wrapper" id="pathWrapper">
+    <div id="map-container" class="map-container">
+      <!-- SVG-декорации (кусты, цветы, грибы) -->
+      <svg style="width:0; height:0; position:absolute;" aria-hidden="true">
+        <defs>
+          <g id="tuft">
+            <path d="M 10 20 Q 5 10 0 5 Q 8 10 10 20 Z" fill="#79c232"/>
+            <path d="M 10 20 Q 12 5 15 0 Q 18 5 20 20 Z" fill="#89d146"/>
+            <path d="M 20 20 Q 25 10 30 5 Q 22 10 20 20 Z" fill="#79c232"/>
+          </g>
+          <g id="bush">
+            <circle cx="15" cy="30" r="16" fill="#6abf2a"/>
+            <circle cx="35" cy="30" r="16" fill="#6abf2a"/>
+            <circle cx="25" cy="18" r="20" fill="#75c234"/>
+            <circle cx="20" cy="18" r="8" fill="#8ded3f" opacity="0.4"/>
+          </g>
+          <g id="daisy">
+            <circle cx="12" cy="7" r="5" fill="white"/>
+            <circle cx="17" cy="12" r="5" fill="white"/>
+            <circle cx="12" cy="17" r="5" fill="white"/>
+            <circle cx="7" cy="12" r="5" fill="white"/>
+            <circle cx="12" cy="12" r="5" fill="#ffc800"/>
+          </g>
+          <g id="flower-pink">
+            <circle cx="12" cy="6" r="5" fill="#ff85c2"/>
+            <circle cx="18" cy="12" r="5" fill="#ff85c2"/>
+            <circle cx="12" cy="18" r="5" fill="#ff85c2"/>
+            <circle cx="6" cy="12" r="5" fill="#ff85c2"/>
+            <circle cx="12" cy="12" r="5.5" fill="#fff"/>
+            <circle cx="12" cy="12" r="3" fill="#ff6aaf"/>
+          </g>
+          <g id="sunflower">
+            <ellipse cx="12" cy="4" rx="3" ry="5" fill="#ffd000"/>
+            <ellipse cx="20" cy="7" rx="3" ry="5" fill="#ffd000" transform="rotate(45 20 7)"/>
+            <ellipse cx="22" cy="14" rx="3" ry="5" fill="#ffd000" transform="rotate(90 22 14)"/>
+            <ellipse cx="19" cy="21" rx="3" ry="5" fill="#ffd000" transform="rotate(135 19 21)"/>
+            <ellipse cx="12" cy="24" rx="3" ry="5" fill="#ffd000" transform="rotate(180 12 24)"/>
+            <ellipse cx="5" cy="21" rx="3" ry="5" fill="#ffd000" transform="rotate(225 5 21)"/>
+            <ellipse cx="2" cy="14" rx="3" ry="5" fill="#ffd000" transform="rotate(270 2 14)"/>
+            <ellipse cx="5" cy="7" rx="3" ry="5" fill="#ffd000" transform="rotate(315 5 7)"/>
+            <circle cx="12" cy="14" r="7" fill="#8B4513"/>
+            <circle cx="12" cy="14" r="4.5" fill="#6B3410"/>
+          </g>
+          <g id="flower-purple">
+            <circle cx="12" cy="5" r="4.5" fill="#b66cff"/>
+            <circle cx="19" cy="12" r="4.5" fill="#b66cff"/>
+            <circle cx="12" cy="19" r="4.5" fill="#b66cff"/>
+            <circle cx="5" cy="12" r="4.5" fill="#b66cff"/>
+            <circle cx="15" cy="7" r="4.5" fill="#b66cff"/>
+            <circle cx="9" cy="7" r="4.5" fill="#b66cff"/>
+            <circle cx="12" cy="12" r="5" fill="#ffd000"/>
+          </g>
+          <g id="mushroom">
+            <rect x="8" y="14" width="8" height="8" rx="2" fill="#f5ede0"/>
+            <ellipse cx="12" cy="14" rx="11" ry="8" fill="#e83a3a"/>
+            <circle cx="8" cy="12" r="2.5" fill="white"/>
+            <circle cx="14" cy="10" r="2" fill="white"/>
+            <circle cx="17" cy="14" r="1.5" fill="white"/>
+          </g>
+        </defs>
+      </svg>
+    </div>
   </div>
-  <div class="practice-toggle" role="tablist" aria-label="practice mode">
-    <button class="practice-btn active" data-practice="scheduled" id="practiceScheduled" data-testid="practice-scheduled">Заучивание</button>
-    <button class="practice-btn" data-practice="endless" id="practiceEndless" data-testid="practice-endless">Повторение</button>
-    <button class="practice-btn" data-practice="list" id="practiceList" data-testid="practice-list">
-      <i class="fas fa-list"></i> Список
-    </button>
-  </div>
-</div>
 
-<div id="learningWordsList" class="learning-words-list"></div>
+  <!-- КОНТЕЙНЕР АКТИВНОЙ ТРЕНИРОВКИ (СКРЫТ ПО УМОЛЧАНИЮ) -->
+  <div id="activeTrainingContainer" class="active-training-container hidden">
+    <div id="trainingContent"></div>
+  </div>
+
+  <!-- СТАРЫЙ контейнер для quiz/flashcards -->
+  <div id="learningWordsList" class="learning-words-list" style="display:none;"></div>
 </section>
+<!-- Training -->
+<section id="trainer" class="content-section">
+  <div class="section-header">
+    <h2>Тренажер предложений</h2>
+    <p style="color:var(--text-secondary); font-size:0.9rem;">Собирайте предложения из слов вашего уровня</p>
+  </div>
+  <div id="trainerContainer" class="trainer-container"></div>
+</section>
+
     <!-- New Words -->
-  <section id="new-words" class="content-section"> <div id="translatorWidget" class="translator-card"> <div class="translator-header"> <h3>BeWords - Translate</h3> <p>Ищите слова и фразы и добавляйте их на изучение</p> </div>
+  <section id="new-words" class="content-section"> <div id="translatorWidget" class="translator-card"> <div class="translator-header"> <h3>BeWords - Translate</h3> <p>Переводите слова и фразы и добавляйте их на изучение</p> </div>
 <div class="tr-lang-row">
   <button class="tr-lang-btn active" id="trRuBtn" type="button">🇷🇺 Русский</button>
   <button class="tr-swap-btn" id="trSwapBtn" type="button" title="Поменять местами">⇄</button>
@@ -616,7 +688,109 @@ body {
 
 <div class="translator-error" id="trError"></div>
 <div class="translator-results" id="trResults"></div>
-</div> <div class="section-header"> <h2>Загрузите новые слова</h2> </div> <div class="toggles-row"> <div class="upload-toggle" role="tablist" aria-label="upload mode"> <button class="upload-btn active" id="uploadTabSingle" data-tab="single">Одно слово</button> <button class="upload-btn" id="uploadTabBulk" data-tab="bulk">Массовое добавление</button> </div> </div> <p id="singleHelp" class="mode-help"> Введите слово на английском и перевод на русский. После добавления слово сразу попадёт в ваш словарь. </p> <div class="add-word-form" id="singleAddForm"> <div class="form-group"> <label for="newWord">Английское слово</label> <input type="text" id="newWord" placeholder="Введите слово на английском" data-testid="new-word-input"> </div> <div class="form-group"> <label for="newTranslation">Перевод</label> <input type="text" id="newTranslation" placeholder="Введите перевод" data-testid="new-translation-input"> </div> <div class="form-group"> <label for="newLevel">Уровень</label> <select id="newLevel" data-testid="new-level-select"> <option value="A1">A1 - Beginner</option> <option value="A2">A2 - Elementary</option> <option value="B1">B1 - Intermediate</option> <option value="B2">B2 - Upper-Intermediate</option> <option value="C1">C1 - Advanced</option> <option value="C2">C2 - Proficiency</option> <option value="IRREGULARS">Irregular Verbs</option> <option value="PREPOSITIONS">Prepositions</option> </select> </div> <button class="add-word-btn" id="addWordBtn" data-testid="add-word-btn"> <i class="fas fa-plus"></i> Добавить слово </button> </div> <div class="add-word-form" id="bulkAddForm" style="display:none;"> <h3 style="margin-bottom:8px;">Массовое добавление</h3> <p class="mode-help" id="bulkHelp" data-testid="bulk-help"> Каждое английское слово / фразу вводите с новой строки.<br><br> Перевод указывается через "-" (например: go - идти, ехать, ходить) </p> <div class="form-group"> <label for="bulkLevel">Уровень для всех слов</label> <select id="bulkLevel" data-testid="bulk-level-select"> <option value="A1">A1 - Beginner</option> <option value="A2">A2 - Elementary</option> <option value="B1">B1 - Intermediate</option> <option value="B2">B2 - Upper-Intermediate</option> <option value="C1">C1 - Advanced</option> <option value="C2">C2 - Proficiency</option> <option value="IRREGULARS">Irregular Verbs</option> <option value="PREPOSITIONS">Prepositions</option> </select> </div> <div class="form-group"> <label for="bulkTextarea">Вставьте строки</label> <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;go - идти, ехать, ходить&#10;table - стол&#10;run - бежать, запускать" data-testid="bulk-textarea" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);border-radius:var(--radius-md);background:var(--bg-primary);color:var(--text-primary);"></textarea> </div> <button class="add-word-btn" id="bulkAddBtn" data-testid="bulk-add-btn"> <i class="fas fa-file-import"></i> Добавить список </button> </div> <div id="customWordsList" class="words-list"> <h3>Добавленные слова</h3> <div id="customWords"> <div class="empty-state"> <i class="fas fa-plus-circle"></i> <h3>Нет добавленных слов</h3> <p>Используйте формы выше для добавления новых слов</p> </div> </div> </div> </section>
+</div> <div class="section-header"> <h2>Загрузите новые слова</h2> </div> 
+<div class="toggles-row">
+  <div class="upload-toggle" role="tablist" aria-label="upload mode" style="flex-wrap: wrap; gap: 10px;">
+    <!-- Строка 1: Формы добавления -->
+    <button class="upload-btn active" id="uploadTabSingle" data-tab="single" style="flex: 1 1 auto;">Одно слово</button>
+    <button class="upload-btn" id="uploadTabBulk" data-tab="bulk" style="flex: 1 1 auto;">Массовое добавление</button>
+    <button class="upload-btn" id="uploadTabShare" data-tab="share" style="flex: 1 1 auto; background-color: #7700ff; color: #fff;">Слова от друга 🎁</button>
+  </div>
+</div>
+
+<!-- Подсказка для вкладки "Одно слово" -->
+<p id="singleHelp" class="mode-help">
+  Введите слово на английском и перевод на русский. После добавления слово сразу попадёт в ваш словарь.
+</p>
+
+<!-- Форма: Одно слово -->
+<div class="add-word-form" id="singleAddForm">
+  <div class="form-group">
+    <label for="newWord">Английское слово</label>
+    <input type="text" id="newWord" placeholder="Введите слово на английском" data-testid="new-word-input">
+  </div>
+  <div class="form-group">
+    <label for="newTranslation">Перевод</label>
+    <input type="text" id="newTranslation" placeholder="Введите перевод" data-testid="new-translation-input">
+  </div>
+  <div class="form-group">
+    <label for="newLevel">Уровень</label>
+    <select id="newLevel" data-testid="new-level-select">
+      <option value="A1">A1 - Beginner</option>
+      <option value="A2">A2 - Elementary</option>
+      <option value="B1">B1 - Intermediate</option>
+      <option value="B2">B2 - Upper-Intermediate</option>
+      <option value="C1">C1 - Advanced</option>
+      <option value="C2">C2 - Proficiency</option>
+      <option value="IRREGULARS">Irregular Verbs</option>
+      <option value="PREPOSITIONS">Prepositions</option>
+    </select>
+  </div>
+  <button class="add-word-btn" id="addWordBtn" data-testid="add-word-btn">
+    <i class="fas fa-plus"></i> Добавить слово
+  </button>
+</div>
+
+<!-- Форма: Массовое добавление -->
+<div class="add-word-form" id="bulkAddForm" style="display:none;">
+  <h3 style="margin-bottom:8px;">Массовое добавление</h3>
+  <p class="mode-help" id="bulkHelp" data-testid="bulk-help">
+    Каждое английское слово / фразу вводите с новой строки.<br><br>
+    Перевод указывается через "-" (например: go - идти, ехать, ходить)
+  </p>
+  <div class="form-group">
+    <label for="bulkLevel">Уровень для всех слов</label>
+    <select id="bulkLevel" data-testid="bulk-level-select">
+      <option value="A1">A1 - Beginner</option>
+      <option value="A2">A2 - Elementary</option>
+      <option value="B1">B1 - Intermediate</option>
+      <option value="B2">B2 - Upper-Intermediate</option>
+      <option value="C1">C1 - Advanced</option>
+      <option value="C2">C2 - Proficiency</option>
+      <option value="IRREGULARS">Irregular Verbs</option>
+      <option value="PREPOSITIONS">Prepositions</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="bulkTextarea">Вставьте строки</label>
+    <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;go - идти, ехать, ходить&#10;table - стол&#10;run - бежать, запускать" data-testid="bulk-textarea" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);border-radius:var(--radius-md);background:var(--bg-primary);color:var(--text-primary);"></textarea>
+  </div>
+  <button class="add-word-btn" id="bulkAddBtn" data-testid="bulk-add-btn">
+    <i class="fas fa-file-import"></i> Добавить список
+  </button>
+</div>
+
+<!-- === НОВАЯ ФОРМА: Ввод кода для импорта === -->
+<div class="add-word-form" id="shareAddForm" style="display:none;">
+  <h3 style="margin-bottom:8px;">Получить слова от друга</h3>
+  <p class="mode-help">Вставьте специальный код, который вам прислали, чтобы мгновенно добавить подборку слов.</p>
+  <div class="form-group">
+    <label for="shareCodeInput">Уникальный код</label>
+    <input type="text" id="shareCodeInput" placeholder="Например: eyJ1Ijoi0JjQstCw0..." style="font-family: monospace; width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+  </div>
+  <button class="add-word-btn" id="checkShareCodeBtn" style="background-color: #28a745; width: 100%;">
+    <i class="fas fa-gift"></i> Проверить и получить
+  </button>
+</div>
+
+<!-- Список добавленных слов -->
+<div id="customWordsList" class="words-list">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+    <h3 style="margin: 0;">Добавленные слова</h3>
+    <!-- Кнопка Поделиться (уже есть у тебя) -->
+ <button id="shareWordsBtn" class="add-word-btn" style="padding: 5px 15px; font-size: 14px; background: #6c757d; width: auto;">
+        <i class="fas fa-share-alt"></i> Поделиться
+    </button>
+  </div>
+  <div id="customWords">
+    <div class="empty-state">
+      <i class="fas fa-plus-circle"></i>
+      <h3>Нет добавленных слов</h3>
+      <p>Используйте формы выше для добавления новых слов</p>
+    </div>
+  </div>
+</div>
+</section>
   
     <!-- Progress -->
     <section id="progress" class="content-section">
@@ -630,6 +804,10 @@ body {
     <section id="games" class="content-section">
       <div class="section-header">
         <h2>Игры</h2>
+        <!-- Кнопка закрытия (возврат в Изучаю) -->
+        <button onclick="app.switchSection('learning')" style="background: none; border: none; font-size: 1.8rem; color: var(--text-secondary); cursor: pointer; padding: 0 10px;">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
 
       <p class="mode-help">
@@ -757,24 +935,23 @@ body {
   </main>
 
 <nav class="bottom-nav" id="bottomNav">
-  <button class="nav-item active" type="button" data-section="levels">
-    <i class="fas fa-layer-group"></i><span>Слова</span>
-  </button>
-  <button class="nav-item" type="button" data-section="learning">
+  <button class="nav-item active" type="button" data-section="learning">
     <i class="fas fa-book-reader"></i><span>Изучаю</span>
   </button>
-  <!-- НОВЫЙ ПУНКТ -->
+  <button class="nav-item" type="button" data-section="trainer">
+    <i class="fas fa-comments"></i><span>Тренажер</span>
+  </button>
   <button class="nav-item" type="button" data-section="grammar">
     <i class="fas fa-university"></i><span>Грамматика</span>
+  </button>
+  <button class="nav-item" type="button" data-section="levels">
+    <i class="fas fa-layer-group"></i><span>Слова</span>
   </button>
   <button class="nav-item" type="button" data-section="new-words">
     <i class="fas fa-plus"></i><span>Новые</span>
   </button>
   <button class="nav-item" type="button" data-section="progress">
     <i class="fas fa-chart-line"></i><span>Отчет</span>
-  </button>
-  <button class="nav-item" type="button" data-section="games">
-    <i class="fas fa-gamepad"></i><span>Игры</span>
   </button>
 </nav>
 </div>
@@ -1240,7 +1417,6 @@ function setLang(from, to){
     if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){ return false; } // Ctrl+U
   }
 </script>
-<script src="auth.js"></script>
 <script>
 // Скрываем основной контент до загрузки
 document.addEventListener('DOMContentLoaded', function() {
@@ -1272,6 +1448,50 @@ setTimeout(function() {
     hidePreloader();
 }, 4000);
 </script>
+
+<!-- === МОДАЛКА ЭКСПОРТА (выбор слов) === -->
+<div id="exportModal" class="words-popup-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:100000; justify-content:center; align-items:center;">
+  
+  <div class="words-popup" style="background: var(--bg-primary, #fff) !important; padding:20px; border-radius:16px; width:90%; max-width:420px; max-height:80vh; overflow-y:auto; box-shadow: 0 20px 60px rgba(0,0,0,0.4);">
+    
+    <!-- Шапка модалки (БРОНЕБОЙНАЯ ВЕРСИЯ) -->
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:15px; border-bottom:1px solid var(--border-color, #ccc); padding-bottom:10px;">
+      
+      <div style="flex: 1;">
+        <h3 style="margin:0 0 5px 0; color: var(--text-primary, #000) !important;">📤 Поделиться словами с другом</h3>
+        <p style="font-size:0.9rem; color: var(--text-secondary, #666) !important; margin:0;">
+          Выберите до 15 слов • Лимит: <span id="shareCounter" style="color: var(--primary-color, #58cc02) !important; font-weight:bold;">0</span>/15
+        </p>
+      </div>
+
+      <button id="closeExportModal" class="btn btn-secondary" style="width:36px; height:36px; padding:0; display:flex; align-items:center; justify-content:center; border-radius:8px; background: var(--bg-secondary, #eee) !important; color: var(--text-primary, #000) !important; border: none;">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <!-- ИСПРАВЛЕНИЕ 2: Список слов теперь имеет фон var(--bg-secondary) -->
+    <div id="exportWordsList" style="margin:15px 0; border:1px solid var(--border-color); background:var(--bg-secondary); padding:10px; border-radius:8px; max-height:280px; overflow-y:auto;">
+      <!-- Сюда JS вставит чекбоксы -->
+    </div>
+    
+    <!-- Низ модалки с кнопками -->
+    <div style="padding-top:15px; border-top:1px solid var(--border-color);">
+      <button id="generateShareCodeBtn" class="btn btn-primary" disabled style="width:100%; padding:12px; border-radius:8px; font-weight:bold;">
+        <i class="fas fa-link"></i> Создать код
+      </button>
+      
+      <div id="shareResult" style="display:none; margin-top:15px;">
+        <!-- ИСПРАВЛЕНИЕ 3: Поле вывода кода тоже подстраивается под тему -->
+        <input type="text" id="shareCodeOutput" readonly style="width:100%; padding:12px; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-primary); color:var(--text-primary); font-size:0.85rem; font-family:monospace; margin-bottom:10px;">
+        <button id="copyShareCodeBtn" class="btn btn-success" style="width:100%; padding:12px; border-radius:8px; font-weight:bold;">
+          <i class="fas fa-copy"></i> Скопировать код
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </body>
 
 </html>
