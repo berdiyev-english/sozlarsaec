@@ -1114,30 +1114,6 @@ body {
     color: #1cb0f6;
 }
 
-.empty-state {
-  text-align: center;
-  padding: 3rem 1.5rem;
-  color: var(--text-muted);
-}
-
-.empty-state i {
-  font-size: 3.5rem;
-  margin-bottom: 1.25rem;
-  opacity: 0.5;
-}
-
-.empty-state h3 {
-  font-size: 1.375rem;
-  margin-bottom: 0.5rem;
-  color: var(--text-secondary);
-  font-weight: 800;
-}
-
-.empty-state p {
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
 /* Контейнер для лого и названия */
 .logo-title {
   display: flex;
@@ -1409,27 +1385,37 @@ body {
 }
 
 .empty-state {
-  text-align: center;
-  padding: 3rem 1.5rem;
-  color: var(--text-muted);
+    text-align: center;
+    padding: 2rem 1.5rem;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh; /* Центрируем по вертикали */
+    gap: 1rem; /* Единое расстояние между элементами */
 }
-
 .empty-state i {
-  font-size: 3.5rem;
-  margin-bottom: 1.25rem;
-  opacity: 0.5;
+    font-size: 3rem; /* Единый размер иконки */
+    margin-bottom: 0;
+    opacity: 0.6;
+    color: var(--text-secondary);
 }
-
 .empty-state h3 {
-  font-size: 1.375rem;
-  margin-bottom: 0.5rem;
-  color: var(--text-secondary);
-  font-weight: 800;
+    font-size: 1.25rem; /* Единый размер заголовка */
+    margin-bottom: 0;
+    color: var(--text-secondary);
+    font-weight: 800;
 }
-
 .empty-state p {
-  font-size: 0.95rem;
-  line-height: 1.5;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 320px; /* Ограничиваем ширину для читаемости */
+    margin-bottom: 0;
+    color: var(--text-secondary);
+}
+.empty-state .btn {
+    margin-top: 0.5rem;
 }
 
 .mode-toggle,
@@ -6088,14 +6074,23 @@ LEARNING PATH
 /* ============================================================
 FIX: ИДЕАЛЬНЫЕ ОТСТУПЫ И ФОНЫ
 ============================================================ */
-
-/* 1. Убираем ВСЕ отступы у родительских контейнеров */
-#learning, 
+/* 1. Убираем отступы ТОЛЬКО у main-content и learning, чтобы дорожка была на всю ширину */
 .main-content {
-  padding: 0 !important;
-  margin: 0 !important;
-  max-width: 100% !important;
-  background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+}
+#learning {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    background: transparent !important;
+}
+/* ВОЗВРАЩАЕМ отступы для ВСЕХ ОСТАЛЬНЫХ секций (Слова, Тренажер, Грамматика, Отчет) */
+.content-section:not(#learning) {
+    padding: 1.0rem !important;
+    padding-top: 1.0rem !important; /* Отступ от синего топ-бара */
+    padding-bottom: 140px !important; /* Отступ для нижней навигации */
 }
 
 /* 2. Белая панель — на всю ширину и прилипает к самому верху */
@@ -6182,21 +6177,22 @@ FIX: ИДЕАЛЬНЫЕ ОТСТУПЫ И ФОНЫ
     min-height: auto !important;
 }
 .learning-top-bar {
-  position: fixed !important; 
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
-  z-index: 100 !important; 
+    position: sticky !important;
+    top: 0 !important; /* Прилипает к верху main-content, сразу под синим хедером */
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 99 !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 /* 1. Спускаем саму зеленую зону ниже из-под белой панели */
 #learning .path-wrapper {
-  padding-top: 120px !important; /* Увеличили с 80 до 120 */
+  padding-top: 65px !important; /* Увеличили с 80 до 120 */
 }
 
 /* 2. Спускаем сами уроки (первый кружок) еще чуть ниже от края травы */
 #learning .map-container {
-  margin-top: 60px !important; /* Раньше было 20 или 40 */
+  margin-top: 15px !important; /* Раньше было 20 или 40 */
 }
 
 #floating-active-arrow {
