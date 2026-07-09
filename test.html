@@ -26,6 +26,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="BeWords">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
   
   <!-- SEO для поисковиков и соцсетей -->
   <meta name="description" content="Инновационная платформа для изучения английских слов через игры">
@@ -35,7 +36,7 @@
   <meta property="og:url" content="https://bewords.ru">
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://bewords.ru">
-  <link rel="stylesheet" href="test.css">
+  <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -661,10 +662,6 @@ body {
 </section>
 <!-- Training -->
 <section id="trainer" class="content-section">
-  <div class="section-header">
-    <h2>Тренажер предложений</h2>
-    <p style="color:var(--text-secondary); font-size:0.9rem;">Собирайте предложения из слов вашего уровня</p>
-  </div>
   <div id="trainerContainer" class="trainer-container"></div>
 </section>
 
@@ -794,9 +791,6 @@ body {
   
     <!-- Progress -->
     <section id="progress" class="content-section">
-      <div class="section-header">
-        <h2>Прогресс</h2>
-      </div>
       <div id="progressContent" class="progress-content"></div>
     </section>
 
@@ -812,9 +806,7 @@ body {
 
       <p class="mode-help">
         Играйте в игры и изучайте слова в Английском.<br><br>
-        Чтобы запустить игру нужно правильно решить quiz.<br><br>
         Каждые 5 минут игры вам нужно будет правильно ответить на quiz из 4 слов , чтобы продолжить играть<br><br>
-        Таким образом за час вы повторите 48 слов просто играя в игры<br><br>
         Новая эра обучения началась с "Bewords"<br>
       </p>
 
@@ -919,12 +911,8 @@ body {
       </div>
     </section>
 
-    <!-- Grammar Section (Replaces AI Chat) -->
+    <!-- Grammar Section -->
     <section id="grammar" class="content-section">
-      <div class="section-header">
-        <h2>Грамматика</h2>
-        <p style="color:var(--text-secondary); font-size:0.9rem;">От простого к сложному</p>
-      </div>
       
       <!-- Сюда JS будет рендерить темы -->
       <div id="grammarList" class="grammar-topics-grid"></div>
@@ -936,7 +924,7 @@ body {
 
 <nav class="bottom-nav" id="bottomNav">
   <button class="nav-item active" type="button" data-section="learning">
-    <i class="fas fa-book-reader"></i><span>Изучаю</span>
+    <i class="fas fa-book-reader"></i><span>Изучать</span>
   </button>
   <button class="nav-item" type="button" data-section="trainer">
     <i class="fas fa-comments"></i><span>Тренажер</span>
@@ -961,7 +949,7 @@ body {
 <script src="oxford_words_data.js"></script>
 <script src="sentences-data.js"></script>
 <script src="grammar.js"></script> 
-<script src="test.js"></script>
+<script src="app.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -1083,7 +1071,7 @@ body {
     deferredPrompt = e;
     
     if (banner && banner.classList.contains('show') && !isIOS) {
-      installBtn.textContent = 'Установить PWA';
+      installBtn.textContent = 'Установить';
       installBtn.href = '#';
       installBtn.onclick = async function(e) {
         e.preventDefault();
