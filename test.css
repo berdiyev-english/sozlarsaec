@@ -7349,6 +7349,28 @@ FIX: ИДЕАЛЬНЫЕ ОТСТУПЫ И ФОНЫ
     animation: streakPopupBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
+    max-height: 85vh !important; /* Ограничиваем высоту 85% от экрана */
+    overflow-y: auto !important; /* Включаем внутренний скролл, если контента много */
+    box-sizing: border-box;
+    padding: 24px 20px !important; /* Чуть уменьшаем отступы по бокам на узких экранах */
+}
+@media (max-height: 700px) {
+    .streak-fire-icon {
+        width: 70px !important;
+        height: 70px !important;
+        margin-bottom: 10px !important;
+    }
+    .streak-fire-icon i {
+        font-size: 2rem !important;
+    }
+    .streak-title {
+        font-size: 1.5rem !important;
+    }
+    .streak-day-circle {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1rem !important;
+    }
 }
 
 [data-theme="dark"] .streak-popup-card {
@@ -7809,4 +7831,295 @@ FIX: ИДЕАЛЬНЫЕ ОТСТУПЫ И ФОНЫ
 
 [data-theme="dark"] .streak-birth-text {
     color: #fcd34d;
+}
+
+/* === КОМПАКТНЫЙ СТРИК В ТОП-БАРЕ === */
+@keyframes flameWiggle {
+    0%, 100% { transform: rotate(-3deg) scale(1); }
+    25% { transform: rotate(3deg) scale(1.1); }
+    50% { transform: rotate(-2deg) scale(1.05); }
+    75% { transform: rotate(2deg) scale(1.08); }
+}
+
+/* Тёмная тема для стрик-пилюли */
+[data-theme="dark"] .streak-pill-compact {
+    background: linear-gradient(135deg, #431407, #7c2d12) !important;
+    border-color: #ea580c !important;
+}
+[data-theme="dark"] .streak-pill-compact span:last-child {
+    color: #fdba74 !important;
+}
+/* === ПОЛНОЦЕННЫЙ КАЛЕНДАРЬ СТРИКА === */
+.streak-calendar-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease-out;
+}
+.streak-calendar-card {
+    background: var(--bg-primary);
+    border-radius: 24px;
+    padding: 24px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border: 3px solid #ffc800;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+[data-theme="dark"] .streak-calendar-card {
+    border-color: #f59e0b;
+}
+.cal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+.cal-main-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+}
+.cal-stats-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.cal-stat {
+    flex: 1;
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+    border: 2px solid var(--border-color);
+}
+.cal-stat-num {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #ff6b35;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+.cal-stat-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 700;
+}
+.cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.cal-title {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    text-transform: capitalize;
+}
+.cal-nav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+.cal-nav-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+.cal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 8px;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+.cal-day {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+.cal-empty { background: transparent; border: none; }
+.cal-active {
+    background: linear-gradient(135deg, #58cc02, #4caf00);
+    color: white;
+    border-color: #4caf00;
+    box-shadow: 0 4px 10px rgba(88, 204, 2, 0.3);
+}
+.cal-active i { font-size: 1rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+.cal-missed {
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+.cal-missed i { font-size: 0.7rem; color: #ef4444; }
+.cal-today {
+    border-color: #ffc800;
+    border-width: 3px;
+    background: var(--bg-primary);
+    color: #ffc800;
+    font-weight: 900;
+    box-shadow: 0 0 15px rgba(255, 200, 0, 0.3);
+}
+.cal-future {
+    background: transparent;
+    color: var(--text-muted);
+    opacity: 0.2;
+    border: 2px dashed var(--border-color);
+}
+/* === ПРОГНОЗ НАГРАДЫ В КАЛЕНДАРЕ === */
+.cal-reward-preview {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border: 2px solid #fbbf24;
+    border-radius: 16px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.15);
+}
+[data-theme="dark"] .cal-reward-preview {
+    background: linear-gradient(135deg, #451a03, #78350f);
+    border-color: #f59e0b;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+}
+.cal-reward-icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+.cal-reward-info {
+    flex: 1;
+}
+.cal-reward-label {
+    font-size: 0.8rem;
+    color: #92400e;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+[data-theme="dark"] .cal-reward-label {
+    color: #fcd34d;
+}
+.cal-reward-amount {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #d97706;
+}
+[data-theme="dark"] .cal-reward-amount {
+    color: #fbbf24;
+}
+/* === СТАТИСТИКА ПОСЛЕ УРОКА (DUOLINGO STYLE) === */
+.lesson-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+}
+.lesson-stat-card {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px 8px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+.lesson-stat-card:hover {
+    transform: translateY(-2px);
+}
+.lesson-stat-icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+.lesson-stat-value {
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+.lesson-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Блок с точностью */
+.lesson-accuracy-block {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 24px;
+    text-align: left;
+}
+.lesson-accuracy-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+.lesson-accuracy-bar {
+    height: 12px;
+    background: var(--bg-tertiary);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.lesson-accuracy-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #58cc02, #89e219);
+    border-radius: 10px;
+    /* Плавная анимация заполнения */
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+/* Анимация прыгающего Боба на экране победы */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
