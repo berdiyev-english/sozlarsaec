@@ -2630,7 +2630,7 @@ img[data-image-source*="Servier"],
   }
 }
 
-/* ===== Translator (Duolingo-style) + Upload tabs ===== */
+/* ===== Translator + Upload tabs ===== */
 .translator-card {
 background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
 border: 3px solid var(--border-color);
@@ -4121,7 +4121,7 @@ box-shadow: var(--shadow-md);
     70% { transform: scale(1); }
 }
 
-/* ==================== ONBOARDING WIZARD (DUOLINGO STYLE) ==================== */
+/* ==================== ONBOARDING WIZARD  ==================== */
 .wizard-overlay {
   position: fixed;
   inset: 0;
@@ -6355,7 +6355,7 @@ FIX: ИДЕАЛЬНЫЕ ОТСТУПЫ И ФОНЫ
 .match-item:active { transform: translateY(2px); }
 
 /* ============================================================
-АНМАЦИЯ ОТКРЫТИЯ СУНДУКА (DUOLINGO STYLE)
+АНМАЦИЯ ОТКРЫТИЯ СУНДУКА 
 ============================================================ */
 .chest-opening-overlay {
     position: fixed;
@@ -7324,7 +7324,7 @@ FIX: ИДЕАЛЬНЫЕ ОТСТУПЫ И ФОНЫ
     text-transform: uppercase;
 }
 
-/* === STREAK POPUP (DUOLINGO STYLE) === */
+/* === STREAK POPUP  === */
 .streak-popup-overlay {
     position: fixed;
     inset: 0;
@@ -8052,7 +8052,7 @@ FIX: ИДЕАЛЬНЫЕ ОТСТУПЫ И ФОНЫ
 [data-theme="dark"] .cal-reward-amount {
     color: #fbbf24;
 }
-/* === СТАТИСТИКА ПОСЛЕ УРОКА (DUOLINGO STYLE) === */
+/* === СТАТИСТИКА ПОСЛЕ УРОКА   === */
 .lesson-stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -8122,4 +8122,64 @@ FIX: ИДЕАЛЬНЫЕ ОТСТУПЫ И ФОНЫ
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
+}
+
+/* === СТИЛЬНАЯ ИКОНКА ОГНЯ (вместо эмодзи) === */
+.fire-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ff6b35, #ff4500);
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
+    flex-shrink: 0;
+    animation: fireIconPulse 2s ease-in-out infinite;
+}
+
+/* Маленькая версия (для топ-бара) */
+.fire-icon-sm {
+    width: 24px;
+    height: 24px;
+    font-size: 0.75rem;
+    box-shadow: 0 2px 6px rgba(255, 107, 53, 0.3);
+}
+
+/* Большая версия (для попапов) */
+.fire-icon-lg {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.5);
+}
+
+/* Анимация пульсации */
+@keyframes fireIconPulse {
+    0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
+    }
+    50% { 
+        transform: scale(1.1); 
+        box-shadow: 0 4px 16px rgba(255, 107, 53, 0.6);
+    }
+}
+
+/* Тёмная тема */
+[data-theme="dark"] .fire-icon {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.5);
+}
+
+/* === ПЛАШКА "ТОЛЬКО СТАРЫЕ СЛОВА" (ТЁМНАЯ ТЕМА) === */
+[data-theme="dark"] .lesson-old-words-hint {
+    background: #451a03 !important;
+    border-color: #78350f !important;
+    color: #fcd34d !important;
+}
+[data-theme="dark"] .lesson-old-words-hint i {
+    color: #f59e0b !important;
 }
