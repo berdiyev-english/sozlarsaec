@@ -1,28 +1,28 @@
 /* Bewords Service Worker - Offline Mode */
-const CACHE_NAME = 'bewords-cache-v12';
+const CACHE_NAME = 'bewords-cache-v13';
 
 // Список файлов, которые нужно сохранить СРАЗУ
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/subway.html',
-  '/tile.html',
-  '/ninja.html',
-  '/cosmos.html',
-  '/brain.html',
-  '/style.css',  
-  '/app.js',  
+  '/style.css',  // Если есть внешний файл
+  '/app.js',     // Твой основной скрипт (если он внешний)
   '/grammar.js',
   '/sentences-data.js',
-  '/oxford_words_data.js'
   '/loading.gif',
   '/kitten.png',
   '/puppy.png',
   '/nophoto.jpg',
-  '/bob_in_spring.jpg',
   '/m1.jpg',     // Закешируем хотя бы пару мотиваций
   '/m2.jpg',
-  '/m3.jpg'
+  '/m3.jpg',
+  '/m4.jpg',
+  '/m5.jpg',
+  '/panda.png',
+  '/fox.png',
+  '/penguin.png',
+  '/rabbit.png',
+  '/bob_in_spring.png'
 ];
 
 // 1. Установка (Кешируем статику)
