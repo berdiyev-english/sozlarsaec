@@ -8208,3 +8208,105 @@ animation: none;
 [data-theme="dark"] .match-item {
     color: var(--text-primary) !important;
 }
+
+/* ==========================================================================
+ФИКС: СКРОЛЛ В ТРЕНИРОВКЕ + АДАПТАЦИЯ QUIZ ДЛЯ МОБИЛЬНЫХ
+========================================================================== */
+
+/* 1. Включаем скролл внутри контейнера тренировки */
+.active-training-container {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-height: calc(100vh - 140px) !important; /* 70px хедер + 70px топ-бар */
+    padding-bottom: 100px !important; /* Отступ, чтобы последний ответ не прятался под нижнее меню */
+}
+
+/* 2. Базовые стили для картинки Quiz (переопределяем инлайн-стили из JS) */
+#exerciseContainer .quiz-image {
+    width: 100% !important;
+    height: 220px !important;
+    object-fit: cover !important;
+    background: var(--bg-tertiary) !important;
+    border-radius: 16px !important;
+    margin-bottom: 16px !important;
+    border: 3px solid var(--border-color) !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+/* 3. Адаптация для телефонов (iPhone 15 Pro, обычные смартфоны) */
+@media (max-width: 480px) {
+    /* Уменьшаем картинку */
+    #exerciseContainer .quiz-image {
+        height: 140px !important;
+        margin-bottom: 12px !important;
+        border-radius: 12px !important;
+    }
+    
+    /* Уменьшаем заголовок (слово) */
+    #exerciseContainer h3 {
+        font-size: 1.5rem !important;
+        margin-bottom: 4px !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Уменьшаем подзаголовок */
+    #exerciseContainer p {
+        font-size: 0.9rem !important;
+        margin-bottom: 14px !important;
+    }
+    
+    /* Уменьшаем отступы в корневом контейнере упражнения */
+    #exerciseContainer > div:first-child {
+        padding: 10px 0 !important;
+    }
+    
+    /* Сжимаем кнопки ответов */
+    #exerciseContainer .quiz-option-btn,
+    #exerciseContainer .dict1-option,
+    #exerciseContainer .dict2-btn,
+    #exerciseContainer .match-item {
+        padding: 12px 14px !important;
+        font-size: 0.95rem !important;
+        border-radius: 12px !important;
+    }
+    
+    /* Уменьшаем gap между кнопками */
+    #exerciseContainer [style*="gap:12px"],
+    #exerciseContainer [style*="gap: 12px"] {
+        gap: 8px !important;
+    }
+    
+    /* Кнопка "Проверить" и другие крупные кнопки */
+    #exerciseContainer button[style*="padding:14px"],
+    #exerciseContainer button[style*="padding: 14px"] {
+        padding: 12px !important;
+        font-size: 1rem !important;
+    }
+}
+
+/* 4. Для очень маленьких экранов (iPhone SE, iPhone 5/5s) */
+@media (max-width: 375px) {
+    #exerciseContainer .quiz-image {
+        height: 120px !important;
+    }
+    
+    #exerciseContainer h3 {
+        font-size: 1.3rem !important;
+    }
+    
+    #exerciseContainer .quiz-option-btn {
+        padding: 10px 12px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* Ещё сильнее сжимаем gap */
+    #exerciseContainer [style*="gap:12px"],
+    #exerciseContainer [style*="gap: 12px"] {
+        gap: 6px !important;
+    }
+}
+
+/* 5. Тёмная тема для картинки */
+[data-theme="dark"] #exerciseContainer .quiz-image {
+    background: #1f2937 !important;
+}
