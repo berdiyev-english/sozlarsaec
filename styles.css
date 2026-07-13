@@ -8310,3 +8310,371 @@ animation: none;
 [data-theme="dark"] #exerciseContainer .quiz-image {
     background: #1f2937 !important;
 }
+/* === ПРАКТИКА: ВЫБОР СЛОВ (ПОЛНОЭКРАННАЯ МОДАЛКА + АККОРДЕОН) === */
+.practice-words-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 0;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.practice-words-modal-card {
+    background: var(--bg-primary);
+    width: 100%;
+    max-width: 520px;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 60px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+/* На десктопе — обычное окно по центру */
+@media (min-width: 768px) {
+    .practice-words-modal-overlay {
+        padding: 20px;
+        align-items: center;
+    }
+    .practice-words-modal-card {
+        height: 85vh;
+        max-height: 700px;
+        border-radius: 24px;
+    }
+}
+
+.practice-words-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 2px solid var(--border-color);
+    flex-shrink: 0;
+    background: var(--bg-primary);
+}
+
+.practice-words-header h2 {
+    margin: 0;
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.practice-words-header .selected-count {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    background: rgba(88, 204, 2, 0.1);
+    padding: 4px 10px;
+    border-radius: 10px;
+}
+
+.practice-words-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.practice-words-close:hover {
+    background: var(--danger-color);
+    border-color: var(--danger-color);
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* Панель действий */
+.practice-words-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.practice-words-actions button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.practice-words-actions button:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Список категорий (скроллится) */
+.practice-words-list {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 0;
+}
+
+/* Группа (аккордеон) */
+.practice-group {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.practice-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    cursor: pointer;
+    background: var(--bg-secondary);
+    transition: background 0.2s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.practice-group-header:hover {
+    background: var(--bg-tertiary);
+}
+
+.practice-group-header:active {
+    background: var(--bg-tertiary);
+}
+
+.practice-group-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+}
+
+.practice-group-arrow {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+}
+
+.practice-group.open .practice-group-arrow {
+    transform: rotate(90deg);
+}
+
+.practice-group-name {
+    font-weight: 800;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.practice-group-count {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: rgba(0,0,0,0.06);
+    padding: 2px 8px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .practice-group-count {
+    background: rgba(255,255,255,0.08);
+}
+
+.practice-group-select-all {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-color);
+    background: transparent;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.practice-group-select-all:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Контент группы (скрыт по умолчанию) */
+.practice-group-content {
+    display: none;
+    background: var(--bg-primary);
+}
+
+.practice-group.open .practice-group-content {
+    display: block;
+}
+
+/* Элемент слова */
+.practice-word-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px 12px 44px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.practice-word-item:hover {
+    background: var(--bg-secondary);
+}
+
+.practice-word-item:active {
+    background: var(--bg-tertiary);
+}
+
+.practice-word-item input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    margin-right: 14px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.practice-word-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.practice-word-en {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+
+.practice-word-ru {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.3;
+    margin-top: 1px;
+}
+
+/* Футер с кнопкой старта */
+.practice-words-footer {
+    padding: 16px 20px;
+    border-top: 2px solid var(--border-color);
+    background: var(--bg-primary);
+    flex-shrink: 0;
+    /* Безопасная зона для iPhone */
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+}
+
+.practice-words-footer button {
+    width: 100%;
+    padding: 16px;
+    font-weight: 800;
+    border: none;
+    border-radius: 14px;
+    background: var(--primary-color);
+    color: white;
+    font-size: 1.05rem;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--primary-dark);
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.practice-words-footer button:active:not(:disabled) {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0 var(--primary-dark);
+}
+
+.practice-words-footer button:disabled {
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+/* Пустое состояние */
+.practice-words-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+}
+
+.practice-words-empty i {
+    font-size: 3rem;
+    margin-bottom: 12px;
+    opacity: 0.4;
+}
+
+/* === КНОПКА-СЧЁТЧИК СЛОВ (ЯРКАЯ ОБВОДКА) === */
+.stat-pill-words {
+    /* Яркая обводка */
+    border: 2px solid #38bdf8 !important;
+    background: linear-gradient(135deg, #e0f2fe, #f0f9ff) !important;
+    box-shadow: 0 2px 8px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255,255,255,0.5) !important;
+    
+    /* Курсор и анимация */
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    
+    /* Чтобы текст не выделялся при клике */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Эффект при наведении мышкой */
+.stat-pill-words:hover {
+    transform: translateY(-2px) scale(1.05) !important;
+    border-color: #0ea5e9 !important;
+    background: linear-gradient(135deg, #bae6fd, #e0f2fe) !important;
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4), inset 0 1px 0 rgba(255,255,255,0.6) !important;
+}
+
+/* Тёмная тема */
+[data-theme="dark"] .stat-pill-words {
+    border-color: #0ea5e9 !important;
+    background: linear-gradient(135deg, #0c4a6e, #075985) !important;
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+
+[data-theme="dark"] .stat-pill-words:hover {
+    border-color: #38bdf8 !important;
+    background: linear-gradient(135deg, #075985, #0369a1) !important;
+    box-shadow: 0 6px 16px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255,255,255,0.15) !important;
+}
+
+/* Пульсация иконки книги (привлекает внимание) */
+.stat-pill-words i {
+    animation: bookPulse 2s ease-in-out infinite;
+}
+
+@keyframes bookPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
