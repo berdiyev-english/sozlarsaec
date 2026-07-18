@@ -664,129 +664,173 @@ body {
   <div id="trainerContainer" class="trainer-container"></div>
 </section>
 
-    <!-- New Words -->
-  <section id="new-words" class="content-section"> <div id="translatorWidget" class="translator-card"> <div class="translator-header"> <h3>BeWords - Translate</h3> <p>Переводите слова и фразы и добавляйте их на изучение</p> </div>
-<div class="tr-lang-row">
-  <button class="tr-lang-btn active" id="trRuBtn" type="button">🇷🇺 Русский</button>
-  <button class="tr-swap-btn" id="trSwapBtn" type="button" title="Поменять местами">⇄</button>
-  <button class="tr-lang-btn" id="trEnBtn" type="button">🇬🇧 English</button>
-</div>
-
-<div class="tr-input-row">
-  <input type="text" id="trInputText" placeholder="Введите слово или фразу..." />
-  <button id="trTranslateBtn" type="button">Перевести</button>
-</div>
-
-<div class="translator-loading" id="trLoading">
-  <div class="tr-spinner"></div>
-  <p>Анализирую варианты перевода...</p>
-</div>
-
-<div class="translator-error" id="trError"></div>
-<div class="translator-results" id="trResults"></div>
-</div> <div class="section-header"> <h2>Загрузите новые слова</h2> </div> 
-<div class="toggles-row">
-  <div class="upload-toggle" role="tablist" aria-label="upload mode" style="flex-wrap: wrap; gap: 10px;">
-    <!-- Строка 1: Формы добавления -->
-    <button class="upload-btn active" id="uploadTabSingle" data-tab="single" style="flex: 1 1 auto;">Одно слово</button>
-    <button class="upload-btn" id="uploadTabBulk" data-tab="bulk" style="flex: 1 1 auto;">Массовое добавление</button>
-    <button class="upload-btn" id="uploadTabShare" data-tab="share" style="flex: 1 1 auto; background-color: #7700ff; color: #fff;">Слова от друга 🎁</button>
-  </div>
-</div>
-
-<!-- Подсказка для вкладки "Одно слово" -->
-<p id="singleHelp" class="mode-help">
-  Введите слово на английском и перевод на русский. После добавления слово сразу попадёт в ваш словарь.
-</p>
-
-<!-- Форма: Одно слово -->
-<div class="add-word-form" id="singleAddForm">
-  <div class="form-group">
-    <label for="newWord">Английское слово</label>
-    <input type="text" id="newWord" placeholder="Введите слово на английском" data-testid="new-word-input">
-  </div>
-  <div class="form-group">
-    <label for="newTranslation">Перевод</label>
-    <input type="text" id="newTranslation" placeholder="Введите перевод" data-testid="new-translation-input">
-  </div>
-  <div class="form-group">
-    <label for="newLevel">Уровень</label>
-    <select id="newLevel" data-testid="new-level-select">
-      <option value="A1">A1 - Beginner</option>
-      <option value="A2">A2 - Elementary</option>
-      <option value="B1">B1 - Intermediate</option>
-      <option value="B2">B2 - Upper-Intermediate</option>
-      <option value="C1">C1 - Advanced</option>
-      <option value="C2">C2 - Proficiency</option>
-      <option value="IRREGULARS">Irregular Verbs</option>
-      <option value="PREPOSITIONS">Prepositions</option>
-    </select>
-  </div>
-  <button class="add-word-btn" id="addWordBtn" data-testid="add-word-btn">
-    <i class="fas fa-plus"></i> Добавить слово
-  </button>
-</div>
-
-<!-- Форма: Массовое добавление -->
-<div class="add-word-form" id="bulkAddForm" style="display:none;">
-  <h3 style="margin-bottom:8px;">Массовое добавление</h3>
-  <p class="mode-help" id="bulkHelp" data-testid="bulk-help">
-    Каждое английское слово / фразу вводите с новой строки.<br><br>
-    Перевод указывается через ": или ;" (например: go : идти, ехать, ходить)
-  </p>
-  <div class="form-group">
-    <label for="bulkLevel">Уровень для всех слов</label>
-    <select id="bulkLevel" data-testid="bulk-level-select">
-      <option value="A1">A1 - Beginner</option>
-      <option value="A2">A2 - Elementary</option>
-      <option value="B1">B1 - Intermediate</option>
-      <option value="B2">B2 - Upper-Intermediate</option>
-      <option value="C1">C1 - Advanced</option>
-      <option value="C2">C2 - Proficiency</option>
-      <option value="IRREGULARS">Irregular Verbs</option>
-      <option value="PREPOSITIONS">Prepositions</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="bulkTextarea">Вставьте строки</label>
-    <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;go - идти, ехать, ходить&#10;table - стол&#10;run - бежать, запускать" data-testid="bulk-textarea" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);border-radius:var(--radius-md);background:var(--bg-primary);color:var(--text-primary);"></textarea>
-  </div>
-  <button class="add-word-btn" id="bulkAddBtn" data-testid="bulk-add-btn">
-    <i class="fas fa-file-import"></i> Добавить список
-  </button>
-</div>
-
-<!-- === НОВАЯ ФОРМА: Ввод кода для импорта === -->
-<div class="add-word-form" id="shareAddForm" style="display:none;">
-  <h3 style="margin-bottom:8px;">Получить слова от друга</h3>
-  <p class="mode-help">Вставьте специальный код, который вам прислали, чтобы мгновенно добавить подборку слов.</p>
-  <div class="form-group">
-    <label for="shareCodeInput">Уникальный код</label>
-    <input type="text" id="shareCodeInput" placeholder="Например: eyJ1Ijoi0JjQstCw0..." style="font-family: monospace; width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
-  </div>
-  <button class="add-word-btn" id="checkShareCodeBtn" style="background-color: #28a745; width: 100%;">
-    <i class="fas fa-gift"></i> Проверить и получить
-  </button>
-</div>
-
-<!-- Список добавленных слов -->
-<div id="customWordsList" class="words-list">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-    <h3 style="margin: 0;">Добавленные слова</h3>
-    <!-- Кнопка Поделиться (уже есть у тебя) -->
- <button id="shareWordsBtn" class="add-word-btn" style="padding: 5px 15px; font-size: 14px; background: #6c757d; width: auto;">
-        <i class="fas fa-share-alt"></i> Поделиться
-    </button>
-  </div>
-  <div id="customWords">
-    <div class="empty-state">
-      <i class="fas fa-plus-circle"></i>
-      <h3>Нет добавленных слов</h3>
-      <p>Используйте формы выше для добавления новых слов</p>
+   <!-- New Words Section -->
+  <section id="new-words" class="content-section">
+    
+<!-- Modern Boblingo-style Translator Widget -->
+<div id="translatorWidget" class="translator-card-bob">
+    
+    <!-- Шапка -->
+    <div class="header-container">
+        <div class="header-text">
+            <div class="header-title">Bewords - Переводчик</div>
+        </div>
     </div>
-  </div>
+
+    <!-- Переключатель языков -->
+    <div class="lang-switcher">
+        <button class="lang-btn" id="trRuBtn" type="button">🇷🇺 Русский</button>
+        <button class="swap-btn" id="trSwapBtn" type="button" title="Поменять местами">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 4l4 4-4 4"></path>
+                <path d="M3 8h18"></path>
+                <path d="M7 20l-4-4 4-4"></path>
+                <path d="M21 16H3"></path>
+            </svg>
+        </button>
+        <button class="lang-btn" id="trEnBtn" type="button">🇬🇧 Англ</button>
+    </div>
+
+    <!-- Поле ввода текста -->
+    <div class="input-area">
+        <textarea class="text-input" id="trInputText" placeholder="Переводи слова и фразы , и добавляй их на изучение"></textarea>
+    </div>
+
+    <!-- Кнопка перевода -->
+    <button class="btn-bob" id="trTranslateBtn" type="button">Перевести</button>
+
+    <!-- === НОВЫЕ БЛОКИ ДЛЯ ОТОБРАЖЕНИЯ РЕЗУЛЬТАТА === -->
+    
+    <!-- Загрузка -->
+    <div class="translator-loading" id="trLoading">
+        <div class="tr-spinner"></div>
+        <p>Боб ищет лучший перевод...</p>
+    </div>
+
+    <!-- Ошибка -->
+    <div class="translator-error" id="trError" style="display: none;"></div>
+
+    <!-- Результаты перевода -->
+    <div class="translator-results" id="trResults" style="display: none;">
+        <div class="tr-result-card">
+            <div class="tr-result-main">
+                <div class="tr-result-label">Перевод</div>
+                <div class="tr-result-text" id="trMainTranslation">...</div>
+            </div>
+            
+            <!-- Дополнительные значения (появятся, если они есть) -->
+            <div class="tr-result-alternatives" id="trAlternatives" style="display: none;">
+                <div class="tr-alt-label">Другие значения:</div>
+                <div class="tr-alt-list" id="trAltList"></div>
+            </div>
+
+            <!-- Кнопка добавления -->
+            <button class="btn-add-to-dict" id="trAddToDictBtn">
+                <i class="fas fa-plus"></i> Добавить в словарь
+            </button>
+        </div>
+    </div>
+
 </div>
-</section>
+
+    <!-- 2. Заголовок и Современный переключатель (Segmented Control) -->
+    <div class="section-header">
+      <h2>Добавить слова</h2>
+    </div>
+    
+    <div class="segmented-control">
+      <button class="segment-btn active" id="uploadTabSingle" data-tab="single">
+        <i class="fas fa-pen"></i> Вручную
+      </button>
+      <button class="segment-btn" id="uploadTabBulk" data-tab="bulk">
+        <i class="fas fa-list"></i> Списком
+      </button>
+      <button class="segment-btn" id="uploadTabShare" data-tab="share">
+        <i class="fas fa-gift"></i> От друга
+      </button>
+    </div>
+
+    <!-- 3. Вкладка: ВРУЧНУЮ -->
+    <div id="singleAddForm" class="add-word-form">
+      <div class="form-group">
+        <label for="newWord">Английское слово</label>
+        <input type="text" id="newWord" placeholder="Например: apple" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="newTranslation">Перевод</label>
+        <input type="text" id="newTranslation" placeholder="Например: яблоко" autocomplete="off">
+      </div>
+      
+      <!-- Мягкая подсказка вместо красной рамки -->
+      <div class="form-hint">
+        <i class="fas fa-lightbulb"></i>
+        <span>Слово сразу попадёт в ваш словарь и будет доступно для изучения.</span>
+      </div>
+
+      <button class="btn btn-primary add-word-btn" id="addWordBtn">
+        <i class="fas fa-plus"></i> Добавить слово
+      </button>
+    </div>
+
+    <!-- 4. Вкладка: СПИСКОМ -->
+    <div id="bulkAddForm" class="add-word-form" style="display: none;">
+      <div class="form-group">
+        <label for="bulkTextarea">Список слов</label>
+        <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;apple : яблоко&#10;run : бег , бегать&#10;cat : кот"></textarea>
+      </div>
+      
+      <div class="form-hint">
+        <i class="fas fa-info-circle"></i>
+        <span>Каждое слово с новой строки. Разделяйте слово и перевод двоеточием (:) или точкой с запятой (;).</span>
+      </div>
+
+      <button class="btn btn-primary add-word-btn" id="bulkAddBtn">
+        <i class="fas fa-download"></i> Добавить список
+      </button>
+    </div>
+
+    <!-- 5. Вкладка: ОТ ДРУГА 🎁 (Сделана максимально понятной) -->
+    <div id="shareAddForm" class="add-word-form" style="display: none;">
+      <div class="form-group">
+        <label for="shareCodeInput">Код от друга</label>
+        <input type="text" id="shareCodeInput" placeholder="Например: A8F-9K2 или SHARE-..." style="text-transform: uppercase; letter-spacing: 1px; font-family: monospace;">
+      </div>
+      
+      <div class="form-hint">
+        <i class="fas fa-users"></i>
+        <span>Вставьте короткий код, который вам прислали, чтобы мгновенно получить готовую подборку слов в свой словарь.</span>
+      </div>
+
+      <button class="btn btn-primary add-word-btn" id="checkShareCodeBtn">
+        <i class="fas fa-check-circle"></i> Проверить и получить
+      </button>
+    </div>
+
+    <!-- 6. Список добавленных слов + Умное пустое состояние -->
+    <div id="customWordsList" class="words-list" style="margin-top: 2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800;">Добавленные слова</h3>
+        <button id="shareWordsBtn" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">
+          <i class="fas fa-share-alt"></i> Cлова другу
+        </button>
+      </div>
+      
+      <div id="customWords">
+        <!-- Этот блок покажется, если слов нет. JS сам подставит сюда слова, когда они появятся -->
+        <div class="empty-state-wrapper">
+          <div class="empty-state">
+            <i class="fas fa-book-open" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+            <h3>Словарь пуст</h3>
+            <p>Добавьте свои первые слова или получите их от друга, чтобы начать обучение</p>
+            <button class="btn btn-primary" onclick="document.getElementById('newWord').focus(); window.scrollTo({top: 0, behavior: 'smooth'});">
+              <i class="fas fa-plus"></i> Добавить первое слово
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
   
     <!-- Progress -->
     <section id="progress" class="content-section">
