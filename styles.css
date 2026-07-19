@@ -568,64 +568,6 @@ body {
   gap: 0.875rem;
 }
 
-.word-card {
-  background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
-  border: 3px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem;
-  transition: all 0.3s ease;
-  box-shadow: var(--shadow-md);
-  contain: layout style paint;
-  will-change: auto;
-}
-
-.word-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--primary-color);
-}
-
-.word-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 0.75rem;
-  gap: 1rem;
-}
-
-.word-text {
-  font-size: clamp(1.125rem, 3vw, 1.5rem);
-  font-weight: 800;
-  color: var(--text-primary);
-  word-break: break-word;
-  flex: 1;
-}
-
-.word-actions {
-  display: flex;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
-
-.word-translation {
-  color: var(--text-secondary);
-  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
-  font-weight: 600;
-  line-height: 1.4;
-  word-break: break-word;
-}
-
-.word-level {
-  display: inline-block;
-  background: var(--bg-tertiary);
-  color: var(--text-muted);
-  padding: 0.25rem 0.5rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  margin-top: 0.5rem;
-  font-weight: 700;
-}
-
 .action-btn {
   width: 40px;
   height: 40px;
@@ -1764,7 +1706,7 @@ img[data-image-source*="Servier"],
 .words-list {
   display: flex;
   flex-direction: column;
-  gap: 0.875rem;
+  gap: 8px;
 }
 
 .learning-word-card {
@@ -2814,11 +2756,6 @@ box-shadow: var(--shadow-md);
    ОПТИМИЗАЦИЯ ПРОИЗВОДИТЕЛЬНОСТИ
    ======================================== */
 
-/* Изоляция перерисовки для карточек слов */
-.word-card {
-  contain: layout style paint;
-}
-
 /* Оптимизация списка слов */
 #wordsList {
   contain: layout;
@@ -3468,208 +3405,6 @@ box-shadow: var(--shadow-md);
 }
 [data-theme="dark"] .grammar-modal-body div[style*="#F7F7F7"] div[style*="#777"] {
     color: #d1d5db !important; /* Светло-серый */
-}
-
-/* ============================================================
-   COMPACT WORD LIST STYLES
-   ============================================================ */
-
-/* Компактная карточка (как строка списка) */
-.word-card-compact {
-  padding: 8px 12px !important; /* Уменьшенные отступы */
-  display: grid;
-  grid-template-columns: 1fr auto; /* Слева текст, справа кнопки */
-  align-items: center;
-  gap: 12px;
-  min-height: 50px;
-}
-
-/* Блок с текстом */
-.word-card-compact .word-info-col {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2px; /* Расстояние между англ и рус */
-  overflow: hidden;
-}
-
-/* Английское слово */
-.word-card-compact .word-text-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 1.05rem; /* Чуть меньше чем было */
-  font-weight: 800;
-  color: var(--text-primary);
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Перевод */
-.word-card-compact .word-trans-row {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Кнопки действий */
-.word-card-compact .word-actions-row {
-  display: flex;
-  align-items: center;
-  gap: 6px; /* Плотное расположение кнопок */
-}
-
-/* Уменьшенные кнопки */
-.word-card-compact .action-btn {
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  font-size: 0.85rem !important;
-  padding: 0 !important;
-  border-width: 2px !important; /* Тоньше рамка */
-}
-
-/* Бейдж уровня (A1, B2...) делаем маленьким */
-.word-card-compact .tiny-level-badge {
-  font-size: 0.65rem;
-  padding: 2px 6px;
-  border-radius: 6px;
-  background: var(--bg-tertiary);
-  color: var(--text-muted);
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-/* Бейдж точности в компактном виде */
-.word-card-compact .acc-badge {
-  font-size: 0.7rem;
-  padding: 1px 5px;
-  margin-left: 4px;
-}
-
-/* ============================================================
-   COMPACT CARDS FOR LEVELS LIST (ADD WORDS SCREEN)
-   ============================================================ */
-
-/* Применяем компактный стиль для #wordsList .word-card */
-#wordsList .word-card, 
-#newWordsList .word-card,
-#customWords .word-card {
-  padding: 8px 12px !important;
-  display: grid;
-  grid-template-columns: 1fr auto; /* Текст слева, кнопки справа */
-  align-items: center;
-  gap: 10px;
-  min-height: 48px;
-}
-
-/* Скрываем старые большие заголовки и уровни, которые мешают */
-#wordsList .word-card .word-header,
-#newWordsList .word-card .word-header,
-#customWords .word-card .word-header {
-  display: contents; /* Убираем блочность хедера, чтобы grid работал */
-}
-
-/* Левая колонка: Текст + Перевод */
-#wordsList .word-card .word-info-wrapper,
-#newWordsList .word-card .word-info-wrapper,
-#customWords .word-card .word-info-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2px;
-  overflow: hidden;
-}
-
-/* Слово (английское) */
-#wordsList .word-card .word-text,
-#newWordsList .word-card .word-text,
-#customWords .word-card .word-text {
-  font-size: 1rem !important;
-  margin: 0 !important;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.2;
-}
-
-/* Перевод */
-#wordsList .word-card .word-translation,
-#newWordsList .word-card .word-translation,
-#customWords .word-card .word-translation {
-  font-size: 0.85rem !important;
-  color: var(--text-secondary);
-  margin: 0 !important;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.2;
-}
-
-/* Правая колонка: Кнопки */
-#wordsList .word-card .word-actions,
-#newWordsList .word-card .word-actions,
-#customWords .word-card .word-actions {
-  display: flex;
-  gap: 6px;
-  margin: 0 !important;
-  flex-shrink: 0;
-}
-
-/* Уменьшаем кнопки */
-#wordsList .word-card .action-btn,
-#newWordsList .word-card .action-btn,
-#customWords .word-card .action-btn {
-  width: 34px !important;
-  height: 34px !important;
-  min-width: 34px !important;
-  font-size: 0.9rem !important;
-  padding: 0 !important;
-  border-radius: 50% !important;
-}
-
-/* Кнопка "Учить" (текстовая) превращается в иконку для компактности */
-#wordsList .word-card .action-text-btn,
-#newWordsList .word-card .action-text-btn,
-#customWords .word-card .action-text-btn {
-  width: 34px !important;
-  height: 34px !important;
-  min-width: 34px !important;
-  border-radius: 50% !important;
-  padding: 0 !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0 !important; /* Скрываем текст "Учить" */
-}
-
-/* Возвращаем иконку в кнопку "Учить" */
-#wordsList .word-card .action-text-btn::after,
-#newWordsList .word-card .action-text-btn::after,
-#customWords .word-card .action-text-btn::after {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  font-size: 1rem;
-  content: "\f067"; /* fa-plus */
-}
-
-/* Иконка для кнопки "Удалить" */
-#wordsList .word-card .action-text-btn.remove::after,
-#newWordsList .word-card .action-text-btn.remove::after,
-#customWords .word-card .action-text-btn.remove::after {
-  content: "\f00c"; /* fa-check (галочка, типа "уже добавлено") */
-}
-
-/* Скрываем старый лейбл уровня, он занимает место */
-#wordsList .word-card .word-level,
-#newWordsList .word-card .word-level,
-#customWords .word-card .word-level {
-  display: none !important;
 }
 
 /* ============================================================
@@ -4714,7 +4449,7 @@ box-shadow: var(--shadow-md);
     #wordsList {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 16px;
+        gap: 6px;
     }
     
     /* В попапе оставляем одну колонку */
@@ -9227,4 +8962,184 @@ BOBLINGO STYLE TRANSLATOR WIDGET
 [data-theme="dark"] .clear-all-chips-btn:hover {
   background: #10b981;
   color: white !important;
+}
+
+/* ============================================================
+НОВЫЙ СТИЛЬ КАРТОЧЕК СЛОВ - BOB STYLE 3D (ЧИСТОВАЯ ВЕРСИЯ)
+============================================================ */
+
+/* 1. Контейнер карточки */
+.word-card.bob-style-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Математическое центрирование */
+    border: 2px solid var(--border-color, #E5E5E5);
+    border-radius: 16px;
+    padding: 10px 12px;
+    background: var(--bg-primary, #ffffff);
+    box-shadow: 0 4px 0 var(--border-color, #E5E5E5);
+    transition: transform 0.1s, box-shadow 0.1s, border-color 0.2s;
+    margin-bottom: 0 !important; /* 🔥 Глушим старые margin, используем gap */
+}
+
+/* Активная карточка (при клике) */
+.word-card.bob-style-card.active-card {
+    border-color: #1CB0F6 !important;
+}
+
+/* 2. Информация о слове */
+.word-card.bob-style-card .word-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+    padding-right: 10px;
+    margin: 0;
+}
+
+.word-card.bob-style-card .word-en {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-primary, #4B4B4B);
+    word-break: break-word;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.word-card.bob-style-card .word-ru {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary, #AFAFAF);
+    word-break: break-word;
+    line-height: 1.2;
+    margin: 0;
+}
+
+/* 3. Контейнер кнопок (ИДЕАЛЬНОЕ ЦЕНТРИРОВАНИЕ) */
+.word-card.bob-style-card .card-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+    margin-bottom: 0 !important;
+    transform: none; /* 🔥 Убираем кривой сдвиг */
+    margin-top: 2px; /* 🔥 Визуальная компенсация тени снизу (4px) */
+}
+
+/* 4. Сами кнопки (Базовый размер) */
+.bg-flag-btn, .delete-btn, .add-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.bg-flag-btn svg, .delete-btn svg, .add-btn svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+/* Кнопки с флагом (US / UK) */
+.bg-flag-btn {
+    position: relative;
+    border: 2px solid var(--border-color, #E5E5E5);
+    background: var(--bg-primary, #ffffff);
+    box-shadow: 0 4px 0 var(--border-color, #E5E5E5);
+    overflow: hidden;
+}
+.bg-flag-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0 var(--border-color, #E5E5E5);
+}
+.bg-flag-btn::before {
+    content: attr(data-flag);
+    position: absolute;
+    font-size: 50px;
+    opacity: 0.2;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+.bg-flag-btn svg {
+    position: relative;
+    z-index: 2;
+    color: var(--text-primary, #4B4B4B);
+    filter: drop-shadow(0px 0px 2px rgba(255,255,255,0.8));
+}
+
+/* Синяя кнопка добавления */
+.add-btn {
+    background: #1CB0F6;
+    color: white;
+    box-shadow: 0 4px 0 #1899D6;
+}
+.add-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0 #1899D6;
+}
+
+/* Красная кнопка удаления */
+.delete-btn {
+    background: #FF4B4B;
+    color: white;
+    box-shadow: 0 4px 0 #EA2B2B;
+}
+.delete-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0 #EA2B2B;
+}
+
+/* Тёмная тема */
+[data-theme="dark"] .word-card.bob-style-card {
+    box-shadow: 0 4px 0 #374151;
+}
+[data-theme="dark"] .bg-flag-btn {
+    box-shadow: 0 4px 0 #374151;
+}
+
+/* Кнопка редактирования (в попапе) */
+.popup-edit-btn.bg-flag-btn {
+    background: var(--bg-secondary, #f7f7f7);
+    border: 2px solid var(--border-color, #E5E5E5);
+    box-shadow: 0 4px 0 var(--border-color, #E5E5E5);
+}
+.popup-edit-btn.bg-flag-btn svg {
+    color: var(--text-secondary, #777);
+}
+.popup-edit-btn.bg-flag-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0 var(--border-color, #E5E5E5);
+}
+[data-theme="dark"] .popup-edit-btn.bg-flag-btn {
+    background: var(--bg-tertiary, #374151);
+    box-shadow: 0 4px 0 #374151;
+}
+
+/* ============================================================
+ФИКС: АВТО-ЗУМ ПРИ ФОКУСЕ НА ПОЛЕ ПОИСКА (iOS/Android)
+============================================================ */
+/* Браузер зумит страницу, если font-size < 16px в инпуте */
+#exportSearchInput,
+.pet-rename-input,
+.pet-name-input,
+#editTranslationInput,
+#renameInput,
+#shareCodeInput,
+#dict3Input,
+.dictation-input {
+    font-size: 16px !important;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
