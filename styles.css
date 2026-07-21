@@ -4110,6 +4110,7 @@ box-shadow: var(--shadow-md);
   gap: 12px;
 }
 
+
 .lesson-card {
   background: var(--bg-primary);
   border: 2px solid var(--border-color);
@@ -4818,20 +4819,7 @@ box-shadow: var(--shadow-md);
   display: none !important;
 }
 
-/* ← НОВЫЙ БЛОК: Мобильный фикс */
-@media (max-width: 767px) {
-  #grammarDetail {
-    position: fixed;  /* ← Фиксируем на мобильных */
-    top: 0;
-    left: 0;
-    width: 100vw;
-    max-width: 100%;
-    height: 100vh;
-    min-height: 100vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-}
+
 
 .grammar-detail-header {
   position: sticky;
@@ -9142,4 +9130,683 @@ BOBLINGO STYLE TRANSLATOR WIDGET
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     text-size-adjust: 100%;
+}
+
+/* ==========================================================================
+НОВЫЙ ДИЗАЙН: СЕКЦИЯ "ОТЧЕТ" (ИСПРАВЛЕННАЯ АДАПТАЦИЯ + FONT AWESOME)
+========================================================================== */
+.content-scroll-area {
+    width: 100%; 
+    max-width: 100%; 
+    background: var(--bg-primary, #FFFFFF);
+    display: flex; 
+    flex-direction: column; 
+    gap: 16px; 
+    padding: 16px;
+    border-radius: 24px; 
+    box-sizing: border-box;
+    font-family: 'Nunito', 'Inter', sans-serif;
+}
+
+.card { 
+    background: var(--bg-primary, #FFFFFF); 
+    border-radius: 24px; 
+    padding: 18px; 
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04); 
+    border: 2px solid var(--border-color, #F0F0F0); 
+    margin-bottom: 16px; 
+    width: 100%;
+    box-sizing: border-box;
+}
+[data-theme="dark"] .card { background: var(--bg-secondary, #1f2937); border-color: #374151; }
+
+.card-title-main { 
+    font-size: 18px; 
+    font-weight: 800; 
+    color: var(--text-primary, #3C3C3C); 
+    margin-bottom: 16px; 
+    display: flex; 
+    align-items: center; 
+}
+
+.section-header { 
+    font-size: 14px; 
+    font-weight: 800; 
+    color: var(--text-secondary, #9A9A9A); 
+    text-transform: uppercase; 
+    margin: 8px 0 16px 8px; 
+    letter-spacing: 0.5px;
+}
+.divider { height: 2px; background: var(--border-color, #F0F0F0); margin: 16px 0; border-radius: 2px;}
+
+.progress-bar-bg { 
+    width: 100%; 
+    height: 14px; 
+    background: var(--bg-tertiary, #F0F0F0); 
+    border-radius: 8px; 
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+.progress-fill { 
+    height: 100%; 
+    border-radius: 8px; 
+    transition: width 0.3s;
+    background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.25) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0.25) 75%, transparent 75%, transparent);
+    background-size: 20px 20px;
+    animation: moveStripes 1.5s linear infinite; 
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,0.15); 
+}
+.fill-orange { background-color: var(--warning-color, #FF9600); }
+.fill-green { background-color: var(--success-color, #58CC02); }
+.fill-blue { background-color: var(--info-color, #1CB0F6); }
+
+@keyframes moveStripes { 0% { background-position: 0 0; } 100% { background-position: 20px 0; } }
+
+.quest-item { 
+    border: 2px solid var(--border-color, #EAEAEA); 
+    border-radius: 20px; 
+    padding: 14px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+    margin-bottom: 12px;
+    background: var(--bg-primary, #FFFFFF);
+    box-sizing: border-box;
+}
+[data-theme="dark"] .quest-item { background: var(--bg-secondary, #1f2937); border-color: #374151; }
+.quest-item:last-child { margin-bottom: 0; }
+.quest-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.quest-header-left { display: flex; gap: 12px; align-items: center; }
+.quest-icon { 
+    width: 44px; 
+    height: 44px; 
+    border-radius: 14px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    font-size: 1.2rem;
+}
+.icon-blue { background: rgba(28, 176, 246, 0.15); color: var(--info-color, #1CB0F6); }
+.icon-green { background: rgba(88, 204, 2, 0.15); color: var(--success-color, #58CC02); }
+.quest-title { font-size: 16px; font-weight: 800; color: var(--text-primary, #3C3C3C); margin: 0; }
+.quest-desc { font-size: 12px; font-weight: 700; color: var(--text-secondary, #9A9A9A); margin-top: 2px;}
+.settings-icon { font-size: 20px; color: var(--text-muted, #D0D0D0); cursor: pointer; transition: 0.2s;}
+.settings-icon:hover { color: var(--info-color, #1CB0F6); transform: rotate(90deg);}
+.quest-body { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.quest-progress-area { flex: 1; min-width: 150px; }
+.quest-meta { display: flex; justify-content: space-between; font-size: 13px; font-weight: 800; color: var(--info-color, #1CB0F6); margin-bottom: 6px; }
+
+.quest-reward { 
+    background: #FFC800; 
+    color: white; 
+    font-size: 14px; 
+    font-weight: 800; 
+    padding: 8px 16px; 
+    border-radius: 14px; 
+    display: flex; 
+    align-items: center; 
+    gap: 6px;
+    border-bottom: 4px solid #D9A000; 
+    cursor: pointer; 
+    transition: transform 0.1s, border-width 0.1s, margin-bottom 0.1s; 
+    border: none;
+    white-space: nowrap;
+}
+.quest-reward:active { transform: translateY(4px); border-bottom-width: 0px; margin-bottom: 4px; }
+
+.streak-header { display: flex; justify-content: space-between; align-items: center;}
+.days-row { display: flex; justify-content: space-between; margin-top: 16px; padding: 0 4px;}
+.day { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.day-circle { 
+    width: 36px; 
+    height: 36px; 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    background: var(--bg-tertiary, #F0F0F0); 
+    color: var(--text-muted, #B0B0B0);
+}
+.day.done .day-circle { background: var(--warning-color, #FF9600); color: white; box-shadow: 0 4px 0 #d97706; margin-bottom: 4px;} 
+.day.today .day-circle { border: 3px solid var(--warning-color, #FF9600); }
+.day-name { font-size: 12px; font-weight: 700; color: var(--text-secondary, #9A9A9A); }
+
+.tomorrow-bonus { 
+    margin-top: 20px; 
+    background: linear-gradient(135deg, #FF9600 0%, #FF5100 100%); 
+    border-radius: 18px; 
+    padding: 16px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    box-shadow: 0 8px 20px rgba(255, 100, 0, 0.3); 
+    position: relative; 
+    overflow: hidden; 
+}
+.tomorrow-bonus::after {
+    content: ''; 
+    position: absolute; 
+    top: 0; 
+    left: -100%; 
+    width: 50%; 
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,0));
+    transform: skewX(-25deg); 
+    animation: shine 3s infinite; 
+}
+@keyframes shine { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+.tomorrow-text { font-size: 15px; font-weight: 800; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.2); margin: 0;}
+.tomorrow-subtext { font-size: 12px; font-weight: 700; color: #FFE3CC; margin-top: 2px; }
+.tomorrow-reward-pill {
+    background: white; 
+    color: #FF9600; 
+    font-size: 14px; 
+    font-weight: 800;
+    padding: 8px 14px; 
+    border-radius: 14px; 
+    display: flex; 
+    align-items: center; 
+    gap: 4px;
+    box-shadow: 0 4px 0 #E5D5C5; 
+    z-index: 2; 
+    white-space: nowrap;
+}
+
+.path-visual-box { background: linear-gradient(145deg, #E8F5E9 0%, #F1F8E9 100%); border-radius: 20px; padding: 20px 16px; margin-bottom: 16px; border: 2px solid #C8E6C9;}
+[data-theme="dark"] .path-visual-box { background: linear-gradient(145deg, #064e3b 0%, #065f46 100%); border-color: #047857; }
+.path-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;}
+.path-lvl { font-size: 15px; font-weight: 800; color: var(--success-color, #46A302); display: flex; align-items: center; gap: 6px;}
+.path-total { font-size: 12px; font-weight: 800; color: #7CB342; background: white; padding: 4px 10px; border-radius: 12px; box-shadow: 0 2px 0 #D4E1C5;}
+[data-theme="dark"] .path-total { background: #064e3b; color: #6ee7b7; box-shadow: 0 2px 0 #047857; }
+.visual-track-container { position: relative; padding: 10px 0;}
+.visual-track-bg { height: 16px; background: rgba(255,255,255,0.8); border-radius: 8px; width: 100%; box-shadow: inset 0 2px 4px rgba(0,0,0,0.08);}
+[data-theme="dark"] .visual-track-bg { background: rgba(0,0,0,0.3); }
+.visual-track-fill { height: 16px; border-radius: 8px; position: absolute; top: 10px; left: 0;} 
+.track-marker-start { position: absolute;  top: -2px; background: white; border: 3px solid var(--success-color, #58CC02); color: var(--success-color, #46A302); font-size: 14px; font-weight: 800; width: 34px; height: 34px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 2; box-shadow: 0 4px 8px rgba(0,0,0,0.1);}
+[data-theme="dark"] .track-marker-start { background: #064e3b; border-color: #10b981; color: #6ee7b7; }
+.track-marker-end { position: absolute; right: -5px; top: -7px; z-index: 2; animation: bounceFlag 2s infinite; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2));}
+@keyframes bounceFlag { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+.path-footer-text { text-align: center; font-size: 13px; font-weight: 800; color: var(--text-primary, #3C3C3C); margin-top: 24px;}
+[data-theme="dark"] .path-footer-text { color: #d1d5db; }
+
+/* ИСПРАВЛЕНИЕ: Grid вместо Flex для бейджей, чтобы не обрезались на узких экранах */
+.badges-row { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 8px;
+}
+@media (max-width: 360px) {
+    .badges-row { grid-template-columns: repeat(2, 1fr); }
+}
+.badge { text-align: center; }
+.badge-icon { 
+    width: 48px; 
+    height: 48px; 
+    background: var(--bg-tertiary, #F0F0F0); 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    margin: 0 auto 8px auto; 
+    color: var(--text-muted, #B0B0B0); 
+    transition: transform 0.2s;
+}
+.badge.active .badge-icon { 
+    background: #FFF2C2; 
+    color: var(--warning-color, #FF9600); 
+    box-shadow: 0 0 15px rgba(255, 150, 0, 0.4), inset 0 -4px 0 #FFE082; 
+    transform: scale(1.1);
+}
+.badge.locked .badge-icon { color: #C5C5C5; }
+.badge-title { font-size: 11px; font-weight: 800; color: var(--text-primary, #3C3C3C);}
+.badge.locked .badge-title { color: var(--text-secondary, #9A9A9A); }
+.badge-desc { font-size: 10px; font-weight: 700; color: var(--text-secondary, #9A9A9A); margin-top: 2px;}
+[data-theme="dark"] .badge-icon { background: #374151; color: #6b7280; }
+[data-theme="dark"] .badge.active .badge-icon { background: #451a03; color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4), inset 0 -4px 0 #78350f; }
+[data-theme="dark"] .badge.locked .badge-icon { color: #4b5563; }
+[data-theme="dark"] .badge-title { color: #f9fafb; }
+[data-theme="dark"] .badge.locked .badge-title { color: #6b7280; }
+[data-theme="dark"] .badge-desc { color: #9ca3af; }
+
+.chart-row { display: flex; justify-content: space-between; align-items: flex-end; height: 100px; margin-top: 16px; padding: 0 8px;}
+.bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end;}
+.bar { width: 20px; background: #E5F3FF; border-radius: 6px; position: relative;}
+.bar.today { background: var(--success-color, #58CC02); box-shadow: 0 4px 10px rgba(88, 204, 2, 0.3); } 
+.bar-label { font-size: 12px; font-weight: 800; color: var(--text-secondary, #9A9A9A); }
+.bar-wrap.today .bar-label { color: var(--text-primary, #3C3C3C); }
+[data-theme="dark"] .bar { background: #1e3a8a; }
+[data-theme="dark"] .bar.today { background: #10b981; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); }
+[data-theme="dark"] .bar-label { color: #9ca3af; }
+[data-theme="dark"] .bar-wrap.today .bar-label { color: #f9fafb; }
+
+.level-row { margin-bottom: 14px;}
+.level-row:last-child { margin-bottom: 0;}
+.level-text { display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; margin-bottom: 6px; color: var(--text-primary, #3C3C3C);}
+[data-theme="dark"] .level-text { color: #f9fafb; }
+[data-theme="dark"] .level-text span:last-child { color: #9ca3af; }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stat-box { border-radius: 16px; padding: 14px; text-align: center; border: 2px solid transparent;}
+.stat-box.light-purple { background: #F3E5F5; border-color: #E1BEE7; }
+.stat-box.light-blue { background: #E3F2FD; border-color: #BBDEFB; }
+.stat-val { font-size: 22px; font-weight: 800; margin: 4px 0;}
+.light-purple .stat-val { color: #8E24AA; }
+.light-blue .stat-val { color: #1976D2; }
+.stat-lbl { font-size: 12px; font-weight: 800; color: rgba(0,0,0,0.5); }
+[data-theme="dark"] .stat-box.light-purple { background: #3b0764; border-color: #581c87; }
+[data-theme="dark"] .stat-box.light-blue { background: #1e3a8a; border-color: #1e40af; }
+[data-theme="dark"] .light-purple .stat-val { color: #e9d5ff; }
+[data-theme="dark"] .light-blue .stat-val { color: #bfdbfe; }
+[data-theme="dark"] .stat-lbl { color: #d1d5db; }
+
+/* ==========================================================================
+ФИКСЫ ОТЧЕТА: КОМПАКТНОСТЬ, ЯРКОСТЬ И СЕРЫЕ СУНДУКИ
+========================================================================== */
+
+/* 1. ЯРКИЕ И СОЧНЫЕ ЦВЕТА (вместо тусклых) */
+.icon-blue { 
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd) !important; 
+    color: #0284c7 !important; 
+}
+.icon-green { 
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0) !important; 
+    color: #16a34a !important; 
+}
+.fill-orange { 
+    background: linear-gradient(90deg, #f97316, #fb923c) !important; 
+}
+.fill-green { 
+    background: linear-gradient(90deg, #22c55e, #4ade80) !important; 
+}
+.fill-blue { 
+    background: linear-gradient(90deg, #3b82f6, #60a5fa) !important; 
+}
+.tomorrow-bonus { 
+    background: linear-gradient(135deg, #FF9600 0%, #FF6B00 100%) !important; 
+    box-shadow: 0 8px 20px rgba(255, 107, 0, 0.4) !important; 
+}
+
+/* 2. СЕРЫЙ СУНДУК ВМЕСТО ЗАМКА (стили для кнопки) */
+.quest-reward-locked {
+    background: #F3F4F6 !important;
+    border-bottom: 4px solid #D1D5DB !important;
+    color: #9CA3AF !important;
+    padding: 8px 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: not-allowed !important;
+    border-radius: 14px !important;
+}
+[data-theme="dark"] .quest-reward-locked {
+    background: #374151 !important;
+    border-bottom-color: #4B5563 !important;
+}
+/* Делаем активные бейджи еще более "сочными" и светящимися */
+.badge.active .badge-icon { 
+    background: linear-gradient(135deg, #FFF2C2, #FFE082) !important; 
+    color: #F59E0B !important; 
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4), inset 0 -4px 0 #FCD34D !important; 
+}
+
+/* 3. КОМПАКТНОСТЬ НА МАЛЕНЬКИХ ТЕЛЕФОНАХ (меньше отступы и зазоры) */
+@media (max-width: 480px) {
+    .content-scroll-area { 
+        padding: 10px !important; 
+        gap: 10px !important; 
+    }
+    .card { 
+        padding: 14px !important; 
+        margin-bottom: 10px !important; 
+    }
+    .quest-item { 
+        padding: 12px !important; 
+        gap: 10px !important; 
+    }
+    .quest-icon { 
+        width: 40px !important; 
+        height: 40px !important; 
+        font-size: 1.1rem !important; 
+    }
+    .tomorrow-bonus { 
+        padding: 12px !important; 
+    }
+    .tomorrow-text { 
+        font-size: 14px !important; 
+    }
+    .tomorrow-reward-pill { 
+        padding: 6px 10px !important; 
+        font-size: 13px !important; 
+    }
+    .path-visual-box { 
+        padding: 14px 12px !important; 
+    }
+    .badge-icon { 
+        width: 44px !important; 
+        height: 44px !important; 
+    }
+    .badge-title { 
+        font-size: 11px !important; 
+    }
+    .bar { 
+        width: 18px !important; 
+    }
+    .chart-row { 
+        height: 80px !important; 
+    }
+    .stat-box {
+        padding: 10px !important;
+    }
+    .stat-val {
+        font-size: 20px !important;
+    }
+}
+
+/* ==========================================================================
+ФИКС: УВЕЛИЧЕНИЕ ШИРИНЫ НА МОБИЛЬНЫХ + КОМПАКТНЫЕ ОТСТУПЫ
+========================================================================== */
+
+/* 1. Увеличиваем ширину контейнера на мобильных (было 480px) */
+@media (max-width: 767px) {
+    .app-container {
+        max-width: 520px !important;
+    }
+}
+
+/* 2. Компактные отступы в секции "Отчёт" */
+.content-scroll-area {
+    gap: 12px !important;
+    padding: 12px !important;
+}
+
+.card {
+    padding: 14px !important;
+    margin-bottom: 12px !important;
+}
+
+.card-title-main {
+    font-size: 16px !important;
+    margin-bottom: 12px !important;
+}
+
+.quest-item {
+    padding: 12px !important;
+    gap: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.quest-icon {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.1rem !important;
+}
+
+.quest-title {
+    font-size: 15px !important;
+}
+
+.quest-desc {
+    font-size: 11px !important;
+}
+
+.tomorrow-bonus {
+    padding: 14px !important;
+    margin-top: 14px !important;
+}
+
+.tomorrow-text {
+    font-size: 14px !important;
+}
+
+.tomorrow-subtext {
+    font-size: 11px !important;
+}
+
+.tomorrow-reward-pill {
+    padding: 6px 12px !important;
+    font-size: 13px !important;
+}
+
+.day-circle {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.day-name {
+    font-size: 11px !important;
+}
+
+.progress-grid {
+    gap: 12px !important;
+}
+
+/* 3. СТИЛИ ДЛЯ НОВЫХ КНОПОК ВЫБОРА ЦЕЛИ */
+.goal-option-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border: 3px solid var(--border-color);
+    border-radius: 16px;
+    background: var(--bg-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    text-align: left;
+}
+
+.goal-option-btn:hover {
+    border-color: var(--primary-color);
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+}
+
+.goal-option-btn.selected {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    box-shadow: 0 0 0 4px rgba(88, 204, 2, 0.15);
+}
+
+[data-theme="dark"] .goal-option-btn.selected {
+    background: linear-gradient(135deg, #064e3b, #065f46);
+}
+
+.goal-option-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.15);
+}
+
+/* 4. Компактность на очень узких экранах */
+@media (max-width: 380px) {
+    .content-scroll-area {
+        padding: 10px !important;
+        gap: 10px !important;
+    }
+    .card {
+        padding: 12px !important;
+    }
+    .quest-item {
+        padding: 10px !important;
+    }
+    .quest-body {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .quest-reward {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Выравнивание стрика */
+.streak-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 16px !important;
+    min-height: 40px !important; /* Фиксированная высота */
+}
+
+.streak-header .card-title-main {
+    margin-bottom: 0 !important;
+    line-height: 1.2 !important;
+}
+
+/* Число стрика */
+.streak-header > div:last-child {
+    font-size: 28px !important;
+    font-weight: 900 !important;
+    color: var(--warning-color) !important;
+    line-height: 1 !important; /* Убираем лишнюю высоту */
+    min-width: 80px !important; /* Фиксированная ширина */
+    text-align: right !important;
+}
+
+/* На мобильных */
+@media (max-width: 480px) {
+    .streak-header > div:last-child {
+        font-size: 24px !important;
+        min-width: 60px !important;
+    }
+}
+
+/* ==========================================================================
+ФИКСЫ ОТЧЕТА: 3D КНОПКИ, СТРИК И ОТСТУПЫ
+========================================================================== */
+
+/* 1. УБИРАЕМ ЛИШНИЕ ОТСТУПЫ И ФОН (Конфликт "карточка в карточке") */
+.content-scroll-area {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    gap: 12px !important;
+    padding: 0 !important; /* Убираем двойные отступы, они уже есть у .content-section */
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-sizing: border-box;
+}
+
+/* 2. 3D КНОПКА ПОЛУЧЕНИЯ МОНЕТ (В стиле приложения) */
+.quest-reward {
+    background: linear-gradient(135deg, #FFC800, #FFB020) !important;
+    color: white !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    padding: 10px 16px !important;
+    border-radius: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    border: none !important;
+    box-shadow: 0 4px 0 #D9A000 !important; /* 3D тень снизу */
+    cursor: pointer !important;
+    transition: transform 0.1s, box-shadow 0.1s !important;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.quest-reward:active {
+    transform: translateY(4px) !important;
+    box-shadow: 0 0px 0 #D9A000 !important;
+}
+/* Заблокированная 3D кнопка */
+.quest-reward-locked {
+    background: #F3F4F6 !important;
+    box-shadow: 0 4px 0 #D1D5DB !important;
+    color: #9CA3AF !important;
+    cursor: not-allowed !important;
+}
+[data-theme="dark"] .quest-reward-locked {
+    background: #374151 !important;
+    box-shadow: 0 4px 0 #4B5563 !important;
+}
+
+/* 3. ИДЕАЛЬНОЕ ВЫРАВНИВАНИЕ СТРИКА */
+.streak-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 16px !important;
+}
+.streak-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.streak-header-right {
+    display: flex;
+    align-items: baseline; /* 🔑 Секрет ровного текста: цифры и подпись по одной линии */
+    gap: 4px;
+}
+
+/* 4. АДАПТИВНОСТЬ КАРТОЧЕК ПО ШИРИНЕ */
+.card {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-bottom: 0 !important; /* Убираем старые отступы, используем gap у родителя */
+}
+
+/* ==========================================================================
+ФИКС: КАРТОЧКИ УРОКОВ НА ВСЮ ШИРИНУ (ВНУТРИ УРОВНЕЙ A1, A2 И Т.Д.)
+========================================================================== */
+
+/* 1. Контейнер меню категорий — на всю ширину */
+.category-menu-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* 2. Список уроков — на всю ширину */
+.lessons-list {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* 3. Карточка урока — на всю ширину */
+.lesson-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* 4. НА ДЕСКТОПЕ: #wordsList — это grid, нужно чтобы category-menu-container занимал всю ширину */
+@media (min-width: 768px) {
+    .category-menu-container {
+        grid-column: 1 / -1 !important; /* Растянуть на все колонки grid */
+        width: 100% !important;
+    }
+    
+    .lessons-list {
+        width: 100% !important;
+    }
+    
+    .lesson-card {
+        width: 100% !important;
+    }
+}
+
+/* 5. На мобильных — тоже на всю ширину */
+@media (max-width: 480px) {
+    .category-menu-container {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+    
+    .lessons-list {
+        width: 100% !important;
+    }
+    
+    .lesson-card {
+        width: 100% !important;
+        padding: 12px !important;
+    }
 }
