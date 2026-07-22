@@ -397,47 +397,88 @@ body {
 
   <main class="main-content">
     <!-- Levels + Categories -->
-        <section id="levels" class="content-section active">
+    <section id="levels" class="content-section active">
       <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
         <h2>Слова по уровням</h2>
       </div>
 
       <div class="levels-grid" id="levelsGrid">
-        <div class="level-card" data-level="A1" data-testid="level-card-A1"  >
+        <div class="level-card" data-level="A1" data-testid="level-card-A1">
           <div class="level-badge beginner">A1</div>
-          <h3>Beginner</h3>
-          <p>Базовые слова для начинающих</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+          <h3>Первые шаги</h3>
+        <p>База для начинающих</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
-        <div class="level-card" data-level="A2" data-testid="level-card-A2"  >
+
+        <div class="level-card" data-level="A2" data-testid="level-card-A2">
           <div class="level-badge elementary">A2</div>
-          <h3>Elementary</h3>
-          <p>Элементарный уровень</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+          <h3>Фундамент</h3>
+        <p>Слова для простых бесед</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
-        <div class="level-card" data-level="B1" data-testid="level-card-B1"  >
+
+        <div class="level-card" data-level="B1" data-testid="level-card-B1">
           <div class="level-badge intermediate">B1</div>
-          <h3>Intermediate</h3>
-          <p>Средний уровень</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+          <h3>Уверенный уровень</h3>
+        <p>Словарный запас для жизни</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
-        <div class="level-card" data-level="B2" data-testid="level-card-B2"  >
+
+        <div class="level-card" data-level="B2" data-testid="level-card-B2">
           <div class="level-badge upper-intermediate">B2</div>
-          <h3>Upper-Intermediate</h3>
-          <p>Выше среднего</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+             <h3>Свободное общение</h3>
+          <p>Понимаем фильмы и статьи</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
-        <div class="level-card" data-level="C1" data-testid="level-card-C1"  >
+
+        <div class="level-card" data-level="C1" data-testid="level-card-C1">
           <div class="level-badge advanced">C1</div>
-          <h3>Advanced</h3>
-          <p>Продвинутый уровень</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Мастерство</h3>
+        <p>Сложные термины и нюансы</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
-        <div class="level-card" data-level="C2" data-testid="level-card-C2"  >
+
+        <div class="level-card" data-level="C2" data-testid="level-card-C2">
           <div class="level-badge proficiency">C2</div>
-          <h3>Proficiency</h3>
-          <p>Профессиональный уровень</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Как носитель</h3>
+        <p>Высший пилотаж</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
       </div>
 
@@ -446,109 +487,193 @@ body {
         <h2>Категории</h2>
       </div>
       <div class="levels-grid" id="categoriesGrid">
-        <div class="level-card" data-category="IRREGULARS" data-testid="category-card-irregulars"  >
+        <div class="level-card" data-category="IRREGULARS" data-testid="category-card-irregulars">
           <div class="level-badge advanced">Irregular Verbs</div>
-          <h3>Неправильные глаголы</h3>
-          <p>Формы глаголов</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Неправильные глаголы</h3>
+            <p>Исключения из правил</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="PREPOSITIONS" data-testid="category-card-prepositions">
           <div class="level-badge elementary">Prepositions</div>
-          <h3>Предлоги</h3>
-          <p>Частые предлоги</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Предлоги</h3>
+            <p>Частые предлоги</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="PHRASAL_VERBS" data-testid="category-card-phrasal">
           <div class="level-badge beginner">Phrasal Verbs</div>
-          <h3>Фразовые глаголы</h3>
-          <p>Частые фразовые глаголы</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Фразовые глаголы</h3>
+            <p>Частые фразовые глаголы</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="IDIOMS" data-testid="category-card-idioms">
           <div class="level-badge proficiency">Idioms</div>
-          <h3>Идиомы</h3>
-          <p>Разговорные выражения</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Идиомы</h3>
+            <p>Разговорные выражения</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="PROVERBS" data-testid="category-card-proverbs">
-  <div class="level-badge upper-intermediate">Proverbs</div>
-  <h3>Пословицы и поговорки</h3>
-  <p>Устойчивые выражения</p>
-  <div class="level-stats"><span class="word-count">0 слов</span></div>
-</div>
+          <div class="level-badge upper-intermediate">Proverbs</div>
+          <div class="level-info">
+            <h3>Пословицы и поговорки</h3>
+            <p>Устойчивые выражения</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+        </div>
       </div>
       
-            <!-- Exams -->
+      <!-- Exams -->
       <div class="section-header" style="margin-top:1rem;">
         <h2>Экзамены</h2>
       </div>
       <div class="levels-grid" id="examsGrid">
         <div class="level-card" data-category="EGE" data-testid="category-card-ege">
           <div class="level-badge elementary">ЕГЭ</div>
-          <h3>ЕГЭ</h3>
-          <p>Подготовка к ЕГЭ</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>ЕГЭ</h3>
+            <p>Подготовка к ЕГЭ</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="OGE" data-testid="category-card-oge">
           <div class="level-badge beginner">ОГЭ</div>
-          <h3>ОГЭ</h3>
-          <p>Подготовка к ОГЭ</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>ОГЭ</h3>
+            <p>Подготовка к ОГЭ</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="IELTS" data-testid="category-card-ielts">
           <div class="level-badge upper-intermediate">IELTS</div>
-          <h3>IELTS</h3>
-          <p>Academic / General</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>IELTS</h3>
+            <p>Academic / General</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="TOEFL" data-testid="category-card-toefl">
           <div class="level-badge advanced">TOEFL</div>
-          <h3>TOEFL</h3>
-          <p>Подготовка к TOEFL</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>TOEFL</h3>
+            <p>Подготовка к TOEFL</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
       </div>
       
-            <!-- Professions -->
+      <!-- Professions -->
       <div class="section-header" style="margin-top:1rem;">
         <h2>Профессии</h2>
       </div>
       <div class="levels-grid" id="professionsGrid">
-        <!-- Сюда мы перенесли Медицинский -->
-        <div class="level-card" data-category="MEDICAL" data-testid="category-card-medical"  >
+        <div class="level-card" data-category="MEDICAL" data-testid="category-card-medical">
           <div class="level-badge elementary">Medical</div>
-          <h3>Медицина</h3>
-          <p>Врачи, болезни, тело</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Медицина</h3>
+            <p>Врачи, болезни, тело</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
 
-        <!-- Новые категории -->
-        <div class="level-card" data-category="IT" data-testid="category-card-it"  >
+        <!-- Карточки "Скоро" получили дополнительный класс coming-soon -->
+        <div class="level-card coming-soon" data-category="IT" data-testid="category-card-it">
           <div class="level-badge proficiency">IT</div>
-          <h3>IT & Tech</h3>
-          <p>Разработка, компьютеры</p>
-          <div class="level-stats"><span class="word-count">Скоро</span></div>
+          <div class="level-info">
+            <h3>IT & Tech</h3>
+            <p>Разработка, компьютеры</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
 
-        <div class="level-card" data-category="BUSINESS" data-testid="category-card-business">
+        <div class="level-card coming-soon" data-category="BUSINESS" data-testid="category-card-business">
           <div class="level-badge upper-intermediate">Business</div>
-          <h3>Бизнес</h3>
-          <p>Переговоры, финансы</p>
-          <div class="level-stats"><span class="word-count">Скоро</span></div>
+          <div class="level-info">
+            <h3>Бизнес</h3>
+            <p>Переговоры, финансы</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
 
-        <div class="level-card" data-category="LEGAL" data-testid="category-card-legal"  >
+        <div class="level-card coming-soon" data-category="LEGAL" data-testid="category-card-legal">
           <div class="level-badge advanced">Legal</div>
-          <h3>Юридический</h3>
-          <p>Законы, право, суды</p>
-          <div class="level-stats"><span class="word-count">Скоро</span></div>
+          <div class="level-info">
+            <h3>Юридический</h3>
+            <p>Законы, право, суды</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
       </div>
 
       <!-- Words List (levels or categories) -->
-   <div id="wordsContainer" class="words-container hidden">
+      <div id="wordsContainer" class="words-container hidden">
         <div class="words-header">
-          <button class="back-btn" id="backToLevels" data-testid="back-to-levels"  >
+          <button class="back-btn" id="backToLevels" data-testid="back-to-levels">
             <i class="fas fa-arrow-left"></i>
             Назад
           </button>
@@ -1027,131 +1152,6 @@ body {
     
     document.body.appendChild(toast);
   }
-</script>
-<script>
-// Управление баннером установки приложения
-(function() {
-  const banner = document.getElementById('appInstallBanner');
-  const installBtn = document.getElementById('bannerInstallBtn');
-  
-  if (!banner || !installBtn) return;
-  
-  const userAgent = navigator.userAgent.toLowerCase();
-  const isIOS = /iphone|ipad|ipod/.test(userAgent);
-  const isAndroid = /android/.test(userAgent);
-  const isMobile = /mobile/.test(userAgent);
-  const isTablet = /tablet|ipad|playbook|silk/.test(userAgent);
-  
-  const isStandalone = window.navigator.standalone || 
-                       window.matchMedia('(display-mode: standalone)').matches ||
-                       window.matchMedia('(display-mode: fullscreen)').matches;
-  
-  const isFromApp = document.referrer.includes('android-app://');
-  
-  // Проверяем, нужно ли показывать баннер
-  const shouldShowBanner = (isMobile || isTablet) && !isStandalone && !isFromApp;
-  
-  if (!shouldShowBanner) return;
-  
-  // Настраиваем кнопку в зависимости от ОС
-  if (isIOS) {
-    installBtn.textContent = 'Установить';
-    installBtn.href = '/iphone.html';
-    installBtn.onclick = function(e) {
-      if (typeof ym !== 'undefined') {
-        ym(105128338, 'reachGoal', 'install_instructions_ios');
-      }
-    };
-  } else if (isAndroid) {
-    installBtn.textContent = 'Скачать';
-    installBtn.href = '/android.html';
-    installBtn.onclick = function(e) {
-      if (typeof ym !== 'undefined') {
-        ym(105128338, 'reachGoal', 'download_app_android');
-      }
-    };
-  } else {
-    installBtn.textContent = 'Установить';
-    installBtn.href = '#';
-  }
-  
-  // Функция показа баннера
-  function showBanner() {
-    // Проверяем, нет ли активных модальных окон
-    const tourOverlay = document.getElementById('firstRunTour');
-    const motivationOverlay = document.getElementById('motivationOverlay');
-    
-    if (tourOverlay || motivationOverlay) {
-      // Если есть презентация или мотивация - повторяем через 3 секунды
-      setTimeout(showBanner, 3000);
-      return;
-    }
-    
-    // Показываем баннер
-    banner.classList.add('show');
-    document.body.classList.add('banner-shown');
-    console.log('Banner shown');
-  }
-  
-  // Запускаем показ через 5 секунд после загрузки
-  setTimeout(() => {
-    const firstRunDone = localStorage.getItem('first_run_completed') === '1';
-    console.log('Banner timer - firstRunDone:', firstRunDone);
-    
-    if (firstRunDone) {
-      // Если презентация была - показываем сразу (или ждем мотивацию)
-      showBanner();
-    } else {
-      // Если это первый запуск - ждем дольше
-      setTimeout(showBanner, 5000);
-    }
-  }, 5000);
-  
-  // PWA установка для Android
-  let deferredPrompt;
-  
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    
-    if (banner && banner.classList.contains('show') && !isIOS) {
-      installBtn.textContent = 'Установить';
-      installBtn.href = '#';
-      installBtn.onclick = async function(e) {
-        e.preventDefault();
-        if (deferredPrompt) {
-          deferredPrompt.prompt();
-          const { outcome } = await deferredPrompt.userChoice;
-          
-          if (outcome === 'accepted') {
-            closeInstallBanner();
-            if (typeof ym !== 'undefined') {
-              ym(105128338, 'reachGoal', 'pwa_installed');
-            }
-          }
-          deferredPrompt = null;
-        }
-      };
-    }
-  });
-})();
-
-function closeInstallBanner() {
-  const banner = document.getElementById('appInstallBanner');
-  
-  if (banner) {
-    banner.style.animation = 'slideUp 0.3s ease-out';
-    
-    setTimeout(() => {
-      banner.classList.remove('show');
-      document.body.classList.remove('banner-shown');
-    }, 300);
-    
-    if (typeof ym !== 'undefined') {
-      ym(105128338, 'reachGoal', 'banner_closed');
-    }
-  }
-}
 </script>
 <script>
 (function(){
