@@ -1,5 +1,5 @@
 /* Bewords Service Worker - Offline Mode */
-const CACHE_NAME = 'bewords-cache-v15';
+const CACHE_NAME = 'bewords-cache-v16';
 
 // Список файлов, которые нужно сохранить СРАЗУ
 const STATIC_ASSETS = [
@@ -22,7 +22,7 @@ const STATIC_ASSETS = [
   '/fox.png',
   '/penguin.png',
   '/rabbit.png',
-  '/bob_in_spring.png'
+  '/Bob_loading.PNG'
 ];
 
 // 1. Установка (Кешируем статику)
