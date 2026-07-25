@@ -261,72 +261,6 @@ body {
     .action-text-btn.remove { border-color: #ef4444; color: #ef4444; background: #fee2e2; }
     .action-text-btn:hover { filter: brightness(0.98); }
 
-    #preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #eef4f6;
-    z-index: 999999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.8s ease-out, visibility 0.8s;
-}
-
-#preloader.done {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.loader-content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.loader-cat {
-    width: 250px;
-    height: auto;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    animation: duo-breathe 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes duo-breathe {
-    0% {
-        transform: scale(1) translateY(0);
-    }
-    100% {
-        transform: scale(1.05) translateY(-5px);
-    }
-}
-
-.loading-bar-container {
-    width: 200px;
-    height: 6px;
-    background: #dcdcdc;
-    border-radius: 3px;
-    margin-top: 30px;
-    overflow: hidden;
-}
-
-.loading-bar {
-    height: 100%;
-    width: 0%;
-    background: #2ecc71;
-    border-radius: 3px;
-    animation: fill-bar 2s ease-in-out forwards;
-}
-
-@keyframes fill-bar {
-    0% { width: 0%; }
-    50% { width: 60%; }
-    100% { width: 100%; }
-}
-
   </style>
   <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
@@ -343,15 +277,38 @@ body {
 <!-- /Yandex.Metrika counter -->
 </head>
 <body>
-  <div id="preloader">
-    <div class="loader-content">
-        <img src="https://bewords.ru/bob_in_spring.jpg" alt="Bewords Cat" class="loader-cat">
-        
-        <!-- Полоска прогресса -->
-        <div class="loading-bar-container">
-            <div class="loading-bar"></div>
-        </div>
+  <div id="loading-layer" aria-busy="true" aria-label="Загрузка приложения">
+  <div class="ambient" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <div class="center-group">
+    <div class="mascot-float" id="mascotFloat">
+      <div class="mascot-scale" id="mascotScale">
+        <img src="/Bob_loading.PNG" alt="BeWords" class="mascot-image" id="mascotImg"
+             onerror="this.onerror=null;this.src=window.bwFallbackMascot;">
+      </div>
     </div>
+
+    <div class="fade-elements" id="fadeGroup">
+      <div class="loading-text-wrapper">
+        <div class="loading-text-bg">BeWords</div>
+        <div class="loading-text-fill-wrap" id="textFillWrap">
+          <div class="loading-text-fill">BeWords</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shockwave" id="shockwave"></div>
+
+  <div class="tips-container" id="tipsGroup">
+    <div class="tip-pill">
+      <span class="tip-icon" aria-hidden="true">💡</span>
+      <span class="tips-text" id="randomTip"></span>
+    </div>
+  </div>
 </div>
   <!-- App Install Banner -->
 <div id="appInstallBanner" class="app-install-banner">
@@ -370,8 +327,8 @@ body {
   </div>
 </div>
   
-<div class="app-container">
-  <header class="app-header">
+<div class="app-container" style="visibility:hidden">
+    <header class="app-header">
     <div class="header-content">
       <div class="logo-title">
         <a href="/" class="logo-link" onclick="location.reload(); return false;">
@@ -1118,7 +1075,6 @@ body {
 <script src="sentences-data.js"></script>
 <script src="grammar.js"></script> 
 <script src="app.js"></script>
-<script src="auth_no_sync.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
@@ -1576,35 +1532,135 @@ function setLang(from, to){
   }
 </script>
 <script>
-// Скрываем основной контент до загрузки
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('.app-container').style.visibility = 'hidden';
-});
+(function () {
+  'use strict';
 
-// Функция скрытия прелоадера
-function hidePreloader() {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-        preloader.classList.add('done');
-        document.querySelector('.app-container').style.visibility = 'visible';
-        
-        setTimeout(() => {
-            if (preloader.parentNode) {
-                preloader.style.display = 'none';
-            }
-        }, 800);
+  var loadingLayer = document.getElementById('loading-layer');
+  var mascotFloat  = document.getElementById('mascotFloat');
+  var mascotScale  = document.getElementById('mascotScale');
+  var fadeGroup    = document.getElementById('fadeGroup');
+  var tipsGroup    = document.getElementById('tipsGroup');
+  var shockwave    = document.getElementById('shockwave');
+  var tipElement   = document.getElementById('randomTip');
+  var textFillWrap = document.getElementById('textFillWrap');
+  var appContainer = document.querySelector('.app-container');
+
+  // Если оверлея почему-то нет — просто показываем приложение
+  if (!loadingLayer) {
+    if (appContainer) appContainer.style.visibility = 'visible';
+    return;
+  }
+
+  var finished = false;
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Режим слабого устройства
+  (function () {
+    var mem = navigator.deviceMemory, cores = navigator.hardwareConcurrency;
+    if ((mem && mem <= 2) || (cores && cores <= 4)) loadingLayer.classList.add('bw-low-end');
+  })();
+
+  // Блокируем скролл, пока виден сплэш
+  document.body.classList.add('bw-splash-lock');
+
+  // Случайный совет
+  var tips = [
+    "Ваш питомец скучает, если вы долго не заходите в приложение 🥺",
+    "Изучайте по 5 новых слов в день — это 1825 слов за год! 🧠",
+    "Включите уведомления, чтобы не пропустить тренировку ⏰",
+    "Повторение — мать учения. Загляните в раздел «Повтор» 🔄",
+    "Проговаривайте слова вслух — так они запоминаются лучше 🗣️",
+    "Занимайтесь по 10 минут в день — это эффективнее, чем час раз в неделю 📅",
+    "Учите слова в контексте фраз, а не по одному — так они лучше закрепляются 💬",
+    "Ошибки — это нормально! Мозг лучше запоминает то, в чём сначала ошибся ❌➡️✅",
+    "Повторяйте слова перед сном — это помогает закрепить их в долгосрочной памяти 🌙",
+    "Отмечайте прогресс в календаре — так проще не бросить учёбу 📈"
+  ];
+  if (tipElement) tipElement.textContent = tips[Math.floor(Math.random() * tips.length)];
+
+  function setProgress(p) {
+    var c = Math.max(0, Math.min(100, p));
+    if (textFillWrap) textFillWrap.style.width = c + '%';
+  }
+
+  function revealApp() {
+    if (appContainer) appContainer.style.visibility = 'visible';
+    document.body.classList.remove('bw-splash-lock');
+  }
+
+  function positionShockwave() {
+    if (!mascotFloat || !shockwave) return;
+    var r = mascotFloat.getBoundingClientRect();
+    shockwave.style.left = (r.left + r.width / 2) + 'px';
+    shockwave.style.top  = (r.top + r.height / 2) + 'px';
+  }
+
+  function triggerWowEffect() {
+    if (finished) return;
+    finished = true;
+
+    if (prefersReducedMotion) {
+      revealApp();
+      loadingLayer.classList.add('bw-fade-out');
+      setTimeout(function () { if (loadingLayer.parentNode) loadingLayer.parentNode.removeChild(loadingLayer); }, 450);
+      return;
     }
-}
 
-// Ждем загрузки ВСЕХ ресурсов
-window.addEventListener('load', function() {
-    setTimeout(hidePreloader, 2500); // Минимум 2.5 секунды
-});
+    if (fadeGroup) fadeGroup.classList.add('hidden');
+    if (tipsGroup) tipsGroup.classList.add('hidden');
 
-// Фолбэк: если что-то пошло не так
-setTimeout(function() {
-    hidePreloader();
-}, 4000);
+    setTimeout(function () {
+      if (mascotFloat) mascotFloat.classList.add('frozen');
+      if (mascotScale) mascotScale.classList.add('frozen', 'anticipate');
+    }, 160);
+
+    setTimeout(function () {
+      if (mascotScale) { mascotScale.classList.remove('anticipate'); mascotScale.classList.add('zoom-in'); }
+    }, 320);
+
+    setTimeout(function () {
+      if (mascotScale) { mascotScale.classList.remove('zoom-in'); mascotScale.classList.add('poof'); }
+      positionShockwave();
+      if (shockwave) shockwave.classList.add('explode');
+    }, 740);
+
+    setTimeout(function () {
+      revealApp();
+      loadingLayer.classList.add('bw-fade-out');
+    }, 890);
+
+    setTimeout(function () {
+      if (loadingLayer.parentNode) loadingLayer.parentNode.removeChild(loadingLayer);
+    }, 1500);
+  }
+
+  // === Реальная загрузка: ждём window.load + минимум времени ===
+  var MIN_MS = 2200;
+  var start = performance.now();
+  var appReady = false;
+  window.addEventListener('load', function () { appReady = true; }, { once: true });
+
+  function tick(now) {
+    var elapsed = now - start;
+    // прогресс асимптотически ползёт к ~92%, пока приложение реально грузится
+    setProgress(92 * (1 - Math.exp(-elapsed / 900)));
+    if (appReady && elapsed >= MIN_MS) {
+      setProgress(100);
+      requestAnimationFrame(triggerWowEffect);
+    } else {
+      requestAnimationFrame(tick);
+    }
+  }
+  requestAnimationFrame(tick);
+
+  // Фолбэк: если load завис или что-то пошло не так
+  setTimeout(function () {
+    if (!finished) { setProgress(100); triggerWowEffect(); }
+  }, 6000);
+
+  window.addEventListener('resize', function () { if (!finished) positionShockwave(); });
+  positionShockwave();
+})();
 </script>
 
 <!-- === МОДАЛКА ЭКСПОРТА (выбор слов) === -->
