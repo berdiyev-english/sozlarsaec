@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- МАГИЧЕСКАЯ СТРОКА: Прячет адрес твоего сайта от Гугла, чтобы избежать блокировки (403 Forbidden) -->
+    <meta name="referrer" content="no-referrer">
+    
     <title>Озвучка слов (Google TTS)</title>
     <style>
         body {
@@ -49,6 +53,7 @@
             font-size: 16px;
             outline: none;
             cursor: pointer;
+            width: 95%;
         }
         button {
             background-color: #1a73e8;
@@ -68,8 +73,12 @@
         button:active {
             transform: scale(0.98);
         }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
         .error {
-            color: red;
+            color: #d93025;
             font-size: 14px;
             margin-top: 10px;
             display: none;
@@ -81,51 +90,73 @@
     <div class="card">
         <h1>🔊 Озвучка слов</h1>
         
-        <input type="text" id="wordInput" placeholder="Введите слово на английском..." autocomplete="off">
+        <input type="text" id="wordInput" placeholder="Введите слово или фразу..." autocomplete="off">
         
         <div>
             <select id="accentSelect">
-                <option value="en-US">Американский акцент (US)</option>
-                <option value="en-GB">Британский акцент (UK)</option>
+                <option value="en-US">🇺🇸 Американский акцент</option>
+                <option value="en-GB">🇬🇧 Британский акцент</option>
+                <option value="ru-RU">🇷🇺 Русский (если нужно)</option>
             </select>
         </div>
 
-        <button onclick="speakWord()">Озвучить</button>
-        <p id="errorText" class="error">Пожалуйста, введите текст!</p>
+        <button id="playBtn" onclick="speakWord()">Озвучить</button>
+        <p id="errorText" class="error"></p>
     </div>
 
     <script>
         function speakWord() {
-            // Получаем текст из инпута
-            const text = document.getElementById('wordInput').value.trim();
+            const input = document.getElementById('wordInput');
+            const btn = document.getElementById('playBtn');
             const errorText = document.getElementById('errorText');
             
-            // Если пусто - показываем ошибку
+            const text = input.value.trim();
+            
             if (!text) {
-                errorText.style.display = 'block';
+                showError('Пожалуйста, введите текст!');
                 return;
             }
             
             errorText.style.display = 'none';
+            btn.disabled = true;
+            btn.innerText = 'Загрузка...';
 
-            // Получаем выбранный акцент
             const lang = document.getElementById('accentSelect').value;
-
-            // Кодируем текст (чтобы пробелы и спецсимволы не сломали ссылку)
             const encodedText = encodeURIComponent(text);
 
-            // Формируем секретную ссылку на API Google Переводчика
-            // client=tw-ob - это важный параметр, без него Гугл заблокирует запрос
+            // client=tw-ob - имитация веб-приложения Гугла
             const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${lang}&q=${encodedText}`;
 
-            // Создаем аудио объект и воспроизводим его
             const audio = new Audio(googleTtsUrl);
-            audio.play().catch(error => {
-                alert("Ошибка воспроизведения. Возможно, нет подключения к интернету.");
+            
+            // Когда аудио начинает играть, возвращаем кнопку в норму
+            audio.onplay = () => {
+                btn.disabled = false;
+                btn.innerText = 'Озвучить';
+            };
+
+            // Обработка ошибок (например, пропал интернет)
+            audio.onerror = () => {
+                btn.disabled = false;
+                btn.innerText = 'Озвучить';
+                showError('Ошибка загрузки. Проверьте интернет или попробуйте позже.');
+            };
+
+            // Запускаем аудио
+            audio.play().catch(e => {
+                btn.disabled = false;
+                btn.innerText = 'Озвучить';
+                showError('Браузер заблокировал автовоспроизведение.');
             });
         }
 
-        // Озвучка по нажатию клавиши Enter
+        function showError(msg) {
+            const errorText = document.getElementById('errorText');
+            errorText.innerText = msg;
+            errorText.style.display = 'block';
+        }
+
+        // Озвучка по Enter
         document.getElementById('wordInput').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 speakWord();
