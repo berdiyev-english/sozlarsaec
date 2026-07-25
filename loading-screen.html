@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>BeWords - Загрузка</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #F4F7FA;
+            --primary-blue: #1CB0F6;
+            --green: #58CC02;
+            --text-dark: #3C3C3C;
+            --text-gray: #9A9A9A;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        html, body {
+            width: 100%; height: 100%;
+            overscroll-behavior: none;
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #000;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .device-screen {
+            width: 100vw; height: 100dvh;
+            position: relative;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* =========================================
+           СЛОЙ 1: ЭКРАН ЗАГРУЗКИ
+           ========================================= */
+        #loading-layer {
+            position: absolute; inset: 0;
+            background-color: var(--bg-color);
+            z-index: 100;
+            /* ЕДИНАЯ flex-структура сверху вниз — никаких "оторванных" absolute-блоков */
+            display: flex; flex-direction: column; align-items: center;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: calc(env(safe-area-inset-bottom) + 3vh);
+            contain: layout style paint;
+        }
+
+        /* Блок кота и текста — занимает всё свободное место и центрируется внутри него */
+        .loading-main {
+            flex: 1 1 auto;
+            min-height: 0; /* критично для корректного сжатия на маленьких экранах */
+            width: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        /* Блок совета — идёт ПОСЛЕ основного блока в обычном потоке, наложение невозможно физически */
+        .tips-container {
+            flex: 0 0 auto;
+            width: 85%; max-width: 340px; text-align: center;
+            padding-top: 20px; /* гарантированный отступ от текста BeWords сверху */
+        }
+
+        /* ---------- МАСКОТ: два вложенных слоя ---------- */
+
+        .mascot-float {
+            width: clamp(120px, 34vw, 210px);
+            height: clamp(120px, 34vw, 210px);
+            margin-bottom: clamp(20px, 5vh, 48px);
+            position: relative; z-index: 102;
+            animation: float 3.2s ease-in-out infinite;
+            will-change: transform;
+        }
+        .mascot-float.frozen { animation: none; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50%      { transform: translateY(-14px); }
+        }
+
+        .mascot-scale {
+            width: 100%; height: 100%;
+            transform-origin: 50% 85%;
+            animation: breathe 3.6s ease-in-out infinite;
+            will-change: transform;
+        }
+        .mascot-scale.frozen { animation: none; }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1, 1); }
+            50%      { transform: scale(1.025, 0.975); }
+        }
+
+        .mascot-scale.anticipate {
+            transition: transform 0.16s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+            transform: scale(0.93, 1.08);
+        }
+
+        .mascot-scale.zoom-in {
+            transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(1.48, 1.62);
+        }
+
+        .mascot-scale.poof {
+            transition: transform 0.15s cubic-bezier(0.6, -0.28, 0.735, 0.045),
+                        opacity 0.15s ease-in 0.03s;
+            transform: scale(0.3, 0.05);
+            opacity: 0;
+        }
+
+        .mascot-image {
+            width: 100%; height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 6px 6px rgba(0,0,0,0.12));
+            pointer-events: none;
+        }
+
+        .low-end .mascot-image { filter: none; }
+        .low-end .mascot-scale { animation: none; }
+        .low-end .mascot-float { animation-duration: 4.4s; }
+
+        /* ---------- ТЕКСТ ЗАГРУЗКИ ---------- */
+        .fade-elements {
+            display: flex; flex-direction: column; align-items: center; width: 100%;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            will-change: opacity, transform;
+        }
+        .fade-elements.hidden {
+            opacity: 0;
+            transform: translateY(8px);
+            pointer-events: none;
+        }
+
+        .loading-text-wrapper {
+            position: relative;
+            font-size: clamp(26px, 7vw, 40px);
+            font-weight: 900; letter-spacing: 0.5px;
+        }
+        .loading-text-bg { color: #DCDCDC; }
+
+        .loading-text-fill-wrap {
+            position: absolute; top: 0; left: 0;
+            width: 0%; height: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .loading-text-fill { color: var(--green); }
+
+        .tips-title {
+            font-size: 12px; font-weight: 800; color: var(--primary-blue);
+            text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.6px;
+        }
+        .tips-text {
+            font-size: 14.5px; font-weight: 700; color: var(--text-gray); line-height: 1.4;
+            min-height: 40px;
+        }
+
+        /* ---------- ВЗРЫВНАЯ ВОЛНА ---------- */
+        .shockwave {
+            position: absolute; top: 50%; left: 50%; /* значения перезаписываются через JS перед взрывом */
+            width: 40px; height: 40px;
+            background: radial-gradient(
+                circle,
+                rgba(28, 176, 246, 0.35) 0%,
+                rgba(28, 176, 246, 0.15) 40%,
+                rgba(28, 176, 246, 0) 70%
+            );
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0; z-index: 101; pointer-events: none;
+            will-change: transform, opacity;
+        }
+        .shockwave.explode {
+            animation: blast 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes blast {
+            0%   { transform: translate(-50%, -50%) scale(1);  opacity: 0.9; }
+            60%  { opacity: 0.45; }
+            100% { transform: translate(-50%, -50%) scale(55); opacity: 0; }
+        }
+
+        .low-end .shockwave { display: none; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .mascot-float, .mascot-scale { animation: none !important; }
+            * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="device-screen">
+
+
+        <!-- ЗАГРУЗКА -->
+        <div id="loading-layer" aria-busy="true" aria-label="Загрузка приложения">
+
+            <!-- Основной блок: кот + текст. Центрируется в доступном пространстве -->
+            <div class="loading-main">
+
+                <div class="mascot-float" id="mascotFloat">
+                    <div class="mascot-scale" id="mascotScale">
+                        <img src="https://bewords.ru/instruction.png"
+                             alt="Mascot"
+                             class="mascot-image"
+                             id="mascotImg"
+                             onerror="this.onerror=null; this.src=fallbackMascotSVG;">
+                    </div>
+                </div>
+
+                <div class="shockwave" id="shockwave"></div>
+
+                <div class="fade-elements" id="fadeGroup">
+                    <div class="loading-text-wrapper">
+                        <div class="loading-text-bg">BeWords</div>
+                        <div class="loading-text-fill-wrap" id="textFillWrap">
+                            <div class="loading-text-fill">BeWords</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Блок совета — теперь ВСЕГДА ниже основного блока, наложение невозможно -->
+            <div class="tips-container fade-elements" id="tipsGroup">
+                <div class="tips-title">Совет</div>
+                <div class="tips-text" id="randomTip"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+    (function () {
+        'use strict';
+
+        const fallbackMascotSVG = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                <circle cx="100" cy="110" r="75" fill="#1CB0F6"/>
+                <circle cx="75" cy="100" r="12" fill="white"/>
+                <circle cx="125" cy="100" r="12" fill="white"/>
+                <circle cx="75" cy="100" r="6" fill="#3C3C3C"/>
+                <circle cx="125" cy="100" r="6" fill="#3C3C3C"/>
+                <path d="M85 135 Q100 150 115 135" stroke="white" stroke-width="6" fill="none" stroke-linecap="round"/>
+                <path d="M55 60 L70 35 L85 65 Z" fill="#1CB0F6"/>
+                <path d="M145 60 L130 35 L115 65 Z" fill="#1CB0F6"/>
+            </svg>
+        `);
+        window.fallbackMascotSVG = fallbackMascotSVG;
+
+        const mascotFloat  = document.getElementById('mascotFloat');
+        const mascotScale  = document.getElementById('mascotScale');
+        const fadeGroup    = document.getElementById('fadeGroup');
+        const tipsGroup    = document.getElementById('tipsGroup');
+        const shockwave    = document.getElementById('shockwave');
+        const loadingLayer = document.getElementById('loading-layer');
+        const mainApp      = document.getElementById('main-app-layer');
+        const tipElement   = document.getElementById('randomTip');
+        const textFillWrap = document.getElementById('textFillWrap');
+
+        let finished = false;
+
+        function isLowEndDevice() {
+            const memory = navigator.deviceMemory;
+            const cores  = navigator.hardwareConcurrency;
+            if (memory && memory <= 2) return true;
+            if (cores && cores <= 4) return true;
+            return false;
+        }
+        if (isLowEndDevice()) {
+            document.documentElement.classList.add('low-end');
+        }
+
+        const prefersReducedMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+        ).matches;
+
+        const tips = [
+            "Ваш питомец скучает, если вы долго не заходите в приложение 🥺",
+            "Изучайте по 5 новых слов в день — это 1825 слов за год! 🧠",
+            "Включите уведомления, чтобы не пропустить тренировку ⏰",
+            "Повторение — мать учения. Загляните в раздел «Повтор» 🔄",
+            "Проговаривайте слова вслух — так они запоминаются лучше 🗣️",
+            "Занимайтесь по 10 минут в день — это эффективнее, чем час раз в неделю 📅",
+            "Учите слова в контексте фраз, а не по одному — так они лучше закрепляются 💬",
+            "Ошибки — это нормально! Мозг лучше запоминает то, в чём сначала ошибся ❌➡️✅",
+            "Повторяйте слова перед сном — это помогает закрепить их в долгосрочной памяти 🌙",
+            "Отмечайте прогресс в календаре — так проще не бросить учёбу 📈",
+            "Слушайте живую речь: подкасты и песни ускоряют привыкание к языку 🎧"
+        ];
+        tipElement.textContent = tips[Math.floor(Math.random() * tips.length)];
+
+        function setProgress(percent) {
+            const clamped = Math.max(0, Math.min(100, percent));
+            textFillWrap.style.width = clamped + '%';
+        }
+
+        function fakeAppBootstrap(onProgress) {
+            return new Promise((resolve) => {
+                const duration = 1500 + Math.random() * 700;
+                const start = performance.now();
+
+                function tick(now) {
+                    const elapsed = now - start;
+                    const progress = Math.min(100, (elapsed / duration) * 100);
+                    onProgress(progress);
+
+                    if (progress < 100) {
+                        requestAnimationFrame(tick);
+                    } else {
+                        resolve();
+                    }
+                }
+                requestAnimationFrame(tick);
+            });
+        }
+
+        const minimumTime = new Promise((resolve) => setTimeout(resolve, 1400));
+        const dataReady = fakeAppBootstrap(setProgress);
+
+        Promise.all([minimumTime, dataReady]).then(() => {
+            setProgress(100);
+            requestAnimationFrame(() => triggerWowEffect());
+        });
+
+        // Вычисляем реальный центр кота на экране и позиционируем волну именно туда
+        function positionShockwaveAtMascot() {
+            const rect = mascotFloat.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            shockwave.style.left = centerX + 'px';
+            shockwave.style.top = centerY + 'px';
+        }
+
+        function triggerWowEffect() {
+            if (finished) return;
+            finished = true;
+
+            if (prefersReducedMotion) {
+                loadingLayer.style.backgroundColor = 'transparent';
+                mainApp.classList.add('reveal');
+                setTimeout(() => loadingLayer.remove(), 500);
+                return;
+            }
+
+            fadeGroup.classList.add('hidden');
+            tipsGroup.classList.add('hidden');
+
+            setTimeout(() => {
+                mascotFloat.classList.add('frozen');
+                mascotScale.classList.add('frozen', 'anticipate');
+            }, 160);
+
+            setTimeout(() => {
+                mascotScale.classList.remove('anticipate');
+                mascotScale.classList.add('zoom-in');
+            }, 320);
+
+            setTimeout(() => {
+                mascotScale.classList.remove('zoom-in');
+                mascotScale.classList.add('poof');
+                positionShockwaveAtMascot(); // фиксируем точное положение перед взрывом
+                shockwave.classList.add('explode');
+            }, 740);
+
+            setTimeout(() => {
+                loadingLayer.style.backgroundColor = 'transparent';
+                mainApp.classList.add('reveal');
+            }, 890);
+
+            setTimeout(() => {
+                loadingLayer.remove();
+            }, 1590);
+        }
+
+        // Пересчитываем позицию волны при повороте экрана / изменении размера окна до момента взрыва
+        window.addEventListener('resize', () => {
+            if (!finished) positionShockwaveAtMascot();
+        });
+        positionShockwaveAtMascot();
+    })();
+    </script>
+
+</body>
+</html>
