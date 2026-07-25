@@ -6446,3 +6446,93 @@ FIX: Сундук — нормальная надпись и монеты пос
     transform: scale(0.9);
   }
 }
+
+/* =====================================================
+   BeWords SPLASH SCREEN (скоуплено под #loading-layer)
+   ===================================================== */
+#loading-layer {
+  position: fixed; inset: 0; z-index: 999999;
+  background: linear-gradient(160deg, #EBF5FF 0%, #D4ECFF 100%);
+  overflow: hidden;
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  user-select: none; -webkit-user-select: none;
+  touch-action: manipulation; overscroll-behavior: none;
+  contain: layout style paint;
+}
+#loading-layer.bw-fade-out { opacity: 0; transition: opacity 0.4s ease; }
+#loading-layer *, #loading-layer *::before, #loading-layer *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ambient-боке */
+#loading-layer .ambient { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+#loading-layer .blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.55; will-change: transform; }
+#loading-layer .blob-1 { width: 55vw; height: 55vw; top: -12vw; left: -14vw; background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%); animation: bw-drift1 14s ease-in-out infinite; }
+#loading-layer .blob-2 { width: 60vw; height: 60vw; bottom: -18vw; right: -16vw; background: radial-gradient(circle, rgba(120,190,250,0.55) 0%, rgba(120,190,250,0) 70%); animation: bw-drift2 18s ease-in-out infinite; }
+@keyframes bw-drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6vw,4vh) scale(1.08); } }
+@keyframes bw-drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-5vw,-3vh) scale(1.1); } }
+
+/* центральная группа (в потоке только кот -> центр кота = центр экрана) */
+#loading-layer .center-group { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); display: flex; flex-direction: column; align-items: center; width: 100%; z-index: 2; }
+
+/* маскот */
+#loading-layer .mascot-float {
+  width: min(clamp(260px, 82vw, 420px), 60vh);
+  height: min(clamp(260px, 82vw, 420px), 60vh);
+  position: relative; z-index: 102; will-change: transform;
+  animation: bw-pop-in 0.6s cubic-bezier(0.34,1.56,0.64,1) both, bw-float 3.2s ease-in-out 0.6s infinite;
+}
+#loading-layer .mascot-float.frozen { animation: none; }
+#loading-layer .mascot-float::before { content: ""; position: absolute; inset: 8% 6% 14% 6%; background: radial-gradient(circle at 50% 45%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.35) 45%, rgba(255,255,255,0) 72%); border-radius: 50%; z-index: -1; filter: blur(2px); }
+@keyframes bw-pop-in { 0% { transform: translateY(40px) scale(0.6); opacity: 0; } 60% { transform: translateY(-6px) scale(1.04); opacity: 1; } 100% { transform: translateY(0) scale(1); opacity: 1; } }
+@keyframes bw-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+#loading-layer .mascot-scale { width: 100%; height: 100%; transform-origin: 50% 50%; animation: bw-breathe 3.6s ease-in-out infinite; will-change: transform; }
+#loading-layer .mascot-scale.frozen { animation: none; }
+@keyframes bw-breathe { 0%,100% { transform: scale(1,1); } 50% { transform: scale(1.025,0.975); } }
+#loading-layer .mascot-scale.anticipate { transition: transform 0.16s cubic-bezier(0.55,0.055,0.675,0.19); transform: scale(0.93,1.08); }
+#loading-layer .mascot-scale.zoom-in { transition: transform 0.42s cubic-bezier(0.34,1.56,0.64,1); transform: scale(1.3,1.42); }
+#loading-layer .mascot-scale.poof { transition: transform 0.15s cubic-bezier(0.6,-0.28,0.735,0.045), opacity 0.15s ease-in 0.03s; transform: scale(0.3,0.05); opacity: 0; }
+#loading-layer .mascot-image { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 20px 30px rgba(20,110,180,0.24)); pointer-events: none; transform: translateX(0); }
+
+/* текст-логотип с заполнением */
+#loading-layer .fade-elements { display: flex; flex-direction: column; align-items: center; width: 100%; transition: opacity 0.3s ease-out, transform 0.3s ease-out; will-change: opacity, transform; }
+#loading-layer .fade-elements.hidden { opacity: 0; transform: translateY(8px); pointer-events: none; }
+#loading-layer #fadeGroup { position: absolute; top: calc(100% + 8px); left: 0; width: 100%; }
+#loading-layer .loading-text-wrapper { position: relative; font-size: clamp(32px, 9.5vw, 46px); font-weight: 900; letter-spacing: 0.5px; }
+#loading-layer .loading-text-bg { color: #fff; text-shadow: 0 3px 0 rgba(120,168,210,0.55); }
+#loading-layer .loading-text-fill-wrap { position: absolute; top: 0; left: 0; width: 0%; height: 100%; overflow: hidden; white-space: nowrap; }
+#loading-layer .loading-text-fill { color: #58CC02; text-shadow: 0 3px 0 #46A302; }
+
+/* совет-пилюля */
+#loading-layer .tips-container { position: absolute; bottom: calc(env(safe-area-inset-bottom) + 5vh); left: 50%; transform: translateX(-50%); width: 88%; max-width: 360px; z-index: 2; animation: bw-rise-in 0.55s cubic-bezier(0.22,1,0.36,1) 0.5s both; }
+@keyframes bw-rise-in { 0% { opacity: 0; transform: translate(-50%,14px); } 100% { opacity: 1; transform: translate(-50%,0); } }
+#loading-layer .tips-container.hidden { opacity: 0; transform: translate(-50%,10px); animation: none; pointer-events: none; transition: opacity 0.3s ease-out, transform 0.3s ease-out; }
+#loading-layer .tip-pill { display: flex; align-items: center; gap: 10px; padding: 11px 16px; background: rgba(255,255,255,0.62); border: 1px solid rgba(255,255,255,0.7); border-radius: 999px; box-shadow: 0 6px 18px rgba(28,120,200,0.12); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+#loading-layer .tip-icon { flex: 0 0 auto; font-size: 18px; line-height: 1; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.08)); }
+#loading-layer .tips-text { font-size: 13.5px; font-weight: 700; color: #51606E; line-height: 1.35; text-align: left; }
+
+/* взрывная волна */
+#loading-layer .shockwave { position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; background: radial-gradient(circle, rgba(28,176,246,0.4) 0%, rgba(28,176,246,0.15) 40%, rgba(28,176,246,0) 70%); border-radius: 50%; transform: translate(-50%,-50%) scale(0); opacity: 0; z-index: 101; pointer-events: none; will-change: transform, opacity; }
+#loading-layer .shockwave.explode { animation: bw-blast 0.75s cubic-bezier(0.22,1,0.36,1) forwards; }
+@keyframes bw-blast { 0% { transform: translate(-50%,-50%) scale(1); opacity: 1; } 60% { opacity: 0.5; } 100% { transform: translate(-50%,-50%) scale(55); opacity: 0; } }
+
+/* слабые устройства */
+#loading-layer.bw-low-end .mascot-image { filter: none; }
+#loading-layer.bw-low-end .mascot-scale { animation: none; }
+#loading-layer.bw-low-end .mascot-float { animation: bw-float 4.4s ease-in-out infinite; }
+#loading-layer.bw-low-end .mascot-float::before { filter: none; }
+#loading-layer.bw-low-end .tips-container { animation: none; }
+#loading-layer.bw-low-end .tip-pill { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(255,255,255,0.8); }
+#loading-layer.bw-low-end .ambient { display: none; }
+#loading-layer.bw-low-end .shockwave { display: none; }
+
+/* короткие экраны: совет прячем, чтобы не налезал на крупного кота */
+@media (max-height: 700px) { #loading-layer .tips-container { display: none; } }
+
+/* уважение к reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  #loading-layer .mascot-float, #loading-layer .mascot-scale, #loading-layer .tips-container, #loading-layer .blob { animation: none !important; }
+  #loading-layer * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+/* блокировка скролла ТОЛЬКО на время сплэша (снимается в JS) */
+body.bw-splash-lock { overflow: hidden !important; }
