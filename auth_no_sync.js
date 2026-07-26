@@ -1,6 +1,15 @@
 var supabaseUrl = 'https://dyiwuslfjnvirbxfafuq.supabase.co';
 var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5aXd1c2xmam52aXJieGZhZnVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MTU1MTEsImV4cCI6MjA5MDM5MTUxMX0.c61rc2C2YOWCMF0JdmvdcrsCdoyfJNOkFLDoxZN1N5U';
-var supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+// ✅ КЛЮЧЕВОЕ: detectSessionInUrl + autoRefreshToken
+var supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey, {
+    auth: {
+        detectSessionInUrl: true,   // парсит #access_token из URL
+        autoRefreshToken: true,     // обновляет токен автоматически
+        persistSession: true,       // хранит сессию в localStorage
+        flowType: 'pkce'            // ✅ более надёжный поток для SPA
+    }
+});
 
 class AuthManager {
     constructor() {
@@ -10,12 +19,6 @@ class AuthManager {
         this.isRecoveringPassword = false;
         this.lastCustomMessage = null;
 
-        // ==========================================
-        // КЛЮЧЕВЫЕ ФЛАГИ
-        // ==========================================
-        this._userClickedLogin = false;    // юзер НАЖАЛ кнопку "Войти"
-        this._userClickedGoogle = false;   // юзер НАЖАЛ кнопку "Google"
-        this._userClickedLogout = false;   // юзер НАЖАЛ кнопку "Выйти"
         this._lastAuthEvent = null;
         this._lastEventTime = 0;
 
@@ -23,9 +26,89 @@ class AuthManager {
     }
 
     async init() {
+        // ==========================================
+        // 1. СНАЧАЛА регистрируем обработчик
+        //    (ДО getSession, чтобы не пропустить событие)
+        // ==========================================
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            const now = Date.now();
+            if (event === this._lastAuthEvent && (now - this._lastEventTime) < 2000) {
+                return;
+            }
+            this._lastAuthEvent = event;
+            this._lastEventTime = now;
+
+            this.currentUser = session ? session.user : null;
+
+            if (event === 'INITIAL_SESSION') return;
+            if (event === 'TOKEN_REFRESHED') return;
+            if (event === 'USER_UPDATED') return;
+
+            if (event === 'PASSWORD_RECOVERY') {
+                this.isRecoveringPassword = true;
+                this.showUpdatePasswordModal();
+                return;
+            }
+
+            if (event === 'SIGNED_IN') {
+                // ✅ Проверяем флаг в sessionStorage (переживает перезагрузку!)
+                const wasGoogle = sessionStorage.getItem('_authAction') === 'google';
+                const wasLogin = sessionStorage.getItem('_authAction') === 'login';
+
+                if ((wasGoogle || wasLogin) && typeof app !== 'undefined') {
+                    app.showNotification('Успешный вход!', 'success');
+                }
+
+                // Очищаем флаг
+                sessionStorage.removeItem('_authAction');
+
+                this.closeModal();
+                this._cleanOAuthHash();
+                return;
+            }
+
+            if (event === 'SIGNED_OUT') {
+                const wasLogout = sessionStorage.getItem('_authAction') === 'logout';
+                if (wasLogout && typeof app !== 'undefined') {
+                    app.showNotification('Вы вышли из аккаунта', 'info');
+                }
+                sessionStorage.removeItem('_authAction');
+                this.closeModal();
+                return;
+            }
+        });
+
+        // ==========================================
+        // 2. ПОТОМ получаем сессию
+        // ==========================================
         const { data: { session } } = await supabaseClient.auth.getSession();
         this.currentUser = session ? session.user : null;
 
+        // ==========================================
+        // 3. Если вернулись с Google OAuth — очищаем URL
+        // ==========================================
+        if (window.location.hash.includes('access_token') ||
+            window.location.search.includes('code=')) {
+            this._cleanOAuthHash();
+
+            // Даём Supabase время обработать токены
+            // и проверяем сессию повторно через 1.5 сек
+            setTimeout(async () => {
+                const { data: { session: s2 } } = await supabaseClient.auth.getSession();
+                if (s2) {
+                    this.currentUser = s2.user;
+                    const wasGoogle = sessionStorage.getItem('_authAction') === 'google';
+                    if (wasGoogle && typeof app !== 'undefined') {
+                        app.showNotification('Успешный вход через Google!', 'success');
+                    }
+                    sessionStorage.removeItem('_authAction');
+                }
+            }, 1500);
+        }
+
+        // ==========================================
+        // 4. Кнопка профиля
+        // ==========================================
         const profileBtn = document.getElementById('profileBtn');
         if (profileBtn) {
             const newBtn = profileBtn.cloneNode(true);
@@ -38,63 +121,8 @@ class AuthManager {
         }
 
         // ==========================================
-        // ОБРАБОТЧИК СОБЫТИЙ
+        // 5. Восстановление пароля
         // ==========================================
-        supabaseClient.auth.onAuthStateChange((event, session) => {
-
-            // Дебаунс: игнорируем дубликаты в течение 2 секунд
-            const now = Date.now();
-            if (event === this._lastAuthEvent && (now - this._lastEventTime) < 2000) {
-                return;
-            }
-            this._lastAuthEvent = event;
-            this._lastEventTime = now;
-
-            this.currentUser = session ? session.user : null;
-
-            // --- ТИХИЕ СОБЫТИЯ (никаких тостов) ---
-            if (event === 'INITIAL_SESSION') return;
-            if (event === 'TOKEN_REFRESHED') return;
-            if (event === 'USER_UPDATED') return;
-
-            // --- PASSWORD RECOVERY ---
-            if (event === 'PASSWORD_RECOVERY') {
-                this.isRecoveringPassword = true;
-                this.showUpdatePasswordModal();
-                return;
-            }
-
-            // --- ВХОД ---
-            if (event === 'SIGNED_IN') {
-                // Тост ТОЛЬКО если юзер сам нажал кнопку
-                const wasUserAction = this._userClickedLogin || this._userClickedGoogle;
-
-                if (wasUserAction && typeof app !== 'undefined') {
-                    app.showNotification('Успешный вход!', 'success');
-                }
-
-                // Сбрасываем флаги
-                this._userClickedLogin = false;
-                this._userClickedGoogle = false;
-
-                this.closeModal();
-                this._cleanOAuthHash();
-                return;
-            }
-
-            // --- ВЫХОД ---
-            if (event === 'SIGNED_OUT') {
-                // Тост ТОЛЬКО если юзер сам нажал "Выйти"
-                if (this._userClickedLogout && typeof app !== 'undefined') {
-                    app.showNotification('Вы вышли из аккаунта', 'info');
-                }
-
-                this._userClickedLogout = false;
-                this.closeModal();
-                return;
-            }
-        });
-
         if (window.location.hash.includes('type=recovery')) {
             this.isRecoveringPassword = true;
             this.showUpdatePasswordModal();
@@ -107,21 +135,26 @@ class AuthManager {
     _cleanOAuthHash() {
         try {
             const hash = window.location.hash;
-            if (hash && (hash.includes('access_token') || hash.includes('type='))) {
-                window.history.replaceState(null, '', window.location.pathname + window.location.search);
+            const search = window.location.search;
+            if ((hash && (hash.includes('access_token') || hash.includes('type='))) ||
+                (search && search.includes('code='))) {
+                window.history.replaceState(
+                    null, '',
+                    window.location.pathname
+                );
             }
         } catch (e) {}
     }
 
     // ==========================================
-    // ЗАГЛУШКИ (синхронизация отключена)
+    // ЗАГЛУШКИ
     // ==========================================
     triggerCloudSave() {}
     async syncToCloud() {}
     async syncFromCloud() {}
 
     // ==========================================
-    // UI
+    // UI (без изменений, кроме Google-кнопки и Logout)
     // ==========================================
     showProfileModal(customMessage = null) {
         if (customMessage) this.lastCustomMessage = customMessage;
@@ -178,9 +211,9 @@ class AuthManager {
                 </button>
             `;
 
-            // ✅ Флаг: юзер САМ нажал "Выйти"
+            // ✅ Флаг в sessionStorage (переживает перезагрузку)
             document.getElementById('logoutBtn').onclick = () => {
-                this._userClickedLogout = true;
+                sessionStorage.setItem('_authAction', 'logout');
                 supabaseClient.auth.signOut();
             };
 
@@ -255,19 +288,34 @@ class AuthManager {
         document.getElementById('tabLogin').onclick = () => { this.isLoginMode = true; this.renderModalInner(); };
         document.getElementById('mainAuthBtn').onclick = () => this.handleAuth(this.isLoginMode ? 'login' : 'register');
 
-        // ✅ Флаг: юзер САМ нажал "Google"
+        // ✅ КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: флаг в sessionStorage
         document.getElementById('googleLoginBtn').onclick = async () => {
-            this._userClickedGoogle = true;
-            await supabaseClient.auth.signInWithOAuth({
+            sessionStorage.setItem('_authAction', 'google');
+            const { error } = await supabaseClient.auth.signInWithOAuth({
                 provider: 'google',
-                options: { redirectTo: window.location.origin + window.location.pathname }
+                options: {
+                    redirectTo: window.location.origin + window.location.pathname
+                }
             });
+            if (error) {
+                sessionStorage.removeItem('_authAction');
+                this.showAuthError(error.message);
+            }
         };
 
         if (this.isLoginMode) {
             document.getElementById('forgotBtn').onclick = () => { this.isResetMode = true; this.renderModalInner(); };
         } else {
             document.getElementById('switchToLoginBtn').onclick = () => { this.isLoginMode = true; this.renderModalInner(); };
+        }
+    }
+
+    showAuthError(msg) {
+        const el = document.getElementById('authError');
+        if (el) {
+            el.textContent = msg;
+            el.style.color = '#ef4444';
+            el.style.display = 'block';
         }
     }
 
@@ -339,18 +387,16 @@ class AuthManager {
                 errorEl.style.display = 'block';
                 return;
             }
-            // Если регистрация прошла и сразу создалась сессия
             if (!result.error && result.data.session) {
-                this._userClickedLogin = true; // ← тост покажется
+                sessionStorage.setItem('_authAction', 'login');
             }
         } else {
-            // ✅ Флаг: юзер САМ нажал "Войти"
-            this._userClickedLogin = true;
+            sessionStorage.setItem('_authAction', 'login');
             result = await supabaseClient.auth.signInWithPassword({ email, password });
         }
 
         if (result.error) {
-            this._userClickedLogin = false; // ← не было входа, сбрасываем
+            sessionStorage.removeItem('_authAction');
             errorEl.style.color = '#ef4444';
             errorEl.textContent = result.error.message.includes('Invalid login')
                 ? 'Неверный Email или пароль'
