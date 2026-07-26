@@ -1,8 +1,3 @@
-// ==========================================
-// auth.js — ЛЁГКАЯ ВЕРСИЯ (без синхронизации)
-// Данные хранятся ТОЛЬКО локально
-// ==========================================
-
 var supabaseUrl = 'https://dyiwuslfjnvirbxfafuq.supabase.co';
 var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5aXd1c2xmam52aXJieGZhZnVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MTU1MTEsImV4cCI6MjA5MDM5MTUxMX0.c61rc2C2YOWCMF0JdmvdcrsCdoyfJNOkFLDoxZN1N5U';
 var supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -14,6 +9,15 @@ class AuthManager {
         this.isResetMode = false;
         this.isRecoveringPassword = false;
         this.lastCustomMessage = null;
+
+        // ==========================================
+        // ЗАЩИТА ОТ ПОВТОРНЫХ СОБЫТИЙ
+        // ==========================================
+        this._lastAuthEvent = null;       // последнее обработанное событие
+        this._lastEventTime = 0;          // время последнего события
+        this._hasShownLoginToast = false; // показали ли "Успешный вход" в этой сессии
+        this._isInitialized = false;      // завершена ли инициализация
+
         this.init();
     }
 
@@ -32,46 +36,121 @@ class AuthManager {
             });
         }
 
+        // ==========================================
+        // ИСПРАВЛЕННЫЙ onAuthStateChange
+        // ==========================================
         supabaseClient.auth.onAuthStateChange((event, session) => {
+
+            // --- ДЕБАУНС: игнорируем дубликаты в течение 2 секунд ---
+            const now = Date.now();
+            if (event === this._lastAuthEvent && (now - this._lastEventTime) < 2000) {
+                console.log(`⏭️ Пропускаю дубликат: ${event}`);
+                return;
+            }
+            this._lastAuthEvent = event;
+            this._lastEventTime = now;
+
+            // --- Обновляем юзера ---
+            const prevUser = this.currentUser;
             this.currentUser = session ? session.user : null;
+
+            console.log(`🔐 Auth event: ${event}`, {
+                was: prevUser?.email || 'null',
+                now: this.currentUser?.email || 'null'
+            });
+
+            // --- ОБРАБОТКА ПО СОБЫТИЯМ ---
 
             if (event === 'PASSWORD_RECOVERY') {
                 this.isRecoveringPassword = true;
                 this.showUpdatePasswordModal();
+                return;
             }
-            else if (event === 'SIGNED_IN') {
-                if (typeof app !== 'undefined') app.showNotification('Успешный вход!', 'success');
-                this.closeModal();
+
+            if (event === 'INITIAL_SESSION') {
+                // Тихое восстановление сессии при загрузке страницы.
+                // НИКАКИХ тостов, НИКАКИХ модалок.
+                this._isInitialized = true;
+                return;
             }
-            else if (event === 'SIGNED_OUT') {
-                if (typeof app !== 'undefined') app.showNotification('Вы вышли из аккаунта', 'info');
+
+            if (event === 'TOKEN_REFRESHED') {
+                // Supabase обновил JWT. Это рутина, юзеру не нужно знать.
+                return;
+            }
+
+            if (event === 'USER_UPDATED') {
+                // Юзер сменил пароль / профиль. Просто обновляем данные.
+                return;
+            }
+
+            if (event === 'SIGNED_IN') {
+                // Показываем тост ТОЛЬКО если:
+                // 1. Это реальный вход (не восстановление сессии)
+                // 2. Мы ещё не показывали тост в этой сессии
+                // 3. Инициализация уже завершена
+                if (this._isInitialized && !this._hasShownLoginToast) {
+                    this._hasShownLoginToast = true;
+
+                    if (typeof app !== 'undefined') {
+                        app.showNotification('Успешный вход!', 'success');
+                    }
+                }
+
                 this.closeModal();
+
+                // Очищаем URL от OAuth-хеша (#access_token=...)
+                this._cleanOAuthHash();
+                return;
+            }
+
+            if (event === 'SIGNED_OUT') {
+                // Реальный выход (не ложный от TOKEN_REFRESHED)
+                this._hasShownLoginToast = false; // сбрасываем флаг
+
+                if (typeof app !== 'undefined') {
+                    app.showNotification('Вы вышли из аккаунта', 'info');
+                }
+                this.closeModal();
+                return;
             }
         });
 
+        // --- Восстановление пароля из URL ---
         if (window.location.hash.includes('type=recovery')) {
             this.isRecoveringPassword = true;
             this.showUpdatePasswordModal();
         }
+
+        this._isInitialized = true;
+    }
+
+    // ==========================================
+    // Очистка OAuth-хеша из URL
+    // ==========================================
+    _cleanOAuthHash() {
+        try {
+            const hash = window.location.hash;
+            if (hash && (hash.includes('access_token') || hash.includes('type='))) {
+                // Убираем хеш, чтобы при перезагрузке не было повторного SIGNED_IN
+                window.history.replaceState(
+                    null, '',
+                    window.location.pathname + window.location.search
+                );
+                console.log('🧹 OAuth hash cleaned from URL');
+            }
+        } catch (e) {}
     }
 
     // ==========================================
     // ЗАГЛУШКА: синхронизация отключена
     // ==========================================
-    triggerCloudSave() {
-        // Ничего не делаем. Данные только в localStorage.
-    }
-
-    async syncToCloud() {
-        // Отключено
-    }
-
-    async syncFromCloud() {
-        // Отключено
-    }
+    triggerCloudSave() {}
+    async syncToCloud() {}
+    async syncFromCloud() {}
 
     // ==========================================
-    // UI модалки — без изменений
+    // UI модалки
     // ==========================================
     showProfileModal(customMessage = null) {
         if (customMessage) this.lastCustomMessage = customMessage;
@@ -199,7 +278,10 @@ class AuthManager {
         document.getElementById('tabLogin').onclick = () => { this.isLoginMode = true; this.renderModalInner(); };
         document.getElementById('mainAuthBtn').onclick = () => this.handleAuth(this.isLoginMode ? 'login' : 'register');
         document.getElementById('googleLoginBtn').onclick = async () => {
-            await supabaseClient.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin + window.location.pathname } });
+            await supabaseClient.auth.signInWithOAuth({
+                provider: 'google',
+                options: { redirectTo: window.location.origin + window.location.pathname }
+            });
         };
 
         if (this.isLoginMode) {
@@ -255,7 +337,9 @@ class AuthManager {
 
         if (type === 'reset') {
             errorEl.style.display = 'none';
-            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
+            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+                redirectTo: window.location.origin + window.location.pathname
+            });
             if (error) { errorEl.textContent = error.message; errorEl.style.color = '#ef4444'; }
             else { errorEl.innerHTML = '✅ Ссылка отправлена!'; errorEl.style.color = '#10b981'; }
             errorEl.style.display = 'block';
@@ -281,7 +365,9 @@ class AuthManager {
 
         if (result.error) {
             errorEl.style.color = '#ef4444';
-            errorEl.textContent = result.error.message.includes('Invalid login') ? 'Неверный Email или пароль' : result.error.message;
+            errorEl.textContent = result.error.message.includes('Invalid login')
+                ? 'Неверный Email или пароль'
+                : result.error.message;
             errorEl.style.display = 'block';
         }
     }
