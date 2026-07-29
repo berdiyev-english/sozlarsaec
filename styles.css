@@ -6536,3 +6536,818 @@ FIX: Сундук — нормальная надпись и монеты пос
 
 /* блокировка скролла ТОЛЬКО на время сплэша (снимается в JS) */
 body.bw-splash-lock { overflow: hidden !important; }
+
+/* ==========================================================
+   ГРАММАТИКА: ТРЕНАЖЁР (премиальный UI) — ФИКС СВЕЧЕНИЯ
+   ========================================================== */
+
+/* 🔑 КЛЮЧЕВОЕ: overlay перекрывает ВСЁ и дотягивается до физического низа */
+.gt-overlay{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    height:100dvh;                 /* реальная высота на мобилках */
+    z-index:99999990;              /* выше любого fixed-декора/баннера */
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+    font-family:'Nunito',sans-serif;
+    animation:gtFadeIn .3s ease;
+    overflow:hidden;               /* ничего не торчит наружу */
+}
+@keyframes gtFadeIn{from{opacity:0}to{opacity:1}}
+
+.gt-container{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    max-width:600px;
+    width:100%;
+    margin:0 auto;
+    position:relative;
+    height:100%;
+    background:#fff;               /* контейнер тоже непрозрачный */
+    overflow:hidden;
+}
+
+/* --- Шапка --- */
+.gt-header{display:flex;align-items:center;gap:16px;padding:20px 24px;border-bottom:2px solid #f0f0f0;background:#fff}
+.gt-close{background:none;border:none;font-size:26px;color:#afafaf;cursor:pointer;padding:4px 8px;line-height:1;font-weight:900}
+.gt-progress{flex:1;height:14px;background:#f0f0f0;border-radius:10px;overflow:hidden}
+.gt-progress-fill{height:100%;background:#58cc02;border-radius:10px;transition:width .4s ease;width:0%}
+.gt-header .grammar-lamp{font-size:22px;cursor:pointer}
+
+/* --- Контент --- */
+.gt-content{flex:1;padding:24px;display:flex;flex-direction:column;gap:20px;overflow-y:auto;background:#fff}
+.gt-task-title{font-size:22px;font-weight:800;color:#3c3c3c}
+.gt-original{font-size:22px;font-weight:700;color:#4b4b4b}
+
+/* --- Зона ответа --- */
+.gt-answer-area{min-height:90px;background:#f7f9fa;border:2px solid transparent;border-radius:20px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;padding:16px;transition:all .3s ease}
+.gt-answer-area.success{background:#f1fbe5;border-color:#b3e57f}
+.gt-answer-area.error{background:#fdf1f1;border-color:#ffb3b3}
+.gt-answer-placeholder{color:#afafaf;font-weight:700;font-size:16px}
+
+/* --- Пул слов --- */
+.gt-word-pool{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:auto;padding-top:20px}
+.gt-word-chip{background:#fff;border:2px solid #e5e5e5;padding:12px 18px;border-radius:16px;font-size:18px;font-weight:800;color:#3c3c3c;box-shadow:0 4px 0 #e5e5e5;cursor:pointer;font-family:'Nunito',sans-serif;transition:transform .1s,box-shadow .1s,opacity .2s}
+.gt-word-chip:active{transform:translateY(4px);box-shadow:0 0 0 transparent}
+.gt-word-chip.used{opacity:.3;pointer-events:none;box-shadow:none}
+.gt-answer-chip{cursor:pointer}
+
+/* --- Подсветка "Почти" --- */
+.gt-chip-wrong{border-color:#ff4b4b!important;box-shadow:0 4px 0 #d93a3a!important;background:#fff5f5!important;animation:gtShake .35s}
+@keyframes gtShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.gt-almost-hint{display:none;align-items:center;justify-content:center;gap:8px;background:#fff7ed;border:2px solid #fb923c;border-radius:14px;padding:12px 16px;color:#c2410c;font-weight:800;font-size:.95rem;margin-bottom:14px;animation:gtFadeIn .3s}
+.gt-almost-hint.show{display:flex}
+
+/* --- Зона кнопки: БЕЛЫЙ ПОЛ, чтобы снизу ничего не просвечивало --- */
+.gt-action{
+    position:relative;
+    z-index:3;
+    padding:20px 24px calc(20px + env(safe-area-inset-bottom));
+    background:#fff;               /* ← белый пол под кнопкой */
+    transition:opacity .2s;
+}
+.gt-btn{width:100%;color:#fff;border:none;padding:16px;border-radius:18px;font-size:16px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Nunito',sans-serif;transition:transform .1s,box-shadow .1s}
+.gt-btn:active{transform:translateY(4px)}
+.gt-btn-check{background:#1cb0f6;box-shadow:0 5px 0 #1899d6}
+.gt-btn-check.disabled{background:#e5e5e5;box-shadow:0 5px 0 #d0d0d0;color:#afafaf;cursor:not-allowed}
+.gt-btn-check.disabled:active{transform:none}
+.gt-btn-continue{background:#58cc02;box-shadow:0 5px 0 #58a700}
+.gt-btn-error{background:#ff4b4b;box-shadow:0 5px 0 #d93a3a}
+
+/* --- Шторки --- */
+.gt-sheet{position:absolute;bottom:0;left:0;width:100%;border-radius:32px 32px 0 0;padding:30px 24px calc(30px + env(safe-area-inset-bottom));box-sizing:border-box;display:flex;flex-direction:column;gap:24px;z-index:10;transform:translateY(100%);transition:transform .4s cubic-bezier(.2,.9,.3,1.15);box-shadow:none}
+.gt-sheet.show{transform:translateY(0)}
+.gt-sheet-success.show{box-shadow:0 -10px 40px rgba(88,167,0,.2)}
+.gt-sheet-error.show{box-shadow:0 -10px 40px rgba(255,75,75,.2)}
+.gt-sheet-final.show{box-shadow:0 -10px 40px rgba(88,167,0,.2)}
+.gt-sheet-success{background:#d7ffb8}
+.gt-sheet-error{background:#ffdfe0}
+.gt-sheet-final{background:#d7ffb8}
+.gt-sheet-header{display:flex;align-items:center;gap:20px}
+.gt-mascot{width:75px;height:auto;opacity:0;transform:scale(.5);filter:drop-shadow(0 10px 15px rgba(0,0,0,.1))}
+.gt-sheet.show .gt-mascot{animation:gtPopIn .5s cubic-bezier(.2,.9,.3,1.3) forwards;animation-delay:.15s}
+@keyframes gtPopIn{0%{opacity:0;transform:scale(.3) translateY(20px)}60%{opacity:1;transform:scale(1.1) translateY(-5px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+.gt-mascot-sad{filter:grayscale(.35) drop-shadow(0 10px 15px rgba(0,0,0,.1))}
+.gt-sheet-title{color:#58a700;font-size:26px;font-weight:900;margin:0}
+.gt-error-title{color:#ff4b4b}
+.gt-correct-answer{font-size:20px;font-weight:800;color:#c92a2a;margin-top:6px}
+
+/* --- Финал --- */
+.gt-final-stats{display:flex;gap:24px;justify-content:center;margin:10px 0}
+.gt-final-stat{text-align:center}
+.gt-final-stat-num{font-size:34px;font-weight:900;color:#58a700}
+.gt-final-stat-lbl{font-size:14px;font-weight:700;color:#58a700;opacity:.8}
+
+/* 🔑 Подсказка-лампочка должна быть ВЫШЕ тренажёра */
+.grammar-modal.show{z-index:99999999!important}
+
+/* --- Адаптив --- */
+@media (max-width:480px){
+    .gt-content{padding:20px 16px}
+    .gt-task-title,.gt-original{font-size:20px}
+    .gt-word-chip{font-size:16px;padding:10px 14px}
+    .gt-header{padding:16px}
+}
+@media (min-width:768px){
+    .gt-overlay{background:rgba(0,0,0,.5);padding:20px}
+    .gt-container{border-radius:32px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);height:calc(100% - 40px)}
+}
+
+/* ==========================================================
+   ПОЛНОЭКРАННЫЙ РЕЖИМ УРОКА (финальная архитектура)
+   Один хозяин на обязанность:
+   • видимость превью/тренировки  → JS (block / none / .hidden)
+   • растяжение по высоте         → этот блок (height + flex)
+   display:flex !important ставим ТОЛЬКО на теги, которые JS
+   никогда не прячет по отдельности → конфликтов нет.
+   ========================================================== */
+
+/* фон body — чтобы за пределами main не просвечивал градиент (тот самый «другой цвет») */
+body.training-fullscreen { background: var(--bg-primary) !important; overflow: hidden !important; }
+
+/* прячем хром (в т.ч. сайдбар-меню на ПК) */
+body.training-fullscreen .app-header,
+body.training-fullscreen .bottom-nav,
+body.training-fullscreen .learning-top-bar,
+body.training-fullscreen #appInstallBanner,
+body.training-fullscreen #floating-active-arrow { display: none !important; }
+
+/* главный контейнер — фикс на весь экран, БЕЗ скролла самого экрана */
+body.training-fullscreen .main-content {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  z-index: 9000 !important;
+  background: var(--bg-primary) !important;
+  overflow: hidden !important;          /* скроллим только зону упражнения */
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* секция урока: тянется как flex-item (её display=block от JS нам не мешает) */
+body.training-fullscreen #learning.active {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+/* контейнеры-переключатели: ТОЛЬКО высота, display оставлен за JS */
+body.training-fullscreen #activeTrainingContainer,
+body.training-fullscreen #learningWordsList {
+  height: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+/* 🔑 СБРОС базового .active-training-container (убираем белую полосу и резку высоты) */
+body.training-fullscreen .active-training-container {
+  min-height: 0 !important;
+  max-height: none !important;
+  padding: 0 !important;
+  background: var(--bg-primary) !important;
+  overflow: visible !important;
+}
+[data-theme="dark"] body.training-fullscreen .active-training-container { background: var(--bg-primary) !important; }
+
+/* ---------- ТРЕНИРОВКА ----------
+   #trainingContent и #exerciseContainer JS по отдельности НЕ прячет → flex безопасен */
+body.training-fullscreen #trainingContent {
+  height: 100% !important;
+  max-width: 680px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: calc(16px + env(safe-area-inset-top)) 20px calc(16px + env(safe-area-inset-bottom)) !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+/* шапка «Выйти + прогресс» (и плашка старых слов) — сверху, не тянутся */
+body.training-fullscreen #trainingContent > div:first-child { flex: 0 0 auto; }
+body.training-fullscreen #trainingContent > .lesson-old-words-hint { flex: 0 0 auto; }
+/* зона упражнения — остаток высоты; центрирует суть, скроллится только она */
+body.training-fullscreen #exerciseContainer {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+body.training-fullscreen #exerciseContainer > div { width: 100% !important; }
+/* финальный экран «Урок пройден!» — по центру */
+body.training-fullscreen #trainingContent > div:only-child { margin: auto 0 !important; width: 100% !important; }
+
+/* ---------- ОЗНАКОМЛЕНИЕ (превью) ----------
+   обёртку превью JS по отдельности не прячет (прячет весь #learningWordsList) → flex безопасен */
+body.training-fullscreen #learningWordsList > div {
+  height: 100% !important;
+  max-width: 680px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: calc(20px + env(safe-area-inset-top)) 22px calc(24px + env(safe-area-inset-bottom)) !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow-y: auto !important;
+}
+/* крестик выхода — в правый верхний угол (перебиваем inline top:80px) */
+body.training-fullscreen #learningWordsList > div > button[aria-label="Выйти"] {
+  position: absolute !important;
+  top: calc(14px + env(safe-area-inset-top)) !important;
+  right: 16px !important;
+}
+/* ЗОНА 1 — «Ознакомление X из Y» + зелёный бар: сверху */
+body.training-fullscreen #learningWordsList > div > div:first-of-type {
+  flex: 0 0 auto !important;
+  margin: 0 0 clamp(16px, 3vh, 32px) !important;
+}
+/* ЗОНА 2 — карточка слова: по центру свободной зоны */
+body.training-fullscreen #learningWordsList > div > div:nth-of-type(2) {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: clamp(20px, 4vh, 48px) 22px !important;
+}
+body.training-fullscreen #learningWordsList > div > div:nth-of-type(2) > div:first-child {
+  font-size: clamp(2.1rem, 6.5vh, 3.6rem) !important;
+  line-height: 1.1 !important;
+  margin-bottom: clamp(14px, 3vh, 28px) !important;
+}
+body.training-fullscreen #learningWordsList > div > div:nth-of-type(2) > div:last-child {
+  font-size: clamp(1.2rem, 3.2vh, 1.8rem) !important;
+}
+/* ЗОНА 3 — кнопка «Далее» + подсказка: внизу */
+body.training-fullscreen #previewNextBtn {
+  flex: 0 0 auto !important;
+  align-self: center !important;
+  width: 100% !important;
+  max-width: 440px !important;
+  margin: clamp(20px, 4vh, 40px) 0 14px !important;
+}
+body.training-fullscreen #learningWordsList > div > p { flex: 0 0 auto !important; margin: 0 !important; }
+
+body.training-fullscreen #exerciseContainer .quiz-image {
+    height: auto !important;
+    max-height: 32vh !important;
+    max-width: min(460px, 100%) !important;
+}
+
+
+body.training-fullscreen #exerciseContainer h3 { font-size: clamp(1.4rem, 4vh, 2.2rem) !important; }
+
+/* тосты — поверх урока */
+body.training-fullscreen .toast-container { z-index: 10000000 !important; }
+
+/* ==========================================================================
+МОДАЛКА ПОДТВЕРЖДЕНИЯ ВЫХОДА ИЗ УРОКА
+========================================================================== */
+.exit-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999995;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.exit-confirm-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.exit-confirm-box {
+    background: #fff;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 32px 32px 0 0;
+    padding: 32px 24px calc(24px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.exit-confirm-overlay.active .exit-confirm-box {
+    transform: translateY(0);
+}
+
+/* Десктоп: по центру, полностью круглая */
+@media (min-width: 480px) {
+    .exit-confirm-overlay { align-items: center; }
+    .exit-confirm-box {
+        border-radius: 32px;
+        transform: scale(0.9);
+    }
+    .exit-confirm-overlay.active .exit-confirm-box {
+        transform: scale(1);
+    }
+}
+
+/* Маскот */
+.exit-confirm-mascot {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 20px;
+    animation: exitShiver 2s infinite;
+}
+.exit-confirm-mascot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.12));
+}
+@keyframes exitShiver {
+    0%, 100% { transform: translateX(0); }
+    2%, 6%, 10% { transform: translateX(-2px) rotate(-2deg); }
+    4%, 8%, 12% { transform: translateX(2px) rotate(2deg); }
+    14% { transform: translateX(0); }
+}
+
+/* Тексты */
+.exit-confirm-title {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--text-primary, #3c3c3c);
+    margin-bottom: 8px;
+    line-height: 1.35;
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.exit-confirm-subtitle {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-muted, #afafaf);
+    margin-bottom: 28px;
+}
+
+/* Кнопка «Остаться» — большая и яркая */
+.exit-confirm-stay {
+    width: 100%;
+    background: var(--info-color, #1cb0f6);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 16px;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 5px 0 var(--blue-dark, #1899d6);
+    cursor: pointer;
+    margin-bottom: 16px;
+    transition: transform 0.1s, box-shadow 0.1s;
+    font-family: 'Nunito', sans-serif;
+}
+.exit-confirm-stay:active {
+    transform: translateY(5px);
+    box-shadow: 0 0 0 var(--blue-dark, #1899d6);
+}
+
+/* Кнопка «Выйти» — нарочно невзрачная */
+.exit-confirm-quit {
+    background: none;
+    border: none;
+    color: var(--danger-color, #ff4b4b);
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 10px;
+    cursor: pointer;
+    opacity: 0.8;
+    font-family: 'Nunito', sans-serif;
+}
+.exit-confirm-quit:active { opacity: 0.5; }
+
+/* Тёмная тема */
+[data-theme="dark"] .exit-confirm-box {
+    background: var(--bg-primary, #131f24);
+}
+[data-theme="dark"] .exit-confirm-title {
+    color: var(--text-primary, #f9fafb);
+}
+[data-theme="dark"] .exit-confirm-subtitle {
+    color: var(--text-secondary, #d1d5db);
+}
+
+/* ==========================================================================
+Экран «Урок пройден!»
+========================================================================== */
+.lesson-complete-wrap {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    align-self: center; /* центрирует во flex-контейнере полноэкранного урока */
+    padding: 32px 20px 40px;
+    text-align: center;
+    animation: fadeInSection 0.5s ease-out;
+}
+.lesson-complete-mascot {
+    width: 120px;
+    height: auto;
+    margin-bottom: 14px;
+    animation: lessonCompletePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes lessonCompletePop {
+    0%   { transform: scale(0.3) translateY(40px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+.lesson-complete-title {
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin-bottom: 18px;
+}
+
+/* XP-баннер */
+.lesson-xp-banner {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border: 2px solid #fcd34d;
+    border-radius: 18px;
+    padding: 14px 22px 12px;
+    margin: 0 auto 22px;
+    max-width: 260px;
+    box-shadow: 0 4px 0 #fcd34d;
+    animation: lessonCompletePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s both;
+}
+.lesson-xp-main { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.lesson-xp-icon { font-size: 1.5rem; }
+.lesson-xp-value {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #d97706;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+}
+.lesson-xp-sub {
+    margin-top: 2px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #b45309;
+}
+[data-theme="dark"] .lesson-xp-banner {
+    background: linear-gradient(135deg, #451a03, #78350f);
+    border-color: #f59e0b;
+    box-shadow: 0 4px 0 #92400e;
+}
+[data-theme="dark"] .lesson-xp-value { color: #fbbf24; }
+[data-theme="dark"] .lesson-xp-sub { color: #fcd34d; }
+
+/* Сетка статистики — не съезжает даже на узких экранах */
+.lesson-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 22px;
+    animation: lessonCompletePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.22s both;
+}
+.lesson-stat-mini {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 14px 6px 12px;
+    min-width: 0;
+    overflow: hidden;
+}
+.lesson-stat-mini-val {
+    font-size: 1.35rem;
+    font-weight: 900;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+.lesson-stat-mini-lbl {
+    margin-top: 4px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Кнопка «Продолжить» */
+.lesson-complete-btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 16px;
+    background: #58cc02;
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #4caf00;
+    transition: transform 0.1s, box-shadow 0.1s, filter 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+.lesson-complete-btn:hover { filter: brightness(1.05); }
+.lesson-complete-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #4caf00; }
+
+/* ==========================================================================
+УПРАЖНЕНИЯ: верхняя панель, ритм, карточки
+========================================================================== */
+
+/* --- Верхняя панель урока: крестик + прогресс + счётчик --- */
+.lesson-topbar { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.lesson-exit-btn {
+    width: 40px; height: 40px; min-width: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-size: 1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+}
+.lesson-exit-btn:hover { color: #ff4b4b; border-color: #ff4b4b; background: rgba(255,75,75,.08); }
+.lesson-progress-track { flex: 1; height: 14px; background: var(--bg-tertiary); border-radius: 8px; overflow: hidden; }
+.lesson-progress-fill { height: 100%; background: linear-gradient(90deg,#58cc02,#89e219); border-radius: 8px; transition: width 0.35s ease; }
+.lesson-step-counter { font-weight: 900; font-size: 1rem; color: var(--text-primary); white-space: nowrap; }
+.lesson-step-counter span { color: var(--text-muted); font-weight: 800; }
+
+/* --- Строка «Слово N из M» + тип упражнения --- */
+.lesson-meta-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 22px; }
+.lesson-word-label { font-weight: 800; color: var(--text-secondary); font-size: 0.9rem; }
+.lesson-ex-badge {
+    font-weight: 800; font-size: 0.8rem; color: var(--info-color);
+    background: rgba(28,176,246,.1); border: 1.5px solid rgba(28,176,246,.25);
+    padding: 4px 12px; border-radius: 20px; white-space: nowrap;
+}
+
+/* --- Общий контейнер упражнения: центр + воздух --- */
+.ex-wrap { max-width: 560px; margin: 0 auto; padding: 4px 0 28px; text-align: center; }
+
+/* --- Quiz: рамка плотно облегает фото (без пустых полей) --- */
+.ex-quiz-media {
+    width: 100%;
+    height: auto !important;            /* убираем фиксированную высоту */
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent !important; /* контейнер теперь невидим */
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+}
+
+#exerciseContainer .ex-quiz-media .quiz-image,
+#exerciseContainer .quiz-image {
+    width: 100% !important;        /* ← ширина вернулась: всегда во всю рамку */
+    height: auto !important;       /* высота подстраивается под пропорции фото */
+    max-height: 340px !important;  /* страховка от очень «портретных» фото */
+    object-fit: cover !important;
+    border-radius: 16px !important;
+    border: 3px solid var(--border-color) !important;
+    background: var(--bg-tertiary) !important;
+    box-shadow: var(--shadow-md) !important;
+    margin: 0 !important;
+}
+.ex-quiz-wordrow { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 8px; }
+.ex-quiz-word { font-size: clamp(1.8rem, 5vw, 2.4rem); font-weight: 900; color: var(--text-primary); margin: 0; line-height: 1.15; }
+.ex-quiz-prompt { color: var(--text-secondary); font-weight: 700; margin: 0 0 26px; }
+.ex-quiz-options { display: flex; flex-direction: column; gap: 14px; }
+
+/* карточки ответов (базовое состояние; подсветку верного/неверного
+   по-прежнему рисует JS инлайн-стилями — она перебивает эти правила) */
+.quiz-option-btn {
+    padding: 18px 20px;
+    border: 3px solid var(--border-color);
+    border-radius: 16px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 1.1rem; font-weight: 700;
+    cursor: pointer; text-align: left;
+    transition: border-color 0.2s, background 0.2s;
+    box-shadow: 0 3px 0 var(--border-color);
+}
+.quiz-option-btn:hover { border-color: var(--info-color); }
+
+/* --- Диктант / голос / карточки: воздушные отступы --- */
+#dict1Options, #dict2Buttons { display: flex; flex-direction: column; gap: 14px !important; margin-bottom: 22px !important; }
+#dict1SelectedSlot, #dict2Slots { margin-bottom: 22px !important; }
+#dict1PlayBtn, #dict2PlayBtn, #dict3PlayBtn { margin: 4px auto 18px !important; }
+#dict3Input { margin-bottom: 18px !important; }
+
+/* ===== КАРУСЕЛЬ УРОВНЕЙ ГРАММАТИКИ ===== */
+.grammar-carousel-header { text-align: center; padding: 20px 20px 6px; }
+.grammar-carousel-header h1 { font-size: clamp(22px, 6vw, 28px); font-weight: 900; color: var(--text-primary); margin-bottom: 8px; }
+.grammar-carousel-header p { font-size: 15px; font-weight: 700; color: var(--text-secondary); }
+
+.grammar-carousel {
+    --glc-per-view: 1;                                   
+    --glc-gap: 12px;
+    --glc-card-w: min(75vw, 320px);
+    
+    /* ИСПРАВЛЕНИЕ 1: Считаем от 50%, а не от 50vw */
+    --glc-side: calc(50% - (var(--glc-card-w) / 2)); 
+    
+    display: flex;
+    align-items: stretch;
+    gap: var(--glc-gap);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    
+    /* ИСПРАВЛЕНИЕ 2: Убрали scroll-padding-inline, он конфликтовал с padding */
+    padding: 20px var(--glc-side);
+    
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+}
+.grammar-carousel::-webkit-scrollbar { display: none; }
+
+.grammar-level-card {
+    scroll-snap-align: center;
+    flex: 0 0 var(--glc-card-w);
+    width: var(--glc-card-w);
+    height: clamp(380px, 62dvh, 500px); 
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 24px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+    transform: scale(0.92);
+    opacity: 0.65;
+    transition: transform .3s ease, opacity .3s ease, border-color .3s ease, box-shadow .3s ease;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+.grammar-level-card.in-view {
+    transform: scale(1); opacity: 1;
+    border-color: var(--glc-color);
+}
+.grammar-level-card:active { transform: scale(0.97); }
+
+/* ==========================================================================
+   ПЛАНШЕТЫ И ПК (СЕТКА В 2 КОЛОНКИ, СКРОЛЛ ВНИЗ)
+========================================================================== */
+@media (min-width: 768px) {
+    .grammar-carousel-header { padding-top: 40px; }
+
+    
+    
+    /* Превращаем карусель в сетку */
+    .grammar-carousel {
+        flex-wrap: wrap;             /* Разрешаем перенос карточек на новые строки (скролл вниз) */
+        justify-content: center;     /* Центрируем карточки */
+        overflow-x: visible;         /* Убираем боковой скролл полностью */
+        padding: 24px 20px;
+        
+        --glc-gap: 24px;             /* Расстояние между карточками */
+        --glc-per-view: 2;           /* Строго 2 колонки */
+        --glc-card-w: calc(50% - (var(--glc-gap) / 2)); 
+        
+        /* ВАЖНО: Ограничиваем ширину всей сетки, чтобы на ПК карточки не растягивались на весь экран */
+        max-width: 860px; 
+        margin: 0 auto;
+    }
+
+    .grammar-level-card {
+        flex: 0 0 var(--glc-card-w);
+        max-width: var(--glc-card-w); /* Фиксируем ширину карточки */
+           /* ВСТАВЬ ЭТИ ДВЕ СТРОЧКИ: */
+        height: auto;               /* Отключаем мобильную вытянутость */
+        min-height: 380px;          /* Возвращаем аккуратную высоту для сетки */
+        transform: none !important;   /* Отключаем мобильное уменьшение */
+        opacity: 1 !important;        /* Все карточки 100% яркие */
+    }
+
+    /* Эффект при наведении мышкой на ПК */
+    @media (hover: hover) {
+        .grammar-level-card:hover {
+            transform: translateY(-6px) !important;
+            box-shadow: 0 14px 34px rgba(0,0,0,0.08);
+            border-color: var(--glc-color);
+        }
+    }
+
+    /* Прячем точки пагинации, так как скролл теперь вниз */
+    .grammar-pagination { 
+        display: none !important; 
+    }
+
+        .grammar-level-card.glc-nudge {
+        animation: none !important;
+    }
+}
+
+/* Внутренности карточки (без изменений) */
+.glc-top { display: flex; justify-content: space-between; align-items: center; }
+.glc-badge { width: 56px; height: 56px; background: var(--glc-color); color: #fff; font-size: 22px; font-weight: 900; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 rgba(0,0,0,0.12); }
+.glc-lessons-count { font-size: 13px; font-weight: 800; color: var(--text-secondary); background: var(--bg-secondary); padding: 6px 12px; border-radius: 12px; white-space: nowrap; }
+.glc-middle { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 16px 0; }
+.glc-middle h3 { font-size: 22px; font-weight: 900; color: var(--text-primary); margin-bottom: 8px; }
+.glc-middle p { font-size: 15px; font-weight: 700; color: var(--text-secondary); line-height: 1.45; }
+.glc-bottom { margin-top: auto; }
+.glc-progress-wrapper { margin-bottom: 20px; }
+.glc-progress-text { display: flex; justify-content: space-between; font-size: 13px; font-weight: 800; color: var(--text-secondary); margin-bottom: 8px; }
+.glc-progress-text .glc-percent { color: var(--glc-color); }
+.glc-progress-track { width: 100%; height: 12px; background: var(--bg-secondary); border-radius: 8px; overflow: hidden; }
+.glc-progress-fill { height: 100%; background: var(--glc-color); border-radius: 8px; transition: width .6s cubic-bezier(.4,0,.2,1); }
+.glc-btn { width: 100%; padding: 16px; border: none; border-radius: 16px; font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: #fff; cursor: pointer; transition: transform .1s, box-shadow .1s; }
+.glc-btn-green { background: #58cc02; box-shadow: 0 5px 0 #4caf00; }
+.glc-btn-blue  { background: #1cb0f6; box-shadow: 0 5px 0 #1899d6; }
+.glc-btn-gold  { background: linear-gradient(135deg,#ffc800,#ffb020); box-shadow: 0 5px 0 #d9a000; }
+.glc-btn:active { transform: translateY(5px); box-shadow: none; }
+
+.grammar-pagination { display: flex; justify-content: center; gap: 8px; padding-bottom: 32px; }
+.grammar-dot { width: 8px; height: 8px; background: var(--bg-tertiary); border-radius: 4px; transition: width .3s, background-color .3s; cursor: pointer; }
+.grammar-dot.active { width: 24px; background: var(--info-color); }
+
+[data-theme="dark"] .grammar-level-card { background: var(--bg-secondary); }
+[data-theme="dark"] .glc-lessons-count,
+[data-theme="dark"] .glc-progress-track { background: var(--bg-tertiary); }
+
+/* --- Настройки специально для маленьких экранов (iPhone SE) --- */
+@media (max-width: 380px) {
+    .grammar-carousel { 
+        --glc-card-w: 84vw; /* Карточка чуть шире, чтобы соседка торчала идеально */
+    }
+    .grammar-level-card { 
+        padding: 20px; 
+        height: 380px !important; /* Жестко фиксируем идеальную высоту, отключая clamp */
+    }
+    .glc-badge { 
+        width: 48px; 
+        height: 48px; 
+        font-size: 19px; 
+    }
+}
+/* --- Подсказка «свайпни»: лёгкий толчок активной карточки --- */
+@keyframes glcNudge {
+    0%, 100% { translate: 0 0; }
+    15%      { translate: -14px 0; }
+    35%      { translate: 10px 0; }
+    55%      { translate: -6px 0; }
+    75%      { translate: 3px 0; }
+}
+.grammar-level-card.glc-nudge {
+    animation: glcNudge 1.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.5s 2;
+}
+/* Первое же взаимодействие — подсказка больше не нужна */
+.grammar-carousel.glc-interacted .grammar-level-card {
+    animation: none !important;
+}
+
+
+
+/* ==========================================================================
+ИГРЫ: ПОЛНОЭКРАННЫЙ РЕЖИМ (прячем шапку и меню)
+========================================================================== */
+body.games-fullscreen .app-header,
+body.games-fullscreen .bottom-nav,
+body.games-fullscreen #appInstallBanner,
+body.games-fullscreen #floating-active-arrow {
+    display: none !important;
+}
+
+/* Десктоп: выпадаем из «окна» на весь экран, сетка в одну ячейку */
+@media (min-width: 768px) {
+    body.games-fullscreen .app-container {
+        max-width: 100% !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        max-height: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 1fr !important;
+    }
+    body.games-fullscreen .main-content {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+    }
+}
