@@ -2,7 +2,7 @@
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target": {
     "namespace": "android_app",
-    "package_name": "com.bewords.app",
+    "package_name": "app.bewords",
     "sha256_cert_fingerprints": ["63:6C:3C:10:0E:5C:AC:09:BE:AB:66:88:A5:78:28:5C:24:16:72:59:D5:45:1E:E4:37:F5:8F:CA:4C:B8:9A:E0"]
   }
 }]
