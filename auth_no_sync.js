@@ -42,75 +42,76 @@ class AuthManager {
         this.init();
     }
 
-    async init() {
-        if (!supabaseClient) return;   // Supabase не загрузился — авторизация недоступна
-        // ==========================================
-        // 1. СНАЧАЛА регистрируем обработчик
-        //    (ДО getSession, чтобы не пропустить событие)
-        // ==========================================
-        supabaseClient.auth.onAuthStateChange((event, session) => {
-            const now = Date.now();
-            if (event === this._lastAuthEvent && (now - this._lastEventTime) < 2000) {
-                return;
-            }
-            this._lastAuthEvent = event;
-            this._lastEventTime = now;
-
-            this.currentUser = session ? session.user : null;
-
-            if (event === 'INITIAL_SESSION') return;
-            if (event === 'TOKEN_REFRESHED') return;
-            if (event === 'USER_UPDATED') return;
-
-            if (event === 'PASSWORD_RECOVERY') {
-                this.isRecoveringPassword = true;
-                this.showUpdatePasswordModal();
-                return;
-            }
-
-            if (event === 'SIGNED_IN') {
-    // ✅ Проверяем флаг в sessionStorage
-    const wasGoogle = sessionStorage.getItem('_authAction') === 'google';
-    const wasLogin = sessionStorage.getItem('_authAction') === 'login';
-
-    // 🆕 Если это была первая регистрация через Google — логируем согласие
-    if (wasGoogle && session?.user) {
-        // Проверяем, нет ли уже записи о согласии
-        const { data: existingConsent } = await supabaseClient
-            .from('consent_log')
-            .select('id')
-            .eq('user_id', session.user.id)
-            .limit(1);
-
-        if (!existingConsent || existingConsent.length === 0) {
-            await this.logConsent(
-                session.user, 
-                session.user.email, 
-                'oauth_registration'
-            );
+async init() {
+    if (!supabaseClient) return;
+    
+    // 🆕 ДОБАВЬ async перед (event, session)
+    supabaseClient.auth.onAuthStateChange(async (event, session) => {
+        const now = Date.now();
+        if (event === this._lastAuthEvent && (now - this._lastEventTime) < 2000) {
+            return;
         }
-    }
+        this._lastAuthEvent = event;
+        this._lastEventTime = now;
 
-    if ((wasGoogle || wasLogin) && typeof app !== 'undefined') {
-        app.showNotification('Успешный вход!', 'success');
-    }
+        this.currentUser = session ? session.user : null;
 
-    sessionStorage.removeItem('_authAction');
-    this.closeModal();
-    this._cleanOAuthHash();
-    return;
-}
+        if (event === 'INITIAL_SESSION') return;
+        if (event === 'TOKEN_REFRESHED') return;
+        if (event === 'USER_UPDATED') return;
 
-            if (event === 'SIGNED_OUT') {
-                const wasLogout = sessionStorage.getItem('_authAction') === 'logout';
-                if (wasLogout && typeof app !== 'undefined') {
-                    app.showNotification('Вы вышли из аккаунта', 'info');
+        if (event === 'PASSWORD_RECOVERY') {
+            this.isRecoveringPassword = true;
+            this.showUpdatePasswordModal();
+            return;
+        }
+
+        if (event === 'SIGNED_IN') {
+            const wasGoogle = sessionStorage.getItem('_authAction') === 'google';
+            const wasLogin = sessionStorage.getItem('_authAction') === 'login';
+
+            // 🆕 Если это была первая регистрация через Google — логируем согласие
+            if (wasGoogle && session?.user) {
+                try {
+                    const { data: existingConsent } = await supabaseClient
+                        .from('consent_log')
+                        .select('id')
+                        .eq('user_id', session.user.id)
+                        .limit(1);
+
+                    if (!existingConsent || existingConsent.length === 0) {
+                        await this.logConsent(
+                            session.user, 
+                            session.user.email, 
+                            'oauth_registration'
+                        );
+                    }
+                } catch (e) {
+                    console.warn('Ошибка при проверке согласия:', e);
                 }
-                sessionStorage.removeItem('_authAction');
-                this.closeModal();
-                return;
             }
-        });
+
+            if ((wasGoogle || wasLogin) && typeof app !== 'undefined') {
+                app.showNotification('Успешный вход!', 'success');
+            }
+
+            sessionStorage.removeItem('_authAction');
+            this.closeModal();
+            this._cleanOAuthHash();
+            return;
+        }
+
+        if (event === 'SIGNED_OUT') {
+            const wasLogout = sessionStorage.getItem('_authAction') === 'logout';
+            if (wasLogout && typeof app !== 'undefined') {
+                app.showNotification('Вы вышли из аккаунта', 'info');
+            }
+            sessionStorage.removeItem('_authAction');
+            this.closeModal();
+            return;
+        }
+    });
+
 
         // ==========================================
         // 2. ПОТОМ получаем сессию
