@@ -1,15 +1,32 @@
+// 🆕 Версия политики для логирования
+const CONSENT_VERSION = 'v1.0-2026-08-09';
+const PRIVACY_URL = 'https://bewords.ru/privacy-policy';
+const AGREEMENT_URL = 'https://bewords.ru/user-agreement';
+
 var supabaseUrl = 'https://dyiwuslfjnvirbxfafuq.supabase.co';
 var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5aXd1c2xmam52aXJieGZhZnVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MTU1MTEsImV4cCI6MjA5MDM5MTUxMX0.c61rc2C2YOWCMF0JdmvdcrsCdoyfJNOkFLDoxZN1N5U';
 
-// ✅ КЛЮЧЕВОЕ: detectSessionInUrl + autoRefreshToken
-var supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey, {
-    auth: {
-        detectSessionInUrl: true,   // парсит #access_token из URL
-        autoRefreshToken: true,     // обновляет токен автоматически
-        persistSession: true,       // хранит сессию в localStorage
-        flowType: 'pkce'            // ✅ более надёжный поток для SPA
+var SITE_URL = 'https://bewords.ru/';
+function getAuthRedirectBase() {
+    // В приложении ссылки из писем ведут на сайт (их открывают в браузере/почте)
+    if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) {
+        return SITE_URL;
     }
-});
+    return window.location.origin + window.location.pathname;
+}
+
+// ✅ КЛЮЧЕВОЕ: detectSessionInUrl + autoRefreshToken
+var supabaseClient = null;
+if (window.supabase) {
+    supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey, {
+        auth: {
+            detectSessionInUrl: true,
+            autoRefreshToken: true,
+            persistSession: true,
+            flowType: 'pkce'
+        }
+    });
+}
 
 class AuthManager {
     constructor() {
@@ -26,6 +43,7 @@ class AuthManager {
     }
 
     async init() {
+        if (!supabaseClient) return;   // Supabase не загрузился — авторизация недоступна
         // ==========================================
         // 1. СНАЧАЛА регистрируем обработчик
         //    (ДО getSession, чтобы не пропустить событие)
@@ -51,21 +69,37 @@ class AuthManager {
             }
 
             if (event === 'SIGNED_IN') {
-                // ✅ Проверяем флаг в sessionStorage (переживает перезагрузку!)
-                const wasGoogle = sessionStorage.getItem('_authAction') === 'google';
-                const wasLogin = sessionStorage.getItem('_authAction') === 'login';
+    // ✅ Проверяем флаг в sessionStorage
+    const wasGoogle = sessionStorage.getItem('_authAction') === 'google';
+    const wasLogin = sessionStorage.getItem('_authAction') === 'login';
 
-                if ((wasGoogle || wasLogin) && typeof app !== 'undefined') {
-                    app.showNotification('Успешный вход!', 'success');
-                }
+    // 🆕 Если это была первая регистрация через Google — логируем согласие
+    if (wasGoogle && session?.user) {
+        // Проверяем, нет ли уже записи о согласии
+        const { data: existingConsent } = await supabaseClient
+            .from('consent_log')
+            .select('id')
+            .eq('user_id', session.user.id)
+            .limit(1);
 
-                // Очищаем флаг
-                sessionStorage.removeItem('_authAction');
+        if (!existingConsent || existingConsent.length === 0) {
+            await this.logConsent(
+                session.user, 
+                session.user.email, 
+                'oauth_registration'
+            );
+        }
+    }
 
-                this.closeModal();
-                this._cleanOAuthHash();
-                return;
-            }
+    if ((wasGoogle || wasLogin) && typeof app !== 'undefined') {
+        app.showNotification('Успешный вход!', 'success');
+    }
+
+    sessionStorage.removeItem('_authAction');
+    this.closeModal();
+    this._cleanOAuthHash();
+    return;
+}
 
             if (event === 'SIGNED_OUT') {
                 const wasLogout = sessionStorage.getItem('_authAction') === 'logout';
@@ -242,72 +276,124 @@ class AuthManager {
             return;
         }
 
-        // 3. ВХОД / РЕГИСТРАЦИЯ
-        let hookHtml = this.lastCustomMessage
-            ? `<div style="text-align:center;margin-bottom:15px;background:var(--bg-secondary);padding:15px;border-radius:12px;">
-                 <img src="/instruction.png" style="width:70px;margin-bottom:10px;">
-                 <div style="color:#f59e0b;font-weight:800;font-size:1rem;line-height:1.3;">${this.lastCustomMessage}</div>
-               </div>`
-            : '';
+// 3. ВХОД / РЕГИСТРАЦИЯ
+let hookHtml = this.lastCustomMessage
+    ? `<div style="text-align:center;margin-bottom:15px;background:var(--bg-secondary);padding:15px;border-radius:12px;">
+         <img src="/instructor.png" style="width:70px;margin-bottom:10px;">
+         <div style="color:#f59e0b;font-weight:800;font-size:1rem;line-height:1.3;">${this.lastCustomMessage}</div>
+       </div>`
+    : '';
 
-        const mainBtnText = this.isLoginMode ? 'Войти в аккаунт' : 'Создать аккаунт';
+const mainBtnText = this.isLoginMode ? 'Войти в аккаунт' : 'Создать аккаунт';
 
-        modal.innerHTML = `
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                <h2 style="margin:0;">BeWords</h2>
-                <button class="btn btn-secondary close-auth" style="padding:5px 10px;"><i class="fas fa-times"></i></button>
-            </div>
-            <p style="color:var(--text-secondary);font-size:0.9rem;margin:0 0 15px 0;line-height:1.3;">
-                Создай аккаунт, чтобы в будущем синхронизировать прогресс между устройствами.
-            </p>
-            ${hookHtml}
-            <div style="display:flex;background:var(--bg-secondary);border-radius:12px;padding:5px;margin-bottom:20px;">
-                <button id="tabRegister" style="flex:1;padding:10px;border:none;border-radius:8px;font-weight:bold;font-size:0.95rem;cursor:pointer;background:${!this.isLoginMode ? 'var(--bg-primary)' : 'transparent'};box-shadow:${!this.isLoginMode ? '0 2px 5px rgba(0,0,0,0.1)' : 'none'};color:var(--text-primary);transition:all 0.2s;">Регистрация</button>
-                <button id="tabLogin" style="flex:1;padding:10px;border:none;border-radius:8px;font-weight:bold;font-size:0.95rem;cursor:pointer;background:${this.isLoginMode ? 'var(--bg-primary)' : 'transparent'};box-shadow:${this.isLoginMode ? '0 2px 5px rgba(0,0,0,0.1)' : 'none'};color:var(--text-primary);transition:all 0.2s;">Вход</button>
-            </div>
-            <button id="googleLoginBtn" style="width:100%;padding:12px;border-radius:12px;border:2px solid var(--border-color);background:var(--bg-primary);color:var(--text-primary);font-weight:bold;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:15px;">
-                <img src="https://www.svgrepo.com/show/475656/google-color.svg" style="width:20px;height:20px;">
-                Продолжить с Google
-            </button>
-            <div style="display:flex;align-items:center;margin:15px 0;">
-                <div style="flex:1;height:1px;background:var(--border-color);"></div>
-                <div style="padding:0 10px;color:var(--text-secondary);font-size:0.8rem;font-weight:bold;">ИЛИ EMAIL</div>
-                <div style="flex:1;height:1px;background:var(--border-color);"></div>
-            </div>
-            <input type="email" id="authEmail" placeholder="Ваш Email" style="width:100%;padding:14px;border-radius:12px;border:1px solid var(--border-color);margin-bottom:10px;background:var(--bg-secondary);color:var(--text-primary);font-size:1rem;">
-            <input type="password" id="authPassword" placeholder="Пароль" style="width:100%;padding:14px;border-radius:12px;border:1px solid var(--border-color);margin-bottom:10px;background:var(--bg-secondary);color:var(--text-primary);font-size:1rem;">
-            <div id="authError" style="color:#ef4444;font-size:0.85rem;margin-bottom:10px;display:none;text-align:center;font-weight:bold;"></div>
-            <button class="btn btn-primary" id="mainAuthBtn" style="width:100%;font-weight:900;margin-bottom:10px;padding:14px;font-size:1.1rem;box-shadow:0 4px 0 rgba(0,0,0,0.2);">${mainBtnText}</button>
-            ${this.isLoginMode
-                ? `<div style="text-align:center;margin-top:10px;"><button id="forgotBtn" style="background:none;border:none;color:var(--text-secondary);text-decoration:underline;cursor:pointer;font-size:0.9rem;">Забыли пароль?</button></div>`
-                : `<div style="text-align:center;margin-top:10px;"><button id="switchToLoginBtn" style="background:none;border:none;color:var(--text-secondary);text-decoration:underline;cursor:pointer;font-size:0.9rem;">Уже есть аккаунт?</button></div>`
-            }
-        `;
+// 🆕 Чекбокс согласия (только для регистрации и OAuth)
+const consentHtml = !this.isLoginMode ? `
+    <div style="display:flex;align-items:flex-start;gap:8px;margin:15px 0;padding:12px;background:var(--bg-secondary);border-radius:10px;">
+        <input type="checkbox" id="consentCheckbox" style="margin-top:2px;width:18px;height:18px;cursor:pointer;accent-color:#10b981;flex-shrink:0;">
+        <label for="consentCheckbox" style="font-size:0.82rem;color:var(--text-secondary);line-height:1.4;cursor:pointer;user-select:none;">
+            Я согласен с 
+            <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="color:var(--primary-color);text-decoration:underline;font-weight:600;" onclick="event.stopPropagation()">Политикой конфиденциальности</a> 
+            и 
+            <a href="${AGREEMENT_URL}" target="_blank" rel="noopener" style="color:var(--primary-color);text-decoration:underline;font-weight:600;" onclick="event.stopPropagation()">Пользовательским соглашением</a>
+        </label>
+    </div>
+` : '';
 
-        document.getElementById('tabRegister').onclick = () => { this.isLoginMode = false; this.renderModalInner(); };
-        document.getElementById('tabLogin').onclick = () => { this.isLoginMode = true; this.renderModalInner(); };
-        document.getElementById('mainAuthBtn').onclick = () => this.handleAuth(this.isLoginMode ? 'login' : 'register');
+modal.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <h2 style="margin:0;">BeWords</h2>
+        <button class="btn btn-secondary close-auth" style="padding:5px 10px;"><i class="fas fa-times"></i></button>
+    </div>
+    <p style="color:var(--text-secondary);font-size:0.9rem;margin:0 0 15px 0;line-height:1.3;">
+        Создай аккаунт, чтобы в будущем синхронизировать прогресс между устройствами.
+    </p>
+    ${hookHtml}
+    <div style="display:flex;background:var(--bg-secondary);border-radius:12px;padding:5px;margin-bottom:20px;">
+        <button id="tabRegister" style="flex:1;padding:10px;border:none;border-radius:8px;font-weight:bold;font-size:0.95rem;cursor:pointer;background:${!this.isLoginMode ? 'var(--bg-primary)' : 'transparent'};box-shadow:${!this.isLoginMode ? '0 2px 5px rgba(0,0,0,0.1)' : 'none'};color:var(--text-primary);transition:all 0.2s;">Регистрация</button>
+        <button id="tabLogin" style="flex:1;padding:10px;border:none;border-radius:8px;font-weight:bold;font-size:0.95rem;cursor:pointer;background:${this.isLoginMode ? 'var(--bg-primary)' : 'transparent'};box-shadow:${this.isLoginMode ? '0 2px 5px rgba(0,0,0,0.1)' : 'none'};color:var(--text-primary);transition:all 0.2s;">Вход</button>
+    </div>
+    <button id="googleLoginBtn" style="width:100%;padding:12px;border-radius:12px;border:2px solid var(--border-color);background:var(--bg-primary);color:var(--text-primary);font-weight:bold;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:15px;${this.isLoginMode ? '' : 'opacity:0.5;cursor:not-allowed;'}">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" style="width:20px;height:20px;">
+        Продолжить с Google
+    </button>
+    <div style="display:flex;align-items:center;margin:15px 0;">
+        <div style="flex:1;height:1px;background:var(--border-color);"></div>
+        <div style="padding:0 10px;color:var(--text-secondary);font-size:0.8rem;font-weight:bold;">ИЛИ EMAIL</div>
+        <div style="flex:1;height:1px;background:var(--border-color);"></div>
+    </div>
+    <input type="email" id="authEmail" placeholder="Ваш Email" style="width:100%;padding:14px;border-radius:12px;border:1px solid var(--border-color);margin-bottom:10px;background:var(--bg-secondary);color:var(--text-primary);font-size:1rem;">
+    <input type="password" id="authPassword" placeholder="Пароль" style="width:100%;padding:14px;border-radius:12px;border:1px solid var(--border-color);margin-bottom:10px;background:var(--bg-secondary);color:var(--text-primary);font-size:1rem;">
+    ${consentHtml}
+    <div id="authError" style="color:#ef4444;font-size:0.85rem;margin-bottom:10px;display:none;text-align:center;font-weight:bold;"></div>
+    <button class="btn btn-primary" id="mainAuthBtn" style="width:100%;font-weight:900;margin-bottom:10px;padding:14px;font-size:1.1rem;box-shadow:0 4px 0 rgba(0,0,0,0.2);${this.isLoginMode ? '' : 'opacity:0.5;cursor:not-allowed;'}">${mainBtnText}</button>
+    ${this.isLoginMode
+        ? `<div style="text-align:center;margin-top:10px;"><button id="forgotBtn" style="background:none;border:none;color:var(--text-secondary);text-decoration:underline;cursor:pointer;font-size:0.9rem;">Забыли пароль?</button></div>`
+        : `<div style="text-align:center;margin-top:10px;"><button id="switchToLoginBtn" style="background:none;border:none;color:var(--text-secondary);text-decoration:underline;cursor:pointer;font-size:0.9rem;">Уже есть аккаунт?</button></div>`
+    }
+`;
 
-        // ✅ КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: флаг в sessionStorage
-        document.getElementById('googleLoginBtn').onclick = async () => {
-            sessionStorage.setItem('_authAction', 'google');
-            const { error } = await supabaseClient.auth.signInWithOAuth({
-                provider: 'google',
-                options: {
-                    redirectTo: window.location.origin + window.location.pathname
-                }
-            });
-            if (error) {
-                sessionStorage.removeItem('_authAction');
-                this.showAuthError(error.message);
-            }
-        };
-
-        if (this.isLoginMode) {
-            document.getElementById('forgotBtn').onclick = () => { this.isResetMode = true; this.renderModalInner(); };
-        } else {
-            document.getElementById('switchToLoginBtn').onclick = () => { this.isLoginMode = true; this.renderModalInner(); };
+// 🆕 Обработчик чекбокса — включает/выключает кнопки
+const consentCheckbox = document.getElementById('consentCheckbox');
+if (consentCheckbox) {
+    consentCheckbox.addEventListener('change', () => {
+        const checked = consentCheckbox.checked;
+        const mainBtn = document.getElementById('mainAuthBtn');
+        const googleBtn = document.getElementById('googleLoginBtn');
+        
+        if (mainBtn) {
+            mainBtn.style.opacity = checked ? '1' : '0.5';
+            mainBtn.style.cursor = checked ? 'pointer' : 'not-allowed';
         }
+        if (googleBtn) {
+            googleBtn.style.opacity = checked ? '1' : '0.5';
+            googleBtn.style.cursor = checked ? 'pointer' : 'not-allowed';
+        }
+    });
+}
+
+document.getElementById('tabRegister').onclick = () => { this.isLoginMode = false; this.renderModalInner(); };
+document.getElementById('tabLogin').onclick = () => { this.isLoginMode = true; this.renderModalInner(); };
+document.getElementById('mainAuthBtn').onclick = () => {
+    // 🆕 Проверка согласия для регистрации
+    if (!this.isLoginMode) {
+        const consentCheckbox = document.getElementById('consentCheckbox');
+        if (consentCheckbox && !consentCheckbox.checked) {
+            this.showAuthError('Пожалуйста, согласитесь с условиями');
+            return;
+        }
+    }
+    this.handleAuth(this.isLoginMode ? 'login' : 'register');
+};
+
+// 🆕 Google OAuth с проверкой согласия
+document.getElementById('googleLoginBtn').onclick = async () => {
+    // 🆕 Если это регистрация (не вход), требуем согласие
+    if (!this.isLoginMode) {
+        const consentCheckbox = document.getElementById('consentCheckbox');
+        if (consentCheckbox && !consentCheckbox.checked) {
+            this.showAuthError('Пожалуйста, согласитесь с условиями');
+            return;
+        }
+    }
+    
+    sessionStorage.setItem('_authAction', this.isLoginMode ? 'login' : 'google');
+    const { error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+            redirectTo: getAuthRedirectBase()
+        }
+    });
+    if (error) {
+        sessionStorage.removeItem('_authAction');
+        this.showAuthError(error.message);
+    }
+};
+
+if (this.isLoginMode) {
+    document.getElementById('forgotBtn').onclick = () => { this.isResetMode = true; this.renderModalInner(); };
+} else {
+    document.getElementById('switchToLoginBtn').onclick = () => { this.isLoginMode = true; this.renderModalInner(); };
+}
     }
 
     showAuthError(msg) {
@@ -349,6 +435,43 @@ class AuthManager {
         };
     }
 
+    // 🆕 Логирование согласия в Supabase
+async logConsent(user, email, consentType = 'registration') {
+    try {
+        const userAgent = navigator.userAgent;
+        let ipAddress = null;
+        
+        // Получаем IP через внешний сервис (опционально, можно убрать)
+        try {
+            const ipResponse = await fetch('https://api.ipify.org?format=json');
+            const ipData = await ipResponse.json();
+            ipAddress = ipData.ip;
+        } catch (e) {
+            // Если не получилось — ничего страшного
+            console.warn('Не удалось получить IP:', e);
+        }
+
+        const { error } = await supabaseClient
+            .from('consent_log')
+            .insert({
+                user_id: user.id,
+                email: email,
+                consent_version: CONSENT_VERSION,
+                consent_type: consentType,
+                ip_address: ipAddress,
+                user_agent: userAgent
+            });
+
+        if (error) {
+            console.warn('Не удалось сохранить лог согласия:', error);
+        } else {
+            console.log('✅ Согласие залогировано');
+        }
+    } catch (e) {
+        console.warn('Ошибка при логировании согласия:', e);
+    }
+}
+
     closeModal() {
         this.lastCustomMessage = null;
         this.isResetMode = false;
@@ -357,53 +480,66 @@ class AuthManager {
     }
 
     async handleAuth(type) {
-        const email = document.getElementById('authEmail').value.trim();
-        const password = document.getElementById('authPassword') ? document.getElementById('authPassword').value.trim() : '';
-        const errorEl = document.getElementById('authError');
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authPassword') ? document.getElementById('authPassword').value.trim() : '';
+    const errorEl = document.getElementById('authError');
 
-        if (!email) { errorEl.textContent = 'Введите Email'; errorEl.style.color = '#ef4444'; errorEl.style.display = 'block'; return; }
+    if (!email) { errorEl.textContent = 'Введите Email'; errorEl.style.color = '#ef4444'; errorEl.style.display = 'block'; return; }
 
-        if (type === 'reset') {
-            errorEl.style.display = 'none';
-            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-                redirectTo: window.location.origin + window.location.pathname
-            });
-            if (error) { errorEl.textContent = error.message; errorEl.style.color = '#ef4444'; }
-            else { errorEl.innerHTML = '✅ Ссылка отправлена!'; errorEl.style.color = '#10b981'; }
+    if (type === 'reset') {
+        errorEl.style.display = 'none';
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+           redirectTo: getAuthRedirectBase()
+        });
+        if (error) { errorEl.textContent = error.message; errorEl.style.color = '#ef4444'; }
+        else { errorEl.innerHTML = '✅ Ссылка отправлена!'; errorEl.style.color = '#10b981'; }
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    if (!password) { errorEl.textContent = 'Введите пароль'; errorEl.style.color = '#ef4444'; errorEl.style.display = 'block'; return; }
+
+    errorEl.style.display = 'none';
+    let result;
+
+    if (type === 'register') {
+        // 🆕 Проверка согласия перед регистрацией
+        const consentCheckbox = document.getElementById('consentCheckbox');
+        if (consentCheckbox && !consentCheckbox.checked) {
+            errorEl.textContent = 'Необходимо согласие с условиями';
+            errorEl.style.color = '#ef4444';
             errorEl.style.display = 'block';
             return;
         }
 
-        if (!password) { errorEl.textContent = 'Введите пароль'; errorEl.style.color = '#ef4444'; errorEl.style.display = 'block'; return; }
-
-        errorEl.style.display = 'none';
-        let result;
-
-        if (type === 'register') {
-            result = await supabaseClient.auth.signUp({ email, password });
-            if (!result.error && result.data.user && !result.data.session) {
+        result = await supabaseClient.auth.signUp({ email, password });
+        
+        if (!result.error && result.data.user) {
+            // 🆕 Логируем согласие в БД
+            await this.logConsent(result.data.user, email, 'registration');
+            
+            if (!result.data.session) {
                 errorEl.style.color = '#10b981';
                 errorEl.innerHTML = '🎉 Письмо отправлено! Проверьте почту.';
                 errorEl.style.display = 'block';
                 return;
             }
-            if (!result.error && result.data.session) {
-                sessionStorage.setItem('_authAction', 'login');
-            }
-        } else {
             sessionStorage.setItem('_authAction', 'login');
-            result = await supabaseClient.auth.signInWithPassword({ email, password });
         }
-
-        if (result.error) {
-            sessionStorage.removeItem('_authAction');
-            errorEl.style.color = '#ef4444';
-            errorEl.textContent = result.error.message.includes('Invalid login')
-                ? 'Неверный Email или пароль'
-                : result.error.message;
-            errorEl.style.display = 'block';
-        }
+    } else {
+        sessionStorage.setItem('_authAction', 'login');
+        result = await supabaseClient.auth.signInWithPassword({ email, password });
     }
+
+    if (result.error) {
+        sessionStorage.removeItem('_authAction');
+        errorEl.style.color = '#ef4444';
+        errorEl.textContent = result.error.message.includes('Invalid login')
+            ? 'Неверный Email или пароль'
+            : result.error.message;
+        errorEl.style.display = 'block';
+    }
+}
 }
 
 window.authManager = new AuthManager();
