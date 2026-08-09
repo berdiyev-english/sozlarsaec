@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Пользовательское соглашение (Оферта) — BeWords</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded@5.0.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded@5.0.0/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/rubik@5.0.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/rubik@5.0.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/rubik@5.0.0/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/rubik@5.0.0/700.css">
+<style>
+:root{
+  --green:#58CC02; --green-dark:#46A302; --green-light:#D7FFB8; --green-bg:#EAF8DC;
+  --blue:#1CB0F6; --blue-dark:#1899D6; --blue-light:#DDF4FF;
+  --yellow:#FFC200; --yellow-dark:#D9A400; --yellow-light:#FFF3D6;
+  --red:#FF4B4B; --red-dark:#E03B3B; --red-light:#FFE0E0;
+  --purple:#CE82FF; --purple-dark:#A568CC; --purple-light:#F5E8FF;
+  --orange:#FF9600; --orange-dark:#DB8100; --orange-light:#FFEBD1;
+  --ink:#3C3C3C; --ink-soft:#777777; --line:#E5E5E5; --card:#FFFFFF; --bg:#F6FAF0;
+  --radius:16px;
+  --shadow-card:0 4px 0 rgba(0,0,0,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Rubik',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:-2;
+  background-image:radial-gradient(rgba(88,204,2,.10) 1.5px, transparent 1.5px);
+  background-size:26px 26px;
+}
+#bgLayer{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.float-letter{
+  position:absolute; bottom:-60px;
+  font-family:'Unbounded',sans-serif; font-weight:700;
+  opacity:.10; user-select:none;
+  animation:floatUp linear infinite;
+}
+@keyframes floatUp{0%{transform:translateY(105vh) rotate(0deg)}100%{transform:translateY(-15vh) rotate(340deg)}}
+
+/* ---------- TOP BAR ---------- */
+.topbar{
+  position:sticky; top:0; z-index:60;
+  background:#fff; border-bottom:2px solid var(--line);
+}
+.topbar-inner{
+  max-width:1180px; margin:0 auto; padding:10px 16px;
+  display:flex; align-items:center; gap:14px;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand-name{font-family:'Unbounded';font-weight:700;font-size:17px;letter-spacing:.2px}
+.brand-name em{font-style:normal;color:var(--green)}
+.progress-wrap{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+.progress-track{
+  flex:1;height:14px;border-radius:999px;background:#E9EDE4;
+  border:2px solid #DDE3D5;overflow:hidden;position:relative;
+}
+.progress-fill{
+  height:100%;width:0%;border-radius:999px;
+  background:linear-gradient(90deg,var(--green),#89E219);
+  position:relative;transition:width .15s linear;
+}
+.progress-fill::after{
+  content:"";position:absolute;left:8px;right:8px;top:2px;height:4px;
+  border-radius:999px;background:rgba(255,255,255,.45);
+}
+.progress-label{
+  font-family:'Unbounded';font-weight:700;font-size:11px;color:var(--green-dark);
+  min-width:42px;text-align:right;
+}
+.top-actions{display:flex;gap:8px}
+.icon-btn{
+  width:40px;height:40px;border-radius:12px;border:2px solid var(--line);
+  background:#fff;cursor:pointer;display:grid;place-items:center;
+  box-shadow:0 3px 0 var(--line);transition:transform .12s,box-shadow .12s;
+  color:var(--ink);
+}
+.icon-btn:hover{border-color:var(--green);color:var(--green)}
+.icon-btn:active{transform:translateY(3px);box-shadow:0 0 0 var(--line)}
+.icon-btn svg{width:18px;height:18px}
+
+/* ---------- HERO ---------- */
+.hero{max-width:1180px;margin:0 auto;padding:44px 16px 26px}
+.hero-inner{display:grid;grid-template-columns:1fr;gap:30px;align-items:center}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#fff;border:2px solid var(--line);border-radius:999px;
+  padding:6px 13px;font-size:13px;font-weight:600;color:var(--ink);
+  box-shadow:0 2px 0 var(--line);
+}
+.chip-date{border-color:var(--green);color:var(--green-dark);background:var(--green-bg);box-shadow:0 2px 0 var(--green-light)}
+.hero-title{
+  font-family:'Unbounded';font-weight:700;
+  font-size:clamp(22px,4.6vw,40px);
+  line-height:1.2;margin:18px 0 12px;text-transform:uppercase;
+}
+.hero-title .mask{display:block;overflow:hidden}
+.hero-title .mask > span{display:inline-block;transform:translateY(115%);animation:riseIn .8s cubic-bezier(.2,.7,.2,1) forwards}
+.hero-title .mask:nth-child(2) > span{animation-delay:.18s;color:var(--green)}
+@keyframes riseIn{to{transform:translateY(0)}}
+.hero-sub{color:var(--ink-soft);font-size:15px;max-width:640px;margin-bottom:12px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn{
+  font-family:'Rubik';font-weight:700;font-size:15px;
+  border:none;border-radius:14px;padding:13px 22px;cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  transition:transform .12s,box-shadow .12s,filter .12s;
+  letter-spacing:.3px;
+}
+.btn:active{transform:translateY(4px)!important;box-shadow:none!important}
+.btn-green{background:var(--green);color:#fff;box-shadow:0 4px 0 var(--green-dark);text-transform:uppercase}
+.btn-green:hover{filter:brightness(1.06)}
+.btn-white{background:#fff;color:var(--green-dark);border:2px solid var(--line);box-shadow:0 4px 0 var(--line);text-transform:uppercase}
+.btn-white:hover{border-color:var(--green)}
+.btn-blue{background:var(--blue);color:#fff;box-shadow:0 4px 0 var(--blue-dark);text-transform:uppercase}
+
+/* ---------- LAYOUT ---------- */
+.layout{
+  max-width:1180px;margin:0 auto;padding:10px 16px 60px;
+  display:grid;grid-template-columns:280px 1fr;gap:26px;align-items:start;
+}
+/* TOC */
+.toc{
+  position:sticky;top:78px;background:#fff;border:2px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow-card);overflow:hidden;
+}
+.toc-toggle{
+  width:100%;display:none;align-items:center;justify-content:space-between;
+  background:var(--green);color:#fff;border:none;cursor:pointer;
+  font-family:'Unbounded';font-weight:700;font-size:13px;padding:14px 16px;
+  text-transform:uppercase;letter-spacing:.4px;
+}
+.toc-toggle svg{width:16px;height:16px;transition:transform .3s}
+.toc.open .toc-toggle svg{transform:rotate(180deg)}
+.toc-list{padding:12px;display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 120px);overflow:auto}
+.toc-list a{
+  display:flex;align-items:center;gap:10px;text-decoration:none;
+  color:var(--ink);font-weight:600;font-size:14px;
+  padding:8px 10px;border-radius:12px;transition:background .2s,color .2s;
+}
+.toc-list a .n{
+  font-family:'Unbounded';font-weight:700;font-size:11px;
+  width:26px;height:26px;border-radius:9px;flex:none;
+  display:grid;place-items:center;background:#F0F3EC;color:var(--ink-soft);
+  border:2px solid var(--line);transition:all .25s;
+}
+.toc-list a:hover{background:var(--green-bg);color:var(--green-dark)}
+.toc-list a.active{background:var(--green-light);color:var(--green-dark)}
+.toc-list a.active .n{background:var(--green);color:#fff;border-color:var(--green);box-shadow:0 2px 0 var(--green-dark)}
+.toc-list a.done .n{background:var(--green);color:#fff;border-color:var(--green)}
+
+/* ---------- SECTIONS ---------- */
+.doc{display:flex;flex-direction:column;gap:22px;min-width:0}
+.sec{
+  background:var(--card);border:2px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-card);overflow:hidden;scroll-margin-top:86px;
+  border-top:6px solid var(--acc,var(--green));
+}
+.acc-green{--acc:var(--green);--accd:var(--green-dark);--accl:var(--green-light);--accbg:var(--green-bg)}
+.acc-blue{--acc:var(--blue);--accd:var(--blue-dark);--accl:var(--blue-light);--accbg:#EAF7FF}
+.acc-yellow{--acc:var(--yellow);--accd:var(--yellow-dark);--accl:var(--yellow-light);--accbg:#FFF9E8}
+.acc-purple{--acc:var(--purple);--accd:var(--purple-dark);--accl:var(--purple-light);--accbg:#FAF2FF}
+.acc-orange{--acc:var(--orange);--accd:var(--orange-dark);--accl:var(--orange-light);--accbg:#FFF6EA}
+.acc-red{--acc:var(--red);--accd:var(--red-dark);--accl:var(--red-light);--accbg:#FFF1F1}
+.sec-head{
+  display:flex;align-items:center;gap:14px;
+  padding:20px 22px 0;
+}
+.sec-badge{
+  font-family:'Unbounded';font-weight:700;font-size:16px;color:#fff;
+  width:42px;height:42px;border-radius:14px;flex:none;
+  background:var(--acc);box-shadow:0 3px 0 var(--accd);
+  display:grid;place-items:center;
+}
+.sec-title{font-family:'Unbounded';font-weight:700;font-size:clamp(14px,2.6vw,20px);text-transform:uppercase;letter-spacing:.3px}
+.sec-title .mask{display:block;overflow:hidden}
+.sec-title .mask > span{display:inline-block;transform:translateY(130%);transition:transform .7s cubic-bezier(.2,.7,.2,1) .1s}
+.sec.in .sec-title .mask > span{transform:translateY(0)}
+.sec-body{padding:16px 22px 24px;display:flex;flex-direction:column;gap:14px}
+.clause{display:flex;gap:12px;align-items:flex-start}
+.cl-num{
+  font-family:'Unbounded';font-weight:700;font-size:11px;color:#fff;
+  background:var(--acc);box-shadow:0 2px 0 var(--accd);
+  border-radius:8px;padding:4px 8px;flex:none;margin-top:2px;white-space:nowrap;
+}
+.clause p{font-size:15px}
+.clause > div{min-width:0;width:100%}
+.list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.list li{
+  display:flex;gap:10px;align-items:flex-start;font-size:15px;
+  background:var(--accbg,#F7FBF2);border:2px solid var(--line);
+  border-radius:12px;padding:10px 14px;
+}
+.list li .ic{flex:none;font-size:16px;line-height:1.4}
+.list li b{font-weight:700}
+a.mail{color:var(--green-dark);font-weight:700;text-decoration:none;border-bottom:2px dashed var(--green)}
+a.mail:hover{border-bottom-style:solid}
+.callout{
+  border-radius:14px;padding:14px 16px;font-size:15px;
+  border:2px solid;display:flex;gap:10px;align-items:flex-start;
+}
+.callout .ic{flex:none;font-size:17px}
+.callout-green{background:var(--green-bg);border-color:var(--green);color:#3E7A0E}
+.callout-yellow{background:var(--yellow-light);border-color:var(--yellow);color:#8A6A00}
+.callout-blue{background:var(--blue-light);border-color:var(--blue);color:#0F6E9C}
+.callout-red{background:var(--red-light);border-color:var(--red);color:#B02A2A}
+
+/* --- unified grids: min() guards against overflow, equal columns --- */
+.tiles,.plan-grid,.quad,.refund-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+  gap:12px;
+  align-items:stretch;
+  width:100%;
+}
+.tiles{grid-template-columns:repeat(auto-fit, minmax(min(200px, 100%), 1fr));}
+.plan-grid{margin-top:8px;grid-template-columns:repeat(auto-fit, minmax(min(240px, 100%), 1fr));}
+.quad{margin-top:8px;grid-template-columns:repeat(auto-fit, minmax(min(260px, 100%), 1fr));}
+.refund-grid{margin-top:8px}
+.tiles > *, .plan-grid > *, .quad > *, .refund-grid > *{min-width:0;height:100%}
+
+.tile{
+  background:#fff;border:2px solid var(--line);border-radius:14px;
+  padding:14px;display:flex;flex-direction:column;gap:6px;
+  box-shadow:0 3px 0 var(--line);transition:transform .2s,box-shadow .2s;
+}
+.tile:hover{transform:translateY(-4px);box-shadow:0 6px 0 var(--line)}
+.tile .t-ic{font-size:24px}
+.tile .t-title{font-weight:700;font-size:14px}
+.tile .t-text{font-size:13px;color:var(--ink-soft)}
+
+/* capped-width helpers (full width on mobile) */
+.cap-tile{max-width:420px;width:100%}
+.cap-link{max-width:360px;width:100%;margin-top:10px}
+
+/* plans (free vs subscription) */
+.plan{border:2px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 3px 0 var(--line);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.plan:hover{transform:translateY(-4px);box-shadow:0 6px 0 var(--line)}
+.plan-head{font-family:'Unbounded';font-weight:700;font-size:13px;text-transform:uppercase;padding:12px 14px;color:#fff;display:flex;align-items:center;gap:8px}
+.plan-free .plan-head{background:var(--blue);box-shadow:0 3px 0 var(--blue-dark)}
+.plan-pro .plan-head{background:var(--yellow);color:#7A5B00;box-shadow:0 3px 0 var(--yellow-dark)}
+.plan ul{list-style:none;padding:14px;display:flex;flex-direction:column;gap:9px;flex:1}
+.plan li{display:flex;gap:9px;font-size:14px;align-items:flex-start}
+.plan li .ic{flex:none}
+
+/* quad (rights & duties) */
+.quad-card{border:2px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 3px 0 var(--line);padding:14px;display:flex;flex-direction:column}
+.quad-card h4{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;gap:8px;align-items:center}
+.quad-card ul{list-style:none;display:flex;flex-direction:column;gap:8px;flex:1}
+.quad-card li{display:flex;gap:8px;font-size:14px;align-items:flex-start}
+.quad-card li .ic{flex:none}
+
+/* refund cards */
+.refund-card{border-radius:14px;padding:16px;border:2px solid;display:flex;flex-direction:column}
+.refund-card h4{font-size:15px;font-weight:700;margin-bottom:10px;display:flex;gap:8px;align-items:center}
+.refund-card ul{list-style:none;display:flex;flex-direction:column;gap:8px;flex:1}
+.refund-card li{display:flex;gap:8px;font-size:14px;align-items:flex-start}
+.refund-ok{background:var(--green-bg);border-color:var(--green);color:#3E7A0E}
+.refund-part{background:var(--yellow-light);border-color:var(--yellow);color:#8A6A00}
+
+.doc-link{
+  display:flex;gap:12px;align-items:center;text-decoration:none;color:var(--ink);
+  background:#fff;border:2px solid var(--line);border-radius:14px;padding:16px;
+  box-shadow:0 3px 0 var(--line);transition:transform .2s,box-shadow .2s,border-color .2s;
+}
+.doc-link:hover{transform:translateY(-4px);box-shadow:0 6px 0 var(--line);border-color:var(--green)}
+.doc-link .d-ic{font-size:28px;flex:none}
+.doc-link b{font-size:15px;display:block}
+.doc-link small{display:block;font-weight:500;color:var(--ink-soft);font-size:12px}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* end card */
+.end-card{
+  background:linear-gradient(160deg,#FFFFFF 0%,var(--green-bg) 100%);
+  border:2px solid var(--green);border-radius:20px;box-shadow:0 6px 0 var(--green-light);
+  padding:30px 22px;text-align:center;scroll-margin-top:86px;
+}
+.end-card h3{font-family:'Unbounded';font-weight:700;font-size:clamp(17px,3vw,24px);text-transform:uppercase;margin-bottom:8px}
+
+/* footer */
+footer{
+  background:#fff;border-top:2px solid var(--line);
+  padding:26px 16px;text-align:center;color:var(--ink-soft);font-size:14px;
+}
+footer b{color:var(--ink)}
+footer .f-line{margin:4px 0}
+
+/* back to top */
+#backTop{
+  position:fixed;right:18px;bottom:18px;z-index:70;
+  width:52px;height:52px;border-radius:16px;border:none;cursor:pointer;
+  background:var(--green);color:#fff;box-shadow:0 4px 0 var(--green-dark);
+  display:grid;place-items:center;opacity:0;pointer-events:none;transform:translateY(14px);
+  transition:opacity .3s,transform .3s;
+}
+#backTop.show{opacity:1;pointer-events:auto;transform:none}
+#backTop:active{transform:translateY(4px);box-shadow:none}
+#backTop svg{width:20px;height:20px}
+
+/* toast */
+#toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,120px);z-index:80;
+  background:#37413C;color:#fff;border-radius:16px;padding:14px 22px;
+  font-weight:700;font-size:15px;display:flex;align-items:center;gap:10px;
+  box-shadow:0 6px 0 rgba(0,0,0,.2);transition:transform .45s cubic-bezier(.2,.7,.2,1);
+  max-width:calc(100vw - 32px);
+}
+#toast.show{transform:translate(-50%,0)}
+
+/* confetti */
+.confetti{position:fixed;top:-20px;z-index:75;border-radius:3px;pointer-events:none;animation:confettiFall linear forwards}
+@keyframes confettiFall{to{transform:translateY(112vh) rotate(720deg)}}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr}
+  .toc{position:static}
+  .toc-toggle{display:flex}
+  .toc-list{max-height:0;padding:0 12px;overflow:hidden;transition:max-height .45s ease,padding .3s}
+  .toc.open .toc-list{max-height:500px;padding:12px;overflow:auto}
+}
+@media (max-width:680px){
+  .brand-name{display:none}
+  .progress-label{min-width:36px;font-size:10px}
+  #copyEmailTop{display:none}
+  .sec-head{padding:16px 16px 0}
+  .sec-body{padding:14px 16px 20px}
+  .clause{gap:10px}
+  /* карточки строго в одну колонку, равной ширины */
+  .tiles,.plan-grid,.quad,.refund-grid{
+    grid-template-columns:1fr;
+  }
+  .cap-tile,.cap-link{max-width:100%}
+  .plan-grid,.quad,.refund-grid{margin-top:8px}
+}
+
+/* ---------- PRINT ---------- */
+@media print{
+  .topbar,.toc,#bgLayer,#backTop,#toast,.hero-actions,
+  .top-actions,.confetti{display:none!important}
+  body{background:#fff}
+  body::before{display:none}
+  .layout{grid-template-columns:1fr;padding:0}
+  .sec,.reveal{opacity:1!important;transform:none!important;box-shadow:none}
+  .sec-title .mask > span{transform:none!important}
+  .hero{padding:10px 0}
+  .sec{break-inside:avoid-page}
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .hero-title .mask > span,.sec-title .mask > span{transform:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<div id="bgLayer" aria-hidden="true"></div>
+
+<!-- ======= TOP BAR ======= -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top" aria-label="BeWords">
+      <span class="brand-name">Be<em>Words</em></span>
+    </a>
+    <div class="progress-wrap" role="progressbar" aria-label="Прогресс чтения документа">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-label" id="progressLabel">0%</span>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="copyEmailTop" title="Скопировать email" aria-label="Скопировать email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      </button>
+      <button class="icon-btn" id="printBtn" title="Распечатать документ" aria-label="Распечатать">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ======= HERO ======= -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <span class="chip chip-date">📅 Редакция от 09 августа 2026 года</span>
+        <h1 class="hero-title">
+          <span class="mask"><span>Пользовательское</span></span>
+          <span class="mask"><span>соглашение</span></span>
+          <span class="mask"><span style="color:var(--green)">(Оферта) · BeWords</span></span>
+        </h1>
+        <p class="hero-sub">Публичная оферта в соответствии со ст. 437 ГК РФ — условия использования приложения BeWords.</p>
+        <div class="hero-actions">
+          <a class="btn btn-green" href="#s1">Читать документ</a>
+          <button class="btn btn-white" id="printBtn2">🖨️ Распечатать</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="layout">
+    <!-- ======= TOC ======= -->
+    <aside class="toc" id="toc">
+      <button class="toc-toggle" id="tocToggle" aria-expanded="false">
+        <span>📚 Содержание · 15 разделов</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <nav class="toc-list" id="tocList">
+        <a href="#s1"><i class="n">1</i> Общие положения</a>
+        <a href="#s2"><i class="n">2</i> Термины и определения</a>
+        <a href="#s3"><i class="n">3</i> Предмет соглашения</a>
+        <a href="#s4"><i class="n">4</i> Регистрация и доступ</a>
+        <a href="#s5"><i class="n">5</i> Бесплатный и платный функционал</a>
+        <a href="#s6"><i class="n">6</i> Подписка и оплата</a>
+        <a href="#s7"><i class="n">7</i> Возврат средств</a>
+        <a href="#s8"><i class="n">8</i> Права и обязанности сторон</a>
+        <a href="#s9"><i class="n">9</i> Интеллектуальная собственность</a>
+        <a href="#s10"><i class="n">10</i> Ограничение ответственности</a>
+        <a href="#s11"><i class="n">11</i> Персональные данные</a>
+        <a href="#s12"><i class="n">12</i> Разрешение споров</a>
+        <a href="#s13"><i class="n">13</i> Изменение условий</a>
+        <a href="#s14"><i class="n">14</i> Заключительные положения</a>
+        <a href="#s15"><i class="n">15</i> Реквизиты оператора</a>
+      </nav>
+    </aside>
+
+    <!-- ======= DOCUMENT ======= -->
+    <article class="doc">
+
+      <!-- 1 -->
+      <section class="sec acc-green reveal" id="s1">
+        <div class="sec-head"><span class="sec-badge">1</span>
+          <h2 class="sec-title"><span class="mask"><span>Общие положения</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="clause"><span class="cl-num">1.1</span><p>Настоящее Пользовательское соглашение (далее — Соглашение) является публичной офертой в соответствии со ст. 437 ГК РФ и определяет условия использования мобильного и веб-приложения BeWords (далее — Приложение).</p></div>
+          <div class="clause"><span class="cl-num">1.2</span>
+            <div>
+              <p><b>Оферент (Оператор):</b></p>
+              <ul class="list">
+                <li><span class="ic">👤</span><span><b>ФИО:</b> Бердиев Абдуррахим Вельмурадович</span></li>
+                <li><span class="ic">💼</span><span><b>Статус:</b> Самозанятый (плательщик налога на профессиональный доход)</span></li>
+                <li><span class="ic">✉️</span><span><b>Email:</b> <a class="mail" href="mailto:beridyevabdurrakhim@gmail.com">beridyevabdurrakhim@gmail.com</a></span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="clause"><span class="cl-num">1.3</span>
+            <div>
+              <p>Акцептом (принятием) оферты является совершение Пользователем любого из следующих действий:</p>
+              <ul class="list">
+                <li><span class="ic">📝</span><span>Регистрация в Приложении</span></li>
+                <li><span class="ic">▶️</span><span>Начало использования Приложения без регистрации</span></li>
+                <li><span class="ic">💳</span><span>Оплата подписки или иных платных услуг</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="clause"><span class="cl-num">1.4</span><p class="callout callout-green"><span class="ic">⏱️</span>Настоящее Соглашение вступает в силу с момента акцепта и действует до момента удаления учётной записи Пользователя.</p></div>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="sec acc-blue reveal" id="s2">
+        <div class="sec-head"><span class="sec-badge">2</span>
+          <h2 class="sec-title"><span class="mask"><span>Термины и определения</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <ul class="list">
+            <li><span class="ic">📱</span><span><b>Приложение</b> — программа для ЭВМ BeWords, доступная в виде мобильного приложения (iOS/Android) и веб-версии.</span></li>
+            <li><span class="ic">👤</span><span><b>Пользователь</b> — любое физическое лицо, использующее Приложение.</span></li>
+            <li><span class="ic">🔑</span><span><b>Учётная запись (Аккаунт)</b> — совокупность данных Пользователя, необходимых для доступа к Приложению.</span></li>
+            <li><span class="ic">⭐</span><span><b>Подписка</b> — платный доступ к расширенному функционалу Приложения на определённый срок.</span></li>
+            <li><span class="ic">📚</span><span><b>Контент</b> — все материалы, размещённые в Приложении: слова, уроки, упражнения, изображения, тексты, аудио.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="sec acc-yellow reveal" id="s3">
+        <div class="sec-head"><span class="sec-badge">3</span>
+          <h2 class="sec-title"><span class="mask"><span>Предмет соглашения</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="clause"><span class="cl-num">3.1</span><p>Оператор предоставляет Пользователю доступ к функционалу Приложения для самостоятельного изучения английской лексики на условиях настоящего Соглашения.</p></div>
+          <div class="clause"><span class="cl-num">3.2</span><p class="callout callout-blue"><span class="ic">🎯</span>Приложение является <b>инструментом для самостоятельного обучения</b>. Оператор <b>не гарантирует</b> достижение Пользователем конкретных результатов (уровня владения языком, количества выученных слов, сдачи экзаменов и т.д.).</p></div>
+          <div class="clause"><span class="cl-num">3.3</span><p>Оператор не несёт ответственности за эффективность обучения, которая зависит от индивидуальных усилий, способностей и регулярности занятий Пользователя.</p></div>
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section class="sec acc-purple reveal" id="s4">
+        <div class="sec-head"><span class="sec-badge">4</span>
+          <h2 class="sec-title"><span class="mask"><span>Регистрация и доступ</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="clause"><span class="cl-num">4.1</span><p>Для использования полного функционала Приложения Пользователь обязан создать учётную запись, предоставив достоверные данные (email, пароль).</p></div>
+          <div class="clause"><span class="cl-num">4.2</span>
+            <div>
+              <p>Альтернативные способы регистрации:</p>
+              <ul class="list">
+                <li><span class="ic">✉️</span><span>Email + пароль</span></li>
+                <li><span class="ic">🔐</span><span>OAuth-авторизация через Google Sign-In или Apple ID</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="clause"><span class="cl-num">4.3</span><p class="callout callout-yellow"><span class="ic">🌍</span>Для Пользователей из Российской Федерации перечень доступных способов авторизации может быть ограничен в соответствии с требованиями законодательства РФ.</p></div>
+          <div class="clause"><span class="cl-num">4.4</span>
+            <div>
+              <p>Пользователь несёт ответственность за:</p>
+              <ul class="list">
+                <li><span class="ic">📋</span><span>Достоверность предоставленных при регистрации данных</span></li>
+                <li><span class="ic">🔑</span><span>Сохранность учётных данных (логина, пароля)</span></li>
+                <li><span class="ic">👣</span><span>Все действия, совершённые с использованием его Аккаунта</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="clause"><span class="cl-num">4.5</span>
+            <div>
+              <p>Оператор вправе заблокировать Аккаунт в случае:</p>
+              <ul class="list">
+                <li><span class="ic">🚫</span><span>Нарушения Пользователем условий настоящего Соглашения</span></li>
+                <li><span class="ic">🕵️</span><span>Подозрительной активности (попытки взлома, спам)</span></li>
+                <li><span class="ic">💤</span><span>Длительного неиспользования Аккаунта (более 12 месяцев)</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section class="sec acc-green reveal" id="s5">
+        <div class="sec-head"><span class="sec-badge">5</span>
+          <h2 class="sec-title"><span class="mask"><span>Бесплатный и платный функционал</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="clause"><span class="cl-num">5.1</span>
+            <div>
+              <p>Часть функционала Приложения предоставляется бесплатно с ограничениями:</p>
+              <div class="plan-grid">
+                <div class="plan plan-free">
+                  <div class="plan-head">🆓 Бесплатно</div>
+                  <ul>
+                    <li><span class="ic">📉</span><span>Ограниченное количество слов для изучения в день</span></li>
+                    <li><span class="ic">📖</span><span>Доступ к базовым урокам</span></li>
+                    <li><span class="ic">📢</span><span>Реклама (при наличии)</span></li>
+                  </ul>
+                </div>
+                <div class="plan plan-pro">
+                  <div class="plan-head">⭐ Подписка</div>
+                  <ul>
+                    <li><span class="ic">♾️</span><span>Неограниченный доступ ко всем словам и урокам</span></li>
+                    <li><span class="ic">🚫</span><span>Отсутствие рекламы</span></li>
+                    <li><span class="ic">🧰</span><span>Дополнительные функции (статистика, офлайн-режим и т.д.)</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clause"><span class="cl-num">5.2</span><p>Подписка предоставляет расширенный функционал (см. карточку «Подписка» выше).</p></div>
+          <div class="clause"><span class="cl-num">5.3</span><p class="callout callout-blue"><span class="ic">💰</span>Перечень платных функций и стоимость подписки указываются в Приложении и могут изменяться Оператором в одностороннем порядке. Изменения не распространяются на уже оплаченные периоды подписки.</p></div>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section class="sec acc-blue reveal" id="s6">
+        <div class="sec-head"><span class="sec-badge">6</span>
+          <h2 class="sec-title"><span class="mask"><span>Подписка и оплата</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="clause"><span class="cl-num">6.1</span>
+            <div>
+              <p>Оплата подписки осуществляется через платёжный шлюз ЮKassa или встроенные платежи магазинов приложений (App Store, Google Play).</p>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+                <span class="chip">💳 ЮKassa</span>
+                <span class="chip"> App Store</span>
+                <span class="chip">▶️ Google Play</span>
+              </div>
+            </div>
+          </div>
+          <div class="clause"><span class="cl-num">6.2</span><p>Подписка оформляется на определённый срок (месяц, год и т.д.) и действует с момента подтверждения оплаты.</p></div>
+          <div class="clause"><span class="cl-num">6.3</span><p class="callout callout-green"><span class="ic">🔒</span>Оператор не хранит платёжные данные Пользователя (номера карт, CVV). Все платёжные операции обрабатываются платёжным шлюзом в соответствии с его политикой конфиденциальности.</p></div>
+          <div class="clause"><span class="cl-num">6.4</span><p>Чек о покупке формируется автоматически платёжным шлюзом и направляется на email Пользователя.</p></div>
+          <div class="clause"><span class="cl-num">6.5</span><p class="callout callout-yellow"><span class="ic">🔁</span>Подписка <b>не продлевается автоматически</b>. Для продолжения использования платного функционала Пользователь обязан оплатить новый период подписки.</p></div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="sec acc-orange reveal" id="s7">
+        <div class="sec-head"><span class="sec-badge">7</span>
+          <h2 class="sec-title"><span class="mask"><span>Возврат средств</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="clause"><span class="cl-num">7.1</span><p>Пользователь вправе отказаться от подписки и потребовать возврата средств в соответствии с законодательством РФ о защите прав потребителей.</p></div>
+          <div class="clause"><span class="cl-num">7.2</span>
+            <div>
+              <p>Условия возврата:</p>
+              <div class="refund-grid">
+                <div class="refund-card refund-ok">
+                  <h4><span class="ic">✅</span> Возврат в течение 14 дней с момента оплаты</h4>
+                  <ul>
+                    <li><span class="ic">💯</span><span>Полный возврат стоимости подписки</span></li>
+                    <li><span class="ic">🚪</span><span>Доступ к платному функционалу прекращается с момента возврата</span></li>
+                  </ul>
+                </div>
+                <div class="refund-card refund-part">
+                  <h4><span class="ic">⏳</span> Возврат после 14 дней</h4>
+                  <ul>
+                    <li><span class="ic">📐</span><span>Возврат осуществляется пропорционально неиспользованному периоду подписки</span></li>
+                    <li><span class="ic">➖</span><span>Из стоимости вычитается сумма за фактически использованные дни</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clause"><span class="cl-num">7.3</span>
+            <div>
+              <p>Для оформления возврата Пользователь направляет запрос на email: <b>beridyevabdurrakhim@gmail.com</b> с указанием:</p>
+              <ul class="list">
+                <li><span class="ic">✉️</span><span>Email, привязанный к Аккаунту</span></li>
+                <li><span class="ic">📆</span><span>Дата оплаты подписки</span></li>
+                <li><span class="ic">💬</span><span>Причина возврата (необязательно)</span></li>
+              </ul>
+              <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+                <a class="btn btn-green" href="mailto:beridyevabdurrakhim@gmail.com?subject=Запрос на возврат средств" style="padding:10px 18px;font-size:13px">↩️ Запросить возврат</a>
+                <button class="btn btn-white copy-email" style="padding:10px 18px;font-size:13px">📋 Скопировать email</button>
+              </div>
+            </div>
+          </div>
+          <div class="clause"><span class="cl-num">7.4</span><p>Оператор рассматривает запрос в течение 10 рабочих дней и осуществляет возврат на платёжное средство, с которого была произведена оплата. <span class="chip" style="margin-left:6px">⏱️ 10 рабочих дней</span></p></div>
+          <div class="clause"><span class="cl-num">7.5</span>
+            <div>
+              <p class="callout callout-red"><span class="ic">⛔</span>Возврат не осуществляется в случае:</p>
+              <ul class="list" style="margin-top:8px">
+                <li><span class="ic">❌</span><span>Нарушения Пользователем условий настоящего Соглашения</span></li>
+                <li><span class="ic">❌</span><span>Использования подписки более чем на 50% оплаченного периода</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="sec acc-purple reveal" id="s8">
+        <div class="sec-head"><span class="sec-badge">8</span>
+          <h2 class="sec-title"><span class="mask"><span>Права и обязанности сторон</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="quad">
+            <div class="quad-card" style="border-color:var(--green)">
+              <h4><span class="ic">🟢</span> 8.1. Оператор обязуется</h4>
+              <ul>
+                <li><span class="ic">✅</span><span>Предоставлять доступ к Приложению в соответствии с условиями Соглашения</span></li>
+                <li><span class="ic">🛟</span><span>Обеспечивать техническую поддержку по email</span></li>
+                <li><span class="ic">📢</span><span>Своевременно информировать о технических работах, влияющих на доступность Приложения</span></li>
+              </ul>
+            </div>
+            <div class="quad-card" style="border-color:var(--blue)">
+              <h4><span class="ic">🔵</span> 8.2. Оператор вправе</h4>
+              <ul>
+                <li><span class="ic">🛠️</span><span>Вносить изменения в функционал Приложения</span></li>
+                <li><span class="ic">📝</span><span>Изменять условия настоящего Соглашения в одностороннем порядке</span></li>
+                <li><span class="ic">⏸️</span><span>Приостанавливать работу Приложения для проведения технических работ</span></li>
+              </ul>
+            </div>
+            <div class="quad-card" style="border-color:var(--yellow)">
+              <h4><span class="ic">🟡</span> 8.3. Пользователь обязуется</h4>
+              <ul>
+                <li><span class="ic">📋</span><span>Соблюдать условия настоящего Соглашения</span></li>
+                <li><span class="ic">⚖️</span><span>Не использовать Приложение в противоправных целях</span></li>
+                <li><span class="ic">🚷</span><span>Не предпринимать попыток взлома, реверс-инжиниринга или обхода ограничений</span></li>
+                <li><span class="ic">🔏</span><span>Не распространять Контент Приложения без разрешения Оператора</span></li>
+              </ul>
+            </div>
+            <div class="quad-card" style="border-color:var(--purple)">
+              <h4><span class="ic">🟣</span> 8.4. Пользователь вправе</h4>
+              <ul>
+                <li><span class="ic">🏠</span><span>Использовать Приложение в личных некоммерческих целях</span></li>
+                <li><span class="ic">📞</span><span>Обращаться в техническую поддержку</span></li>
+                <li><span class="ic">🚪</span><span>Отказаться от использования Приложения в любое время</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9 -->
+      <section class="sec acc-yellow reveal" id="s9">
+        <div class="sec-head"><span class="sec-badge">9</span>
+          <h2 class="sec-title"><span class="mask"><span>Интеллектуальная собственность</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="clause"><span class="cl-num">9.1</span><p>Все объекты, размещённые в Приложении, включая Контент (слова, уроки, изображения, тексты, аудио, дизайн), являются объектами исключительных прав Оператора или третьих лиц.</p></div>
+          <div class="clause"><span class="cl-num">9.2</span><p class="callout callout-green"><span class="ic">🎁</span>Пользователю предоставляется ограниченная, неисключительная, безвозмездная лицензия на использование Контента <b>только в личных некоммерческих целях</b> в рамках функционала Приложения.</p></div>
+          <div class="clause"><span class="cl-num">9.3</span>
+            <div>
+              <p>Пользователю запрещается:</p>
+              <ul class="list">
+                <li><span class="ic">❌</span><span>Копировать, воспроизводить, распространять Контент</span></li>
+                <li><span class="ic">❌</span><span>Создавать производные произведения на основе Контента</span></li>
+                <li><span class="ic">❌</span><span>Использовать Контент в коммерческих целях</span></li>
+                <li><span class="ic">❌</span><span>Удалять знаки охраны авторских прав</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="clause"><span class="cl-num">9.4</span><p class="callout callout-red"><span class="ic">⚖️</span>Нарушение прав интеллектуальной собственности влечёт ответственность в соответствии с законодательством РФ.</p></div>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec acc-red reveal" id="s10">
+        <div class="sec-head"><span class="sec-badge">10</span>
+          <h2 class="sec-title"><span class="mask"><span>Ограничение ответственности</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="clause"><span class="cl-num">10.1</span>
+            <div>
+              <p>Приложение предоставляется <b>«как есть» (as is)</b>. Оператор не даёт никаких гарантий, явных или подразумеваемых, относительно:</p>
+              <ul class="list">
+                <li><span class="ic">⚙️</span><span>Бесперебойной и безошибочной работы Приложения</span></li>
+                <li><span class="ic">🎯</span><span>Соответствия Приложения целям Пользователя</span></li>
+                <li><span class="ic">🏆</span><span>Достижения Пользователем конкретных результатов обучения</span></li>
+                <li><span class="ic">🔌</span><span>Совместимости со всеми устройствами и операционными системами</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="clause"><span class="cl-num">10.2</span>
+            <div>
+              <p>Оператор не несёт ответственности за:</p>
+              <ul class="list">
+                <li><span class="ic">📉</span><span>Убытки, возникшие вследствие использования или невозможности использования Приложения</span></li>
+                <li><span class="ic">💾</span><span>Потерю данных Пользователя (прогресс обучения, статистика)</span></li>
+                <li><span class="ic">🤝</span><span>Действия третьих лиц (платёжных шлюзов, хостинг-провайдеров, магазинов приложений)</span></li>
+                <li><span class="ic">🌪️</span><span>Последствия форс-мажорных обстоятельств</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="clause"><span class="cl-num">10.3</span>
+            <div class="tile cap-tile"><span class="t-ic">🧮</span><span class="t-title">Максимальная ответственность Оператора</span><span class="t-text">ограничивается суммой, фактически уплаченной Пользователем за подписку за последние 3 месяца</span></div>
+          </div>
+          <div class="clause"><span class="cl-num">10.4</span><p class="callout callout-blue"><span class="ic">✔️</span>Пользователь подтверждает, что ознакомлен с настоящим разделом и согласен с ограничениями ответственности.</p></div>
+        </div>
+      </section>
+
+      <!-- 11 -->
+      <section class="sec acc-blue reveal" id="s11">
+        <div class="sec-head"><span class="sec-badge">11</span>
+          <h2 class="sec-title"><span class="mask"><span>Персональные данные</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="clause"><span class="cl-num">11.1</span>
+            <div>
+              <p>Обработка персональных данных Пользователя осуществляется в соответствии с Политикой конфиденциальности.</p>
+              <div class="cap-link">
+                <a class="doc-link" href="/privacy-policy">
+                  <span class="d-ic">📗</span>
+                  <span><b>Политика конфиденциальности</b><small>Полный текст документа</small></span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="clause"><span class="cl-num">11.2</span><p class="callout callout-green"><span class="ic">🤝</span>Используя Приложение, Пользователь даёт согласие на обработку своих персональных данных на условиях Политики конфиденциальности.</p></div>
+        </div>
+      </section>
+
+      <!-- 12 -->
+      <section class="sec acc-orange reveal" id="s12">
+        <div class="sec-head"><span class="sec-badge">12</span>
+          <h2 class="sec-title"><span class="mask"><span>Порядок разрешения споров</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="clause"><span class="cl-num">12.1</span><p>Все споры, возникающие из настоящего Соглашения, разрешаются путём переговоров.</p></div>
+          <div class="clause"><span class="cl-num">12.2</span><p>При невозможности разрешения спора путём переговоров, он передаётся на рассмотрение в суд в соответствии с законодательством РФ.</p></div>
+          <div class="clause"><span class="cl-num">12.3</span><p class="callout callout-yellow"><span class="ic">📨</span>Обязательный досудебный порядок: Пользователь направляет претензию на email Оператора. Срок рассмотрения претензии — 30 дней с момента получения.</p></div>
+          <div class="clause"><span class="cl-num">12.4</span><p>Применимое право: законодательство Российской Федерации. <span class="chip" style="margin-left:6px">⚖️ Право РФ</span></p></div>
+        </div>
+      </section>
+
+      <!-- 13 -->
+      <section class="sec acc-yellow reveal" id="s13">
+        <div class="sec-head"><span class="sec-badge">13</span>
+          <h2 class="sec-title"><span class="mask"><span>Изменение условий</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="clause"><span class="cl-num">13.1</span><p>Оператор вправе в одностороннем порядке изменять условия настоящего Соглашения.</p></div>
+          <div class="clause"><span class="cl-num">13.2</span><p>Новая редакция Соглашения вступает в силу с момента её публикации в Приложении.</p></div>
+          <div class="clause"><span class="cl-num">13.3</span><p>Продолжение использования Приложения после изменения условий означает согласие Пользователя с новой редакцией Соглашения.</p></div>
+          <div class="clause"><span class="cl-num">13.4</span><p class="callout callout-blue"><span class="ic">🚪</span>Если Пользователь не согласен с новыми условиями, он вправе удалить Аккаунт и прекратить использование Приложения.</p></div>
+        </div>
+      </section>
+
+      <!-- 14 -->
+      <section class="sec acc-green reveal" id="s14">
+        <div class="sec-head"><span class="sec-badge">14</span>
+          <h2 class="sec-title"><span class="mask"><span>Заключительные положения</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <div class="clause"><span class="cl-num">14.1</span><p>Настоящее Соглашение является юридически обязательным документом для обеих сторон.</p></div>
+          <div class="clause"><span class="cl-num">14.2</span><p>Если какое-либо положение Соглашения признано недействительным, остальные положения сохраняют силу.</p></div>
+          <div class="clause"><span class="cl-num">14.3</span><p>Бездействие Оператора в случае нарушения Пользователем условий Соглашения не лишает Оператора права защитить свои интересы позднее.</p></div>
+          <div class="clause"><span class="cl-num">14.4</span><p class="callout callout-green"><span class="ic">🇷🇺</span>Настоящее Соглашение составлено на русском языке.</p></div>
+        </div>
+      </section>
+
+      <!-- 15 -->
+      <section class="sec acc-purple reveal" id="s15">
+        <div class="sec-head"><span class="sec-badge">15</span>
+          <h2 class="sec-title"><span class="mask"><span>Реквизиты оператора</span></span></h2>
+        </div>
+        <div class="sec-body">
+          <ul class="list">
+            <li><span class="ic">👤</span><span><b>Бердиев Абдуррахим Вельмурадович</b></span></li>
+            <li><span class="ic">💼</span><span><b>Статус:</b> Самозанятый (плательщик НПД)</span></li>
+            <li><span class="ic">✉️</span><span><b>Email:</b> <a class="mail" href="mailto:beridyevabdurrakhim@gmail.com">beridyevabdurrakhim@gmail.com</a></span></li>
+            <li><span class="ic">📚</span><span><b>Приложение:</b> BeWords</span></li>
+          </ul>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn btn-green" href="mailto:beridyevabdurrakhim@gmail.com">✉️ Написать на email</a>
+            <button class="btn btn-white copy-email">📋 Скопировать email</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FINISH -->
+      <section class="end-card reveal" id="finish">
+        <h3>Вы прочитали соглашение!</h3>
+        <p style="color:var(--ink-soft)">Спасибо, что ознакомились с условиями использования BeWords. Учим слова дальше! 💚</p>
+      </section>
+
+    </article>
+  </div>
+</main>
+
+<footer>
+  <p class="f-line"><b>BeWords</b> © 2026 · Пользовательское соглашение (Оферта)</p>
+</footer>
+
+<button id="backTop" aria-label="Наверх">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+</button>
+<div id="toast" role="status"></div>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var EMAIL = 'beridyevabdurrakhim@gmail.com';
+
+  /* ---- внутренние ссылки скроллят на месте, не открывая страницу ---- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
+    anchor.addEventListener('click', function(e){
+      e.preventDefault();
+      var targetId = anchor.getAttribute('href');
+      if(targetId.length > 1){
+        var target = document.querySelector(targetId);
+        if(target){
+          target.scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block:'start'});
+          if(window.history && window.history.replaceState){
+            window.history.replaceState(null, '', targetId);
+          }
+        }
+      } else {
+        window.scrollTo({top:0, behavior: reduced ? 'auto' : 'smooth'});
+        if(window.history && window.history.replaceState){
+          window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+      }
+    });
+  });
+
+  /* ---- floating letters background ---- */
+  if(!reduced){
+    var layer = document.getElementById('bgLayer');
+    var letters = ['A','Б','W','Я','S','e','o','r','d','Ж','Ю','K','s','В'];
+    var colors = ['#58CC02','#1CB0F6','#FFC200','#CE82FF','#FF9600'];
+    for(var i=0;i<16;i++){
+      var sp = document.createElement('span');
+      sp.className = 'float-letter';
+      sp.textContent = letters[i % letters.length];
+      sp.style.left = (Math.random()*96) + '%';
+      sp.style.fontSize = (16 + Math.random()*30) + 'px';
+      sp.style.color = colors[i % colors.length];
+      sp.style.animationDuration = (18 + Math.random()*20) + 's';
+      sp.style.animationDelay = (-Math.random()*30) + 's';
+      layer.appendChild(sp);
+    }
+  }
+
+  /* ---- reading progress ---- */
+  var fill = document.getElementById('progressFill');
+  var label = document.getElementById('progressLabel');
+  var backTop = document.getElementById('backTop');
+  var ticking = false;
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      var p = max > 0 ? (h.scrollTop / max) * 100 : 0;
+      fill.style.width = p + '%';
+      label.textContent = Math.round(p) + '%';
+      backTop.classList.toggle('show', h.scrollTop > 600);
+      updateSpy();
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* ---- scrollspy + done marks ---- */
+  var secs = Array.prototype.slice.call(document.querySelectorAll('.sec, .end-card'));
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.toc-list a'));
+  function updateSpy(){
+    var mid = window.innerHeight * 0.45;
+    var activeId = null;
+    secs.forEach(function(s){
+      var r = s.getBoundingClientRect();
+      if(r.top < mid) activeId = s.id;
+      if(r.bottom < window.innerHeight * 0.6){
+        var link = document.querySelector('.toc-list a[href="#'+s.id+'"]');
+        if(link) link.classList.add('done');
+      }
+    });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + activeId);
+    });
+  }
+
+  /* ---- reveal on scroll ---- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if(reduced || !('IntersectionObserver' in window)){
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.12});
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---- mobile TOC toggle ---- */
+  var toc = document.getElementById('toc');
+  var tocToggle = document.getElementById('tocToggle');
+  tocToggle.addEventListener('click', function(){
+    var open = toc.classList.toggle('open');
+    tocToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  tocLinks.forEach(function(a){
+    a.addEventListener('click', function(){
+      if(window.innerWidth <= 960){ toc.classList.remove('open'); tocToggle.setAttribute('aria-expanded','false'); }
+    });
+  });
+
+  /* ---- toast ---- */
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(html){
+    toast.innerHTML = html;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 3200);
+  }
+
+  /* ---- copy email ---- */
+  function copyEmail(){
+    function done(){ showToast('📋 Email скопирован: <b>' + EMAIL + '</b>'); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(EMAIL).then(done).catch(function(){ fallback(); });
+    } else { fallback(); }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = EMAIL; document.body.appendChild(ta);
+      ta.select(); try{ document.execCommand('copy'); done(); }catch(e){}
+      document.body.removeChild(ta);
+    }
+  }
+  document.getElementById('copyEmailTop').addEventListener('click', copyEmail);
+  document.querySelectorAll('.copy-email').forEach(function(b){ b.addEventListener('click', copyEmail); });
+
+  /* ---- print ---- */
+  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+  document.getElementById('printBtn2').addEventListener('click', function(){ window.print(); });
+
+  /* ---- back to top ---- */
+  backTop.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior: reduced ? 'auto' : 'smooth'});
+  });
+
+  /* ---- finish: confetti ---- */
+  var finished = false;
+  if('IntersectionObserver' in window && !reduced){
+    var finIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ celebrate(); finIO.disconnect(); } });
+    }, {threshold:.4});
+    finIO.observe(document.getElementById('finish'));
+  }
+
+  onScroll();
+})();
+</script>
+</body>
+</html>
