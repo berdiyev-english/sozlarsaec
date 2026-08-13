@@ -8,12 +8,11 @@ var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlz
 
 var SITE_URL = 'https://bewords.ru/';
 function getAuthRedirectBase() {
-    // Если это Capacitor приложение — возвращаем URL scheme
     if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) {
-        return 'bewords://';  // ← URL scheme для Android/iOS
+        return 'bewords://';
     }
-    // Если это обычный браузер — возвращаем текущий URL страницы
-    return window.location.origin + window.location.pathname;
+    // 🆕 ИСПРАВЛЕНИЕ: Возвращаем только origin без pathname
+    return window.location.origin;
 }
 
 // ✅ КЛЮЧЕВОЕ: detectSessionInUrl + autoRefreshToken
@@ -46,7 +45,8 @@ class AuthManager {
 async init() {
     if (!supabaseClient) return;
     
-    // 🆕 ДОБАВЬ async перед (event, session)
+    let initialSessionHandled = false;
+    
     supabaseClient.auth.onAuthStateChange(async (event, session) => {
         const now = Date.now();
         if (event === this._lastAuthEvent && (now - this._lastEventTime) < 2000) {
@@ -57,7 +57,15 @@ async init() {
 
         this.currentUser = session ? session.user : null;
 
-        if (event === 'INITIAL_SESSION') return;
+        // 🆕 ИСПРАВЛЕНИЕ: Обрабатываем INITIAL_SESSION правильно
+        if (event === 'INITIAL_SESSION') {
+            initialSessionHandled = true;
+            if (this.currentUser) {
+                await this.checkPolicyUpdateOnLoad();
+            }
+            return;
+        }
+        
         if (event === 'TOKEN_REFRESHED') return;
         if (event === 'USER_UPDATED') return;
 
@@ -71,8 +79,6 @@ async init() {
             const wasGoogle = sessionStorage.getItem('_authAction') === 'google';
             const wasLogin = sessionStorage.getItem('_authAction') === 'login';
 
-            // 🆕 Если это была первая регистрация через Google — логируем согласие
-                        // 🆕 Умное логирование согласия для Google (с кэшем, без лишних запросов)
             if (wasGoogle && session?.user) {
                 await this.ensureConsentLogged(session.user, session.user.email, 'oauth_registration');
             }
@@ -83,12 +89,12 @@ async init() {
 
             sessionStorage.removeItem('_authAction');
             this.closeModal();
-            this._cleanOAuthHash();
+            setTimeout(() => this._cleanOAuthHash(), 500);
             return;
         }
 
         if (event === 'SIGNED_OUT') {
-            localStorage.removeItem('bewords_consent_cache');  // 🆕 сброс кэша согласия
+            localStorage.removeItem('bewords_consent_cache');
             const wasLogout = sessionStorage.getItem('_authAction') === 'logout';
             if (wasLogout && typeof app !== 'undefined') {
                 app.showNotification('Вы вышли из аккаунта', 'info');
@@ -99,39 +105,18 @@ async init() {
         }
     });
 
-
-        // ==========================================
-        // 2. ПОТОМ получаем сессию
-        // ==========================================
+    // 🆕 ИСПРАВЛЕНИЕ: Ждем небольшую задержку перед getSession
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    if (!initialSessionHandled) {
         const { data: { session } } = await supabaseClient.auth.getSession();
         this.currentUser = session ? session.user : null;
-
-                // 🆕 Проверяем, не обновилась ли политика для залогиненного пользователя
+        
         if (this.currentUser) {
             await this.checkPolicyUpdateOnLoad();
         }
+    }
 
-        // ==========================================
-        // 3. Если вернулись с Google OAuth — очищаем URL
-        // ==========================================
-        if (window.location.hash.includes('access_token') ||
-            window.location.search.includes('code=')) {
-            this._cleanOAuthHash();
-
-            // Даём Supabase время обработать токены
-            // и проверяем сессию повторно через 1.5 сек
-            setTimeout(async () => {
-                const { data: { session: s2 } } = await supabaseClient.auth.getSession();
-                if (s2) {
-                    this.currentUser = s2.user;
-                    const wasGoogle = sessionStorage.getItem('_authAction') === 'google';
-                    if (wasGoogle && typeof app !== 'undefined') {
-                        app.showNotification('Успешный вход через Google!', 'success');
-                    }
-                    sessionStorage.removeItem('_authAction');
-                }
-            }, 1500);
-        }
 
         // ==========================================
         // 4. Кнопка профиля
@@ -160,18 +145,23 @@ async init() {
     // Очистка OAuth-хеша из URL
     // ==========================================
     _cleanOAuthHash() {
-        try {
-            const hash = window.location.hash;
-            const search = window.location.search;
-            if ((hash && (hash.includes('access_token') || hash.includes('type='))) ||
-                (search && search.includes('code='))) {
-                window.history.replaceState(
-                    null, '',
-                    window.location.pathname
-                );
-            }
-        } catch (e) {}
+    try {
+        const hash = window.location.hash;
+        const search = window.location.search;
+        const url = window.location.pathname;
+        
+        // 🆕 ИСПРАВЛЕНИЕ: Проверяем наличие OAuth параметров
+        const hasOAuthParams = (hash && (hash.includes('access_token') || hash.includes('type='))) ||
+                              (search && (search.includes('code=') || search.includes('type=')));
+        
+        if (hasOAuthParams) {
+            window.history.replaceState(null, '', url);
+            console.log('✅ OAuth URL очищен');
+        }
+    } catch (e) {
+        console.warn('Ошибка очистки OAuth URL:', e);
     }
+}
 
     // ==========================================
     // ЗАГЛУШКИ
@@ -633,96 +623,129 @@ async logConsent(user, email, consentType = 'registration') {
     }
 
     async handleAuth(type) {
-        if (this.isProcessing) return;  // 🆕 защита от двойного клика
+    if (this.isProcessing) return;
 
-        const email = document.getElementById('authEmail').value.trim();
-        const password = document.getElementById('authPassword') ? document.getElementById('authPassword').value.trim() : '';
-        const errorEl = document.getElementById('authError');
-        const mainBtn = document.getElementById('mainAuthBtn');
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authPassword') ? document.getElementById('authPassword').value.trim() : '';
+    const errorEl = document.getElementById('authError');
+    const mainBtn = document.getElementById('mainAuthBtn');
 
-        if (!email) { errorEl.textContent = 'Введите Email'; errorEl.style.color = '#ef4444'; errorEl.style.display = 'block'; return; }
+    if (!email) { 
+        errorEl.textContent = 'Введите Email'; 
+        errorEl.style.color = '#ef4444'; 
+        errorEl.style.display = 'block'; 
+        return; 
+    }
 
-        // === СБРОС ПАРОЛЯ ===
-        if (type === 'reset') {
-            this.isProcessing = true;
-            this._setLoading(true, mainBtn);
-            errorEl.style.display = 'none';
-            try {
-                const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-                    redirectTo: getAuthRedirectBase()
-                });
-                if (error) { errorEl.textContent = error.message; errorEl.style.color = '#ef4444'; }
-                else { errorEl.innerHTML = '✅ Ссылка отправлена!'; errorEl.style.color = '#10b981'; }
-                errorEl.style.display = 'block';
-            } finally {
-                this.isProcessing = false;
-                this._setLoading(false, mainBtn);
-            }
-            return;
-        }
-
-        if (!password) { errorEl.textContent = 'Введите пароль'; errorEl.style.color = '#ef4444'; errorEl.style.display = 'block'; return; }
-
-        errorEl.style.display = 'none';
-
-        // Проверка галочки согласия
-        const consentCheckbox = document.getElementById('consentCheckbox');
-        if ((type === 'register' || type === 'login') && consentCheckbox && !consentCheckbox.checked) {
-            errorEl.textContent = 'Необходимо согласие с условиями';
-            errorEl.style.color = '#ef4444';
-            errorEl.style.display = 'block';
-            return;
-        }
-
-        // 🆕 Блокируем кнопку на время запроса
+    // === СБРОС ПАРОЛЯ ===
+    if (type === 'reset') {
         this.isProcessing = true;
         this._setLoading(true, mainBtn);
-
-        let result;
+        errorEl.style.display = 'none';
         try {
-            if (type === 'register') {
-                result = await supabaseClient.auth.signUp({ email, password });
-                
-                if (!result.error && result.data.user) {
-                    // Регистрация = всегда первый раз → логируем напрямую
-                    await this.logConsent(result.data.user, email, 'registration');
-                    // Сразу кэшируем, чтобы первый вход не делал лишний запрос
-                    localStorage.setItem('bewords_consent_cache', JSON.stringify({
-                        user_id: result.data.user.id,
-                        version: CONSENT_VERSION
-                    }));
-                    
-                    if (!result.data.session) {
-                        errorEl.style.color = '#10b981';
-                        errorEl.innerHTML = '🎉 Письмо отправлено! Проверьте почту.';
-                        errorEl.style.display = 'block';
-                        return;
-                    }
-                    sessionStorage.setItem('_authAction', 'login');
-                }
-            } else {
-                sessionStorage.setItem('_authAction', 'login');
-                result = await supabaseClient.auth.signInWithPassword({ email, password });
-
-                // 🆕 Логирование согласия при обычном входе (умное: только если нет текущей версии)
-                if (!result.error && result.data.user) {
-                    await this.ensureConsentLogged(result.data.user, email, 'login_consent');
-                }
+            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+                redirectTo: getAuthRedirectBase()
+            });
+            if (error) { 
+                console.error('Reset error:', error);
+                errorEl.textContent = error.message; 
+                errorEl.style.color = '#ef4444'; 
             }
-
-            if (result.error) {
-                sessionStorage.removeItem('_authAction');
-                errorEl.style.color = '#ef4444';
-                errorEl.textContent = result.error.message.includes('Invalid login')
-                    ? 'Неверный Email или пароль'
-                    : result.error.message;
-                errorEl.style.display = 'block';
+            else { 
+                errorEl.innerHTML = '✅ Ссылка отправлена!'; 
+                errorEl.style.color = '#10b981'; 
             }
+            errorEl.style.display = 'block';
         } finally {
             this.isProcessing = false;
             this._setLoading(false, mainBtn);
         }
+        return;
     }
+
+    if (!password) { 
+        errorEl.textContent = 'Введите пароль'; 
+        errorEl.style.color = '#ef4444'; 
+        errorEl.style.display = 'block'; 
+        return; 
+    }
+
+    errorEl.style.display = 'none';
+
+    const consentCheckbox = document.getElementById('consentCheckbox');
+    if ((type === 'register' || type === 'login') && consentCheckbox && !consentCheckbox.checked) {
+        errorEl.textContent = 'Необходимо согласие с условиями';
+        errorEl.style.color = '#ef4444';
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    this.isProcessing = true;
+    this._setLoading(true, mainBtn);
+
+    let result;
+    try {
+        if (type === 'register') {
+            console.log('📝 Регистрация:', email);
+            result = await supabaseClient.auth.signUp({ email, password });
+            console.log('📝 Результат регистрации:', result);
+            
+            if (!result.error && result.data.user) {
+                await this.logConsent(result.data.user, email, 'registration');
+                localStorage.setItem('bewords_consent_cache', JSON.stringify({
+                    user_id: result.data.user.id,
+                    version: CONSENT_VERSION
+                }));
+                
+                if (!result.data.session) {
+                    errorEl.style.color = '#10b981';
+                    errorEl.innerHTML = '🎉 Письмо отправлено! Проверьте почту.';
+                    errorEl.style.display = 'block';
+                    this.isProcessing = false;
+                    this._setLoading(false, mainBtn);
+                    return;
+                }
+                sessionStorage.setItem('_authAction', 'login');
+            }
+        } else {
+            sessionStorage.setItem('_authAction', 'login');
+            console.log('🔑 Вход:', email);
+            result = await supabaseClient.auth.signInWithPassword({ email, password });
+            console.log('🔑 Результат входа:', result);
+
+            if (!result.error && result.data.user) {
+                await this.ensureConsentLogged(result.data.user, email, 'login_consent');
+            }
+        }
+
+        if (result.error) {
+            console.error('❌ Ошибка аутентификации:', result.error);
+            console.error('❌ Код ошибки:', result.error.status);
+            console.error('❌ Сообщение:', result.error.message);
+            
+            sessionStorage.removeItem('_authAction');
+            errorEl.style.color = '#ef4444';
+            
+            let errorMessage = result.error.message;
+            if (errorMessage.includes('Invalid login') || errorMessage.includes('Invalid credentials')) {
+                errorMessage = 'Неверный Email или пароль';
+            } else if (errorMessage.includes('Email not confirmed')) {
+                errorMessage = 'Подтвердите email по ссылке в почте';
+            }
+            
+            errorEl.textContent = errorMessage;
+            errorEl.style.display = 'block';
+        }
+    } catch (e) {
+        console.error('💥 Критическая ошибка:', e);
+        errorEl.style.color = '#ef4444';
+        errorEl.textContent = 'Произошла ошибка. Попробуйте еще раз.';
+        errorEl.style.display = 'block';
+    } finally {
+        this.isProcessing = false;
+        this._setLoading(false, mainBtn);
+    }
+}
 }
 
 window.authManager = new AuthManager();
