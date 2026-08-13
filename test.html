@@ -36,8 +36,9 @@
   <meta property="og:url" content="https://bewords.ru">
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://bewords.ru">
-  <link rel="stylesheet" href="test.css">
+  <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
@@ -261,72 +262,6 @@ body {
     .action-text-btn.remove { border-color: #ef4444; color: #ef4444; background: #fee2e2; }
     .action-text-btn:hover { filter: brightness(0.98); }
 
-    #preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #eef4f6;
-    z-index: 999999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.8s ease-out, visibility 0.8s;
-}
-
-#preloader.done {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.loader-content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.loader-cat {
-    width: 250px;
-    height: auto;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    animation: duo-breathe 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes duo-breathe {
-    0% {
-        transform: scale(1) translateY(0);
-    }
-    100% {
-        transform: scale(1.05) translateY(-5px);
-    }
-}
-
-.loading-bar-container {
-    width: 200px;
-    height: 6px;
-    background: #dcdcdc;
-    border-radius: 3px;
-    margin-top: 30px;
-    overflow: hidden;
-}
-
-.loading-bar {
-    height: 100%;
-    width: 0%;
-    background: #2ecc71;
-    border-radius: 3px;
-    animation: fill-bar 2s ease-in-out forwards;
-}
-
-@keyframes fill-bar {
-    0% { width: 0%; }
-    50% { width: 60%; }
-    100% { width: 100%; }
-}
-
   </style>
   <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
@@ -343,15 +278,38 @@ body {
 <!-- /Yandex.Metrika counter -->
 </head>
 <body>
-  <div id="preloader">
-    <div class="loader-content">
-        <img src="https://bewords.ru/bob_in_spring.jpg" alt="Bewords Cat" class="loader-cat">
-        
-        <!-- Полоска прогресса -->
-        <div class="loading-bar-container">
-            <div class="loading-bar"></div>
-        </div>
+  <div id="loading-layer" aria-busy="true" aria-label="Загрузка приложения">
+  <div class="ambient" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <div class="center-group">
+    <div class="mascot-float" id="mascotFloat">
+      <div class="mascot-scale" id="mascotScale">
+        <img src="/Bob_loading.PNG" alt="BeWords" class="mascot-image" id="mascotImg"
+             onerror="this.onerror=null;this.src=window.bwFallbackMascot;">
+      </div>
     </div>
+
+    <div class="fade-elements" id="fadeGroup">
+      <div class="loading-text-wrapper">
+        <div class="loading-text-bg">BeWords</div>
+        <div class="loading-text-fill-wrap" id="textFillWrap">
+          <div class="loading-text-fill">BeWords</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shockwave" id="shockwave"></div>
+
+  <div class="tips-container" id="tipsGroup">
+    <div class="tip-pill">
+      <span class="tip-icon" aria-hidden="true">💡</span>
+      <span class="tips-text" id="randomTip"></span>
+    </div>
+  </div>
 </div>
   <!-- App Install Banner -->
 <div id="appInstallBanner" class="app-install-banner">
@@ -370,8 +328,8 @@ body {
   </div>
 </div>
   
-<div class="app-container">
-  <header class="app-header">
+<div class="app-container" style="visibility:hidden">
+    <header class="app-header">
     <div class="header-content">
       <div class="logo-title">
         <a href="/" class="logo-link" onclick="location.reload(); return false;">
@@ -397,47 +355,88 @@ body {
 
   <main class="main-content">
     <!-- Levels + Categories -->
-     <section id="levels" class="content-section active">
+    <section id="levels" class="content-section active">
       <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
         <h2>Слова по уровням</h2>
       </div>
 
       <div class="levels-grid" id="levelsGrid">
-        <div class="level-card" data-level="A1" data-testid="level-card-A1" onclick="window.app && app.showLevelWords('A1')">
+        <div class="level-card" data-level="A1" data-testid="level-card-A1">
           <div class="level-badge beginner">A1</div>
-          <h3>Beginner</h3>
-          <p>Базовые слова для начинающих</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+          <h3>Первые шаги</h3>
+        <p>База для начинающих</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
-        <div class="level-card" data-level="A2" data-testid="level-card-A2" onclick="window.app && app.showLevelWords('A2')">
+
+        <div class="level-card" data-level="A2" data-testid="level-card-A2">
           <div class="level-badge elementary">A2</div>
-          <h3>Elementary</h3>
-          <p>Элементарный уровень</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+          <h3>Фундамент</h3>
+        <p>Слова для простых бесед</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
-        <div class="level-card" data-level="B1" data-testid="level-card-B1" onclick="window.app && app.showLevelWords('B1')">
+
+        <div class="level-card" data-level="B1" data-testid="level-card-B1">
           <div class="level-badge intermediate">B1</div>
-          <h3>Intermediate</h3>
-          <p>Средний уровень</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+          <h3>Уверенный уровень</h3>
+        <p>Словарный запас для жизни</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
-        <div class="level-card" data-level="B2" data-testid="level-card-B2" onclick="window.app && app.showLevelWords('B2')">
+
+        <div class="level-card" data-level="B2" data-testid="level-card-B2">
           <div class="level-badge upper-intermediate">B2</div>
-          <h3>Upper-Intermediate</h3>
-          <p>Выше среднего</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+             <h3>Свободное общение</h3>
+          <p>Понимаем фильмы и статьи</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
-        <div class="level-card" data-level="C1" data-testid="level-card-C1" onclick="window.app && app.showLevelWords('C1')">
+
+        <div class="level-card" data-level="C1" data-testid="level-card-C1">
           <div class="level-badge advanced">C1</div>
-          <h3>Advanced</h3>
-          <p>Продвинутый уровень</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Мастерство</h3>
+        <p>Сложные термины и нюансы</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
-        <div class="level-card" data-level="C2" data-testid="level-card-C2" onclick="window.app && app.showLevelWords('C2')">
+
+        <div class="level-card" data-level="C2" data-testid="level-card-C2">
           <div class="level-badge proficiency">C2</div>
-          <h3>Proficiency</h3>
-          <p>Профессиональный уровень</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Как носитель</h3>
+        <p>Высший пилотаж</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
       </div>
 
@@ -446,109 +445,193 @@ body {
         <h2>Категории</h2>
       </div>
       <div class="levels-grid" id="categoriesGrid">
-        <div class="level-card" data-category="IRREGULARS" data-testid="category-card-irregulars" onclick="window.app && app.showCategoryWords('IRREGULARS')">
+        <div class="level-card" data-category="IRREGULARS" data-testid="category-card-irregulars">
           <div class="level-badge advanced">Irregular Verbs</div>
-          <h3>Неправильные глаголы</h3>
-          <p>Формы глаголов</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Неправильные глаголы</h3>
+            <p>Исключения из правил</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="PREPOSITIONS" data-testid="category-card-prepositions">
           <div class="level-badge elementary">Prepositions</div>
-          <h3>Предлоги</h3>
-          <p>Частые предлоги</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Предлоги</h3>
+            <p>Частые предлоги</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="PHRASAL_VERBS" data-testid="category-card-phrasal">
           <div class="level-badge beginner">Phrasal Verbs</div>
-          <h3>Фразовые глаголы</h3>
-          <p>Частые фразовые глаголы</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Фразовые глаголы</h3>
+            <p>Частые фразовые глаголы</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="IDIOMS" data-testid="category-card-idioms">
           <div class="level-badge proficiency">Idioms</div>
-          <h3>Идиомы</h3>
-          <p>Разговорные выражения</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Идиомы</h3>
+            <p>Разговорные выражения</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="PROVERBS" data-testid="category-card-proverbs">
-  <div class="level-badge upper-intermediate">Proverbs</div>
-  <h3>Пословицы и поговорки</h3>
-  <p>Устойчивые выражения</p>
-  <div class="level-stats"><span class="word-count">0 слов</span></div>
-</div>
+          <div class="level-badge upper-intermediate">Proverbs</div>
+          <div class="level-info">
+            <h3>Пословицы и поговорки</h3>
+            <p>Устойчивые выражения</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+        </div>
       </div>
       
-            <!-- Exams -->
+      <!-- Exams -->
       <div class="section-header" style="margin-top:1rem;">
         <h2>Экзамены</h2>
       </div>
       <div class="levels-grid" id="examsGrid">
         <div class="level-card" data-category="EGE" data-testid="category-card-ege">
           <div class="level-badge elementary">ЕГЭ</div>
-          <h3>ЕГЭ</h3>
-          <p>Подготовка к ЕГЭ</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>ЕГЭ</h3>
+            <p>Подготовка к ЕГЭ</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="OGE" data-testid="category-card-oge">
           <div class="level-badge beginner">ОГЭ</div>
-          <h3>ОГЭ</h3>
-          <p>Подготовка к ОГЭ</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>ОГЭ</h3>
+            <p>Подготовка к ОГЭ</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="IELTS" data-testid="category-card-ielts">
           <div class="level-badge upper-intermediate">IELTS</div>
-          <h3>IELTS</h3>
-          <p>Academic / General</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>IELTS</h3>
+            <p>Academic / General</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
+
         <div class="level-card" data-category="TOEFL" data-testid="category-card-toefl">
           <div class="level-badge advanced">TOEFL</div>
-          <h3>TOEFL</h3>
-          <p>Подготовка к TOEFL</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>TOEFL</h3>
+            <p>Подготовка к TOEFL</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
       </div>
       
-            <!-- Professions -->
+      <!-- Professions -->
       <div class="section-header" style="margin-top:1rem;">
         <h2>Профессии</h2>
       </div>
       <div class="levels-grid" id="professionsGrid">
-        <!-- Сюда мы перенесли Медицинский -->
-        <div class="level-card" data-category="MEDICAL" data-testid="category-card-medical" onclick="window.app && app.showCategoryWords('MEDICAL')">
+        <div class="level-card" data-category="MEDICAL" data-testid="category-card-medical">
           <div class="level-badge elementary">Medical</div>
-          <h3>Медицина</h3>
-          <p>Врачи, болезни, тело</p>
-          <div class="level-stats"><span class="word-count">0 слов</span></div>
+          <div class="level-info">
+            <h3>Медицина</h3>
+            <p>Врачи, болезни, тело</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
 
-        <!-- Новые категории -->
-        <div class="level-card" data-category="IT" data-testid="category-card-it" onclick="window.app && app.showCategoryWords('IT')">
+        <!-- Карточки "Скоро" получили дополнительный класс coming-soon -->
+        <div class="level-card coming-soon" data-category="IT" data-testid="category-card-it">
           <div class="level-badge proficiency">IT</div>
-          <h3>IT & Tech</h3>
-          <p>Разработка, компьютеры</p>
-          <div class="level-stats"><span class="word-count">Скоро</span></div>
+          <div class="level-info">
+            <h3>IT & Tech</h3>
+            <p>Разработка, компьютеры</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
 
-        <div class="level-card" data-category="BUSINESS" data-testid="category-card-business" onclick="window.app && app.showCategoryWords('BUSINESS')">
+        <div class="level-card coming-soon" data-category="BUSINESS" data-testid="category-card-business">
           <div class="level-badge upper-intermediate">Business</div>
-          <h3>Бизнес</h3>
-          <p>Переговоры, финансы</p>
-          <div class="level-stats"><span class="word-count">Скоро</span></div>
+          <div class="level-info">
+            <h3>Бизнес</h3>
+            <p>Переговоры, финансы</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
 
-        <div class="level-card" data-category="LEGAL" data-testid="category-card-legal" onclick="window.app && app.showCategoryWords('LEGAL')">
+        <div class="level-card coming-soon" data-category="LEGAL" data-testid="category-card-legal">
           <div class="level-badge advanced">Legal</div>
-          <h3>Юридический</h3>
-          <p>Законы, право, суды</p>
-          <div class="level-stats"><span class="word-count">Скоро</span></div>
+          <div class="level-info">
+            <h3>Юридический</h3>
+            <p>Законы, право, суды</p>
+          </div>
+          <div class="chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
         </div>
       </div>
 
       <!-- Words List (levels or categories) -->
-   <div id="wordsContainer" class="words-container hidden">
+      <div id="wordsContainer" class="words-container hidden">
         <div class="words-header">
-          <button class="back-btn" id="backToLevels" data-testid="back-to-levels" onclick="window.app && app.backToLevels()">
+          <button class="back-btn" id="backToLevels" data-testid="back-to-levels">
             <i class="fas fa-arrow-left"></i>
             Назад
           </button>
@@ -572,8 +655,7 @@ body {
         <i class="fas fa-book"></i>
         <span id="learningCount">0</span>
       </div>
-      <div class="stat-pill" title="Пройдено уроков">
-        <i class="fas fa-check-circle" style="color:#58cc02;"></i>
+      <div class="stat-pill" title="Стрик">
         <span id="completedLessonsCount">0</span>
       </div>
     </div>
@@ -587,7 +669,7 @@ body {
     </div>
   </div>
 
-  <!-- === ДОРОЖКА DUOLINGO-STYLE === -->
+  <!-- === ДОРОЖКА=== -->
   <div class="path-wrapper" id="pathWrapper">
     <div id="map-container" class="map-container">
       <!-- SVG-декорации (кусты, цветы, грибы) -->
@@ -665,129 +747,173 @@ body {
   <div id="trainerContainer" class="trainer-container"></div>
 </section>
 
-    <!-- New Words -->
-  <section id="new-words" class="content-section"> <div id="translatorWidget" class="translator-card"> <div class="translator-header"> <h3>BeWords - Translate</h3> <p>Переводите слова и фразы и добавляйте их на изучение</p> </div>
-<div class="tr-lang-row">
-  <button class="tr-lang-btn active" id="trRuBtn" type="button">🇷🇺 Русский</button>
-  <button class="tr-swap-btn" id="trSwapBtn" type="button" title="Поменять местами">⇄</button>
-  <button class="tr-lang-btn" id="trEnBtn" type="button">🇬🇧 English</button>
-</div>
-
-<div class="tr-input-row">
-  <input type="text" id="trInputText" placeholder="Введите слово или фразу..." />
-  <button id="trTranslateBtn" type="button">Перевести</button>
-</div>
-
-<div class="translator-loading" id="trLoading">
-  <div class="tr-spinner"></div>
-  <p>Анализирую варианты перевода...</p>
-</div>
-
-<div class="translator-error" id="trError"></div>
-<div class="translator-results" id="trResults"></div>
-</div> <div class="section-header"> <h2>Загрузите новые слова</h2> </div> 
-<div class="toggles-row">
-  <div class="upload-toggle" role="tablist" aria-label="upload mode" style="flex-wrap: wrap; gap: 10px;">
-    <!-- Строка 1: Формы добавления -->
-    <button class="upload-btn active" id="uploadTabSingle" data-tab="single" style="flex: 1 1 auto;">Одно слово</button>
-    <button class="upload-btn" id="uploadTabBulk" data-tab="bulk" style="flex: 1 1 auto;">Массовое добавление</button>
-    <button class="upload-btn" id="uploadTabShare" data-tab="share" style="flex: 1 1 auto; background-color: #7700ff; color: #fff;">Слова от друга 🎁</button>
-  </div>
-</div>
-
-<!-- Подсказка для вкладки "Одно слово" -->
-<p id="singleHelp" class="mode-help">
-  Введите слово на английском и перевод на русский. После добавления слово сразу попадёт в ваш словарь.
-</p>
-
-<!-- Форма: Одно слово -->
-<div class="add-word-form" id="singleAddForm">
-  <div class="form-group">
-    <label for="newWord">Английское слово</label>
-    <input type="text" id="newWord" placeholder="Введите слово на английском" data-testid="new-word-input">
-  </div>
-  <div class="form-group">
-    <label for="newTranslation">Перевод</label>
-    <input type="text" id="newTranslation" placeholder="Введите перевод" data-testid="new-translation-input">
-  </div>
-  <div class="form-group">
-    <label for="newLevel">Уровень</label>
-    <select id="newLevel" data-testid="new-level-select">
-      <option value="A1">A1 - Beginner</option>
-      <option value="A2">A2 - Elementary</option>
-      <option value="B1">B1 - Intermediate</option>
-      <option value="B2">B2 - Upper-Intermediate</option>
-      <option value="C1">C1 - Advanced</option>
-      <option value="C2">C2 - Proficiency</option>
-      <option value="IRREGULARS">Irregular Verbs</option>
-      <option value="PREPOSITIONS">Prepositions</option>
-    </select>
-  </div>
-  <button class="add-word-btn" id="addWordBtn" data-testid="add-word-btn">
-    <i class="fas fa-plus"></i> Добавить слово
-  </button>
-</div>
-
-<!-- Форма: Массовое добавление -->
-<div class="add-word-form" id="bulkAddForm" style="display:none;">
-  <h3 style="margin-bottom:8px;">Массовое добавление</h3>
-  <p class="mode-help" id="bulkHelp" data-testid="bulk-help">
-    Каждое английское слово / фразу вводите с новой строки.<br><br>
-    Перевод указывается через "-" (например: go - идти, ехать, ходить)
-  </p>
-  <div class="form-group">
-    <label for="bulkLevel">Уровень для всех слов</label>
-    <select id="bulkLevel" data-testid="bulk-level-select">
-      <option value="A1">A1 - Beginner</option>
-      <option value="A2">A2 - Elementary</option>
-      <option value="B1">B1 - Intermediate</option>
-      <option value="B2">B2 - Upper-Intermediate</option>
-      <option value="C1">C1 - Advanced</option>
-      <option value="C2">C2 - Proficiency</option>
-      <option value="IRREGULARS">Irregular Verbs</option>
-      <option value="PREPOSITIONS">Prepositions</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="bulkTextarea">Вставьте строки</label>
-    <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;go - идти, ехать, ходить&#10;table - стол&#10;run - бежать, запускать" data-testid="bulk-textarea" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);border-radius:var(--radius-md);background:var(--bg-primary);color:var(--text-primary);"></textarea>
-  </div>
-  <button class="add-word-btn" id="bulkAddBtn" data-testid="bulk-add-btn">
-    <i class="fas fa-file-import"></i> Добавить список
-  </button>
-</div>
-
-<!-- === НОВАЯ ФОРМА: Ввод кода для импорта === -->
-<div class="add-word-form" id="shareAddForm" style="display:none;">
-  <h3 style="margin-bottom:8px;">Получить слова от друга</h3>
-  <p class="mode-help">Вставьте специальный код, который вам прислали, чтобы мгновенно добавить подборку слов.</p>
-  <div class="form-group">
-    <label for="shareCodeInput">Уникальный код</label>
-    <input type="text" id="shareCodeInput" placeholder="Например: eyJ1Ijoi0JjQstCw0..." style="font-family: monospace; width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
-  </div>
-  <button class="add-word-btn" id="checkShareCodeBtn" style="background-color: #28a745; width: 100%;">
-    <i class="fas fa-gift"></i> Проверить и получить
-  </button>
-</div>
-
-<!-- Список добавленных слов -->
-<div id="customWordsList" class="words-list">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-    <h3 style="margin: 0;">Добавленные слова</h3>
-    <!-- Кнопка Поделиться (уже есть у тебя) -->
- <button id="shareWordsBtn" class="add-word-btn" style="padding: 5px 15px; font-size: 14px; background: #6c757d; width: auto;">
-        <i class="fas fa-share-alt"></i> Поделиться
-    </button>
-  </div>
-  <div id="customWords">
-    <div class="empty-state">
-      <i class="fas fa-plus-circle"></i>
-      <h3>Нет добавленных слов</h3>
-      <p>Используйте формы выше для добавления новых слов</p>
+   <!-- New Words Section -->
+  <section id="new-words" class="content-section">
+    
+<!-- Modern Boblingo-style Translator Widget -->
+<div id="translatorWidget" class="translator-card-bob">
+    
+    <!-- Шапка -->
+    <div class="header-container">
+        <div class="header-text">
+            <div class="header-title">Bewords - Переводчик</div>
+        </div>
     </div>
-  </div>
+
+    <!-- Переключатель языков -->
+    <div class="lang-switcher">
+        <button class="lang-btn" id="trRuBtn" type="button">🇷🇺 Русский</button>
+        <button class="swap-btn" id="trSwapBtn" type="button" title="Поменять местами">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 4l4 4-4 4"></path>
+                <path d="M3 8h18"></path>
+                <path d="M7 20l-4-4 4-4"></path>
+                <path d="M21 16H3"></path>
+            </svg>
+        </button>
+        <button class="lang-btn" id="trEnBtn" type="button">🇬🇧 Англ</button>
+    </div>
+
+    <!-- Поле ввода текста -->
+    <div class="input-area">
+        <textarea class="text-input" id="trInputText" placeholder="Переводи слова и фразы , и добавляй их на изучение"></textarea>
+    </div>
+
+    <!-- Кнопка перевода -->
+    <button class="btn-bob" id="trTranslateBtn" type="button">Перевести</button>
+
+    <!-- === НОВЫЕ БЛОКИ ДЛЯ ОТОБРАЖЕНИЯ РЕЗУЛЬТАТА === -->
+    
+    <!-- Загрузка -->
+    <div class="translator-loading" id="trLoading">
+        <div class="tr-spinner"></div>
+        <p>Боб ищет лучший перевод...</p>
+    </div>
+
+    <!-- Ошибка -->
+    <div class="translator-error" id="trError" style="display: none;"></div>
+
+    <!-- Результаты перевода -->
+    <div class="translator-results" id="trResults" style="display: none;">
+        <div class="tr-result-card">
+            <div class="tr-result-main">
+                <div class="tr-result-label">Перевод</div>
+                <div class="tr-result-text" id="trMainTranslation">...</div>
+            </div>
+            
+            <!-- Дополнительные значения (появятся, если они есть) -->
+            <div class="tr-result-alternatives" id="trAlternatives" style="display: none;">
+                <div class="tr-alt-label">Другие значения:</div>
+                <div class="tr-alt-list" id="trAltList"></div>
+            </div>
+
+            <!-- Кнопка добавления -->
+            <button class="btn-add-to-dict" id="trAddToDictBtn">
+                <i class="fas fa-plus"></i> Добавить в словарь
+            </button>
+        </div>
+    </div>
+
 </div>
-</section>
+
+    <!-- 2. Заголовок и Современный переключатель (Segmented Control) -->
+    <div class="section-header">
+      <h2>Добавить слова</h2>
+    </div>
+    
+    <div class="segmented-control">
+      <button class="segment-btn active" id="uploadTabSingle" data-tab="single">
+        <i class="fas fa-pen"></i> Вручную
+      </button>
+      <button class="segment-btn" id="uploadTabBulk" data-tab="bulk">
+        <i class="fas fa-list"></i> Списком
+      </button>
+      <button class="segment-btn" id="uploadTabShare" data-tab="share">
+        <i class="fas fa-gift"></i> От друга
+      </button>
+    </div>
+
+    <!-- 3. Вкладка: ВРУЧНУЮ -->
+    <div id="singleAddForm" class="add-word-form">
+      <div class="form-group">
+        <label for="newWord">Английское слово</label>
+        <input type="text" id="newWord" placeholder="Например: apple" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="newTranslation">Перевод</label>
+        <input type="text" id="newTranslation" placeholder="Например: яблоко" autocomplete="off">
+      </div>
+      
+      <!-- Мягкая подсказка вместо красной рамки -->
+      <div class="form-hint">
+        <i class="fas fa-lightbulb"></i>
+        <span>Слово сразу попадёт в ваш словарь и будет доступно для изучения.</span>
+      </div>
+
+      <button class="btn btn-primary add-word-btn" id="addWordBtn">
+        <i class="fas fa-plus"></i> Добавить слово
+      </button>
+    </div>
+
+    <!-- 4. Вкладка: СПИСКОМ -->
+    <div id="bulkAddForm" class="add-word-form" style="display: none;">
+      <div class="form-group">
+        <label for="bulkTextarea">Список слов</label>
+        <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;apple : яблоко&#10;run : бег , бегать&#10;cat : кот"></textarea>
+      </div>
+      
+      <div class="form-hint">
+        <i class="fas fa-info-circle"></i>
+        <span>Каждое слово с новой строки. Разделяйте слово и перевод двоеточием (:) или точкой с запятой (;).</span>
+      </div>
+
+      <button class="btn btn-primary add-word-btn" id="bulkAddBtn">
+        <i class="fas fa-download"></i> Добавить список
+      </button>
+    </div>
+
+    <!-- 5. Вкладка: ОТ ДРУГА 🎁 (Сделана максимально понятной) -->
+    <div id="shareAddForm" class="add-word-form" style="display: none;">
+      <div class="form-group">
+        <label for="shareCodeInput">Код от друга</label>
+        <input type="text" id="shareCodeInput" placeholder="Например: A8F-9K2 или SHARE-..." style="text-transform: uppercase; letter-spacing: 1px; font-family: monospace;">
+      </div>
+      
+      <div class="form-hint">
+        <i class="fas fa-users"></i>
+        <span>Вставьте короткий код, который вам прислали, чтобы мгновенно получить готовую подборку слов в свой словарь.</span>
+      </div>
+
+      <button class="btn btn-primary add-word-btn" id="checkShareCodeBtn">
+        <i class="fas fa-check-circle"></i> Проверить и получить
+      </button>
+    </div>
+
+    <!-- 6. Список добавленных слов + Умное пустое состояние -->
+    <div id="customWordsList" class="words-list" style="margin-top: 2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800;">Добавленные слова</h3>
+        <button id="shareWordsBtn" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">
+          <i class="fas fa-share-alt"></i> Cлова другу
+        </button>
+      </div>
+      
+      <div id="customWords">
+        <!-- Этот блок покажется, если слов нет. JS сам подставит сюда слова, когда они появятся -->
+        <div class="empty-state-wrapper">
+          <div class="empty-state">
+            <i class="fas fa-book-open" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+            <h3>Словарь пуст</h3>
+            <p>Добавьте свои первые слова или получите их от друга, чтобы начать обучение</p>
+            <button class="btn btn-primary" onclick="document.getElementById('newWord').focus(); window.scrollTo({top: 0, behavior: 'smooth'});">
+              <i class="fas fa-plus"></i> Добавить первое слово
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
   
     <!-- Progress -->
     <section id="progress" class="content-section">
@@ -924,10 +1050,7 @@ body {
 
 <nav class="bottom-nav" id="bottomNav">
   <button class="nav-item active" type="button" data-section="learning">
-    <i class="fas fa-book-reader"></i><span>Изучать</span>
-  </button>
-  <button class="nav-item" type="button" data-section="trainer">
-    <i class="fas fa-comments"></i><span>Тренажер</span>
+    <i class="fas fa-book-reader"></i><span>Урок</span>
   </button>
   <button class="nav-item" type="button" data-section="grammar">
     <i class="fas fa-university"></i><span>Грамматика</span>
@@ -949,7 +1072,9 @@ body {
 <script src="oxford_words_data.js"></script>
 <script src="sentences-data.js"></script>
 <script src="grammar.js"></script> 
-<script src="test.js"></script>
+<script src="app.js"></script>
+<script src="auth_no_sync.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -1406,35 +1531,137 @@ function setLang(from, to){
   }
 </script>
 <script>
-// Скрываем основной контент до загрузки
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('.app-container').style.visibility = 'hidden';
-});
+(function () {
+  'use strict';
 
-// Функция скрытия прелоадера
-function hidePreloader() {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-        preloader.classList.add('done');
-        document.querySelector('.app-container').style.visibility = 'visible';
-        
-        setTimeout(() => {
-            if (preloader.parentNode) {
-                preloader.style.display = 'none';
-            }
-        }, 800);
+  var loadingLayer = document.getElementById('loading-layer');
+  var mascotFloat  = document.getElementById('mascotFloat');
+  var mascotScale  = document.getElementById('mascotScale');
+  var fadeGroup    = document.getElementById('fadeGroup');
+  var tipsGroup    = document.getElementById('tipsGroup');
+  var shockwave    = document.getElementById('shockwave');
+  var tipElement   = document.getElementById('randomTip');
+  var textFillWrap = document.getElementById('textFillWrap');
+  var appContainer = document.querySelector('.app-container');
+
+  // Если оверлея почему-то нет — просто показываем приложение
+  if (!loadingLayer) {
+    if (appContainer) appContainer.style.visibility = 'visible';
+    return;
+  }
+
+  var finished = false;
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Режим слабого устройства
+  (function () {
+    var mem = navigator.deviceMemory, cores = navigator.hardwareConcurrency;
+    if ((mem && mem <= 2) || (cores && cores <= 4)) loadingLayer.classList.add('bw-low-end');
+  })();
+
+  // Блокируем скролл, пока виден сплэш
+  document.body.classList.add('bw-splash-lock');
+
+  // Случайный совет
+  var tips = [
+    "Ваш питомец скучает, если вы долго не заходите в приложение 🥺",
+    "Изучайте по 5 новых слов в день — это 1825 слов за год! 🧠",
+    "Включите уведомления, чтобы не пропустить тренировку ⏰",
+    "Повторение — мать учения , не бойтесь повторять старые слова ↺",
+    "Проговаривайте слова вслух — так они запоминаются лучше 🗣️",
+    "Занимайтесь по 10 минут в день — это эффективнее, чем час раз в неделю 📅",
+    "Ошибки — это нормально! Мозг лучше запоминает то, в чём сначала ошибся ✅",
+    "Повторяйте слова перед сном — это помогает закрепить их в долгосрочной памяти 🌙",
+    "Вы можете редактировать слова , если нажмете на иконку с книгой над дорожкой 📖",
+    "Если нет желания что-то учить , то заходите просто поиграть в игры 🎮",
+    "Вы можете поделиться своими словами с другом нажав на 🔗",
+    "Поддерживайте стрик — так проще не бросить учёбу 📈"
+  ];
+  if (tipElement) tipElement.textContent = tips[Math.floor(Math.random() * tips.length)];
+
+  function setProgress(p) {
+    var c = Math.max(0, Math.min(100, p));
+    if (textFillWrap) textFillWrap.style.width = c + '%';
+  }
+
+  function revealApp() {
+    if (appContainer) appContainer.style.visibility = 'visible';
+    document.body.classList.remove('bw-splash-lock');
+  }
+
+  function positionShockwave() {
+    if (!mascotFloat || !shockwave) return;
+    var r = mascotFloat.getBoundingClientRect();
+    shockwave.style.left = (r.left + r.width / 2) + 'px';
+    shockwave.style.top  = (r.top + r.height / 2) + 'px';
+  }
+
+  function triggerWowEffect() {
+    if (finished) return;
+    finished = true;
+
+    if (prefersReducedMotion) {
+      revealApp();
+      loadingLayer.classList.add('bw-fade-out');
+      setTimeout(function () { if (loadingLayer.parentNode) loadingLayer.parentNode.removeChild(loadingLayer); }, 450);
+      return;
     }
-}
 
-// Ждем загрузки ВСЕХ ресурсов
-window.addEventListener('load', function() {
-    setTimeout(hidePreloader, 2500); // Минимум 2.5 секунды
-});
+    if (fadeGroup) fadeGroup.classList.add('hidden');
+    if (tipsGroup) tipsGroup.classList.add('hidden');
 
-// Фолбэк: если что-то пошло не так
-setTimeout(function() {
-    hidePreloader();
-}, 4000);
+    setTimeout(function () {
+      if (mascotFloat) mascotFloat.classList.add('frozen');
+      if (mascotScale) mascotScale.classList.add('frozen', 'anticipate');
+    }, 160);
+
+    setTimeout(function () {
+      if (mascotScale) { mascotScale.classList.remove('anticipate'); mascotScale.classList.add('zoom-in'); }
+    }, 320);
+
+    setTimeout(function () {
+      if (mascotScale) { mascotScale.classList.remove('zoom-in'); mascotScale.classList.add('poof'); }
+      positionShockwave();
+      if (shockwave) shockwave.classList.add('explode');
+    }, 740);
+
+    setTimeout(function () {
+      revealApp();
+      loadingLayer.classList.add('bw-fade-out');
+    }, 890);
+
+    setTimeout(function () {
+      if (loadingLayer.parentNode) loadingLayer.parentNode.removeChild(loadingLayer);
+    }, 1500);
+  }
+
+  // === Реальная загрузка: ждём window.load + минимум времени ===
+  var MIN_MS = 2200;
+  var start = performance.now();
+  var appReady = false;
+  window.addEventListener('load', function () { appReady = true; }, { once: true });
+
+  function tick(now) {
+    var elapsed = now - start;
+    // прогресс асимптотически ползёт к ~92%, пока приложение реально грузится
+    setProgress(92 * (1 - Math.exp(-elapsed / 900)));
+    if (appReady && elapsed >= MIN_MS) {
+      setProgress(100);
+      requestAnimationFrame(triggerWowEffect);
+    } else {
+      requestAnimationFrame(tick);
+    }
+  }
+  requestAnimationFrame(tick);
+
+  // Фолбэк: если load завис или что-то пошло не так
+  setTimeout(function () {
+    if (!finished) { setProgress(100); triggerWowEffect(); }
+  }, 6000);
+
+  window.addEventListener('resize', function () { if (!finished) positionShockwave(); });
+  positionShockwave();
+})();
 </script>
 
 <!-- === МОДАЛКА ЭКСПОРТА (выбор слов) === -->
