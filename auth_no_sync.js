@@ -11,8 +11,8 @@ function getAuthRedirectBase() {
     if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) {
         return 'bewords://';
     }
-    // 🆕 ИСПРАВЛЕНИЕ: Возвращаем только origin без pathname
-    return window.location.origin;
+    // ✅ Возвращаем домен + путь, чтобы оказаться на той же странице
+    return window.location.origin + window.location.pathname;
 }
 
 // ✅ КЛЮЧЕВОЕ: detectSessionInUrl + autoRefreshToken
