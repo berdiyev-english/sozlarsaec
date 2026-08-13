@@ -3,15 +3,16 @@ const CONSENT_VERSION = 'v1.0-2026-08-09';
 const PRIVACY_URL = 'https://bewords.ru/privacy-policy';
 const AGREEMENT_URL = 'https://bewords.ru/user-agreement';
 
-var supabaseUrl = 'https://dyiwuslfjnvirbxfafuq.supabase.co';
-var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5aXd1c2xmam52aXJieGZhZnVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MTU1MTEsImV4cCI6MjA5MDM5MTUxMX0.c61rc2C2YOWCMF0JdmvdcrsCdoyfJNOkFLDoxZN1N5U';
+var supabaseUrl = 'https://api.bewords.ru';
+var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzg2MzU4ODQ3LCJleHAiOjIxMDE3MTg4NDd9.-U9BDkhwCoa7IKTRzRSx7ovFomQI9hbLZCoAOYaFWtc';
 
 var SITE_URL = 'https://bewords.ru/';
 function getAuthRedirectBase() {
-    // В приложении ссылки из писем ведут на сайт (их открывают в браузере/почте)
+    // Если это Capacitor приложение — возвращаем URL scheme
     if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) {
-        return SITE_URL;
+        return 'bewords://';  // ← URL scheme для Android/iOS
     }
+    // Если это обычный браузер — возвращаем текущий URL страницы
     return window.location.origin + window.location.pathname;
 }
 
@@ -38,7 +39,7 @@ class AuthManager {
 
         this._lastAuthEvent = null;
         this._lastEventTime = 0;
-
+        this.isProcessing = false;  // 🆕 защита от двойного клика
         this.init();
     }
 
@@ -71,24 +72,9 @@ async init() {
             const wasLogin = sessionStorage.getItem('_authAction') === 'login';
 
             // 🆕 Если это была первая регистрация через Google — логируем согласие
+                        // 🆕 Умное логирование согласия для Google (с кэшем, без лишних запросов)
             if (wasGoogle && session?.user) {
-                try {
-                    const { data: existingConsent } = await supabaseClient
-                        .from('consent_log')
-                        .select('id')
-                        .eq('user_id', session.user.id)
-                        .limit(1);
-
-                    if (!existingConsent || existingConsent.length === 0) {
-                        await this.logConsent(
-                            session.user, 
-                            session.user.email, 
-                            'oauth_registration'
-                        );
-                    }
-                } catch (e) {
-                    console.warn('Ошибка при проверке согласия:', e);
-                }
+                await this.ensureConsentLogged(session.user, session.user.email, 'oauth_registration');
             }
 
             if ((wasGoogle || wasLogin) && typeof app !== 'undefined') {
@@ -102,6 +88,7 @@ async init() {
         }
 
         if (event === 'SIGNED_OUT') {
+            localStorage.removeItem('bewords_consent_cache');  // 🆕 сброс кэша согласия
             const wasLogout = sessionStorage.getItem('_authAction') === 'logout';
             if (wasLogout && typeof app !== 'undefined') {
                 app.showNotification('Вы вышли из аккаунта', 'info');
@@ -118,6 +105,11 @@ async init() {
         // ==========================================
         const { data: { session } } = await supabaseClient.auth.getSession();
         this.currentUser = session ? session.user : null;
+
+                // 🆕 Проверяем, не обновилась ли политика для залогиненного пользователя
+        if (this.currentUser) {
+            await this.checkPolicyUpdateOnLoad();
+        }
 
         // ==========================================
         // 3. Если вернулись с Google OAuth — очищаем URL
@@ -287,8 +279,8 @@ let hookHtml = this.lastCustomMessage
 
 const mainBtnText = this.isLoginMode ? 'Войти в аккаунт' : 'Создать аккаунт';
 
-// 🆕 Чекбокс согласия (только для регистрации и OAuth)
-const consentHtml = !this.isLoginMode ? `
+// 🆕 Галочка показывается ВСЕГДА (и при входе, и при регистрации)
+const consentHtml = `
     <div style="display:flex;align-items:flex-start;gap:8px;margin:15px 0;padding:12px;background:var(--bg-secondary);border-radius:10px;">
         <input type="checkbox" id="consentCheckbox" style="margin-top:2px;width:18px;height:18px;cursor:pointer;accent-color:#10b981;flex-shrink:0;">
         <label for="consentCheckbox" style="font-size:0.82rem;color:var(--text-secondary);line-height:1.4;cursor:pointer;user-select:none;">
@@ -298,7 +290,7 @@ const consentHtml = !this.isLoginMode ? `
             <a href="${AGREEMENT_URL}" target="_blank" rel="noopener" style="color:var(--primary-color);text-decoration:underline;font-weight:600;" onclick="event.stopPropagation()">Пользовательским соглашением</a>
         </label>
     </div>
-` : '';
+`;
 
 modal.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
@@ -313,7 +305,7 @@ modal.innerHTML = `
         <button id="tabRegister" style="flex:1;padding:10px;border:none;border-radius:8px;font-weight:bold;font-size:0.95rem;cursor:pointer;background:${!this.isLoginMode ? 'var(--bg-primary)' : 'transparent'};box-shadow:${!this.isLoginMode ? '0 2px 5px rgba(0,0,0,0.1)' : 'none'};color:var(--text-primary);transition:all 0.2s;">Регистрация</button>
         <button id="tabLogin" style="flex:1;padding:10px;border:none;border-radius:8px;font-weight:bold;font-size:0.95rem;cursor:pointer;background:${this.isLoginMode ? 'var(--bg-primary)' : 'transparent'};box-shadow:${this.isLoginMode ? '0 2px 5px rgba(0,0,0,0.1)' : 'none'};color:var(--text-primary);transition:all 0.2s;">Вход</button>
     </div>
-    <button id="googleLoginBtn" style="width:100%;padding:12px;border-radius:12px;border:2px solid var(--border-color);background:var(--bg-primary);color:var(--text-primary);font-weight:bold;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:15px;${this.isLoginMode ? '' : 'opacity:0.5;cursor:not-allowed;'}">
+    <button id="googleLoginBtn" style="width:100%;padding:12px;border-radius:12px;border:2px solid var(--border-color);background:var(--bg-primary);color:var(--text-primary);font-weight:bold;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:15px;opacity:0.5;cursor:not-allowed;">
         <img src="https://www.svgrepo.com/show/475656/google-color.svg" style="width:20px;height:20px;">
         Продолжить с Google
     </button>
@@ -326,7 +318,7 @@ modal.innerHTML = `
     <input type="password" id="authPassword" placeholder="Пароль" style="width:100%;padding:14px;border-radius:12px;border:1px solid var(--border-color);margin-bottom:10px;background:var(--bg-secondary);color:var(--text-primary);font-size:1rem;">
     ${consentHtml}
     <div id="authError" style="color:#ef4444;font-size:0.85rem;margin-bottom:10px;display:none;text-align:center;font-weight:bold;"></div>
-    <button class="btn btn-primary" id="mainAuthBtn" style="width:100%;font-weight:900;margin-bottom:10px;padding:14px;font-size:1.1rem;box-shadow:0 4px 0 rgba(0,0,0,0.2);${this.isLoginMode ? '' : 'opacity:0.5;cursor:not-allowed;'}">${mainBtnText}</button>
+    <button class="btn btn-primary" id="mainAuthBtn" style="width:100%;font-weight:900;margin-bottom:10px;padding:14px;font-size:1.1rem;box-shadow:0 4px 0 rgba(0,0,0,0.2);opacity:0.5;cursor:not-allowed;">${mainBtnText}</button>
     ${this.isLoginMode
         ? `<div style="text-align:center;margin-top:10px;"><button id="forgotBtn" style="background:none;border:none;color:var(--text-secondary);text-decoration:underline;cursor:pointer;font-size:0.9rem;">Забыли пароль?</button></div>`
         : `<div style="text-align:center;margin-top:10px;"><button id="switchToLoginBtn" style="background:none;border:none;color:var(--text-secondary);text-decoration:underline;cursor:pointer;font-size:0.9rem;">Уже есть аккаунт?</button></div>`
@@ -354,29 +346,32 @@ if (consentCheckbox) {
 
 document.getElementById('tabRegister').onclick = () => { this.isLoginMode = false; this.renderModalInner(); };
 document.getElementById('tabLogin').onclick = () => { this.isLoginMode = true; this.renderModalInner(); };
+// 🆕 Проверка согласия ВСЕГДА (и при входе, и при регистрации)
 document.getElementById('mainAuthBtn').onclick = () => {
-    // 🆕 Проверка согласия для регистрации
-    if (!this.isLoginMode) {
-        const consentCheckbox = document.getElementById('consentCheckbox');
-        if (consentCheckbox && !consentCheckbox.checked) {
-            this.showAuthError('Пожалуйста, согласитесь с условиями');
-            return;
-        }
+    if (this.isProcessing) return;  // 🆕 защита от двойного клика
+
+    const consentCheckbox = document.getElementById('consentCheckbox');
+    if (consentCheckbox && !consentCheckbox.checked) {
+        this.showAuthError('Пожалуйста, согласитесь с условиями');
+        return;
     }
     this.handleAuth(this.isLoginMode ? 'login' : 'register');
 };
 
-// 🆕 Google OAuth с проверкой согласия
+// 🆕 Проверка согласия ВСЕГДА
 document.getElementById('googleLoginBtn').onclick = async () => {
-    // 🆕 Если это регистрация (не вход), требуем согласие
-    if (!this.isLoginMode) {
-        const consentCheckbox = document.getElementById('consentCheckbox');
-        if (consentCheckbox && !consentCheckbox.checked) {
-            this.showAuthError('Пожалуйста, согласитесь с условиями');
-            return;
-        }
+    if (this.isProcessing) return;  // 🆕 защита от двойного клика
+
+    const consentCheckbox = document.getElementById('consentCheckbox');
+    if (consentCheckbox && !consentCheckbox.checked) {
+        this.showAuthError('Пожалуйста, согласитесь с условиями');
+        return;
     }
     
+    const googleBtn = document.getElementById('googleLoginBtn');
+    this.isProcessing = true;
+    this._setLoading(true, googleBtn);
+
     sessionStorage.setItem('_authAction', this.isLoginMode ? 'login' : 'google');
     const { error } = await supabaseClient.auth.signInWithOAuth({
         provider: 'google',
@@ -387,7 +382,10 @@ document.getElementById('googleLoginBtn').onclick = async () => {
     if (error) {
         sessionStorage.removeItem('_authAction');
         this.showAuthError(error.message);
+        this.isProcessing = false;
+        this._setLoading(false, googleBtn);
     }
+    // При успехе — редирект на Google, разблокировка не нужна
 };
 
 if (this.isLoginMode) {
@@ -455,12 +453,11 @@ async logConsent(user, email, consentType = 'registration') {
         const { error } = await supabaseClient
             .from('consent_log')
             .insert({
-                user_id: user.id,
-                email: email,
-                consent_version: CONSENT_VERSION,
-                consent_type: consentType,
-                ip_address: ipAddress,
-                user_agent: userAgent
+            user_id: user.id,
+            consent_version: CONSENT_VERSION,
+            consent_type: consentType,
+            ip_address: ipAddress,
+            user_agent: userAgent
             });
 
         if (error) {
@@ -473,6 +470,161 @@ async logConsent(user, email, consentType = 'registration') {
     }
 }
 
+       // ==========================================
+    // 🆕 УМНОЕ ЛОГИРОВАНИЕ СОГЛАСИЯ (с кэшем в localStorage)
+    // ==========================================
+    async ensureConsentLogged(user, email, consentType) {
+        const CACHE_KEY = 'bewords_consent_cache';
+        try {
+            // 1. Проверяем локальный кэш (0 запросов к серверу)
+            let cache = null;
+            try { cache = JSON.parse(localStorage.getItem(CACHE_KEY)); } catch(e) {}
+            if (cache && cache.user_id === user.id && cache.version === CONSENT_VERSION) {
+                return; // согласие текущей версии уже есть
+            }
+
+            // 2. Кэш не совпал → один запрос к серверу
+            const { data: allConsents, error } = await supabaseClient
+                .from('consent_log')
+                .select('consent_version')
+                .eq('user_id', user.id);
+
+            if (error) throw error;
+
+            const hasCurrentVersion = (allConsents || []).some(c => c.consent_version === CONSENT_VERSION);
+            if (hasCurrentVersion) {
+                // согласие есть → кэшируем, чтобы больше не дёргать сервер
+                localStorage.setItem(CACHE_KEY, JSON.stringify({ user_id: user.id, version: CONSENT_VERSION }));
+                return;
+            }
+
+            // 3. Согласия текущей версии нет → логируем
+            //    Если были старые версии → это обновление политики
+            const finalType = (allConsents && allConsents.length > 0) ? 'policy_update' : consentType;
+            await this.logConsent(user, email, finalType);
+
+            // 4. Кэшируем после успешной записи
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ user_id: user.id, version: CONSENT_VERSION }));
+        } catch (e) {
+            console.warn('Ошибка при проверке/логировании согласия:', e);
+        }
+    }
+
+    // ==========================================
+    // 🆕 ПРОВЕРКА ОБНОВЛЕНИЯ ПОЛИТИКИ ПРИ ЗАГРУЗКЕ ПРИЛОЖЕНИЯ
+    // ==========================================
+    async checkPolicyUpdateOnLoad() {
+        if (!this.currentUser) return;
+        const CACHE_KEY = 'bewords_consent_cache';
+        try {
+            let cache = null;
+            try { cache = JSON.parse(localStorage.getItem(CACHE_KEY)); } catch(e) {}
+            if (cache && cache.user_id === this.currentUser.id && cache.version === CONSENT_VERSION) {
+                return; // всё актуально
+            }
+
+            const { data: allConsents, error } = await supabaseClient
+                .from('consent_log')
+                .select('consent_version')
+                .eq('user_id', this.currentUser.id);
+
+            if (error) throw error;
+
+            const hasCurrentVersion = (allConsents || []).some(c => c.consent_version === CONSENT_VERSION);
+            if (hasCurrentVersion) {
+                localStorage.setItem(CACHE_KEY, JSON.stringify({ user_id: this.currentUser.id, version: CONSENT_VERSION }));
+                return;
+            }
+
+            // Политика обновилась, а пользователь ещё не подтвердил → показать модалку
+            this.showPolicyUpdateModal();
+        } catch (e) {
+            console.warn('Ошибка проверки версии политики:', e);
+        }
+    }
+
+    // ==========================================
+    // 🆕 МОДАЛКА ПОВТОРНОГО СОГЛАСИЯ (при обновлении политики)
+    // ==========================================
+    showPolicyUpdateModal() {
+        this.closeModal();
+        const overlay = document.createElement('div');
+        overlay.id = 'authOverlay';
+        overlay.style.cssText = 'position:fixed;inset:0;z-index:9999999;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;padding:20px;';
+        const modal = document.createElement('div');
+        modal.style.cssText = 'background:var(--bg-primary);border-radius:16px;padding:24px;max-width:400px;width:100%;box-shadow:var(--shadow-lg);text-align:center;';
+        modal.innerHTML = `
+            <h2 style="margin-top:0;">📜 Обновление политики</h2>
+            <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.4;margin-bottom:20px;">
+                Мы обновили Политику конфиденциальности и Пользовательское соглашение.
+                Пожалуйста, ознакомьтесь и подтвердите согласие, чтобы продолжить использовать BeWords.
+            </p>
+            <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:20px;padding:12px;background:var(--bg-secondary);border-radius:10px;text-align:left;">
+                <input type="checkbox" id="policyUpdateCheckbox" style="margin-top:2px;width:18px;height:18px;cursor:pointer;accent-color:#10b981;flex-shrink:0;">
+                <label for="policyUpdateCheckbox" style="font-size:0.85rem;color:var(--text-secondary);line-height:1.4;cursor:pointer;">
+                    Я согласен с обновлённой 
+                    <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="color:var(--primary-color);text-decoration:underline;">Политикой конфиденциальности</a> 
+                    и 
+                    <a href="${AGREEMENT_URL}" target="_blank" rel="noopener" style="color:var(--primary-color);text-decoration:underline;">Пользовательским соглашением</a>
+                </label>
+            </div>
+            <button class="btn btn-primary" id="acceptPolicyBtn" style="width:100%;font-weight:900;padding:14px;opacity:0.5;cursor:not-allowed;">Принять и продолжить</button>
+        `;
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        const checkbox = document.getElementById('policyUpdateCheckbox');
+        const acceptBtn = document.getElementById('acceptPolicyBtn');
+
+        checkbox.addEventListener('change', () => {
+            acceptBtn.style.opacity = checkbox.checked ? '1' : '0.5';
+            acceptBtn.style.cursor = checkbox.checked ? 'pointer' : 'not-allowed';
+        });
+
+        acceptBtn.onclick = async () => {
+            if (!checkbox.checked || this.isProcessing) return;
+            this.isProcessing = true;
+            acceptBtn.disabled = true;
+            acceptBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Сохраняем...';
+            try {
+                await this.logConsent(this.currentUser, this.currentUser.email, 'policy_update');
+                localStorage.setItem('bewords_consent_cache', JSON.stringify({ user_id: this.currentUser.id, version: CONSENT_VERSION }));
+                if (typeof app !== 'undefined') app.showNotification('Согласие обновлено!', 'success');
+                overlay.remove();
+            } catch(e) {
+                console.warn(e);
+                acceptBtn.disabled = false;
+                acceptBtn.textContent = 'Принять и продолжить';
+            } finally {
+                this.isProcessing = false;
+            }
+        };
+    }
+
+    // ==========================================
+    // 🆕 БЛОКИРОВКА/РАЗБЛОКИРОВКА КНОПОК (защита от двойного клика)
+    // ==========================================
+    _setLoading(loading, btn) {
+        if (!btn) return;
+        const consent = document.getElementById('consentCheckbox');
+        const consentOk = consent ? consent.checked : true;
+
+        btn.disabled = loading;
+        if (loading) {
+            if (!btn.dataset.origHtml) btn.dataset.origHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Подождите...';
+            btn.style.opacity = '0.6';
+            btn.style.cursor = 'wait';
+        } else {
+            if (btn.dataset.origHtml) {
+                btn.innerHTML = btn.dataset.origHtml;
+                delete btn.dataset.origHtml;
+            }
+            btn.style.opacity = consentOk ? '1' : '0.5';
+            btn.style.cursor = consentOk ? 'pointer' : 'not-allowed';
+        }
+    }
+
     closeModal() {
         this.lastCustomMessage = null;
         this.isResetMode = false;
@@ -481,66 +633,96 @@ async logConsent(user, email, consentType = 'registration') {
     }
 
     async handleAuth(type) {
-    const email = document.getElementById('authEmail').value.trim();
-    const password = document.getElementById('authPassword') ? document.getElementById('authPassword').value.trim() : '';
-    const errorEl = document.getElementById('authError');
+        if (this.isProcessing) return;  // 🆕 защита от двойного клика
 
-    if (!email) { errorEl.textContent = 'Введите Email'; errorEl.style.color = '#ef4444'; errorEl.style.display = 'block'; return; }
+        const email = document.getElementById('authEmail').value.trim();
+        const password = document.getElementById('authPassword') ? document.getElementById('authPassword').value.trim() : '';
+        const errorEl = document.getElementById('authError');
+        const mainBtn = document.getElementById('mainAuthBtn');
 
-    if (type === 'reset') {
+        if (!email) { errorEl.textContent = 'Введите Email'; errorEl.style.color = '#ef4444'; errorEl.style.display = 'block'; return; }
+
+        // === СБРОС ПАРОЛЯ ===
+        if (type === 'reset') {
+            this.isProcessing = true;
+            this._setLoading(true, mainBtn);
+            errorEl.style.display = 'none';
+            try {
+                const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+                    redirectTo: getAuthRedirectBase()
+                });
+                if (error) { errorEl.textContent = error.message; errorEl.style.color = '#ef4444'; }
+                else { errorEl.innerHTML = '✅ Ссылка отправлена!'; errorEl.style.color = '#10b981'; }
+                errorEl.style.display = 'block';
+            } finally {
+                this.isProcessing = false;
+                this._setLoading(false, mainBtn);
+            }
+            return;
+        }
+
+        if (!password) { errorEl.textContent = 'Введите пароль'; errorEl.style.color = '#ef4444'; errorEl.style.display = 'block'; return; }
+
         errorEl.style.display = 'none';
-        const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-           redirectTo: getAuthRedirectBase()
-        });
-        if (error) { errorEl.textContent = error.message; errorEl.style.color = '#ef4444'; }
-        else { errorEl.innerHTML = '✅ Ссылка отправлена!'; errorEl.style.color = '#10b981'; }
-        errorEl.style.display = 'block';
-        return;
-    }
 
-    if (!password) { errorEl.textContent = 'Введите пароль'; errorEl.style.color = '#ef4444'; errorEl.style.display = 'block'; return; }
-
-    errorEl.style.display = 'none';
-    let result;
-
-    if (type === 'register') {
-        // 🆕 Проверка согласия перед регистрацией
+        // Проверка галочки согласия
         const consentCheckbox = document.getElementById('consentCheckbox');
-        if (consentCheckbox && !consentCheckbox.checked) {
+        if ((type === 'register' || type === 'login') && consentCheckbox && !consentCheckbox.checked) {
             errorEl.textContent = 'Необходимо согласие с условиями';
             errorEl.style.color = '#ef4444';
             errorEl.style.display = 'block';
             return;
         }
 
-        result = await supabaseClient.auth.signUp({ email, password });
-        
-        if (!result.error && result.data.user) {
-            // 🆕 Логируем согласие в БД
-            await this.logConsent(result.data.user, email, 'registration');
-            
-            if (!result.data.session) {
-                errorEl.style.color = '#10b981';
-                errorEl.innerHTML = '🎉 Письмо отправлено! Проверьте почту.';
-                errorEl.style.display = 'block';
-                return;
-            }
-            sessionStorage.setItem('_authAction', 'login');
-        }
-    } else {
-        sessionStorage.setItem('_authAction', 'login');
-        result = await supabaseClient.auth.signInWithPassword({ email, password });
-    }
+        // 🆕 Блокируем кнопку на время запроса
+        this.isProcessing = true;
+        this._setLoading(true, mainBtn);
 
-    if (result.error) {
-        sessionStorage.removeItem('_authAction');
-        errorEl.style.color = '#ef4444';
-        errorEl.textContent = result.error.message.includes('Invalid login')
-            ? 'Неверный Email или пароль'
-            : result.error.message;
-        errorEl.style.display = 'block';
+        let result;
+        try {
+            if (type === 'register') {
+                result = await supabaseClient.auth.signUp({ email, password });
+                
+                if (!result.error && result.data.user) {
+                    // Регистрация = всегда первый раз → логируем напрямую
+                    await this.logConsent(result.data.user, email, 'registration');
+                    // Сразу кэшируем, чтобы первый вход не делал лишний запрос
+                    localStorage.setItem('bewords_consent_cache', JSON.stringify({
+                        user_id: result.data.user.id,
+                        version: CONSENT_VERSION
+                    }));
+                    
+                    if (!result.data.session) {
+                        errorEl.style.color = '#10b981';
+                        errorEl.innerHTML = '🎉 Письмо отправлено! Проверьте почту.';
+                        errorEl.style.display = 'block';
+                        return;
+                    }
+                    sessionStorage.setItem('_authAction', 'login');
+                }
+            } else {
+                sessionStorage.setItem('_authAction', 'login');
+                result = await supabaseClient.auth.signInWithPassword({ email, password });
+
+                // 🆕 Логирование согласия при обычном входе (умное: только если нет текущей версии)
+                if (!result.error && result.data.user) {
+                    await this.ensureConsentLogged(result.data.user, email, 'login_consent');
+                }
+            }
+
+            if (result.error) {
+                sessionStorage.removeItem('_authAction');
+                errorEl.style.color = '#ef4444';
+                errorEl.textContent = result.error.message.includes('Invalid login')
+                    ? 'Неверный Email или пароль'
+                    : result.error.message;
+                errorEl.style.display = 'block';
+            }
+        } finally {
+            this.isProcessing = false;
+            this._setLoading(false, mainBtn);
+        }
     }
-}
 }
 
 window.authManager = new AuthManager();
