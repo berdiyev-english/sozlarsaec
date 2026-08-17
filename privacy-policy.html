@@ -4,992 +4,296 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Политика конфиденциальности — BeWords</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded@5.0.0/500.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded@5.0.0/700.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/rubik@5.0.0/400.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/rubik@5.0.0/500.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/rubik@5.0.0/600.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/rubik@5.0.0/700.css">
 <style>
-:root{
-  --green:#58CC02; --green-dark:#46A302; --green-light:#D7FFB8; --green-bg:#EAF8DC;
-  --blue:#1CB0F6; --blue-dark:#1899D6; --blue-light:#DDF4FF;
-  --yellow:#FFC200; --yellow-dark:#D9A400; --yellow-light:#FFF3D6;
-  --red:#FF4B4B; --red-dark:#E03B3B; --red-light:#FFE0E0;
-  --purple:#CE82FF; --purple-dark:#A568CC; --purple-light:#F5E8FF;
-  --orange:#FF9600; --orange-dark:#DB8100; --orange-light:#FFEBD1;
-  --ink:#3C3C3C; --ink-soft:#777777; --line:#E5E5E5; --card:#FFFFFF; --bg:#F6FAF0;
-  --radius:16px;
-  --shadow-card:0 4px 0 rgba(0,0,0,.06);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Rubik',system-ui,sans-serif;
-  background:var(--bg);
-  color:var(--ink);
-  line-height:1.6;
-  overflow-x:hidden;
-}
-body::before{
-  content:""; position:fixed; inset:0; z-index:-2;
-  background-image:radial-gradient(rgba(88,204,2,.10) 1.5px, transparent 1.5px);
-  background-size:26px 26px;
-}
-#bgLayer{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
-.float-letter{
-  position:absolute; bottom:-60px;
-  font-family:'Unbounded',sans-serif; font-weight:700;
-  opacity:.10; user-select:none;
-  animation:floatUp linear infinite;
-}
-@keyframes floatUp{0%{transform:translateY(105vh) rotate(0deg)}100%{transform:translateY(-15vh) rotate(340deg)}}
-
-/* ---------- TOP BAR ---------- */
-.topbar{
-  position:sticky; top:0; z-index:60;
-  background:#fff; border-bottom:2px solid var(--line);
-}
-.topbar-inner{
-  max-width:1180px; margin:0 auto; padding:10px 16px;
-  display:flex; align-items:center; gap:14px;
-}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
-.brand-logo{
-  width:38px;height:38px;border-radius:12px;background:var(--green);
-  box-shadow:0 3px 0 var(--green-dark);
-  display:grid;place-items:center;flex:none;
-}
-.brand-logo svg{width:22px;height:22px}
-.brand-name{font-family:'Unbounded';font-weight:700;font-size:17px;letter-spacing:.2px}
-.brand-name em{font-style:normal;color:var(--green)}
-.progress-wrap{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
-.progress-track{
-  flex:1;height:14px;border-radius:999px;background:#E9EDE4;
-  border:2px solid #DDE3D5;overflow:hidden;position:relative;
-}
-.progress-fill{
-  height:100%;width:0%;border-radius:999px;
-  background:linear-gradient(90deg,var(--green),#89E219);
-  position:relative;transition:width .15s linear;
-}
-.progress-fill::after{
-  content:"";position:absolute;left:8px;right:8px;top:2px;height:4px;
-  border-radius:999px;background:rgba(255,255,255,.45);
-}
-.progress-label{
-  font-family:'Unbounded';font-weight:700;font-size:11px;color:var(--green-dark);
-  min-width:42px;text-align:right;
-}
-.top-actions{display:flex;gap:8px}
-.icon-btn{
-  width:40px;height:40px;border-radius:12px;border:2px solid var(--line);
-  background:#fff;cursor:pointer;display:grid;place-items:center;
-  box-shadow:0 3px 0 var(--line);transition:transform .12s,box-shadow .12s;
-  color:var(--ink);
-}
-.icon-btn:hover{border-color:var(--green);color:var(--green)}
-.icon-btn:active{transform:translateY(3px);box-shadow:0 0 0 var(--line)}
-.icon-btn svg{width:18px;height:18px}
-
-/* ---------- HERO ---------- */
-.hero{max-width:1180px;margin:0 auto;padding:44px 16px 26px}
-.hero-inner{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
-.chip{
-  display:inline-flex;align-items:center;gap:6px;
-  background:#fff;border:2px solid var(--line);border-radius:999px;
-  padding:6px 13px;font-size:13px;font-weight:600;color:var(--ink);
-  box-shadow:0 2px 0 var(--line);
-}
-.chip-date{border-color:var(--green);color:var(--green-dark);background:var(--green-bg);box-shadow:0 2px 0 var(--green-light)}
-.hero-title{
-  font-family:'Unbounded';font-weight:700;
-  font-size:clamp(24px,5vw,42px);
-  line-height:1.18;margin:18px 0 14px;text-transform:uppercase;
-}
-.hero-title .mask{display:block;overflow:hidden}
-.hero-title .mask > span{display:inline-block;transform:translateY(115%);animation:riseIn .8s cubic-bezier(.2,.7,.2,1) forwards}
-.hero-title .mask:nth-child(2) > span{animation-delay:.18s;color:var(--green)}
-@keyframes riseIn{to{transform:translateY(0)}}
-.hero-sub{color:var(--ink-soft);font-size:16px;max-width:520px;margin-bottom:16px}
-.hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
-.btn{
-  font-family:'Rubik';font-weight:700;font-size:15px;
-  border:none;border-radius:14px;padding:13px 22px;cursor:pointer;
-  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
-  transition:transform .12s,box-shadow .12s,filter .12s;
-  letter-spacing:.3px;
-}
-.btn:active{transform:translateY(4px)!important;box-shadow:none!important}
-.btn-green{background:var(--green);color:#fff;box-shadow:0 4px 0 var(--green-dark);text-transform:uppercase}
-.btn-green:hover{filter:brightness(1.06)}
-.btn-white{background:#fff;color:var(--green-dark);border:2px solid var(--line);box-shadow:0 4px 0 var(--line);text-transform:uppercase}
-.btn-white:hover{border-color:var(--green)}
-.btn-blue{background:var(--blue);color:#fff;box-shadow:0 4px 0 var(--blue-dark);text-transform:uppercase}
-.hero-art{position:relative;display:grid;place-items:center}
-.hero-art img{
-  width:min(340px,80%);border-radius:24px;
-  animation:bob 4.5s ease-in-out infinite;
-  filter:drop-shadow(0 14px 24px rgba(88,204,2,.25));
-}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-.spark{position:absolute;font-size:22px;animation:twinkle 2.2s ease-in-out infinite}
-.spark.sp1{top:8%;left:12%;color:var(--yellow)}
-.spark.sp2{top:16%;right:10%;color:var(--blue);animation-delay:.6s}
-.spark.sp3{bottom:10%;left:18%;color:var(--purple);animation-delay:1.1s}
-@keyframes twinkle{0%,100%{transform:scale(.7);opacity:.5}50%{transform:scale(1.25);opacity:1}}
-
-/* ---------- LAYOUT ---------- */
-.layout{
-  max-width:1180px;margin:0 auto;padding:10px 16px 60px;
-  display:grid;grid-template-columns:280px 1fr;gap:26px;align-items:start;
-}
-/* TOC */
-.toc{
-  position:sticky;top:78px;background:#fff;border:2px solid var(--line);
-  border-radius:var(--radius);box-shadow:var(--shadow-card);overflow:hidden;
-}
-.toc-toggle{
-  width:100%;display:none;align-items:center;justify-content:space-between;
-  background:var(--green);color:#fff;border:none;cursor:pointer;
-  font-family:'Unbounded';font-weight:700;font-size:13px;padding:14px 16px;
-  text-transform:uppercase;letter-spacing:.4px;
-}
-.toc-toggle svg{width:16px;height:16px;transition:transform .3s}
-.toc.open .toc-toggle svg{transform:rotate(180deg)}
-.toc-list{padding:12px;display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 120px);overflow:auto}
-.toc-list a{
-  display:flex;align-items:center;gap:10px;text-decoration:none;
-  color:var(--ink);font-weight:600;font-size:14px;
-  padding:8px 10px;border-radius:12px;transition:background .2s,color .2s;
-}
-.toc-list a .n{
-  font-family:'Unbounded';font-weight:700;font-size:11px;
-  width:26px;height:26px;border-radius:9px;flex:none;
-  display:grid;place-items:center;background:#F0F3EC;color:var(--ink-soft);
-  border:2px solid var(--line);transition:all .25s;
-}
-.toc-list a:hover{background:var(--green-bg);color:var(--green-dark)}
-.toc-list a.active{background:var(--green-light);color:var(--green-dark)}
-.toc-list a.active .n{background:var(--green);color:#fff;border-color:var(--green);box-shadow:0 2px 0 var(--green-dark)}
-.toc-list a.done .n{background:var(--green);color:#fff;border-color:var(--green)}
-
-/* ---------- SECTIONS ---------- */
-.doc{display:flex;flex-direction:column;gap:22px;min-width:0}
-.sec{
-  background:var(--card);border:2px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow-card);overflow:hidden;scroll-margin-top:86px;
-  border-top:6px solid var(--acc,var(--green));
-}
-.acc-green{--acc:var(--green);--accd:var(--green-dark);--accl:var(--green-light);--accbg:var(--green-bg)}
-.acc-blue{--acc:var(--blue);--accd:var(--blue-dark);--accl:var(--blue-light);--accbg:#EAF7FF}
-.acc-yellow{--acc:var(--yellow);--accd:var(--yellow-dark);--accl:var(--yellow-light);--accbg:#FFF9E8}
-.acc-purple{--acc:var(--purple);--accd:var(--purple-dark);--accl:var(--purple-light);--accbg:#FAF2FF}
-.acc-orange{--acc:var(--orange);--accd:var(--orange-dark);--accl:var(--orange-light);--accbg:#FFF6EA}
-.acc-red{--acc:var(--red);--accd:var(--red-dark);--accl:var(--red-light);--accbg:#FFF1F1}
-.sec-head{
-  display:flex;align-items:center;gap:14px;
-  padding:20px 22px 0;
-}
-.sec-badge{
-  font-family:'Unbounded';font-weight:700;font-size:16px;color:#fff;
-  width:42px;height:42px;border-radius:14px;flex:none;
-  background:var(--acc);box-shadow:0 3px 0 var(--accd);
-  display:grid;place-items:center;
-}
-.sec-title{font-family:'Unbounded';font-weight:700;font-size:clamp(15px,2.6vw,20px);text-transform:uppercase;letter-spacing:.3px}
-.sec-title .mask{display:block;overflow:hidden}
-.sec-title .mask > span{display:inline-block;transform:translateY(130%);transition:transform .7s cubic-bezier(.2,.7,.2,1) .1s}
-.sec.in .sec-title .mask > span{transform:translateY(0)}
-.sec-body{padding:16px 22px 24px;display:flex;flex-direction:column;gap:14px}
-.clause{display:flex;gap:12px;align-items:flex-start}
-.cl-num{
-  font-family:'Unbounded';font-weight:700;font-size:11px;color:#fff;
-  background:var(--acc);box-shadow:0 2px 0 var(--accd);
-  border-radius:8px;padding:4px 8px;flex:none;margin-top:2px;white-space:nowrap;
-}
-.clause p{font-size:15px}
-.clause > div{min-width:0}
-.list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px}
-.list li{
-  display:flex;gap:10px;align-items:flex-start;font-size:15px;
-  background:var(--accbg,#F7FBF2);border:2px solid var(--line);
-  border-radius:12px;padding:10px 14px;
-}
-.list li .ic{flex:none;font-size:16px;line-height:1.4}
-.list li b{font-weight:700}
-a.mail{color:var(--green-dark);font-weight:700;text-decoration:none;border-bottom:2px dashed var(--green)}
-a.mail:hover{border-bottom-style:solid}
-.callout{
-  border-radius:14px;padding:14px 16px;font-size:15px;
-  border:2px solid;display:flex;gap:10px;align-items:flex-start;
-}
-.callout .ic{flex:none;font-size:17px}
-.callout-green{background:var(--green-bg);border-color:var(--green);color:#3E7A0E}
-.callout-yellow{background:var(--yellow-light);border-color:var(--yellow);color:#8A6A00}
-.callout-blue{background:var(--blue-light);border-color:var(--blue);color:#0F6E9C}
-.callout-red{background:var(--red-light);border-color:var(--red);color:#B02A2A}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:8px}
-.tile{
-  background:#fff;border:2px solid var(--line);border-radius:14px;
-  padding:14px;display:flex;flex-direction:column;gap:6px;
-  box-shadow:0 3px 0 var(--line);transition:transform .2s,box-shadow .2s;
-}
-.tile:hover{transform:translateY(-4px);box-shadow:0 6px 0 var(--line)}
-.tile .t-ic{font-size:24px}
-.tile .t-title{font-weight:700;font-size:14px}
-.tile .t-text{font-size:13px;color:var(--ink-soft)}
-.party{
-  display:flex;gap:12px;align-items:flex-start;
-  border:2px solid var(--line);border-radius:14px;padding:12px 14px;
-  background:#fff;box-shadow:0 3px 0 var(--line);
-}
-.party .p-logo{
-  width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;
-  font-weight:700;font-size:17px;color:#fff;box-shadow:0 2px 0 rgba(0,0,0,.15);
-}
-.party p{font-size:14px}
-.party .p-name{font-weight:700;font-size:15px;display:block}
-.check-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px}
-.check-list li{
-  display:flex;gap:10px;align-items:flex-start;font-size:15px;
-  background:var(--green-bg);border:2px solid var(--green-light);border-radius:12px;padding:10px 14px;
-}
-.check-list .ck{
-  flex:none;width:22px;height:22px;border-radius:8px;margin-top:1px;
-  background:var(--green);box-shadow:0 2px 0 var(--green-dark);
-  display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700;
-}
-.check-list .cn{font-family:'Unbounded';font-size:10px;font-weight:700;color:var(--green-dark);margin-top:4px;white-space:nowrap}
-.age-badge{
-  font-family:'Unbounded';font-weight:700;font-size:30px;color:#fff;
-  background:var(--red);box-shadow:0 4px 0 var(--red-dark);
-  border-radius:16px;padding:10px 20px;display:inline-block;
-}
-
-/* table */
-.table-wrap{overflow-x:auto;border:2px solid var(--line);border-radius:14px;margin-top:6px}
-.data-table{width:100%;border-collapse:collapse;min-width:640px;font-size:14px}
-.data-table th{
-  background:var(--green);color:#fff;font-family:'Unbounded';font-weight:700;
-  font-size:12px;text-transform:uppercase;letter-spacing:.4px;
-  padding:12px 14px;text-align:left;
-}
-.data-table td{padding:12px 14px;border-top:2px solid #EEF2E9;vertical-align:top}
-.data-table tbody tr:nth-child(even){background:#F8FBF4}
-.data-table tbody tr:hover{background:var(--green-bg)}
-
-/* reveal */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
-.reveal.in{opacity:1;transform:none}
-
-/* end card */
-.end-card{
-  background:linear-gradient(160deg,#FFFFFF 0%,var(--green-bg) 100%);
-  border:2px solid var(--green);border-radius:20px;box-shadow:0 6px 0 var(--green-light);
-  padding:30px 22px;text-align:center;scroll-margin-top:86px;
-}
-.end-card img{width:180px;margin-bottom:10px;animation:bob 4s ease-in-out infinite}
-.end-card h3{font-family:'Unbounded';font-weight:700;font-size:clamp(17px,3vw,24px);text-transform:uppercase;margin-bottom:8px}
-.xp-chip{
-  display:inline-flex;align-items:center;gap:8px;margin:10px 0 18px;
-  background:var(--yellow);color:#7A5B00;border-radius:999px;padding:8px 18px;
-  font-family:'Unbounded';font-weight:700;font-size:14px;box-shadow:0 3px 0 var(--yellow-dark);
-}
-.end-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-
-/* footer */
-footer{
-  background:#fff;border-top:2px solid var(--line);
-  padding:26px 16px;text-align:center;color:var(--ink-soft);font-size:14px;
-}
-footer b{color:var(--ink)}
-footer .f-line{margin:4px 0}
-
-/* back to top */
-#backTop{
-  position:fixed;right:18px;bottom:18px;z-index:70;
-  width:52px;height:52px;border-radius:16px;border:none;cursor:pointer;
-  background:var(--green);color:#fff;box-shadow:0 4px 0 var(--green-dark);
-  display:grid;place-items:center;opacity:0;pointer-events:none;transform:translateY(14px);
-  transition:opacity .3s,transform .3s;
-}
-#backTop.show{opacity:1;pointer-events:auto;transform:none}
-#backTop:active{transform:translateY(4px);box-shadow:none}
-#backTop svg{width:20px;height:20px}
-
-/* toast */
-#toast{
-  position:fixed;left:50%;bottom:26px;transform:translate(-50%,120px);z-index:80;
-  background:#37413C;color:#fff;border-radius:16px;padding:14px 22px;
-  font-weight:700;font-size:15px;display:flex;align-items:center;gap:10px;
-  box-shadow:0 6px 0 rgba(0,0,0,.2);transition:transform .45s cubic-bezier(.2,.7,.2,1);
-  max-width:calc(100vw - 32px);
-}
-#toast.show{transform:translate(-50%,0)}
-#toast .t-xp{color:var(--yellow);font-family:'Unbounded';font-size:13px}
-
-/* confetti */
-.confetti{position:fixed;top:-20px;z-index:75;border-radius:3px;pointer-events:none;animation:confettiFall linear forwards}
-@keyframes confettiFall{to{transform:translateY(112vh) rotate(720deg)}}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width:960px){
-  .layout{grid-template-columns:1fr}
-  .toc{position:static}
-  .toc-toggle{display:flex}
-  .toc-list{max-height:0;padding:0 12px;overflow:hidden;transition:max-height .45s ease,padding .3s}
-  .toc.open .toc-list{max-height:420px;padding:12px;overflow:auto}
-  .hero-inner{grid-template-columns:1fr;text-align:center}
-  .hero-sub{margin-left:auto;margin-right:auto}
-  .hero-chips,.hero-actions{justify-content:center}
-  .hero-art{order:-1}
-  .hero-art img{width:min(240px,70%)}
-}
-@media (max-width:680px){
-  .brand-name{display:none}
-  .progress-label{min-width:36px;font-size:10px}
-  #copyEmailTop{display:none}
-  .sec-head{padding:16px 16px 0}
-  .sec-body{padding:14px 16px 20px}
-  .table-wrap{border:none;overflow:visible}
-  .data-table{min-width:0}
-  .data-table thead{display:none}
-  .data-table, .data-table tbody, .data-table tr, .data-table td{display:block;width:100%}
-  .data-table tr{
-    border:2px solid var(--line);border-radius:14px;margin-bottom:12px;
-    background:#fff!important;overflow:hidden;box-shadow:0 3px 0 var(--line);
-  }
-  .data-table td{border-top:none;padding:10px 14px}
-  .data-table td:first-child{background:var(--green);color:#fff;font-weight:700;font-family:'Unbounded';font-size:12px;text-transform:uppercase}
-  .data-table td:not(:first-child){border-top:2px dashed #EEF2E9}
-  .data-table td:not(:first-child)::before{
-    content:attr(data-label);display:block;font-size:10px;font-weight:700;
-    text-transform:uppercase;letter-spacing:.5px;color:var(--green-dark);margin-bottom:2px;
-  }
-  .clause{gap:10px}
-}
-
-/* ---------- PRINT ---------- */
-@media print{
-  .topbar,.toc,#bgLayer,#backTop,#toast,.hero-art,.hero-actions,.end-actions,
-  .top-actions,.spark,.confetti{display:none!important}
-  body{background:#fff}
-  body::before{display:none}
-  .layout{grid-template-columns:1fr;padding:0}
-  .sec,.reveal{opacity:1!important;transform:none!important;box-shadow:none}
-  .sec-title .mask > span{transform:none!important}
-  .hero{padding:10px 0}
-  .sec{break-inside:avoid-page}
-}
-
-/* ---------- REDUCED MOTION ---------- */
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .hero-title .mask > span,.sec-title .mask > span{transform:none!important}
-  .reveal{opacity:1!important;transform:none!important}
-}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;max-width:820px;margin:0 auto;padding:40px 20px;line-height:1.7;color:#1a1a1a;font-size:15px}
+h1{font-size:22px;margin-bottom:4px;text-transform:uppercase}
+h2{font-size:16px;margin-top:28px;margin-bottom:10px;color:#000}
+.meta{font-size:13px;color:#555;margin-bottom:25px;padding-bottom:15px;border-bottom:2px solid #000}
+p{margin:10px 0;text-align:justify}
+ul{margin:8px 0;padding-left:22px}
+li{margin:4px 0}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid #333;padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#f0f0f0;font-weight:bold}
+.note{background:#f8f8f8;border-left:4px solid #333;padding:12px 16px;margin:15px 0;font-size:14px}
+footer{margin-top:40px;padding-top:15px;border-top:2px solid #000;font-size:13px;color:#333}
+@media print{body{padding:20px}}
+@media(max-width:600px){body{padding:20px 12px}table{font-size:12px}th,td{padding:5px 6px}}
 </style>
 </head>
 <body>
 
-<div id="bgLayer" aria-hidden="true"></div>
+<h1>Политика конфиденциальности</h1>
+<div class="meta">
+Редакция от 17 августа 2026 года · Версия 2.0<br>
+Разработана в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных» (в действующей редакции)
+</div>
 
-<!-- ======= TOP BAR ======= -->
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="#top" data-scroll aria-label="BeWords">
+<h2>1. Общие положения</h2>
 
-      <span class="brand-name">Be<em>Words</em></span>
-    </a>
-    <div class="progress-wrap" role="progressbar" aria-label="Прогресс чтения документа">
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <span class="progress-label" id="progressLabel">0%</span>
-    </div>
-    <div class="top-actions">
-      <button class="icon-btn" id="copyEmailTop" title="Скопировать email" aria-label="Скопировать email">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      </button>
-      <button class="icon-btn" id="printBtn" title="Распечатать документ" aria-label="Распечатать">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-      </button>
-    </div>
-  </div>
-</header>
+<p>1.1. Настоящая Политика конфиденциальности (далее — Политика) определяет порядок обработки и защиты персональных данных пользователей мобильного приложения и веб-версии BeWords (далее — Приложение), а также устанавливает права субъектов персональных данных и обязанности Оператора.</p>
 
-<main id="top">
-  <!-- ======= HERO ======= -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <span class="chip chip-date">📅 Редакция от 09 августа 2026 года</span>
-        <h1 class="hero-title">
-          <span class="mask"><span>Политика</span></span>
-          <span class="mask"><span>конфиденциальности</span></span>
-          <span class="mask"><span style="color:var(--green)">приложения BeWords</span></span>
-        </h1>
-        <p class="hero-sub">Как мы собираем, храним и защищаем ваши персональные данные — понятно, честно и по закону.</p>
-        <div class="hero-actions">
-          <a class="btn btn-green" href="#s1" data-scroll>Читать документ</a>
-          <button class="btn btn-white" id="printBtn2">🖨️ Распечатать</button>
-        </div>
-      </div>
-    </div>
-  </section>
+<p>1.2. Политика разработана в соответствии с требованиями Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных» (в редакции Федерального закона от 24.06.2025 № 156-ФЗ, Федерального закона от 30.11.2024 № 420-ФЗ), а также иных нормативных правовых актов Российской Федерации, регулирующих отношения в области обработки и обеспечения безопасности персональных данных.</p>
 
-  <div class="layout">
-    <!-- ======= TOC ======= -->
-    <aside class="toc" id="toc">
-      <button class="toc-toggle" id="tocToggle" aria-expanded="false">
-        <span>📚 Содержание · 13 разделов</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
-      </button>
-      <nav class="toc-list" id="tocList">
-        <a href="#s1" data-scroll><i class="n">1</i> Общие положения</a>
-        <a href="#s2" data-scroll><i class="n">2</i> Какие данные мы собираем</a>
-        <a href="#s3" data-scroll><i class="n">3</i> Цели обработки данных</a>
-        <a href="#s4" data-scroll><i class="n">4</i> Правовые основания</a>
-        <a href="#s5" data-scroll><i class="n">5</i> Способы обработки</a>
-        <a href="#s6" data-scroll><i class="n">6</i> Хранение и трансграничная передача</a>
-        <a href="#s7" data-scroll><i class="n">7</i> Передача третьим лицам</a>
-        <a href="#s8" data-scroll><i class="n">8</i> Сроки хранения</a>
-        <a href="#s9" data-scroll><i class="n">9</i> Права пользователя</a>
-        <a href="#s10" data-scroll><i class="n">10</i> Cookies и аналитика</a>
-        <a href="#s11" data-scroll><i class="n">11</i> Возрастные ограничения</a>
-        <a href="#s12" data-scroll><i class="n">12</i> Изменение политики</a>
-        <a href="#s13" data-scroll><i class="n">13</i> Контактная информация</a>
-      </nav>
-    </aside>
+<p>1.3. Оператором, осуществляющим обработку персональных данных, является:</p>
+<table>
+<tr><th style="width:220px">ФИО</th><td>Бердиев Абдуррахим Вельмурадович</td></tr>
+<tr><th>Статус</th><td>Самозанятый (плательщик налога на профессиональный доход)</td></tr>
+<tr><th>Регион регистрации</th><td>г. Санкт-Петербург, Российская Федерация</td></tr>
+<tr><th>ИНН</th><td>780633106396</td></tr>
+<tr><th>Email</th><td>support@bewords.ru</td></tr>
+</table>
 
-    <!-- ======= DOCUMENT ======= -->
-    <article class="doc">
+<p>1.4. Настоящая Политика распространяется на все случаи обработки персональных данных, получаемых Оператором от пользователей при использовании Приложения, взаимодействии с его функциональными возможностями, направлении обращений в службу поддержки, а также при совершении иных действий, связанных с использованием Приложения.</p>
 
-      <!-- 1 -->
-      <section class="sec acc-green reveal" id="s1">
-        <div class="sec-head"><span class="sec-badge">1</span>
-          <h2 class="sec-title"><span class="mask"><span>Общие положения</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">1.1</span><p>Настоящая Политика конфиденциальности (далее — Политика) определяет порядок обработки и защиты персональных данных пользователей мобильного и веб-приложения BeWords (далее — Приложение), разработанного Бердиевым Абдуррахимом Вельмурадовичем (далее — Оператор).</p></div>
-          <div class="clause"><span class="cl-num">1.2</span>
-            <div>
-              <p>Оператор:</p>
-              <ul class="list">
-                <li><span class="ic">👤</span><span><b>ФИО:</b> Бердиев Абдуррахим Вельмурадович</span></li>
-                <li><span class="ic">💼</span><span><b>Статус:</b> Самозанятый (плательщик налога на профессиональный доход)</span></li>
-                <li><span class="ic">✉️</span><span><b>Email для связи:</b> <a class="mail" href="mailto:beridyevabdurrakhim@gmail.com">beridyevabdurrakhim@gmail.com</a></span></li>
-              </ul>
-            </div>
-          </div>
-          <div class="clause"><span class="cl-num">1.3</span><p>Используя Приложение, Пользователь подтверждает своё согласие с условиями настоящей Политики. Если Пользователь не согласен с условиями, он обязан прекратить использование Приложения.</p></div>
-          <div class="clause"><span class="cl-num">1.4</span><p class="callout callout-green"><span class="ic">⚖️</span>Настоящая Политика соответствует требованиям Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных».</p></div>
-          <div class="clause"><span class="cl-num">1.5</span><p class="callout callout-yellow"><span class="ic">🌍</span>Для Пользователей, находящихся на территории Российской Федерации, в соответствии с требованиями законодательства РФ (ФЗ «Об информации»), доступные способы авторизации могут быть ограничены. Оператор оставляет за собой право изменять перечень доступных способов авторизации в зависимости от региона Пользователя и требований законодательства.</p></div>
-        </div>
-      </section>
+<p>1.5. Использование Приложения означает ознакомление Пользователя с настоящей Политикой. Согласие на обработку персональных данных оформляется в виде отдельного документа — «Согласие на обработку персональных данных», доступного по адресу: <a href="/consent">bewords.ru/consent</a>.</p>
 
-      <!-- 2 -->
-      <section class="sec acc-blue reveal" id="s2">
-        <div class="sec-head"><span class="sec-badge">2</span>
-          <h2 class="sec-title"><span class="mask"><span>Какие данные мы собираем</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">2.1</span>
-            <div>
-              <p>При регистрации Пользователь предоставляет:</p>
-              <ul class="list">
-                <li><span class="ic">✉️</span><span>Адрес электронной почты</span></li>
-                <li><span class="ic">🔒</span><span>Пароль (в зашифрованном виде)</span></li>
-                <li><span class="ic">🖼️</span><span>Опционально: аватар профиля (виден только самому пользователю)</span></li>
-              </ul>
-            </div>
-          </div>
-          <div class="clause"><span class="cl-num">2.2</span>
-            <div>
-              <p>При использовании OAuth-авторизации (Google Sign-In, Apple ID) Оператор получает:</p>
-              <ul class="list">
-                <li><span class="ic">🆔</span><span>Уникальный идентификатор пользователя в системе провайдера</span></li>
-                <li><span class="ic">✉️</span><span>Адрес электронной почты (если доступен)</span></li>
-                <li><span class="ic">🏷️</span><span>Имя профиля (если доступно)</span></li>
-              </ul>
-            </div>
-          </div>
-          <div class="clause"><span class="cl-num">2.3</span>
-            <div>
-              <p>Автоматически собираемые данные:</p>
-              <ul class="list">
-                <li><span class="ic">🌐</span><span>IP-адрес</span></li>
-                <li><span class="ic">📱</span><span>Информация об устройстве (модель, версия ОС)</span></li>
-                <li><span class="ic">📚</span><span>Данные о взаимодействии с Приложением (пройденные уроки, статистика)</span></li>
-                <li><span class="ic">📊</span><span>Данные аналитики (Яндекс.Метрика)</span></li>
-              </ul>
-            </div>
-          </div>
-          <div class="clause"><span class="cl-num">2.4</span>
-            <p class="callout callout-red" style="display:block"><span style="display:flex;gap:10px"><span class="ic">🚫</span><span><b>Оператор НЕ собирает:</b>
-              <ul class="list" style="margin-top:10px">
-                <li><span class="ic">❌</span><span>Паспортные данные</span></li>
-                <li><span class="ic">❌</span><span>Платёжную информацию (обрабатывается платёжным шлюзом ЮKassa)</span></li>
-                <li><span class="ic">❌</span><span>Биометрические данные</span></li>
-                <li><span class="ic">❌</span><span>Специальные категории персональных данных</span></li>
-              </ul></span></span>
-            </p>
-          </div>
-        </div>
-      </section>
+<p>1.6. Если Пользователь не согласен с условиями настоящей Политики, он обязан прекратить любое использование Приложения.</p>
 
-      <!-- 3 -->
-      <section class="sec acc-yellow reveal" id="s3">
-        <div class="sec-head"><span class="sec-badge">3</span>
-          <h2 class="sec-title"><span class="mask"><span>Цели обработки персональных данных</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">3.1</span><p>Обработка персональных данных осуществляется в следующих целях:</p></div>
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead>
-                <tr><th>Тип данных</th><th>Цели обработки</th><th>Правовые основания</th><th>Период хранения</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-label="Тип данных">Email + пароль</td>
-                  <td data-label="Цели обработки">Создание аккаунта и авторизация</td>
-                  <td data-label="Правовые основания">Исполнение договора</td>
-                  <td data-label="Период хранения">До удаления аккаунта</td>
-                </tr>
-                <tr>
-                  <td data-label="Тип данных">Данные об устройстве</td>
-                  <td data-label="Цели обработки">Улучшение сервиса</td>
-                  <td data-label="Правовые основания">Законный интерес</td>
-                  <td data-label="Период хранения">180 дней</td>
-                </tr>
-                <tr>
-                  <td data-label="Тип данных">Прогресс обучения</td>
-                  <td data-label="Цели обработки">Предоставление сервиса</td>
-                  <td data-label="Правовые основания">Исполнение договора</td>
-                  <td data-label="Период хранения">До удаления аккаунта</td>
-                </tr>
-                <tr>
-                  <td data-label="Тип данных">Платёжная информация</td>
-                  <td data-label="Цели обработки">Обработка подписок</td>
-                  <td data-label="Правовые основания">Исполнение договора</td>
-                  <td data-label="Период хранения">5 лет (по закону)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+<p>1.7. Настоящая Политика размещается в открытом доступе в сети Интернет на сайте Оператора в целях обеспечения неограниченного доступа пользователей к информации о порядке, принципах, условиях и способах обработки персональных данных.</p>
 
-      <!-- 4 -->
-      <section class="sec acc-purple reveal" id="s4">
-        <div class="sec-head"><span class="sec-badge">4</span>
-          <h2 class="sec-title"><span class="mask"><span>Правовые основания обработки</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">4.1</span>
-            <div>
-              <p>Обработка персональных данных осуществляется на основании:</p>
-              <ul class="list">
-                <li><span class="ic">✅</span><span>Согласия Пользователя на обработку персональных данных (ст. 6 ч. 1 п. 1 ФЗ-152)</span></li>
-                <li><span class="ic">📄</span><span>Необходимости исполнения договора (Пользовательского соглашения) между Оператором и Пользователем (ст. 6 ч. 1 п. 5 ФЗ-152)</span></li>
-                <li><span class="ic">⚖️</span><span>Необходимости достижения целей, предусмотренных законом (ст. 6 ч. 1 п. 6 ФЗ-152)</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+<p>1.8. Политика вступает в силу с момента её размещения на сайте Оператора и действует бессрочно до замены её новой редакцией. Оператор вправе в одностороннем порядке изменять условия Политики.</p>
 
-      <!-- 5 -->
-      <section class="sec acc-green reveal" id="s5">
-        <div class="sec-head"><span class="sec-badge">5</span>
-          <h2 class="sec-title"><span class="mask"><span>Способы обработки персональных данных</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">5.1</span>
-            <div>
-              <p>Оператор осуществляет следующие действия с персональными данными:</p>
-              <ul class="list">
-                <li><span class="ic">🗂️</span><span>Сбор, запись, систематизация, накопление, хранение</span></li>
-                <li><span class="ic">✏️</span><span>Уточнение (обновление, изменение), извлечение, использование</span></li>
-                <li><span class="ic">🗑️</span><span>Удаление, уничтожение</span></li>
-              </ul>
-            </div>
-          </div>
-          <div class="clause"><span class="cl-num">5.2</span><p>Обработка осуществляется с использованием средств вычислительной техники и облачных сервисов.</p></div>
-          <div class="clause"><span class="cl-num">5.3</span><p class="callout callout-blue"><span class="ic">🧮</span>В случае обезличивания персональных данных Оператор вправе использовать их для статистических и исследовательских целей без дополнительного согласия Пользователя.</p></div>
-          <div class="clause"><span class="cl-num">5.4</span>
-            <div style="width:100%">
-              <p>Оператор применяет следующие меры защиты персональных данных:</p>
-              <div class="tiles">
-                <div class="tile"><span class="t-ic">🔐</span><span class="t-title">Шифрование bcrypt</span><span class="t-text">Шифрование паролей с использованием алгоритма bcrypt</span></div>
-                <div class="tile"><span class="t-ic">🌐</span><span class="t-title">HTTPS / TLS</span><span class="t-text">Передача данных по защищённому протоколу HTTPS/TLS</span></div>
-                <div class="tile"><span class="t-ic">🚪</span><span class="t-title">Контроль доступа</span><span class="t-text">Ограничение доступа к базе данных по паролю и API-ключам</span></div>
-                <div class="tile"><span class="t-ic">🔄</span><span class="t-title">Обновления</span><span class="t-text">Регулярное обновление зависимостей и компонентов Приложения</span></div>
-                <div class="tile"><span class="t-ic">🧾</span><span class="t-title">Логи доступа</span><span class="t-text">Хранение логов доступа в течение ограниченного периода</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="clause"><span class="cl-num">5.5</span><p class="callout callout-purple" style="background:var(--purple-light);border-color:var(--purple);color:#6B3FA0"><span class="ic">🧑‍⚖️</span>Оператор не использует автоматизированных средств принятия решений, имеющих юридические последствия для Пользователя (профайлинг). Все решения, влияющие на Пользователя, принимаются с участием человека.</p></div>
-        </div>
-      </section>
+<h2>2. Термины и определения</h2>
 
-      <!-- 6 -->
-      <section class="sec acc-blue reveal" id="s6">
-        <div class="sec-head"><span class="sec-badge">6</span>
-          <h2 class="sec-title"><span class="mask"><span>Место хранения и трансграничная передача</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">6.1</span><p>Персональные данные Пользователей хранятся в облачной инфраструктуре Supabase (провайдер Supabase Inc.), которая расположена на территории Европейского Союза (Ирландия). <span class="chip" style="margin-left:6px">🇮🇪 Ирландия</span></p></div>
-          <div class="clause"><span class="cl-num">6.2</span><p class="callout callout-green"><span class="ic">✅</span>Ирландия входит в перечень государств, обеспечивающих адекватную защиту прав субъектов персональных данных, согласно приказу Роскомнадзора.</p></div>
-          <div class="clause"><span class="cl-num">6.3</span><p>Трансграничная передача персональных данных осуществляется при наличии согласия Пользователя, выраженного путём принятия настоящей Политики.</p></div>
-          <div class="clause"><span class="cl-num">6.4</span>
-            <div>
-              <p>Для Пользователей, находящихся на территории Российской Федерации:</p>
-              <ul class="list">
-                <li><span class="ic">📢</span><span>Оператор уведомляет о том, что персональные данные передаются на территорию иностранного государства (Ирландия)</span></li>
-                <li><span class="ic">🤝</span><span>Согласие на трансграничную передачу даётся Пользователем путём принятия настоящей Политики</span></li>
-                <li><span class="ic">↩️</span><span>Пользователь вправе отозвать согласие на трансграничную передачу, направив запрос Оператору, после чего его данные будут удалены</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+<p>2.1. <strong>Персональные данные</strong> — любая информация, относящаяся прямо или косвенно к физическому лицу (субъекту персональных данных), которое определено или может быть определено на основании такой информации.</p>
 
-      <!-- 7 -->
-      <section class="sec acc-orange reveal" id="s7">
-        <div class="sec-head"><span class="sec-badge">7</span>
-          <h2 class="sec-title"><span class="mask"><span>Передача данных третьим лицам</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">7.1</span><p>Оператор не передаёт персональные данные третьим лицам, за исключением следующих случаев:</p></div>
-          <div class="clause"><span class="cl-num">7.1.1</span>
-            <div class="party" style="width:100%"><span class="p-logo" style="background:#0079FF">₽</span>
-              <p><span class="p-name">Платёжный шлюз ЮKassa</span>— для обработки платежей (передаются только данные, необходимые для проведения транзакции)</p>
-            </div>
-          </div>
-          <div class="clause"><span class="cl-num">7.1.2</span>
-            <div style="width:100%">
-              <p>Сервисы аналитики:</p>
-              <div class="party" style="margin-top:8px"><span class="p-logo" style="background:#FC3F1D">Я</span>
-                <p><span class="p-name">Яндекс.Метрика</span>ООО «ЯНДЕКС», Российская Федерация, г. Москва, ул. Льва Толстого, д. 16</p>
-              </div>
-            </div>
-          </div>
-          <div class="clause"><span class="cl-num">7.1.3</span>
-            <div style="width:100%">
-              <p>OAuth-провайдеры:</p>
-              <div class="tiles" style="margin-top:8px">
-                <div class="party"><span class="p-logo" style="background:#4285F4">G</span>
-                  <p><span class="p-name">Google Sign-In</span>Google Ireland Ltd, Gordon House, Barrow Street, Dublin 4, Ireland</p>
-                </div>
-                <div class="party"><span class="p-logo" style="background:#333"></span>
-                  <p><span class="p-name">Apple ID</span>Apple Inc., One Apple Park Way, Cupertino, CA 95014, USA</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="clause"><span class="cl-num">7.1.4</span><p>По требованию уполномоченных государственных органов в случаях, предусмотренных законодательством РФ.</p></div>
-          <div class="clause"><span class="cl-num">7.2</span><p class="callout callout-yellow"><span class="ic">☁️</span>Пользователь уведомлён и соглашается с тем, что персональные данные могут автоматически сохраняться в сервисах резервного копирования операционной системы устройства (iCloud для iOS, Google Drive для Android). Обработка данных в этих сервисах осуществляется их владельцами (Apple Inc., Google LLC) в соответствии с их собственными политиками конфиденциальности. Оператор не контролирует и не несёт ответственности за обработку данных в сервисах резервного копирования третьих лиц.</p></div>
-        </div>
-      </section>
+<p>2.2. <strong>Оператор</strong> — Бердиев Абдуррахим Вельмурадович, самостоятельно определяющий цели обработки персональных данных, состав обрабатываемых сведений, перечень совершаемых с ними действий.</p>
 
-      <!-- 8 -->
-      <section class="sec acc-purple reveal" id="s8">
-        <div class="sec-head"><span class="sec-badge">8</span>
-          <h2 class="sec-title"><span class="mask"><span>Сроки хранения персональных данных</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">8.1</span><p>Персональные данные хранятся в течение всего срока использования Приложения Пользователем.</p></div>
-          <div class="tiles">
-            <div class="tile"><span class="t-ic">⏳</span><span class="t-title">Всё время использования</span><span class="t-text">Пока вы пользуетесь Приложением — данные хранятся</span></div>
-            <div class="tile"><span class="t-ic">🗑️</span><span class="t-title">30 дней после удаления</span><span class="t-text">После удаления учётной записи данные удаляются в течение 30 дней</span></div>
-          </div>
-          <div class="clause"><span class="cl-num">8.2</span><p>После удаления учётной записи персональные данные удаляются в течение 30 дней, за исключением случаев, когда законодательство требует более длительного хранения.</p></div>
-        </div>
-      </section>
+<p>2.3. <strong>Обработка персональных данных</strong> — любое действие или совокупность действий, совершаемых с персональными данными с использованием средств автоматизации или без их использования: сбор, запись, систематизация, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передача (распространение, предоставление, доступ), обезличивание, блокирование, удаление, уничтожение.</p>
 
-      <!-- 9 -->
-      <section class="sec acc-green reveal" id="s9">
-        <div class="sec-head"><span class="sec-badge">9</span>
-          <h2 class="sec-title"><span class="mask"><span>Права пользователя</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">9.1</span>
-            <div style="width:100%">
-              <p>Пользователь имеет право:</p>
-              <ul class="check-list">
-                <li><span class="ck">✓</span><span class="cn">9.1.1</span><span>Получать информацию об обработке своих персональных данных</span></li>
-                <li><span class="ck">✓</span><span class="cn">9.1.2</span><span>Требовать уточнения, блокирования или уничтожения своих данных</span></li>
-                <li><span class="ck">✓</span><span class="cn">9.1.3</span><span>Отозвать согласие на обработку персональных данных</span></li>
-                <li><span class="ck">✓</span><span class="cn">9.1.4</span><span>Обжаловать действия Оператора в Роскомнадзор или суд</span></li>
-                <li><span class="ck">✓</span><span class="cn">9.1.5</span><span>Подавать жалобы в уполномоченный орган по защите прав субъектов персональных данных — <a class="mail" href="https://rkn.gov.ru" target="_blank" rel="noopener">Роскомнадзор</a></span></li>
-              </ul>
-            </div>
-          </div>
-          <div class="clause"><span class="cl-num">9.2</span><p>Для реализации своих прав Пользователь может направить запрос на email: <b>beridyevabdurrakhim@gmail.com</b> &nbsp;<button class="btn btn-green copy-email" style="padding:8px 16px;font-size:13px">Скопировать</button></p></div>
-          <div class="clause"><span class="cl-num">9.3</span><p>Оператор обязуется рассмотреть запрос в течение 10 рабочих дней. <span class="chip" style="margin-left:6px">⏱️ 10 рабочих дней</span></p></div>
-          <div class="clause"><span class="cl-num">9.4</span>
-            <div>
-              <p>Пользователь несёт ответственность за:</p>
-              <ul class="list">
-                <li><span class="ic">📋</span><span>Достоверность предоставляемых персональных данных</span></li>
-                <li><span class="ic">🔑</span><span>Сохранность учётных данных (логина и пароля)</span></li>
-                <li><span class="ic">👣</span><span>Все действия, совершённые с использованием его учётной записи</span></li>
-                <li><span class="ic">🎂</span><span>Соблюдение возрастных ограничений (14+)</span></li>
-              </ul>
-              <p class="callout callout-yellow" style="margin-top:10px"><span class="ic">⚠️</span>Оператор не несёт ответственности за ущерб, возникший вследствие передачи Пользователем своих учётных данных третьим лицам.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+<p>2.4. <strong>Пользователь</strong> — физическое лицо, достигшее 18 (восемнадцати) лет, использующее Приложение.</p>
 
-      <!-- 10 -->
-      <section class="sec acc-blue reveal" id="s10">
-        <div class="sec-head"><span class="sec-badge">10</span>
-          <h2 class="sec-title"><span class="mask"><span>Cookies и аналитика</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">10.1</span><p>Приложение использует сервис Яндекс.Метрика для анализа использования сервиса.</p></div>
-          <div class="clause"><span class="cl-num">10.2</span>
-            <div>
-              <p>Яндекс.Метрика собирает обезличенные данные о взаимодействии Пользователя с Приложением:</p>
-              <ul class="list">
-                <li><span class="ic">📱</span><span>Тип устройства и операционная система</span></li>
-                <li><span class="ic">📥</span><span>Источник установки Приложения</span></li>
-                <li><span class="ic">👆</span><span>Действия в Приложении (без привязки к персональным данным)</span></li>
-              </ul>
-            </div>
-          </div>
-          <div class="clause"><span class="cl-num">10.3</span><p class="callout callout-blue"><span class="ic">⚙️</span>Пользователь может отключить сбор данных аналитики в настройках устройства.</p></div>
-        </div>
-      </section>
+<p>2.5. <strong>Приложение</strong> — программа для ЭВМ BeWords, доступная в виде мобильного приложения (iOS/Android) и веб-версии, предназначенная для изучения английской лексики.</p>
 
-      <!-- 11 -->
-      <section class="sec acc-red reveal" id="s11">
-        <div class="sec-head"><span class="sec-badge">11</span>
-          <h2 class="sec-title"><span class="mask"><span>Возрастные ограничения</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">11.1</span><p>Приложение предназначено для Пользователей, достигших возраста, необходимого для дачи согласия на обработку персональных данных в соответствии с законодательством страны их пребывания.</p></div>
-          <div class="clause"><span class="cl-num">11.2</span><p>Для Пользователей из Российской Федерации минимальный возраст составляет 14 лет. Для Пользователей из других стран применяются возрастные ограничения, установленные местным законодательством.</p></div>
-          <div class="clause"><span class="cl-num">11.3</span><p class="callout callout-yellow"><span class="ic">👨‍👩‍👧</span>Если Пользователь не достиг необходимого возраста, он обязан получить согласие родителей или законных представителей на регистрацию и обработку персональных данных.</p></div>
-        </div>
-      </section>
+<p>2.6. <strong>Файлы cookie</strong> — небольшие текстовые файлы, передаваемые с сайта на устройство Пользователя, позволяющие сайту запоминать информацию о Пользователе для более удобной навигации и аналитики.</p>
 
-      <!-- 12 -->
-      <section class="sec acc-yellow reveal" id="s12">
-        <div class="sec-head"><span class="sec-badge">12</span>
-          <h2 class="sec-title"><span class="mask"><span>Изменение политики</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">12.1</span><p>Оператор оставляет за собой право вносить изменения в настоящую Политику.</p></div>
-          <div class="clause"><span class="cl-num">12.2</span><p>Новая редакция Политики вступает в силу с момента её публикации в Приложении.</p></div>
-          <div class="clause"><span class="cl-num">12.3</span><p>Продолжение использования Приложения после внесения изменений означает согласие Пользователя с новой редакцией Политики.</p></div>
-        </div>
-      </section>
+<p>Иные термины, не упомянутые в настоящем разделе, применяются в значении, установленном нормативными правовыми актами Российской Федерации.</p>
 
-      <!-- 13 -->
-      <section class="sec acc-green reveal" id="s13">
-        <div class="sec-head"><span class="sec-badge">13</span>
-          <h2 class="sec-title"><span class="mask"><span>Контактная информация</span></span></h2>
-        </div>
-        <div class="sec-body">
-          <div class="clause"><span class="cl-num">13.1</span>
-            <div>
-              <p>По всем вопросам, связанным с обработкой персональных данных, Пользователь может обратиться к Оператору:</p>
-              <ul class="list">
-                <li><span class="ic">✉️</span><span><b>Email:</b> <a class="mail" href="mailto:beridyevabdurrakhim@gmail.com">beridyevabdurrakhim@gmail.com</a></span></li>
-                <li><span class="ic">📚</span><span><b>Приложение:</b> BeWords</span></li>
-              </ul>
-              <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
-                <a class="btn btn-green" href="mailto:beridyevabdurrakhim@gmail.com">✉️ Написать на email</a>
-                <button class="btn btn-white copy-email">📋 Скопировать email</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+<h2>3. Состав обрабатываемых персональных данных</h2>
 
-      <!-- FINISH -->
-      <section class="end-card reveal" id="finish">
-        <h3>Вы прочитали политику!</h3>
-        <p style="color:var(--ink-soft)">Теперь вы знаете, как BeWords заботится о ваших данных. Спасибо за доверие! 💚</p>
-        
+<p>3.1. В зависимости от способа использования Приложения могут обрабатываться следующие категории персональных данных:</p>
 
-      </section>
+<p><strong>3.2. Данные, предоставляемые Пользователем при регистрации:</strong></p>
+<ul>
+<li>адрес электронной почты;</li>
+<li>пароль (в хэшированном виде, алгоритм bcrypt);</li>
+<li>имя профиля (при использовании OAuth-авторизации, если доступно);</li>
+<li>изображение профиля (при наличии).</li>
+</ul>
 
-    </article>
-  </div>
-</main>
+<p><strong>3.3. Автоматически собираемые технические данные:</strong></p>
+<ul>
+<li>IP-адрес;</li>
+<li>сведения о браузере и его версии;</li>
+<li>информация об используемом устройстве и операционной системе;</li>
+<li>дата, время и продолжительность использования Приложения;</li>
+<li>URL-адреса запрашиваемых страниц;</li>
+<li>сведения об источнике перехода;</li>
+<li>данные файлов cookie;</li>
+<li>данные о взаимодействии с Приложением (пройденные уроки, статистика).</li>
+</ul>
+
+<p><strong>3.4. Данные, связанные с оплатой:</strong></p>
+<p>Обработка реквизитов банковских карт осуществляется специализированными платёжными организациями. Оператор не получает и не хранит полные реквизиты банковских карт. Для целей исполнения договора могут обрабатываться: идентификатор платежа, дата операции, сумма, статус.</p>
+
+<p><strong>3.5. Ограничения:</strong></p>
+<p>Оператор не осуществляет целенаправленный сбор специальных категорий персональных данных (расовая принадлежность, политические взгляды, религиозные убеждения, состояние здоровья, интимная жизнь), а также биометрических персональных данных.</p>
+
+<p>3.6. Оператор не требует предоставления персональных данных в объёме, превышающем необходимый для достижения целей обработки, и соблюдает принцип минимизации обрабатываемых данных.</p>
+
+<h2>4. Цели обработки персональных данных</h2>
+
+<p>4.1. Обработка персональных данных осуществляется исключительно в следующих целях:</p>
+<ul>
+<li>создание и сопровождение учётной записи Пользователя, авторизация, предоставление доступа к функционалу Приложения;</li>
+<li>исполнение Пользовательского соглашения (публичной оферты), заключённого между Пользователем и Оператором;</li>
+<li>обработка платежей, учёт подписок и тарифных планов;</li>
+<li>обработка обращений Пользователя, оказание технической поддержки;</li>
+<li>обеспечение стабильной и безопасной работы Приложения, предотвращение несанкционированного доступа и мошенничества;</li>
+<li>улучшение качества Приложения, анализ использования, разработка новых функций;</li>
+<li>направление уведомлений, связанных с работой Приложения и исполнением договора;</li>
+<li>направление информационных и рекламных сообщений — исключительно при наличии отдельного согласия Пользователя;</li>
+<li>исполнение требований законодательства Российской Федерации, включая ведение налогового учёта.</li>
+</ul>
+
+<p>4.2. Оператор не осуществляет обработку персональных данных в целях, несовместимых с указанными в настоящем разделе.</p>
+
+<h2>5. Правовые основания обработки</h2>
+
+<p>5.1. Обработка персональных данных осуществляется на следующих основаниях:</p>
+<ul>
+<li><strong>Согласие субъекта персональных данных</strong> (ст. 6 ч. 1 п. 1 ФЗ-152) — добровольное, конкретное, информированное, сознательное и однозначное согласие, оформляемое в виде отдельного документа;</li>
+<li><strong>Исполнение договора</strong> (ст. 6 ч. 1 п. 5 ФЗ-152) — обработка необходима для исполнения Пользовательского соглашения, стороной которого является Пользователь;</li>
+<li><strong>Исполнение требований законодательства</strong> (ст. 6 ч. 1 п. 6 ФЗ-152) — обработка необходима для исполнения обязанностей, возложенных на Оператора законодательством РФ;</li>
+<li><strong>Законные интересы Оператора</strong> (ст. 6 ч. 1 п. 7 ФЗ-152) — обеспечение информационной безопасности, предотвращение мошенничества, анализ работы Приложения, при условии соблюдения прав Пользователя.</li>
+</ul>
+
+<p>5.2. Обработка персональных данных для направления рекламных сообщений осуществляется исключительно при наличии отдельного согласия Пользователя, предоставленного активным действием (opt-in).</p>
+
+<h2>6. Порядок и способы обработки</h2>
+
+<p>6.1. Обработка персональных данных осуществляется Оператором с использованием средств автоматизации.</p>
+
+<p>6.2. При обработке персональных данных Оператор руководствуется следующими принципами:</p>
+<ul>
+<li>законность и добросовестность обработки;</li>
+<li>ограничение обработки достижением конкретных, заранее определённых и законных целей;</li>
+<li>недопустимость обработки способами, несовместимыми с целями получения данных;</li>
+<li>соответствие объёма обрабатываемых данных заявленным целям;</li>
+<li>недопущение обработки избыточных данных;</li>
+<li>обеспечение достоверности и актуальности данных;</li>
+<li>хранение не дольше срока, необходимого для достижения целей обработки.</li>
+</ul>
+
+<p>6.3. Обработка прекращается при достижении целей обработки, отзыве согласия, прекращении действия правовых оснований либо в иных случаях, предусмотренных законодательством РФ.</p>
+
+<p>6.4. По завершении обработки персональные данные подлежат удалению или уничтожению способом, исключающим возможность их восстановления.</p>
+
+<h2>7. Хранение и локализация персональных данных</h2>
+
+<p>7.1. В соответствии с ч. 5 ст. 18 Федерального закона от 27.07.2006 № 152-ФЗ, при сборе персональных данных, в том числе посредством сети Интернет, Оператор обеспечивает запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение персональных данных граждан Российской Федерации с использованием баз данных, находящихся на территории Российской Федерации.</p>
+
+<p>7.2. Все персональные данные Пользователей хранятся в облачной инфраструктуре, развёрнутой на сервере, расположенном на территории Российской Федерации (self-hosted Supabase).</p>
+
+<p>7.3. Сроки хранения персональных данных:</p>
+<ul>
+<li>данные учётной записи (email, пароль, профиль) — в течение всего срока использования Приложения и 30 дней после удаления аккаунта;</li>
+<li>данные о транзакциях — 5 (пять) лет в соответствии с требованиями налогового законодательства;</li>
+<li>технические и аналитические данные — не более 180 дней;</li>
+<li>файлы cookie — не более 1 года.</li>
+</ul>
+
+<p>7.4. По истечении установленных сроков персональные данные подлежат уничтожению способом, исключающим возможность их восстановления.</p>
+
+<h2>8. Передача персональных данных третьим лицам</h2>
+
+<p>8.1. Оператор обеспечивает конфиденциальность персональных данных и не раскрывает их третьим лицам, за исключением случаев, прямо предусмотренных законодательством РФ и настоящей Политикой.</p>
+
+<p>8.2. Для обеспечения функционирования Приложения Оператор вправе привлекать третьих лиц:</p>
+<ul>
+<li>организации, обеспечивающие обработку электронных платежей (платёжные шлюзы);</li>
+<li>сервисы веб-аналитики (ООО «ЯНДЕКС», Яндекс.Метрика);</li>
+<li>сервисы авторизации (OAuth-провайдеры) — при использовании Пользователем соответствующего способа входа;</li>
+<li>поставщики переводческих технологий — для обеспечения переводческого функционала Приложения.</li>
+</ul>
+
+<p>8.3. При привлечении третьих лиц Оператор обеспечивает передачу только тех данных, которые необходимы для достижения соответствующей цели обработки.</p>
+
+<p>8.4. При использовании переводческого функционала Оператор принимает меры по снижению риска раскрытия идентифицирующей информации. Переводческий запрос содержит исключительно текст для перевода без привязки к учётной записи Пользователя. Оператор не передаёт поставщикам переводческих технологий email, имя, идентификатор аккаунта или иные данные, позволяющие прямо идентифицировать Пользователя.</p>
+
+<p>8.5. Пользователь обязуется не использовать переводческий функционал для обработки персональных данных третьих лиц, а также специальных категорий персональных данных.</p>
+
+<p>8.6. Оператор не осуществляет продажу персональных данных Пользователей и не предоставляет их третьим лицам для самостоятельных маркетинговых целей.</p>
+
+<p>8.7. В случае если Оператор поручает обработку персональных данных другому лицу, ответственность перед субъектом персональных данных за действия указанного лица несёт Оператор. Лицо, осуществляющее обработку по поручению Оператора, несёт ответственность перед Оператором.</p>
+
+<p>8.8. Передача персональных данных по требованию уполномоченных государственных органов осуществляется в случаях и порядке, предусмотренных законодательством РФ.</p>
+
+<h2>9. Трансграничная передача персональных данных</h2>
+
+<p>9.1. Персональные данные Пользователей (email, пароль, данные профиля, прогресс обучения) хранятся и обрабатываются исключительно на территории Российской Федерации. Трансграничная передача указанных данных не осуществляется.</p>
+
+<p>9.2. Отдельные технические функции Приложения (переводческий функционал, доставка контента веб-версии, сервисы авторизации при их использовании Пользователем) могут реализовываться с использованием сторонних сервисов, инфраструктура которых расположена за пределами Российской Федерации. При использовании указанных сервисов технические данные (IP-адрес, User-Agent) могут передаваться на серверы соответствующих провайдеров в автоматическом режиме для обеспечения работоспособности Приложения.</p>
+
+<p>9.3. Указанная передача осуществляется исключительно в техническом объёме, необходимом для функционирования Приложения, без передачи данных, позволяющих прямо идентифицировать Пользователя (email, имя, идентификатор аккаунта), за исключением случаев использования OAuth-авторизации, при которой Пользователь самостоятельно принимает решение об использовании соответствующего способа входа.</p>
+
+<p>9.4. Оператор уведомляет, что в случае осуществления трансграничной передачи персональных данных, уведомление о намерении осуществлять трансграничную передачу направляется в Роскомнадзор до начала осуществления такой передачи в соответствии со ст. 12 Федерального закона от 27.07.2006 № 152-ФЗ.</p>
+
+<h2>10. Использование файлов cookie и средств веб-аналитики</h2>
+
+<p>10.1. Веб-версия Приложения использует файлы cookie и сервис веб-аналитики Яндекс.Метрика (ООО «ЯНДЕКС», Российская Федерация).</p>
+
+<p>10.2. В соответствии с позицией Роскомнадзора и требованиями Федерального закона от 30.11.2024 № 420-ФЗ, cookie-идентификаторы квалифицируются как персональные данные. Обработка cookie-файлов осуществляется на основании согласия Пользователя.</p>
+
+<p>10.3. При первом посещении веб-версии Приложения Пользователю отображается баннер с запросом согласия на установку файлов cookie. Аналитические и маркетинговые cookie устанавливаются исключительно после получения явного согласия Пользователя (opt-in). Технические cookie, необходимые для функционирования сайта, устанавливаются без согласия.</p>
+
+<p>10.4. Яндекс.Метрика собирает обезличенные данные: тип устройства, операционная система, источник перехода, действия на сайте. Указанные данные не позволяют прямо идентифицировать Пользователя.</p>
+
+<p>10.5. Пользователь вправе в любое время отозвать согласие на cookie, изменив настройки в баннере, либо отключив cookie в настройках браузера. Ограничение cookie может повлиять на корректность работы отдельных функций Приложения.</p>
+
+<h2>11. Меры защиты персональных данных</h2>
+
+<p>11.1. Оператор принимает необходимые правовые, организационные и технические меры для защиты персональных данных от неправомерного или случайного доступа, уничтожения, изменения, блокирования, копирования, предоставления, распространения и иных неправомерных действий.</p>
+
+<p>11.2. В целях обеспечения безопасности Оператор, в частности:</p>
+<ul>
+<li>применяет защищённые протоколы передачи данных (HTTPS/TLS);</li>
+<li>использует хэширование паролей алгоритмом bcrypt;</li>
+<li>ограничивает доступ к персональным данным;</li>
+<li>осуществляет контроль доступа к информационным системам;</li>
+<li>обеспечивает резервное копирование информации;</li>
+<li>проводит регулярное обновление программного обеспечения;</li>
+<li>ведёт логи доступа в течение ограниченного периода.</li>
+</ul>
+
+<p>11.3. Оператор не использует автоматизированных средств принятия решений, имеющих юридические последствия для Пользователя (профайлинг).</p>
+
+<h2>12. Инциденты информационной безопасности</h2>
+
+<p>12.1. В случае выявления факта неправомерной передачи (утечки) персональных данных Оператор обязуется в соответствии с ч. 3.1 и ч. 3.2 ст. 21 Федерального закона от 27.07.2006 № 152-ФЗ:</p>
+<ul>
+<li>в течение 24 (двадцати четырёх) часов с момента обнаружения инцидента уведомить Роскомнадзор о факте неправомерной передачи персональных данных;</li>
+<li>в течение 72 (семидесяти двух) часов с момента обнаружения инцидента направить в Роскомнадзор результаты внутреннего расследования;</li>
+<li>принять все возможные меры для локализации инцидента и предотвращения дальнейших последствий;</li>
+<li>при наличии технической возможности уведомить затронутых Пользователей.</li>
+</ul>
+
+<p>12.2. Оператор ведёт внутренний учёт инцидентов информационной безопасности и проводит анализ причин их возникновения.</p>
+
+<h2>13. Права субъектов персональных данных</h2>
+
+<p>13.1. Пользователь вправе:</p>
+<ul>
+<li>получать информацию об обработке своих персональных данных (ст. 14 ФЗ-152);</li>
+<li>требовать уточнения, блокирования или уничтожения персональных данных (ст. 14 ФЗ-152);</li>
+<li>отозвать ранее предоставленное согласие на обработку (ст. 9 ФЗ-152);</li>
+<li>возражать против обработки персональных данных;</li>
+<li>обжаловать действия Оператора в Роскомнадзор или в судебном порядке.</li>
+</ul>
+
+<p>13.2. Для реализации своих прав Пользователь направляет обращение на email: <strong>support@bewords.ru</strong>.</p>
+
+<p>13.3. В обращении рекомендуется указать: фамилию, имя, отчество (при наличии); адрес электронной почты, привязанный к учётной записи; суть требования.</p>
+
+<p>13.4. Обращения рассматриваются Оператором в течение 10 (десяти) календарных дней с момента их получения в соответствии со ст. 20 ФЗ-152. При необходимости срок может быть продлён не более чем на 5 (пять) рабочих дней с направлением Пользователю мотивированного уведомления.</p>
+
+<p>13.5. В случае отзыва согласия Оператор прекращает обработку и обеспечивает уничтожение персональных данных в срок, не превышающий 30 (тридцати) календарных дней, если иное не предусмотрено законодательством РФ.</p>
+
+<h2>14. Использование Приложения несовершеннолетними</h2>
+
+<p>14.1. Приложение предназначено исключительно для лиц, достигших 18 (восемнадцати) лет. Оператор не осуществляет целенаправленный сбор персональных данных лиц, не достигших 18 лет.</p>
+
+<p>14.2. Регистрируясь в Приложении, Пользователь подтверждает, что достиг 18-летнего возраста и обладает полной гражданской дееспособностью.</p>
+
+<p>14.3. В случае, если Оператору станет известно, что персональные данные были получены от лица, не достигшего 18 лет, такие данные будут незамедлительно удалены.</p>
+
+<h2>15. Изменение Политики</h2>
+
+<p>15.1. Оператор вправе в любое время вносить изменения в настоящую Политику.</p>
+
+<p>15.2. Новая редакция Политики вступает в силу с момента её размещения на сайте Оператора, если иной срок не указан непосредственно в новой редакции.</p>
+
+<p>15.3. При существенном изменении Политики Оператор направляет Пользователю уведомление в Приложении с запросом повторного согласия путём проставления отметки (галочки). Продолжение использования Приложения после подтверждения новой версии означает согласие Пользователя с обновлёнными условиями.</p>
+
+<p>15.4. Пользователю рекомендуется регулярно проверять условия настоящей Политики на предмет изменений.</p>
+
+<h2>16. Контактная информация</h2>
+
+<table>
+<tr><th style="width:220px">Оператор</th><td>Бердиев Абдуррахим Вельмурадович</td></tr>
+<tr><th>Статус</th><td>Самозанятый (плательщик налога на профессиональный доход)</td></tr>
+<tr><th>ИНН</th><td>780633106396</td></tr>
+<tr><th>Регион</th><td>г. Санкт-Петербург, Российская Федерация</td></tr>
+<tr><th>Email</th><td>support@bewords.ru</td></tr>
+<tr><th>Приложение</th><td>BeWords</td></tr>
+</table>
 
 <footer>
-  <p class="f-line"><b>BeWords</b> © 2026 · Политика конфиденциальности</p>
+<p><strong>Бердиев Абдуррахим Вельмурадович</strong> · Самозанятый · ИНН 780633106396 · г. Санкт-Петербург<br>
+Email: support@bewords.ru · Приложение: BeWords</p>
+<p style="margin-top:10px;font-size:12px;color:#666;">Настоящая Политика разработана в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных» в редакции, действующей на дату публикации настоящей Политики.</p>
 </footer>
 
-<button id="backTop" aria-label="Наверх">
-  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
-</button>
-<div id="toast" role="status"></div>
-
-<script>
-(function(){
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var EMAIL = 'beridyevabdurrakhim@gmail.com';
-
-  /* ---- FIX: внутренние ссылки скроллят на месте, не открывая страницу ---- */
-  document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
-    anchor.addEventListener('click', function(e){
-      e.preventDefault();
-      var targetId = anchor.getAttribute('href');
-      if(targetId.length > 1){
-        var target = document.querySelector(targetId);
-        if(target){
-          target.scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block:'start'});
-          if(window.history && window.history.replaceState){
-            window.history.replaceState(null, '', targetId);
-          }
-        }
-      } else {
-        window.scrollTo({top:0, behavior: reduced ? 'auto' : 'smooth'});
-        if(window.history && window.history.replaceState){
-          window.history.replaceState(null, '', window.location.pathname + window.location.search);
-        }
-      }
-    });
-  });
-
-  /* ---- floating letters background ---- */
-  if(!reduced){
-    var layer = document.getElementById('bgLayer');
-    var letters = ['A','Б','W','Я','S','e','o','r','d','Ж','Ю','K','s','В'];
-    var colors = ['#58CC02','#1CB0F6','#FFC200','#CE82FF','#FF9600'];
-    for(var i=0;i<16;i++){
-      var sp = document.createElement('span');
-      sp.className = 'float-letter';
-      sp.textContent = letters[i % letters.length];
-      sp.style.left = (Math.random()*96) + '%';
-      sp.style.fontSize = (16 + Math.random()*30) + 'px';
-      sp.style.color = colors[i % colors.length];
-      sp.style.animationDuration = (18 + Math.random()*20) + 's';
-      sp.style.animationDelay = (-Math.random()*30) + 's';
-      layer.appendChild(sp);
-    }
-  }
-
-  /* ---- reading progress ---- */
-  var fill = document.getElementById('progressFill');
-  var label = document.getElementById('progressLabel');
-  var backTop = document.getElementById('backTop');
-  var ticking = false;
-  function onScroll(){
-    if(ticking) return;
-    ticking = true;
-    requestAnimationFrame(function(){
-      var h = document.documentElement;
-      var max = h.scrollHeight - h.clientHeight;
-      var p = max > 0 ? (h.scrollTop / max) * 100 : 0;
-      fill.style.width = p + '%';
-      label.textContent = Math.round(p) + '%';
-      backTop.classList.toggle('show', h.scrollTop > 600);
-      updateSpy();
-      ticking = false;
-    });
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-
-  /* ---- scrollspy + done marks ---- */
-  var secs = Array.prototype.slice.call(document.querySelectorAll('.sec, .end-card'));
-  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.toc-list a'));
-  function updateSpy(){
-    var mid = window.innerHeight * 0.45;
-    var activeId = null;
-    secs.forEach(function(s){
-      var r = s.getBoundingClientRect();
-      if(r.top < mid) activeId = s.id;
-      if(r.bottom < window.innerHeight * 0.6){
-        var link = document.querySelector('.toc-list a[href="#'+s.id+'"]');
-        if(link) link.classList.add('done');
-      }
-    });
-    tocLinks.forEach(function(a){
-      a.classList.toggle('active', a.getAttribute('href') === '#' + activeId);
-    });
-  }
-
-  /* ---- reveal on scroll ---- */
-  var revealEls = document.querySelectorAll('.reveal');
-  if(reduced || !('IntersectionObserver' in window)){
-    revealEls.forEach(function(el){ el.classList.add('in'); });
-  } else {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
-      });
-    }, {threshold:.12});
-    revealEls.forEach(function(el){ io.observe(el); });
-  }
-
-  /* ---- mobile TOC toggle ---- */
-  var toc = document.getElementById('toc');
-  var tocToggle = document.getElementById('tocToggle');
-  tocToggle.addEventListener('click', function(){
-    var open = toc.classList.toggle('open');
-    tocToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  tocLinks.forEach(function(a){
-    a.addEventListener('click', function(){
-      if(window.innerWidth <= 960){ toc.classList.remove('open'); tocToggle.setAttribute('aria-expanded','false'); }
-    });
-  });
-
-  /* ---- toast ---- */
-  var toast = document.getElementById('toast');
-  var toastTimer = null;
-  function showToast(html){
-    toast.innerHTML = html;
-    toast.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 3200);
-  }
-
-  /* ---- copy email ---- */
-  function copyEmail(){
-    function done(){ showToast('📋 Email скопирован: <b>' + EMAIL + '</b>'); }
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(EMAIL).then(done).catch(function(){ fallback(); });
-    } else { fallback(); }
-    function fallback(){
-      var ta = document.createElement('textarea');
-      ta.value = EMAIL; document.body.appendChild(ta);
-      ta.select(); try{ document.execCommand('copy'); done(); }catch(e){}
-      document.body.removeChild(ta);
-    }
-  }
-  document.getElementById('copyEmailTop').addEventListener('click', copyEmail);
-  document.querySelectorAll('.copy-email').forEach(function(b){ b.addEventListener('click', copyEmail); });
-
-  /* ---- print ---- */
-  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
-  document.getElementById('printBtn2').addEventListener('click', function(){ window.print(); });
-
-  /* ---- back to top ---- */
-  backTop.addEventListener('click', function(){
-    window.scrollTo({top:0, behavior: reduced ? 'auto' : 'smooth'});
-  });
-
-  /* ---- finish: confetti ---- */
-  var finished = false;
-  if('IntersectionObserver' in window && !reduced){
-    var finIO = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){ if(en.isIntersecting){ celebrate(); finIO.disconnect(); } });
-    }, {threshold:.4});
-    finIO.observe(document.getElementById('finish'));
-  }
-
-  onScroll();
-})();
-</script>
 </body>
 </html>
