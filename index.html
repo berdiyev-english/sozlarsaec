@@ -1617,71 +1617,49 @@ function setLang(from, to){
 window.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('simple-splash');
   if (!splash) return;
-  
-  // Предзагружаем аудио заранее
+
   const introAudio = new Audio('au/ui/intro.mp3');
   introAudio.volume = 0.65;
   introAudio.preload = 'auto';
-  
-  // Нативный splash сам уходит (MainActivity)
-  // Через 1.5 сек после старта WebView убираем HTML splash
-  setTimeout(() => {
-    // Запускаем звук в момент начала анимации ухода
-    introAudio.play().catch(e => {
-      console.warn('Не удалось воспроизвести звук:', e);
-    });
-    
+
+  let introPlayed = false;
+  let splashDismissed = false;
+
+  function dismissSplash() {
+    if (splashDismissed) return;
+    splashDismissed = true;
     splash.classList.add('fade-out');
     setTimeout(() => splash.remove(), 300);
-  }, 500);
-});
-</script>
-<script>
-(function() {
-  'use strict';
-  
-  let unlocked = false;
-  
-  function unlockAudio() {
-    if (unlocked) return;
-    unlocked = true;
-    
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-      
-      const ctx = new AudioContext();
-      
-      // Создаём беззвучный буфер (1 сэмпла тишины)
-      const buffer = ctx.createBuffer(1, 1, 22050);
-      const source = ctx.createBufferSource();
-      source.buffer = buffer;
-      source.connect(ctx.destination);
-      source.start(0);
-      
-      // Пробуем воспроизвести любой <audio> элемент (финальная разблокировка)
-      const silentAudio = document.querySelector('audio') || new Audio();
-      silentAudio.volume = 0;
-      silentAudio.play().then(() => silentAudio.pause()).catch(() => {});
-      
-      console.log('🔓 iOS audio unlocked');
-    } catch (e) {
-      console.warn('Unlock failed:', e);
-    } finally {
-      // Снимаем обработчики — больше они не нужны
-      document.removeEventListener('click', unlockAudio, true);
-      document.removeEventListener('touchstart', unlockAudio, true);
-      document.removeEventListener('touchend', unlockAudio, true);
-      document.removeEventListener('keydown', unlockAudio, true);
-    }
   }
-  
-  // Вешаем на все возможные user gestures
-  document.addEventListener('click', unlockAudio, true);
-  document.addEventListener('touchstart', unlockAudio, { capture: true, passive: true });
-  document.addEventListener('touchend', unlockAudio, { capture: true, passive: true });
-  document.addEventListener('keydown', unlockAudio, true);
-})();
+
+  function tryPlayIntro() {
+    if (introPlayed) return;
+    introAudio.play()
+      .then(() => { introPlayed = true; })
+      .catch(() => { /* iOS без жеста — молча копим попытку на следующий тап */ });
+  }
+
+  tryPlayIntro();
+
+  splash.addEventListener('click', () => {
+    tryPlayIntro();
+    dismissSplash();
+  }, { once: true });
+
+  splash.addEventListener('touchend', () => {
+    tryPlayIntro();
+    dismissSplash();
+  }, { once: true, passive: true });
+
+  setTimeout(dismissSplash, 1500);
+
+  // ДОБАВЛЕНО: если пользователь не тапнул по сплэшу, а сразу начал
+  // тыкать в приложение после его исчезновения — ловим первый тап
+  // где угодно на странице и пробуем проиграть интро тогда
+  document.addEventListener('touchend', function once() {
+    tryPlayIntro();
+  }, { once: true, passive: true });
+});
 </script>
 
 </body>
