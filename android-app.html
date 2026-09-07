@@ -2,22 +2,23 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+
   <title>BeWords - Изучение английских слов</title>
   
   <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="96x96" href="app-photos/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="app-photos/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="app-photos/icons/favicon-16x16.png">
+  <link rel="icon" href="app-photos/icons/favicon.ico" sizes="any">
   
   <!-- Apple Touch Icon -->
-  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="app-photos/icons/icon-192.png">
   
-  <link rel="preload" as="image" href="/loading.gif">
+  <link rel="preload" as="image" href="app-photos/bob/loading.gif">
   
   <!-- Manifest -->
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="manifest.json">
   
   <!-- Theme Color -->
   <meta name="theme-color" content="#f2f1f1">
@@ -36,10 +37,10 @@
   <meta property="og:url" content="https://bewords.ru">
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://bewords.ru">
+  <link rel="preload" as="style" href="styles.css">
+  <link rel="preload" as="style" href="fonts/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="fonts/fontawesome/css/all.min.css">
 
   <style>
   .app-install-banner {
@@ -262,6 +263,35 @@ body {
     .action-text-btn.remove { border-color: #ef4444; color: #ef4444; background: #fee2e2; }
     .action-text-btn:hover { filter: brightness(0.98); }
 
+    #simple-splash {
+  position: fixed;
+  inset: 0;
+  background: #EBF5FF; /* Тот же цвет что и нативный splash */
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* НЕТ transition на opacity — уход будет через класс */
+}
+
+#splash-text {
+  font-family: 'Nunito', sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  color: #58CC02;
+  text-shadow: 0 4px 0 #46A302;
+  /* СРАЗУ ВИДЕН, без анимации появления */
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Класс для ухода */
+#simple-splash.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
   </style>
   <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
@@ -278,54 +308,9 @@ body {
 <!-- /Yandex.Metrika counter -->
 </head>
 <body>
-  <div id="loading-layer" aria-busy="true" aria-label="Загрузка приложения">
-  <div class="ambient" aria-hidden="true">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-  </div>
-
-  <div class="center-group">
-    <div class="mascot-float" id="mascotFloat">
-      <div class="mascot-scale" id="mascotScale">
-        <img src="/Bob_loading.PNG" alt="BeWords" class="mascot-image" id="mascotImg"
-             onerror="this.onerror=null;this.src=window.bwFallbackMascot;">
-      </div>
-    </div>
-
-    <div class="fade-elements" id="fadeGroup">
-      <div class="loading-text-wrapper">
-        <div class="loading-text-bg">BeWords</div>
-        <div class="loading-text-fill-wrap" id="textFillWrap">
-          <div class="loading-text-fill">BeWords</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="shockwave" id="shockwave"></div>
-
-  <div class="tips-container" id="tipsGroup">
-    <div class="tip-pill">
-      <span class="tip-icon" aria-hidden="true">💡</span>
-      <span class="tips-text" id="randomTip"></span>
-    </div>
-  </div>
-</div>
-  <!-- App Install Banner -->
-<div id="appInstallBanner" class="app-install-banner">
-  <div class="banner-content">
-    <div class="banner-info">
-      <img src="/logo1.png" alt="BeWords" class="banner-icon">
-      <div class="banner-text">
-        <h4>BeWords - Учи английский</h4>
-        <p>Установите приложение для лучшего опыта!</p>
-      </div>
-    </div>
-    <a href="#" class="banner-install-btn" id="bannerInstallBtn">
-      Установить
-    </a>
-    <button class="banner-close" onclick="closeInstallBanner()" aria-label="Закрыть">×</button>
-  </div>
+<!-- Элегантный Splash Screen (Только текст после натива) -->
+<div id="simple-splash">
+  <h1 id="splash-text">BeWords</h1>
 </div>
   
 <div class="app-container" style="visibility:hidden">
@@ -333,7 +318,7 @@ body {
     <div class="header-content">
       <div class="logo-title">
         <a href="/" class="logo-link" onclick="location.reload(); return false;">
-          <img src="/logo1.png" alt="BeWords" class="app-logo">
+          <img src="app-photos/icons/apple-touch-icon.png" alt="BeWords" class="app-logo">
         </a>
         <h1 class="app-title">BeWords</h1>
       </div>
@@ -445,6 +430,19 @@ body {
         <h2>Категории</h2>
       </div>
       <div class="levels-grid" id="categoriesGrid">
+        <div class="level-card" data-category="SLANG" data-testid="category-card-slang">
+  <div class="level-badge elementary">Slang</div>
+  <div class="level-info">
+    <h3>Сленг</h3>
+    <p>Разговорные и уличные выражения</p>
+  </div>
+  <div class="chevron">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </div>
+</div>
+
         <div class="level-card" data-category="IRREGULARS" data-testid="category-card-irregulars">
           <div class="level-badge advanced">Irregular Verbs</div>
           <div class="level-info">
@@ -652,10 +650,10 @@ body {
   <div class="learning-top-bar">
     <div class="learning-stats-left">
       <div class="stat-pill" title="Слов в изучении">
-        <i class="fas fa-book"></i>
+        <i class="fas fa-layer-group"></i>
         <span id="learningCount">0</span>
       </div>
-      <div class="stat-pill" title="Стрик">
+      <div class="stat-pill" title="Ударный темп">
         <span id="completedLessonsCount">0</span>
       </div>
     </div>
@@ -920,6 +918,56 @@ body {
       <div id="progressContent" class="progress-content"></div>
     </section>
 
+    <section id="chat" class="content-section">
+    <div class="chat-screen">
+        <!-- ШАПКА ЧАТА (заменяет app-header) -->
+        <div class="chat-header">
+            <div class="header-avatar">
+                <img src="app-photos/bob/Bob_happy.png" alt="Боб">
+            </div>
+            <div class="header-info">
+                <div class="header-name">Боб</div>
+                <div class="header-status" id="chat-header-status">В сети</div>
+            </div>
+            <button class="chat-drawer-btn" id="chatDrawerBtn" title="Мои чаты">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- СООБЩЕНИЯ -->
+        <div class="chat-messages" id="chat-messages"></div>
+
+        <!-- ВВОД -->
+        <div class="chat-input-area">
+            <div class="input-wrapper">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Напиши Бобу..." autocomplete="off">
+            </div>
+            <button class="send-btn disabled" id="chat-send-btn">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+        </div>
+
+        <!-- ШТОРКА СО СПИСКОМ ЧАТОВ -->
+        <div class="chat-drawer" id="chatDrawer">
+            <div class="chat-drawer-header">
+                <h3><i class="fas fa-comments"></i> Мои чаты</h3>
+                <button class="chat-drawer-close" id="chatDrawerClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-drawer-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="chatSearchInput" placeholder="Поиск по чатам..." autocomplete="off">
+            </div>
+            <button class="chat-new-btn" id="chatNewBtn">
+                <i class="fas fa-plus"></i> Новый чат
+            </button>
+            <div class="chat-drawer-list" id="chatDrawerList"></div>
+        </div>
+        <div class="chat-drawer-overlay" id="chatDrawerOverlay"></div>
+    </div>
+</section>
+
     <!-- Games -->
     <section id="games" class="content-section">
       <div class="section-header">
@@ -936,105 +984,82 @@ body {
         Новая эра обучения началась с "Bewords"<br>
       </p>
 
-            <div class="games-grid">
-        <!-- Старые игры -->
-        <div class="game-card">
-          <img src="subway.jpg" alt="Subway" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>Subway Surfers</h3>
-            <button class="btn btn-primary" id="surfStartBtn">Старт</button>
-          </div>
-        </div>
+      <div class="games-grid">
+  <!-- Старые игры -->
+  <div class="game-card">
+    <img src="app-photos/games/bird.jpg" alt="flyingbob" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
+    <div class="game-info">
+      <h3>Летающий Боб</h3>
+      <button class="btn btn-primary" id="flyingStartBtn">Старт</button>
+    </div>
+  </div>
 
-        <div class="game-card">
-          <img src="bird.jpg" alt="Bird" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>Flying Bob</h3>
-            <button class="btn btn-primary" id="doodleStartBtn">Старт</button>
-          </div>
-        </div>
+  <div class="game-card">
+    <img src="app-photos/games/2048.jpg" alt="2048" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
+    <div class="game-info">
+      <h3>Собери 2048</h3>
+      <button class="btn btn-primary" id="game2048StartBtn">Старт</button>
+    </div>
+  </div>
 
-        <div class="game-card">
-          <img src="2048.jpg" alt="2048" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>2048</h3>
-            <button class="btn btn-primary" id="game2048StartBtn">Старт</button>
-          </div>
-        </div>
+  <div class="game-card">
+    <img src="app-photos/games/match3.jpg" alt="shoot" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
+    <div class="game-info">
+      <h3>Взрыв шаров</h3>
+      <button class="btn btn-primary" id="shootStartBtn">Старт</button>
+    </div>
+  </div>
 
-        <div class="game-card">
-          <img src="match3.jpg" alt="Panda" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>Bubble shoot</h3>
-            <button class="btn btn-primary" id="rocketStartBtn">Старт</button>
-          </div>
-        </div>
+  <!-- НОВЫЕ ИГРЫ -->
+  <div class="game-card">
+    <img src="app-photos/games/checkers.jpg" alt="Checkers" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
+    <div class="game-info">
+      <h3>Шашки с Бобом</h3>
+      <button class="btn btn-primary" id="checkersStartBtn">Старт</button>
+    </div>
+  </div>
 
-        <div class="game-card">
-          <img src="ninja.jpg" alt="Ninja" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>Fruit Ninja</h3>
-            <button class="btn btn-primary" id="ninjaStartBtn">Старт</button>
-          </div>
-        </div>
+  <div class="game-card">
+    <img src="app-photos/games/chess.jpg" alt="Chess" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
+    <div class="game-info">
+      <h3>Шахматы с Бобом</h3>
+      <button class="btn btn-primary" id="chessStartBtn">Старт</button>
+    </div>
+  </div>
 
-        <div class="game-card">
-          <img src="dash.jpg" alt="Dash" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>Geo-Dash</h3>
-            <button class="btn btn-primary" id="catalogStartBtn">Старт</button>
-          </div>
-        </div>
+  <div class="game-card">
+    <img src="app-photos/games/cosmos.jpg" alt="Cosmos" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
+    <div class="game-info">
+      <h3>Соедини линии</h3>
+      <button class="btn btn-primary" id="cosmosStartBtn">Старт</button>
+    </div>
+  </div>
 
-        <!-- НОВЫЕ ИГРЫ -->
-        <div class="game-card">
-          <img src="checkers.jpg" alt="Checkers" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>Шашки с Бобом</h3>
-            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Checkers', 'checkers.html')">Старт</button>
-          </div>
-        </div>
+  <div class="game-card">
+    <img src="app-photos/games/brain.jpg" alt="Brain" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
+    <div class="game-info">
+      <h3>Сломай мозг</h3>
+      <button class="btn btn-primary" id="brainStartBtn">Старт</button>
+    </div>
+  </div>
 
-        <div class="game-card">
-          <img src="chess.jpg" alt="Chess" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>Шахматы с Бобом</h3>
-            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Chess', 'chess.html')">Старт</button>
-          </div>
-        </div>
+  <div class="game-card">
+    <img src="app-photos/games/merge.jpg" alt="Merge" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
+    <div class="game-info">
+      <h3> Фруктовое слияние</h3>
+      <button class="btn btn-primary" id="mergeStartBtn">Старт</button>
+    </div>
+  </div>
 
-        <div class="game-card">
-          <img src="cosmos.jpg" alt="Cosmos" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>Cosmos</h3>
-            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Cosmos', 'cosmos.html')">Старт</button>
-          </div>
-        </div>
+  <div class="game-card">
+    <img src="app-photos/games/tile.jpg" alt="Tile" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
+    <div class="game-info">
+      <h3>Собери 3 в ряд</h3>
+      <button class="btn btn-primary" id="tileStartBtn">Старт</button>
+    </div>
+  </div>
+</div>
 
-        <div class="game-card">
-          <img src="brain.jpg" alt="Brain" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>Brain Trainer</h3>
-            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Brain', 'brain.html')">Старт</button>
-          </div>
-        </div>
-
-        <div class="game-card">
-          <img src="merge.jpg" alt="Merge" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>Merge</h3>
-            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Merge', 'merge.html')">Старт</button>
-          </div>
-        </div>
-
-        <div class="game-card">
-          <img src="tile.jpg" alt="Tile" class="game-cover" onerror="this.src='nophoto.jpg'">
-          <div class="game-info">
-            <h3>Tile Match</h3>
-            <button class="btn btn-primary" onclick="app.showQuizGateForGame('Tile', 'tile.html')">Старт</button>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- Grammar Section -->
@@ -1050,14 +1075,19 @@ body {
 
 <nav class="bottom-nav" id="bottomNav">
   <button class="nav-item active" type="button" data-section="learning">
-    <i class="fas fa-book-reader"></i><span>Урок</span>
+    <i class="fas fa-book-reader"></i><span>Практика</span>
   </button>
   <button class="nav-item" type="button" data-section="grammar">
-    <i class="fas fa-university"></i><span>Грамматика</span>
+    <i class="fas fa-graduation-cap"></i><span>Курс</span>
   </button>
+  <!-- НОВЫЙ ПУНКТ: Чат с Бобом -->
+    <!--  <button class="nav-item" data-section="chat">
+        <i class="fas fa-comment-dots"></i>
+        <span>Чат</span> 
+    </button> -->
   <button class="nav-item" type="button" data-section="levels">
-    <i class="fas fa-layer-group"></i><span>Слова</span>
-  </button>
+    <i class="fas fa-layer-group"></i><span>Наборы</span>
+  </button> 
   <button class="nav-item" type="button" data-section="new-words">
     <i class="fas fa-plus"></i><span>Новые</span>
   </button>
@@ -1068,12 +1098,60 @@ body {
 </div>
 
 <audio id="audioPlayer" preload="none"></audio>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="oxford_words_data.js"></script>
+<script src="supabase.js"></script>
+<script src="words_data.js"></script>
 <script src="sentences-data.js"></script>
 <script src="grammar.js"></script> 
 <script src="app.js"></script>
+<!-- <script src="auth_no_sync.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+<script>
+(function() {
+  'use strict';
+  
+  let unlocked = false;
+  
+  function unlockAudio() {
+    if (unlocked) return;
+    unlocked = true;
+    
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      
+      const ctx = new AudioContext();
+      
+      // Создаём беззвучный буфер (1 сэмпла тишины)
+      const buffer = ctx.createBuffer(1, 1, 22050);
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+      source.connect(ctx.destination);
+      source.start(0);
+      
+      // Пробуем воспроизвести любой <audio> элемент (финальная разблокировка)
+      const silentAudio = document.querySelector('audio') || new Audio();
+      silentAudio.volume = 0;
+      silentAudio.play().then(() => silentAudio.pause()).catch(() => {});
+      
+      console.log('🔓 iOS audio unlocked');
+    } catch (e) {
+      console.warn('Unlock failed:', e);
+    } finally {
+      // Снимаем обработчики — больше они не нужны
+      document.removeEventListener('click', unlockAudio, true);
+      document.removeEventListener('touchstart', unlockAudio, true);
+      document.removeEventListener('touchend', unlockAudio, true);
+      document.removeEventListener('keydown', unlockAudio, true);
+    }
+  }
+  
+  // Вешаем на все возможные user gestures
+  document.addEventListener('click', unlockAudio, true);
+  document.addEventListener('touchstart', unlockAudio, { capture: true, passive: true });
+  document.addEventListener('touchend', unlockAudio, { capture: true, passive: true });
+  document.addEventListener('keydown', unlockAudio, true);
+})();
+</script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -1449,7 +1527,7 @@ function setLang(from, to){
     "Вы можете редактировать слова , если нажмете на иконку с книгой над дорожкой 📖",
     "Если нет желания что-то учить , то заходите просто поиграть в игры 🎮",
     "Вы можете поделиться своими словами с другом нажав на 🔗",
-    "Поддерживайте стрик — так проще не бросить учёбу 📈"
+    "Поддерживайте ударный темп — так проще не бросить учёбу 📈"
   ];
   if (tipElement) tipElement.textContent = tips[Math.floor(Math.random() * tips.length)];
 
@@ -1580,6 +1658,32 @@ function setLang(from, to){
 
   </div>
 </div>
+
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const splash = document.getElementById('simple-splash');
+  if (!splash) return;
+  
+  // Предзагружаем аудио заранее
+  const introAudio = new Audio('au/ui/intro.mp3');
+  introAudio.volume = 0.65;
+  introAudio.preload = 'auto';
+  
+  // Нативный splash сам уходит (MainActivity)
+  // Через 1.5 сек после старта WebView убираем HTML splash
+  setTimeout(() => {
+    // Запускаем звук в момент начала анимации ухода
+    introAudio.play().catch(e => {
+      console.warn('Не удалось воспроизвести звук:', e);
+    });
+    
+    splash.classList.add('fade-out');
+    setTimeout(() => splash.remove(), 300);
+  }, 500);
+});
+</script>
+
 
 </body>
 
