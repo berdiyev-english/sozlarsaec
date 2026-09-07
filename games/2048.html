@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>Bewords 2048</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  /* ---------- ПЕРЕМЕННЫЕ (весенняя тема — синий основной) ---------- */
+  :root {
+    --primary-color: #0ea5e9;
+    --primary-dark: #0284c7;
+    --secondary-color: #ffc800;
+    --accent-color: #ff4b4b;
+    --danger-color: #ff4b4b;
+    --warning-color: #ffb020;
+    --success-color: #58cc02;
+    --info-color: #1cb0f6;
+    --purple-color: #ce82ff;
+
+    --bg-primary: #ffffff;
+    --bg-secondary: #f7f7f7;
+    --bg-tertiary: #e5e5e5;
+    --text-primary: #3c3c3c;
+    --text-secondary: #777777;
+    --text-muted: #afafaf;
+    --border-color: #e5e5e5;
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.16);
+
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 20px;
+    --radius-xl: 24px;
+    --radius-xxl: 32px;
+    
+    /* Игровое поле */
+    --gap: 12px;
+    --board-bg: #bbada0;
+    --cell-bg: rgba(238, 228, 218, 0.35);
+    --anim: 100ms;
+    --ease: cubic-bezier(.2,.8,.2,1);
+  }
+  
+  @media (prefers-reduced-motion: reduce) { :root { --anim: 0ms; } }
+  
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  
+  body {
+    margin: 0; 
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: grid; 
+    place-items: center; 
+    padding: 20px 10px;
+    user-select: none; 
+    -webkit-user-select: none;
+    overflow-x: hidden;
+  }
+
+  .wrap { 
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+  }
+
+  /* ВЕРХНЯЯ ПАНЕЛЬ */
+  .topbar { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+  }
+  
+  .brand { 
+    font-size: 36px; 
+    font-weight: 800; 
+    color: var(--primary-color);
+    line-height: 1;
+  }
+  
+  .scores { 
+    display: flex; 
+    gap: 8px; 
+  }
+  
+  .badge {
+    background: var(--primary-color);
+    padding: 10px 16px; 
+    border-radius: var(--radius-sm); 
+    text-align: center; 
+    min-width: 80px;
+    box-shadow: var(--shadow-sm);
+  }
+  .badge span { 
+    display: block; 
+    text-transform: uppercase; 
+    font-size: 11px; 
+    line-height: 13px; 
+    color: rgba(255,255,255,0.9); 
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .badge b { 
+    display: block; 
+    color: #fff; 
+    font-size: 22px; 
+    font-weight: 800; 
+    margin-top: 4px; 
+  }
+
+  .controls { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    gap: 10px;
+  }
+  
+  .controls-left {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+  }
+  
+  button, select {
+    background: var(--primary-color); 
+    color: #fff; 
+    border: none;
+    border-radius: var(--radius-sm); 
+    padding: 12px 20px; 
+    font-weight: 700; 
+    font-size: 15px;
+    cursor: pointer; 
+    outline: none;
+    appearance: none;
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 4px 0 var(--primary-dark);
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  button:hover { background: var(--info-color); }
+  button:active { 
+    transform: translateY(4px); 
+    box-shadow: 0 0 0 var(--primary-dark); 
+  }
+  
+  #undoBtn {
+    background: var(--purple-color);
+    box-shadow: 0 4px 0 #a560e8;
+  }
+  #undoBtn:hover { background: #d895ff; }
+  #undoBtn:active { box-shadow: 0 0 0 #a560e8; }
+  
+  select {
+    background: var(--secondary-color);
+    box-shadow: 0 4px 0 #cc9e00;
+    color: var(--text-primary);
+    padding-right: 36px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path fill='%233c3c3c' d='M0 0l6 8 6-8z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+  select:hover { background: #ffd42a; }
+  select:active { 
+    transform: translateY(4px); 
+    box-shadow: 0 0 0 #cc9e00; 
+  }
+
+  /* ИГРОВОЕ ПОЛЕ — БЕЗ ИЗМЕНЕНИЙ */
+  .board {
+    position: relative; 
+    width: 100%; 
+    aspect-ratio: 1/1;
+    background: var(--board-bg); 
+    border-radius: var(--radius-md);
+    border: 4px solid var(--board-bg); 
+    touch-action: none;
+  }
+
+  .grid-container, .tile-container {
+    position: absolute;
+    inset: 0;
+    padding: var(--gap);
+    display: grid;
+    grid-template-columns: repeat(var(--size), 1fr);
+    grid-template-rows: repeat(var(--size), 1fr);
+    gap: var(--gap);
+  }
+  
+  .grid-container { z-index: 1; }
+  .tile-container { z-index: 2; pointer-events: none; }
+
+  .cell { 
+    background: var(--cell-bg); 
+    border-radius: 6px; 
+    width: 100%; 
+    height: 100%; 
+  }
+
+  .tile {
+    position: absolute;
+    width: var(--w); height: var(--h);
+    background: #eee4da;
+    border-radius: 6px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    font-weight: 700; 
+    font-size: 30px;
+    line-height: 1;
+    z-index: 10;
+    transform: translate3d(var(--tx), var(--ty), 0) scale(var(--s, 1));
+    transition: transform var(--anim) var(--ease);
+    will-change: transform;
+  }
+
+  .tile.new { animation: pop 200ms ease; }
+  .tile.merged { animation: pop 200ms ease; z-index: 20; }
+  
+  @keyframes pop {
+    0% { transform: translate3d(var(--tx), var(--ty), 0) scale(0.5); }
+    50% { transform: translate3d(var(--tx), var(--ty), 0) scale(1.1); }
+    100% { transform: translate3d(var(--tx), var(--ty), 0) scale(1); }
+  }
+
+  /* ЦВЕТА ТАЙЛОВ — БЕЗ ИЗМЕНЕНИЙ */
+  .tile[data-val="2"]    { background: #eee4da; color: #776e65; }
+  .tile[data-val="4"]    { background: #ede0c8; color: #776e65; }
+  .tile[data-val="8"]    { background: #f2b179; color: #f9f6f2; }
+  .tile[data-val="16"]   { background: #f59563; color: #f9f6f2; }
+  .tile[data-val="32"]   { background: #f67c5f; color: #f9f6f2; }
+  .tile[data-val="64"]   { background: #f65e3b; color: #f9f6f2; }
+  .tile[data-val="128"]  { background: #edcf72; color: #f9f6f2; font-size: 2.5em; }
+  .tile[data-val="256"]  { background: #edcc61; color: #f9f6f2; font-size: 2.5em; }
+  .tile[data-val="512"]  { background: #edc850; color: #f9f6f2; font-size: 2.5em; }
+  .tile[data-val="1024"] { background: #edc53f; color: #f9f6f2; font-size: 2.0em; }
+  .tile[data-val="2048"] { background: #edc22e; color: #f9f6f2; font-size: 2.0em; }
+
+  /* ОВЕРЛЕИ */
+  .overlay {
+    position: absolute; inset: 0; z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: var(--radius-md);
+    animation: fadein 0.3s;
+    padding: 30px 20px;
+  }
+  .overlay.show { display: flex; }
+  
+  @keyframes fadein { 
+    from { opacity: 0; } 
+    to { opacity: 1; } 
+  }
+
+  /* СТАРТОВОЕ МЕНЮ */
+  #startScreen {
+    background: var(--bg-primary);
+    z-index: 200;
+  }
+  
+  .start-icon {
+    font-size: 80px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  #startScreen h1 {
+    font-size: 42px;
+    color: var(--text-primary);
+    margin: 0 0 12px;
+    font-weight: 800;
+  }
+  
+  #startScreen p {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin: 0 0 35px;
+    font-weight: 500;
+  }
+  
+  .big-btn {
+    background: var(--success-color) !important;
+    color: #fff !important;
+    font-size: 20px !important;
+    padding: 16px 50px !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: 0 6px 0 #46a302 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 800;
+  }
+  .big-btn:hover {
+    background: #65d806 !important;
+  }
+  .big-btn:active {
+    transform: translateY(6px) !important;
+    box-shadow: 0 0 0 #46a302 !important;
+  }
+  .big-btn i {
+    margin-right: 8px;
+  }
+
+  /* ЭКРАН ПОБЕДЫ */
+  #winOv {
+    background: var(--bg-primary);
+  }
+  
+  .win-icon {
+    font-size: 90px;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    animation: bounce 1s ease infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-15px) scale(1.05); }
+  }
+  
+  .overlay-text { 
+    font-size: 38px; 
+    font-weight: 800; 
+    color: var(--text-primary); 
+    margin: 0 0 10px;
+  }
+  
+  .overlay-subtitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+  }
+  
+  .overlay-btns { 
+    display: flex; 
+    gap: 12px; 
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .overlay-btns button {
+    padding: 14px 28px;
+    font-size: 16px;
+    border-radius: var(--radius-sm);
+  }
+  
+  #contBtn {
+    background: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 4px 0 #999 !important;
+  }
+  #contBtn:hover { background: #d5d5d5 !important; }
+  #contBtn:active { box-shadow: 0 0 0 #999 !important; }
+  
+  #retryWinBtn {
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 0 var(--primary-dark) !important;
+  }
+  #retryWinBtn:hover { background: var(--info-color) !important; }
+  #retryWinBtn:active { box-shadow: 0 0 0 var(--primary-dark) !important; }
+
+  /* ЭКРАН ПОРАЖЕНИЯ */
+  #loseOv {
+    background: var(--bg-primary);
+  }
+  
+  .lose-icon {
+    font-size: 85px;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+  }
+  
+  #retryLoseBtn {
+    background: var(--accent-color) !important;
+    color: #fff !important;
+    box-shadow: 0 6px 0 #cc3a3a !important;
+    padding: 16px 40px !important;
+    font-size: 18px !important;
+    margin-top: 10px;
+  }
+  #retryLoseBtn:hover { background: #ff6565 !important; }
+  #retryLoseBtn:active {
+    transform: translateY(6px) !important;
+    box-shadow: 0 0 0 #cc3a3a !important;
+  }
+
+  .hint { 
+    text-align: center; 
+    font-size: 15px; 
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-top: 5px;
+    background: var(--bg-primary);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .hint i {
+    font-size: 18px;
+    color: var(--primary-color);
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">2048</div>
+    <div class="scores">
+      <div class="badge">
+        <span>СЧЁТ</span>
+        <b id="score">0</b>
+      </div>
+      <div class="badge">
+        <span>РЕКОРД</span>
+        <b id="best">0</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="controls-left">
+      <button id="newGameBtn">
+        <i class="fas fa-redo"></i>
+        <span>Новая игра</span>
+      </button>
+      <button id="undoBtn">
+        <i class="fas fa-undo"></i>
+        <span>Отмена</span>
+      </button>
+    </div>
+    <select id="sizeSel">
+      <option value="3">3 × 3</option>
+      <option value="4" selected>4 × 4</option>
+      <option value="5">5 × 5</option>
+      <option value="6">6 × 6</option>
+    </select>
+  </div>
+
+  <div class="board" id="board" style="--size:4">
+    <div class="grid-container" id="grid"></div>
+    <div class="tile-container" id="tiles"></div>
+
+    <!-- СТАРТОВОЕ МЕНЮ -->
+    <div class="overlay show" id="startScreen">
+      <div class="start-icon">
+        <i class="fas fa-gamepad"></i>
+      </div>
+      <h1>Bewords 2048</h1>
+      <p>Соедини числа, чтобы получить 2048!</p>
+      <button class="big-btn" id="playBtn">
+        <i class="fas fa-play"></i>
+        <span>Старт</span>
+      </button>
+    </div>
+
+    <!-- ПОБЕДА -->
+    <div class="overlay" id="winOv">
+      <div class="win-icon">
+        <i class="fas fa-trophy"></i>
+      </div>
+      <div class="overlay-text">Вы победили!</div>
+      <div class="overlay-subtitle">Отличная работа!</div>
+      <div class="overlay-btns">
+        <button id="contBtn">
+          <i class="fas fa-forward"></i>
+          <span>Продолжить</span>
+        </button>
+        <button id="retryWinBtn">
+          <i class="fas fa-redo"></i>
+          <span>Сыграть снова</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ПОРАЖЕНИЕ -->
+    <div class="overlay" id="loseOv">
+      <div class="lose-icon">
+        <i class="fas fa-times-circle"></i>
+      </div>
+      <div class="overlay-text">Игра окончена!</div>
+      <div class="overlay-subtitle">Не сдавайся, попробуй ещё раз!</div>
+      <button id="retryLoseBtn">
+        <i class="fas fa-redo"></i>
+        <span>Попробовать снова</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="hint">
+    <i class="fas fa-hand-pointer"></i>
+    <span>Свайпай пальцем или используй стрелки / WASD</span>
+  </div>
+</div>
+
+<script>
+(() => {
+  const D = document;
+  const els = {
+    board: D.getElementById('board'),
+    grid:  D.getElementById('grid'),
+    tiles: D.getElementById('tiles'),
+    score: D.getElementById('score'),
+    best:  D.getElementById('best'),
+    start: D.getElementById('startScreen'),
+    win:   D.getElementById('winOv'),
+    lose:  D.getElementById('loseOv')
+  };
+
+  let config = {
+    size: 4,
+    best: parseInt(localStorage.getItem('bewords-2048-best') || '0')
+  };
+  
+  let state = {
+    tiles: [],
+    score: 0,
+    history: [],
+    isPlaying: false,
+    won: false,
+    over: false,
+    lock: false
+  };
+
+  let idSeq = 1;
+
+  els.best.textContent = config.best;
+
+  function init() {
+    els.board.style.setProperty('--size', config.size);
+    els.grid.innerHTML = '';
+    for(let i=0; i<config.size*config.size; i++) {
+      const cell = D.createElement('div');
+      cell.className = 'cell';
+      els.grid.appendChild(cell);
+    }
+  }
+
+  function startGame() {
+    state = {
+      tiles: [],
+      score: 0,
+      history: [],
+      isPlaying: true,
+      won: false,
+      over: false,
+      lock: false
+    };
+    els.score.textContent = '0';
+    els.tiles.innerHTML = '';
+    els.win.classList.remove('show');
+    els.lose.classList.remove('show');
+    els.start.classList.remove('show');
+    
+    addRandomTile();
+    addRandomTile();
+    saveState();
+    render();
+  }
+
+  function getPos(x, y) {
+    const index = y * config.size + x;
+    const cell = els.grid.children[index];
+    return {
+      x: cell.offsetLeft,
+      y: cell.offsetTop,
+      w: cell.offsetWidth,
+      h: cell.offsetHeight
+    };
+  }
+
+  function render() {
+    const domTiles = Array.from(els.tiles.children);
+    const activeIds = new Set(state.tiles.map(t => String(t.id)));
+
+    domTiles.forEach(el => {
+      if(!activeIds.has(el.dataset.id)) el.remove();
+    });
+
+    state.tiles.forEach(t => {
+      let el = els.tiles.querySelector(`.tile[data-id="${t.id}"]`);
+      const pos = getPos(t.x, t.y);
+      const isNew = !el;
+
+      if(isNew) {
+        el = D.createElement('div');
+        el.className = `tile new`;
+        el.dataset.id = t.id;
+        els.tiles.appendChild(el);
+      } else {
+        el.classList.remove('new', 'merged');
+        if(t.merged) {
+           void el.offsetWidth; 
+           el.classList.add('merged');
+           t.merged = false;
+        }
+      }
+
+      el.dataset.val = t.val;
+      el.textContent = t.val;
+      el.style.setProperty('--tx', pos.x + 'px');
+      el.style.setProperty('--ty', pos.y + 'px');
+      el.style.setProperty('--w', pos.w + 'px');
+      el.style.setProperty('--h', pos.h + 'px');
+      
+      if(t.val > 100 && t.val < 1000) el.style.fontSize = (pos.w * 0.4) + 'px';
+      else if(t.val >= 1000) el.style.fontSize = (pos.w * 0.35) + 'px';
+      else el.style.fontSize = (pos.w * 0.5) + 'px';
+    });
+  }
+
+  function addRandomTile() {
+    const empty = [];
+    for(let x=0; x<config.size; x++) {
+      for(let y=0; y<config.size; y++) {
+        if(!state.tiles.find(t => t.x===x && t.y===y)) empty.push({x,y});
+      }
+    }
+    if(empty.length === 0) return;
+    const cell = empty[Math.floor(Math.random()*empty.length)];
+    state.tiles.push({
+      id: idSeq++,
+      x: cell.x,
+      y: cell.y,
+      val: Math.random() > 0.9 ? 4 : 2
+    });
+  }
+
+  function saveState() {
+    state.history.push({
+      tiles: JSON.parse(JSON.stringify(state.tiles)),
+      score: state.score
+    });
+    if(state.history.length > 10) state.history.shift();
+  }
+
+  function undo() {
+    if(!state.isPlaying || state.history.length <= 1) return;
+    state.history.pop();
+    const prev = state.history[state.history.length - 1];
+    state.tiles = JSON.parse(JSON.stringify(prev.tiles));
+    state.score = prev.score;
+    els.score.textContent = state.score;
+    state.over = false;
+    state.won = false;
+    els.lose.classList.remove('show');
+    els.win.classList.remove('show');
+    render();
+  }
+
+  function move(dir) {
+    if(!state.isPlaying || state.lock || state.over) return;
+    
+    const vec = {
+      ArrowUp:    {x:0, y:-1},
+      ArrowDown:  {x:0, y:1},
+      ArrowLeft:  {x:-1,y:0},
+      ArrowRight: {x:1, y:0}
+    }[dir];
+    
+    if(!vec) return;
+
+    state.lock = true;
+    let moved = false;
+    
+    let sorted = [...state.tiles];
+    if(vec.x===1) sorted.sort((a,b) => b.x - a.x);
+    else if(vec.x===-1) sorted.sort((a,b) => a.x - b.x);
+    else if(vec.y===1) sorted.sort((a,b) => b.y - a.y);
+    else if(vec.y===-1) sorted.sort((a,b) => a.y - b.y);
+
+    const mergedIds = new Set();
+
+    sorted.forEach(t => {
+      let cx = t.x, cy = t.y;
+      let dist = 0;
+      
+      while(true) {
+        const nx = cx + vec.x;
+        const ny = cy + vec.y;
+        
+        if(nx<0 || nx>=config.size || ny<0 || ny>=config.size) break;
+        
+        const blocker = state.tiles.find(o => o.x===nx && o.y===ny);
+        
+        if(!blocker) {
+          cx = nx; cy = ny;
+          moved = true;
+        } else if(blocker.val === t.val && !mergedIds.has(blocker.id) && !mergedIds.has(t.id)) {
+          state.tiles = state.tiles.filter(o => o.id !== t.id);
+          blocker.val *= 2;
+          blocker.merged = true;
+          mergedIds.add(blocker.id);
+          state.score += blocker.val;
+          els.score.textContent = state.score;
+          if(state.score > config.best) {
+            config.best = state.score;
+            els.best.textContent = config.best;
+            localStorage.setItem('bewords-2048-best', config.best);
+          }
+          if(blocker.val === 2048 && !state.won) {
+             state.won = true;
+             setTimeout(() => els.win.classList.add('show'), 200);
+          }
+          moved = true;
+          break; 
+        } else {
+          break;
+        }
+      }
+      t.x = cx; t.y = cy;
+    });
+
+    if(moved) {
+      render();
+      setTimeout(() => {
+        addRandomTile();
+        saveState();
+        render();
+        checkOver();
+        state.lock = false;
+      }, 150);
+    } else {
+      state.lock = false;
+    }
+  }
+
+  function checkOver() {
+    if(state.tiles.length < config.size*config.size) return;
+    
+    for(let t of state.tiles) {
+      for(let d of [[0,1],[0,-1],[1,0],[-1,0]]) {
+        const n = state.tiles.find(o => o.x===t.x+d[0] && o.y===t.y+d[1]);
+        if(n && n.val === t.val) return;
+      }
+    }
+    state.over = true;
+    els.lose.classList.add('show');
+  }
+
+  window.addEventListener('keydown', e => {
+    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code)) {
+      e.preventDefault();
+      move(e.code);
+    }
+    if(e.code === 'KeyW') move('ArrowUp');
+    if(e.code === 'KeyS') move('ArrowDown');
+    if(e.code === 'KeyA') move('ArrowLeft');
+    if(e.code === 'KeyD') move('ArrowRight');
+  });
+
+  let ts = {x:0, y:0};
+  els.board.addEventListener('touchstart', e => {
+    ts.x = e.touches[0].clientX;
+    ts.y = e.touches[0].clientY;
+  }, {passive: false});
+  
+  els.board.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - ts.x;
+    const dy = e.changedTouches[0].clientY - ts.y;
+    if(Math.abs(dx) > 30 || Math.abs(dy) > 30) {
+      if(Math.abs(dx) > Math.abs(dy)) move(dx>0 ? 'ArrowRight' : 'ArrowLeft');
+      else move(dy>0 ? 'ArrowDown' : 'ArrowUp');
+    }
+  }, {passive: false});
+
+  els.board.addEventListener('touchmove', e => e.preventDefault(), {passive:false});
+
+  D.getElementById('playBtn').onclick = startGame;
+  D.getElementById('newGameBtn').onclick = startGame;
+  D.getElementById('retryWinBtn').onclick = startGame;
+  D.getElementById('retryLoseBtn').onclick = startGame;
+  D.getElementById('contBtn').onclick = () => els.win.classList.remove('show');
+  D.getElementById('undoBtn').onclick = undo;
+  
+  D.getElementById('sizeSel').onchange = (e) => {
+    config.size = parseInt(e.target.value);
+    init();
+    els.start.classList.add('show');
+    state.isPlaying = false;
+  };
+
+  window.addEventListener('resize', () => {
+     setTimeout(render, 100);
+  });
+
+  init();
+})();
+</script>
+</body>
+</html>

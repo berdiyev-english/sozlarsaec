@@ -3,27 +3,27 @@ const CACHE_NAME = 'bewords-cache-v18';
 
 // Список файлов, которые нужно сохранить СРАЗУ
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/style.css',  // Если есть внешний файл
-  '/app.js',     // Твой основной скрипт (если он внешний)
-  '/grammar.js',
-  '/sentences-data.js',
-  '/loading.gif',
-  '/kitten.png',
-  '/puppy.png',
-  '/panda.png',
-  '/fox.png',
-  '/penguin.png',
-  '/rabbit.png',
-  '/nophoto.jpg',
-  '/m1.jpg',     // Закешируем хотя бы пару мотиваций
-  '/m2.jpg',
-  '/m3.jpg',
-  '/m4.jpg',
-  '/m5.jpg',
-  '/bob_loading.png',
-  '/instructor.png'
+  './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './grammar.js',
+  './sentences-data.js',
+  'app-photos/bob/loading.gif',
+  'app-photos/pets/kitten.png',
+  'app-photos/pets/puppy.png',
+  'app-photos/pets/panda.png',
+  'app-photos/pets/fox.png',
+  'app-photos/pets/penguin.png',
+  'app-photos/pets/rabbit.png',
+  'app-photos/error/nophoto.jpg',
+  'app-photos/motivation/m1.jpg',
+  'app-photos/motivation/m2.jpg',
+  'app-photos/motivation/m3.jpg',
+  'app-photos/motivation/m4.jpg',
+  'app-photos/motivation/m5.jpg',
+  'app-photos/bob/Bob_loading.PNG',
+  'app-photos/bob/instructor.png'
 ];
 
 // 1. Установка (Кешируем статику)

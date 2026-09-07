@@ -8,13 +8,13 @@ var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlz
 
 var SITE_URL = 'https://bewords.ru/';
 function getAuthRedirectBase() {
+    // Если это Capacitor приложение — возвращаем URL scheme
     if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) {
-        return 'bewords://';
+        return 'app.bewords://';  // ← Схема твоего приложения
     }
-    // ✅ Возвращаем домен + путь, чтобы оказаться на той же странице
+    // Для веб-сайта и локалки — возвращаем origin + pathname (сохраняет путь)
     return window.location.origin + window.location.pathname;
 }
-
 // ✅ КЛЮЧЕВОЕ: detectSessionInUrl + autoRefreshToken
 var supabaseClient = null;
 if (window.supabase) {
