@@ -427,6 +427,12 @@ body.modal-open {
   to { opacity: 1; transform: translateY(0) translateZ(0); }
 }
 
+/* Отступы для всех секций, кроме дорожки обучения */
+.content-section:not(#learning) {
+  padding: 1rem !important;
+  padding-bottom: 140px !important;
+}
+
 #learning {
   padding: 0 !important;
   margin: 0 !important;
@@ -7299,6 +7305,115 @@ body.training-fullscreen .toast-container { z-index: 10000000 !important; }
 /* Первое же взаимодействие — подсказка больше не нужна */
 .grammar-carousel.glc-interacted .grammar-level-card {
     animation: none !important;
+}
+
+
+
+/* ==========================================================================
+ИГРЫ И другие отступы в capacitor
+========================================================================== */
+body.games-fullscreen .app-header,
+body.games-fullscreen .bottom-nav,
+body.games-fullscreen #appInstallBanner,
+body.games-fullscreen #floating-active-arrow {
+    display: none !important;
+}
+
+/* Десктоп: выпадаем из «окна» на весь экран, сетка в одну ячейку */
+@media (min-width: 768px) {
+    body.games-fullscreen .app-container {
+        max-width: 100% !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        max-height: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 1fr !important;
+    }
+    body.games-fullscreen .main-content {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+    }
+}
+/* Нижняя системная панель (жесты/кнопки Android) не перекрывает меню */
+.bottom-nav {
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* Контент не прячется под нижнюю панель */
+.content-section:not(#learning) {
+    padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
+}
+/* Убираем задержку тапа и двойной зум — кнопки реагируют мгновенно */
+button, .btn, .nav-item, .quiz-option, .quiz-option-gate,
+.word-card, .level-card, .sentence-word, .gt-word-chip,
+.grammar-topic-card, .game-card, .mode-option, .lesson-card {
+    touch-action: manipulation;
+}
+
+/* Отступ под системный статус-бар (время, батарея) */
+.app-header {
+    padding-top: calc(1.25rem + env(safe-area-inset-top, 0px));
+}
+
+/* Заодно — чтобы нижнее меню не залезало под жестовую панель */
+.bottom-nav {
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* ===== Отступ под статус-бар в полноэкранных режимах ===== */
+/* Поделиться словами */
+.practice-words-modal-overlay {
+    padding-top: env(safe-area-inset-top, 0px);
+}
+/* Тренажёр грамматики */
+.gt-overlay {
+    padding-top: env(safe-area-inset-top, 0px);
+}
+/* Тренажёр в уроке (верхняя панель урока) */
+body.training-fullscreen .lesson-topbar {
+    padding-top: env(safe-area-inset-top, 0px);
+}
+/* Экран завершения тренировки грамматики */
+#grammarFinishOverlay {
+    padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* === Игры: чуть больше отступ сверху === */
+#games {
+    padding-top: 20px;   /* увеличь/уменьши на пару px по вкусу */
+}
+/* Выбранная карточка в «Подборе программы»: только голубая обводка, без заливки фона */
+.wizard-card.active {
+    background: var(--bg-primary) !important;
+    box-shadow: 0 0 0 3px var(--primary-color) !important;
+}
+/* === Отступы под статус-бар для модальных окон со словами === */
+.practice-words-modal-overlay,   /* поделиться словами + подбор слов в уроке */
+.words-popup-overlay,            /* список слов / настройка тренировки */
+.import-modal-overlay {          /* импорт слов от друга */
+    padding-top: max(16px, env(safe-area-inset-top)) !important;
+}
+
+/* === «Поделиться словами» / «Выбор слов»: фикс кнопки за экраном === */
+.practice-words-modal-overlay {
+    padding-top: max(16px, env(safe-area-inset-top)) !important;
+    box-sizing: border-box;
+}
+.practice-words-modal-card {
+    max-height: 100%;          /* было что-то типа 90vh — теперь не вылезает */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.practice-words-list {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;             /* ← ВОТ ГЛАВНЫЙ ФИКС */
+}
+.practice-words-footer {
+    flex-shrink: 0;            /* кнопка не сжимается и не уезжает */
 }
 
 /* ============================================================
