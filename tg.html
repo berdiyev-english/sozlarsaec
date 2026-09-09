@@ -658,13 +658,16 @@ body {
       </div>
     </div>
     <div class="learning-actions-right">
-      <button id="gamesToggleBtn" class="share-btn" title="Игры">
+    <button id="sectionSwitcherBtn" class="share-btn section-switcher-btn" title="Секции" onclick="app.showSectionSwitcher()">
+        <i class="fa-solid fa-rectangle-list"></i>
+    </button>
+    <button id="gamesToggleBtn" class="share-btn" title="Игры">
         <i class="fas fa-gamepad"></i>
-      </button>
-      <button id="shareFromLearningBtn" class="share-btn" title="Поделиться словами">
+    </button>
+    <button id="shareFromLearningBtn" class="share-btn" title="Поделиться словами">
         <i class="fas fa-share-alt"></i>
-      </button>
-    </div>
+    </button>
+     </div>
   </div>
 
   <!-- === ДОРОЖКА=== -->
@@ -978,11 +981,9 @@ body {
         </button>
       </div>
 
-      <p class="mode-help">
-        Играйте в игры и изучайте слова в Английском.<br><br>
-        Каждые 5 минут игры вам нужно будет правильно ответить на quiz из 4 слов , чтобы продолжить играть<br><br>
-        Новая эра обучения началась с "Bewords"<br>
-      </p>
+    <p class="mode-help">
+    Играйте в обычные игры и учите английский с Bewords !
+    </p>
 
       <div class="games-grid">
   <!-- Старые игры -->
@@ -1075,21 +1076,21 @@ body {
 
 <nav class="bottom-nav" id="bottomNav">
   <button class="nav-item active" type="button" data-section="learning">
-    <i class="fas fa-book-reader"></i><span>Практика</span>
+    <i class="fas fa-book-reader"></i><span>Учить</span>
   </button>
   <button class="nav-item" type="button" data-section="grammar">
     <i class="fas fa-graduation-cap"></i><span>Курс</span>
   </button>
-  <!-- НОВЫЙ ПУНКТ: Чат с Бобом -->
+  <button class="nav-item" type="button" data-section="levels">
+    <i class="fas fa-plus"></i><span>Слова</span>
+  </button> 
+    <!-- НОВЫЙ ПУНКТ: Чат с Бобом -->
     <!--  <button class="nav-item" data-section="chat">
         <i class="fas fa-comment-dots"></i>
         <span>Чат</span> 
     </button> -->
-  <button class="nav-item" type="button" data-section="levels">
-    <i class="fas fa-layer-group"></i><span>Наборы</span>
-  </button> 
   <button class="nav-item" type="button" data-section="new-words">
-    <i class="fas fa-plus"></i><span>Новые</span>
+    <i class="fas fa-upload"></i><span>Загрузка</span>
   </button>
   <button class="nav-item" type="button" data-section="progress">
     <i class="fas fa-chart-line"></i><span>Отчет</span>
@@ -1103,55 +1104,8 @@ body {
 <script src="sentences-data.js"></script>
 <script src="grammar.js"></script> 
 <script src="app.js"></script>
-<!-- <script src="auth_no_sync.js"></script> -->
+<script src="auth_no_sync.js"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
-<script>
-(function() {
-  'use strict';
-  
-  let unlocked = false;
-  
-  function unlockAudio() {
-    if (unlocked) return;
-    unlocked = true;
-    
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-      
-      const ctx = new AudioContext();
-      
-      // Создаём беззвучный буфер (1 сэмпла тишины)
-      const buffer = ctx.createBuffer(1, 1, 22050);
-      const source = ctx.createBufferSource();
-      source.buffer = buffer;
-      source.connect(ctx.destination);
-      source.start(0);
-      
-      // Пробуем воспроизвести любой <audio> элемент (финальная разблокировка)
-      const silentAudio = document.querySelector('audio') || new Audio();
-      silentAudio.volume = 0;
-      silentAudio.play().then(() => silentAudio.pause()).catch(() => {});
-      
-      console.log('🔓 iOS audio unlocked');
-    } catch (e) {
-      console.warn('Unlock failed:', e);
-    } finally {
-      // Снимаем обработчики — больше они не нужны
-      document.removeEventListener('click', unlockAudio, true);
-      document.removeEventListener('touchstart', unlockAudio, true);
-      document.removeEventListener('touchend', unlockAudio, true);
-      document.removeEventListener('keydown', unlockAudio, true);
-    }
-  }
-  
-  // Вешаем на все возможные user gestures
-  document.addEventListener('click', unlockAudio, true);
-  document.addEventListener('touchstart', unlockAudio, { capture: true, passive: true });
-  document.addEventListener('touchend', unlockAudio, { capture: true, passive: true });
-  document.addEventListener('keydown', unlockAudio, true);
-})();
-</script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
