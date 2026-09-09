@@ -1862,6 +1862,7 @@ body.modal-open {
 
 .learning-actions-right { display: flex; gap: 10px; }
 .learning-actions-right .share-btn {
+  position: relative;
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -1932,34 +1933,55 @@ body.modal-open {
   transition: transform 0.1s;
 }
 .node-btn svg { width: 36px; height: 36px; }
+.node-btn i { font-size: 28px; }
 .node-btn:active { transform: translateY(4px); }
 
-.node.completed .node-btn { background-color: var(--info-color); box-shadow: 0 6px 0 0 #1899d6; }
+/* Пройденный — цвет главы, приглушённый */
+.node.completed .node-btn { 
+    background-color: var(--chapter-bg, var(--info-color)); 
+    box-shadow: 0 6px 0 0 var(--chapter-shadow, #1899d6); 
+    filter: brightness(0.85) saturate(0.75);
+}
+.node.completed .node-btn i { color: white; }
 .node.completed .node-btn svg { fill: white; }
-.node.completed:active .node-btn { box-shadow: 0 2px 0 0 #1899d6; }
+.node.completed:active .node-btn { 
+    box-shadow: 0 2px 0 0 var(--chapter-shadow, #1899d6); 
+}
 
-.node.active .node-btn { background-color: var(--info-color); box-shadow: 0 6px 0 0 #1899d6; }
+/* ─── АКТИВНЫЙ (цвет главы из CSS-переменной) ─── */
+.node.active .node-btn { 
+    background-color: var(--chapter-bg, var(--info-color)); 
+    box-shadow: 0 6px 0 0 var(--chapter-shadow, #1899d6); 
+}
+.node.active .node-btn i { color: white; }
 .node.active .node-btn svg { fill: white; }
-.node.active:active .node-btn { box-shadow: 0 2px 0 0 #1899d6; }
+.node.active:active .node-btn { box-shadow: 0 2px 0 0 var(--chapter-shadow, #1899d6); }
 .node.active::before {
   content: '';
   position: absolute;
   top: -12px; left: -12px; right: -12px; bottom: -18px;
-  border: 4px solid var(--info-color);
+  border: 4px solid var(--chapter-bg, var(--info-color));
   border-radius: 50%;
   z-index: -1;
   animation: pulse-ring 2s infinite;
 }
 @keyframes pulse-ring {
-  0%   { border-color: rgba(28, 176, 246, 1); transform: scale(1); opacity: 1; }
-  50%  { border-color: rgba(28, 176, 246, 0.5); transform: scale(1.05); opacity: 0.8; }
-  100% { border-color: rgba(28, 176, 246, 1); transform: scale(1); opacity: 1; }
+  0%   { border-color: var(--chapter-bg, rgba(28, 176, 246, 1)); transform: scale(1); opacity: 1; }
+  50%  { border-color: var(--chapter-bg, rgba(28, 176, 246, 0.5)); transform: scale(1.05); opacity: 0.8; }
+  100% { border-color: var(--chapter-bg, rgba(28, 176, 246, 1)); transform: scale(1); opacity: 1; }
 }
 
+/* ─── ЗАБЛОКИРОВАННЫЙ (серый) ─── */
 .node.locked .node-btn { background-color: #e5e5e5; box-shadow: 0 6px 0 0 #cecece; }
 .node.locked .node-btn svg { fill: #afafaf; }
+.node.locked .node-btn i { color: #afafaf; }
 .node.locked:active .node-btn { box-shadow: 0 2px 0 0 #cecece; }
 
+/* ─── БОСС-УЗЕЛ (🏆 каждый 15-й) ─── */
+.node.boss-node .node-btn { width: 78px; height: 78px; }
+.node.boss-node .node-btn i { font-size: 34px; }
+
+/* ─── ИГРОВОЙ (как было) ─── */
 .node.game-node .node-btn { background: linear-gradient(135deg, #ce82ff, #a568d3); box-shadow: 0 6px 0 0 #8b4fc4; }
 .node.game-node .node-btn svg { fill: white; }
 
@@ -2041,7 +2063,7 @@ body.modal-open {
 /* Плавающая стрелка к активному уроку */
 #floating-active-arrow {
   position: fixed;
-  bottom: 90px;
+  bottom: 120px;
   right: 20px;
   width: 50px;
   height: 50px;
@@ -2321,6 +2343,7 @@ body.modal-open {
 }
 
 .practice-words-header {
+  padding-top: calc(16px + env(safe-area-inset-top, 0px)) !important;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -7143,7 +7166,7 @@ body.training-fullscreen .toast-container { z-index: 10000000 !important; }
 #dict3Input { margin-bottom: 18px !important; }
 
 /* ===== КАРУСЕЛЬ УРОВНЕЙ ГРАММАТИКИ ===== */
-.grammar-carousel-header { text-align: center; padding: 20px 20px 6px; }
+.grammar-carousel-header { text-align: center; padding: 5px 5px 6px; }
 .grammar-carousel-header h1 { font-size: clamp(22px, 6vw, 28px); font-weight: 900; color: var(--text-primary); margin-bottom: 8px; }
 .grammar-carousel-header p { font-size: 15px; font-weight: 700; color: var(--text-secondary); }
 
@@ -7393,12 +7416,12 @@ body.training-fullscreen .lesson-topbar {
 .practice-words-modal-overlay,   /* поделиться словами + подбор слов в уроке */
 .words-popup-overlay,            /* список слов / настройка тренировки */
 .import-modal-overlay {          /* импорт слов от друга */
-    padding-top: max(16px, env(safe-area-inset-top)) !important;
+  padding-top: 0 !important;
 }
 
 /* === «Поделиться словами» / «Выбор слов»: фикс кнопки за экраном === */
 .practice-words-modal-overlay {
-    padding-top: max(16px, env(safe-area-inset-top)) !important;
+    padding-top: 0 !important;
     box-sizing: border-box;
 }
 .practice-words-modal-card {
@@ -10128,3 +10151,290 @@ FROZEN FIRE DESIGN — универсальный для обеих тем
 
 @keyframes floatEpicItem { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
 @keyframes blinkSparkle { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.5); } }
+
+/* ============================================
+   КНОПКА СЕКЦИЙ
+============================================ */
+.icon-trigger-btn {
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    color: var(--info-color);
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--border-color);
+    transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
+    margin: 10px auto;
+    position: relative;
+}
+.icon-trigger-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 var(--border-color);
+    background: var(--bg-secondary);
+}
+.section-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: var(--info-color);
+    color: white;
+    font-size: 10px;
+    font-weight: 900;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg-primary);
+}
+
+/* ============================================
+   FULLSCREEN МЕНЮ СЕКЦИЙ
+============================================ */
+.fullscreen-modal {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-secondary);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.fullscreen-modal.active {
+    transform: translateY(0);
+}
+
+.fs-header {
+    background: var(--bg-primary);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding-top: calc(16px + env(safe-area-inset-top, 0px)) ;
+}
+.fs-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+.close-btn {
+    background: var(--bg-tertiary);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: var(--text-secondary);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s;
+}
+.close-btn:active { transform: scale(0.9); }
+
+.fs-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 24px 20px;
+    padding-bottom: calc(40px + env(safe-area-inset-bottom));
+}
+
+.section-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.sec-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md, 16px);
+    background: var(--bg-primary);
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 0 4px 0 var(--border-color);
+}
+.sec-item:not(.locked):active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 var(--border-color);
+}
+
+.sec-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-right: 16px;
+    flex-shrink: 0;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.sec-info { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+.sec-title { font-size: 18px; font-weight: 900; color: var(--text-primary); margin: 0; }
+.sec-progress { font-size: 13px; font-weight: 700; color: var(--text-secondary); margin-top: 2px; }
+
+/* Пройдена */
+.sec-item.done { border-color: var(--success-color, #58cc02); box-shadow: 0 4px 0 #46a302; background: rgba(88, 204, 2, 0.05); }
+.sec-item.done .sec-icon { background: var(--success-color, #58cc02); color: white; }
+.sec-item.done .sec-title { color: var(--success-color, #58cc02); }
+
+/* Текущая */
+.sec-item.current { border-color: var(--info-color, #1cb0f6); box-shadow: 0 4px 0 #1899d6; background: rgba(28, 176, 246, 0.05); }
+.sec-item.current .sec-icon { background: var(--info-color, #1cb0f6); color: white; }
+.sec-item.current .sec-title { color: var(--info-color, #1cb0f6); }
+
+.badge-current {
+    position: absolute;
+    top: -10px;
+    right: 16px;
+    background: var(--info-color, #1cb0f6);
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 2px solid var(--bg-primary);
+}
+
+/* Заблокирована */
+.sec-item.locked { opacity: 0.6; cursor: not-allowed; }
+.sec-item.locked .sec-icon { background: var(--bg-tertiary); color: var(--text-muted); }
+/* Прогресс-бар секции */
+.sec-progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.sec-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--success-color, #58cc02), #89e219);
+    transition: width 0.4s ease;
+}
+
+/* Для текущей секции — голубой прогресс */
+.sec-item.current .sec-progress-fill {
+    background: linear-gradient(90deg, var(--info-color, #1cb0f6), #38bdf8);
+}
+
+/* Для заблокированной — серый */
+.sec-item.locked .sec-progress-fill {
+    background: var(--bg-tertiary);
+}
+/* Сообщение о заблокированных секциях внизу */
+.sec-locked-hint {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    margin-top: 8px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md, 16px);
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 700;
+    text-align: left;
+    opacity: 0.8;
+}
+
+.sec-locked-hint i {
+    font-size: 18px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+/* ============================================
+   ГЛАВА/СЕКЦИЯ ЗАКРЫТА (chapter-gate)
+============================================ */
+.chapter-gate {
+    width: 90%; /* Возвращаем твой безопасный размер */
+    max-width: 400px; /* Чтобы на планшете не растягивался на весь экран */
+    
+    /* 30px отступ сверху, 40px отступ снизу, по бокам АВТО (это ставит блок строго по центру) */
+    margin: 20px auto 40px auto; 
+    
+    padding: 20px 20px;
+    background: var(--bg-secondary);
+    border-radius: 20px;
+    border: 2px dashed var(--border-color);
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center; /* Центрируем текст внутри */
+    gap: 10px;
+}
+
+.chapter-gate .gate-icon {
+    font-size: 2.2rem;
+    margin-bottom: 4px;
+    color: var(--text-muted);
+}
+
+.chapter-gate h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+
+.chapter-gate p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    line-height: 1.4;
+    max-width: 280px; /* Чтобы текст аккуратно переносился */
+}
+
+.chapter-gate .btn-primary {
+    margin-top: 12px;
+    width: 100%;
+    max-width: 260px; /* Красивая широкая кнопка по центру */
+    padding: 14px 24px;
+    
+    font-size: 0.95rem;
+    font-weight: 900;
+    border-radius: 16px;
+    border: none;
+    background: var(--info-color);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 5px 0 var(--primary-dark, #1899d6);
+    transition: transform 0.1s, box-shadow 0.1s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.chapter-gate .btn-primary:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 var(--primary-dark, #1899d6);
+}
