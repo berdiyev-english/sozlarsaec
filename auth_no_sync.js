@@ -1,5 +1,5 @@
 // 🆕 Версия политики для логирования
-const CONSENT_VERSION = 'v1.0-2026-08-09';
+const CONSENT_VERSION = 'v1.1-2026-09-09';
 const PRIVACY_URL = 'https://bewords.ru/privacy-policy';
 const AGREEMENT_URL = 'https://bewords.ru/user-agreement';
 
