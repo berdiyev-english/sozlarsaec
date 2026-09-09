@@ -658,13 +658,16 @@ body {
       </div>
     </div>
     <div class="learning-actions-right">
-      <button id="gamesToggleBtn" class="share-btn" title="Игры">
+    <button id="sectionSwitcherBtn" class="share-btn section-switcher-btn" title="Секции" onclick="app.showSectionSwitcher()">
+        <i class="fa-solid fa-rectangle-list"></i>
+    </button>
+    <button id="gamesToggleBtn" class="share-btn" title="Игры">
         <i class="fas fa-gamepad"></i>
-      </button>
-      <button id="shareFromLearningBtn" class="share-btn" title="Поделиться словами">
+    </button>
+    <button id="shareFromLearningBtn" class="share-btn" title="Поделиться словами">
         <i class="fas fa-share-alt"></i>
-      </button>
-    </div>
+    </button>
+     </div>
   </div>
 
   <!-- === ДОРОЖКА=== -->
@@ -978,11 +981,9 @@ body {
         </button>
       </div>
 
-      <p class="mode-help">
-        Играйте в игры и изучайте слова в Английском.<br><br>
-        Каждые 5 минут игры вам нужно будет правильно ответить на quiz из 4 слов , чтобы продолжить играть<br><br>
-        Новая эра обучения началась с "Bewords"<br>
-      </p>
+    <p class="mode-help">
+    Играйте в обычные игры и учите английский с Bewords !
+    </p>
 
       <div class="games-grid">
   <!-- Старые игры -->
@@ -1075,21 +1076,21 @@ body {
 
 <nav class="bottom-nav" id="bottomNav">
   <button class="nav-item active" type="button" data-section="learning">
-    <i class="fas fa-book-reader"></i><span>Практика</span>
+    <i class="fas fa-book-reader"></i><span>Учить</span>
   </button>
   <button class="nav-item" type="button" data-section="grammar">
     <i class="fas fa-graduation-cap"></i><span>Курс</span>
   </button>
-  <!-- НОВЫЙ ПУНКТ: Чат с Бобом -->
+  <button class="nav-item" type="button" data-section="levels">
+    <i class="fas fa-plus"></i><span>Слова</span>
+  </button> 
+    <!-- НОВЫЙ ПУНКТ: Чат с Бобом -->
     <!--  <button class="nav-item" data-section="chat">
         <i class="fas fa-comment-dots"></i>
         <span>Чат</span> 
     </button> -->
-  <button class="nav-item" type="button" data-section="levels">
-    <i class="fas fa-layer-group"></i><span>Наборы</span>
-  </button> 
   <button class="nav-item" type="button" data-section="new-words">
-    <i class="fas fa-plus"></i><span>Новые</span>
+    <i class="fas fa-upload"></i><span>Загрузка</span>
   </button>
   <button class="nav-item" type="button" data-section="progress">
     <i class="fas fa-chart-line"></i><span>Отчет</span>
@@ -1103,7 +1104,7 @@ body {
 <script src="sentences-data.js"></script>
 <script src="grammar.js"></script> 
 <script src="app.js"></script>
-<script src="auth_no_sync.js"></script>
+<script src="auth_no_sync.js"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
@@ -1617,50 +1618,26 @@ function setLang(from, to){
 window.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('simple-splash');
   if (!splash) return;
-
+  
+  // Предзагружаем аудио заранее
   const introAudio = new Audio('au/ui/intro.mp3');
-  introAudio.volume = 0.55;
+  introAudio.volume = 0.65;
   introAudio.preload = 'auto';
-
-  let introPlayed = false;
-  let splashDismissed = false;
-
-  function dismissSplash() {
-    if (splashDismissed) return;
-    splashDismissed = true;
+  
+  // Нативный splash сам уходит (MainActivity)
+  // Через 1.5 сек после старта WebView убираем HTML splash
+  setTimeout(() => {
+    // Запускаем звук в момент начала анимации ухода
+    introAudio.play().catch(e => {
+      console.warn('Не удалось воспроизвести звук:', e);
+    });
+    
     splash.classList.add('fade-out');
     setTimeout(() => splash.remove(), 300);
-  }
-
-  function tryPlayIntro() {
-    if (introPlayed) return;
-    introAudio.play()
-      .then(() => { introPlayed = true; })
-      .catch(() => { /* iOS без жеста — молча копим попытку на следующий тап */ });
-  }
-
-  tryPlayIntro();
-
-  splash.addEventListener('click', () => {
-    tryPlayIntro();
-    dismissSplash();
-  }, { once: true });
-
-  splash.addEventListener('touchend', () => {
-    tryPlayIntro();
-    dismissSplash();
-  }, { once: true, passive: true });
-
-  setTimeout(dismissSplash, 1500);
-
-  // ДОБАВЛЕНО: если пользователь не тапнул по сплэшу, а сразу начал
-  // тыкать в приложение после его исчезновения — ловим первый тап
-  // где угодно на странице и пробуем проиграть интро тогда
-  document.addEventListener('touchend', function once() {
-    tryPlayIntro();
-  }, { once: true, passive: true });
+  }, 500);
 });
 </script>
+
 
 </body>
 
