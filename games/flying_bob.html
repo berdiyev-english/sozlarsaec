@@ -2,9 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Flying Bob - Летающий кот Боб</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         * {
             margin: 0;
@@ -12,34 +11,42 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-        
+
+        html { height: 100%; }
+
         body {
             overflow: hidden;
             touch-action: manipulation;
-            background: linear-gradient(to bottom, #87CEEB, #E0F6FF);
+            overscroll-behavior: none;
+            /* Фон совпадает с верхом игрового неба — никаких швов и «обрезов» */
+            background: #87CEEB;
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        
+
+        /* Игровое поле занимает ВСЮ высоту экрана: ничего не обрезается сверху и снизу */
         #gameContainer {
             position: relative;
             width: 100%;
             max-width: 480px;
             height: 100vh;
-            max-height: 800px;
+            height: 100dvh;
             overflow: hidden;
+            background: #87CEEB;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
         }
-        
+
         #gameCanvas {
             display: block;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, #87CEEB 0%, #B0E0E6 50%, #90EE90 95%, #228B22 100%);
+            background: #87CEEB;
         }
-        
+
         #startScreen, #gameOverScreen {
             position: absolute;
             top: 0;
@@ -52,8 +59,10 @@
             align-items: center;
             background: rgba(0, 0, 0, 0.5);
             z-index: 10;
+            padding: calc(env(safe-area-inset-top, 0px) + 10px) 16px calc(env(safe-area-inset-bottom, 0px) + 10px);
+            overflow-y: auto;
         }
-        
+
         .game-title {
             font-size: 3rem;
             color: #FFD700;
@@ -61,12 +70,12 @@
             margin-bottom: 20px;
             animation: bounce 1s infinite;
         }
-        
+
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
-        
+
         .play-btn {
             padding: 15px 50px;
             font-size: 1.5rem;
@@ -77,101 +86,145 @@
             cursor: pointer;
             box-shadow: 0 6px 0 #2E7D32;
             transition: all 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
-        
+
         .play-btn:active {
             box-shadow: 0 2px 0 #2E7D32;
             transform: translateY(4px);
         }
-        
+
         #score {
             position: absolute;
             top: 20px;
+            top: calc(env(safe-area-inset-top, 0px) + 14px);
             left: 50%;
             transform: translateX(-50%);
             font-size: 3rem;
+            line-height: 1;
             color: white;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             z-index: 5;
+            padding: 2px 14px;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.15);
         }
-        
+
         .final-score {
             font-size: 2rem;
             color: white;
             margin: 20px 0;
         }
-        
+
         .best-score {
             font-size: 1.2rem;
             color: #FFD700;
             margin-bottom: 20px;
         }
-        
+
         .hidden {
             display: none !important;
         }
-        
+
         .bob-preview {
             width: 120px;
             height: 120px;
             margin-bottom: 20px;
             animation: float 2s ease-in-out infinite;
         }
-        
+
         /* Стили для обложки игры на старте */
         .game-cover {
-            width: 280px;
+            width: 260px;
             height: auto;
-            max-height: 350px;
+            max-width: 70vw;
+            max-height: 34vh;
+            object-fit: cover;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
             margin-bottom: 25px;
             border: 6px solid #FFFFFF;
             transform: rotate(-3deg);
             transition: transform 0.5s ease;
+            flex: 0 0 auto;
         }
 
         .game-over-img {
-            width: 280px;
+            width: 260px;
             height: auto;
-            max-height: 300px;
+            max-width: 70vw;
+            max-height: 30vh;
+            object-fit: cover;
             border-radius: 15px;
             margin-bottom: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.5);
             border: 4px solid white;
         }
-        
+
         .game-cover:hover {
             transform: rotate(0deg) scale(1.05);
         }
-        
+
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(-5deg); }
             50% { transform: translateY(-15px) rotate(5deg); }
         }
-        
+
         .level-badge {
             background: rgba(0, 0, 0, 0.6);
-            padding: 5px 15px;
+            padding: 8px 18px;
             border-radius: 20px;
             color: #FFD700;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 15px;
             border: 2px solid #FFD700;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-align: center;
+            line-height: 1.3;
+            max-width: 90%;
+        }
+
+        .badge-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            white-space: nowrap;
+        }
+
+        .continue-note {
+            color: #7CFFB2;
+            font-weight: 600;
+            font-size: 0.92em;
+            border-top: 1px solid rgba(124, 255, 178, 0.35);
+            padding-top: 5px;
+            width: 100%;
+            justify-content: center;
         }
 
         #levelDisplay {
             position: absolute;
             top: 20px;
+            top: calc(env(safe-area-inset-top, 0px) + 14px);
             left: 20px;
-            font-size: 2rem;
+            left: calc(env(safe-area-inset-left, 0px) + 16px);
+            font-size: 1.5rem;
             color: white;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             z-index: 5;
             font-weight: bold;
             font-family: 'Arial', sans-serif;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.15);
+            line-height: 1.1;
         }
-        
+
+
         .instructions {
             color: white;
             font-size: 1rem;
@@ -180,17 +233,17 @@
             opacity: 0.8;
         }
 
-        #pauseBtn {
+        #pauseBtn, #muteBtn {
             position: absolute;
             top: 20px;
-            right: 20px;
+            top: calc(env(safe-area-inset-top, 0px) + 14px);
             width: 50px;
             height: 50px;
+            padding: 0;
             background: rgba(0, 0, 0, 0.3);
             border: 2px solid white;
             border-radius: 50%;
             color: white;
-            font-size: 24px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -199,11 +252,23 @@
             transition: transform 0.1s;
         }
 
-        #pauseBtn:active {
+        #pauseBtn svg, #muteBtn svg { display: block; }
+
+        #pauseBtn {
+            right: 20px;
+            right: calc(env(safe-area-inset-right, 0px) + 16px);
+        }
+
+        #muteBtn {
+            right: 82px;
+            right: calc(env(safe-area-inset-right, 0px) + 78px);
+        }
+
+        #pauseBtn:active, #muteBtn:active {
             transform: scale(0.9);
         }
 
-        #pauseScreen {
+        #pauseScreen, #levelUpScreen {
             position: absolute;
             top: 0;
             left: 0;
@@ -216,6 +281,7 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 30;
             backdrop-filter: blur(4px);
+            padding: 16px;
         }
 
         .pause-title {
@@ -224,6 +290,111 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             margin-bottom: 30px;
         }
+
+        /* ---------- Экран "уровень пройден" ---------- */
+        #levelUpScreen {
+            z-index: 25;
+            background: radial-gradient(circle at 50% 40%, rgba(255,193,7,0.35) 0%, rgba(0,0,0,0.55) 65%);
+            animation: fadeIn 0.25s ease;
+            overflow: hidden;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .confetti {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .confetti span {
+            position: absolute;
+            top: -20px;
+            width: 10px;
+            height: 16px;
+            opacity: 0.9;
+            border-radius: 2px;
+            animation: confettiFall 2.6s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(120vh) rotate(360deg); opacity: 0.9; }
+        }
+
+        .confetti span:nth-child(1)  { left: 5%;  background:#FFD700; animation-delay: 0s;    }
+        .confetti span:nth-child(2)  { left: 15%; background:#FF6B6B; animation-delay: 0.3s;  }
+        .confetti span:nth-child(3)  { left: 25%; background:#4CAF50; animation-delay: 0.6s;  }
+        .confetti span:nth-child(4)  { left: 35%; background:#42A5F5; animation-delay: 0.15s; }
+        .confetti span:nth-child(5)  { left: 45%; background:#FF9800; animation-delay: 0.9s;  }
+        .confetti span:nth-child(6)  { left: 55%; background:#E91E63; animation-delay: 0.45s; }
+        .confetti span:nth-child(7)  { left: 65%; background:#FFD700; animation-delay: 0.75s; }
+        .confetti span:nth-child(8)  { left: 75%; background:#4CAF50; animation-delay: 0.2s;  }
+        .confetti span:nth-child(9)  { left: 85%; background:#42A5F5; animation-delay: 1.1s;  }
+        .confetti span:nth-child(10) { left: 95%; background:#FF6B6B; animation-delay: 0.55s; }
+        .confetti span:nth-child(11) { left: 50%; background:#FF9800; animation-delay: 1.3s;  }
+        .confetti span:nth-child(12) { left: 10%; background:#E91E63; animation-delay: 1.6s;  }
+
+        .level-up-emoji {
+            font-size: 4.5rem;
+            margin-bottom: 6px;
+            color: #FFD700;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+            animation: houseWobble 0.9s ease infinite;
+        }
+
+        @keyframes houseWobble {
+            0%, 100% { transform: rotate(-6deg) scale(1); }
+            50% { transform: rotate(6deg) scale(1.08); }
+        }
+
+        .level-up-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-align: center;
+            color: #FFFFFF;
+            letter-spacing: 0.5px;
+            text-shadow: 2px 2px 0 #E65100, 0 6px 16px rgba(0,0,0,0.45);
+            animation: titlePop 1.6s ease-in-out infinite;
+        }
+
+        @keyframes titlePop {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+
+        .level-up-sub {
+            font-size: 1.1rem;
+            color: white;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        #continueBtn {
+            background: linear-gradient(to bottom, #FFC107, #FF9800);
+            border-color: #E65100;
+            box-shadow: 0 6px 0 #E65100, 0 0 20px rgba(255,193,7,0.6);
+            animation: pulseGlow 1.4s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 6px 0 #E65100, 0 0 12px rgba(255,193,7,0.5); }
+            50% { box-shadow: 0 6px 0 #E65100, 0 0 26px rgba(255,193,7,0.9); }
+        }
+
+        /* На узких экранах HUD компактнее: счёт, уровень и кнопки не наезжают друг на друга */
+        @media (max-width: 400px) {
+            #levelDisplay { font-size: 1.25rem; padding: 3px 10px; }
+            #score { padding: 2px 10px; }
+            #pauseBtn, #muteBtn { width: 42px; height: 42px; }
+            #pauseBtn { right: calc(env(safe-area-inset-right, 0px) + 12px); }
+            #muteBtn { right: calc(env(safe-area-inset-right, 0px) + 60px); }
+        }
     </style>
 </head>
 <body>
@@ -231,30 +402,59 @@
         <canvas id="gameCanvas"></canvas>
         <div id="score" class="hidden">0</div>
         <div id="levelDisplay" class="hidden">LVL 1</div>
-        <button id="pauseBtn" class="hidden">ll</button>
-        
+        <button id="muteBtn" class="hidden" aria-label="Звук"></button>
+        <button id="pauseBtn" class="hidden" aria-label="Пауза"></button>
+
         <!-- Pause Screen -->
         <div id="pauseScreen" class="hidden">
             <h2 class="pause-title">ПАУЗА</h2>
-            <button class="play-btn" id="resumeBtn">ПРОДОЛЖИТЬ</button>
+            <button class="play-btn" id="resumeBtn"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8 4l12 8-12 8z"/></svg> ПРОДОЛЖИТЬ</button>
         </div>
-        
+
+        <!-- Level Up Screen -->
+        <div id="levelUpScreen" class="hidden">
+            <div class="confetti">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="level-up-emoji">
+                <svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true">
+                    <path d="M32 8L6 30h7v24a2 2 0 002 2h34a2 2 0 002-2V30h7L32 8z" fill="#FFD08A" stroke="#B4651A" stroke-width="3" stroke-linejoin="round"/>
+                    <path d="M32 8L6 30h52L32 8z" fill="#E2574C" stroke="#A83228" stroke-width="3" stroke-linejoin="round"/>
+                    <rect x="26" y="38" width="12" height="18" rx="2" fill="#8B5A2B" stroke="#5E3A16" stroke-width="2.5"/>
+                    <rect x="41" y="35" width="9" height="9" rx="1.5" fill="#AFE4FF" stroke="#4A86A8" stroke-width="2.5"/>
+                </svg>
+            </div>
+            <h2 class="level-up-title">Уровень <span id="levelUpNum">1</span> пройден!</h2>
+            <p class="level-up-sub">Боб долетел до дома. Дальше — уровень <span id="levelUpNext">2</span>, будет быстрее!</p>
+            <button class="play-btn" id="continueBtn"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M4 5l8 7-8 7z"/><path d="M13 5l8 7-8 7z"/></svg> ДАЛЬШЕ</button>
+        </div>
+
         <!-- Start Screen -->
         <div id="startScreen">
-            <img src="../app-photos/games/bird.jpg" alt="Flying Bob Cover" class="game-cover"> 
+            <img src="../app-photos/games/bird.jpg" alt="Flying Bob Cover" class="game-cover" id="coverImg">
             <h1 class="game-title">Flying Bob</h1>
-            <div class="level-badge">🏆 Макс. уровень: <span id="startMaxLevel">1</span></div>
-            <button class="play-btn" id="startBtn">ИГРАТЬ</button>
+            <div class="level-badge">
+                <span class="badge-row">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M7 4h10v3a5 5 0 01-5 5 5 5 0 01-5-5V4z"/><path d="M5 5H2v2a3 3 0 003 3V5zm14 0h3v2a3 3 0 01-3 3V5z"/><path d="M10 13h4l.6 3H9.4l.6-3z"/><rect x="7" y="18" width="10" height="3" rx="1"/></svg>
+                    Пройдено уровней: <span id="startMaxLevel">0</span>
+                </span>
+                <span class="badge-row continue-note hidden" id="continueBadge">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 12a8 8 0 11-2.6-5.9"/><path d="M20 3v5h-5"/></svg>
+                    Игра начнётся с <span id="startContinueLevel">1</span> уровня
+                </span>
+            </div>
+            <button class="play-btn" id="startBtn"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8 4l12 8-12 8z"/></svg> ИГРАТЬ</button>
             <p class="instructions">Тапай или нажимай пробел,<br>чтобы Боб летел!</p>
         </div>
-        
+
         <!-- Game Over Screen -->
         <div id="gameOverScreen" class="hidden">
-            <img src="../app-photos/games/flying_bob_game_over.jpg" alt="Game Over" class="game-over-img">
+            <img src="../app-photos/games/flying_bob_game_over.jpg" alt="Game Over" class="game-over-img" id="gameOverImg">
             <p class="final-score">Счёт: <span id="finalScore">0</span></p>
-            <p class="best-score">🏆 Лучший: <span id="bestScore">0</span></p>
-            <p class="best-score" style="font-size: 1rem; color: #DDD;">Уровень: <span id="finalLevel">1</span> (Макс: <span id="bestLevel">1</span>)</p>
-            <button class="play-btn" id="restartBtn">ЗАНОВО</button>
+            <p class="best-score"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="vertical-align:-3px" aria-hidden="true"><path d="M7 4h10v3a5 5 0 01-5 5 5 5 0 01-5-5V4z"/><path d="M5 5H2v2a3 3 0 003 3V5zm14 0h3v2a3 3 0 01-3 3V5z"/><path d="M10 13h4l.6 3H9.4l.6-3z"/><rect x="7" y="18" width="10" height="3" rx="1"/></svg> Лучший: <span id="bestScore">0</span></p>
+            <p class="best-score" style="font-size: 1rem; color: #DDD;">Уровень: <span id="finalLevel">1</span> · Пройдено уровней: <span id="bestLevel">0</span></p>
+            <button class="play-btn" id="restartBtn"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 12a8 8 0 11-2.6-5.9"/><path d="M20 3v5h-5"/></svg> ЗАНОВО</button>
         </div>
     </div>
 
@@ -267,103 +467,316 @@
         const startScreen = document.getElementById('startScreen');
         const gameOverScreen = document.getElementById('gameOverScreen');
         const pauseScreen = document.getElementById('pauseScreen');
+        const levelUpScreen = document.getElementById('levelUpScreen');
         const pauseBtn = document.getElementById('pauseBtn');
+        const muteBtn = document.getElementById('muteBtn');
         const resumeBtn = document.getElementById('resumeBtn');
+        const continueBtn = document.getElementById('continueBtn');
         const finalScoreSpan = document.getElementById('finalScore');
         const bestScoreSpan = document.getElementById('bestScore');
         const startMaxLevelSpan = document.getElementById('startMaxLevel');
         const finalLevelSpan = document.getElementById('finalLevel');
         const bestLevelSpan = document.getElementById('bestLevel');
-        
-        let skyGradient;
+        const levelUpNumSpan = document.getElementById('levelUpNum');
+        const levelUpNextSpan = document.getElementById('levelUpNext');
+        const continueBadge = document.getElementById('continueBadge');
+        const startContinueLevelSpan = document.getElementById('startContinueLevel');
+        const coverImg = document.getElementById('coverImg');
+        const gameOverImg = document.getElementById('gameOverImg');
 
-        // Set canvas size
-        function resizeCanvas() {
-            const rect = gameContainer.getBoundingClientRect();
-            canvas.width = rect.width;
-            canvas.height = rect.height;
-            
-            // Pre-calculate gradient for optimization
-            skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            skyGradient.addColorStop(0, '#87CEEB');
-            skyGradient.addColorStop(0.7, '#B0E0E6');
-            skyGradient.addColorStop(1, '#90EE90');
+        // ---------- ИКОНКИ (инлайн-SVG: работают без внешних шрифтов и CDN) ----------
+        const ICON_PLAY  = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 4l12 8-12 8z"/></svg>';
+        const ICON_PAUSE = '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
+        const ICON_SOUND_ON = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h3l4-4v14l-4-4H4z" fill="currentColor" stroke="none"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 6a8.5 8.5 0 010 12"/></svg>';
+        const ICON_SOUND_OFF = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h3l4-4v14l-4-4H4z" fill="currentColor" stroke="none"/><path d="M16 9l6 6M22 9l-6 6"/></svg>';
+
+        // ---------- АУДИО ----------
+        // Звук самолёта убран полностью: во время полёта тишина.
+        // Остался только короткий звук при переходе на новый уровень.
+        let isMuted = localStorage.getItem('bobMuted') === 'true';
+
+        const levelUpSound = new Audio('../au/ui/new_level_pet.mp3');
+        levelUpSound.volume = 0.9;
+
+        function updateMuteUI() {
+            muteBtn.innerHTML = isMuted ? ICON_SOUND_OFF : ICON_SOUND_ON;
+            levelUpSound.muted = isMuted;
         }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        
-        // Game variables
-        let gameState = 'start'; // start, playing, gameOver
-        let score = 0;
-        let level = 1;
-        let bestScore = localStorage.getItem('bobBestScore') || 0;
-        let maxLevel = localStorage.getItem('bobMaxLevel') || 1;
-        
-        bestScoreSpan.textContent = bestScore;
-        startMaxLevelSpan.textContent = maxLevel;
-        
-        // Bob (the cat)
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            localStorage.setItem('bobMuted', isMuted);
+            updateMuteUI();
+        }
+
+        function playLevelUpSound() {
+            if (isMuted) return;
+            try {
+                levelUpSound.currentTime = 0;
+                const p = levelUpSound.play();
+                if (p && p.catch) p.catch(() => {});
+            } catch (e) { /* звук не критичен для игры */ }
+        }
+
+        // Иконки на игровых кнопках: пауза и звук
+        pauseBtn.innerHTML = ICON_PAUSE;
+        updateMuteUI();
+
+        // ---------- РАЗМЕРЫ ИГРОВОГО ПОЛЯ ----------
+        const GROUND_HEIGHT = 80;
+        // Фиксированный "кадр" физики: все скорости заданы в расчёте на 60 fps.
+        // Благодаря этому на телефонах с 90/120 Гц игра не ускоряется в 1.5–2 раза.
+        const FPS = 60;
+        const FRAME_MS = 1000 / FPS;
+
+        let skyGradient = null;
+        let hillsGradient = null;
+
+        function clamp(v, min, max) {
+            if (max < min) return min;
+            return v < min ? min : (v > max ? max : v);
+        }
+
+        // ---------- ЛЕТАЮЩИЙ КОТ ----------
         const bobImg = new Image();
         bobImg.src = '../app-photos/games/flying_bob.png';
-        
+        bobImg.onerror = () => { bobImg.failed = true; };
+
         const bob = {
             x: 50, // Чуть сдвинем влево, чтобы было больше времени на реакцию
             y: 0,
-            width: 85, // Чуть увеличим (было 80)
+            width: 85,
             height: 85,
             velocity: 0,
-            gravity: 0.35, // Более плавная гравитация
-            jump: -6.5, // Менее резкий прыжок
+            gravity: 0.36,        // на кадр 60 fps
+            jump: -6.9,           // подъём за один тап ≈ 66 px
             rotation: 0,
-            maxFallSpeed: 10,
+            maxFallSpeed: 9.5,
             flapRotation: -25,
-            targetRotation: 0,
-            rotationDelay: 0 // Задержка перед поворотом вниз
+            rotationDelay: 0
         };
-        
-        // Pipes
+
+        // Хитбокс заметно меньше спрайта: столкновения прощаются,
+        // и «game over» не показывается раньше времени.
+        const hitboxMargin = 22;
+
+        // ---------- ТРУБЫ ----------
         let pipes = [];
         const pipeWidth = 80;
-        const pipeGap = 200;
         let pipeSpeed = 3;
         let pipeSpawnTimer = 0;
-        const pipeSpawnInterval = 100;
-        
-        // Clouds for background
+        const pipeSpawnInterval = 100; // в кадрах 60 fps (≈1.6 сек между трубами)
+        let lastGapCenter = null;      // центр последнего «прохода» — чтобы трубы не прыгали вверх-вниз
+
+        // ---------- ДОМ ----------
+        let house = null;
+        const houseSize = 74;
+        let landingTimer = 0;
+        let landingTargetY = 0;
+        const landingHoldFrames = 40;
+
+        // ---------- ОБЛАКА ----------
         let clouds = [];
-        for (let i = 0; i < 5; i++) {
-            clouds.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height * 0.5,
-                size: 30 + Math.random() * 40,
-                speed: 0.5 + Math.random() * 0.5
+
+        function initClouds() {
+            clouds = [];
+            const count = Math.max(4, Math.round(canvas.width / 90));
+            for (let i = 0; i < count; i++) {
+                clouds.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height * 0.5,
+                    size: 30 + Math.random() * 45,
+                    speed: 0.4 + Math.random() * 0.5
+                });
+            }
+        }
+
+        let groundOffset = 0;
+
+        // ---------- СОСТОЯНИЕ ИГРЫ ----------
+        // start -> playing -> houseApproach -> landing -> levelUp -> playing ...
+        //                  \-> paused
+        //                  \-> gameOver
+        let gameState = 'start';
+        let score = 0;
+        let level = 1;
+        let pendingLevel = 1;
+        let bestScore = localStorage.getItem('bobBestScore') || 0;
+
+        // ПРОГРЕСС — одно-единственное число: максимальный достигнутый уровень.
+        // Он же является уровнем, с которого начнётся новая игра.
+        // (Раньше это были два разных счётчика: «макс. уровень» обновлялся только
+        //  при проигрыше, а «старт с уровня» — при прохождении, поэтому на старте
+        //  могли показываться разные числа, например «Макс. 11» и «Старт с 13».)
+        let progressLevel = Math.max(
+            parseInt(localStorage.getItem('bobMaxLevel')) || 1,
+            parseInt(localStorage.getItem('bobContinueLevel')) || 1,
+            1
+        );
+        const scorePerLevel = 10;
+
+        // progressLevel — уровень, с которого начнётся игра (чекпоинт).
+        // Пройдено уровней = progressLevel - 1. Держим это в одном месте,
+        // чтобы надписи «пройдено / начнётся с» нигде не расходились.
+        function passedLevels() {
+            return Math.max(0, progressLevel - 1);
+        }
+
+        function updateStartScreenProgress() {
+            startMaxLevelSpan.textContent = passedLevels();
+            startContinueLevelSpan.textContent = progressLevel;
+            if (progressLevel > 1) {
+                continueBadge.classList.remove('hidden');
+            } else {
+                continueBadge.classList.add('hidden');
+            }
+        }
+
+        // Единственная точка сохранения прогресса: оба ключа пишутся одинаково,
+        // чтобы старое значение не «рассинхронизировалось»
+        function saveProgress(lvl) {
+            progressLevel = Math.max(progressLevel, lvl || 1, 1);
+            localStorage.setItem('bobMaxLevel', progressLevel);
+            localStorage.setItem('bobContinueLevel', progressLevel);
+            updateStartScreenProgress();
+        }
+
+        function updateScoreSize() {
+            const digits = String(score).length;
+            let size = canvas.width < 360 ? 26 : (canvas.width < 430 ? 36 : 42);
+            if (digits >= 3) size -= 4;
+            if (digits >= 4) size -= 4;
+            scoreDisplay.style.fontSize = size + 'px';
+        }
+
+        function updateHud() {
+            scoreDisplay.textContent = score;
+            levelDisplay.textContent = 'LVL ' + level;
+            updateScoreSize();
+        }
+
+        // ---------- СЛОЖНОСТЬ (один источник правды) ----------
+        function pipeSpeedForLevel(lvl) {
+            // Рост скорости ограничен: на высоких уровнях игра перестаёт быть «непролезаемой»
+            return Math.min(3 + (lvl - 1) * 0.32, 5.6);
+        }
+
+        function pipeGapForLevel(lvl) {
+            // Высота прохода считается от размера экрана и почти не сужается с уровнем:
+            // проход всегда заметно шире одного прыжка Боба (прыжок ≈ 66 px),
+            // поэтому на любом уровне и любом экране реально пролететь.
+            const base = clamp(canvas.height * 0.44, 235, 310);
+            const shrink = Math.min((lvl - 1) * 3.5, base * 0.13);
+            return base - shrink;
+        }
+
+        // ---------- ГЕНЕРАЦИЯ ПРОХОДОВ ----------
+        function spawnPipe() {
+            const gap = pipeGapForLevel(level);
+            const usable = canvas.height - GROUND_HEIGHT;              // высота игровой зоны
+            const margin = clamp((usable - gap) * 0.35, 40, 90);       // отступ от неба и земли
+            const minCenter = margin + gap / 2;
+            const maxCenter = usable - margin - gap / 2;
+
+            let center;
+            if (lastGapCenter === null) {
+                // Первая труба уровня — всегда в удобной середине
+                center = usable / 2;
+            } else {
+                // ГЛАВНОЕ ИСПРАВЛЕНИЕ: проход не может прыгнуть вверх/вниз дальше,
+                // чем игрок успевает подняться/опуститься между трубами.
+                const maxStep = Math.min(gap * 0.50, canvas.height * 0.20);
+                center = lastGapCenter + (Math.random() * 2 - 1) * maxStep;
+            }
+            center = clamp(center, minCenter, Math.max(minCenter, maxCenter));
+
+            const topHeight = Math.max(20, center - gap / 2);
+            lastGapCenter = center;
+
+            pipes.push({
+                x: canvas.width,
+                topHeight: topHeight,
+                bottomY: topHeight + gap,
+                gap: gap,
+                passed: false
             });
         }
-        
-        // Ground
-        const groundHeight = 80;
-        let groundOffset = 0;
-        
+
+        // ---------- РАЗМЕР КАНВАСА / ФОН ----------
+        function resizeCanvas() {
+            const rect = gameContainer.getBoundingClientRect();
+            const w = Math.max(240, Math.round(rect.width));
+            const h = Math.max(320, Math.round(rect.height));
+            if (w === canvas.width && h === canvas.height) return;
+
+            const oldH = canvas.height;
+            canvas.width = w;
+            canvas.height = h;
+
+            // Небо рисуем ровно на всю высоту экрана — обрезов сверху/снизу нет
+            skyGradient = ctx.createLinearGradient(0, 0, 0, h);
+            skyGradient.addColorStop(0, '#87CEEB');
+            skyGradient.addColorStop(0.55, '#AEE1F0');
+            skyGradient.addColorStop(0.8, '#CDEFD6');
+            skyGradient.addColorStop(1, '#90EE90');
+
+            // Мягкие «холмы» у линии земли
+            hillsGradient = ctx.createLinearGradient(0, h - GROUND_HEIGHT - 70, 0, h - GROUND_HEIGHT);
+            hillsGradient.addColorStop(0, '#9BE07A');
+            hillsGradient.addColorStop(1, '#6FCB4E');
+
+            if (clouds.length === 0) initClouds();
+            clouds.forEach(c => {
+                c.x = clamp(c.x, 0, w);
+                c.y = clamp(c.y, 0, h * 0.5);
+            });
+
+            // Если экран изменился прямо во время игры — не даём трубам «сломаться»
+            if (oldH > 0 && oldH !== h) {
+                const k = h / oldH;
+                pipes.forEach(p => { p.topHeight *= k; p.bottomY *= k; p.gap *= k; });
+                if (house) house.y = h - GROUND_HEIGHT - houseSize;
+                if (gameState === 'playing' || gameState === 'houseApproach') {
+                    bob.y = clamp(bob.y, 0, h - GROUND_HEIGHT - bob.height);
+                }
+            }
+        }
+
+        resizeCanvas();
+        updateScoreSize();
+        window.addEventListener('resize', () => { resizeCanvas(); updateScoreSize(); });
+        window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 150));
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', resizeCanvas);
+        }
+
+        bestScoreSpan.textContent = bestScore;
+        // Нормализуем старые сохранения: два ключа приводятся к одному числу
+        saveProgress(progressLevel);
+
+        // ---------- ЛОГИКА ----------
         function resetGame() {
-            bob.y = canvas.height / 2;
+            bob.y = Math.max(0, canvas.height / 2 - bob.height / 2);
             bob.velocity = 0;
             bob.rotation = 0;
             bob.rotationDelay = 0;
             pipes = [];
-            score = 0;
-            level = 1;
-            pipeSpeed = 3;
+            house = null;
+            lastGapCenter = null;
+            // Начинаем с максимального достигнутого уровня (он же — чекпоинт)
+            level = progressLevel;
+            score = (progressLevel - 1) * scorePerLevel;
+            pipeSpeed = pipeSpeedForLevel(progressLevel);
             pipeSpawnTimer = 0;
-            scoreDisplay.textContent = '0';
-            levelDisplay.textContent = 'LVL 1';
+            updateHud();
         }
-        
+
         function jump() {
-            if (gameState === 'playing') {
+            if (gameState === 'playing' || gameState === 'houseApproach') {
                 bob.velocity = bob.jump;
             }
         }
-        
+
         function togglePause() {
             if (gameState === 'playing') {
                 gameState = 'paused';
@@ -375,147 +788,316 @@
                 pauseBtn.classList.remove('hidden');
             }
         }
-        
+
         function startGame() {
+            resizeCanvas();
             resetGame();
             gameState = 'playing';
             startScreen.classList.add('hidden');
             gameOverScreen.classList.add('hidden');
             pauseScreen.classList.add('hidden');
+            levelUpScreen.classList.add('hidden');
             scoreDisplay.classList.remove('hidden');
             levelDisplay.classList.remove('hidden');
             pauseBtn.classList.remove('hidden');
+            muteBtn.classList.remove('hidden');
         }
-        
+
         function gameOver() {
             gameState = 'gameOver';
             scoreDisplay.classList.add('hidden');
             levelDisplay.classList.add('hidden');
             pauseBtn.classList.add('hidden');
+            muteBtn.classList.add('hidden');
             gameOverScreen.classList.remove('hidden');
             finalScoreSpan.textContent = score;
             finalLevelSpan.textContent = level;
-            bestLevelSpan.textContent = maxLevel;
-            
+
             if (score > bestScore) {
                 bestScore = score;
                 localStorage.setItem('bobBestScore', bestScore);
             }
-            if (level > maxLevel) {
-                maxLevel = level;
-                localStorage.setItem('bobMaxLevel', maxLevel);
-            }
-            
+            saveProgress(level);
+
             bestScoreSpan.textContent = bestScore;
-            startMaxLevelSpan.textContent = maxLevel;
+            bestLevelSpan.textContent = passedLevels();
         }
-        
-        function spawnPipe() {
-            const minHeight = 80;
-            const maxHeight = canvas.height - groundHeight - pipeGap - minHeight;
-            const topHeight = minHeight + Math.random() * maxHeight;
-            
-            pipes.push({
+
+        // Дом появляется справа и летит навстречу Бобу
+        function startHouseApproach(newLevel) {
+            pendingLevel = newLevel;
+            gameState = 'houseApproach';
+            pauseBtn.classList.add('hidden');
+            lastGapCenter = null; // после нового уровня первая труба снова будет «доброй»
+            house = {
                 x: canvas.width,
-                topHeight: topHeight,
-                bottomY: topHeight + pipeGap,
-                passed: false
-            });
+                y: canvas.height - GROUND_HEIGHT - houseSize,
+                width: houseSize,
+                height: houseSize
+            };
         }
-        
-        function update() {
-            if (gameState !== 'playing') return;
-            
-            // Physics
-            bob.velocity += bob.gravity;
+
+        // Боб плавно "приземляется" на крышу дома
+        function startLanding() {
+            gameState = 'landing';
+            landingTimer = 0;
+            bob.velocity = 0;
+            landingTargetY = house.y - bob.height * 0.62;
+        }
+
+        // Показываем весёлый экран "уровень пройден" (дом остаётся виден на фоне)
+        function showLevelUp(newLevel) {
+            // ВАЖНО: на экране пишем ТОЛЬКО ЧТО ПРОЙДЕННЫЙ уровень (newLevel - 1),
+            // а следующий показываем отдельной строкой. Раньше в заголовок
+            // подставлялся новый уровень, и после 1-го уровня выходило
+            // «Уровень 2 пройден», хотя игрок только что закончил первый.
+            const passedLevel = Math.max(1, newLevel - 1);
+
+            level = newLevel;
+            pipeSpeed = pipeSpeedForLevel(level);
+            levelDisplay.textContent = 'LVL ' + level;
+            gameState = 'levelUp';
+            playLevelUpSound();
+            levelUpNumSpan.textContent = passedLevel;
+            levelUpNextSpan.textContent = newLevel;
+            levelUpScreen.classList.remove('hidden');
+
+            // Достигли нового уровня — сразу же обновляем и рекорд, и чекпоинт
+            // (это теперь одно и то же число)
+            saveProgress(newLevel);
+        }
+
+        function continueAfterLevelUp() {
+            levelUpScreen.classList.add('hidden');
+            pauseBtn.classList.remove('hidden');
+            house = null;
+            lastGapCenter = null;
+            // Небольшая передышка перед новой трубой (в кадрах 60 fps)
+            pipeSpawnTimer = -Math.round(pipeSpawnInterval * 0.45);
+            gameState = 'playing';
+        }
+
+        function updateBobPhysics(dt) {
+            bob.velocity += bob.gravity * dt;
             if (bob.velocity > bob.maxFallSpeed) {
                 bob.velocity = bob.maxFallSpeed;
             }
-            bob.y += bob.velocity;
-            
+            bob.y += bob.velocity * dt;
+
             // Rotation logic
             if (bob.velocity < 0) {
-                bob.rotation = -25;
+                bob.rotation = bob.flapRotation;
                 bob.rotationDelay = 0;
             } else {
-                bob.rotationDelay++;
+                bob.rotationDelay += dt;
                 if (bob.rotationDelay > 10) {
-                    bob.rotation += 2;
+                    bob.rotation += 2 * dt;
                     if (bob.rotation > 90) bob.rotation = 90;
                 }
             }
-            
-            // Check boundaries
-            if (bob.y < -bob.height) {
-                bob.y = -bob.height;
+
+            // Верхняя граница: Боб не улетает за экран (виден игроку всегда)
+            if (bob.y + hitboxMargin < 0) {
+                bob.y = -hitboxMargin;
                 bob.velocity = 0;
             }
-            
-            if (bob.y + bob.height > canvas.height - groundHeight) {
-                gameOver();
+        }
+
+        function update(dt) {
+            if (gameState === 'paused' || gameState === 'start' || gameState === 'gameOver' || gameState === 'levelUp') {
                 return;
             }
-            
-            // Spawn pipes
-            pipeSpawnTimer++;
-            if (pipeSpawnTimer >= pipeSpawnInterval) {
-                spawnPipe();
-                pipeSpawnTimer = 0;
-            }
-            
-            // Update pipes
-            for (let i = pipes.length - 1; i >= 0; i--) {
-                pipes[i].x -= pipeSpeed;
-                
-                // Collision Detection
-                const hitboxX = bob.x + 15;
-                const hitboxY = bob.y + 15;
-                const hitboxW = bob.width - 30;
-                const hitboxH = bob.height - 30;
-                
-                if (hitboxX + hitboxW > pipes[i].x && hitboxX < pipes[i].x + pipeWidth) {
-                    if (hitboxY < pipes[i].topHeight || hitboxY + hitboxH > pipes[i].bottomY) {
+
+            const groundY = canvas.height - GROUND_HEIGHT;
+
+            if (gameState === 'playing' || gameState === 'houseApproach') {
+                updateBobPhysics(dt);
+
+                // Землю проверяем по компактному хитбоксу — там же, где столкновения с трубами
+                if (bob.y + bob.height - hitboxMargin > groundY) {
+                    if (gameState === 'playing') {
                         gameOver();
                         return;
                     }
-                }
-                
-                // Score
-                if (!pipes[i].passed && pipes[i].x + pipeWidth < bob.x) {
-                    pipes[i].passed = true;
-                    score++;
-                    scoreDisplay.textContent = score;
-                    
-                    // Level Logic
-                    const newLevel = Math.floor(score / 10) + 1;
-                    if (newLevel > level) {
-                        level = newLevel;
-                        levelDisplay.textContent = 'LVL ' + level;
-                        pipeSpeed = 3 + (level - 1) * 0.5;
-                    }
-                }
-                
-                // Remove off-screen pipes
-                if (pipes[i].x + pipeWidth < 0) {
-                    pipes.splice(i, 1);
+                    // Полёт к дому — «безопасная» зона: уровень уже заработан,
+                    // поэтому о землю тут не разбиваемся, просто скользим по ней.
+                    bob.y = groundY - bob.height + hitboxMargin;
+                    bob.velocity = 0;
                 }
             }
-            
+
+            if (gameState === 'playing') {
+                // Spawn pipes
+                pipeSpawnTimer += dt;
+                if (pipeSpawnTimer >= pipeSpawnInterval) {
+                    spawnPipe();
+                    pipeSpawnTimer = 0;
+                }
+
+                // Update pipes
+                for (let i = pipes.length - 1; i >= 0; i--) {
+                    pipes[i].x -= pipeSpeed * dt;
+
+                    // Collision Detection (компактный хитбокс, см. hitboxMargin)
+                    const hitboxX = bob.x + hitboxMargin;
+                    const hitboxY = bob.y + hitboxMargin;
+                    const hitboxW = bob.width - hitboxMargin * 2;
+                    const hitboxH = bob.height - hitboxMargin * 2;
+
+                    if (hitboxX + hitboxW > pipes[i].x && hitboxX < pipes[i].x + pipeWidth) {
+                        if (hitboxY < pipes[i].topHeight || hitboxY + hitboxH > pipes[i].bottomY) {
+                            gameOver();
+                            return;
+                        }
+                    }
+
+                    // Score
+                    if (!pipes[i].passed && pipes[i].x + pipeWidth < bob.x) {
+                        pipes[i].passed = true;
+                        score++;
+                        scoreDisplay.textContent = score;
+                        updateScoreSize();
+
+                        // Level Logic — каждые scorePerLevel очков Боб летит к дому
+                        const newLevel = Math.floor(score / scorePerLevel) + 1;
+                        if (newLevel > level) {
+                            startHouseApproach(newLevel);
+                            break; // дальше обрабатываем трубы уже в режиме "полёт к дому"
+                        }
+                    }
+
+                    // Remove off-screen pipes
+                    if (pipes[i].x + pipeWidth < 0) {
+                        pipes.splice(i, 1);
+                    }
+                }
+            } else if (gameState === 'houseApproach') {
+                // Оставшиеся трубы просто доезжают и исчезают — без столкновений,
+                // это "безопасная зона" на пути к дому
+                for (let i = pipes.length - 1; i >= 0; i--) {
+                    pipes[i].x -= pipeSpeed * dt;
+                    if (pipes[i].x + pipeWidth < 0) {
+                        pipes.splice(i, 1);
+                    }
+                }
+
+                house.x -= pipeSpeed * dt;
+                const targetX = bob.x - (house.width - bob.width) / 2;
+                if (house.x <= targetX) {
+                    house.x = targetX;
+                    startLanding();
+                }
+            } else if (gameState === 'landing') {
+                landingTimer += dt;
+                bob.y += (landingTargetY - bob.y) * 0.18 * dt;
+                bob.rotation *= Math.pow(0.85, dt);
+
+                if (landingTimer > landingHoldFrames) {
+                    bob.y = landingTargetY;
+                    bob.rotation = 0;
+                    showLevelUp(pendingLevel);
+                }
+            }
+
             // Update ground offset
-            groundOffset = (groundOffset + pipeSpeed) % 40;
-            
+            groundOffset = (groundOffset + pipeSpeed * dt) % 40;
+
             // Update clouds
             clouds.forEach(cloud => {
-                cloud.x -= cloud.speed;
+                cloud.x -= cloud.speed * dt;
                 if (cloud.x + cloud.size < 0) {
                     cloud.x = canvas.width + cloud.size;
                     cloud.y = Math.random() * canvas.height * 0.4;
                 }
             });
         }
-        
+
+        // ---------- РИСОВАНИЕ ----------
+        // Запасной кот: рисуем сами, если картинка flying_bob.png недоступна
+        function drawCatShape(g, cx, cy, size, rotation, mood) {
+            const s = size / 120;
+            g.save();
+            g.translate(cx, cy);
+            g.rotate(rotation || 0);
+            g.scale(s, s);
+            g.lineJoin = 'round';
+            g.lineCap = 'round';
+            g.strokeStyle = '#c9761f';
+            g.lineWidth = 3;
+
+            const happy = mood !== 'sad';
+
+            // Крылья
+            g.fillStyle = '#fff6cf';
+            g.beginPath();
+            g.moveTo(22, 62); g.bezierCurveTo(2, 48, 6, 22, 22, 28); g.bezierCurveTo(34, 33, 42, 50, 44, 64); g.closePath(); g.fill(); g.stroke();
+            g.beginPath();
+            g.moveTo(98, 62); g.bezierCurveTo(118, 48, 114, 22, 98, 28); g.bezierCurveTo(86, 33, 78, 50, 76, 64); g.closePath(); g.fill(); g.stroke();
+
+            // Хвост
+            g.fillStyle = '#f7a94e';
+            g.beginPath();
+            g.moveTo(30, 84); g.bezierCurveTo(8, 92, 10, 108, 22, 108); g.bezierCurveTo(32, 108, 38, 96, 42, 90); g.closePath(); g.fill(); g.stroke();
+
+            // Тело
+            g.fillStyle = '#f7a94e';
+            g.beginPath(); g.ellipse(60, 72, 29, 26, 0, 0, Math.PI * 2); g.fill(); g.stroke();
+
+            // Уши
+            g.fillStyle = '#f7a94e';
+            g.beginPath(); g.moveTo(34, 46); g.lineTo(30, 20); g.lineTo(53, 35); g.closePath(); g.fill(); g.stroke();
+            g.beginPath(); g.moveTo(86, 46); g.lineTo(90, 20); g.lineTo(67, 35); g.closePath(); g.fill(); g.stroke();
+
+            // Голова
+            g.fillStyle = '#ffc266';
+            g.beginPath(); g.arc(60, 52, 25, 0, Math.PI * 2); g.fill(); g.stroke();
+
+            // Полоски
+            g.strokeStyle = '#e58a2b';
+            g.lineWidth = 5;
+            g.beginPath(); g.moveTo(45, 36); g.lineTo(51, 44); g.stroke();
+            g.beginPath(); g.moveTo(75, 36); g.lineTo(69, 44); g.stroke();
+
+            // Глаза
+            g.strokeStyle = '#3a2a17';
+            g.lineWidth = 3.5;
+            g.fillStyle = '#3a2a17';
+            if (happy) {
+                g.beginPath(); g.arc(50, 51, 4.6, 0, Math.PI * 2); g.fill();
+                g.beginPath(); g.arc(70, 51, 4.6, 0, Math.PI * 2); g.fill();
+                g.fillStyle = '#ffffff';
+                g.beginPath(); g.arc(51.6, 49.4, 1.6, 0, Math.PI * 2); g.fill();
+                g.beginPath(); g.arc(71.6, 49.4, 1.6, 0, Math.PI * 2); g.fill();
+            } else {
+                g.beginPath(); g.moveTo(45, 47); g.lineTo(55, 55); g.moveTo(55, 47); g.lineTo(45, 55); g.stroke();
+                g.beginPath(); g.moveTo(65, 47); g.lineTo(75, 55); g.moveTo(75, 47); g.lineTo(65, 55); g.stroke();
+            }
+
+            // Нос и рот
+            g.fillStyle = '#f2726f';
+            g.beginPath(); g.moveTo(60, 58); g.lineTo(55, 63); g.lineTo(65, 63); g.closePath(); g.fill();
+            g.strokeStyle = '#c9761f';
+            g.lineWidth = 2.5;
+            g.beginPath();
+            if (happy) { g.arc(55, 64, 5, 0, Math.PI); g.arc(65, 64, 5, 0, Math.PI); }
+            else { g.arc(55, 70, 5, Math.PI, Math.PI * 2); g.arc(65, 70, 5, Math.PI, Math.PI * 2); }
+            g.stroke();
+
+            // Усы
+            g.strokeStyle = '#8a5a20';
+            g.lineWidth = 2;
+            g.beginPath();
+            g.moveTo(38, 56); g.lineTo(24, 53);
+            g.moveTo(38, 61); g.lineTo(25, 63);
+            g.moveTo(82, 56); g.lineTo(96, 53);
+            g.moveTo(82, 61); g.lineTo(95, 63);
+            g.stroke();
+
+            g.restore();
+        }
+
         function drawCloud(x, y, size) {
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
             ctx.beginPath();
             ctx.arc(x, y, size * 0.5, 0, Math.PI * 2);
             ctx.arc(x + size * 0.4, y - size * 0.2, size * 0.4, 0, Math.PI * 2);
@@ -523,102 +1105,263 @@
             ctx.arc(x + size * 0.4, y + size * 0.15, size * 0.35, 0, Math.PI * 2);
             ctx.fill();
         }
-        
+
         function drawPipe(x, topHeight, bottomY) {
             const gradient = ctx.createLinearGradient(x, 0, x + pipeWidth, 0);
             gradient.addColorStop(0, '#5DBE4A');
             gradient.addColorStop(0.3, '#7ED956');
             gradient.addColorStop(0.7, '#5DBE4A');
             gradient.addColorStop(1, '#4AA83C');
-            
+
             // Top pipe
             ctx.fillStyle = gradient;
             ctx.fillRect(x, 0, pipeWidth, topHeight);
-            
+
             // Top pipe cap
             ctx.fillStyle = '#4AA83C';
             ctx.fillRect(x - 5, topHeight - 30, pipeWidth + 10, 30);
             ctx.strokeStyle = '#2E7D32';
             ctx.lineWidth = 2;
             ctx.strokeRect(x - 5, topHeight - 30, pipeWidth + 10, 30);
-            
+
             // Bottom pipe
             ctx.fillStyle = gradient;
-            ctx.fillRect(x, bottomY, pipeWidth, canvas.height - bottomY - groundHeight);
-            
+            ctx.fillRect(x, bottomY, pipeWidth, Math.max(0, canvas.height - bottomY - GROUND_HEIGHT));
+
             // Bottom pipe cap
             ctx.fillStyle = '#4AA83C';
             ctx.fillRect(x - 5, bottomY, pipeWidth + 10, 30);
             ctx.strokeStyle = '#2E7D32';
             ctx.strokeRect(x - 5, bottomY, pipeWidth + 10, 30);
         }
-        
+
+        // Векторный домик: не зависит от эмодзи-шрифтов и всегда выглядит одинаково
+        function drawHouseShape(g, x, y, w, h) {
+            const roofH = h * 0.44;
+            g.save();
+
+            // Тень
+            g.fillStyle = 'rgba(0,0,0,0.15)';
+            g.beginPath();
+            g.ellipse(x + w / 2, y + h + 4, w * 0.52, h * 0.06, 0, 0, Math.PI * 2);
+            g.fill();
+
+            // Стены
+            g.fillStyle = '#FFE0B2';
+            g.fillRect(x + w * 0.08, y + roofH * 0.7, w * 0.84, h - roofH * 0.7);
+            g.strokeStyle = '#B4651A';
+            g.lineWidth = 3;
+            g.strokeRect(x + w * 0.08, y + roofH * 0.7, w * 0.84, h - roofH * 0.7);
+
+            // Крыша
+            g.fillStyle = '#E2574C';
+            g.beginPath();
+            g.moveTo(x + w / 2, y);
+            g.lineTo(x + w, y + roofH);
+            g.lineTo(x, y + roofH);
+            g.closePath();
+            g.fill();
+            g.strokeStyle = '#A83228';
+            g.stroke();
+
+            // Труба
+            g.fillStyle = '#C1443A';
+            g.fillRect(x + w * 0.68, y + roofH * 0.18, w * 0.13, roofH * 0.42);
+            g.strokeStyle = '#A83228';
+            g.strokeRect(x + w * 0.68, y + roofH * 0.18, w * 0.13, roofH * 0.42);
+
+            // Дверь
+            g.fillStyle = '#8B5A2B';
+            g.fillRect(x + w * 0.42, y + h - h * 0.42, w * 0.18, h * 0.42);
+            g.strokeStyle = '#5E3A16';
+            g.lineWidth = 2.5;
+            g.strokeRect(x + w * 0.42, y + h - h * 0.42, w * 0.18, h * 0.42);
+            g.fillStyle = '#FFD700';
+            g.beginPath();
+            g.arc(x + w * 0.565, y + h - h * 0.2, 2.4, 0, Math.PI * 2);
+            g.fill();
+
+            // Окно
+            g.fillStyle = '#AFE4FF';
+            g.fillRect(x + w * 0.17, y + h - h * 0.44, w * 0.17, h * 0.18);
+            g.strokeStyle = '#4A86A8';
+            g.strokeRect(x + w * 0.17, y + h - h * 0.44, w * 0.17, h * 0.18);
+
+            g.restore();
+        }
+
+        // Физический дом в игровом мире — Боб реально долетает до него и садится на крышу
+        function drawHouse() {
+            if (!house) return;
+            drawHouseShape(ctx, house.x, house.y, house.width, house.height);
+        }
+
         function draw() {
             // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Draw sky gradient (optimized)
-            if (skyGradient) {
-                ctx.fillStyle = skyGradient;
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-            } else {
-                // Fallback if resize hasn't happened yet (should be rare)
-                ctx.fillStyle = '#87CEEB';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-            }
-            
-            // Draw clouds
+
+            // Sky gradient — на всю высоту, без обрезов
+            ctx.fillStyle = skyGradient || '#87CEEB';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Солнце
+            ctx.save();
+            ctx.globalAlpha = 0.85;
+            ctx.fillStyle = '#FFF3B0';
+            ctx.beginPath();
+            ctx.arc(canvas.width - 70, 90, 46, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 0.35;
+            ctx.beginPath();
+            ctx.arc(canvas.width - 70, 90, 70, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            // Clouds
             clouds.forEach(cloud => {
                 drawCloud(cloud.x, cloud.y, cloud.size);
             });
-            
-            // Draw pipes
+
+            // Холмы у земли
+            if (hillsGradient) {
+                ctx.fillStyle = hillsGradient;
+                ctx.beginPath();
+                ctx.moveTo(0, canvas.height - GROUND_HEIGHT);
+                const step = canvas.width / 3;
+                for (let i = 0; i <= 3; i++) {
+                    ctx.quadraticCurveTo(
+                        i * step + step * 0.5,
+                        canvas.height - GROUND_HEIGHT - (i % 2 === 0 ? 46 : 30),
+                        (i + 1) * step,
+                        canvas.height - GROUND_HEIGHT
+                    );
+                }
+                ctx.lineTo(canvas.width, canvas.height);
+                ctx.lineTo(0, canvas.height);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            // Pipes
             pipes.forEach(pipe => {
                 drawPipe(pipe.x, pipe.topHeight, pipe.bottomY);
             });
-            
+
+            // Draw house (виден и во время levelUp — Боб сидит на крыше под оверлеем)
+            drawHouse();
+
             // Draw ground
             ctx.fillStyle = '#8B4513';
-            ctx.fillRect(0, canvas.height - groundHeight, canvas.width, groundHeight);
-            
+            ctx.fillRect(0, canvas.height - GROUND_HEIGHT, canvas.width, GROUND_HEIGHT);
+
             // Ground grass
             ctx.fillStyle = '#228B22';
-            ctx.fillRect(0, canvas.height - groundHeight, canvas.width, 20);
-            
+            ctx.fillRect(0, canvas.height - GROUND_HEIGHT, canvas.width, 20);
+
             // Ground pattern
             ctx.fillStyle = '#654321';
             for (let i = -groundOffset; i < canvas.width + 40; i += 40) {
-                ctx.fillRect(i, canvas.height - groundHeight + 20, 20, 10);
+                ctx.fillRect(i, canvas.height - GROUND_HEIGHT + 20, 20, 10);
             }
-            
+
             // Draw Bob
             ctx.save();
             ctx.translate(bob.x + bob.width / 2, bob.y + bob.height / 2);
             ctx.rotate(bob.rotation * Math.PI / 180);
-            
-            if (bobImg.complete) {
+
+            if (bobImg.complete && bobImg.naturalWidth > 0) {
                 ctx.drawImage(bobImg, -bob.width / 2, -bob.height / 2, bob.width, bob.height);
             } else {
-                // Fallback: draw a simple cat
-                ctx.fillStyle = '#FFA500';
-                ctx.beginPath();
-                ctx.ellipse(0, 0, bob.width / 2, bob.height / 2.5, 0, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.fillStyle = '#000';
-                ctx.beginPath();
-                ctx.arc(-8, -5, 4, 0, Math.PI * 2);
-                ctx.arc(8, -5, 4, 0, Math.PI * 2);
-                ctx.fill();
+                // Запасной вариант, если картинка ещё не загрузилась или недоступна
+                drawCatShape(ctx, 0, 0, bob.width * 1.25, 0, 'happy');
             }
             ctx.restore();
         }
-        
-        function gameLoop() {
-            update();
+
+        // ---------- ЦИКЛ ----------
+        let lastTime = 0;
+
+        function gameLoop(now) {
+            if (!lastTime) lastTime = now;
+            let dt = (now - lastTime) / FRAME_MS; // шаг в "кадрах 60 fps"
+            lastTime = now;
+            if (!isFinite(dt) || dt <= 0) dt = 1;
+            // Ограничиваем шаг: после сворачивания вкладки игра не «телепортирует» Боба
+            dt = Math.min(dt, 2.5);
+
+            resizeCanvas();
+            update(dt);
             draw();
             requestAnimationFrame(gameLoop);
         }
-        
+
+        // ---------- ОБЛОЖКИ (если картинок из приложения нет — рисуем свои) ----------
+        function makeCoverDataURL(sad) {
+            const c = document.createElement('canvas');
+            c.width = 560;
+            c.height = 700;
+            const g = c.getContext('2d');
+
+            const sky = g.createLinearGradient(0, 0, 0, 700);
+            if (sad) {
+                sky.addColorStop(0, '#2b3a55');
+                sky.addColorStop(1, '#5b6f8c');
+            } else {
+                sky.addColorStop(0, '#6fc4ec');
+                sky.addColorStop(0.6, '#aee1f0');
+                sky.addColorStop(1, '#cdeed6');
+            }
+            g.fillStyle = sky;
+            g.fillRect(0, 0, 560, 700);
+
+            if (!sad) {
+                g.fillStyle = 'rgba(255,243,176,0.9)';
+                g.beginPath(); g.arc(430, 130, 70, 0, Math.PI * 2); g.fill();
+            }
+
+            g.fillStyle = 'rgba(255,255,255,0.85)';
+            [[120, 180, 90], [400, 260, 70], [220, 340, 60]].forEach(([x, y, s]) => {
+                g.beginPath();
+                g.arc(x, y, s * 0.5, 0, Math.PI * 2);
+                g.arc(x + s * 0.4, y - s * 0.2, s * 0.4, 0, Math.PI * 2);
+                g.arc(x + s * 0.8, y, s * 0.45, 0, Math.PI * 2);
+                g.arc(x + s * 0.4, y + s * 0.15, s * 0.35, 0, Math.PI * 2);
+                g.fill();
+            });
+
+            g.fillStyle = sad ? '#2f4a2c' : '#6FCB4E';
+            g.beginPath();
+            g.moveTo(0, 560);
+            g.quadraticCurveTo(140, 500, 280, 560);
+            g.quadraticCurveTo(420, 620, 560, 540);
+            g.lineTo(560, 700);
+            g.lineTo(0, 700);
+            g.closePath();
+            g.fill();
+
+            drawCatShape(g, 268, 392, 380, -0.06, sad ? 'sad' : 'happy');
+
+            return c.toDataURL('image/png');
+        }
+
+        function applyFallbackImage(img, sad) {
+            if (img.dataset.fallbackDone) return;
+            img.dataset.fallbackDone = '1';
+            img.src = makeCoverDataURL(sad);
+        }
+        coverImg.addEventListener('error', () => applyFallbackImage(coverImg, false));
+        gameOverImg.addEventListener('error', () => applyFallbackImage(gameOverImg, true));
+        // Если картинка не загрузилась ещё до того, как мы повесили обработчик
+        if (coverImg.complete && coverImg.naturalWidth === 0) applyFallbackImage(coverImg, false);
+        if (gameOverImg.complete && gameOverImg.naturalWidth === 0) applyFallbackImage(gameOverImg, true);
+
+        // ---------- ПАРАМЕТРЫ ПРЯМО В КАДРЕ ----------
+        // Позволяет проверить генерацию уровней: ?level=12
+        const urlLevel = parseInt(new URLSearchParams(location.search).get('level'));
+        if (urlLevel > 1) {
+            saveProgress(urlLevel);
+        }
+
         // Event listeners
         document.getElementById('startBtn').addEventListener('click', startGame);
         document.getElementById('restartBtn').addEventListener('click', startGame);
@@ -627,24 +1370,37 @@
             togglePause();
         });
         resumeBtn.addEventListener('click', togglePause);
-        
+        muteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMute();
+        });
+        continueBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            continueAfterLevelUp();
+        });
+
         // Touch and click controls
-        canvas.addEventListener('click', () => {
-            if (gameState === 'playing') jump();
-        });
-        
-        canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (gameState === 'playing') jump();
-        });
-        
+        function onTap(e) {
+            if (e && e.cancelable) e.preventDefault();
+            if (gameState === 'playing' || gameState === 'houseApproach') jump();
+        }
+        if (window.PointerEvent) {
+            canvas.addEventListener('pointerdown', onTap);
+        } else {
+            canvas.addEventListener('touchstart', onTap, { passive: false });
+            canvas.addEventListener('mousedown', onTap);
+        }
+        // Двойной тап не должен приближать/скроллить страницу
+        document.addEventListener('gesturestart', (e) => e.preventDefault());
+
         // Keyboard controls
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' || e.code === 'ArrowUp') {
                 e.preventDefault();
                 if (gameState === 'start') startGame();
-                else if (gameState === 'playing') jump();
+                else if (gameState === 'playing' || gameState === 'houseApproach') jump();
                 else if (gameState === 'gameOver') startGame();
+                else if (gameState === 'levelUp') continueAfterLevelUp();
             }
             if (e.code === 'Escape' || e.code === 'KeyP') {
                 if (gameState === 'playing' || gameState === 'paused') {
@@ -652,10 +1408,10 @@
                 }
             }
         });
-        
+
         // Initialize
         resetGame();
-        gameLoop();
+        requestAnimationFrame(gameLoop);
     </script>
 </body>
 </html>

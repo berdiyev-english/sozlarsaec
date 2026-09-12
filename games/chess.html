@@ -2,19 +2,17 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>BeWords Chess vs Bob</title>
-    
+
     <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 
     <style>
         /* --- СТИЛИ (БЕЖЕВЫЙ МУЛЬТЯШНЫЙ) --- */
         body {
-            background-color: #fff8e1; 
-            background-image: radial-gradient(#fde68a 15%, transparent 16%), radial-gradient(#fde68a 15%, transparent 16%);
-            background-size: 30px 30px;
-            background-position: 0 0, 15px 15px;
+            background: radial-gradient(circle at 50% -10%, #6b4423, #3c2414 65%);
+            background-attachment: fixed;
             font-family: 'Nunito', sans-serif;
             margin: 0;
             display: flex;
@@ -22,7 +20,8 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             color: #451a03;
         }
 
@@ -33,89 +32,353 @@
             z-index: 1000; display: flex; flex-direction: column;
             align-items: center; justify-content: center; text-align: center;
             transition: opacity 0.4s;
+            padding: 12px; box-sizing: border-box;
         }
         .hidden { display: none !important; opacity: 0; }
 
+        /* Карточка (экран конца игры и модалка в том же стиле, что и настройки) */
         .overlay-content {
-            background: #fff; padding: 40px; border-radius: 40px;
-            border: 8px solid #fbbf24; box-shadow: 0 20px 0 rgba(0,0,0,0.2);
-            max-width: 90%; width: 400px;
+            background: #fffaf0;
+            padding: clamp(20px, 6vw, 34px);
+            border-radius: 24px;
+            border: none;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+            width: 100%; max-width: 420px; box-sizing: border-box;
+            max-height: calc(100vh - 24px);
+            max-height: calc(100dvh - 24px);
+            overflow-y: auto; overflow-x: hidden;
             animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
+        /* Главные кнопки (например «Еще раз» на экране конца игры) */
+        .btn-main {
+            background: linear-gradient(180deg, #ffcb4d, #ffb800);
+            color: #3c2414; border: none;
+            padding: clamp(13px, 4vw, 17px) clamp(24px, 8vw, 44px);
+            font-size: clamp(15px, 4.6vw, 18px); border-radius: 18px;
+            font-weight: 900; cursor: pointer; font-family: 'Nunito', sans-serif;
+            text-transform: uppercase; letter-spacing: 0.6px;
+            box-shadow: 0 6px 0 #d69200, 0 10px 20px rgba(0,0,0,0.25);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        .btn-main:active { transform: translateY(4px); box-shadow: 0 2px 0 #d69200; }
+
         .bob-large-img {
-            width: 160px; height: 160px; object-fit: contain; margin-bottom: 15px;
+            width: clamp(88px, 24vw, 160px); height: clamp(88px, 24vw, 160px);
+            object-fit: contain; margin-bottom: clamp(6px, 2vw, 15px);
             filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
         }
 
-        .overlay-content h1 { font-size: 2.5rem; color: #d97706; margin: 10px 0; line-height: 1; }
-        
-        .btn-main {
-            background: #22c55e; color: white; border: none; padding: 15px 40px;
-            font-size: 22px; border-radius: 50px; font-weight: 900; cursor: pointer;
-            box-shadow: 0 8px 0 #15803d; transition: transform 0.1s; margin-top: 20px;
-            text-transform: uppercase; letter-spacing: 1px;
+        .overlay-content h1 { font-size: clamp(1.5rem, 7.2vw, 2.2rem); color: #d97706; margin: 6px 0 10px; line-height: 1.05; }
+        .welcome-text { font-size: clamp(0.9rem, 3.9vw, 1.1rem); color: #78350f; margin: 0 0 clamp(10px, 3vw, 20px); }
+
+        /* ===== СТАРТОВЫЙ ЭКРАН: hero отдельно, настройки отдельными карточками ===== */
+        #welcome-screen {
+            background: radial-gradient(circle at 50% -10%, #6b4423, #3c2414 65%);
+            backdrop-filter: none;
+            padding: 0;
+            justify-content: flex-start;
+            overflow-y: auto;
         }
-        .btn-main:active { transform: translateY(8px); box-shadow: none; }
-        
-        .btn-black {
-            background: #451a03; box-shadow: 0 8px 0 #290f02;
-        }
-        .btn-black:active {
-            box-shadow: none;
+        .welcome-shell {
+            width: 100%; max-width: 440px;
+            min-height: 100vh; min-height: 100dvh;
+            display: flex; flex-direction: column;
+            padding: calc(14px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));
+            box-sizing: border-box; margin: 0 auto;
         }
 
-        /* --- ИГРА --- */
+        /* верхняя панель — используем пустое место сверху */
+        .top-bar { display: flex; justify-content: flex-end; align-items: center; padding: 4px 0 16px; }
+        .win-counter {
+            display: flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.08); padding: 9px 15px; border-radius: 999px;
+            color: #f3d9a4; font-weight: 800; font-size: 14px; white-space: nowrap;
+        }
+        .win-counter-flash { animation: winFlash 0.8s ease; }
+        @keyframes winFlash {
+            0% { transform: scale(1); }
+            35% { transform: scale(1.14); background: rgba(255,184,0,0.4); }
+            100% { transform: scale(1); }
+        }
+
+        /* герой-блок */
+        .welcome-hero { text-align: center; margin-bottom: 16px; }
+        .bob-badge {
+            width: clamp(96px, 28vw, 132px); height: clamp(96px, 28vw, 132px);
+            margin: 0 auto 12px; border-radius: 26px; background: #fffdf6;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .bob-badge .bob-large-img { width: 88%; height: 88%; margin: 0; filter: none; }
+        .welcome-hero h1 {
+            font-size: clamp(1.6rem, 7.6vw, 2rem); font-weight: 900; color: #ffb84d;
+            margin: 0 0 8px; letter-spacing: 0.5px; line-height: 1.05;
+        }
+        .welcome-hero .welcome-text {
+            font-size: clamp(0.88rem, 3.8vw, 1rem); color: #e8c99a; opacity: 0.85;
+            margin: 0; line-height: 1.45; font-weight: 600;
+        }
+
+        /* карточки настроек: каждая секция — отдельный блок */
+        .settings-stack { display: flex; flex-direction: column; gap: 14px; }
+        .setting-card {
+            background: #fffaf0; border-radius: 20px; padding: 15px 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+        }
+        .setting-title {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 12px; font-weight: 800; color: #a67c52;
+            text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 12px;
+        }
+
+        /* сложность */
+        .difficulty-row { display: flex; gap: 8px; }
+        .diff-chip {
+            flex: 1 1 0; min-width: 0; cursor: pointer; font-family: 'Nunito', sans-serif;
+            border: 2px solid #f0e0c0; background: #fffdf7; border-radius: 14px;
+            padding: 10px 6px; text-align: center; color: #5c4530;
+            display: flex; flex-direction: column; align-items: center; gap: 2px;
+            transition: all 0.15s ease;
+        }
+        .diff-chip .emoji { font-size: 22px; line-height: 1; }
+        .diff-chip .name { font-size: 13px; font-weight: 800; }
+        .diff-chip .desc { font-size: 10px; color: #a89372; font-weight: 700; }
+        .diff-chip.is-active {
+            border-color: #ffb800; background: #fff3d6;
+            transform: translateY(-3px); box-shadow: 0 6px 14px rgba(255,184,0,0.35);
+        }
+        .diff-chip:active { transform: translateY(1px); }
+
+        /* сторона */
+        .side-row { display: flex; gap: 10px; }
+        .side-card {
+            position: relative; flex: 1 1 0; min-width: 0; cursor: pointer;
+            border-radius: 16px; padding: 14px 8px; text-align: center;
+            border: 2px solid transparent; font-family: 'Nunito', sans-serif;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s, background 0.15s;
+        }
+        .side-card:active { transform: translateY(2px); }
+        .side-card.white { background: #fffdf7; border-color: #f0e0c0; color: #5c4530; }
+        .side-card.black { background: #2b1c10; color: #f3d9a4; }
+        .side-card .side-icon { width: clamp(34px, 10vw, 44px); height: clamp(34px, 10vw, 44px); }
+        .side-card .side-name {
+            font-size: clamp(13px, 3.9vw, 15px); font-weight: 900;
+            text-transform: uppercase; letter-spacing: 0.4px;
+        }
+        .side-card .side-hint { font-size: clamp(10px, 2.9vw, 11px); font-weight: 700; opacity: 0.78; }
+        .side-card.selected { border-color: #ffb800; box-shadow: 0 0 0 3px rgba(255,184,0,0.25); }
+        .check-badge {
+            position: absolute; top: 8px; right: 8px;
+            width: 20px; height: 20px; border-radius: 50%;
+            background: #ffb800; color: #3c2414; font-size: 12px; font-weight: 900;
+            display: none; align-items: center; justify-content: center;
+        }
+        .side-card.selected .check-badge { display: flex; }
+
+        /* кнопка «Играть» живёт на тёмном фоне, вне карточек */
+        .play-btn {
+            margin-top: 16px; width: 100%; padding: 17px 0; border: none; border-radius: 18px;
+            background: linear-gradient(180deg, #ffcb4d, #ffb800); color: #3c2414;
+            font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 18px;
+            text-transform: uppercase; letter-spacing: 0.6px; cursor: pointer;
+            box-shadow: 0 6px 0 #d69200, 0 10px 20px rgba(0,0,0,0.35);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        .play-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #d69200; }
+
+        /* низкие экраны — компактнее, чтобы всё влезало без прокрутки */
+        @media (max-height: 700px) {
+            .welcome-shell { padding-top: calc(8px + env(safe-area-inset-top)); padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+            .top-bar { padding-bottom: 8px; }
+            .win-counter { padding: 7px 12px; font-size: 13px; }
+            .bob-badge { width: clamp(76px, 20vw, 96px); height: clamp(76px, 20vw, 96px); border-radius: 20px; margin-bottom: 8px; }
+            .welcome-hero { margin-bottom: 10px; }
+            .welcome-hero h1 { margin-bottom: 4px; }
+            .settings-stack { gap: 10px; }
+            .setting-card { padding: 12px 13px; }
+            .setting-title { margin-bottom: 9px; }
+            .diff-chip { padding: 8px 5px; }
+            .side-card { padding: 11px 6px; }
+            .play-btn { margin-top: 12px; padding: 14px 0; font-size: 17px; }
+        }
+
+        /* на широких экранах: герой слева, настройки справа */
+        .welcome-body { display: block; }
+        .welcome-main { min-width: 0; }
+        @media (min-width: 760px) {
+            .welcome-shell { max-width: 880px; justify-content: center; }
+            .welcome-body {
+                display: grid; grid-template-columns: 1fr 1.05fr;
+                gap: clamp(20px, 3vw, 40px); align-items: center;
+            }
+            .welcome-hero { margin-bottom: 0; }
+            .bob-badge { width: 160px; height: 160px; border-radius: 32px; }
+            .welcome-hero h1 { font-size: 2.4rem; }
+        }
+
+        /* ===== ИГРА: та же сетка, что и на старте — карточки на тёмном фоне ===== */
         #game-container {
             display: flex; flex-direction: column; align-items: center;
             width: 100%; opacity: 1; transition: opacity 0.5s;
         }
+        .game-shell {
+            width: 100%; max-width: 470px; box-sizing: border-box; margin: 0 auto;
+            padding: calc(10px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom));
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        /* верхняя панель в игре: соперник + счётчик побед */
+        .game-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .level-banner {
+            display: inline-flex; align-items: center; gap: 7px; min-width: 0;
+            background: rgba(255,255,255,0.08); border: none; border-radius: 999px;
+            padding: 9px 15px; margin: 0; color: #f3d9a4; font-weight: 800;
+            font-size: clamp(12px, 3.5vw, 14px);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .level-banner .lb-label {
+            font-size: clamp(10px, 2.8vw, 11px); font-weight: 800; color: #e0b878;
+            text-transform: uppercase; letter-spacing: 0.6px; flex-shrink: 0;
+        }
+        .level-banner b { overflow: hidden; text-overflow: ellipsis; }
+        .level-banner-flash { animation: levelFlash 0.9s ease; }
+        @keyframes levelFlash {
+            0%   { background: rgba(255,255,255,0.08); transform: scale(1); }
+            30%  { background: rgba(255,184,0,0.42); transform: scale(1.06); }
+            100% { background: rgba(255,255,255,0.08); transform: scale(1); }
+        }
+
+        /* карточки-разделы */
+        .game-card {
+            background: #fffaf0; border-radius: 20px; padding: 14px 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.22); box-sizing: border-box; width: 100%;
+        }
+        .bob-card { padding: 10px 14px; }
+        .board-card { display: flex; justify-content: center; padding: 12px; }
+        .controls-card { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .controls-card .setting-title { margin-bottom: 0; }
 
         .bob-area {
             display: flex; align-items: center; justify-content: center;
-            width: 100%; max-width: 500px; margin-bottom: 15px; position: relative;
+            width: 100%; position: relative;
         }
-
         .bob-avatar {
-            width: 110px; height: 110px; background-size: cover; background-position: center;
-            filter: drop-shadow(0 8px 10px rgba(0,0,0,0.15)); z-index: 2; transition: transform 0.2s;
+            width: clamp(64px, 18vw, 84px); height: clamp(64px, 18vw, 84px);
+            background-size: cover; background-position: center; flex-shrink: 0;
+            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.18)); z-index: 2; transition: transform 0.2s;
         }
         .bob-jump { animation: bounce 0.5s ease infinite; }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
         .speech-bubble {
-            position: relative; background: white; border-radius: 25px; padding: 15px 25px;
-            margin-left: 10px; color: #451a03; font-weight: 800; font-size: 16px;
-            box-shadow: 5px 5px 0 #fbbf24; border: 3px solid #fbbf24; max-width: 180px;
+            position: relative; background: #fff; border-radius: 20px; padding: 10px 16px;
+            margin-left: 10px; color: #451a03; font-weight: 800; font-size: clamp(13px, 3.6vw, 15px);
+            box-shadow: 0 3px 0 #fbbf24; border: 2px solid #fbbf24;
+            max-width: min(230px, 60vw);
             opacity: 0; transform: translateX(-10px); transition: all 0.3s;
         }
         .speech-bubble.show { opacity: 1; transform: translateX(0); }
         .speech-bubble::after {
-            content: ''; position: absolute; left: -13px; top: 50%; transform: translateY(-50%);
-            border-style: solid; border-width: 10px 13px 10px 0; border-color: transparent #fbbf24 transparent transparent;
+            content: ''; position: absolute; left: -11px; top: 50%; transform: translateY(-50%);
+            border-style: solid; border-width: 8px 11px 8px 0; border-color: transparent #fbbf24 transparent transparent;
         }
 
         /* --- ДОСКА --- */
+        :root {
+            --frame-pad: 14px;      /* отступ рамки до доски */
+            --frame-bottom: 24px;   /* полоса снизу под буквы a-h */
+            --label-h: 18px;
+            --label-w: 14px;
+        }
         #board-wrapper {
-            padding: 15px; background: #86efac; border-radius: 20px;
-            border: 8px solid #16a34a; box-shadow: 0 15px 0 rgba(0,0,0,0.1); margin-bottom: 20px;
+            position: relative; box-sizing: border-box;
+            padding: var(--frame-pad) var(--frame-pad) var(--frame-bottom);
+            background: #86efac; border-radius: 18px;
+            border: 7px solid #16a34a; box-shadow: 0 6px 0 rgba(0,0,0,0.18);
         }
-        #board { width: 85vw; max-width: 420px; }
+        #board { width: min(76vw, 390px); }
+        /* лёгкая тень под фигурами, чтобы они читались на клетке */
+        #board img { filter: drop-shadow(0 2px 1px rgba(69, 26, 3, 0.25)); }
 
-        /* --- УПРАВЛЕНИЕ --- */
-        .controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; width: 90%; }
-        .game-btn {
-            background: #3b82f6; color: white; border: none; padding: 12px 20px; border-radius: 15px;
-            font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 16px; cursor: pointer;
-            box-shadow: 0 6px 0 #1d4ed8; transition: transform 0.1s;
+        /* Буквы и цифры вынесены за доску, прямо на зелёную рамку */
+        .board-labels {
+            position: absolute; display: flex; pointer-events: none;
+            color: rgba(22, 101, 52, 0.9); font-weight: 800;
         }
-        .game-btn:active { transform: translateY(6px); box-shadow: none; }
-        .btn-exit { background: #ef4444; box-shadow: 0 6px 0 #b91c1c; }
-        .btn-help { background: #a855f7; box-shadow: 0 6px 0 #7e22ce; }
-        select {
-            padding: 12px; border-radius: 15px; border: 3px solid #fbbf24; background: white;
-            font-family: 'Nunito', sans-serif; font-weight: bold; color: #b45309; outline: none; cursor: pointer;
+        #files-labels {
+            left: var(--frame-pad); right: var(--frame-pad);
+            bottom: calc(var(--frame-bottom) - var(--label-h) - 2px);
+            height: var(--label-h); font-size: 13px;
+        }
+        #files-labels span { flex: 1 1 0; text-align: center; line-height: var(--label-h); }
+        #ranks-labels {
+            top: var(--frame-pad); bottom: var(--frame-bottom);
+            right: calc(var(--frame-pad) - var(--label-w) - 1px);
+            width: var(--label-w); flex-direction: column; font-size: 12px;
+        }
+        #ranks-labels span { flex: 1 1 0; display: flex; align-items: center; justify-content: center; }
+
+        /* --- КНОПКИ УПРАВЛЕНИЯ --- */
+        .control-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; width: 100%; }
+        .game-btn {
+            flex: 1 1 0; min-width: 0; white-space: nowrap;
+            background: #3b82f6; color: white; border: none; padding: 12px 14px; border-radius: 15px;
+            font-family: 'Nunito', sans-serif; font-weight: 800; font-size: clamp(13px, 3.6vw, 15px);
+            cursor: pointer; box-shadow: 0 5px 0 #1d4ed8; transition: transform 0.1s, box-shadow 0.1s;
+        }
+        .game-btn:active { transform: translateY(5px); box-shadow: 0 1px 0 #1d4ed8; }
+        .btn-exit { background: #ef4444; box-shadow: 0 5px 0 #b91c1c; }
+        .btn-exit:active { box-shadow: 0 1px 0 #b91c1c; }
+        .btn-help { background: #a855f7; box-shadow: 0 5px 0 #7e22ce; }
+        .btn-help:active { box-shadow: 0 1px 0 #7e22ce; }
+
+        /* Переключатель сложности в игре: активный уровень всегда видно */
+        .level-switch {
+            display: flex; gap: 5px; padding: 5px; width: 100%; box-sizing: border-box;
+            background: #fff3d6; border-radius: 16px;
+        }
+        .level-btn {
+            flex: 1 1 0; min-width: 0;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            border: none; background: transparent; cursor: pointer;
+            font-family: 'Nunito', sans-serif; font-weight: 800; font-size: clamp(12px, 3.5vw, 14px);
+            color: #b45309; padding: 9px clamp(6px, 2vw, 12px); border-radius: 12px;
+            transition: background 0.12s, color 0.12s, transform 0.12s, box-shadow 0.12s;
+        }
+        .level-btn .lb-face { font-size: clamp(14px, 4.2vw, 17px); line-height: 1; }
+        .level-btn.is-active {
+            background: #f59e0b; color: #fff;
+            box-shadow: 0 3px 0 #b45309; transform: translateY(-1px);
+        }
+        .level-btn:active { transform: translateY(1px); }
+
+        /* --- КОМПАКТНЫЙ РЕЖИМ ДЛЯ НЕВЫСОКИХ ЭКРАНОВ (ТЕЛЕФОНЫ) --- */
+        @media (max-height: 720px) {
+            :root { --frame-pad: 10px; --frame-bottom: 19px; --label-h: 15px; --label-w: 12px; }
+            #board { width: min(74vw, 340px); }
+            .game-shell { gap: 8px; padding-top: calc(6px + env(safe-area-inset-top)); padding-bottom: calc(8px + env(safe-area-inset-bottom)); }
+            .game-card { padding: 9px 12px; border-radius: 16px; }
+            .bob-card { padding: 6px 12px; }
+            .board-card { padding: 9px; }
+            .bob-avatar { width: clamp(52px, 15vw, 64px); height: clamp(52px, 15vw, 64px); }
+            .speech-bubble { padding: 8px 12px; }
+            #board-wrapper { border-width: 6px; border-radius: 15px; }
+            #files-labels { font-size: 12px; }
+            #ranks-labels { font-size: 11px; }
+            .level-banner { padding: 7px 12px; }
+            .win-counter { padding: 7px 12px; font-size: 13px; }
+            .level-btn { padding: 7px 8px; }
+            .controls-card { gap: 7px; }
+            .game-btn { padding: 10px 12px; box-shadow: 0 4px 0 #1d4ed8; }
+            .btn-exit { box-shadow: 0 4px 0 #b91c1c; }
+            .btn-help { box-shadow: 0 4px 0 #7e22ce; }
+        }
+        @media (max-height: 600px) {
+            #board { width: min(74vw, 340px); }
+            .bob-card { display: none; }        /* на совсем низких экранах прячем карточку Боба — диалог уходит в плашку */
         }
 
         /* --- МОДАЛКА ПОДСКАЗКИ --- */
@@ -124,34 +387,49 @@
             background: rgba(69, 26, 3, 0.92); backdrop-filter: blur(8px);
             z-index: 2000; display: flex; align-items: center; justify-content: center;
             opacity: 0; pointer-events: none; transition: opacity 0.3s;
+            padding: 12px; box-sizing: border-box;
         }
         .help-modal.show { opacity: 1; pointer-events: auto; }
         .help-content {
-            background: #fff; padding: 30px; border-radius: 30px;
-            border: 6px solid #fbbf24; box-shadow: 0 15px 0 rgba(0,0,0,0.2);
-            max-width: 90%; width: 380px; max-height: 80vh; overflow-y: auto;
+            background: #fffaf0; padding: clamp(18px, 5vw, 28px);
+            border-radius: 24px; border: none;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+            width: 100%; max-width: 380px; box-sizing: border-box;
+            max-height: calc(100vh - 24px);
+            max-height: calc(100dvh - 24px);
+            overflow-y: auto;
             animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .help-content h2 { color: #d97706; margin: 0 0 20px 0; text-align: center; font-size: 1.8rem; }
+        .help-content h2 { color: #d97706; margin: 0 0 20px 0; text-align: center; font-size: clamp(1.3rem, 5.5vw, 1.8rem); }
         .piece-row {
-            display: flex; align-items: center; gap: 15px; padding: 12px;
+            display: flex; align-items: center; gap: 12px; padding: 10px 12px;
             background: #fef3c7; border-radius: 15px; margin-bottom: 10px;
         }
         .piece-icon { width: 45px; height: 45px; flex-shrink: 0; }
-        .piece-info h3 { margin: 0; color: #92400e; font-size: 1.1rem; }
-        .piece-info p { margin: 5px 0 0 0; font-size: 0.9rem; color: #78350f; font-weight: 600; }
+        .piece-info h3 { margin: 0; color: #92400e; font-size: clamp(1rem, 3.8vw, 1.1rem); }
+        .piece-info p { margin: 5px 0 0 0; font-size: clamp(0.82rem, 3.2vw, 0.9rem); color: #78350f; font-weight: 600; }
         .close-help {
-            background: #ef4444; color: white; border: none; padding: 12px 30px;
-            border-radius: 50px; font-weight: 900; font-size: 16px; cursor: pointer;
-            box-shadow: 0 5px 0 #b91c1c; margin-top: 15px; display: block; margin-left: auto; margin-right: auto;
+            background: linear-gradient(180deg, #ffcb4d, #ffb800); color: #3c2414; border: none;
+            padding: 13px 34px; border-radius: 16px; font-weight: 900; font-size: 16px; cursor: pointer;
+            font-family: 'Nunito', sans-serif; letter-spacing: 0.5px;
+            box-shadow: 0 5px 0 #d69200; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;
+            transition: transform 0.1s, box-shadow 0.1s;
         }
-        .close-help:active { transform: translateY(5px); box-shadow: none; }
+        .close-help:active { transform: translateY(4px); box-shadow: 0 1px 0 #d69200; }
 
         /* ПОДСВЕТКА КЛЕТОК */
-        .highlight-dest { background: rgba(34, 197, 94, 0.6); border-radius: 50%; transform: scale(0.6); }
-        .highlight-capture { 
-            position: relative;
+        .highlight-dest { position: relative; }
+        .highlight-dest::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 32%; height: 32%;
+            background: rgba(34, 197, 94, 0.75);
+            border-radius: 50%;
+            pointer-events: none;
         }
+        .highlight-capture { position: relative; }
         .highlight-capture::before {
             content: '';
             position: absolute;
@@ -165,9 +443,11 @@
             box-sizing: border-box;
             pointer-events: none;
         }
+        /* важно: красим градиентом поверх родного цвета клетки,
+           иначе полупрозрачный фон «теряет» бежевый/коричневый цвет доски */
         .highlight-selected {
-            background-color: rgba(251, 191, 36, 0.6) !important;
-            box-shadow: inset 0 0 3px 3px #d97706;
+            background-image: linear-gradient(rgba(251, 191, 36, 0.65), rgba(251, 191, 36, 0.65)) !important;
+            box-shadow: inset 0 0 0 3px #d97706;
         }
 
     </style>
@@ -176,39 +456,120 @@
 
     <!-- ПРИВЕТСТВИЕ -->
     <div id="welcome-screen" class="overlay">
-        <div class="overlay-content">
-            <img src="../app-photos/games/bob-chess.png" class="bob-large-img" alt="Bob">
-            <h1>BeWords Chess</h1>
-            <p style="font-size: 1.1rem; color: #78350f; margin-bottom: 20px;">
-                Кот Боб вызывает тебя на дуэль!<br>Сможешь поставить ему мат?
-            </p>
-            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                <button class="btn-main" onclick="startGame('w')">⚪ За Белых</button>
-                <button class="btn-main btn-black" onclick="startGame('b')">⚫ За Черных</button>
+      <div class="welcome-shell">
+
+        <div class="top-bar">
+            <div class="win-counter" id="win-counter">🏆 0 побед</div>
+        </div>
+
+        <div class="welcome-body">
+            <div class="welcome-hero">
+                <div class="bob-badge">
+                    <img src="../app-photos/games/bob-chess.png" class="bob-large-img" alt="Кот Боб">
+                </div>
+                <h1>BeWords Chess</h1>
+                <p class="welcome-text">Кот Боб вызывает тебя на дуэль!<br>Сможешь поставить ему мат?</p>
+            </div>
+
+            <div class="welcome-main">
+                <div class="settings-stack">
+
+                    <section class="setting-card">
+                        <div class="setting-title">🎯 Сложность соперника</div>
+                        <div class="difficulty-row" id="welcome-levels" role="group" aria-label="Сложность соперника">
+                            <button type="button" class="diff-chip" data-level="easy" aria-pressed="false">
+                                <span class="emoji">😴</span>
+                                <span class="name">Легко</span>
+                                <span class="desc">Сонный Боб</span>
+                            </button>
+                            <button type="button" class="diff-chip is-active" data-level="medium" aria-pressed="true">
+                                <span class="emoji">🐾</span>
+                                <span class="name">Средне</span>
+                                <span class="desc">Игривый Боб</span>
+                            </button>
+                            <button type="button" class="diff-chip" data-level="hard" aria-pressed="false">
+                                <span class="emoji">😼</span>
+                                <span class="name">Сложно</span>
+                                <span class="desc">Злой Боб</span>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section class="setting-card">
+                        <div class="setting-title">♟️ Выбери сторону</div>
+                        <div class="side-row" id="welcome-sides" role="group" aria-label="Сторона">
+                            <button type="button" class="side-card white selected" data-side="w" aria-pressed="true">
+                                <span class="check-badge">✓</span>
+                                <img id="side-icon-w" class="side-icon" alt="Белый король">
+                                <span class="side-name">За белых</span>
+                                <span class="side-hint">Первый ход твой</span>
+                            </button>
+                            <button type="button" class="side-card black" data-side="b" aria-pressed="false">
+                                <span class="check-badge">✓</span>
+                                <img id="side-icon-b" class="side-icon" alt="Чёрный король">
+                                <span class="side-name">За чёрных</span>
+                                <span class="side-hint">Первым ходит Боб</span>
+                            </button>
+                        </div>
+                    </section>
+
+                </div>
+
+                <button type="button" class="play-btn" id="play-btn" onclick="playSelected()">Играть</button>
             </div>
         </div>
+
+      </div>
     </div>
 
     <!-- ИГРА -->
     <div id="game-container" class="hidden">
-        <div class="bob-area">
-            <div id="bob" class="bob-avatar"></div>
-            <div id="bubble" class="speech-bubble">Мяу! Я хожу.</div>
-        </div>
+        <div class="game-shell">
 
-        <div id="board-wrapper">
-            <div id="board"></div>
-        </div>
+            <div class="game-top">
+                <div id="level-banner" class="level-banner">
+                    <span class="lb-label">Соперник</span>
+                    <b id="level-banner-name">🐾 Игривый Боб · Средне</b>
+                </div>
+                <div class="win-counter" id="game-win-counter">🏆 0 побед</div>
+            </div>
 
-        <div class="controls">
-            <select id="difficulty">
-                <option value="1">Сонный Боб (Легко)</option>
-                <option value="5" selected>Игривый Боб (Средне)</option>
-                <option value="10">Злой Боб (Сложно)</option>
-            </select>
-            <button class="game-btn" onclick="resetGame()">Заново</button>
-            <button class="game-btn btn-help" onclick="showHelp()">❓ Фигуры</button>
-            <button class="game-btn btn-exit" onclick="location.reload()">Выход</button>
+            <section class="game-card bob-card">
+                <div class="bob-area">
+                    <div id="bob" class="bob-avatar"></div>
+                    <div id="bubble" class="speech-bubble">Мяу! Я хожу.</div>
+                </div>
+            </section>
+
+            <section class="game-card board-card">
+                <div id="board-wrapper">
+                    <div id="board"></div>
+                    <div id="files-labels" class="board-labels" aria-hidden="true"></div>
+                    <div id="ranks-labels" class="board-labels" aria-hidden="true"></div>
+                </div>
+            </section>
+
+            <section class="game-card controls-card">
+                <div class="setting-title">🎯 Сложность соперника</div>
+                <div class="level-switch" id="level-switch" role="group" aria-label="Сложность соперника">
+                    <button type="button" class="level-btn" data-level="easy" aria-pressed="false">
+                        <span class="lb-face">😴</span><span>Легко</span>
+                    </button>
+                    <button type="button" class="level-btn is-active" data-level="medium" aria-pressed="true">
+                        <span class="lb-face">🐾</span><span>Средне</span>
+                    </button>
+                    <button type="button" class="level-btn" data-level="hard" aria-pressed="false">
+                        <span class="lb-face">😼</span><span>Сложно</span>
+                    </button>
+                </div>
+
+                <div class="control-row">
+                    <button class="game-btn" onclick="resetGame()">Заново</button>
+                    <button class="game-btn btn-help" onclick="showHelp()">❓ Фигуры</button>
+                    <button class="game-btn btn-exit" onclick="location.reload()">Выход</button>
+                </div>
+            </section>
+
         </div>
     </div>
 
@@ -216,7 +577,7 @@
     <div id="help-modal" class="help-modal" onclick="hideHelp()">
         <div class="help-content" onclick="event.stopPropagation()">
             <h2>🎯 Шахматные фигуры</h2>
-            
+
             <div class="piece-row">
                 <img id="help-king" class="piece-icon" alt="Король">
                 <div class="piece-info">
@@ -224,7 +585,7 @@
                     <p>Главная фигура! Ходит на 1 клетку в любую сторону. Защищай его!</p>
                 </div>
             </div>
-            
+
             <div class="piece-row">
                 <img id="help-queen" class="piece-icon" alt="Ферзь">
                 <div class="piece-info">
@@ -232,7 +593,7 @@
                     <p>Самая сильная! Ходит как угодно далеко по прямой и диагонали.</p>
                 </div>
             </div>
-            
+
             <div class="piece-row">
                 <img id="help-rook" class="piece-icon" alt="Ладья">
                 <div class="piece-info">
@@ -240,7 +601,7 @@
                     <p>Ходит по прямой — вверх, вниз, влево, вправо. Без ограничений!</p>
                 </div>
             </div>
-            
+
             <div class="piece-row">
                 <img id="help-bishop" class="piece-icon" alt="Слон">
                 <div class="piece-info">
@@ -248,7 +609,7 @@
                     <p>Ходит только по диагонали. Один слон — по белым, другой — по чёрным.</p>
                 </div>
             </div>
-            
+
             <div class="piece-row">
                 <img id="help-knight" class="piece-icon" alt="Конь">
                 <div class="piece-info">
@@ -256,7 +617,7 @@
                     <p>Ходит буквой "Г" и может перепрыгивать через фигуры!</p>
                 </div>
             </div>
-            
+
             <div class="piece-row">
                 <img id="help-pawn" class="piece-icon" alt="Пешка">
                 <div class="piece-info">
@@ -264,7 +625,7 @@
                     <p>Ходит вперёд на 1 клетку (первый ход — можно на 2). Бьёт по диагонали.</p>
                 </div>
             </div>
-            
+
             <button class="close-help" onclick="hideHelp()">Понятно!</button>
         </div>
     </div>
@@ -275,7 +636,7 @@
             <h1 id="go-title">ПОБЕДА!</h1>
             <img id="go-img" src="" class="bob-large-img" style="margin: 10px auto;">
             <p id="go-message" style="font-size: 1.2rem; color: #555;">...</p>
-            <button class="btn-main" onclick="resetGame()">Еще раз</button>
+            <button class="btn-main" style="margin: 14px auto 0;" onclick="resetGame()">Еще раз</button>
         </div>
     </div>
 
@@ -291,43 +652,210 @@
 
         $('#bob').css('background-image', 'url(' + imgBobNormal + ')');
 
-        // 2. ГЕНЕРАТОР ФИГУР (КЛАССИЧЕСКИЙ СТИЛЬ STAUNTON)
+        // 2. ЗВУК ХОДА
+        var MOVE_SOUND_SRC = '../au/ui/tap.mp3';
+        var moveSound = null;
+
+        function initSound() {
+            try {
+                moveSound = new Audio(MOVE_SOUND_SRC);
+                moveSound.preload = 'auto';
+                moveSound.volume = 0.6;
+            } catch (e) { moveSound = null; }
+        }
+
+        // Звук ставим на клетку: клонируем, чтобы быстрые ходы не обрезали друг друга
+        function playMoveSound() {
+            if (!moveSound) return;
+            try {
+                var s = moveSound.cloneNode();
+                s.volume = moveSound.volume;
+                var p = s.play();
+                if (p && p.catch) p.catch(function () {});
+            } catch (e) {}
+        }
+
+        // iOS разрешает звук только после первого касания — «разблокируем» его на старте
+        function unlockSound() {
+            if (!moveSound) return;
+            try {
+                var s = moveSound.cloneNode();
+                s.volume = 0;
+                var p = s.play();
+                if (p && p.then) { p.then(function () { s.pause(); }).catch(function () {}); }
+            } catch (e) {}
+        }
+
+        initSound();
+
+        // 3. ГЕНЕРАТОР ФИГУР (МУЛЬТЯШНЫЙ STAUNTON, БЕЗ КРЕСТА НА КОРОЛЕ)
+        // Общая база-"плинт" у всех фигур
+        var P_BASE = ''
+            + '<rect x="12.8" y="29.4" width="19.4" height="3.6" rx="1.2"/>'
+            + '<rect x="9.6" y="32.6" width="25.8" height="3.6" rx="1.4"/>'
+            + '<rect x="8.4" y="35.8" width="28.2" height="4.2" rx="1.9"/>';
+
+        var P_SHAPES = {
+            // ПЕШКА: шарик + воротник + колокол
+            'P': '<circle cx="22.5" cy="11.6" r="5.3"/>'
+               + '<path d="M18.5 16.6 C18.5 18.4 17.3 19.4 17.3 20.8 L27.7 20.8 C27.7 19.4 26.5 18.4 26.5 16.6 Z"/>'
+               + '<path d="M17.3 20.8 C15.1 24.2 13.6 27 12.9 29.8 L32.1 29.8 C31.4 27 29.9 24.2 27.7 20.8 Z"/>',
+            // ЛАДЬЯ: зубцы башни
+            'R': '<path d="M14.8 29.9 L16.1 16.6 L28.9 16.6 L30.2 29.9 Z"/>'
+               + '<path d="M12.2 16.6 L12.2 9.4 L16.7 9.4 L16.7 13.1 L20.6 13.1 L20.6 9.4 L24.4 9.4 L24.4 13.1 L28.3 13.1 L28.3 9.4 L32.8 9.4 L32.8 16.6 Z"/>',
+            // КОНЬ: профиль с ушами, ухом и мордой
+            'N': '<path d="M12.1 29.9'
+               + ' C11.7 25.2 12.7 21.2 15.5 18.1'
+               + ' C16.7 16.6 17.1 14.6 17.3 12.4'
+               + ' C17.5 10.6 18.1 8.5 19.1 5.7'
+               + ' L21.1 9.3'
+               + ' C22.1 7.7 23.7 6.7 25.1 6.9'
+               + ' C26.7 7.3 27.7 8.5 28.3 10.3'
+               + ' C30.7 10.9 33.5 12.1 35.5 13.7'
+               + ' C37.1 15.1 37.3 16.7 35.9 17.9'
+               + ' C34.7 18.9 32.7 19.1 30.7 18.7'
+               + ' C31.5 20.5 31.7 22.7 31.5 24.9'
+               + ' C31.3 27.7 31.7 28.8 32.1 29.9 Z"/>',
+            // СЛОН: цельная митра-«яйцо», шарик сверху и косой надрез
+            'B': '<path d="M22.5 8.9 C27.4 11.6 30.2 15.5 30.2 19.3'
+               + ' C30.2 23.6 26.9 26.5 22.5 26.5'
+               + ' C18.1 26.5 14.8 23.6 14.8 19.3'
+               + ' C14.8 15.5 17.6 11.6 22.5 8.9 Z"/>'
+               + '<path d="M14.9 26.3 L30.1 26.3 L29.2 29.5 L15.8 29.5 Z"/>',
+            // ФЕРЗЬ: корона с шариками на зубцах
+            'Q': '<path d="M22.5 17.6 C27.6 17.6 30.6 21.4 31.4 25.6 C32 28.4 32.6 29.6 33.2 29.9 L11.8 29.9 C12.4 29.6 13 28.4 13.6 25.6 C14.4 21.4 17.4 17.6 22.5 17.6 Z"/>'
+               + '<path d="M12.6 17.6 L32.4 17.6 L31.8 13.9 L13.2 13.9 Z"/>'
+               + '<path d="M13.2 14 L8.6 7.8 L15.4 12 L16.8 5.4 L20.4 11.6 L22.5 3.8 L24.6 11.6 L28.2 5.4 L29.6 12 L36.4 7.8 L31.8 14 Z"/>',
+            // КОРОЛЬ: купол + корона с шариком (без креста)
+            'K': '<path d="M22.5 16.6 C28.2 16.6 31.4 20.8 32.2 25.2 C32.8 28.2 33.4 29.6 34 29.9 L11 29.9 C11.6 29.6 12.2 28.2 12.8 25.2 C13.6 20.8 16.8 16.6 22.5 16.6 Z"/>'
+               + '<path d="M12.6 17.6 L32.4 17.6 L31.8 14.4 L13.2 14.4 Z"/>'
+               + '<path d="M13.2 14.6 L10.4 8.4 L17.4 12.4 L22.5 6.2 L27.6 12.4 L34.6 8.4 L31.8 14.6 Z"/>'
+        };
+
+        // Дополнительные детали (рисуются цветом обводки, чтобы читалось и на белом, и на чёрном)
+        var P_EXTRAS = {
+            'P': '',
+            'R': '',
+            'N': '<circle cx="27.6" cy="13.4" r="1.35" fill="%A%" stroke="none"/>'
+               + '<circle cx="33.8" cy="16.6" r="1.05" fill="%A%" stroke="none"/>',
+            'B': '<circle cx="22.5" cy="7.0" r="2.6" fill="%F%" stroke="%S%" stroke-width="1.5"/>'
+               + '<line x1="25.6" y1="13.0" x2="19.6" y2="19.2" stroke="%A%" stroke-width="1.7" stroke-linecap="round"/>',
+            'Q': '<circle cx="8.6" cy="7.2" r="2.1" fill="%F%" stroke="%S%" stroke-width="1.4"/>'
+               + '<circle cx="16.8" cy="4.8" r="2.1" fill="%F%" stroke="%S%" stroke-width="1.4"/>'
+               + '<circle cx="22.5" cy="3.4" r="2.3" fill="%F%" stroke="%S%" stroke-width="1.4"/>'
+               + '<circle cx="28.2" cy="4.8" r="2.1" fill="%F%" stroke="%S%" stroke-width="1.4"/>'
+               + '<circle cx="36.4" cy="7.2" r="2.1" fill="%F%" stroke="%S%" stroke-width="1.4"/>',
+            'K': '<circle cx="22.5" cy="5.4" r="3.4" fill="%F%" stroke="%S%" stroke-width="1.5"/>'
+        };
+
+        // Иконки для карточек выбора стороны (те же фигуры, что и в игре)
+        function paintSideIcons() {
+            $('#side-icon-w').attr('src', getPieceTheme('wK')).attr('alt', 'Белый король');
+            $('#side-icon-b').attr('src', getPieceTheme('bK')).attr('alt', 'Чёрный король');
+        }
+
         function getPieceTheme(piece) {
             var color = piece.charAt(0);
             var type = piece.charAt(1);
-            
-            var fill = (color === 'w') ? '#ffffff' : '#451a03';
-            var stroke = (color === 'w') ? '#451a03' : '#ffffff';
-            var strokeWidth = 1.5;
 
-            var svgContent = {
-                'P': `<circle cx="22.5" cy="10" r="4"/><path d="M 15 28 C 15 25 17 22 18.5 20 C 16 18 15 15 15 12 C 15 12 17 11 22.5 11 C 28 11 30 12 30 12 C 30 15 29 18 26.5 20 C 28 22 30 25 30 28 L 15 28 Z"/><path d="M 12 32 L 33 32 L 33 29 L 12 29 Z"/><path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/>`,
-                'N': `<path d="M 37 36 L 8 36 L 8 33 L 10 33 C 10 28 14 24 14 24 L 14 20 C 14 17 16 13 18 11 C 16 9 15 8 15 6 C 15 6 17 5 20 6 C 21 4 23 4 25 5 L 25 7 C 25 9 24 11 22 13 C 24 14 26 15 27 18 C 27 18 30 16 32 17 C 32 19 30 21 27 21 L 27 24 C 31 26 35 30 35 33 L 37 33 Z"/><path d="M 18 23 C 17 23 15 24 14 26 L 18 26 C 19 25 19 24 18 23 Z"/>`,
-                'B': `<circle cx="22.5" cy="8" r="3"/><path d="M 17.5 26 L 27.5 26 L 33 32 L 12 32 Z"/><path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/><path d="M 22.5 11 C 22.5 11 30 14 30 24 C 30 26 28.5 26 28.5 26 L 16.5 26 C 16.5 26 15 26 15 24 C 15 14 22.5 11 22.5 11 Z"/><path d="M 22.5 14 L 22.5 22" style="stroke-width:2; stroke-linecap:round;"/>`,
-                'R': `<path d="M 9 39 L 36 39 L 36 36 L 9 36 Z"/><path d="M 12 36 L 12 32 L 33 32 L 33 36 Z"/><path d="M 14 32 L 14 17 L 31 17 L 31 32 Z"/><path d="M 11 17 L 11 12 L 16 12 L 16 8 L 20 8 L 20 12 L 25 12 L 25 8 L 29 8 L 29 12 L 34 12 L 34 17 Z"/>`,
-                'Q': `<circle cx="22.5" cy="8" r="3.5"/><path d="M 9 26 C 17.5 24.5 27 24.5 36 26 L 38 14 L 31 25 L 26 8 L 22.5 22 L 19 8 L 14 25 L 7 14 L 9 26 Z"/><path d="M 9 26 C 9 28 10 30 10 32 L 35 32 C 35 30 36 28 36 26 C 27 24.5 17.5 24.5 9 26 Z"/><path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/><circle cx="7" cy="14" r="2"/><circle cx="14" cy="8" r="2"/><circle cx="22.5" cy="6" r="2"/><circle cx="31" cy="8" r="2"/><circle cx="38" cy="14" r="2"/>`,
-                'K': `<circle cx="22.5" cy="8" r="4"/><path d="M 22.5 12 L 22.5 16"/><path d="M 17.5 16 L 27.5 16"/><path d="M 10 36 L 35 36 L 35 33 L 10 33 Z"/><path d="M 12 33 L 12 30 L 33 30 L 33 33 Z"/><path d="M 12 30 C 12 27 15 22 15 22 L 30 22 C 30 22 33 27 33 30 Z"/><path d="M 15 22 C 15 20 13 18 13 18 L 22.5 16 L 32 18 C 32 18 30 20 30 22 Z"/>`
-            };
+            var fill, stroke, accent;
+            if (color === 'w') {
+                fill = '#fffdf6'; stroke = '#451a03'; accent = '#451a03';
+            } else {
+                fill = '#3f2410'; stroke = '#fdf0d5'; accent = '#fdf0d5';
+            }
 
-            var svgString = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45">
-                    <g style="fill:${fill}; stroke:${stroke}; stroke-width:${strokeWidth}; stroke-linecap:round; stroke-linejoin:round;">
-                        ${svgContent[type]}
-                    </g>
-                </svg>
-            `;
-            
+            var body = P_SHAPES[type] + P_BASE;
+            var extra = P_EXTRAS[type].replace(/%A%/g, accent).replace(/%F%/g, fill).replace(/%S%/g, stroke);
+
+            var svgString = ''
+                + '<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45">'
+                + '<g fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'
+                + body
+                + '</g>'
+                + extra
+                + '</svg>';
+
             return 'data:image/svg+xml;base64,' + btoa(svgString);
         }
 
 
-        // 3. ЛОГИКА
+        paintSideIcons();
+
+        // 4. ЛОГИКА
         var board = null;
         var game = new Chess();
         var stockfish = null;
         var isEngineRunning = false;
         var selectedSquare = null;
         var playerColor = 'w';
+        var engineGen = 0;          // защита от "просроченных" ответов движка
+        var pendingGen = -1;
+        var engineWatchdog = null;
+        var moveStartedAt = 0;
+
+        // УРОВНИ СЛОЖНОСТИ
+        // depth   — на сколько полуходов думает движок
+        // skill   — «умение» Stockfish (0..20), реально ослабляет игру
+        // blunder — вероятность, что Боб зевнёт (сыграет слабый ход)
+        // think   — минимальное время "раздумий", чтобы ход не был мгновенным
+        var LEVELS = {
+            easy:   { depth: 2,  skill: 0,  blunder: 0.40, think: 700, name: 'Сонный Боб',   label: 'Легко',  face: '😴' },
+            medium: { depth: 6,  skill: 7,  blunder: 0.15, think: 450, name: 'Игривый Боб', label: 'Средне', face: '🐾' },
+            hard:   { depth: 10, skill: 18, blunder: 0.02, think: 250, name: 'Злой Боб',    label: 'Сложно', face: '😼' }
+        };
+        var currentLevelKey = 'medium';
+
+        function currentLevel() {
+            return LEVELS[currentLevelKey] || LEVELS.medium;
+        }
+
+        // Единая точка смены уровня: обновляет движок, все индикаторы и озвучивает смену
+        function setLevel(key, announce) {
+            if (!LEVELS[key]) key = 'medium';
+            currentLevelKey = key;
+            renderLevelUI();
+
+            if (stockfish) {
+                stockfish.postMessage("setoption name Skill Level value " + LEVELS[key].skill);
+            }
+
+            // Если Боб уже думает на старом уровне — останавливаем поиск и начинаем заново, уже по-новому
+            if (isEngineRunning && gen_is_fresh()) {
+                stockfish.postMessage("stop");
+                engineGen++;
+                isEngineRunning = false;
+                clearTimeout(engineWatchdog);
+                makeEngineMove();
+            }
+
+            if (announce) {
+                var lvl = LEVELS[key];
+                showBubble(lvl.face + ' Теперь я ' + lvl.name + '!', 2500);
+                $('#level-banner').addClass('level-banner-flash');
+                setTimeout(function () { $('#level-banner').removeClass('level-banner-flash'); }, 900);
+            }
+        }
+
+        function gen_is_fresh() {
+            return pendingGen === engineGen;
+        }
+
+        function renderLevelUI() {
+            var lvl = LEVELS[currentLevelKey];
+
+            $('#level-switch .level-btn').each(function () {
+                var on = $(this).attr('data-level') === currentLevelKey;
+                $(this).toggleClass('is-active', on).attr('aria-pressed', on ? 'true' : 'false');
+            });
+
+            $('#welcome-levels .diff-chip').each(function () {
+                var on = $(this).attr('data-level') === currentLevelKey;
+                $(this).toggleClass('is-active', on).attr('aria-pressed', on ? 'true' : 'false');
+            });
+
+            $('#level-banner-name').text(lvl.face + ' ' + lvl.name + ' · ' + lvl.label);
+        }
 
         var phrases = {
             start: ["Мур! Я готов!", "Посмотрим, кто кого.", "Не наступи мне на хвост!", "Я слежу за тобой..."],
@@ -338,28 +866,62 @@
             lose: ["Как ты это сделал?!", "Я поддавался...", "Ладно, ты крут.", "Требую реванш!"]
         };
 
+        function showBubble(text, ms) {
+            $('#bubble').text(text).addClass('show');
+            clearTimeout(showBubble._t);
+            showBubble._t = setTimeout(function () { $('#bubble').removeClass('show'); }, ms || 3000);
+        }
+
         function bobTalk(category) {
             var options = phrases[category];
             var text = options[Math.floor(Math.random() * options.length)];
-            $('#bubble').text(text).addClass('show');
-            setTimeout(() => $('#bubble').removeClass('show'), 3000);
-            if(category !== 'think' && category !== 'start') {
+            showBubble(text, 3000);
+            if (category !== 'think' && category !== 'start') {
                 $('#bob').addClass('bob-jump');
-                setTimeout(() => $('#bob').removeClass('bob-jump'), 500);
+                setTimeout(function () { $('#bob').removeClass('bob-jump'); }, 500);
             }
+        }
+
+        // Язык бота: на лёгком уровне Боб будет и «засыпать»
+        function bobThinkPhrase() {
+            if (currentLevelKey === 'easy') return ['З-з-з...', 'Ммм... рыбка?', 'А чей ход-то?', 'Считаю на лапах...'];
+            if (currentLevelKey === 'hard') return ['Считаю глубоко...', 'Вижу тебя насквозь!', 'Хм, интересно...'];
+            return phrases.think;
+        }
+
+        // Буквы и цифры: рисуем прямо на зелёной рамке доски и переворачиваем вместе с доской
+        function renderBoardLabels() {
+            var orientation = board ? board.orientation() : 'white';
+            var files = orientation === 'white'
+                ? ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+                : ['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'];
+            var ranks = orientation === 'white'
+                ? ['8', '7', '6', '5', '4', '3', '2', '1']
+                : ['1', '2', '3', '4', '5', '6', '7', '8'];
+
+            var filesHtml = '', ranksHtml = '';
+            for (var i = 0; i < 8; i++) {
+                filesHtml += '<span>' + files[i] + '</span>';
+                ranksHtml += '<span>' + ranks[i] + '</span>';
+            }
+            $('#files-labels').html(filesHtml);
+            $('#ranks-labels').html(ranksHtml);
         }
 
         function startGame(color) {
             playerColor = color || 'w';
+            unlockSound();                       // первым касанием открываем звук на iOS
             $('#welcome-screen').addClass('hidden');
             $('#game-container').removeClass('hidden');
             if (!stockfish) initEngine();
-            
-            setTimeout(() => { 
-                if(board) board.orientation(playerColor === 'w' ? 'white' : 'black');
-                $(window).resize(); 
+
+            setTimeout(function () {
+                if (board) board.orientation(playerColor === 'w' ? 'white' : 'black');
+                $(window).resize();
+                renderBoardLabels();
+                renderLevelUI();
                 bobTalk('start');
-                
+
                 if (playerColor === 'b') {
                     makeEngineMove();
                 }
@@ -370,66 +932,146 @@
             var title, msg, img;
             if (result === 'win') {
                 title = "ТЫ ВЫИГРАЛ!"; msg = "Боб повержен. Отличная тактика!"; img = imgBobLoss; bobTalk('lose');
+                addWin();
             } else if (result === 'lose') {
                 title = "БОБ ПОБЕДИЛ!"; msg = "Не расстраивайся, коты очень умные."; img = imgBobWin; bobTalk('win');
             } else {
                 title = "НИЧЬЯ"; msg = "Силы равны."; img = imgBobNormal;
             }
             $('#go-title').text(title); $('#go-message').text(msg); $('#go-img').attr('src', img);
-            setTimeout(() => $('#game-over-screen').removeClass('hidden'), 1000);
+            setTimeout(function () { $('#game-over-screen').removeClass('hidden'); }, 1000);
         }
 
         function resetGame() {
-            game.reset(); 
+            engineGen++;               // ответы старого движка больше не принимаем
+            pendingGen = -1;
+            clearTimeout(engineWatchdog);
+            game.reset();
             board.start();
             board.orientation(playerColor === 'w' ? 'white' : 'black');
-            
+            renderBoardLabels();
+
             $('#game-over-screen').addClass('hidden');
             $('#game-container').removeClass('hidden');
-            
-            if(stockfish) stockfish.postMessage("ucinewgame");
-            bobTalk('start');
+
             isEngineRunning = false;
             selectedSquare = null;
             removeHighlights();
+
+            showBubble(LEVELS[currentLevelKey].face + ' Новая партия!', 1800);
 
             if (playerColor === 'b') {
                 makeEngineMove();
             }
         }
 
+        // Ход Боба: глубина + Skill Level; на лёгких уровнях иногда «зеваем»
         function makeEngineMove() {
+            if (game.game_over()) return;
+
+            var lvl = currentLevel();
+            var blunder = Math.random() < lvl.blunder;
+            var weakMove = blunder ? pickBlunderMove() : null;
+
             isEngineRunning = true;
-            bobTalk('think');
+            var thinkPhrases = bobThinkPhrase();
+            showBubble(thinkPhrases[Math.floor(Math.random() * thinkPhrases.length)], 2500);
+
+            pendingGen = engineGen;
+            var gen = engineGen;
+            var startedAt = Date.now();
+            moveStartedAt = startedAt;
+
+            // страховка: если движок молчит дольше 8 секунд — Боб ходит сам
+            clearTimeout(engineWatchdog);
+            engineWatchdog = setTimeout(function () {
+                if (gen === engineGen && isEngineRunning) {
+                    var moves = game.moves({ verbose: true });
+                    if (moves.length) {
+                        var m = moves[Math.floor(Math.random() * moves.length)];
+                        finishEngineMove(gen, m.from, m.to, m.promotion, startedAt, lvl);
+                    } else {
+                        isEngineRunning = false;
+                    }
+                }
+            }, 8000);
+
+            if (weakMove) {
+                // Боб уже «зевнул» — ждём только для вида
+                setTimeout(function () {
+                    if (gen !== engineGen) return;
+                    clearTimeout(engineWatchdog);
+                    finishEngineMove(gen, weakMove.from, weakMove.to, weakMove.promotion, startedAt, lvl);
+                }, lvl.think);
+                return;
+            }
+
+            stockfish.postMessage("setoption name Skill Level value " + lvl.skill);
             stockfish.postMessage("position fen " + game.fen());
-            stockfish.postMessage("go depth " + $('#difficulty').val());
+            stockfish.postMessage("go depth " + lvl.depth);
+        }
+
+        // Выбор слабого (но легального) хода: без взятия и без превращения, случайный
+        function pickBlunderMove() {
+            var moves = game.moves({ verbose: true });
+            if (!moves.length) return null;
+            var quiet = moves.filter(function (m) { return !m.captured && !m.promotion; });
+            var pool = quiet.length ? quiet : moves;
+            return pool[Math.floor(Math.random() * pool.length)];
+        }
+
+        // Применяем ход движка (с небольшой задержкой, чтобы Боб не «щёлкал» мгновенно)
+        function finishEngineMove(gen, from, to, promotion, startedAt, lvl) {
+            var wait = Math.max(0, (lvl.think || 0) - (Date.now() - startedAt));
+            setTimeout(function () {
+                if (!isEngineRunning || gen !== engineGen) return;
+                var move = game.move({ from: from, to: to, promotion: promotion || 'q' });
+                if (move === null) { isEngineRunning = false; return; }
+                board.position(game.fen());
+                playMoveSound();                       // стук фигуры о клетку
+                isEngineRunning = false;
+
+                if (move.captured) bobTalk('capture');
+                else if (game.in_check()) bobTalk('check');
+
+                checkStatus();
+            }, wait);
         }
 
         function initEngine() {
-            var blobWorkerCode = `importScripts('https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.2/stockfish.js');`;
-            stockfish = new Worker(window.URL.createObjectURL(new Blob([blobWorkerCode], {type: "application/javascript"})));
-            stockfish.onmessage = function(event) {
-                if (event.data.indexOf("bestmove") > -1) {
-                    var match = event.data.match(/^bestmove ([a-h][1-8])([a-h][1-8])([qrbn])?/);
-                    if (match) {
-                        var move = game.move({ from: match[1], to: match[2], promotion: match[3] });
-                        board.position(game.fen());
-                        isEngineRunning = false;
-                        if (move.captured) bobTalk('capture');
-                        else if (game.in_check()) bobTalk('check');
-                        checkStatus();
-                    }
-                }
+            var blobWorkerCode = "importScripts('https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.2/stockfish.js');";
+            stockfish = new Worker(window.URL.createObjectURL(new Blob([blobWorkerCode], { type: "application/javascript" })));
+
+            stockfish.onmessage = function (event) {
+                var text = String(event.data);
+                if (text.indexOf("bestmove") === -1) return;
+                if (!isEngineRunning || pendingGen !== engineGen) return;   // ответ «прошлой» партии — игнорируем
+
+                clearTimeout(engineWatchdog);
+                var match = text.match(/bestmove\s+([a-h][1-8])([a-h][1-8])([qrbn])?/);
+                if (!match) { isEngineRunning = false; return; }
+
+                finishEngineMove(pendingGen, match[1], match[2], match[3], moveStartedAt, currentLevel());
             };
+
+            stockfish.onerror = function () {
+                isEngineRunning = false;
+            };
+
             stockfish.postMessage("uci");
-            
+            stockfish.postMessage("setoption name Skill Level value " + currentLevel().skill);
+            stockfish.postMessage("ucinewgame");
+
             board = Chessboard('board', {
-                draggable: false, 
+                draggable: false,
                 position: 'start',
+                showNotation: false,        // свои буквы/цифры рисуем на рамке доски, а не в клетках
                 pieceTheme: getPieceTheme
             });
 
-            $('#board').on('click', '.square-55d63', function() {
+            renderBoardLabels();
+
+            $('#board').on('click', '.square-55d63', function () {
                 var square = $(this).attr('data-square');
                 if (square) onSquareClick(square);
             });
@@ -475,21 +1117,24 @@
                 selectedSquare = null;
                 removeHighlights();
                 board.position(game.fen());
-                
+                playMoveSound();                       // стук фигуры о клетку
+
                 if (move.captured) bobTalk('capture');
                 else if (game.in_check()) bobTalk('check');
-                
+
                 if (checkStatus()) return;
-                
+
                 makeEngineMove();
             }
         }
 
         function checkStatus() {
             if (game.in_checkmate()) {
-                game.turn() === 'w' ? showGameOver('lose') : showGameOver('win');
+                $('#bob').removeClass('bob-jump');
+                // проиграл тот, чей сейчас ход — сравниваем с цветом игрока
+                game.turn() === playerColor ? showGameOver('lose') : showGameOver('win');
                 return true;
-            } 
+            }
             if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) {
                 showGameOver('draw');
                 return true;
@@ -510,18 +1155,85 @@
             if (moves.length === 0) return;
 
             for (var i = 0; i < moves.length; i++) {
-                var type = moves[i].flags.includes('c') || moves[i].flags.includes('e') ? 'highlight-capture' : 'highlight-dest';
+                var type = (moves[i].flags.indexOf('c') > -1 || moves[i].flags.indexOf('e') > -1) ? 'highlight-capture' : 'highlight-dest';
                 $('#board .square-' + moves[i].to).addClass(type);
             }
         }
 
-        function removeHighlights () { 
-            $('#board .square-55d63').removeClass('highlight-dest highlight-capture highlight-selected'); 
+        function removeHighlights() {
+            $('#board .square-55d63').removeClass('highlight-dest highlight-capture highlight-selected');
         }
-        
-        $(window).resize(function(){ if(board) board.resize(); });
 
-        // 4. МОДАЛКА ПОДСКАЗКИ
+        $(window).resize(function () { if (board) board.resize(); });
+
+        // 5. СТАРТОВЫЙ ЭКРАН: счётчик побед, выбор стороны, кнопка «Играть»
+
+        // Победы запоминаем между партиями
+        var WINS_KEY = 'bewords_chess_wins';
+
+        function readWins() {
+            try { return parseInt(localStorage.getItem(WINS_KEY), 10) || 0; } catch (e) { return 0; }
+        }
+        function writeWins(n) {
+            try { localStorage.setItem(WINS_KEY, String(n)); } catch (e) {}
+        }
+        function winsWord(n) {
+            var d = n % 10, dd = n % 100;
+            if (d === 1 && dd !== 11) return 'победа';
+            if (d >= 2 && d <= 4 && (dd < 12 || dd > 14)) return 'победы';
+            return 'побед';
+        }
+        var winsCount = readWins();
+
+        function renderWins(flash) {
+            var text = '🏆 ' + winsCount + ' ' + winsWord(winsCount);
+            $('#win-counter, #game-win-counter').text(text);
+            if (flash) {
+                $('#win-counter, #game-win-counter').addClass('win-counter-flash');
+                setTimeout(function () { $('#win-counter, #game-win-counter').removeClass('win-counter-flash'); }, 800);
+            }
+        }
+
+        function addWin() {
+            winsCount++;
+            writeWins(winsCount);
+            renderWins(true);
+        }
+
+        // Выбор стороны: сначала выбираем, потом жмём «Играть»
+        var selectedSide = 'w';
+
+        function selectSide(side) {
+            selectedSide = (side === 'b') ? 'b' : 'w';
+            $('#welcome-sides .side-card').each(function () {
+                var on = $(this).attr('data-side') === selectedSide;
+                $(this).toggleClass('selected', on).attr('aria-pressed', on ? 'true' : 'false');
+            });
+        }
+
+        function playSelected() {
+            startGame(selectedSide);
+        }
+
+        $('#welcome-sides').on('click', '.side-card', function () {
+            selectSide($(this).attr('data-side'));
+        });
+
+        renderWins(false);
+        selectSide('w');
+
+        // 6. ПЕРЕКЛЮЧАТЕЛИ СЛОЖНОСТИ (на старте и в игре)
+        $('#welcome-levels').on('click', '.diff-chip', function () {
+            setLevel($(this).attr('data-level'), false);
+        });
+
+        $('#level-switch').on('click', '.level-btn', function () {
+            setLevel($(this).attr('data-level'), true);
+        });
+
+        renderLevelUI();
+
+        // 7. МОДАЛКА ПОДСКАЗКИ
         function showHelp() {
             $('#help-king').attr('src', getPieceTheme('wK'));
             $('#help-queen').attr('src', getPieceTheme('wQ'));
@@ -531,7 +1243,7 @@
             $('#help-pawn').attr('src', getPieceTheme('wP'));
             $('#help-modal').addClass('show');
         }
-        
+
         function hideHelp() {
             $('#help-modal').removeClass('show');
         }

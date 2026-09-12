@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <title>Bob's Bubbles</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Bubble Shooter</title>
+    <link rel="stylesheet" href="../fonts/fontawesome/css/all.min.css">
     <style>
         /* ---------- ПЕРЕМЕННЫЕ ---------- */
         :root {
@@ -421,6 +421,509 @@
             display: inline-block;
         }
 
+
+        /* ---------- DARK NEON THEME ---------- */
+        :root {
+            --primary-color: #67e8f9;
+            --primary-dark: #0891b2;
+            --secondary-color: #facc15;
+            --accent-color: #fb7185;
+            --danger-color: #fb7185;
+            --warning-color: #fbbf24;
+            --success-color: #4ade80;
+            --info-color: #60a5fa;
+            --purple-color: #c084fc;
+
+            --bg-primary: #0b1022;
+            --bg-secondary: #050816;
+            --bg-tertiary: #182342;
+            --text-primary: #f5f7ff;
+            --text-secondary: #aeb9d7;
+            --text-muted: #7380a4;
+            --border-color: #293862;
+
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.28);
+            --shadow-md: 0 8px 22px rgba(0, 0, 0, 0.34);
+            --shadow-lg: 0 14px 38px rgba(0, 0, 0, 0.42);
+            --shadow-xl: 0 22px 70px rgba(0, 0, 0, 0.55);
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 50% 0%, rgba(40, 67, 135, 0.3), transparent 42%),
+                var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        #gameContainer {
+            background: var(--bg-primary);
+            box-shadow: var(--shadow-xl), 0 0 0 1px rgba(103, 232, 249, 0.08);
+        }
+
+        canvas {
+            background: #070b1d;
+        }
+
+        .screen {
+            background:
+                radial-gradient(circle at 50% 16%, rgba(53, 92, 179, 0.22), transparent 32%),
+                linear-gradient(180deg, rgba(8, 14, 37, 0.965), rgba(4, 7, 19, 0.985));
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .screen::before {
+            content: '';
+            position: absolute;
+            inset: 16px;
+            border: 1px solid rgba(103, 232, 249, 0.1);
+            border-radius: 28px;
+            pointer-events: none;
+        }
+
+        .game-title {
+            color: #f8fbff;
+            text-shadow: 0 0 28px rgba(103, 232, 249, 0.22);
+            letter-spacing: -1.5px;
+        }
+
+        .game-title.accent {
+            color: #fb7185;
+            text-shadow: 0 0 28px rgba(251, 113, 133, 0.28);
+        }
+
+        .stats-text {
+            color: var(--text-primary);
+        }
+
+        .stats-text i {
+            color: var(--secondary-color);
+            filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.5));
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #34d399, #16a34a);
+            box-shadow: 0 6px 0 #0f7838, 0 0 24px rgba(74, 222, 128, 0.18);
+        }
+
+        .play-btn:active {
+            box-shadow: 0 0 0 #0f7838;
+        }
+
+        .secondary-btn {
+            background: linear-gradient(135deg, #38bdf8, #2563eb) !important;
+            box-shadow: 0 6px 0 #17439b, 0 0 24px rgba(56, 189, 248, 0.17) !important;
+        }
+
+        .secondary-btn:active {
+            box-shadow: 0 0 0 #17439b !important;
+        }
+
+        .danger-btn {
+            background: linear-gradient(135deg, #fb7185, #e11d48) !important;
+            box-shadow: 0 6px 0 #9f1239, 0 0 24px rgba(251, 113, 133, 0.17) !important;
+        }
+
+        .danger-btn:active {
+            box-shadow: 0 0 0 #9f1239 !important;
+        }
+
+        #hud {
+            background: rgba(6, 11, 29, 0.86);
+            border-bottom: 1px solid rgba(103, 232, 249, 0.16);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        }
+
+        .hud-item {
+            background: linear-gradient(135deg, #0891b2, #2563eb);
+            box-shadow: 0 4px 14px rgba(8, 145, 178, 0.24);
+        }
+
+        .hud-item.level {
+            background: linear-gradient(135deg, #facc15, #f59e0b);
+            color: #17120a;
+            box-shadow: 0 4px 14px rgba(250, 204, 21, 0.2);
+        }
+
+        #pauseBtn {
+            background: #182342;
+            border: 1px solid #334574;
+            color: #e5ecff;
+            box-shadow: 0 3px 0 #0c132b, 0 0 16px rgba(103, 232, 249, 0.1);
+        }
+
+        #pauseBtn:active {
+            box-shadow: 0 0 0 #0c132b;
+        }
+
+        .game-cover-wrap {
+            position: relative;
+            width: min(240px, 55vw);
+            height: min(240px, 55vw);
+            margin-bottom: 20px;
+            transform: rotate(-2deg);
+            filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.42));
+        }
+
+        .game-cover-wrap .game-cover,
+        .game-cover-wrap .cover-fallback {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            border-radius: 22px;
+            border: 2px solid rgba(148, 163, 184, 0.46);
+            object-fit: cover;
+        }
+
+        .game-cover-wrap .game-cover {
+            display: block;
+            background: #111a37;
+        }
+
+        .cover-fallback {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #172554, #312e81);
+            color: #67e8f9;
+            font-size: 5rem;
+            box-shadow: inset 0 0 34px rgba(103, 232, 249, 0.12);
+        }
+
+        .subtitle,
+        .info-text {
+            color: var(--text-secondary);
+        }
+
+        .info-text i {
+            color: var(--secondary-color);
+        }
+
+        #nextBubbleUI {
+            background: rgba(12, 20, 47, 0.9);
+            border: 1px solid rgba(103, 232, 249, 0.28);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.34), 0 0 18px rgba(103, 232, 249, 0.07);
+        }
+
+        #nextBubbleLabel {
+            color: #91a0c5;
+        }
+
+        .level-badge {
+            background: linear-gradient(135deg, #0891b2, #2563eb);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        .star {
+            color: #243252;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.25));
+        }
+
+        .star.active {
+            color: var(--secondary-color);
+            filter: drop-shadow(0 0 15px rgba(250, 204, 21, 0.58));
+        }
+
+        .score-highlight {
+            background: linear-gradient(135deg, #facc15, #f97316);
+            color: #1c1306;
+            box-shadow: 0 6px 0 #a94e08, 0 0 26px rgba(249, 115, 22, 0.2);
+        }
+
+        #feedbackLayer {
+            position: absolute;
+            top: 82px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 0 18px;
+            pointer-events: none;
+            z-index: 18;
+        }
+
+        .floating-feedback {
+            display: grid;
+            justify-items: center;
+            gap: 2px;
+            min-width: 150px;
+            padding: 9px 18px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(30, 41, 86, 0.96), rgba(9, 17, 43, 0.96));
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.36), 0 0 22px rgba(103, 232, 249, 0.14);
+            color: #ffffff;
+            animation: feedbackFloat 1.35s cubic-bezier(0.2, 0.75, 0.25, 1) forwards;
+        }
+
+        .floating-feedback strong {
+            color: #fef08a;
+            font-size: 0.98rem;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            text-shadow: 0 0 12px rgba(250, 204, 21, 0.35);
+        }
+
+        .floating-feedback span {
+            color: #67e8f9;
+            font-size: 1.12rem;
+            font-weight: 900;
+        }
+
+        .floating-feedback small {
+            color: #c4b5fd;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes feedbackFloat {
+            0% { opacity: 0; transform: translateY(12px) scale(0.78); }
+            15% { opacity: 1; transform: translateY(0) scale(1.04); }
+            30% { transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-44px) scale(0.96); }
+        }
+
+        @media (max-width: 380px) {
+            .game-cover-wrap {
+                width: min(190px, 48vw);
+                height: min(190px, 48vw);
+                margin-bottom: 14px;
+            }
+
+            .game-title {
+                font-size: clamp(2.2rem, 13vw, 3rem);
+            }
+        }
+
+
+        /* ---------- SETTINGS / HAPTICS UI ---------- */
+        #settingsBtn {
+            position: absolute;
+            top: 13px;
+            right: 67px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #182342;
+            border: 1px solid #334574;
+            border-radius: var(--radius-sm);
+            color: #e5ecff;
+            font-size: 1.05rem;
+            cursor: pointer;
+            pointer-events: auto;
+            z-index: 25;
+            box-shadow: 0 3px 0 #0c132b, 0 0 16px rgba(103, 232, 249, 0.1);
+            transition: transform 0.1s, box-shadow 0.1s, color 0.2s;
+            font-family: inherit;
+        }
+
+        #settingsBtn:hover,
+        #settingsBtn:focus-visible {
+            color: #67e8f9;
+            outline: none;
+        }
+
+        #settingsBtn:active {
+            transform: translateY(3px);
+            box-shadow: 0 0 0 #0c132b;
+        }
+
+        .settings-menu-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            width: min(260px, 84vw);
+            padding: 12px 22px;
+            margin-top: 14px;
+            border: 1px solid rgba(103, 232, 249, 0.28);
+            border-radius: var(--radius-md);
+            background: rgba(20, 34, 73, 0.86);
+            color: #dbeafe;
+            box-shadow: 0 4px 0 #0c132b;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: 0.7px;
+            transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
+        }
+
+        .settings-menu-btn:hover,
+        .settings-menu-btn:focus-visible {
+            background: rgba(30, 58, 112, 0.96);
+            outline: none;
+        }
+
+        .settings-menu-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #0c132b;
+        }
+
+        .settings-card {
+            position: relative;
+            z-index: 1;
+            width: min(390px, calc(100% - 30px));
+            padding: 26px 22px 22px;
+            border: 1px solid rgba(103, 232, 249, 0.2);
+            border-radius: 26px;
+            background: linear-gradient(160deg, rgba(20, 34, 73, 0.96), rgba(7, 13, 34, 0.98));
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.44), 0 0 28px rgba(56, 189, 248, 0.08);
+        }
+
+        .settings-heading {
+            margin-bottom: 20px;
+            padding-right: 34px;
+            color: #f8fbff;
+            font-size: 2rem;
+            line-height: 1.1;
+        }
+
+        .settings-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            border-radius: 50%;
+            background: rgba(5, 12, 31, 0.58);
+            color: #cbd5e1;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .settings-close:hover,
+        .settings-close:focus-visible {
+            color: #67e8f9;
+            border-color: rgba(103, 232, 249, 0.55);
+            outline: none;
+        }
+
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            width: 100%;
+            min-height: 66px;
+            padding: 13px 2px;
+            border-top: 1px solid rgba(148, 163, 184, 0.13);
+            cursor: pointer;
+        }
+
+        .setting-row:last-of-type {
+            border-bottom: 1px solid rgba(148, 163, 184, 0.13);
+        }
+
+        .setting-label {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            min-width: 0;
+        }
+
+        .setting-label > i {
+            width: 22px;
+            color: #67e8f9;
+            font-size: 1.05rem;
+            text-align: center;
+        }
+
+        .setting-copy {
+            display: grid;
+            gap: 3px;
+        }
+
+        .setting-copy strong {
+            color: #f1f5ff;
+            font-size: 1rem;
+        }
+
+        .setting-copy small {
+            color: #91a0c5;
+            font-size: 0.76rem;
+            font-weight: 600;
+        }
+
+        .toggle-control {
+            position: relative;
+            flex: 0 0 auto;
+            width: 54px;
+            height: 30px;
+        }
+
+        .setting-toggle {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            border: 1px solid #3b4b76;
+            border-radius: 999px;
+            background: #111a37;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.26);
+            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .toggle-slider::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #94a3b8;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .setting-toggle:checked + .toggle-slider {
+            border-color: rgba(103, 232, 249, 0.7);
+            background: linear-gradient(135deg, #0891b2, #2563eb);
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.24);
+        }
+
+        .setting-toggle:checked + .toggle-slider::after {
+            transform: translateX(24px);
+            background: #f8fbff;
+        }
+
+        .setting-toggle:focus-visible + .toggle-slider {
+            outline: 2px solid #facc15;
+            outline-offset: 3px;
+        }
+
+        .settings-note {
+            margin-top: 16px;
+            color: #8090b5;
+            font-size: 0.78rem;
+            line-height: 1.45;
+            text-align: center;
+        }
+
+        .settings-card > .play-btn {
+            width: 100%;
+            margin-top: 18px;
+        }
+
     </style>
 </head>
 <body>
@@ -443,6 +946,10 @@
         <button id="pauseBtn" class="hidden">
             <i class="fas fa-pause"></i>
         </button>
+
+        <button id="settingsBtn" class="hidden" aria-label="Настройки" title="Настройки">
+            <i class="fas fa-gear"></i>
+        </button>
         
         <!-- Next Bubble Indicator -->
         <div id="nextBubbleUI" class="hidden">
@@ -450,14 +957,21 @@
             <canvas id="nextBubbleCanvas" width="40" height="40"></canvas>
         </div>
 
+        <!-- Floating game-style praise and score feedback -->
+        <div id="feedbackLayer" aria-live="polite" aria-atomic="true"></div>
+
         <!-- SCREENS -->
         
         <!-- Start Screen -->
         <div id="startScreen" class="screen">
-            <div class="cover-icon">
-                <i class="fas fa-circle-dot"></i>
+            <div class="game-cover-wrap">
+                <img class="game-cover" src="../app-photos/games/match3.jpg" alt="Bubble Shooter" decoding="async"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="cover-fallback" aria-hidden="true">
+                    <i class="fas fa-burst"></i>
+                </div>
             </div>
-            <h1 class="game-title">Bob's<br>Bubbles</h1>
+            <h1 class="game-title">Bubble<br>Shooter</h1>
             <p class="info-text">
                 <i class="fas fa-trophy"></i>
                 Лучший результат: <strong>Уровень <span id="maxLevelStart">1</span></strong>
@@ -465,6 +979,10 @@
             <button class="play-btn" id="startBtn">
                 <i class="fas fa-play"></i>
                 <span>ИГРАТЬ</span>
+            </button>
+            <button class="settings-menu-btn" id="menuSettingsBtn">
+                <i class="fas fa-gear"></i>
+                <span>НАСТРОЙКИ</span>
             </button>
         </div>
 
@@ -480,6 +998,52 @@
                 <i class="fas fa-home"></i>
                 <span>В МЕНЮ</span>
             </button>
+            <button class="settings-menu-btn" id="pauseSettingsBtn">
+                <i class="fas fa-gear"></i>
+                <span>НАСТРОЙКИ</span>
+            </button>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="settingsScreen" class="screen hidden">
+            <div class="settings-card">
+                <button class="settings-close" id="closeSettingsBtn" aria-label="Закрыть настройки">×</button>
+                <h2 class="settings-heading">Настройки</h2>
+
+                <label class="setting-row" for="soundToggle">
+                    <span class="setting-label">
+                        <i class="fas fa-volume-high"></i>
+                        <span class="setting-copy">
+                            <strong>Звуки</strong>
+                            <small id="soundStatus">Включены</small>
+                        </span>
+                    </span>
+                    <span class="toggle-control">
+                        <input class="setting-toggle" type="checkbox" id="soundToggle">
+                        <span class="toggle-slider"></span>
+                    </span>
+                </label>
+
+                <label class="setting-row" for="vibrationToggle">
+                    <span class="setting-label">
+                        <i class="fas fa-mobile-screen-button"></i>
+                        <span class="setting-copy">
+                            <strong>Вибрация</strong>
+                            <small id="vibrationStatus">Включена</small>
+                        </span>
+                    </span>
+                    <span class="toggle-control">
+                        <input class="setting-toggle" type="checkbox" id="vibrationToggle">
+                        <span class="toggle-slider"></span>
+                    </span>
+                </label>
+
+               
+                <button class="play-btn" id="doneSettingsBtn">
+                    <i class="fas fa-check"></i>
+                    <span>ГОТОВО</span>
+                </button>
+            </div>
         </div>
 
         <!-- Level Up Screen -->
@@ -533,6 +1097,93 @@
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
 
+        // The asset lives next to the app's shared audio folder. A pool lets several
+        // bubbles pop at once; playbackRate gives a light arcade-style pitch variation.
+        const POP_SOUND_URL = '../au/ui/pop_ballon.mp3';
+        const popAudioPool = [];
+        const activeOscillators = new Set();
+        let popAudioCursor = 0;
+        let popAudioUnavailable = false;
+
+        function trackOscillator(oscillator) {
+            activeOscillators.add(oscillator);
+            oscillator.addEventListener('ended', () => activeOscillators.delete(oscillator), { once: true });
+        }
+
+        function stopAllSound() {
+            popAudioPool.forEach(audio => {
+                try {
+                    audio.pause();
+                    audio.currentTime = 0;
+                } catch(e) {}
+            });
+            activeOscillators.forEach(oscillator => {
+                try { oscillator.stop(); } catch(e) {}
+            });
+            activeOscillators.clear();
+        }
+
+        function initPopAudio() {
+            if (popAudioPool.length) return;
+            for (let i = 0; i < 8; i++) {
+                const audio = new Audio(POP_SOUND_URL);
+                audio.preload = 'auto';
+                audio.volume = 0.72;
+                audio.preservesPitch = false;
+                audio.mozPreservesPitch = false;
+                audio.webkitPreservesPitch = false;
+                audio.addEventListener('error', () => { popAudioUnavailable = true; }, { once: true });
+                popAudioPool.push(audio);
+            }
+        }
+
+        function playSyntheticPop(pitch = 1) {
+            if (!soundEnabled || !audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                const now = audioCtx.currentTime;
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800 * pitch, now);
+                osc.frequency.exponentialRampToValueAtTime(100 * pitch, now + 0.15);
+                gainNode.gain.setValueAtTime(0.18, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                trackOscillator(osc);
+                osc.start(now);
+                osc.stop(now + 0.15);
+            } catch(e) {}
+        }
+
+        function playBalloonPop(pitch = 1, volume = 0.72) {
+            if (!soundEnabled) return;
+            initPopAudio();
+            if (popAudioUnavailable || !popAudioPool.length) {
+                playSyntheticPop(pitch);
+                return;
+            }
+
+            const audio = popAudioPool[popAudioCursor++ % popAudioPool.length];
+            audio.currentTime = 0;
+            audio.playbackRate = pitch;
+            audio.volume = volume;
+            const promise = audio.play();
+            if (promise && promise.catch) {
+                promise.catch(() => playSyntheticPop(pitch));
+            }
+        }
+
+        function playPopBurst(count = 1) {
+            if (!soundEnabled || count <= 0) return;
+            const voices = Math.min(6, Math.max(1, Math.ceil(count / 4)));
+            for (let i = 0; i < voices; i++) {
+                const spread = voices === 1 ? 0 : i / (voices - 1);
+                const pitch = 0.86 + spread * 0.24 + (Math.random() - 0.5) * 0.05;
+                window.setTimeout(() => playBalloonPop(pitch, Math.max(0.5, 0.76 - i * 0.04)), i * 34);
+            }
+        }
+
         function initAudio() {
             if (!audioCtx) {
                 try {
@@ -545,7 +1196,7 @@
         }
 
         function playSound(type) {
-            if (!audioCtx) return;
+            if (!soundEnabled || !audioCtx) return;
             try {
                 const osc = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
@@ -561,21 +1212,17 @@
                     osc.frequency.exponentialRampToValueAtTime(900, now + 0.1);
                     gainNode.gain.setValueAtTime(0.2, now);
                     gainNode.gain.linearRampToValueAtTime(0, now + 0.1);
+                    trackOscillator(osc);
                     osc.start(now);
                     osc.stop(now + 0.1);
                 } else if (type === 'pop') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(800, now);
-                    osc.frequency.exponentialRampToValueAtTime(100, now + 0.15);
-                    gainNode.gain.setValueAtTime(0.2, now);
-                    gainNode.gain.linearRampToValueAtTime(0, now + 0.15);
-                    osc.start(now);
-                    osc.stop(now + 0.15);
+                    playSyntheticPop();
                 } else if (type === 'bounce') {
                     osc.type = 'triangle';
                     osc.frequency.setValueAtTime(300, now);
                     gainNode.gain.setValueAtTime(0.1, now);
                     gainNode.gain.linearRampToValueAtTime(0, now + 0.05);
+                    trackOscillator(osc);
                     osc.start(now);
                     osc.stop(now + 0.05);
                 } else if (type === 'win') {
@@ -587,6 +1234,7 @@
                         o.frequency.value = f;
                         g.gain.setValueAtTime(0.1, now + i*0.1);
                         g.gain.exponentialRampToValueAtTime(0.001, now + i*0.1 + 0.5);
+                        trackOscillator(o);
                         o.start(now + i*0.1);
                         o.stop(now + i*0.1 + 0.6);
                     });
@@ -607,11 +1255,18 @@
             start: document.getElementById('startScreen'),
             pause: document.getElementById('pauseScreen'),
             levelUp: document.getElementById('levelUpScreen'),
-            gameOver: document.getElementById('gameOverScreen')
+            gameOver: document.getElementById('gameOverScreen'),
+            settings: document.getElementById('settingsScreen')
         };
         const hud = document.getElementById('hud');
         const nextBubbleUI = document.getElementById('nextBubbleUI');
+        const feedbackLayer = document.getElementById('feedbackLayer');
         const pauseBtn = document.getElementById('pauseBtn');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const soundToggle = document.getElementById('soundToggle');
+        const vibrationToggle = document.getElementById('vibrationToggle');
+        const soundStatus = document.getElementById('soundStatus');
+        const vibrationStatus = document.getElementById('vibrationStatus');
         
         let GRID_COLS = 8;
         let RADIUS = 0;
@@ -635,7 +1290,11 @@
         let nextBubble = null;
         let bullet = null;
         let lastFiredColor = -1;
+        let soundEnabled = localStorage.getItem('bubbleShooterSound') !== 'off';
+        let vibrationEnabled = localStorage.getItem('bubbleShooterVibration') !== 'off';
+        let settingsReturnState = 'start';
         let score = 0;
+        let comboStreak = 0;
         let level = 1;
         let maxLevel = parseInt(localStorage.getItem('bobBubblesMaxLevel')) || 1;
         let gameState = 'start';
@@ -648,13 +1307,83 @@
         
         document.getElementById('maxLevelStart').textContent = maxLevel;
 
+        function syncSettingsUI() {
+            soundToggle.checked = soundEnabled;
+            vibrationToggle.checked = vibrationEnabled;
+            soundStatus.textContent = soundEnabled ? 'Включены' : 'Выключены';
+            vibrationStatus.textContent = vibrationEnabled ? 'Включена' : 'Выключена';
+        }
+
+        function setSoundEnabled(enabled) {
+            soundEnabled = Boolean(enabled);
+            localStorage.setItem('bubbleShooterSound', soundEnabled ? 'on' : 'off');
+            if (!soundEnabled) {
+                stopAllSound();
+            } else {
+                initAudio();
+                initPopAudio();
+            }
+            syncSettingsUI();
+        }
+
+        function setVibrationEnabled(enabled) {
+            vibrationEnabled = Boolean(enabled);
+            localStorage.setItem('bubbleShooterVibration', vibrationEnabled ? 'on' : 'off');
+            syncSettingsUI();
+        }
+
+        async function triggerPopVibration(count = 1) {
+            if (!vibrationEnabled) return;
+
+            const haptics = window.Capacitor && window.Capacitor.Plugins
+                ? window.Capacitor.Plugins.Haptics
+                : null;
+            const style = count >= 8 ? 'HEAVY' : count >= 4 ? 'MEDIUM' : 'LIGHT';
+
+            try {
+                if (haptics && typeof haptics.impact === 'function') {
+                    await haptics.impact({ style });
+                    return;
+                }
+                if (haptics && typeof haptics.vibrate === 'function') {
+                    await haptics.vibrate({ duration: count >= 8 ? 38 : count >= 4 ? 25 : 14 });
+                    return;
+                }
+            } catch(e) {}
+
+            // Browser fallback; Capacitor Haptics is used first in the mobile build.
+            if (navigator.vibrate) {
+                navigator.vibrate(count >= 8 ? [18, 10, 30] : count >= 4 ? [13, 8, 20] : 12);
+            }
+        }
+
+        function openSettings() {
+            settingsReturnState = ['playing', 'paused', 'start'].includes(gameState) ? gameState : 'start';
+            gameState = 'settings';
+            syncSettingsUI();
+            toggleScreens('settings');
+        }
+
+        function closeSettings() {
+            if (settingsReturnState === 'playing') {
+                gameState = 'playing';
+                toggleScreens('hud');
+            } else if (settingsReturnState === 'paused') {
+                gameState = 'paused';
+                toggleScreens('pause');
+            } else {
+                gameState = 'start';
+                toggleScreens('start');
+            }
+        }
+
         function resize() {
             const rect = container.getBoundingClientRect();
             const dpr = window.devicePixelRatio || 1;
             
             canvas.width = rect.width * dpr;
             canvas.height = rect.height * dpr;
-            ctx.scale(dpr, dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             
             if (rect.width > 600) GRID_COLS = 12;
             else GRID_COLS = 8;
@@ -675,7 +1404,7 @@
             
             nextCanvas.width = 40 * dpr;
             nextCanvas.height = 40 * dpr;
-            nextCtx.scale(dpr, dpr);
+            nextCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
             drawNextBubble();
         }
         window.addEventListener('resize', resize);
@@ -720,15 +1449,24 @@
                 grad.addColorStop(0.3, color.start);
                 grad.addColorStop(1, color.end);
                 
+                context.save();
+                context.shadowColor = color.glow;
+                context.shadowBlur = 13 * this.scale * scaleOverride;
                 context.fillStyle = grad;
                 context.beginPath();
                 context.arc(this.x, this.y, drawSize, 0, Math.PI*2);
                 context.fill();
-                
-                context.fillStyle = 'rgba(255,255,255,0.4)';
+
+                context.shadowBlur = 0;
+                context.strokeStyle = 'rgba(255,255,255,0.22)';
+                context.lineWidth = Math.max(1, drawSize * 0.045);
+                context.stroke();
+
+                context.fillStyle = 'rgba(255,255,255,0.46)';
                 context.beginPath();
                 context.arc(this.x - drawSize*0.25, this.y - drawSize*0.25, drawSize*0.25, 0, Math.PI*2);
                 context.fill();
+                context.restore();
             }
         }
 
@@ -1015,15 +1753,23 @@
             
             const matches = findMatches(newB);
             if (matches.length >= 3) {
-                playSound('pop');
                 removeBubbles(matches);
-                dropFloating();
-                
-                score += matches.length * 10 + (matches.length - 3) * 20;
+                const dropped = dropFloating();
+                const matchPoints = matches.length * 10 + (matches.length - 3) * 20;
+                const dropPoints = dropped * 50;
+
+                comboStreak++;
+                const comboBonus = comboStreak > 1 ? comboStreak * 25 : 0;
+                const totalEarned = matchPoints + dropPoints + comboBonus;
+                score += totalEarned;
                 scoreVal.textContent = score;
-                
+
+                playPopBurst(matches.length + dropped);
+                triggerPopVibration(matches.length + dropped);
+                showFeedback(getPraiseText(matches.length, dropped, comboStreak), totalEarned, comboStreak);
                 checkWin();
             } else {
+                comboStreak = 0;
                 shotsFired++;
                 if (level > 1 && shotsFired >= shotsUntilRow) {
                     addRow();
@@ -1122,11 +1868,24 @@
                     }
                 }
             }
-            if(dropped > 0) {
-                score += dropped * 50;
-                scoreVal.textContent = score;
-                checkWin();
-            }
+            return dropped;
+        }
+
+        function getPraiseText(matches, dropped, combo) {
+            if (dropped >= 8) return 'НЕВЕРОЯТНО!';
+            if (dropped >= 3) return 'МЕГА КОМБО!';
+            if (combo >= 3) return `КОМБО x${combo}!`;
+            if (matches >= 6) return 'СУПЕР!';
+            if (matches >= 4) return 'ОТЛИЧНО!';
+            return 'МОЛОДЕЦ!';
+        }
+
+        function showFeedback(message, points, combo = 1) {
+            const feedback = document.createElement('div');
+            feedback.className = 'floating-feedback';
+            feedback.innerHTML = `<strong>${message}</strong><span>+${points}</span>${combo > 1 ? `<small>Серия x${combo}</small>` : ''}`;
+            feedbackLayer.appendChild(feedback);
+            window.setTimeout(() => feedback.remove(), 1400);
         }
 
         function addRow() {
@@ -1259,11 +2018,18 @@
         function draw() {
             const rect = getCanvasRect();
             
-            // Светлый фон canvas
+            // Глубокий фон canvas подчёркивает свечение шаров.
             const bgGrad = ctx.createLinearGradient(0, 0, 0, rect.height);
-            bgGrad.addColorStop(0, '#f0f9ff');
-            bgGrad.addColorStop(1, '#e0f2fe');
+            bgGrad.addColorStop(0, '#121d42');
+            bgGrad.addColorStop(0.55, '#0a1230');
+            bgGrad.addColorStop(1, '#050817');
             ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, rect.width, rect.height);
+
+            const ambientGlow = ctx.createRadialGradient(rect.width * 0.5, rect.height * 0.2, 10, rect.width * 0.5, rect.height * 0.2, rect.width * 0.85);
+            ambientGlow.addColorStop(0, 'rgba(56, 189, 248, 0.12)');
+            ambientGlow.addColorStop(1, 'rgba(56, 189, 248, 0)');
+            ctx.fillStyle = ambientGlow;
             ctx.fillRect(0, 0, rect.width, rect.height);
             
             // Траектория прицеливания
@@ -1282,7 +2048,7 @@
                     ctx.lineCap = 'round';
                     ctx.lineJoin = 'round';
                     ctx.lineWidth = 3;
-                    ctx.strokeStyle = 'rgba(14, 165, 233, 0.4)';
+                    ctx.strokeStyle = 'rgba(103, 232, 249, 0.58)';
                     ctx.setLineDash([10, 15]);
                     ctx.stroke();
                     ctx.setLineDash([]);
@@ -1290,7 +2056,7 @@
                     const end = path[path.length-1];
                     ctx.beginPath();
                     ctx.arc(end.x, end.y, 6, 0, Math.PI*2);
-                    ctx.fillStyle = 'rgba(14, 165, 233, 0.5)';
+                    ctx.fillStyle = 'rgba(103, 232, 249, 0.72)';
                     ctx.fill();
                 }
             }
@@ -1318,24 +2084,27 @@
                 currentBubble.draw(ctx, 1.0);
                 
                 // Счётчик выстрелов
-                ctx.fillStyle = "rgba(60, 60, 60, 0.6)";
+                ctx.fillStyle = "rgba(229, 238, 255, 0.78)";
                 ctx.font = "bold 12px sans-serif";
+                ctx.shadowColor = "rgba(103, 232, 249, 0.45)";
+                ctx.shadowBlur = 8;
                 ctx.textAlign = "center";
                 ctx.fillText(`${shotsUntilRow - shotsFired}`, rect.width/2, rect.height - 25);
+                ctx.shadowBlur = 0;
             }
             
             const limitY = rect.height - 100;
             
             const dangerGrad = ctx.createLinearGradient(0, limitY, 0, rect.height);
-            dangerGrad.addColorStop(0, 'rgba(255, 75, 75, 0.05)');
-            dangerGrad.addColorStop(1, 'rgba(255, 75, 75, 0.15)');
+            dangerGrad.addColorStop(0, 'rgba(251, 113, 133, 0.07)');
+            dangerGrad.addColorStop(1, 'rgba(251, 113, 133, 0.2)');
             ctx.fillStyle = dangerGrad;
             ctx.fillRect(0, limitY, rect.width, rect.height - limitY);
 
             ctx.beginPath();
             ctx.moveTo(0, limitY);
             ctx.lineTo(rect.width, limitY);
-            ctx.strokeStyle = 'rgba(255, 75, 75, 0.4)';
+            ctx.strokeStyle = 'rgba(251, 113, 133, 0.62)';
             ctx.lineWidth = 2;
             ctx.setLineDash([15, 15]);
             ctx.stroke();
@@ -1352,11 +2121,13 @@
             for(let k in screens) screens[k].classList.add('hidden');
             hud.classList.add('hidden');
             pauseBtn.classList.add('hidden');
+            settingsBtn.classList.add('hidden');
             nextBubbleUI.classList.add('hidden');
             
             if(activeId === 'hud') {
                 hud.classList.remove('hidden');
                 pauseBtn.classList.remove('hidden');
+                settingsBtn.classList.remove('hidden');
                 nextBubbleUI.classList.remove('hidden');
             } else if (screens[activeId]) {
                 screens[activeId].classList.remove('hidden');
@@ -1428,6 +2199,7 @@
 
         document.getElementById('startBtn').addEventListener('click', () => {
             initAudio();
+            initPopAudio();
             const savedLevel = parseInt(localStorage.getItem('bobBubblesCurrentLevel')) || 1;
             initLevel(savedLevel);
             score = 0; scoreVal.textContent = 0;
@@ -1443,6 +2215,15 @@
             gameState = 'paused';
             toggleScreens('pause');
         });
+
+        settingsBtn.addEventListener('click', openSettings);
+        document.getElementById('menuSettingsBtn').addEventListener('click', openSettings);
+        document.getElementById('pauseSettingsBtn').addEventListener('click', openSettings);
+        document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings);
+        document.getElementById('doneSettingsBtn').addEventListener('click', closeSettings);
+        soundToggle.addEventListener('change', event => setSoundEnabled(event.target.checked));
+        vibrationToggle.addEventListener('change', event => setVibrationEnabled(event.target.checked));
+        syncSettingsUI();
         
         document.getElementById('resumeBtn').addEventListener('click', () => {
             gameState = 'playing';
@@ -1483,5 +2264,5 @@
         loop();
 
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a39f5dc65ce2ef0f',t:'MTc4OTIyMDg3MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

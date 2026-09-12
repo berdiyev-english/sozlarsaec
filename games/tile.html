@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>BEWORDS TILE</title>
-    
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../styles.css">
+    <!-- Font Awesome (локальный) -->
+    <link rel="stylesheet" href="../fonts/fontawesome/css/all.min.css">
 
     <style>
         :root {
@@ -48,7 +50,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-family: 'Fredoka', sans-serif;
+            font-family: 'Nunito', sans-serif;
             overflow: hidden;
             position: fixed;
             width: 100%;
@@ -56,6 +58,11 @@
             left: 0;
             touch-action: none;
         }
+
+        /* иконки FA в кнопках */
+        button i, .modal-link i, .label i, p i, .premium-subtitle i { margin-right: 8px; }
+        .btn-icon i { margin: 0; }
+        i[data-fallback] { font-style: normal; }
 
         /* ========== MENU ========== */
         #start-screen {
@@ -77,7 +84,7 @@
         #start-screen.hidden { opacity: 0; pointer-events: none; transform: scale(1.1); }
 
         .premium-title {
-            font-family: 'Fredoka', sans-serif;
+            font-family: 'Nunito', sans-serif;
             font-weight: 700;
             font-size: clamp(3.5rem, 12vw, 5rem);
             color: #ffeaa7;
@@ -91,10 +98,10 @@
         }
         
         .premium-subtitle {
-            font-family: 'Fredoka', sans-serif;
+            font-family: 'Nunito', sans-serif;
             font-size: 1.2rem;
             color: #fff;
-            margin-bottom: 40px;
+            margin-bottom: 34px;
             font-weight: 600;
             text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
             background: #ff7675;
@@ -105,11 +112,29 @@
             border: 2px solid var(--accent-shadow);
         }
 
+        /* декоративные фрукты на меню */
+        .menu-fruits {
+            display: flex; gap: 10px; margin-bottom: 26px;
+            filter: drop-shadow(3px 4px 0 rgba(0,0,0,0.18));
+        }
+        .menu-fruits svg {
+            width: clamp(38px, 11vw, 52px); height: clamp(38px, 11vw, 52px);
+            animation: floaty 3s ease-in-out infinite;
+        }
+        .menu-fruits svg:nth-child(2) { animation-delay: .4s; }
+        .menu-fruits svg:nth-child(3) { animation-delay: .8s; }
+        .menu-fruits svg:nth-child(4) { animation-delay: 1.2s; }
+        .menu-fruits svg:nth-child(5) { animation-delay: 1.6s; }
+        @keyframes floaty {
+            0%,100% { transform: translateY(0) rotate(-4deg); }
+            50% { transform: translateY(-9px) rotate(5deg); }
+        }
+
         .stats-box {
             background: #fff;
             border-radius: 20px;
-            padding: 20px 40px;
-            margin-bottom: 30px;
+            padding: 20px 30px;
+            margin-bottom: 28px;
             text-align: center;
             border: 4px solid var(--accent-shadow);
             box-shadow: 8px 8px 0px rgba(0,0,0,0.15);
@@ -117,25 +142,27 @@
             max-width: 320px;
         }
         .stats-box .label {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 0.9rem;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.8rem;
             color: #636e72;
             text-transform: uppercase;
             font-weight: 700;
             margin-bottom: 5px;
         }
+        .stats-box .label i { color: #0984e3; }
         .stats-box .value {
-            font-family: 'Fredoka', sans-serif;
+            font-family: 'Nunito', sans-serif;
             font-size: 2rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: var(--text-dark, #2d3436);
         }
         .stats-row { display: flex; justify-content: space-around; width: 100%; }
+        .stats-row > div { flex: 1; }
 
         .btn-premium {
             background: #00b894;
             color: #fff;
-            font-family: 'Fredoka', sans-serif;
+            font-family: 'Nunito', sans-serif;
             font-size: 1.2rem;
             font-weight: 700;
             padding: 15px 40px;
@@ -155,7 +182,7 @@
         .btn-secondary {
             background: #fab1a0;
             color: var(--accent-shadow);
-            font-family: 'Fredoka', sans-serif;
+            font-family: 'Nunito', sans-serif;
             font-size: 1rem;
             font-weight: 700;
             padding: 12px 30px;
@@ -182,7 +209,7 @@
         .btn-icon {
             background: #fff; color: #333;
             width: 42px; height: 42px;
-            border-radius: 10px; font-size: 1.3rem;
+            border-radius: 10px; font-size: 1.15rem;
             border: 2px solid #333; box-shadow: 3px 3px 0 #333;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
@@ -191,7 +218,7 @@
         .btn-icon:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #333; }
 
         .game-logo {
-            font-family: 'Fredoka', sans-serif; font-size: 1.8rem; 
+            font-family: 'Nunito', sans-serif; font-size: 1.8rem; 
             color: #fff; font-weight: 700;
             -webkit-text-stroke: 1.5px #333; text-shadow: 3px 3px 0 #333;
         }
@@ -206,7 +233,10 @@
         #score-display, #level-display {
             background: #fff; padding: 4px 12px; border-radius: 20px;
             border: 2px solid #333; box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+            display: flex; align-items: center; gap: 7px; font-size: 1rem;
         }
+        #level-display i { color: #6c5ce7; }
+        #score-display i { color: #fdcb6e; -webkit-text-stroke: 1px #e0a800; }
 
         /* ========== BOARD ========== */
         #game-board {
@@ -218,7 +248,8 @@
 
         .tile {
             width: var(--tile-w); height: var(--tile-h);
-            background: #fff; border-radius: 12px;
+            background: linear-gradient(180deg, #ffffff 45%, var(--tint, #ffffff) 100%);
+            border-radius: 12px;
             position: absolute;
             display: flex; justify-content: center; align-items: center;
             font-size: clamp(22px, 7vw, 30px);
@@ -233,11 +264,42 @@
             transform-origin: center center;
             -webkit-touch-callout: none;
             touch-action: manipulation;
+            overflow: hidden;
+        }
+        /* блик сверху плитки */
+        .tile::after {
+            content: ''; position: absolute; left: 0; top: 0; right: 0; height: 45%;
+            background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,0));
+            pointer-events: none;
+        }
+        .tile .art {
+            width: 82%; height: 82%; display: block; position: relative; z-index: 2;
+            filter: drop-shadow(1px 2px 1px rgba(0,0,0,.22));
+            pointer-events: none;
         }
 
+        /* мягкая подсветка плитки под каждый фрукт */
+        .tile[data-f="strawberry"] { --tint:#ffe1e5; }
+        .tile[data-f="lemon"]      { --tint:#fff6d6; }
+        .tile[data-f="grapes"]     { --tint:#efe2ff; }
+        .tile[data-f="watermelon"] { --tint:#ffe3e3; }
+        .tile[data-f="kiwi"]       { --tint:#eafbd9; }
+        .tile[data-f="pineapple"]  { --tint:#fff1cf; }
+        .tile[data-f="cherry"]     { --tint:#ffdde1; }
+        .tile[data-f="peach"]      { --tint:#ffeade; }
+        .tile[data-f="coconut"]    { --tint:#f2e6dc; }
+        .tile[data-f="avocado"]    { --tint:#e6f5d8; }
+        .tile[data-f="apple"]      { --tint:#e7f8d5; }
+        .tile[data-f="orange"]     { --tint:#ffe9d1; }
+
         .tile.disabled {
-            filter: brightness(0.8) grayscale(0.2); cursor: default;
+            filter: brightness(0.78) saturate(0.55) grayscale(0.35); cursor: default;
         }
+        /* понятная «вуаль» на заблокированной плитке */
+        .tile.disabled::after {
+            background: linear-gradient(180deg, rgba(45,52,54,.32), rgba(45,52,54,.18));
+        }
+        .tile.disabled .art { opacity: .85; }
 
         .tile:not(.disabled):not(.in-dock):active {
             transform: scale(0.92); box-shadow: 1px 1px 0 #999;
@@ -248,6 +310,7 @@
             border: 2px solid #333; background: #fff;
             transform: rotate(0deg) scale(var(--dock-scale)) !important;
         }
+        .tile.in-dock::after { display: none; }
 
         /* ========== DOCK ========== */
         .dock-container {
@@ -273,6 +336,26 @@
             flex-shrink: 0;
         }
 
+        /* ========== ЧАСТИЦЫ ВЗРЫВА ========== */
+        .burst-p {
+            position: absolute; width: 9px; height: 9px; border-radius: 50%;
+            margin: -4.5px 0 0 -4.5px; pointer-events: none; z-index: 1500;
+            animation: burstOut .55s cubic-bezier(.15,.7,.3,1) forwards;
+        }
+        @keyframes burstOut {
+            0%   { transform: translate(0,0) scale(1.1); opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) scale(.15); opacity: 0; }
+        }
+        .burst-ring {
+            position: absolute; border-radius: 50%; pointer-events: none; z-index: 1499;
+            border: 3px solid rgba(255,255,255,.9); width: 14px; height: 14px;
+            margin: -7px 0 0 -7px; animation: ringOut .45s ease-out forwards;
+        }
+        @keyframes ringOut {
+            0%   { transform: scale(.4); opacity: .95; }
+            100% { transform: scale(5.5); opacity: 0; }
+        }
+
         /* ========== MODALS ========== */
         .modal-overlay {
             position: fixed; top: 0; left: 0; 
@@ -281,14 +364,19 @@
             display: flex; justify-content: center; align-items: center;
             z-index: 300; opacity: 0; pointer-events: none; 
             transition: all 0.5s; overflow: hidden;
+            /* резервируем место НАД карточкой под кубок со звёздами,
+               чтобы на маленьких экранах корона не обрезалась сверху */
+            padding: max(96px, calc(env(safe-area-inset-top, 0px) + 80px)) 16px max(16px, env(safe-area-inset-bottom, 0px));
         }
         .modal-overlay.active { opacity: 1; pointer-events: all; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); }
 
         .confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
         .confetti {
-            position: absolute; width: 12px; height: 12px; top: -20px;
+            position: absolute; width: 11px; height: 11px; top: -20px;
             animation: confetti-fall 3s linear forwards;
         }
+        .confetti.c-star { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+        .confetti.c-ring { background: transparent !important; border: 3px solid currentColor; border-radius: 50%; }
         @keyframes confetti-fall {
             0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
             100% { transform: translateY(100vh) rotate(720deg) scale(0.5); opacity: 0; }
@@ -312,9 +400,14 @@
         }
         .modal-overlay.active .modal-card { transform: scale(1) rotate(0deg); }
 
-        .trophy-container { position: absolute; top: -50px; left: 50%; transform: translateX(-50%); z-index: 10; }
+        .crown {
+            position: absolute; bottom: calc(100% - 18px); left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 2px;
+            z-index: 10; pointer-events: none;
+        }
         .trophy {
-            font-size: 5rem; filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.2));
+            width: 84px; height: 84px; display: block;
+            filter: drop-shadow(3px 4px 0 rgba(0,0,0,0.25));
             animation: trophy-bounce 0.6s ease-out 0.3s both;
         }
         @keyframes trophy-bounce {
@@ -323,11 +416,15 @@
         }
 
         .stars-container {
-            position: absolute; top: -30px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 5;
+            display: flex; gap: 6px; justify-content: center;
         }
-        .star { font-size: 2.5rem; opacity: 0; transform: scale(0) rotate(-180deg); filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.2)); }
+        .star {
+            font-size: 2.1rem; color: #ffeaa7; -webkit-text-stroke: 2px #333;
+            opacity: 0; transform: scale(0) rotate(-180deg);
+            filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.2));
+        }
         .star:nth-child(1) { animation: star-pop 0.5s ease-out 0.6s forwards; }
-        .star:nth-child(2) { animation: star-pop 0.5s ease-out 0.8s forwards; font-size: 3rem; margin-top: -15px; }
+        .star:nth-child(2) { animation: star-pop 0.5s ease-out 0.8s forwards; font-size: 2.6rem; margin-top: -15px; }
         .star:nth-child(3) { animation: star-pop 0.5s ease-out 1s forwards; }
         @keyframes star-pop {
             0% { opacity: 0; transform: scale(0) rotate(-180deg); }
@@ -337,19 +434,20 @@
 
         .modal-content { padding: 60px 30px 30px; }
         .ribbon {
-            background: #fdcb6e; color: #333; font-family: 'Fredoka', sans-serif; font-weight: 800;
+            background: #fdcb6e; color: #333; font-family: 'Nunito', sans-serif; font-weight: 800;
             font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
             padding: 10px 40px; position: relative; margin: 0 -30px 20px;
             border-top: 3px solid #333; border-bottom: 3px solid #333; box-shadow: 0 4px 0 rgba(0,0,0,0.1);
         }
+        .ribbon i { margin-right: 8px; }
         .win-title {
-            font-family: 'Fredoka', sans-serif; font-size: 2.8rem; font-weight: 800; color: #00b894;
+            font-family: 'Nunito', sans-serif; font-size: 2.8rem; font-weight: 800; color: #00b894;
             -webkit-text-stroke: 2px #333; text-shadow: 3px 3px 0 #333;
             margin: 10px 0; animation: title-pulse 2s ease-in-out infinite;
         }
         @keyframes title-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
-        .level-complete { font-family: 'Fredoka', sans-serif; font-size: 1.1rem; color: #636e72; margin-bottom: 20px; font-weight: 600; }
+        .level-complete { font-family: 'Nunito', sans-serif; font-size: 1.1rem; color: #636e72; margin-bottom: 20px; font-weight: 600; }
         .level-complete span { color: #2d3436; font-weight: 800; font-size: 1.4rem; }
 
         .stats-row-modal {
@@ -357,17 +455,19 @@
             background: #f1f2f6; border-radius: 15px; border: 2px solid #b2bec3;
         }
         .stat-item { text-align: center; }
-        .stat-value { font-family: 'Fredoka', sans-serif; font-size: 1.8rem; font-weight: 800; color: #333; display: block; }
+        .stat-value { font-family: 'Nunito', sans-serif; font-size: 1.8rem; font-weight: 800; color: #333; display: block; }
         .stat-value.animated { animation: count-up 0.5s ease-out forwards; }
         .stat-label { font-size: 0.7rem; color: #636e72; text-transform: uppercase; margin-top: 5px; font-weight: 700; }
+        .stat-label i { margin-right: 5px; color: #b2bec3; }
 
         .btn-next-level {
-            background: #0984e3; color: white; font-family: 'Fredoka', sans-serif; font-size: 1.2rem; font-weight: 700;
+            background: #0984e3; color: white; font-family: 'Nunito', sans-serif; font-size: 1.2rem; font-weight: 700;
             padding: 18px 40px; border: 3px solid #333; border-radius: 15px; cursor: pointer; text-transform: uppercase; 
             box-shadow: 5px 5px 0 #333; transition: all 0.1s; position: relative; overflow: hidden; width: 100%; margin-top: 10px;
         }
         .btn-next-level:active { transform: translate(4px, 4px); box-shadow: 1px 1px 0 #333; }
-        .btn-next-level .arrow { display: inline-block; margin-left: 10px; animation: arrow-bounce 1s ease-in-out infinite; }
+        .btn-next-level .arrow { display: inline-block; margin-left: 10px; margin-right: 0; animation: arrow-bounce 1s ease-in-out infinite; }
+        @keyframes arrow-bounce { 0%,100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
 
         .modal-link {
             color: #b2bec3; cursor: pointer; font-size: 0.9rem; font-weight: 700; text-transform: uppercase;
@@ -375,55 +475,353 @@
         }
         .modal-link:active { color: #636e72; }
 
-        .lose-emoji { font-size: 4rem; animation: shake-emoji 0.5s ease-in-out; display: block; margin-bottom: 10px; filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.2)); }
-        .lose-title { font-family: 'Fredoka', sans-serif; font-size: 2.2rem; color: #d63031; margin: 10px 0; -webkit-text-stroke: 1.5px #333; text-shadow: 2px 2px 0 #333; font-weight: 800; }
+        .lose-emoji {
+            font-size: 3.6rem; animation: shake-emoji 0.5s ease-in-out; display: block; margin-bottom: 10px;
+            color: #ff7675; -webkit-text-stroke: 2px #333; filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.2));
+        }
+        @keyframes shake-emoji {
+            0%,100% { transform: rotate(0); } 20% { transform: rotate(-12deg); }
+            40% { transform: rotate(10deg); } 60% { transform: rotate(-7deg); } 80% { transform: rotate(5deg); }
+        }
+        .lose-title { font-family: 'Nunito', sans-serif; font-size: 2.2rem; color: #d63031; margin: 10px 0; -webkit-text-stroke: 1.5px #333; text-shadow: 2px 2px 0 #333; font-weight: 800; }
         .btn-retry {
-            background: #d63031; color: white; font-family: 'Fredoka', sans-serif; font-size: 1.2rem; font-weight: 700;
+            background: #d63031; color: white; font-family: 'Nunito', sans-serif; font-size: 1.2rem; font-weight: 700;
             padding: 18px 40px; border: 3px solid #333; border-radius: 15px; cursor: pointer; text-transform: uppercase;
             box-shadow: 5px 5px 0 #333; width: 100%; margin-top: 20px;
         }
         .btn-retry:active { transform: translate(4px, 4px); box-shadow: 1px 1px 0 #333; }
 
         @keyframes popScale { 0% { transform: scale(0) rotate(0deg); } 100% { transform: scale(1) rotate(var(--rot, 0deg)); } }
-        @keyframes matchAnim { 0% { transform: scale(var(--dock-scale)); opacity: 1; background: #ffeaa7; } 50% { transform: scale(1.1); } 100% { transform: scale(0); opacity: 0; } }
+        @keyframes matchAnim { 0% { transform: scale(var(--dock-scale)); opacity: 1; background: #ffeaa7; } 50% { transform: scale(1.15); } 100% { transform: scale(0); opacity: 0; } }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
         .shake { animation: shake 0.3s ease; }
+        @keyframes count-up { from { opacity: .3; } to { opacity: 1; } }
 
         .save-indicator {
             position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
             background: #333; color: #fff; padding: 8px 16px; border-radius: 20px; font-size: 0.8rem;
             opacity: 0; transition: opacity 0.3s; z-index: 500; pointer-events: none; border: 2px solid #fff;
+            font-weight: 700;
         }
         .save-indicator.show { opacity: 1; }
+        .save-indicator i { margin-right: 6px; }
+
+        /* ========== АДАПТИВ: НИЗКИЕ ЭКРАНЫ (SE и ниже) ==========
+           Блок НАМЕРЕННО стоит в конце каскада, чтобы перебивать базовые стили модалки. */
+        @media (max-height: 740px) {
+            .modal-overlay { padding-top: max(78px, env(safe-area-inset-top, 0px)); }
+            .trophy { width: 64px; height: 64px; }
+            .star { font-size: 1.7rem; }
+            .star:nth-child(2) { font-size: 2.1rem; margin-top: -10px; }
+            .modal-content { padding: 48px 22px 22px; }
+            .ribbon { padding: 8px 30px; margin-bottom: 12px; }
+            .win-title { font-size: 2.2rem; margin: 6px 0; }
+            .level-complete { margin-bottom: 12px; font-size: 1rem; }
+            .stats-row-modal { margin: 14px 0; padding: 10px; gap: 14px; }
+            .stat-value { font-size: 1.5rem; }
+            .btn-next-level, .btn-retry { padding: 14px 30px; font-size: 1.05rem; margin-top: 8px; }
+            .modal-link { margin-top: 12px; }
+            .lose-emoji { font-size: 2.9rem; }
+        }
+        @media (max-height: 600px) {
+            .modal-overlay { padding-top: max(64px, env(safe-area-inset-top, 0px)); }
+            .trophy { width: 52px; height: 52px; }
+            .stars-container { gap: 4px; }
+            .star { font-size: 1.35rem; }
+            .star:nth-child(2) { font-size: 1.7rem; margin-top: -8px; }
+            .modal-content { padding: 40px 18px 16px; }
+            .ribbon { font-size: .78rem; padding: 7px 24px; margin-bottom: 10px; }
+            .win-title { font-size: 1.9rem; }
+            .level-complete { margin-bottom: 8px; font-size: .95rem; }
+            .level-complete span { font-size: 1.15rem; }
+            .stats-row-modal { margin: 10px 0; padding: 8px; }
+            .stat-value { font-size: 1.3rem; }
+            .stat-label { font-size: .6rem; }
+            .btn-next-level, .btn-retry { padding: 12px 24px; font-size: 1rem; }
+            .modal-link { margin-top: 10px; font-size: .8rem; }
+            .lose-emoji { font-size: 2.4rem; margin-bottom: 4px; }
+            .lose-title { font-size: 1.8rem; margin: 6px 0; }
+        }
+        /* совсем низко (ландшафт телефона) — модалке разрешено скроллиться */
+        @media (max-height: 480px) {
+            .modal-overlay { overflow-y: auto; padding-top: 56px; touch-action: pan-y; align-items: flex-start; }
+            .rays { display: none; }
+            .trophy { width: 44px; height: 44px; }
+        }
+        /* меню в ландшафте: ужимается и скроллится, кнопки всегда доступны */
+        @media (max-height: 520px) {
+            #start-screen { overflow-y: auto; justify-content: flex-start; padding: 24px 0; touch-action: pan-y; }
+            .premium-title { font-size: 2.6rem; margin-bottom: 6px; }
+            .premium-subtitle { margin-bottom: 14px; font-size: 1rem; }
+            .menu-fruits { margin-bottom: 12px; gap: 6px; }
+            .menu-fruits svg { width: 34px; height: 34px; }
+            .stats-box { padding: 12px 20px; margin-bottom: 14px; }
+            .stats-box .value { font-size: 1.5rem; }
+            .btn-premium { padding: 10px 30px; font-size: 1.05rem; margin-bottom: 10px; }
+            .btn-secondary { padding: 8px 20px; font-size: .9rem; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="save-indicator" id="saveIndicator">💾 Сохранено</div>
+    <!-- ================= SVG-СПРАЙТ ФРУКТОВ ================= -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+        <defs>
+            <linearGradient id="gStraw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a94"/><stop offset="1" stop-color="#d21f3c"/></linearGradient>
+            <linearGradient id="gLemon" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff2a0"/><stop offset="1" stop-color="#f4c025"/></linearGradient>
+            <radialGradient id="gGrape" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#c79bf5"/><stop offset="1" stop-color="#6a35b8"/></radialGradient>
+            <linearGradient id="gMelon" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7a85"/><stop offset="1" stop-color="#e0283c"/></linearGradient>
+            <radialGradient id="gKiwi" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#eafbc7"/><stop offset=".55" stop-color="#a8d948"/><stop offset="1" stop-color="#6fa82e"/></radialGradient>
+            <linearGradient id="gPine" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd977"/><stop offset="1" stop-color="#ee9c1c"/></linearGradient>
+            <radialGradient id="gCherry" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#ff7b7b"/><stop offset="1" stop-color="#b3121f"/></radialGradient>
+            <radialGradient id="gPeach" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ffdcb8"/><stop offset=".6" stop-color="#ffab72"/><stop offset="1" stop-color="#f2795c"/></radialGradient>
+            <radialGradient id="gCoco" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#b07c4f"/><stop offset="1" stop-color="#6b4423"/></radialGradient>
+            <radialGradient id="gAvo" cx=".5" cy=".42" r=".7"><stop offset="0" stop-color="#f2ffc9"/><stop offset=".7" stop-color="#c3e07a"/><stop offset="1" stop-color="#8fbf45"/></radialGradient>
+            <radialGradient id="gPit" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#c08a5c"/><stop offset="1" stop-color="#7a4a24"/></radialGradient>
+            <radialGradient id="gApple" cx=".35" cy=".28" r=".9"><stop offset="0" stop-color="#dcf59a"/><stop offset=".6" stop-color="#a5d64a"/><stop offset="1" stop-color="#6ba327"/></radialGradient>
+            <radialGradient id="gOrange" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ffc46b"/><stop offset=".6" stop-color="#ff9b26"/><stop offset="1" stop-color="#ef7106"/></radialGradient>
+            <linearGradient id="gLeaf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8ede63"/><stop offset="1" stop-color="#3f9142"/></linearGradient>
+            <clipPath id="clipPine"><path d="M32 20c11 0 18 8 18 20 0 11-8 18-18 18s-18-7-18-18c0-12 7-20 18-20z"/></clipPath>
+        </defs>
+
+        <!-- КЛУБНИКА -->
+        <symbol id="fruit-strawberry" viewBox="0 0 64 64">
+            <path d="M32 14c13 0 22 9 21 21-1 12-10 22-21 25C21 57 12 47 11 35 10 23 19 14 32 14z" fill="url(#gStraw)" stroke="#8e1f2c" stroke-width="2.4" stroke-linejoin="round"/>
+            <g fill="#ffeab0" opacity=".95">
+                <ellipse cx="22" cy="28" rx="1.6" ry="2.4" transform="rotate(-14 22 28)"/>
+                <ellipse cx="32" cy="25" rx="1.6" ry="2.4"/>
+                <ellipse cx="42" cy="29" rx="1.6" ry="2.4" transform="rotate(14 42 29)"/>
+                <ellipse cx="18" cy="38" rx="1.6" ry="2.4" transform="rotate(-18 18 38)"/>
+                <ellipse cx="27" cy="37" rx="1.6" ry="2.4"/>
+                <ellipse cx="37" cy="37" rx="1.6" ry="2.4"/>
+                <ellipse cx="46" cy="39" rx="1.6" ry="2.4" transform="rotate(18 46 39)"/>
+                <ellipse cx="23" cy="47" rx="1.5" ry="2.2" transform="rotate(-10 23 47)"/>
+                <ellipse cx="32" cy="47" rx="1.5" ry="2.2"/>
+                <ellipse cx="41" cy="47" rx="1.5" ry="2.2" transform="rotate(10 41 47)"/>
+                <ellipse cx="30" cy="54" rx="1.4" ry="2"/>
+            </g>
+            <rect x="30.4" y="2" width="3.2" height="10" rx="1.6" fill="#8bc34a" stroke="#3d7a34" stroke-width="1.6"/>
+            <g fill="url(#gLeaf)" stroke="#3d7a34" stroke-width="1.8" stroke-linejoin="round">
+                <path d="M32 17c-5-1-10-4-12-10 6-1 11 2 13 6z"/>
+                <path d="M32 17c5-1 10-4 12-10-6-1-11 2-13 6z"/>
+                <path d="M32 18c-3-4-4-9-1-14 3 5 4 10 1 14z"/>
+            </g>
+            <ellipse cx="22" cy="23" rx="6" ry="3.4" fill="#fff" opacity=".3" transform="rotate(-32 22 23)"/>
+        </symbol>
+
+        <!-- ЛИМОН -->
+        <symbol id="fruit-lemon" viewBox="0 0 64 64">
+            <g transform="rotate(-20 32 32)">
+                <path d="M52 25l8 2-6 8z" fill="#f4c025" stroke="#c08f12" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M12 39l-8-2 6-8z" fill="#f4c025" stroke="#c08f12" stroke-width="1.8" stroke-linejoin="round"/>
+                <ellipse cx="32" cy="32" rx="21" ry="17" fill="url(#gLemon)" stroke="#c08f12" stroke-width="2.4"/>
+                <g fill="#e8b21c" opacity=".55">
+                    <ellipse cx="24" cy="26" rx="1.5" ry="1"/><ellipse cx="38" cy="30" rx="1.5" ry="1"/>
+                    <ellipse cx="30" cy="39" rx="1.5" ry="1"/><ellipse cx="44" cy="38" rx="1.5" ry="1"/>
+                    <ellipse cx="19" cy="36" rx="1.5" ry="1"/><ellipse cx="34" cy="22" rx="1.5" ry="1"/>
+                </g>
+                <ellipse cx="24" cy="24" rx="7" ry="3.6" fill="#fff" opacity=".45" transform="rotate(-28 24 24)"/>
+            </g>
+        </symbol>
+
+        <!-- ВИНОГРАД -->
+        <symbol id="fruit-grapes" viewBox="0 0 64 64">
+            <path d="M32 22c0-6 1-10 3-13" stroke="#7a5230" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M35 12c3-5 10-7 15-6-2 7-8 11-15 6z" fill="url(#gLeaf)" stroke="#3d7a34" stroke-width="1.8" stroke-linejoin="round"/>
+            <g stroke="#4b2a7a" stroke-width="1.9">
+                <g fill="url(#gGrape)">
+                    <circle cx="18" cy="47" r="7.6"/><circle cx="32" cy="49" r="7.6"/><circle cx="46" cy="47" r="7.6"/>
+                    <circle cx="24" cy="37" r="7.6"/><circle cx="40" cy="37" r="7.6"/>
+                    <circle cx="32" cy="28" r="7.6"/>
+                    <circle cx="18" cy="27" r="6.4"/><circle cx="46" cy="27" r="6.4"/>
+                </g>
+            </g>
+            <g fill="#fff" opacity=".38">
+                <ellipse cx="15" cy="44" rx="2.6" ry="1.7" transform="rotate(-35 15 44)"/>
+                <ellipse cx="29" cy="46" rx="2.6" ry="1.7" transform="rotate(-35 29 46)"/>
+                <ellipse cx="43" cy="44" rx="2.6" ry="1.7" transform="rotate(-35 43 44)"/>
+                <ellipse cx="21" cy="34" rx="2.6" ry="1.7" transform="rotate(-35 21 34)"/>
+                <ellipse cx="37" cy="34" rx="2.6" ry="1.7" transform="rotate(-35 37 34)"/>
+                <ellipse cx="29" cy="25" rx="2.6" ry="1.7" transform="rotate(-35 29 25)"/>
+            </g>
+        </symbol>
+
+        <!-- АРБУЗ -->
+        <symbol id="fruit-watermelon" viewBox="0 0 64 64">
+            <path d="M5 44a27 27 0 0 1 54 0z" fill="#3fae4a" stroke="#1f6b2b" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M9.5 44a22.5 22.5 0 0 1 45 0z" fill="#f5fff0"/>
+            <path d="M13.5 44a18.5 18.5 0 0 1 37 0z" fill="url(#gMelon)"/>
+            <g fill="#4a2c1c">
+                <ellipse cx="24" cy="36" rx="1.8" ry="2.6" transform="rotate(-15 24 36)"/>
+                <ellipse cx="32" cy="32" rx="1.8" ry="2.6"/>
+                <ellipse cx="40" cy="36" rx="1.8" ry="2.6" transform="rotate(15 40 36)"/>
+                <ellipse cx="27" cy="41" rx="1.7" ry="2.4"/>
+                <ellipse cx="37" cy="41" rx="1.7" ry="2.4"/>
+            </g>
+            <path d="M17 38a16 16 0 0 1 6-9" stroke="#fff" stroke-width="2.6" opacity=".3" fill="none" stroke-linecap="round"/>
+        </symbol>
+
+        <!-- КИВИ -->
+        <symbol id="fruit-kiwi" viewBox="0 0 64 64">
+            <circle cx="32" cy="32" r="26" fill="#8d6e63" stroke="#5a3d2b" stroke-width="2.4"/>
+            <circle cx="32" cy="32" r="22" fill="url(#gKiwi)"/>
+            <g stroke="#f6ffe9" stroke-width="1.8" opacity=".5" stroke-linecap="round">
+                <line x1="32" y1="25" x2="32" y2="13" transform="rotate(22.5 32 32)"/>
+                <line x1="32" y1="25" x2="32" y2="13" transform="rotate(67.5 32 32)"/>
+                <line x1="32" y1="25" x2="32" y2="13" transform="rotate(112.5 32 32)"/>
+                <line x1="32" y1="25" x2="32" y2="13" transform="rotate(157.5 32 32)"/>
+                <line x1="32" y1="25" x2="32" y2="13" transform="rotate(202.5 32 32)"/>
+                <line x1="32" y1="25" x2="32" y2="13" transform="rotate(247.5 32 32)"/>
+                <line x1="32" y1="25" x2="32" y2="13" transform="rotate(292.5 32 32)"/>
+                <line x1="32" y1="25" x2="32" y2="13" transform="rotate(337.5 32 32)"/>
+            </g>
+            <g fill="#31291c">
+                <ellipse cx="32" cy="19" rx="1.7" ry="2.5" transform="rotate(0 32 32)"/>
+                <ellipse cx="32" cy="19" rx="1.7" ry="2.5" transform="rotate(45 32 32)"/>
+                <ellipse cx="32" cy="19" rx="1.7" ry="2.5" transform="rotate(90 32 32)"/>
+                <ellipse cx="32" cy="19" rx="1.7" ry="2.5" transform="rotate(135 32 32)"/>
+                <ellipse cx="32" cy="19" rx="1.7" ry="2.5" transform="rotate(180 32 32)"/>
+                <ellipse cx="32" cy="19" rx="1.7" ry="2.5" transform="rotate(225 32 32)"/>
+                <ellipse cx="32" cy="19" rx="1.7" ry="2.5" transform="rotate(270 32 32)"/>
+                <ellipse cx="32" cy="19" rx="1.7" ry="2.5" transform="rotate(315 32 32)"/>
+            </g>
+            <ellipse cx="32" cy="32" rx="8.5" ry="8.5" fill="#f8ffe9"/>
+            <ellipse cx="32" cy="32" rx="4" ry="4" fill="#dff2b0"/>
+            <path d="M14 22a20 20 0 0 1 9-7" stroke="#fff" stroke-width="3" opacity=".3" fill="none" stroke-linecap="round"/>
+        </symbol>
+
+        <!-- АНАНАС -->
+        <symbol id="fruit-pineapple" viewBox="0 0 64 64">
+            <g fill="url(#gLeaf)" stroke="#3d7a34" stroke-width="1.8" stroke-linejoin="round">
+                <path d="M32 22c-2-9-8-14-15-15 1 8 7 14 15 15z"/>
+                <path d="M32 22c2-9 8-14 15-15-1 8-7 14-15 15z"/>
+                <path d="M32 23c-7-4-14-5-20-3 4 6 12 8 20 3z"/>
+                <path d="M32 23c7-4 14-5 20-3-4 6-12 8-20 3z"/>
+                <path d="M32 24c-3-10-2-16 0-21 2 5 3 11 0 21z"/>
+            </g>
+            <path d="M32 20c11 0 18 8 18 20 0 11-8 18-18 18s-18-7-18-18c0-12 7-20 18-20z" fill="url(#gPine)" stroke="#b06f16" stroke-width="2.4"/>
+            <g clip-path="url(#clipPine)" stroke="#d3891a" stroke-width="1.7" opacity=".8">
+                <line x1="4" y1="20" x2="64" y2="56"/><line x1="4" y1="32" x2="64" y2="68"/><line x1="4" y1="44" x2="52" y2="72"/>
+                <line x1="10" y1="8" x2="70" y2="44"/><line x1="24" y1="4" x2="76" y2="36"/>
+                <line x1="60" y1="20" x2="0" y2="56"/><line x1="60" y1="32" x2="0" y2="68"/><line x1="60" y1="44" x2="12" y2="72"/>
+                <line x1="54" y1="8" x2="-6" y2="44"/><line x1="40" y1="4" x2="-12" y2="36"/>
+            </g>
+            <path d="M20 28c2-4 6-7 10-7" stroke="#fff" stroke-width="3" opacity=".35" fill="none" stroke-linecap="round"/>
+        </symbol>
+
+        <!-- ВИШНЯ -->
+        <symbol id="fruit-cherry" viewBox="0 0 64 64">
+            <path d="M21 38c-1-13 5-22 13-26" stroke="#7ba32c" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+            <path d="M45 38c1-11-3-19-11-26" stroke="#7ba32c" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+            <path d="M34 13c3-6 11-8 16-6-2 7-9 11-16 6z" fill="url(#gLeaf)" stroke="#3d7a34" stroke-width="1.8" stroke-linejoin="round"/>
+            <circle cx="20" cy="45" r="13" fill="url(#gCherry)" stroke="#8e1f2c" stroke-width="2.4"/>
+            <circle cx="45" cy="45" r="13" fill="url(#gCherry)" stroke="#8e1f2c" stroke-width="2.4"/>
+            <ellipse cx="15" cy="39" rx="4.6" ry="2.8" fill="#fff" opacity=".45" transform="rotate(-35 15 39)"/>
+            <ellipse cx="40" cy="39" rx="4.6" ry="2.8" fill="#fff" opacity=".45" transform="rotate(-35 40 39)"/>
+        </symbol>
+
+        <!-- ПЕРСИК -->
+        <symbol id="fruit-peach" viewBox="0 0 64 64">
+            <path d="M32 15v-6" stroke="#7a5230" stroke-width="3.4" stroke-linecap="round"/>
+            <path d="M33 12c2-6 9-9 15-8-2 7-8 11-15 8z" fill="url(#gLeaf)" stroke="#3d7a34" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M32 14c12 0 21 9 21 21 0 11-9 19-21 19s-21-8-21-19c0-12 9-21 21-21z" fill="url(#gPeach)" stroke="#c0563b" stroke-width="2.4"/>
+            <path d="M32 15c-5 9-5 29 0 38" stroke="#e08a6d" stroke-width="2.6" fill="none" opacity=".75" stroke-linecap="round"/>
+            <ellipse cx="43" cy="38" rx="7" ry="5" fill="#ff8f7a" opacity=".4"/>
+            <ellipse cx="21" cy="25" rx="6.4" ry="3.6" fill="#fff" opacity=".45" transform="rotate(-32 21 25)"/>
+        </symbol>
+
+        <!-- КОКОС (без «лица» — только волокна) -->
+        <symbol id="fruit-coconut" viewBox="0 0 64 64">
+            <circle cx="32" cy="34" r="24" fill="url(#gCoco)" stroke="#4a2f1a" stroke-width="2.4"/>
+            <g stroke="#5c3a20" stroke-width="1.8" opacity=".5" fill="none" stroke-linecap="round">
+                <path d="M20 13c-4 7-6 14-6 21s2 14 6 21"/>
+                <path d="M32 10c-3 8-4 16-4 24s1 16 4 24"/>
+                <path d="M44 13c4 7 6 14 6 21s-2 14-6 21"/>
+            </g>
+            <path d="M15 22a21 21 0 0 1 10-8" stroke="#fff" stroke-width="3.4" opacity=".25" fill="none" stroke-linecap="round"/>
+        </symbol>
+
+        <!-- АВОКАДО -->
+        <symbol id="fruit-avocado" viewBox="0 0 64 64">
+            <path d="M32 6c9 0 14 8 16 16 2 9 7 13 7 21 0 9-10 15-23 15S9 52 9 43c0-8 5-12 7-21 2-8 7-16 16-16z" fill="#4c8c2b" stroke="#2f5c19" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M32 12c6 0 10 6 12 13 2 8 6 11 6 18 0 6-8 11-18 11s-18-5-18-11c0-7 4-10 6-18 2-7 6-13 12-13z" fill="url(#gAvo)"/>
+            <circle cx="32" cy="43" r="9.5" fill="url(#gPit)" stroke="#5d3a1c" stroke-width="2"/>
+            <ellipse cx="28.5" cy="39.5" rx="3.4" ry="2.2" fill="#fff" opacity=".4" transform="rotate(-35 28.5 39.5)"/>
+            <path d="M17 24c2-6 6-10 10-11" stroke="#fff" stroke-width="2.6" opacity=".35" fill="none" stroke-linecap="round"/>
+        </symbol>
+
+        <!-- ЗЕЛЁНОЕ ЯБЛОКО -->
+        <symbol id="fruit-apple" viewBox="0 0 64 64">
+            <path d="M32 18C27 12 16 11 12 21 8 32 14 48 24 55c3 2 6 1 8-1 2 2 5 3 8 1 10-7 16-23 12-34C48 11 37 12 32 18z" fill="url(#gApple)" stroke="#3f6b1f" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M32 19c-1-7 0-11 3-14" stroke="#7a5230" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+            <path d="M35 10c3-6 10-8 15-7-2 7-8 11-15 7z" fill="url(#gLeaf)" stroke="#3d7a34" stroke-width="1.8" stroke-linejoin="round"/>
+            <ellipse cx="21" cy="27" rx="6" ry="3.6" fill="#fff" opacity=".5" transform="rotate(-35 21 27)"/>
+            <path d="M32 19c-3 1-6 1-8 0M32 19c3 1 6 1 8 0" stroke="#4f8a24" stroke-width="1.8" fill="none" opacity=".7" stroke-linecap="round"/>
+        </symbol>
+
+        <!-- АПЕЛЬСИН -->
+        <symbol id="fruit-orange" viewBox="0 0 64 64">
+            <circle cx="32" cy="35" r="23" fill="url(#gOrange)" stroke="#c25e00" stroke-width="2.4"/>
+            <g fill="#d16c05" opacity=".35">
+                <circle cx="22" cy="28" r="1.3"/><circle cx="30" cy="24" r="1.3"/><circle cx="40" cy="27" r="1.3"/>
+                <circle cx="46" cy="35" r="1.3"/><circle cx="18" cy="37" r="1.3"/><circle cx="26" cy="46" r="1.3"/>
+                <circle cx="38" cy="47" r="1.3"/><circle cx="45" cy="44" r="1.3"/><circle cx="33" cy="37" r="1.3"/>
+            </g>
+            <path d="M32 14v-6" stroke="#7a5230" stroke-width="3.4" stroke-linecap="round"/>
+            <path d="M33 11c3-6 10-8 15-6-3 7-9 10-15 6z" fill="url(#gLeaf)" stroke="#3d7a34" stroke-width="1.8" stroke-linejoin="round"/>
+            <ellipse cx="22" cy="26" rx="6.4" ry="3.6" fill="#fff" opacity=".45" transform="rotate(-35 22 26)"/>
+        </symbol>
+
+        <!-- ТРОФЕЙ (для модалки победы) -->
+        <symbol id="ico-trophy" viewBox="0 0 64 64">
+            <path d="M20 8h24v14c0 8-5 14-12 14s-12-6-12-14z" fill="#ffd75e" stroke="#3a2b06" stroke-width="2.6" stroke-linejoin="round"/>
+            <path d="M20 12h-8c0 8 4 12 10 13M44 12h8c0 8-4 12-10 13" fill="none" stroke="#3a2b06" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M32 36v8" stroke="#3a2b06" stroke-width="2.6"/>
+            <path d="M22 56h20l-3-12H25z" fill="#ffb02e" stroke="#3a2b06" stroke-width="2.6" stroke-linejoin="round"/>
+            <path d="M25 14v8c0 4 2 7 5 8" stroke="#fff" stroke-width="2.6" opacity=".55" fill="none" stroke-linecap="round"/>
+        </symbol>
+    </svg>
+
+    <div class="save-indicator" id="saveIndicator"><i class="fa-solid fa-floppy-disk" data-fallback="💾"></i>Сохранено</div>
 
     <!-- MENU -->
     <div id="start-screen">
         <div class="premium-title">BEWORDS<br>TILE</div>
-        <div class="premium-subtitle">Fruit Puzzle</div>
+        <div class="premium-subtitle"><i class="fa-solid fa-lemon" data-fallback="🍋"></i>Fruit Puzzle</div>
+
+        <div class="menu-fruits" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><use href="#fruit-strawberry"/></svg>
+            <svg viewBox="0 0 64 64"><use href="#fruit-kiwi"/></svg>
+            <svg viewBox="0 0 64 64"><use href="#fruit-grapes"/></svg>
+            <svg viewBox="0 0 64 64"><use href="#fruit-orange"/></svg>
+            <svg viewBox="0 0 64 64"><use href="#fruit-cherry"/></svg>
+        </div>
+
         <div class="stats-box">
             <div class="stats-row">
-                <div><div class="label">Уровень</div><div class="value" id="menu-level">1</div></div>
-                <div><div class="label">Рекорд</div><div class="value" id="menu-best">0</div></div>
+                <div>
+                    <div class="label"><i class="fa-solid fa-layer-group" data-fallback="🎚"></i>Уровень</div>
+                    <div class="value" id="menu-level">1</div>
+                </div>
+                <div>
+                    <div class="label"><i class="fa-solid fa-trophy" data-fallback="🏆"></i>Рекорд</div>
+                    <div class="value" id="menu-best">0</div>
+                </div>
             </div>
         </div>
-        <button class="btn-premium" id="btn-continue">ПРОДОЛЖИТЬ</button>
-        <button class="btn-secondary" id="btn-new-game">Новая игра</button>
+        <button class="btn-premium" id="btn-continue"><i class="fa-solid fa-play" data-fallback="▶"></i>ПРОДОЛЖИТЬ</button>
+        <button class="btn-secondary" id="btn-new-game"><i class="fa-solid fa-bolt" data-fallback="⚡"></i>Новая игра</button>
     </div>
 
     <!-- GAME UI -->
     <div class="header-row">
-        <button class="btn-icon" id="btn-home">🏠︎</button>
+        <button class="btn-icon" id="btn-home" aria-label="В меню"><i class="fa-solid fa-house" data-fallback="🏠"></i></button>
         <div class="game-logo">BEWORDS</div>
-        <button class="btn-icon" id="btn-restart">↺</button>
+        <button class="btn-icon" id="btn-restart" aria-label="Заново"><i class="fa-solid fa-arrows-rotate" data-fallback="↺"></i></button>
     </div>
     <div class="ui-bar">
-        <div id="level-display">Lv. 1</div>
-        <div id="score-display">0</div>
+        <div id="level-display"><i class="fa-solid fa-layer-group" data-fallback="▤"></i><span id="level-text">Lv. 1</span></div>
+        <div id="score-display"><i class="fa-solid fa-star" data-fallback="★"></i><span id="score-text">0</span></div>
     </div>
     <div id="game-board"></div>
     <div class="dock-container" id="dock"></div>
@@ -435,28 +833,42 @@
         <div class="modal-card">
             <!-- WIN -->
             <div id="win-content" style="display: none;">
-                <div class="trophy-container"><div class="trophy">🏆</div></div>
-                <div class="stars-container"><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span></div>
+                <div class="crown">
+                    <svg class="trophy" viewBox="0 0 64 64"><use href="#ico-trophy"/></svg>
+                    <div class="stars-container">
+                        <i class="fa-solid fa-star star" data-fallback="★"></i>
+                        <i class="fa-solid fa-star star" data-fallback="★"></i>
+                        <i class="fa-solid fa-star star" data-fallback="★"></i>
+                    </div>
+                </div>
                 <div class="modal-content">
-                    <div class="ribbon">УРОВЕНЬ ПРОЙДЕН</div>
+                    <div class="ribbon"><i class="fa-solid fa-ribbon" data-fallback="🎀"></i>УРОВЕНЬ ПРОЙДЕН</div>
                     <div class="win-title">ПОБЕДА!</div>
                     <div class="level-complete">Уровень <span id="completed-level">1</span></div>
                     <div class="stats-row-modal">
-                        <div class="stat-item"><span class="stat-value" id="modal-score">0</span><div class="stat-label">Очки</div></div>
-                        <div class="stat-item"><span class="stat-value" id="modal-best">0</span><div class="stat-label">Рекорд</div></div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="modal-score">0</span>
+                            <div class="stat-label"><i class="fa-solid fa-star" data-fallback="★"></i>Очки</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="modal-best">0</span>
+                            <div class="stat-label"><i class="fa-solid fa-trophy" data-fallback="🏆"></i>Рекорд</div>
+                        </div>
                     </div>
-                    <button class="btn-next-level" id="btn-next">УРОВЕНЬ <span id="next-level-num">2</span><span class="arrow">→</span></button>
-                    <div class="modal-link" id="m-menu-win">В Меню</div>
+                    <button class="btn-next-level" id="btn-next">УРОВЕНЬ <span id="next-level-num">2</span><i class="fa-solid fa-angles-right arrow" data-fallback="→"></i></button>
+                    <div class="modal-link" id="m-menu-win"><i class="fa-solid fa-house" data-fallback="🏠"></i>В Меню</div>
                 </div>
             </div>
             <!-- LOSE -->
             <div id="lose-content" style="display: none;">
                 <div class="modal-content" style="padding-top: 30px;">
-                    <span class="lose-emoji">😢</span>
+                    <span class="lose-emoji"><i class="fa-solid fa-face-frown" data-fallback="😢"></i></span>
                     <div class="lose-title">Не вышло...</div>
-                    <p style="color: #636e72; margin: 15px 0; font-weight: 600;">Док переполнен!</p>
-                    <button class="btn-retry" id="btn-retry">🔄 Ещё раз</button>
-                    <div class="modal-link" id="m-menu-lose">В Меню</div>
+                    <p style="color: #636e72; margin: 15px 0; font-weight: 600;">
+                        <i class="fa-solid fa-box-open" data-fallback="📦"></i>Док переполнен!
+                    </p>
+                    <button class="btn-retry" id="btn-retry"><i class="fa-solid fa-rotate-right" data-fallback="🔄"></i>Ещё раз</button>
+                    <div class="modal-link" id="m-menu-lose"><i class="fa-solid fa-house" data-fallback="🏠"></i>В Меню</div>
                 </div>
             </div>
         </div>
@@ -465,13 +877,29 @@
     <script>
         // ============ CONFIG ============
         const DOCK_SIZE = 7;
-        const ALL_FRUITS = ['🍓', '🍋', '🍇', '🍉', '🥝', '🍍', '🍒', '🍑', '🥥', '🥑', '🍏', '🍊'];
+        // Теперь это id SVG-символов из спрайта (а не эмодзи)
+        const ALL_FRUITS = ['strawberry', 'lemon', 'grapes', 'watermelon', 'kiwi', 'pineapple',
+                            'cherry', 'peach', 'coconut', 'avocado', 'apple', 'orange'];
+        // цвета для частиц взрыва
+        const FRUIT_COLORS = {
+            strawberry:'#e63950', lemon:'#f4c025', grapes:'#8e5ce0', watermelon:'#ff5c6c',
+            kiwi:'#9ccc3c', pineapple:'#ffab2e', cherry:'#d81e3c', peach:'#ff9470',
+            coconut:'#8d6e63', avocado:'#a5d64a', apple:'#8bc34a', orange:'#ff9b26'
+        };
         const STORAGE_KEY = 'bewords_tile_save_v4'; // Уникальный ключ для сохранения
         const MIN_TILE_DISTANCE = 20;
-        const COLLISION_W = 45;
-        const COLLISION_H = 50;
         const MAX_TILES = 60; 
         const MAX_TRIPLES = MAX_TILES / 3; 
+
+        // ============ ЗВУКОВЫЕ ФАЙЛЫ ============
+        // tap  — плашка встала на место в док (+ тапы по кнопкам)
+        // pop  — «взрыв» собранной тройки
+        const SFX_FILES = {
+            tap: '../au/ui/tap.mp3',
+            pop: '../au/ui/pop.mp3'
+        };
+        const SFX_VOLUME = { tap: 0.85, pop: 0.95 };
+        const SFX_POOL = 5;           // сколько копий аудио держать (чтобы звуки не «захлёбывались»)
 
         // ============ STATE ============
         let currentLevel = 1;
@@ -480,63 +908,183 @@
         let tiles = [];
         let dock = [];
         let isLocked = false;
-        let audioCtx = null;
+        let levelFinished = false;
+        let sfxReady = false;
+        const sfx = {};               // name -> {pool:[], idx:0, ok:bool}
 
-        // ============ AUDIO ============
-        function initAudio() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
+        // ============ AUDIO: ТОЛЬКО MP3 ============
+        function initSfx() {
+            Object.keys(SFX_FILES).forEach(name => {
+                if (sfx[name]) return;
+                const pool = [];
+                let ok = true;
+                for (let i = 0; i < SFX_POOL; i++) {
+                    const a = new Audio(SFX_FILES[name]);
+                    a.preload = 'auto';
+                    a.volume = SFX_VOLUME[name] || 1;
+                    a.addEventListener('error', () => { ok = false; if (sfx[name]) sfx[name].ok = false; });
+                    pool.push(a);
+                }
+                sfx[name] = { pool, idx: 0, ok };
+            });
+            sfxReady = true;
         }
+        // Разблокировка аудио на первом касании (требование iOS/Android)
+        function unlockAudio() {
+            initSfx();
+            initAudio();
+            Object.keys(sfx).forEach(name => {
+                const a = sfx[name].pool[0];
+                if (a.dataset.unlocked) return;
+                a.dataset.unlocked = '1';
+                a.muted = true;                      // тихий «прогон» для разблокировки
+                const p = a.play();
+                if (p && p.catch) p.catch(() => {});
+                a.addEventListener('ended', () => { a.muted = false; }, { once: true });
+                setTimeout(() => { a.muted = false; }, 800);
+            });
+        }
+        function playFile(name, volume, rate) {
+            const s = sfx[name];
+            if (!s || !s.ok) return false;
+            const a = s.pool[s.idx++ % s.pool.length];
+            try {
+                a.muted = false;
+                a.volume = (volume !== undefined ? volume : SFX_VOLUME[name]) || 1;
+                if (rate) a.playbackRate = rate;
+                a.currentTime = 0;
+                const p = a.play();
+                if (p && p.catch) p.catch(() => { s.ok = false; });
+                return true;
+            } catch (e) { s.ok = false; return false; }
+        }
+
+        // ============ AUDIO: ТОЧКА ВХОДА ============
+        // Все звуки — только из mp3-файлов (tap.mp3 / pop.mp3), без WebAudio-синтеза.
+        // Мелодии собираются изменением playbackRate у тех же файлов.
         function playSound(type) {
+            if (!sfxReady) initSfx();
+            switch (type) {
+                case 'click':  // взяли плитку с поля
+                    playFile('tap', 0.5, 1.12);
+                    break;
+                case 'dock':   // плашка встала на место
+                    playFile('tap', 0.85, 0.97 + Math.random()*0.06);
+                    break;
+                case 'ui':     // тап по кнопке меню
+                    playFile('tap', 0.6, 1.05);
+                    break;
+                case 'match':  // взрыв тройки
+                    playFile('pop', 0.95);
+                    break;
+                case 'error':  // док полон / нельзя
+                    playFile('tap', 0.7, 0.55);
+                    setTimeout(() => playFile('tap', 0.6, 0.5), 90);
+                    break;
+                case 'win':    // фанфары финального экрана — синтезированные, как изначально
+                    winJingle();
+                    break;
+            }
+        }
+
+        // ============ ФАНФАРЫ ФИНАЛЬНОГО ЭКРАНА ============
+        // Единственный синтезированный звук, оставленный сознательно (по просьбе игрока):
+        // победная мелодия модалки. Mp3-файла под неё нет, а терять её не хотелось.
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { audioCtx = null; }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
+        function winJingle() {
             if (!audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const now = audioCtx.currentTime;
-            if (type === 'click') {
+            const notes = [523, 659, 783, 1046, 783, 1046];
+            notes.forEach((f, i) => {
                 const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
-                o.frequency.setValueAtTime(500, now); o.frequency.exponentialRampToValueAtTime(800, now+0.08);
-                g.gain.setValueAtTime(0.08, now); g.gain.linearRampToValueAtTime(0, now+0.08);
-                o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.08);
-            } else if (type === 'dock') {
-                const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
-                o.type = 'triangle'; o.frequency.setValueAtTime(300, now);
-                g.gain.setValueAtTime(0.08, now); g.gain.exponentialRampToValueAtTime(0.01, now+0.1);
-                o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.1);
-            } else if (type === 'match') {
-                [523, 659, 783].forEach((f,i) => {
-                    const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
-                    o.frequency.value = f; g.gain.setValueAtTime(0.04, now+i*0.05);
-                    g.gain.linearRampToValueAtTime(0, now+i*0.05+0.25);
-                    o.connect(g); g.connect(audioCtx.destination); o.start(now+i*0.05); o.stop(now+i*0.05+0.25);
-                });
-            } else if (type === 'win') {
-                const notes = [523, 659, 783, 1046, 783, 1046];
-                notes.forEach((f,i) => {
-                    const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
-                    o.type = i<4?'square':'sine'; o.frequency.value = f;
-                    g.gain.setValueAtTime(0.06, now+i*0.12); g.gain.linearRampToValueAtTime(0, now+i*0.12+0.3);
-                    o.connect(g); g.connect(audioCtx.destination); o.start(now+i*0.12); o.stop(now+i*0.12+0.3);
-                });
-            } else if (type === 'error') {
-                const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
-                o.type = 'sawtooth'; o.frequency.setValueAtTime(150, now);
-                g.gain.setValueAtTime(0.06, now); g.gain.linearRampToValueAtTime(0, now+0.15);
-                o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.15);
-            }
+                o.type = i < 4 ? 'square' : 'sine'; o.frequency.value = f;
+                g.gain.setValueAtTime(0.06, now + i*0.12); g.gain.linearRampToValueAtTime(0, now + i*0.12 + 0.3);
+                o.connect(g); g.connect(audioCtx.destination); o.start(now + i*0.12); o.stop(now + i*0.12 + 0.3);
+            });
+        }
+
+        // ============ SVG-АРТ ============
+        function fruitSVG(id) {
+            return `<svg class="art" viewBox="0 0 64 64" aria-hidden="true"><use href="#fruit-${id}"/></svg>`;
         }
 
         // ============ VISUALS ============
         function createConfetti() {
             const c = document.getElementById('confettiContainer'); c.innerHTML = '';
-            const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1'];
-            const shapes = ['■', '●', '▲', '★'];
-            for (let i=0; i<50; i++) {
-                const el = document.createElement('div'); el.className = 'confetti';
-                el.textContent = shapes[Math.floor(Math.random()*shapes.length)];
-                el.style.left = Math.random()*100+'%'; el.style.color = colors[Math.floor(Math.random()*colors.length)];
-                el.style.fontSize = (Math.random()*15+10)+'px';
-                el.style.animationDelay = Math.random()*2+'s'; el.style.animationDuration = (Math.random()*2+2)+'s';
+            const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#A29BFE', '#55EFC4'];
+            const shapes = ['', 'c-star', 'c-ring'];
+            for (let i=0; i<60; i++) {
+                const el = document.createElement('div');
+                const shape = shapes[Math.floor(Math.random()*shapes.length)];
+                const col = colors[Math.floor(Math.random()*colors.length)];
+                el.className = 'confetti' + (shape ? ' ' + shape : '');
+                el.style.left = Math.random()*100+'%';
+                el.style.background = col;
+                if (shape === 'c-ring') el.style.color = col;
+                const s = Math.random()*9+7;
+                el.style.width = s+'px'; el.style.height = s+'px';
+                if (!shape) el.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+                el.style.animationDelay = Math.random()*2+'s';
+                el.style.animationDuration = (Math.random()*2+2)+'s';
                 c.appendChild(el);
             }
+        }
+
+        // «Взрыв» частиц на месте собранной тройки
+        function spawnBurst(el, color) {
+            const board = document.getElementById('game-board');
+            const bRect = board.getBoundingClientRect();
+            const r = el.getBoundingClientRect();
+            if (!r.width) return;
+            const x = r.left + r.width/2 - bRect.left;
+            const y = r.top + r.height/2 - bRect.top;
+
+            const ring = document.createElement('div');
+            ring.className = 'burst-ring';
+            ring.style.left = x+'px'; ring.style.top = y+'px';
+            ring.style.borderColor = color;
+            board.appendChild(ring);
+            setTimeout(() => ring.remove(), 500);
+
+            const n = 16;
+            for (let i=0; i<n; i++) {
+                const p = document.createElement('div');
+                p.className = 'burst-p';
+                const ang = (Math.PI*2*i)/n + Math.random()*0.5;
+                const dist = 34 + Math.random()*60;
+                p.style.left = x+'px'; p.style.top = y+'px';
+                p.style.background = Math.random() > .35 ? color : '#ffffff';
+                const sz = 7 + Math.random()*8;
+                p.style.width = sz+'px'; p.style.height = sz+'px';
+                p.style.setProperty('--dx', (Math.cos(ang)*dist).toFixed(1)+'px');
+                p.style.setProperty('--dy', (Math.sin(ang)*dist - 12).toFixed(1)+'px');
+                p.style.animationDuration = (0.4 + Math.random()*0.3)+'s';
+                board.appendChild(p);
+                setTimeout(() => p.remove(), 800);
+            }
+        }
+
+        // Фолбэк иконок, если Font Awesome не загрузился
+        function applyIconFallbacks() {
+            let ok = false;
+            try {
+                ok = !!(document.fonts && document.fonts.check &&
+                        (document.fonts.check('900 16px "Font Awesome 6 Free"') ||
+                         document.fonts.check('400 16px "Font Awesome 6 Free"')));
+            } catch (e) { ok = false; }
+            if (ok) return;
+            document.querySelectorAll('i[data-fallback]').forEach(i => {
+                i.classList.remove('fa-solid','fa-regular','fa-brands');
+                i.className = i.className.replace(/\bfa-[a-z0-9-]+\b/g, '').trim();
+                i.textContent = i.getAttribute('data-fallback');
+            });
         }
 
         // ============ SAVE SYSTEM ============
@@ -574,14 +1122,15 @@
             tiles = []; dock = [];
         }
         function startGame(isNew) {
-            initAudio();
+            unlockAudio();
+            playSound('ui');
             if (isNew) { currentLevel = 1; score = 0; saveProgress(); } else { loadProgress(); }
             document.getElementById('start-screen').classList.add('hidden');
             loadLevel();
         }
-        function goHome() { saveProgress(); showStartScreen(); }
-        function nextLevel() { closeModal(); loadLevel(); }
-        function restartLevel() { closeModal(); score = Math.max(0, score - 50); saveProgress(); loadLevel(); }
+        function goHome() { playSound('ui'); saveProgress(); showStartScreen(); }
+        function nextLevel() { playSound('ui'); closeModal(); loadLevel(); }
+        function restartLevel() { playSound('ui'); closeModal(); score = Math.max(0, score - 50); saveProgress(); loadLevel(); }
         function closeModal() {
             document.getElementById('gameModal').classList.remove('active', 'win', 'lose');
             document.getElementById('confettiContainer').innerHTML = '';
@@ -589,9 +1138,9 @@
 
         // ============ LEVEL GEN ============
         function loadLevel() {
-            isLocked = false; dock = []; tiles = [];
-            document.getElementById('level-display').textContent = `Lv. ${currentLevel}`;
-            document.getElementById('score-display').textContent = score;
+            isLocked = false; levelFinished = false; dock = []; tiles = [];
+            document.getElementById('level-text').textContent = `Lv. ${currentLevel}`;
+            document.getElementById('score-text').textContent = score;
             
             const board = document.getElementById('game-board'); board.innerHTML = '';
             const dockEl = document.getElementById('dock'); dockEl.innerHTML = '';
@@ -612,17 +1161,23 @@
             
             const rect = board.getBoundingClientRect();
             const maxX = rect.width - 60; const maxY = rect.height - 70;
+            // сетка раскладки подстраивается под высоту экрана (чтобы поле не пустовало)
+            const GRID_X = 56, GRID_Y = 62;
+            const rows = Math.max(5, Math.floor((rect.height - 60) / GRID_Y));
+            const cols = Math.max(4, Math.floor((rect.width - 20) / GRID_X));
             const placed = [];
             let id = 0;
             
             deck.forEach((fruit, idx) => {
                 const el = document.createElement('div');
-                el.className = 'tile'; el.textContent = fruit;
+                el.className = 'tile';
+                el.dataset.f = fruit;
+                el.innerHTML = fruitSVG(fruit);
                 let x, y, attempts=0;
                 do {
-                    let r = Math.floor(Math.random()*6); let c = Math.floor(Math.random()*5);
-                    if (idx > deck.length*0.5) { r = 1 + Math.floor(Math.random()*4); c = 1 + Math.floor(Math.random()*3); }
-                    x = (c*55) + (Math.random()*20-10) + 10; y = (r*60) + (Math.random()*20-10) + 20;
+                    let r = Math.floor(Math.random()*rows); let c = Math.floor(Math.random()*cols);
+                    if (idx > deck.length*0.5) { r = 1 + Math.floor(Math.random()*Math.max(1, rows-2)); c = 1 + Math.floor(Math.random()*Math.max(1, cols-2)); }
+                    x = (c*GRID_X) + (Math.random()*20-10) + 8; y = (r*GRID_Y) + (Math.random()*20-10) + 14;
                     x = Math.max(5, Math.min(x, maxX)); y = Math.max(5, Math.min(y, maxY));
                     attempts++;
                 } while(isTooClose(x,y,placed) && attempts<100);
@@ -634,7 +1189,7 @@
                 el.style.left = x+'px'; el.style.top = y+'px'; el.style.zIndex = idx;
                 el.style.animation = `popScale 0.35s backwards ${idx*0.015}s`;
                 
-                const tObj = { id: id++, el, fruit, x, y, z: idx, inDock: false };
+                const tObj = { id: id++, el, fruit, x, y, w: el.offsetWidth, h: el.offsetHeight, z: idx, inDock: false };
                 const action = (e) => { e.preventDefault(); clickTile(tObj); };
                 el.addEventListener('click', action); el.addEventListener('touchstart', action, {passive:false});
                 board.appendChild(el); tiles.push(tObj);
@@ -647,21 +1202,23 @@
             return false;
         }
 
+        // Плитка заблокирована ТОЛЬКО если её центр физически прикрыт плиткой выше.
+        // То есть «куда можно тапнуть — то и кликается»: никаких фантомных блокировок,
+        // когда плитка выглядит свободной, но не нажимается.
         function updateClickability() {
             tiles.forEach(t => {
                 if(t.inDock) return;
+                const cx = t.x + t.w/2, cy = t.y + t.h/2;
                 let covered = false;
-                tiles.forEach(o => {
-                    if(o===t || o.inDock) return;
-                    if(o.z > t.z) {
-                        if (Math.abs(o.x - t.x) < COLLISION_W && Math.abs(o.y - t.y) < COLLISION_H) covered = true;
-                    }
-                });
-                if(covered) t.el.classList.add('disabled'); else t.el.classList.remove('disabled');
+                for (const o of tiles) {
+                    if (o === t || o.inDock || o.z <= t.z) continue;
+                    if (cx > o.x + 3 && cx < o.x + o.w - 3 && cy > o.y + 3 && cy < o.y + o.h - 3) { covered = true; break; }
+                }
+                t.el.classList.toggle('disabled', covered);
             });
         }
 
-        // ============ GAME LOGIC FIXES ============
+        // ============ GAME LOGIC ============
         function clickTile(t) {
             if(isLocked || t.el.classList.contains('disabled') || t.inDock) return;
             if(dock.length >= DOCK_SIZE) {
@@ -689,6 +1246,7 @@
             if(foundIndex !== -1) insIdx = foundIndex + 1;
             
             dock.splice(insIdx, 0, t);
+            // ЗВУК: плашка встала на место
             playSound('dock');
             
             requestAnimationFrame(() => {
@@ -696,6 +1254,8 @@
                 updateClickability();
                 setTimeout(() => {
                     // Разблокируем только когда анимация прошла
+                    renderDock();          // довставляем плашки точно в слоты после анимации
+                    updateClickability();
                     isLocked = false;
                     checkMatches();
                 }, 350);
@@ -707,7 +1267,7 @@
             const slots = document.querySelectorAll('.dock-slot');
             
             dock.forEach((t, i) => {
-                if(i >= slots.length) return;
+                if(i >= slots.length || !t.el.isConnected) return;
                 const sRect = slots[i].getBoundingClientRect();
                 const tx = (sRect.left + sRect.width/2) - bRect.left - t.el.offsetWidth/2;
                 const ty = (sRect.top + sRect.height/2) - bRect.top - t.el.offsetHeight/2;
@@ -724,10 +1284,16 @@
                 if(dock[i].fruit === dock[i+1].fruit && dock[i].fruit === dock[i+2].fruit) {
                     isLocked = true;
                     const triplet = [dock[i], dock[i+1], dock[i+2]];
+                    const color = FRUIT_COLORS[triplet[0].fruit] || '#ffcc00';
+
+                    // ЗВУК: взрыв
                     playSound('match');
+                    // визуальный взрыв
+                    triplet.forEach((t, k) => setTimeout(() => spawnBurst(t.el, color), k*60));
+
                     score += 50;
                     bestScore = Math.max(score, bestScore);
-                    document.getElementById('score-display').textContent = score;
+                    document.getElementById('score-text').textContent = score;
                     
                     triplet.forEach(t => t.el.style.animation = 'matchAnim 0.35s forwards');
                     
@@ -736,21 +1302,38 @@
                         dock.splice(i, 3);
                         renderDock();
                         isLocked = false;
-                        
-                        const rem = tiles.filter(t => !t.inDock).length;
-                        if(rem === 0 && dock.length === 0) {
-                            playSound('win');
-                            currentLevel++;
-                            saveProgress();
-                            showWinModal(currentLevel - 1);
-                        } else {
-                            setTimeout(checkMatches, 100);
-                        }
+                        settleState();
+                        // контрольная «доза» после анимаций: позиции дока и состояние
+                        setTimeout(() => { renderDock(); updateClickability(); settleState(); }, 330);
                     }, 350);
                     return;
                 }
             }
-            if(dock.length === DOCK_SIZE) {
+            settleState();
+        }
+
+        // Страховка от «залипания»: проверяем цепные тройки, победу и поражение
+        // каждый раз, когда док пришёл в покой. Игра больше не может застрять.
+        function settleState() {
+            if (levelFinished) return;
+            for (let i=0; i<dock.length-2; i++) {
+                if (dock[i].fruit === dock[i+1].fruit && dock[i].fruit === dock[i+2].fruit) {
+                    if (!isLocked) {
+                        isLocked = true;
+                        setTimeout(() => { isLocked = false; checkMatches(); }, 60);
+                    }
+                    return;
+                }
+            }
+            const rem = tiles.filter(t => !t.inDock).length;
+            if (rem === 0 && dock.length === 0) {
+                levelFinished = true;
+                playSound('win');
+                currentLevel++;
+                saveProgress();
+                showWinModal(currentLevel - 1);
+            } else if (dock.length >= DOCK_SIZE) {
+                levelFinished = true;
                 playSound('error');
                 showLoseModal();
             }
@@ -779,6 +1362,11 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            initSfx();
+            // первичная разблокировка звука по любому касанию/клику
+            ['pointerdown','touchstart','click'].forEach(ev =>
+                window.addEventListener(ev, unlockAudio, { once: true, passive: true }));
+
             document.getElementById('btn-continue').addEventListener('click', () => startGame(false));
             document.getElementById('btn-new-game').addEventListener('click', () => startGame(true));
             document.getElementById('btn-home').addEventListener('click', goHome);
@@ -792,7 +1380,13 @@
             document.addEventListener('touchmove', (e) => { if(e.touches.length > 1) e.preventDefault(); }, {passive:false});
             window.addEventListener('resize', () => { if(dock.length>0) setTimeout(renderDock, 100); });
             document.addEventListener('visibilitychange', () => { if (document.hidden && tiles.length > 0) saveProgress(); });
+
+            // Font Awesome: подстраховка, если шрифт не подгрузился
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(() => setTimeout(applyIconFallbacks, 300));
+            }
+            setTimeout(applyIconFallbacks, 1500);
         });
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3a1be704d4a1b03',t:'MTc4OTI0NTgwMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
