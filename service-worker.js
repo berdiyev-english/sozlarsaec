@@ -1,5 +1,5 @@
 /* Bewords Service Worker - Offline Mode */
-const CACHE_NAME = 'bewords-cache-v19';
+const CACHE_NAME = 'bewords-cache-v20';
 
 // Список файлов, которые нужно сохранить СРАЗУ
 const STATIC_ASSETS = [
@@ -45,14 +45,39 @@ const STATIC_ASSETS = [
   'au/ui/game_over.mp3',
 ];
 
+// Белый список: только эти mp3 имеют право кешироваться в SW
+const AUDIO_WHITELIST = [
+  'intro.mp3',
+  'fall.mp3',
+  'pop.mp3',
+  'streak.mp3',
+  'open.mp3',
+  'incorrect.mp3',
+  'final.mp3',
+  'correct.mp3',
+  'animal.mp3',
+  'tap.mp3',
+  'coin.mp3',
+  'pop_baloon.mp3',
+  'new_record.mp3',
+  'ice_hit.mp3',
+  'plane.mp3',
+  'fire_break.mp3',
+  'new_level.mp3',
+  'new_level_pet.mp3',
+  'game_over.mp3',
+];
+
 // 1. Установка (Кешируем статику)
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[SW] Caching static assets');
-      // Пытаемся скачать всё, но если что-то упадет - не страшно
-      return cache.addAll(STATIC_ASSETS).catch(err => console.warn('Some assets failed to cache', err));
+      // Каждый файл кешируется независимо — одна ошибка не роняет всё
+      return Promise.allSettled(
+        STATIC_ASSETS.map((url) => cache.add(url))
+      );
     })
   );
 });
@@ -70,43 +95,55 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// 3. Перехват запросов (Стратегия: Network First, then Cache)
-// Мы сначала стучимся в интернет, если нет - берем из кеша.
-// Для картинок/аудио лучше Stale-While-Revalidate, но это сложнее.
+// 3. Перехват запросов
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   const url = new URL(req.url);
 
-  // Игнорируем POST запросы и API (кроме картинок)
+  // Игнорируем не-GET запросы
   if (req.method !== 'GET') return;
 
-  // Аудио не кешируем принудительно (экономим место), браузер сам справится
-  if (url.pathname.endsWith('.mp3')) return;
+  // --- АУДИО ---
+  if (url.pathname.endsWith('.mp3')) {
+    // mp3 вне белого списка — не трогаем (обычная сеть, без кеша SW)
+    if (!AUDIO_WHITELIST.includes(url.pathname.split('/').pop())) return;
 
+    // Cache First: сначала кеш, иначе скачиваем и докешируем
+    event.respondWith(
+      caches.match(req).then((cached) => {
+        if (cached) return cached;
+        return fetch(req).then((networkRes) => {
+          if (networkRes.ok) {
+            const resClone = networkRes.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(req, resClone));
+          }
+          return networkRes;
+        });
+      })
+    );
+    return;
+  }
+
+  // --- ОСТАЛЬНОЕ: Network First, then Cache ---
   event.respondWith(
     fetch(req)
       .then((networkRes) => {
-        // Если скачали успешно - обновляем кеш (для следующего раза)
-        const resClone = networkRes.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          if (req.url.startsWith('http')) { // Кешируем только http/https
-             cache.put(req, resClone);
-          }
-        });
+        if (networkRes.ok && req.url.startsWith('http')) {
+          const resClone = networkRes.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, resClone));
+        }
         return networkRes;
       })
       .catch(() => {
-        // Если интернета нет - идем в кеш
         return caches.match(req).then((cachedRes) => {
           if (cachedRes) return cachedRes;
-          
-          // Если и в кеше нет, и это картинка - отдаем заглушку
+
+          // Заглушка для картинок
           if (req.destination === 'image') {
-             return caches.match('/nophoto.jpg');
+            return caches.match('./app-photos/error/nophoto.jpg');
           }
-          
-          // Иначе всё плохо (оффлайн страница?)
-          return null; 
+
+          return null;
         });
       })
   );
