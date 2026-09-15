@@ -23,7 +23,26 @@ const STATIC_ASSETS = [
   'app-photos/motivation/m4.jpg',
   'app-photos/motivation/m5.jpg',
   'app-photos/bob/Bob_loading.PNG',
-  'app-photos/bob/instructor.png'
+  'app-photos/bob/instructor.png',
+  'au/ui/intro.mp3',
+  'au/ui/fall.mp3',
+  'au/ui/pop.mp3',
+  'au/ui/streak.mp3',
+  'au/ui/open.mp3',
+  'au/ui/incorrect.mp3',
+  'au/ui/final.mp3',
+  'au/ui/correct.mp3',
+  'au/ui/animal.mp3',
+  'au/ui/tap.mp3',
+  'au/ui/coin.mp3',
+  'au/ui/pop_baloon.mp3',
+  'au/ui/new_record.mp3',
+  'au/ui/ice_hit.mp3',
+  'au/ui/plane.mp3',
+  'au/ui/fire_break.mp3',
+  'au/ui/new_level.mp3',
+  'au/ui/new_level_pet.mp3',
+  'au/ui/game_over.mp3',
 ];
 
 // 1. Установка (Кешируем статику)
