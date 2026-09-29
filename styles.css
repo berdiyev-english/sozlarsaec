@@ -10714,3 +10714,32 @@ body.tour-spotlight-active .node.active .node-btn {
     .full-cal-buy-btn { width: 100%; justify-content: center; }
 }
 
+/* ============================================
+ФИКС PWA СЪЕЖАЕТ ШАПКА И КУРС
+============================================ */
+
+/* Фикс шапки в PWA после выхода из урока */
+.app-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    /* dvh для PWA — реальная высота без адресной строки */
+}
+
+/* Принудительный пересчёт после выхода из fullscreen */
+body:not(.training-fullscreen) .app-header {
+    transform: translateZ(0); /* форсирует пересчёт sticky */
+}
+
+/* На мобильных: хедер не должен уезжать */
+@media (max-width: 767px) {
+    .app-container {
+        height: 100vh;
+        height: 100dvh; /* PWA-фикс */
+    }
+    .main-content {
+        height: calc(100vh - var(--header-h, 68px) - 70px);
+        height: calc(100dvh - var(--header-h, 68px) - 70px);
+    }
+}
+
