@@ -10438,3 +10438,376 @@ FROZEN FIRE DESIGN — универсальный для обеих тем
     transform: translateY(4px);
     box-shadow: 0 1px 0 var(--primary-dark, #1899d6);
 }
+
+/* ============================================
+   НОВЫЙ ОНБОРДИНГ
+============================================ */
+.no-soon-badge {
+    display: inline-block;
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 8px;
+    margin-left: 6px;
+    text-transform: uppercase;
+}
+.no-main-btn {
+    background: linear-gradient(135deg, #1cb0f6, #0099db) !important;
+    box-shadow: 0 4px 0 #0077b6 !important;
+}
+.no-text-link {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 8px;
+    font-family: inherit;
+}
+.no-text-link:hover { color: var(--text-primary); }
+
+/* Пульсация подсветки в туре */
+@keyframes tourPulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(28,176,246,0.3), 0 0 20px rgba(28,176,246,0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(28,176,246,0.15), 0 0 30px rgba(28,176,246,0.6); }
+}
+#tourSpotlight div[style*="border:3px solid #1cb0f6"] {
+    animation: tourPulse 2s infinite;
+}
+body.onboarding-active .app-container,
+body.onboarding-active .bottom-nav,
+body.onboarding-active .app-header {
+    visibility: hidden !important;
+}
+
+/* ─── ТУР: глушим свечение активного узла под spotlight ─── */
+body.tour-spotlight-active .node.active::before,
+body.tour-spotlight-active .node.active::after,
+body.tour-spotlight-active .node::before,
+body.tour-spotlight-active .node::after {
+    display: none !important;
+    animation: none !important;
+}
+body.tour-spotlight-active .node.active .node-btn {
+    animation: none !important;
+}
+
+/* ============================================
+ПОЛНОЭКРАННЫЙ КАЛЕНДАРЬ СТРИКА (новая версия)
+============================================ */
+.full-cal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    padding: calc(16px + env(safe-area-inset-top, 0px)) 20px calc(16px + env(safe-area-inset-bottom, 0px));
+    animation: fullCalFadeIn 0.3s ease;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@keyframes fullCalFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.full-cal-screen {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Шапка */
+.full-cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.full-cal-close {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.full-cal-close:hover {
+    color: #ff4b4b;
+    border-color: #ff4b4b;
+    background: rgba(255, 75, 75, 0.08);
+}
+
+.full-cal-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.full-cal-title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+
+.full-cal-streak-num {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #ff6b35;
+    line-height: 1;
+}
+
+/* Статы */
+.full-cal-stats {
+    display: flex;
+    gap: 10px;
+}
+
+.full-cal-stat {
+    flex: 1;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 14px 8px;
+    text-align: center;
+}
+
+.full-cal-stat-num {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #ff6b35;
+    line-height: 1;
+}
+
+.full-cal-stat-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* Блок заморозок */
+.full-cal-freeze-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+    border: 2px solid #0ea5e9;
+    border-radius: 18px;
+    padding: 14px 16px;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+}
+
+[data-theme="dark"] .full-cal-freeze-box {
+    background: linear-gradient(135deg, #0c4a6e, #075985);
+    border-color: #0ea5e9;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
+}
+
+.full-cal-freeze-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.full-cal-freeze-cube {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.full-cal-freeze-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.full-cal-freeze-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #0369a1;
+}
+
+[data-theme="dark"] .full-cal-freeze-label {
+    color: #7dd3fc;
+}
+
+.full-cal-freeze-count {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+
+.full-cal-buy-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, #ffc800, #ffb020);
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #d97706;
+    transition: transform 0.1s, box-shadow 0.1s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+.full-cal-buy-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #d97706;
+}
+
+.full-cal-buy-btn.disabled {
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    box-shadow: 0 4px 0 var(--border-color);
+    cursor: not-allowed;
+}
+
+.full-cal-buy-btn.disabled:active {
+    transform: none;
+    box-shadow: 0 4px 0 var(--border-color);
+}
+
+/* Тело календаря — переиспользуем .cal-* */
+.full-cal-body {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 20px;
+    padding: 16px;
+}
+
+/* Адаптив */
+@media (max-width: 380px) {
+    .full-cal-stats { gap: 6px; }
+    .full-cal-stat { padding: 10px 4px; }
+    .full-cal-stat-num { font-size: 1.3rem; }
+    .full-cal-freeze-box { flex-wrap: wrap; }
+    .full-cal-buy-btn { width: 100%; justify-content: center; }
+}
+
+/* ============================================================
+   БОЛЬШИЕ МОБИЛЬНЫЕ ЭКРАНЫ: ПРЕВЬЮ УРОКА (с Бобом)
+   ============================================================ */
+@media (max-width: 767px) and (min-height: 750px) {
+
+    .tms-full .training-mode-card {
+        padding: calc(24px + env(safe-area-inset-top, 0px)) 24px calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    /* Скролл-зона: центрируем контент по вертикали */
+    .tms-full .training-mode-card .tms-scroll {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    /* Боб побольше */
+    .tms-full .training-mode-card .tms-scroll img[src*="Bob"],
+    .tms-full .training-mode-card .tms-scroll img[src*="bob"] {
+        width: 180px !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* Заголовок */
+    .tms-full .training-mode-card .tms-head h2 {
+        font-size: 1.6rem !important;
+    }
+
+    /* Описание */
+    .tms-full .training-mode-card .tms-scroll > p {
+        font-size: 1.1rem !important;
+        margin-bottom: 28px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Карточка формата урока */
+    .tms-full .training-mode-card .tms-scroll > div[style*="display:flex"] {
+        padding: 22px !important;
+        max-width: 420px !important;
+        width: 100% !important;
+        border-radius: 20px !important;
+    }
+
+    /* Иконка формата */
+    .tms-full .training-mode-card .tms-scroll > div[style*="display:flex"] > div:first-child {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 1.5rem !important;
+        border-radius: 16px !important;
+    }
+
+    /* Название формата */
+    .tms-full .training-mode-card .tms-scroll > div[style*="display:flex"] > div:last-child > div:first-child {
+        font-size: 1.15rem !important;
+    }
+
+    /* Описание формата */
+    .tms-full .training-mode-card .tms-scroll > div[style*="display:flex"] > div:last-child > div:last-child {
+        font-size: 0.95rem !important;
+    }
+
+    /* Кнопки внизу */
+    .tms-full .training-mode-card .tms-foot {
+        padding-top: 28px !important;
+    }
+
+    .tms-full .training-mode-card .tms-foot button:first-child {
+        padding: 18px !important;
+        font-size: 1.15rem !important;
+        border-radius: 18px !important;
+    }
+
+    .tms-full .training-mode-card .tms-foot button:last-child {
+        padding: 15px !important;
+        font-size: 1rem !important;
+        border-radius: 16px !important;
+    }
+}
+/* Календарь стрика: не прилипает к верху на больших мобильных */
+@media (max-width: 767px) and (min-height: 700px) {
+    .streak-calendar-overlay {
+        padding: 80px 20px 40px;
+        align-items: flex-start;
+    }
+    .streak-calendar-card {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 767px) and (min-height: 850px) {
+    .streak-calendar-overlay {
+        padding-top: 120px;
+    }
+}
