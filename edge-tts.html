@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BeWords - TTS Tester</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+  body {
+    background: #0d1b2a;
+    min-height: 100vh;
+    display:flex;
+    justify-content:center;
+    padding: 30px 15px;
+  }
+  .container {
+    width:100%;
+    max-width: 480px;
+  }
+  h1 {
+    color:white;
+    font-size: 24px;
+    margin-bottom: 6px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .subtitle {
+    color:#8a99a8;
+    font-size:13px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    background:#16263a;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  label {
+    color:#aab8c5;
+    font-size: 13px;
+    font-weight:600;
+    display:block;
+    margin-bottom: 8px;
+  }
+
+  textarea, select, input[type="range"] {
+    width:100%;
+    background:#0d1b2a;
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:10px;
+    color:white;
+    padding:12px;
+    font-size:15px;
+    font-family:inherit;
+  }
+
+  textarea {
+    resize:none;
+    height: 70px;
+    margin-bottom:16px;
+  }
+  textarea:focus, select:focus {
+    outline:none;
+    border-color:#4ea8e8;
+  }
+
+  select {
+    margin-bottom:16px;
+    cursor:pointer;
+  }
+
+  .row {
+    display:flex;
+    gap:12px;
+    margin-bottom:16px;
+  }
+  .row > div { flex:1; }
+
+  .slider-row {
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .slider-value {
+    color:#4ea8e8;
+    font-weight:700;
+    font-size:13px;
+    min-width:45px;
+    text-align:right;
+  }
+
+  .btn {
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    transition: all 0.15s;
+  }
+  .btn-primary {
+    background:#4ea8e8;
+    color:white;
+  }
+  .btn-primary:hover { background:#3a93d6; }
+  .btn-primary:disabled {
+    background:#2c3e50;
+    color:#666;
+    cursor:not-allowed;
+  }
+  .btn-secondary {
+    background:#2c3e50;
+    color:white;
+    margin-top:10px;
+  }
+  .btn-secondary:hover { background:#34495e; }
+
+  .status {
+    margin-top:14px;
+    padding:12px;
+    border-radius:10px;
+    font-size:13px;
+    display:none;
+  }
+  .status.show { display:block; }
+  .status.loading { background:rgba(78,168,232,0.15); color:#4ea8e8; }
+  .status.success { background:rgba(46,204,113,0.15); color:#2ecc71; }
+  .status.error { background:rgba(231,76,60,0.15); color:#e74c3c; }
+
+  .word-list {
+    margin-top:20px;
+  }
+  .word-item {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:#16263a;
+    padding:14px 16px;
+    border-radius:12px;
+    margin-bottom:10px;
+    cursor:pointer;
+    transition: background 0.15s;
+  }
+  .word-item:hover { background:#1c2f45; }
+  .word-item .word-text {
+    flex:1;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+  }
+  .word-item .transcription {
+    color:#8a99a8;
+    font-size:13px;
+  }
+  .speaker-btn {
+    width:36px;height:36px;
+    border-radius:50%;
+    background:#4ea8e8;
+    border:none;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .speaker-btn:hover { background:#3a93d6; }
+  .speaker-btn.playing {
+    animation: pulse 0.6s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform:scale(1); }
+    50% { transform:scale(1.15); }
+  }
+
+  audio { width:100%; margin-top:12px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🔊 BeWords TTS Tester</h1>
+  <p class="subtitle">Тестирование озвучки через Microsoft Edge/Bing TTS (неофициальный метод)</p>
+
+  <!-- Панель настроек -->
+  <div class="card">
+    <label>Текст для озвучки</label>
+    <textarea id="textInput" placeholder="Введите слово или фразу...">pronunciation</textarea>
+
+    <label>Голос</label>
+    <select id="voiceSelect">
+      <optgroup label="🇺🇸 US English">
+        <option value="en-US-JennyNeural">Jenny (female)</option>
+        <option value="en-US-AriaNeural">Aria (female)</option>
+        <option value="en-US-GuyNeural">Guy (male)</option>
+        <option value="en-US-DavisNeural">Davis (male)</option>
+      </optgroup>
+      <optgroup label="🇬🇧 UK English">
+        <option value="en-GB-SoniaNeural">Sonia (female)</option>
+        <option value="en-GB-RyanNeural">Ryan (male)</option>
+        <option value="en-GB-LibbyNeural">Libby (female)</option>
+      </optgroup>
+      <optgroup label="🇦🇺 Australian English">
+        <option value="en-AU-NatashaNeural">Natasha (female)</option>
+        <option value="en-AU-WilliamNeural">William (male)</option>
+      </optgroup>
+    </select>
+
+    <div class="row">
+      <div>
+        <label>Скорость</label>
+        <div class="slider-row">
+          <input type="range" id="rateSlider" min="-50" max="50" value="0" step="5">
+          <span class="slider-value" id="rateValue">0%</span>
+        </div>
+      </div>
+      <div>
+        <label>Тон</label>
+        <div class="slider-row">
+          <input type="range" id="pitchSlider" min="-50" max="50" value="0" step="5">
+          <span class="slider-value" id="pitchValue">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" id="speakBtn" onclick="handleSpeak()">
+      ▶️ Озвучить
+    </button>
+
+    <div class="status" id="status"></div>
+
+    <audio id="audioPlayer" controls style="display:none;"></audio>
+    <button class="btn btn-secondary" id="downloadBtn" style="display:none;" onclick="downloadAudio()">
+      ⬇️ Скачать MP3
+    </button>
+  </div>
+
+  <!-- Пример использования в карточках слов -->
+  <h2 style="color:white; font-size:16px; margin-bottom:12px;">📝 Пример карточек слов</h2>
+  <div class="word-list" id="wordList"></div>
+</div>
+
+<script>
+  let currentAudioBlob = null;
+
+  // ===== UI: слайдеры =====
+  const rateSlider = document.getElementById('rateSlider');
+  const pitchSlider = document.getElementById('pitchSlider');
+  rateSlider.addEventListener('input', () => {
+    document.getElementById('rateValue').textContent = rateSlider.value + '%';
+  });
+  pitchSlider.addEventListener('input', () => {
+    document.getElementById('pitchValue').textContent = pitchSlider.value + '%';
+  });
+
+  // ===== Статус =====
+  function setStatus(type, text) {
+    const el = document.getElementById('status');
+    el.className = 'status show ' + type;
+    el.textContent = text;
+  }
+  function hideStatus() {
+    document.getElementById('status').className = 'status';
+  }
+
+  // ===== Основная функция озвучки =====
+  async function handleSpeak() {
+    const text = document.getElementById('textInput').value.trim();
+    const voice = document.getElementById('voiceSelect').value;
+    const rate = rateSlider.value + '%';
+    const pitch = pitchSlider.value + '%';
+
+    if (!text) {
+      setStatus('error', 'Введите текст для озвучки');
+      return;
+    }
+
+    const btn = document.getElementById('speakBtn');
+    btn.disabled = true;
+    btn.textContent = '⏳ Генерация...';
+    setStatus('loading', 'Подключение к серверу озвучки...');
+
+    try {
+      const audioBlob = await synthesizeSpeech(text, voice, rate, pitch);
+      currentAudioBlob = audioBlob;
+
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const player = document.getElementById('audioPlayer');
+      player.src = audioUrl;
+      player.style.display = 'block';
+      player.play();
+
+      document.getElementById('downloadBtn').style.display = 'flex';
+      setStatus('success', `✓ Озвучено успешно (${(audioBlob.size/1024).toFixed(1)} KB)`);
+    } catch (err) {
+      console.error(err);
+      setStatus('error', '✗ Ошибка: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '▶️ Озвучить';
+    }
+  }
+
+  function downloadAudio() {
+    if (!currentAudioBlob) return;
+    const url = URL.createObjectURL(currentAudioBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = document.getElementById('textInput').value.trim().replace(/\s+/g,'_') + '.mp3';
+    a.click();
+  }
+
+  // ===== Ядро: синтез речи через Edge TTS WebSocket =====
+  function synthesizeSpeech(text, voice, rate = '0%', pitch = '0%') {
+    return new Promise((resolve, reject) => {
+      const TRUSTED_TOKEN = '6A5AA1D4EAFF4E9FB37E23D68491D6F4';
+      const connectionId = generateId();
+      const wsUrl = `wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=${TRUSTED_TOKEN}&ConnectionId=${connectionId}`;
+
+      let ws;
+      try {
+        ws = new WebSocket(wsUrl);
+      } catch (e) {
+        return reject(new Error('Не удалось создать WebSocket соединение'));
+      }
+
+      const audioChunks = [];
+      const timeout = setTimeout(() => {
+        ws.close();
+        reject(new Error('Таймаут соединения (10с)'));
+      }, 10000);
+
+      ws.binaryType = 'arraybuffer';
+
+      ws.onopen = () => {
+        const requestId = generateId();
+        const timestamp = new Date().toISOString();
+
+        // 1. Конфигурация
+        const configMsg =
+`X-Timestamp:${timestamp}\r
+Content-Type:application/json; charset=utf-8\r
+Path:speech.config\r
+\r
+{"context":{"synthesis":{"audio":{"metadataoptions":{"sentenceBoundaryEnabled":false,"wordBoundaryEnabled":false},"outputFormat":"audio-24khz-96kbitrate-mono-mp3"}}}}`;
+        ws.send(configMsg);
+
+        // 2. SSML с текстом
+        const ssml =
+`<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='en-US'>
+  <voice name='${voice}'>
+    <prosody rate='${rate}' pitch='${pitch}'>${escapeXml(text)}</prosody>
+  </voice>
+</speak>`;
+
+        const ssmlMsg =
+`X-RequestId:${requestId}\r
+Content-Type:application/ssml+xml\r
+X-Timestamp:${timestamp}\r
+Path:ssml\r
+\r
+${ssml}`;
+        ws.send(ssmlMsg);
+      };
+
+      ws.onmessage = (event) => {
+        if (typeof event.data === 'string') {
+          if (event.data.includes('Path:turn.end')) {
+            clearTimeout(timeout);
+            ws.close();
+            if (audioChunks.length === 0) {
+              reject(new Error('Аудио не получено'));
+            } else {
+              const blob = new Blob(audioChunks, { type: 'audio/mpeg' });
+              resolve(blob);
+            }
+          }
+        } else {
+          // Бинарные данные: заголовок + аудио
+          const buffer = event.data;
+          const view = new DataView(buffer);
+          const headerLength = view.getUint16(0, false); // big-endian
+          const headerText = new TextDecoder('utf-8').decode(buffer.slice(2, 2 + headerLength));
+
+          if (headerText.includes('Path:audio')) {
+            const audioData = buffer.slice(2 + headerLength);
+            audioChunks.push(audioData);
+          }
+        }
+      };
+
+      ws.onerror = (err) => {
+        clearTimeout(timeout);
+        reject(new Error('WebSocket ошибка соединения (возможно, блокировка CORS/сети)'));
+      };
+
+      ws.onclose = (event) => {
+        clearTimeout(timeout);
+        if (audioChunks.length > 0) {
+          // Уже resolved выше, ничего не делаем
+        }
+      };
+    });
+  }
+
+  function generateId() {
+    return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  function escapeXml(text) {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  }
+
+  // ===== Демо: список слов с кнопками озвучки =====
+  const demoWords = [
+    { word: 'Pronunciation', transcription: '/prəˌnʌnsiˈeɪʃən/' },
+    { word: 'Vocabulary', transcription: '/vəˈkæbjʊləri/' },
+    { word: 'Achievement', transcription: '/əˈtʃiːvmənt/' },
+    { word: 'Opportunity', transcription: '/ˌɒpəˈtjuːnəti/' },
+  ];
+
+  function renderWordList() {
+    const container = document.getElementById('wordList');
+    container.innerHTML = demoWords.map((item, idx) => `
+      <div class="word-item">
+        <button class="speaker-btn" id="speaker-${idx}" onclick="quickSpeak('${item.word}', ${idx})">🔊</button>
+        <div>
+          <div class="word-text">${item.word}</div>
+          <div class="transcription">${item.transcription}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function quickSpeak(word, idx) {
+    const btn = document.getElementById(`speaker-${idx}`);
+    btn.classList.add('playing');
+    try {
+      const voice = document.getElementById('voiceSelect').value;
+      const blob = await synthesizeSpeech(word, voice);
+      const audio = new Audio(URL.createObjectURL(blob));
+      audio.onended = () => btn.classList.remove('playing');
+      audio.play();
+    } catch (err) {
+      console.error(err);
+      btn.classList.remove('playing');
+      alert('Ошибка озвучки: ' + err.message);
+    }
+  }
+
+  renderWordList();
+</script>
+
+</body>
+</html>
