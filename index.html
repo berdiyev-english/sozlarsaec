@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -37,9 +38,10 @@
   <meta property="og:url" content="https://bewords.ru">
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://bewords.ru">
-  <link rel="preload" as="style" href="styles.css">
+  <link rel="preload" as="style" href="styles.css?v=2026-10-05-7">
   <link rel="preload" as="style" href="fonts/fontawesome/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <!-- ?v= — защита от кэша service worker'а: меняй при каждом деплое -->
+<link rel="stylesheet" href="styles.css?v=2026-10-05-7">
   <link rel="stylesheet" href="fonts/fontawesome/css/all.min.css">
 
   <style>
@@ -794,26 +796,8 @@ body {
     <!-- Ошибка -->
     <div class="translator-error" id="trError" style="display: none;"></div>
 
-    <!-- Результаты перевода -->
-    <div class="translator-results" id="trResults" style="display: none;">
-        <div class="tr-result-card">
-            <div class="tr-result-main">
-                <div class="tr-result-label">Перевод</div>
-                <div class="tr-result-text" id="trMainTranslation">...</div>
-            </div>
-            
-            <!-- Дополнительные значения (появятся, если они есть) -->
-            <div class="tr-result-alternatives" id="trAlternatives" style="display: none;">
-                <div class="tr-alt-label">Другие значения:</div>
-                <div class="tr-alt-list" id="trAltList"></div>
-            </div>
-
-            <!-- Кнопка добавления -->
-            <button class="btn-add-to-dict" id="trAddToDictBtn">
-                <i class="fas fa-plus"></i> Добавить в словарь
-            </button>
-        </div>
-    </div>
+    <!-- Результаты перевода: содержимое целиком рисует скрипт переводчика (render → .tr-main/.tr-group) -->
+    <div class="translator-results" id="trResults" style="display: none;"></div>
 
 </div>
 
@@ -1112,9 +1096,11 @@ body {
 <script src="words_data.js"></script>
 <script src="sentences-data.js"></script>
 <script src="grammar.js"></script> 
-<script src="app.js"></script>
-<script src="auth_no_sync.js"></script> 
+<!-- pako нужен app.js (сжатие кодов «поделиться словами») — подключаем до app.js.
+     Если CDN недоступен (офлайн в нативе), app.js ловит ошибку и использует base64-фолбэк. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+<script src="app.js?v=2026-10-05-7"></script>
+<script src="auth_no_sync.js"></script> 
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -1139,7 +1125,7 @@ body {
   function showUpdateNotification() {
     const toast = document.createElement('div');
     toast.className = 'toast info';
-    toast.style.cssText = 'position:fixed; bottom:80px; left:50%; transform:translateX(-50%); z-index:9999; cursor:pointer;';
+    toast.style.cssText = 'position:fixed; bottom:calc(80px + env(safe-area-inset-bottom, 0px)); left:50%; transform:translateX(-50%); z-index:2147483000; cursor:pointer; max-width:90%;';
     toast.innerHTML = '<span>Доступно обновление! Нажмите, чтобы применить. 🔄</span>';
     
     toast.onclick = () => {
@@ -1446,137 +1432,14 @@ function setLang(from, to){
   }
 </script>
 <script>
-(function () {
-  'use strict';
-
-  var loadingLayer = document.getElementById('loading-layer');
-  var mascotFloat  = document.getElementById('mascotFloat');
-  var mascotScale  = document.getElementById('mascotScale');
-  var fadeGroup    = document.getElementById('fadeGroup');
-  var tipsGroup    = document.getElementById('tipsGroup');
-  var shockwave    = document.getElementById('shockwave');
-  var tipElement   = document.getElementById('randomTip');
-  var textFillWrap = document.getElementById('textFillWrap');
-  var appContainer = document.querySelector('.app-container');
-
-  // Если оверлея почему-то нет — просто показываем приложение
-  if (!loadingLayer) {
-    if (appContainer) appContainer.style.visibility = 'visible';
-    return;
-  }
-
-  var finished = false;
-  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Режим слабого устройства
+  /* Сплэш-экран (#loading-layer) из проекта удалён — разметки под него нет.
+     Оставляем только показ приложения: .app-container стартует с visibility:hidden,
+     а textual-сплэш #simple-splash закрывает экран и убирается отдельным скриптом ниже.
+     (Мёртвый код сплэша сохранён в DEAD_splash_screen.txt) */
   (function () {
-    var mem = navigator.deviceMemory, cores = navigator.hardwareConcurrency;
-    if ((mem && mem <= 2) || (cores && cores <= 4)) loadingLayer.classList.add('bw-low-end');
-  })();
-
-  // Блокируем скролл, пока виден сплэш
-  document.body.classList.add('bw-splash-lock');
-
-  // Случайный совет
-  var tips = [
-    "Ваш питомец скучает, если вы долго не заходите в приложение 🥺",
-    "Изучайте по 5 новых слов в день — это 1825 слов за год! 🧠",
-    "Включите уведомления, чтобы не пропустить тренировку ⏰",
-    "Повторение — мать учения , не бойтесь повторять старые слова ↺",
-    "Проговаривайте слова вслух — так они запоминаются лучше 🗣️",
-    "Занимайтесь по 10 минут в день — это эффективнее, чем час раз в неделю 📅",
-    "Ошибки — это нормально! Мозг лучше запоминает то, в чём сначала ошибся ✅",
-    "Повторяйте слова перед сном — это помогает закрепить их в долгосрочной памяти 🌙",
-    "Вы можете редактировать слова , если нажмете на иконку с книгой над дорожкой 📖",
-    "Если нет желания что-то учить , то заходите просто поиграть в игры 🎮",
-    "Вы можете поделиться своими словами с другом нажав на 🔗",
-    "Поддерживайте ударный темп — так проще не бросить учёбу 📈"
-  ];
-  if (tipElement) tipElement.textContent = tips[Math.floor(Math.random() * tips.length)];
-
-  function setProgress(p) {
-    var c = Math.max(0, Math.min(100, p));
-    if (textFillWrap) textFillWrap.style.width = c + '%';
-  }
-
-  function revealApp() {
+    var appContainer = document.querySelector('.app-container');
     if (appContainer) appContainer.style.visibility = 'visible';
-    document.body.classList.remove('bw-splash-lock');
-  }
-
-  function positionShockwave() {
-    if (!mascotFloat || !shockwave) return;
-    var r = mascotFloat.getBoundingClientRect();
-    shockwave.style.left = (r.left + r.width / 2) + 'px';
-    shockwave.style.top  = (r.top + r.height / 2) + 'px';
-  }
-
-  function triggerWowEffect() {
-    if (finished) return;
-    finished = true;
-
-    if (prefersReducedMotion) {
-      revealApp();
-      loadingLayer.classList.add('bw-fade-out');
-      setTimeout(function () { if (loadingLayer.parentNode) loadingLayer.parentNode.removeChild(loadingLayer); }, 450);
-      return;
-    }
-
-    if (fadeGroup) fadeGroup.classList.add('hidden');
-    if (tipsGroup) tipsGroup.classList.add('hidden');
-
-    setTimeout(function () {
-      if (mascotFloat) mascotFloat.classList.add('frozen');
-      if (mascotScale) mascotScale.classList.add('frozen', 'anticipate');
-    }, 160);
-
-    setTimeout(function () {
-      if (mascotScale) { mascotScale.classList.remove('anticipate'); mascotScale.classList.add('zoom-in'); }
-    }, 320);
-
-    setTimeout(function () {
-      if (mascotScale) { mascotScale.classList.remove('zoom-in'); mascotScale.classList.add('poof'); }
-      positionShockwave();
-      if (shockwave) shockwave.classList.add('explode');
-    }, 740);
-
-    setTimeout(function () {
-      revealApp();
-      loadingLayer.classList.add('bw-fade-out');
-    }, 890);
-
-    setTimeout(function () {
-      if (loadingLayer.parentNode) loadingLayer.parentNode.removeChild(loadingLayer);
-    }, 1500);
-  }
-
-  // === Реальная загрузка: ждём window.load + минимум времени ===
-  var MIN_MS = 2200;
-  var start = performance.now();
-  var appReady = false;
-  window.addEventListener('load', function () { appReady = true; }, { once: true });
-
-  function tick(now) {
-    var elapsed = now - start;
-    // прогресс асимптотически ползёт к ~92%, пока приложение реально грузится
-    setProgress(92 * (1 - Math.exp(-elapsed / 900)));
-    if (appReady && elapsed >= MIN_MS) {
-      setProgress(100);
-      requestAnimationFrame(triggerWowEffect);
-    } else {
-      requestAnimationFrame(tick);
-    }
-  }
-  requestAnimationFrame(tick);
-
-  // Фолбэк: если load завис или что-то пошло не так
-  setTimeout(function () {
-    if (!finished) { setProgress(100); triggerWowEffect(); }
-  }, 6000);
-
-  window.addEventListener('resize', function () { if (!finished) positionShockwave(); });
-  positionShockwave();
-})();
+  })();
 </script>
 
 <!-- === МОДАЛКА ЭКСПОРТА (выбор слов) === -->

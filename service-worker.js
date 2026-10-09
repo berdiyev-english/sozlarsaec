@@ -1,5 +1,5 @@
 /* Bewords Service Worker - Offline Mode */
-const CACHE_NAME = 'bewords-cache-v20';
+const CACHE_NAME = 'bewords-cache-v21';
 
 // Список файлов, которые нужно сохранить СРАЗУ
 const STATIC_ASSETS = [
