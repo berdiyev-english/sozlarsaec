@@ -552,3 +552,63 @@ p{text-wrap:pretty;margin:0 0 1.15em}
 .pick .pick-rank-5{background:#ff575f}
 .pick .pick-rank-6{background:#795cff}
 .pick-tags span{background:#f5f9f6}
+
+/* =====================================================================
+   МОБИЛЬНЫЙ ЭКРАН БЛОГА: сканируемость, визуальные якоря, ноль
+   горизонтальных скроллов.
+   1) шапка статьи: воздух + крупный заголовок + иконки в мета-строке;
+   2) H2 получают зелёную метку-якорь — текст сканируется списком;
+   3) таблицы на мобильных превращаются в карточки (никакого scroll-x);
+   4) источники: только одна нумерация (нативная), без зелёных счётчиков;
+   5) фильтр рубрик переносится по строкам вместо скролла.
+   ===================================================================== */
+.meta-item{display:inline-flex;align-items:center;gap:6px;min-width:0}
+.meta-ico{display:none;width:13px;height:13px;fill:#9db3ab;flex:0 0 auto}
+
+/* источники: глушим зелёный счётчик .prose ol>li::before (он дублировал нумерацию) */
+.prose .sources ol>li::before{content:none}
+.prose .sources ol{list-style:decimal;padding-left:22px}
+.prose .sources li{padding-left:4px;margin-bottom:.5em;font-size:13px;line-height:1.6}
+
+@media (max-width:760px){
+  /* --- шапка статьи: больше воздуха, заголовок читается с первого взгляда --- */
+  .crumbs{padding-top:14px;font-size:11px}
+  .article-hero{padding:12px 0 26px}
+  .tag-row{gap:6px;margin-bottom:14px}
+  /* над заголовком оставляем рубрику + один тег: меньше шума до H1 */
+  .tag-row .tag-extra{display:none}
+  .article-title{font-size:clamp(27px,8.2vw,36px);line-height:1.12;letter-spacing:-.042em;margin:0 0 14px}
+  .article-lead{font-size:16.5px;line-height:1.64;color:#3c5a52;font-weight:500;margin-bottom:20px}
+  .meta-row{padding-top:16px;font-size:11.5px;gap:8px 14px}
+  .meta-dot{display:none}
+  .meta-ico{display:inline-block}
+
+  /* --- визуальные якоря для сканирования текста --- */
+  .prose h2{position:relative;padding-top:15px}
+  .prose h2::before{content:"";position:absolute;top:0;left:0;width:28px;height:4px;border-radius:4px;
+    background:linear-gradient(90deg,#7cda49,#d9f4c8)}
+  .prose p{margin-bottom:1.05em}
+
+  /* --- таблицы → карточки: прощай, горизонтальный скролл --- */
+  .prose .table-scroll{overflow:visible;border:0;border-radius:0;box-shadow:none;background:transparent;
+    margin:1.6em 0;padding:0;outline:none}
+  .prose table{display:block;min-width:0;width:100%}
+  .prose thead{display:none}
+  .prose tbody{display:block}
+  .prose tbody tr{display:block;background:#fff;border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow-card);margin:0 0 10px;overflow:hidden}
+  .prose tbody tr.t-win{border-color:#cfe7c2}
+  .prose tbody td{display:block;padding:9px 14px;border-bottom:1px solid var(--line-soft);
+    font-size:13.5px;line-height:1.55;text-align:left;overflow-wrap:anywhere}
+  .prose tbody td:first-child{background:#f4f9f5;color:var(--ink);font-weight:800;
+    padding:11px 14px;border-bottom:1px solid var(--line);white-space:normal}
+  .prose tbody td:not(:first-child)::before{content:attr(data-label);display:block;margin-bottom:3px;
+    font-size:8.5px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:#8aa096}
+  .prose tbody td:last-child{border-bottom:0}
+  .prose tbody tr:hover td{background:inherit}
+  .prose tbody td:first-child:hover{background:#f4f9f5}
+
+  /* --- фильтр рубрик: перенос по строкам вместо скрытого скролла --- */
+  .filter-scroll{flex-wrap:wrap;overflow:visible;gap:7px}
+  .filter-chip{flex:0 1 auto}
+}
