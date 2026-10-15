@@ -296,7 +296,8 @@ p{text-wrap:pretty;margin:0 0 1.15em}
 
 /* ---------- шкала-прогресс ---------- */
 .scale{margin:1.9em 0;background:#fff;border:1px solid var(--line);border-radius:20px;padding:19px 20px;box-shadow:var(--shadow-card)}
-.scale-row{display:grid;grid-template-columns:52px minmax(0,1fr) auto;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line-soft)}
+.scale-row{display:grid;grid-template-columns:max-content minmax(0,1fr) auto;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line-soft)}
+.scale-row>div:first-child{white-space:nowrap;font-size:12.5px;font-weight:800;color:#41645a;padding-right:2px}
 .scale-row:last-child{border-bottom:0}
 .scale-bar{height:9px;border-radius:99px;background:#eef3ef;overflow:hidden}
 .scale-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#7cda49,#46a302);
@@ -405,14 +406,15 @@ p{text-wrap:pretty;margin:0 0 1.15em}
 /* фильтр по рубрикам */
 .filter-bar{position:sticky;top:74px;z-index:40;background:rgba(247,251,248,.93);backdrop-filter:blur(14px);
   border-block:1px solid var(--line);padding:12px 0;margin-bottom:38px}
-.filter-scroll{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-inline:34px;max-width:var(--page);margin-inline:auto;
+.filter-scroll{display:flex;align-items:center;gap:8px;overflow-x:auto;scrollbar-width:none;padding-inline:34px;max-width:var(--page);margin-inline:auto;
   overscroll-behavior-x:contain;touch-action:pan-x}
 .filter-scroll::-webkit-scrollbar{display:none}
-.filter-chip{flex:0 0 auto;padding:9px 15px;border-radius:999px;border:1px solid var(--line);background:#fff;
-  font-size:12px;font-weight:780;color:#5b7168;cursor:pointer;transition:.18s;white-space:nowrap}
+.filter-chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;padding:9px 15px;border-radius:999px;
+  border:1px solid var(--line);background:#fff;font-size:12px;font-weight:780;color:#5b7168;cursor:pointer;
+  transition:.18s;white-space:nowrap;line-height:1.2}
 .filter-chip:hover{border-color:#cfe7c2;color:var(--ink);transform:translateY(-1px)}
 .filter-chip[aria-pressed="true"]{background:var(--green);border-color:var(--green-dark);color:#fff;box-shadow:0 3px 0 var(--green-dark)}
-.filter-chip b{font-weight:850;opacity:.65;margin-left:5px;font-size:10.5px}
+.filter-chip b{font-weight:850;opacity:.65;margin-left:1px;font-size:10.5px;line-height:1;align-self:center}
 
 .hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;padding-bottom:22px}
 .hub-grid .card{padding:22px 23px 24px}
@@ -502,7 +504,8 @@ p{text-wrap:pretty;margin:0 0 1.15em}
   .stat{padding:14px 15px;border-radius:16px}
   .stat b{font-size:25px}
   .scale{padding:16px 15px;border-radius:17px}
-  .scale-row{grid-template-columns:44px minmax(0,1fr) auto;gap:9px;padding:8px 0}
+  .scale-row{grid-template-columns:max-content minmax(0,1fr) auto;gap:9px;padding:8px 0}
+  .scale-row>div:first-child{font-size:11.5px}
   .prose table{font-size:13px;min-width:520px}
   .prose thead th,.prose tbody td{padding:11px 12px}
   .pick{padding:17px 17px 18px;border-radius:19px}
@@ -611,4 +614,51 @@ p{text-wrap:pretty;margin:0 0 1.15em}
   /* --- фильтр рубрик: перенос по строкам вместо скрытого скролла --- */
   .filter-scroll{flex-wrap:wrap;overflow:visible;gap:7px}
   .filter-chip{flex:0 1 auto}
+}
+
+/* =====================================================================
+   ДОПИЛНИТЕЛЬНО МОБИЛЬНАЯ ПОЛИРОВКА (после проверки рендером):
+   мета-строка — аккуратным столбиком, шкала — в две строки,
+   чтобы бар не схлопывался рядом с длинными подписями.
+   ===================================================================== */
+@media (max-width:760px){
+  .meta-row{flex-direction:column;align-items:flex-start;gap:7px}
+  .meta-item{white-space:nowrap}
+  .meta-item time{white-space:nowrap}
+
+  .scale-row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"lbl val" "bar bar";
+    row-gap:7px;padding:10px 0}
+  .scale-row>div:first-child{grid-area:lbl}
+  .scale-row .scale-val{grid-area:val}
+  .scale-row .scale-bar{grid-area:bar;width:100%!important;height:8px}
+}
+
+/* =====================================================================
+   СТРАНИЦА «ВОПРОСЫ И ОТВЕТЫ» + тизер на хабе
+   ===================================================================== */
+.qa-hero{padding:52px 0 34px}
+.qa-wrap{max-width:860px;padding-bottom:26px}
+.qa-block{margin:0 0 40px}
+.qa-block h2{font-size:clamp(19px,2.6vw,23px);font-weight:850;letter-spacing:-.03em;margin:0 0 14px;
+  padding-bottom:10px;border-bottom:1px solid var(--line)}
+.qa-block h2 a{color:var(--ink);transition:color .18s}
+.qa-block h2 a:hover{color:#1290c9}
+.qa-more{display:inline-flex;align-items:center;gap:8px;margin-top:13px;font-size:12.5px;font-weight:850;color:#3ea807}
+.qa-more span{font-size:16px;transition:transform .2s}
+.qa-more:hover span{transform:translateX(4px)}
+.qa-teaser{display:flex;align-items:center;gap:15px;background:#fff;border:1px dashed #bfe3ab;border-radius:18px;
+  padding:14px 18px;margin:0 0 24px;transition:transform .2s,box-shadow .2s,border-color .2s}
+.qa-teaser:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(32,70,52,.08);border-color:#9ed47f}
+.qa-teaser-ico{flex:0 0 38px;width:38px;height:38px;border-radius:13px;display:grid;place-items:center;
+  background:var(--green-soft);color:#3ea807;font-size:19px;font-weight:900}
+.qa-teaser-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
+.qa-teaser-copy b{font-size:14px;letter-spacing:-.2px}
+.qa-teaser-copy small{font-size:11px;color:#71827e;line-height:1.45}
+.qa-teaser-arrow{margin-left:auto;font-size:18px;color:#3ea807}
+@media (max-width:760px){
+  .qa-hero{padding:38px 0 26px}
+  .qa-block{margin-bottom:32px}
+  .qa-teaser{padding:13px 15px;gap:12px}
+  .qa-teaser-copy b{font-size:13px}
+  .qa-teaser-copy small{font-size:10.5px}
 }
