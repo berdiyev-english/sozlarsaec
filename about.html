@@ -1,9 +1,8 @@
-
 <!doctype html>
 <html lang="ru">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#f7fbf8" />
 
 <title>BeWords — английские слова и грамматика в формате игры</title>
@@ -45,9 +44,9 @@ html.landing-on #simple-splash{display:none!important}
 #landing button{font:inherit}
 #landing .site-header{height:82px;position:sticky;top:0;z-index:50;background:rgba(250,253,250,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(224,235,229,.76)}
 #landing .nav-wrap{height:100%;max-width:1240px;margin:auto;padding:0 34px;display:flex;align-items:center;justify-content:space-between}
-#landing .brand{display:inline-flex;align-items:center;gap:10px;font-size:23px;font-weight:850;letter-spacing:-1.2px;color:#18322f}
+#landing .brand{display:inline-flex;align-items:center;gap:10px;font-size:23px;font-weight:850;letter-spacing:-1.2px;color:#18322f;min-width:0}
 #landing .brand>span:last-child>span{color:#26a7df}
-#landing .brand-mark{width:39px;height:39px;border-radius:13px;display:grid;place-items:center;background:#eff9e9;box-shadow:inset 0 -2px 0 rgba(23,72,40,.1)}
+#landing .brand-mark{width:39px;height:39px;border-radius:13px;display:grid;place-items:center;background:#eff9e9;box-shadow:inset 0 -2px 0 rgba(23,72,40,.1);flex:0 0 auto}
 #landing .brand-mark svg{width:32px;height:32px}
 #landing .main-nav{display:flex;align-items:center;gap:34px;font-size:13px;font-weight:720;color:#59706b}
 #landing .main-nav>a:not(.nav-cta){transition:color .2s}
@@ -56,13 +55,13 @@ html.landing-on #simple-splash{display:none!important}
 #landing .nav-cta span{color:#1cb0f6;font-size:17px;padding-left:6px}
 #landing .nav-cta:hover{transform:translateY(-2px);box-shadow:0 5px 0 #e0e9e4}
 #landing .menu-toggle{display:none}
-#landing .section-shell,#landing .section{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:34px;padding-right:34px}
+#landing .section-shell,#landing .section{width:100%;max-width:1240px;margin-left:auto;margin-right:auto;padding-left:34px;padding-right:34px}
 #landing .hero{min-height:675px;display:grid;grid-template-columns:48% 52%;align-items:center;position:relative;overflow:hidden;padding-top:46px;padding-bottom:74px}
 #landing .hero:before{content:"";position:absolute;z-index:-1;width:680px;height:680px;left:45%;top:-190px;border-radius:50%;background:radial-gradient(circle,rgba(193,245,159,.35),rgba(222,249,221,.1) 62%,transparent 70%)}
-#landing .hero-copy{padding:14px 0 0 14px;position:relative;z-index:2}
+#landing .hero-copy{padding:14px 0 0 14px;position:relative;z-index:2;min-width:0}
 #landing .eyebrow{display:flex;align-items:center;gap:9px;color:#598373;font-size:10px;font-weight:850;letter-spacing:1.5px}
 #landing .sparkle{font-size:15px;color:#f5ad16}
-#landing .eyebrow-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(88,204,2,.13)}
+#landing .eyebrow-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(88,204,2,.13);flex:0 0 auto}
 #landing h1,#landing h2,#landing h3,#landing p{margin-top:0}
 #landing .hero h1{font-size:clamp(58px,7.1vw,91px);line-height:.98;letter-spacing:-6px;margin:26px 0 22px;font-weight:900;color:#17332f}
 #landing .title-highlight{color:#52be10;position:relative;white-space:nowrap}
@@ -78,7 +77,7 @@ html.landing-on #simple-splash{display:none!important}
 #landing .button-light:hover{background:#fafff6;transform:translateY(-2px)}
 #landing .hero-proof{display:flex;align-items:center;gap:13px;margin-top:32px;font-size:10px;line-height:1.5;color:#80928d}
 #landing .hero-proof b{color:#49615b;font-weight:750}
-#landing .hero-visual{height:540px;position:relative;display:flex;align-items:center;justify-content:center}
+#landing .hero-visual{height:540px;position:relative;display:flex;align-items:center;justify-content:center;min-width:0;max-width:100%}
 #landing .character-halo{position:absolute;width:395px;height:395px;top:70px;left:50%;transform:translateX(-48%);border-radius:48% 52% 43% 57%/50% 44% 56% 50%;background:linear-gradient(145deg,#d9f8c7,#c9f0eb);box-shadow:inset 0 -12px 0 rgba(61,151,89,.08);animation:blob 9s ease-in-out infinite}
 #landing .character-halo:after{content:"";position:absolute;inset:19px;border-radius:inherit;border:1px dashed rgba(49,145,98,.23)}
 #landing .bob-hero{position:absolute;width:min(430px,90%);height:500px;object-fit:contain;bottom:0;left:50%;transform:translateX(-48%);filter:drop-shadow(0 12px 10px rgba(34,58,45,.11));z-index:2;animation:bobfloat 4.2s ease-in-out infinite}
@@ -98,7 +97,7 @@ html.landing-on #simple-splash{display:none!important}
 #landing .chart-days{display:flex;justify-content:space-between;font-size:7px;color:#a0aea9}
 #landing .hero-footnote{position:absolute;bottom:24px;left:47px;color:#8a9a94;font-size:10px;font-weight:650;display:flex;align-items:center;gap:9px}
 #landing .down-arrow{font-size:18px;color:#57b719}
-#landing .trust-strip{background:#fff;border-top:1px solid #ebf1ed;border-bottom:1px solid #ebf1ed}
+#landing .trust-strip{background:#fff;border-top:1px solid #ebf1ed;border-bottom:1px solid #ebf1ed;overflow:hidden}
 #landing .trust-inner{min-height:72px;max-width:1130px;margin:auto;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;color:#71847c;font-size:11px;font-weight:750}
 #landing .trust-inner>span{display:flex;align-items:center;gap:9px;white-space:nowrap}
 #landing .trust-inner i{font-style:normal;color:#53b416;font-size:17px}
@@ -109,14 +108,14 @@ html.landing-on #simple-splash{display:none!important}
 #landing .section-heading h2,#landing .vocab-copy h2,#landing .game-intro h2,#landing .habit-copy h2,#landing .final-cta h2{font-size:clamp(38px,5vw,57px);letter-spacing:-2.6px;line-height:1.06;font-weight:880;color:#193631;margin:17px 0 14px}
 #landing .section-heading h2 span,#landing .vocab-copy h2 span,#landing .game-intro h2 span,#landing .habit-copy h2 span,#landing .final-cta h2 span{color:#4db70b}
 #landing .section-heading p,#landing .vocab-copy>p{font-size:14px;line-height:1.75;color:#7b8d86;max-width:430px;margin:0 auto}
-#landing .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
-#landing .step-card{min-height:335px;background:#fff;border:1px solid #e9efeb;border-radius:22px;padding:20px 22px 24px;position:relative;overflow:hidden;box-shadow:0 6px 0 rgba(30,61,48,.035);transition:transform .25s,box-shadow .25s}
+#landing .steps-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+#landing .step-card{min-height:335px;background:#fff;border:1px solid #e9efeb;border-radius:22px;padding:20px 22px 24px;position:relative;overflow:hidden;box-shadow:0 6px 0 rgba(30,61,48,.035);transition:transform .25s,box-shadow .25s;min-width:0}
 #landing .step-card:hover{transform:translateY(-5px);box-shadow:0 13px 28px rgba(32,70,52,.09)}
 #landing .step-card h3{font-size:17px;letter-spacing:-.4px;margin:4px 0 9px}
 #landing .step-card p{font-size:11px;color:#7c8e88;line-height:1.65;margin:0;max-width:290px}
 #landing .game-section{max-width:none;background:#123431;color:#fff;padding:92px max(34px,calc((100% - 1172px)/2)) 98px;display:grid;grid-template-columns:minmax(260px,.83fr) minmax(500px,1.17fr);gap:55px;align-items:center;position:relative;overflow:hidden}
 #landing .game-section:before{content:"";position:absolute;width:520px;height:520px;border:1px solid rgba(176,239,168,.1);border-radius:50%;left:-220px;top:-170px;box-shadow:0 0 0 38px rgba(176,239,168,.025),0 0 0 80px rgba(176,239,168,.018)}
-#landing .game-intro{position:relative;z-index:1}
+#landing .game-intro{position:relative;z-index:1;min-width:0}
 #landing .eyebrow-light{color:#a8c5b8}
 #landing .eyebrow-light .eyebrow-dot{background:#b6e968;box-shadow:0 0 0 4px rgba(182,233,104,.13)}
 #landing .game-intro h2{color:#fff;margin-top:22px}
@@ -147,9 +146,9 @@ html.landing-on #simple-splash{display:none!important}
 #landing .levels-foot{border-top:1px solid #eff3f0;padding:12px 2px 0;display:flex;justify-content:space-between;font-size:8px;color:#85968f}
 #landing .levels-foot span:last-child{font-weight:750}
 #landing .levels-foot b{font-size:13px;color:#22a8e6;padding-left:4px}
-#landing .habit-section{max-width:none;background:#eaf6e4;padding:79px max(34px,calc((100% - 1172px)/2))}
+#landing .habit-section{max-width:none;background:#eaf6e4;padding:79px max(34px,calc((100% - 1172px)/2));overflow:hidden}
 #landing .habit-card{max-width:1172px;margin:auto;display:grid;grid-template-columns:1fr .9fr;gap:55px;align-items:center;min-height:380px;position:relative}
-#landing .habit-copy{position:relative;z-index:1}
+#landing .habit-copy{position:relative;z-index:1;min-width:0}
 #landing .habit-copy h2{margin:20px 0}
 #landing .habit-copy>p{max-width:395px;color:#718a7f;line-height:1.75;font-size:13px}
 #landing .habit-copy h2 span{color:#279ed1}
@@ -158,7 +157,7 @@ html.landing-on #simple-splash{display:none!important}
 #landing .habit-stats b{font-size:24px;letter-spacing:-1px}
 #landing .habit-stats b i{font-style:normal;font-size:17px}
 #landing .habit-stats small{font-size:8px;color:#7c9388;font-weight:700}
-#landing .habit-dashboard{background:white;border:1px solid #e2ede4;border-radius:23px;padding:22px 23px;box-shadow:0 17px 44px rgba(51,100,55,.1);position:relative;z-index:1}
+#landing .habit-dashboard{background:white;border:1px solid #e2ede4;border-radius:23px;padding:22px 23px;box-shadow:0 17px 44px rgba(51,100,55,.1);position:relative;z-index:1;min-width:0;max-width:100%}
 #landing .dash-top{display:flex;justify-content:space-between;font-size:9px;color:#91a29b;font-weight:900;letter-spacing:1px}
 #landing .dash-menu{font-size:14px;letter-spacing:2px;color:#93a7a0}
 #landing .dash-score{display:flex;align-items:center;gap:12px;margin-top:16px}
@@ -166,18 +165,18 @@ html.landing-on #simple-splash{display:none!important}
 #landing .dash-score span{font-size:9px;line-height:1.5;color:#82958d}
 #landing .dash-score span b{color:#4eb516}
 #landing .bar-chart{height:115px;display:flex;align-items:flex-end;gap:12px;padding:10px 0 0;border-bottom:1px solid #e8efea}
-#landing .bar-group{flex:1;display:flex;align-items:center;flex-direction:column;gap:8px;height:100%;justify-content:flex-end}
+#landing .bar-group{flex:1;display:flex;align-items:center;flex-direction:column;gap:8px;height:100%;justify-content:flex-end;min-width:0}
 #landing .bar-group i{width:70%;max-width:27px;display:block;border-radius:7px 7px 2px 2px;background:#d8f1cb;transition:height .6s}
 #landing .bar-group:nth-child(2n) i{background:#b9e99e}
 #landing .bar-group.today i{background:linear-gradient(#7cda49,#56bd17);box-shadow:0 0 0 4px #eef9e9}
 #landing .bar-group span{font-size:8px;color:#9baaa4}
 #landing .bar-group.today span{color:#45a80c;font-weight:850}
 #landing .dash-goal{display:flex;align-items:center;gap:10px;margin-top:16px;padding:12px 12px;background:#f7faf7;border-radius:14px}
-#landing .goal-icon{width:30px;height:30px;border-radius:10px;background:#e8f7dd;display:grid;place-items:center;color:#4fb316;font-weight:900}
-#landing .dash-goal>span:nth-child(2){display:flex;flex-direction:column;gap:4px}
+#landing .goal-icon{width:30px;height:30px;border-radius:10px;background:#e8f7dd;display:grid;place-items:center;color:#4fb316;font-weight:900;flex:0 0 auto}
+#landing .dash-goal>span:nth-child(2){display:flex;flex-direction:column;gap:4px;min-width:0}
 #landing .dash-goal>span:nth-child(2) b{font-size:9px}
 #landing .dash-goal>span:nth-child(2) small{font-size:8px;color:#92a099}
-#landing .goal-progress{margin-left:auto;position:relative;width:41px;height:41px;display:grid;place-items:center}
+#landing .goal-progress{margin-left:auto;position:relative;width:41px;height:41px;display:grid;place-items:center;flex:0 0 auto}
 #landing .goal-progress svg{position:absolute;inset:0;transform:rotate(-90deg);fill:none;stroke:#edf3ea;stroke-width:4}
 #landing .goal-progress .goal-arc{stroke:#58cc02;stroke-dasharray:88 113;stroke-linecap:round}
 #landing .goal-progress b{font-size:8px;color:#47a512}
@@ -192,7 +191,7 @@ html.landing-on #simple-splash{display:none!important}
 #landing .final-cta p{font-size:13px;color:#80928b;margin-bottom:24px}
 #landing .button-large{height:59px;padding:0 26px;font-size:14px}
 #landing .cta-note{display:block;color:#98a6a0;font-size:9px;margin-top:17px}
-#landing .site-footer{min-height:80px;border-top:1px solid #e7eeea;display:flex;align-items:center;justify-content:space-between;max-width:1240px;margin:auto;padding:14px 34px}
+#landing .site-footer{min-height:80px;border-top:1px solid #e7eeea;display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:1240px;margin:auto;padding:14px 34px}
 #landing .site-footer .brand{font-size:17px}
 #landing .site-footer .brand-mark{width:31px;height:31px;border-radius:10px}
 #landing .site-footer .brand-mark svg{width:25px}
@@ -216,74 +215,83 @@ html.landing-on #simple-splash{display:none!important}
 #landing .section-vocab{gap:38px}
 #landing .trust-inner{padding-left:25px;padding-right:25px}
 #landing .trust-inner>span{font-size:10px}
+/* FIX: полоса преимуществ больше не растягивает документ вбок —
+   вместо grid с nowrap-текстом делаем аккуратный внутренний скролл */
+#landing .trust-inner{display:flex;grid-template-columns:none;width:100%;max-width:100%;min-width:0;justify-content:flex-start;gap:18px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none}
+#landing .trust-inner::-webkit-scrollbar{display:none}
+#landing .trust-inner>span{flex:0 0 auto}
+#landing .trust-inner .trust-dot{flex:0 0 4px}
 }
 @media (max-width:760px){#landing{scroll-padding-top:70px}
 #landing .site-header{height:68px}
 #landing .nav-wrap{padding:0 18px}
 #landing .brand{font-size:21px}
 #landing .brand-mark{width:35px;height:35px}
-#landing .main-nav{display:none;position:absolute;left:12px;right:12px;top:74px;padding:15px;background:#fff;border:1px solid #e5eee8;border-radius:18px;box-shadow:var(--shadow);flex-direction:column;align-items:stretch;gap:4px}
+#landing .main-nav{display:none;position:absolute;left:12px;right:12px;top:74px;padding:15px;background:#fff;border:1px solid #e5eee8;border-radius:18px;box-shadow:var(--shadow);flex-direction:column;align-items:stretch;gap:4px;max-width:calc(100% - 24px)}
 #landing .main-nav.open{display:flex}
 #landing .main-nav>a:not(.nav-cta){padding:13px 12px;border-radius:10px}
 #landing .main-nav>a:not(.nav-cta):hover{background:#f5faf2}
 #landing .nav-cta{text-align:center;margin-top:6px}
-#landing .menu-toggle{display:flex;width:40px;height:40px;flex-direction:column;justify-content:center;align-items:center;gap:6px;border:1px solid #e5eee8;background:white;border-radius:12px;box-shadow:0 3px 0 #e7eee9}
+#landing .menu-toggle{display:flex;width:40px;height:40px;flex:0 0 auto;flex-direction:column;justify-content:center;align-items:center;gap:6px;border:1px solid #e5eee8;background:white;border-radius:12px;box-shadow:0 3px 0 #e7eee9}
 #landing .menu-toggle span{height:2px;width:17px;background:#426259;border-radius:3px;transition:.2s}
 #landing .menu-toggle[aria-expanded=true] span:first-child{transform:translateY(4px) rotate(45deg)}
 #landing .menu-toggle[aria-expanded=true] span:last-child{transform:translateY(-4px) rotate(-45deg)}
-#landing .hero{display:flex;flex-direction:column;align-items:stretch;padding:44px 22px 52px;min-height:0;overflow:hidden}
-#landing .hero-copy{padding:0}
+#landing .hero{display:flex;flex-direction:column;align-items:stretch;padding:44px 22px 52px;min-height:0;overflow:hidden;min-width:0}
+#landing .hero-copy{padding:0;max-width:100%}
 #landing .eyebrow{font-size:9px;letter-spacing:1.2px}
-#landing .hero h1{font-size:clamp(58px,13.5vw,78px);letter-spacing:-4.3px;margin:20px 0 15px;line-height:.97}
+/* FIX: заголовок гарантированно влезает в узкий экран (было 58px + nowrap) */
+#landing .hero h1{font-size:clamp(44px,12.2vw,72px);letter-spacing:-.05em;margin:20px 0 15px;line-height:.97}
 #landing .hero-lead{font-size:14px;line-height:1.66;max-width:500px;margin-bottom:21px}
 #landing .hero-actions{gap:10px}
 #landing .button{height:51px;padding:0 15px;border-radius:14px;font-size:11px;gap:9px}
 #landing .hero-proof{margin-top:24px;font-size:9px}
-#landing .hero-visual{height:385px;margin:6px -8px -3px;transform:none}
+#landing .hero-visual{height:385px;margin:6px 0 -3px;transform:none;max-width:100%}
 #landing .character-halo{width:min(340px,87vw);height:min(340px,87vw);top:21px}
 #landing .bob-hero{width:min(355px,91vw);height:365px;bottom:0}
-#landing .orbit-one{width:380px;height:380px}
-#landing .orbit-two{width:412px;height:412px}
-#landing .growth-card{width:192px;bottom:4px;left:0;padding:11px 12px 9px;border-radius:15px}
+#landing .orbit-one{width:min(380px,96vw);height:min(380px,96vw)}
+#landing .orbit-two{width:min(412px,98vw);height:min(412px,98vw)}
+#landing .growth-card{width:192px;bottom:4px;left:0;padding:11px 12px 9px;border-radius:15px;max-width:calc(100% - 4px)}
 #landing .growth-head strong{font-size:18px}
 #landing .growth-chart{height:44px;margin-top:4px}
 #landing .hero-spark{font-size:18px}
 #landing .spark-a{top:24px;right:15%}
 #landing .spark-b{bottom:125px;left:4%}
-#landing .hero-footnote{left:22px;bottom:16px;font-size:9px}
-#landing .trust-inner{justify-content:flex-start;gap:19px;overflow:auto;scrollbar-width:none;min-height:61px;padding:10px 20px}
+#landing .hero-footnote{left:22px;bottom:16px;font-size:9px;max-width:calc(100% - 44px);cursor:pointer}
+#landing .trust-inner{justify-content:flex-start;gap:19px;overflow-x:auto;scrollbar-width:none;min-height:61px;padding:10px 20px;width:100%;max-width:100%}
 #landing .trust-inner::-webkit-scrollbar{display:none}
 #landing .trust-inner>span{font-size:9px}
 #landing .trust-inner .trust-dot{flex:0 0 4px}
-#landing .section{padding:72px 21px}
-#landing .section-heading{margin-bottom:29px}
-#landing .section-heading h2,#landing .vocab-copy h2,#landing .game-intro h2,#landing .habit-copy h2,#landing .final-cta h2{font-size:clamp(37px,10vw,48px);letter-spacing:-1.9px}
+/* FIX: мобильные вертикальные ритмы — меньше «пустого» между блоками */
+#landing .section{padding:56px 21px 58px}
+#landing .section-heading{margin-bottom:26px}
+#landing .section-heading h2,#landing .vocab-copy h2,#landing .game-intro h2,#landing .habit-copy h2,#landing .final-cta h2{font-size:clamp(32px,9.4vw,48px);letter-spacing:-1.9px}
 #landing .section-heading p{font-size:12px;max-width:330px}
-#landing .steps-grid{grid-template-columns:1fr;gap:11px}
-#landing .step-card{min-height:0;padding:17px 18px 18px;display:grid;grid-template-columns:110px 1fr;grid-template-rows:26px auto auto;column-gap:13px;align-items:center;border-radius:19px}
+#landing .steps-grid{grid-template-columns:minmax(0,1fr);gap:11px}
+#landing .step-card{min-height:0;padding:17px 18px 18px;display:grid;grid-template-columns:110px minmax(0,1fr);grid-template-rows:26px auto auto;column-gap:13px;align-items:center;border-radius:19px}
 #landing .step-card h3{grid-column:2;grid-row:2;align-self:end;font-size:15px;margin:0 0 5px}
 #landing .step-card p{grid-column:2;grid-row:3;align-self:start;font-size:10px}
-#landing .game-section{display:block;padding:68px 21px 68px}
-#landing .game-intro h2{margin:17px 0 11px}
+#landing .game-section{display:block;padding:58px 21px 60px}
+#landing .game-intro h2{margin:14px 0 11px}
 #landing .game-intro p{font-size:12px;max-width:370px}
 #landing .text-link{font-size:11px;margin-top:4px}
-#landing .game-showcase{margin-top:27px}
+#landing .game-showcase{margin-top:24px}
 #landing .plane-frame{border-radius:17px}
-#landing .section-vocab{display:flex;flex-direction:column;align-items:stretch;gap:27px;padding-top:74px;padding-bottom:76px}
-#landing .vocab-copy h2{font-size:clamp(37px,10vw,47px);margin:16px 0}
+/* FIX: у блока «От первого hello…» был огромный верхний отступ (74px) */
+#landing .section-vocab{display:flex;flex-direction:column;align-items:stretch;gap:24px;padding-top:30px;padding-bottom:56px}
+#landing .vocab-copy h2{font-size:clamp(32px,9.4vw,47px);margin:12px 0 14px}
 #landing .vocab-copy>p{font-size:12px}
-#landing .vocab-total{margin:18px 0 20px}
+#landing .vocab-total{margin:16px 0 18px}
 #landing .vocab-total strong{font-size:33px}
 #landing .levels-card{padding:16px 14px 12px;border-radius:19px}
 #landing .levels-head{font-size:8px}
-#landing .level-row{grid-template-columns:37px 1fr auto;column-gap:9px;padding:9px 0 8px}
+#landing .level-row{grid-template-columns:37px minmax(0,1fr) auto;column-gap:9px;padding:9px 0 8px}
 #landing .level-badge{width:34px;height:34px;border-radius:11px;font-size:11px}
 #landing .levels-foot{font-size:7px}
-#landing .habit-section{padding:62px 21px}
+#landing .habit-section{padding:52px 21px 56px}
 #landing .habit-card{display:flex;flex-direction:column;align-items:stretch;gap:25px;min-height:0}
-#landing .habit-copy h2{margin:16px 0}
+#landing .habit-copy h2{margin:14px 0}
 #landing .habit-copy>p{font-size:12px}
-#landing .habit-stats{gap:0;justify-content:space-between;margin-top:22px}
+#landing .habit-stats{gap:0;justify-content:space-between;margin-top:20px}
 #landing .habit-stats b{font-size:21px}
 #landing .habit-stats small{font-size:7px}
 #landing .habit-dashboard{padding:17px;border-radius:19px}
@@ -291,8 +299,8 @@ html.landing-on #simple-splash{display:none!important}
 #landing .bar-chart{height:97px;gap:8px}
 #landing .dash-goal{padding:10px}
 #landing .habit-decoration{right:3px;top:-20px;font-size:27px}
-#landing .final-cta{padding:75px 21px 72px}
-#landing .final-cta h2{margin:16px 0 10px}
+#landing .final-cta{padding:58px 21px 60px}
+#landing .final-cta h2{margin:14px 0 10px}
 #landing .final-cta p{font-size:11px;max-width:300px;margin:0 auto 21px}
 #landing .button-large{height:54px;font-size:12px;padding:0 20px}
 #landing .cta-note{font-size:8px}
@@ -303,16 +311,18 @@ html.landing-on #simple-splash{display:none!important}
 #landing .footer-copy{font-size:8px}
 }
 @media (max-width:380px){#landing .hero{padding-left:17px;padding-right:17px}
-#landing .hero h1{font-size:58px}
+#landing .hero h1{font-size:clamp(40px,11.6vw,50px)}
 #landing .hero-actions{flex-direction:column;align-items:stretch;max-width:245px}
 #landing .hero-visual{height:355px;margin-top:8px}
-#landing .character-halo{width:290px;height:290px}
-#landing .bob-hero{width:315px;height:335px}
+#landing .character-halo{width:min(290px,84vw);height:min(290px,84vw)}
+#landing .bob-hero{width:min(315px,88vw);height:335px}
 #landing .growth-card{width:175px}
 #landing .hero-footnote{left:17px}
 #landing .trust-inner{gap:14px}
-#landing .step-card{grid-template-columns:95px 1fr;column-gap:10px}
+#landing .step-card{grid-template-columns:95px minmax(0,1fr);column-gap:10px}
 #landing .game-section{padding-left:17px;padding-right:17px}
+#landing .section-vocab{padding-top:26px}
+#landing .section{padding:52px 17px 54px}
 }
 @media (prefers-reduced-motion:reduce){#landing *,#landing *:before,#landing *:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
@@ -322,6 +332,8 @@ html.landing-on #simple-splash{display:none!important}
 #landing .trust-inner>span{min-height:26px;display:inline-flex;align-items:center;justify-content:center;gap:9px;line-height:1.25}
 #landing .trust-inner i{width:19px;flex:0 0 19px;display:inline-flex;align-items:center;justify-content:center;line-height:1}
 #landing .trust-inner .trust-dot{align-self:center;margin:0}
+@media (min-width:1001px){#landing .trust-inner{overflow:visible}
+}
 #landing .steps-grid{align-items:stretch}
 @media (min-width:761px){#landing .step-card{display:flex;flex-direction:column;align-items:stretch}
 #landing .step-card h3{min-height:23px}
@@ -351,7 +363,7 @@ html.landing-on #simple-splash{display:none!important}
 @keyframes mascot-bob{0%,100%{transform:translateY(0)}
 50%{transform:translateY(-4px)}
 }
-@media (max-width:760px){#landing .trust-inner{display:flex;width:max-content;min-width:100%;justify-content:flex-start;justify-items:initial;gap:19px;overflow:auto;scrollbar-width:none}
+@media (max-width:760px){#landing .trust-inner{display:flex;width:100%;max-width:100%;min-width:100%;justify-content:flex-start;justify-items:initial;gap:19px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
 #landing .trust-inner>span{justify-content:flex-start}
 #landing .trust-inner .trust-dot{flex:0 0 4px}
 }
@@ -362,15 +374,15 @@ html.landing-on #simple-splash{display:none!important}
 #landing .sparkle .fa-icon{width:13px;height:13px}
 #landing .stat-flame{display:inline-flex;align-items:center;line-height:0;color:#f5a52a;vertical-align:middle}
 #landing .stat-flame .fa-icon{width:15px;height:15px}
-@media (max-width:760px){#landing .hero-visual{height:465px;margin:6px -8px 0}
-#landing .bob-hero{bottom:88px}
-#landing .growth-card{left:50%;bottom:0;width:min(245px,78vw);transform:translateX(-50%)}
+@media (max-width:760px){#landing .hero-visual{height:465px;margin:6px 0 0;max-width:100%}
+#landing .bob-hero{bottom:105px}
+#landing .growth-card{left:50%;bottom:0;width:min(245px,78vw);max-width:calc(100% - 4px);transform:translateX(-50%)}
 #landing .step-card{grid-template-columns:96px minmax(0,1fr);grid-template-rows:25px auto auto;column-gap:12px;padding:14px 15px 15px}
 #landing .step-card h3{grid-column:2;grid-row:2;align-self:end;margin:0 0 5px;font-size:14px;line-height:1.2;min-width:0}
 #landing .step-card p{grid-column:2;grid-row:3;align-self:start;font-size:10px;line-height:1.55;min-width:0;overflow-wrap:anywhere}
 }
 @media (max-width:380px){#landing .hero-visual{height:450px}
-#landing .bob-hero{height:335px;bottom:85px}
+#landing .bob-hero{height:315px;bottom:112px}
 #landing .growth-card{width:min(220px,78vw)}
 #landing .step-card{grid-template-columns:86px minmax(0,1fr);column-gap:9px}
 }
@@ -406,7 +418,7 @@ html.landing-on #simple-splash{display:none!important}
 #landing .plane-frame{position:relative;isolation:isolate}
 #landing .game-library{margin-top:18px}
 #landing .game-library-heading{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:0 2px 10px}
-#landing .game-library-heading>div{display:flex;flex-direction:column;gap:4px}
+#landing .game-library-heading>div{display:flex;flex-direction:column;gap:4px;min-width:0}
 #landing .game-library-heading>div>span{font-size:8px;color:#b5e982;font-weight:900;letter-spacing:1.1px}
 #landing .game-library-heading>div>b{font-size:13px;color:#fff;letter-spacing:-.2px}
 #landing .library-note{font-size:8px;color:#9db9ad;white-space:nowrap}
@@ -432,7 +444,7 @@ html.landing-on #simple-splash{display:none!important}
 }
 #landing .step-photo-card{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:17px 18px 20px;min-height:100%}
 #landing .step-photo{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center;border-radius:15px;margin:0 0 14px}
-#landing .step-photo-copy{display:flex;flex:1;flex-direction:column;align-items:flex-start}
+#landing .step-photo-copy{display:flex;flex:1;flex-direction:column;align-items:flex-start;min-width:0}
 #landing .step-photo-card h3{min-height:0;margin:0 0 7px;font-size:16px;line-height:1.3;letter-spacing:-.3px}
 #landing .step-photo-card p{flex:1;max-width:none;margin:0;font-size:11px;line-height:1.55}
 @media (max-width:760px){#landing .step-photo-card{display:flex;min-height:0;padding:14px 15px 16px;gap:0}
@@ -471,7 +483,7 @@ to{opacity:1;transform:translateY(0)}
 #landing .catalog-overview{display:flex;flex-direction:column;gap:8px;padding-top:12px;border-top:1px solid #edf2ee}
 #landing .catalog-row{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:start;gap:7px}
 #landing .catalog-label{padding-top:4px;color:#84988f;font-size:7px;font-weight:900;letter-spacing:.65px}
-#landing .catalog-chips{display:flex;flex-wrap:wrap;gap:5px}
+#landing .catalog-chips{display:flex;flex-wrap:wrap;gap:5px;min-width:0}
 #landing .catalog-chip{display:inline-flex;align-items:baseline;gap:3px;padding:4px 6px;border:1px solid #edf2ee;border-radius:8px;background:#f7faf8;color:#536b62;font-size:7px;font-weight:760;line-height:1.15}
 #landing .catalog-chip-soon{color:#85928d;background:#fafafa}
 #landing .levels-card.is-animated .level-track-horizontal::before{transform-origin:left;animation:levels-route-horizontal .95s cubic-bezier(.2,.7,.25,1) both}
@@ -486,7 +498,7 @@ to{transform:scaleX(1);opacity:.55}
 }
 #landing .game-library{max-width:520px;margin:18px auto 0}
 #landing .game-library-heading{align-items:center}
-#landing .game-carousel-viewport{position:relative;width:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;scrollbar-width:none}
+#landing .game-carousel-viewport{position:relative;width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;scrollbar-width:none}
 #landing .game-carousel-viewport::-webkit-scrollbar{display:none}
 #landing .game-carousel-track.game-grid{position:relative;display:flex;grid-template-columns:none;gap:10px;width:100%;max-width:none;margin:0}
 #landing .game-carousel-track .game-cover{flex:0 0 calc(50% - 5px);min-width:0;scroll-snap-align:start;scroll-snap-stop:always;transform:none}
@@ -536,7 +548,7 @@ to{transform:scaleX(1);opacity:.55}
 #landing .catalog-row:last-child{border-bottom:0;padding-bottom:2px}
 #landing .catalog-label{padding:0;font-size:7.5px;line-height:1.3;letter-spacing:.55px;white-space:nowrap}
 #landing .catalog-chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0}
-#landing .catalog-chip{flex:0 0 auto;max-width:100%;white-space:nowrap;padding:5px 8px;border-radius:999px;font-size:7.5px;line-height:1.2}
+#landing .catalog-chip{flex:0 1 auto;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:5px 8px;border-radius:999px;font-size:7.5px;line-height:1.2}
 #landing .levels-foot{margin-top:10px;padding-top:10px;gap:8px;align-items:center;line-height:1.35}
 @media (max-width:760px){#landing .levels-card{max-width:none;padding:16px 14px 12px}
 #landing .levels-head{min-height:28px;padding-bottom:9px}
@@ -547,7 +559,7 @@ to{transform:scaleX(1);opacity:.55}
 #landing .catalog-row{grid-template-columns:60px minmax(0,1fr);gap:7px;padding:8px 0}
 #landing .catalog-label{font-size:6.5px;letter-spacing:.4px}
 #landing .catalog-chips{gap:5px}
-#landing .catalog-chip{padding:4px 6px;font-size:6.8px}
+#landing .catalog-chip{padding:4px 6px;font-size:6.8px;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
 #landing .levels-foot{margin-top:8px;padding-top:8px;font-size:6.5px}
 }
 #landing .levels-head{font-size:9px;letter-spacing:.75px}
@@ -626,7 +638,7 @@ to{transform:scaleX(1);opacity:.55}
 #landing .character-halo{top:44px}
 }
 #landing .audience-cue{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:6px;margin-top:13px;max-width:520px}
-#landing .audience-chip{display:inline-flex;align-items:center;gap:5px;min-height:25px;padding:4px 7px;border:1px solid #e5eee8;border-radius:999px;background:rgba(255,255,255,.82);color:#5b7168;font-size:8.5px;font-weight:750;line-height:1.2;white-space:nowrap}
+#landing .audience-chip{display:inline-flex;align-items:center;gap:5px;min-height:25px;padding:4px 7px;border:1px solid #e5eee8;border-radius:999px;background:rgba(255,255,255,.82);color:#5b7168;font-size:8.5px;font-weight:750;line-height:1.2;white-space:nowrap;max-width:100%}
 #landing .audience-chip img{display:block;width:11px;height:11px;flex:0 0 11px;opacity:.56}
 @media (max-width:760px){#landing .audience-cue{justify-content:center;gap:5px;margin-top:12px;max-width:none}
 #landing .audience-chip{min-height:24px;padding:4px 7px;font-size:8px}
@@ -637,15 +649,40 @@ to{transform:scaleX(1);opacity:.55}
 @media (max-width:760px){#landing .game-carousel-track .game-cover{flex-basis:min(70%,320px)}
 }
 
-/* ===== ОТОБРАЖЕНИЕ КАК САМОСТОЯТЕЛЬНОЙ СТРАНИЦЫ =====
-   В index.html лендинг — оверлей (display:none до решения гейта).
-   Здесь он и есть страница: разворачиваем в нормальный поток документа.
-   overflow-x:hidden на html — страховка от горизонтального «гуляния»
-   страницы на мобильных (пропагация на вьюпорт, sticky-шапка не ломается). */
+/* ===== «УЗНАТЬ БОЛЬШЕ» → плавный показ Боба ===== */
+#landing .hero-footnote{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+#landing .hero-footnote:focus-visible{outline:2px solid #58cc02;outline-offset:4px;border-radius:8px}
+#landing .hero-visual{scroll-margin-top:84px}
+@media (max-width:760px){#landing .hero-visual{scroll-margin-top:74px}
+#landing .hero-footnote{cursor:pointer}
+}
+
+/* ===== ОТОБРАЖЕНИЕ КАК САМОСТОЯТЕЛЬНОЙ СТРАНИЦЫ ===== */
 html{scroll-behavior:smooth;scroll-padding-top:88px;overflow-x:hidden}
 body{margin:0;background:#f7fbf8;color:#18322f;font-family:Inter,ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
 #landing{display:block;position:static;inset:auto;z-index:auto;overflow:visible}
 @media (max-width:760px){html{scroll-padding-top:70px}}
+
+/* =====================================================================
+   ФИКС МОБИЛЬНОГО БАГА: «ЭКРАН УХОДИТ В СТОРОНУ»
+   (1) trust-полоса с width:max-content растягивала документ,
+   (2) grid-колонки и nowrap-элементы вылезали за вьюпорт,
+   (3) overflow-x:hidden на корне всё равно позволяет программный scrollLeft
+       (фокус / scrollIntoView / якоря) — страница сдвигалась и не возвращалась.
+   ===================================================================== */
+html{overflow-x:hidden;overscroll-behavior-x:none;max-width:100%}
+/* clip (а не hidden) на body: режет лишнее по ширине и НЕ создаёт
+   скролл-контейнер, поэтому position:sticky у шапки продолжает работать */
+body{max-width:100%;overflow-x:clip;overscroll-behavior-x:none}
+#landing,#landing main,#landing .site-header,#landing .site-footer,#landing .section,#landing .section-shell,#landing .trust-strip,#landing .game-section,#landing .habit-section,#landing .habit-card,#landing .steps-grid,#landing .section-vocab,#landing .game-showcase,#landing .game-library{max-width:100%}
+#landing img,#landing svg,#landing video,#landing canvas{max-width:100%}
+#landing .hero-copy,#landing .hero-visual,#landing .game-intro,#landing .game-showcase,#landing .vocab-copy,#landing .levels-card,#landing .habit-copy,#landing .habit-dashboard,#landing .step-card,#landing .trust-inner,#landing .game-carousel-track,#landing .game-carousel-viewport,#landing .catalog-chips,#landing .levels-foot{min-width:0}
+#landing p,#landing h1,#landing h2,#landing h3,#landing li,#landing span,#landing b,#landing small{overflow-wrap:break-word}
+#landing .game-carousel-viewport,#landing .trust-inner{overscroll-behavior-x:contain;touch-action:pan-x pan-y}
+@media (max-width:1000px){#landing .trust-inner{justify-content:flex-start}}
+@supports not (overflow-x:clip){
+  #landing .habit-section,#landing .trust-strip,#landing .game-section,#landing .final-cta,#landing .hero{overflow:hidden}
+}
   </style>
 </head>
 <body>
@@ -673,7 +710,7 @@ body{margin:0;background:#f7fbf8;color:#18322f;font-family:Inter,ui-rounded,"SF 
         <p class="hero-lead">BeWords подстраивается под тебя: слова — по твоему уровню и целям, полный курс грамматики — с теорией и практикой перевода предложений. Упражнения и игры помогают закрепить всё на деле.</p>
         <div class="hero-actions">
           <a class="button button-green" href="index.html?app=1">Начать учиться <span class="arrow">↗</span></a>
-          <a class="button button-light" href="#ld-how">Узнать больше <span class="arrow">↓</span></a>
+          <a class="button button-light" href="#ld-how" data-reveal-bob>Узнать больше <span class="arrow">↓</span></a>
         </div>
         <div class="audience-cue" aria-label="BeWords подходит для экзаменов, работы, путешествий и занятий для себя">
           <span class="audience-chip"><i class="fa-solid fa-book-open" aria-hidden="true"></i>ЕГЭ/ОГЭ</span>
@@ -681,14 +718,14 @@ body{margin:0;background:#f7fbf8;color:#18322f;font-family:Inter,ui-rounded,"SF 
           <span class="audience-chip"><i class="fa-solid fa-plane" aria-hidden="true"></i>Путешествия</span>
           <span class="audience-chip"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i>Для себя</span>
         </div>
-        
+
       </div>
       <div class="hero-visual" aria-label="Кот Боб и растущий словарный запас">
         <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
         <div class="hero-proof bob-intro"><span class="bob-intro-copy"><b>Боб — твой ИИ-наставник</b></span></div>
         <div class="hero-spark spark-a" aria-hidden="true"><svg class="fa-icon" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></div><div class="hero-spark spark-b" aria-hidden="true"><svg class="fa-icon" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></div>
-        
-        
+
+
         <div class="character-halo"></div>
         <img class="bob-hero" src="app-photos/bob/Bob_happy.png" alt="Боб — кот-наставник BeWords" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" />
         <div class="growth-card">
@@ -697,7 +734,7 @@ body{margin:0;background:#f7fbf8;color:#18322f;font-family:Inter,ui-rounded,"SF 
           <div class="chart-days"><span>пн</span><span>вт</span><span>ср</span><span>чт</span><span>пт</span><span>сб</span><span>сегодня</span></div>
         </div>
       </div>
-      <div class="hero-footnote"><span class="down-arrow">↓</span> Листай — покажем, как устроено</div>
+      <div class="hero-footnote" role="button" tabindex="0" data-reveal-bob aria-label="Показать кота Боба и как устроен BeWords"><span class="down-arrow">↓</span> Листай — покажем, как устроено</div>
     </section>
 
     <section class="trust-strip" aria-label="Преимущества BeWords"><div class="trust-inner"><span><i aria-hidden="true"><svg class="fa-icon" viewBox="0 0 576 512" aria-hidden="true"><path d="M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5l0-377.4c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.3 18.1 56.1C6.8 60.5 0 71.7 0 83.8L0 454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 105.5 448 144 448c33.9 0 79 14 105.6 23.5zm76.8 0C353 462 398.1 448 432 448c38.5 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5l0-370.3c0-12.1-6.8-23.3-18.1-27.6C529.7 45.3 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11L304 456c0 11.4 11.7 19.3 22.4 15.5z"/></svg></i> 8 000+ слов и выражений</span><b class="trust-dot"></b><span><i aria-hidden="true"><svg class="fa-icon" viewBox="0 0 512 512" aria-hidden="true"><path d="M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160 352 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l111.5 0c0 0 0 0 0 0l.4 0c17.7 0 32-14.3 32-32l0-112c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 35.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1L16 432c0 17.7 14.3 32 32 32s32-14.3 32-32l0-35.1 17.6 17.5c0 0 0 0 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.8c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352l34.4 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L48.4 288c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z"/></svg></i> Умные повторения</span><b class="trust-dot"></b><span><i aria-hidden="true"><svg class="fa-icon" viewBox="0 0 640 512" aria-hidden="true"><path d="M192 64C86 64 0 150 0 256S86 448 192 448l256 0c106 0 192-86 192-192s-86-192-192-192L192 64zM496 168a40 40 0 1 1 0 80 40 40 0 1 1 0-80zM392 304a40 40 0 1 1 80 0 40 40 0 1 1 -80 0zM168 200c0-13.3 10.7-24 24-24s24 10.7 24 24l0 32 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-32 0 0 32c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-32-32 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l32 0 0-32z"/></svg></i> Игры с котом Бобом</span><b class="trust-dot"></b><span><i aria-hidden="true"><svg class="fa-icon" viewBox="0 0 512 512" aria-hidden="true"><path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64L0 400c0 44.2 35.8 80 80 80l400 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 416c-8.8 0-16-7.2-16-16L64 64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/></svg></i> От A1 до C2</span></div></section>
@@ -738,8 +775,8 @@ body{margin:0;background:#f7fbf8;color:#18322f;font-family:Inter,ui-rounded,"SF 
       <div class="game-intro"><div class="eyebrow eyebrow-light"><span class="eyebrow-dot"></span> ИННОВАЦИЯ ОТ BEWORDS</div><h2>Играйте<br />и учите <span>английский.</span></h2><p>Игры, карточки, блиц-квизы и перевод предложений — выбирай формат под себя.</p><a href="#ld-start" class="text-link">Заглянуть внутрь <span>↗</span></a></div>
       <div class="game-showcase">
         <div class="plane-frame"><img src="app-photos/landing/flying-bob.webp" alt="Flying Bob — аркадная игра с котом на самолёте" width="640" height="360" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" /></div>
-        
-        
+
+
       <div class="game-library" data-game-carousel>
   <div class="game-library-heading"><div><span>ИГРОВАЯ КОЛЛЕКЦИЯ</span><b>Выбирай, во что играть</b></div><span class="library-note">И это ещё не всё</span></div>
   <div class="game-carousel-viewport" tabindex="0" role="region" aria-label="Примеры игр BeWords"><div class="game-grid game-carousel-track">
@@ -759,12 +796,63 @@ body{margin:0;background:#f7fbf8;color:#18322f;font-family:Inter,ui-rounded,"SF 
 
 <script>
 /* Кнопки «Начать учиться» ведут в приложение (index.html?app=1 — гейт лендинга
-   пропустит пользователя сразу в app). Заодно запоминаем, что лендинг уже видели,
-   чтобы при следующем заходе на bewords.ru не показывать его повторно. */
+   пропустит пользователя сразу в app). Заодно запоминаем, что лендинг уже видели. */
 (function () {
   document.querySelectorAll('#landing a[href="index.html?app=1"]').forEach(function (a) {
     a.addEventListener('click', function () {
       try { localStorage.setItem('beWordsLandingSeen', '1'); } catch (e) {}
+    });
+  });
+})();
+</script>
+
+<script>
+/* ===== «УЗНАТЬ БОЛЬШЕ» → СНАЧАЛА ПОКАЗЫВАЕМ БОБА, ПОТОМ СЛЕДУЮЩИЙ БЛОК =====
+   На мобильных hero-колонка высокая и Боб уходит ниже сгиба: первый тап
+   мягко долистывает до подписи «Боб — твой ИИ-наставник» и самого кота,
+   второй — уходит дальше, к блоку «Как это работает». */
+(function () {
+  'use strict';
+  var root = document.getElementById('landing');
+  if (!root) return;
+
+  var heroVisual = root.querySelector('.hero-visual');
+  var triggers = root.querySelectorAll('[data-reveal-bob]');
+  if (!heroVisual || !triggers.length) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function headerOffset() {
+    var header = root.querySelector('.site-header');
+    return (header ? header.offsetHeight : 68) + 10;
+  }
+  function introEl() {
+    return heroVisual.querySelector('.bob-intro') || heroVisual;
+  }
+  /* Боб уже показан, если его подпись видна под шапкой */
+  function bobIsRevealed() {
+    var top = introEl().getBoundingClientRect().top;
+    return top >= headerOffset() - 40 && top < window.innerHeight * 0.6;
+  }
+  function revealBob() {
+    var y = window.pageYOffset + introEl().getBoundingClientRect().top - headerOffset();
+    window.scrollTo({ top: Math.max(0, y), behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+
+  triggers.forEach(function (trigger) {
+    trigger.addEventListener('click', function (event) {
+      if (bobIsRevealed()) return;           /* второй тап — обычный переход по якорю */
+      var visualBox = heroVisual.getBoundingClientRect();
+      /* если Боб и так полностью на экране — не мешаем штатной навигации */
+      if (visualBox.top >= headerOffset() - 40 && visualBox.bottom <= window.innerHeight + 4) return;
+      event.preventDefault();
+      revealBob();
+    });
+    trigger.addEventListener('keydown', function (event) {
+      if (event.key !== 'Enter' && event.key !== ' ' && event.key !== 'Spacebar') return;
+      if (trigger.tagName === 'A') return;    /* у ссылки Enter сработает штатно */
+      event.preventDefault();
+      if (!bobIsRevealed()) revealBob();
     });
   });
 })();
@@ -791,6 +879,12 @@ if (menuButton && nav) {
     menuButton.setAttribute('aria-expanded', 'false');
     nav.classList.remove('open');
   }));
+  document.addEventListener('click', (event) => {
+    if (!nav.contains(event.target) && !menuButton.contains(event.target)) {
+      menuButton.setAttribute('aria-expanded', 'false');
+      nav.classList.remove('open');
+    }
+  });
 }
 
 // Bring the vocabulary number to life as the hero enters the viewport.
@@ -814,8 +908,7 @@ const countObserver = ('IntersectionObserver' in window && vocabCounter) ? new I
 if (countObserver && vocabCounter) countObserver.observe(vocabCounter);
 else if (vocabCounter) vocabCounter.textContent = (895).toLocaleString('ru-RU');
 
-// Reveal the dashboard only when it scrolls into view, then bring its weekly
-// bars, score, and daily-goal ring to life in sequence.
+// Reveal the dashboard only when it scrolls into view.
 const habitDashboard = root.querySelector('.habit-dashboard');
 if ('IntersectionObserver' in window && habitDashboard) {
   const dashboardObserver = new IntersectionObserver(entries => {
@@ -839,8 +932,7 @@ if ('IntersectionObserver' in window && habitDashboard) {
   habitDashboard.classList.add('is-visible');
 }
 
-// Reveal the CEFR path when it enters view: the connecting route draws down and
-// each level arrives in sequence. With no observer support the card stays static.
+// Reveal the CEFR path when it enters view.
 const levelsCard = root.querySelector('.levels-card');
 if (levelsCard && 'IntersectionObserver' in window) {
   const levelRows = [...levelsCard.querySelectorAll('.level-row')];
@@ -856,7 +948,7 @@ if (levelsCard && 'IntersectionObserver' in window) {
   levelsObserver.observe(levelsCard);
 }
 
-// Swipeable game-cover carousel. It advances only while visible and pauses on hover/focus.
+// Swipeable game-cover carousel.
 const gameCarousel = root.querySelector('[data-game-carousel]');
 if (gameCarousel) {
   const viewport = gameCarousel.querySelector('.game-carousel-viewport');
@@ -876,7 +968,6 @@ if (gameCarousel) {
   const maxPage = () => Math.max(0, Math.round((viewport.scrollWidth - viewport.clientWidth) / stepWidth()));
 
   function updateCarouselUI() {
-    // Dot state is the quiet progress indicator; no numeric counter or arrow controls.
     [...dotsWrap.children].forEach((dot, index) => {
       if (index === activePage) dot.setAttribute('aria-current', 'page');
       else dot.removeAttribute('aria-current');
@@ -896,6 +987,7 @@ if (gameCarousel) {
   }
   function goTo(index) {
     const pages = maxPage() + 1;
+    if (pages <= 1) { updateCarouselUI(); return; }
     activePage = ((index % pages) + pages) % pages;
     const maxScroll = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
     const left = Math.min(slides[activePage]?.offsetLeft || 0, maxScroll);
@@ -915,6 +1007,8 @@ if (gameCarousel) {
   gameCarousel.addEventListener('focusout', event => {
     if (!gameCarousel.contains(event.relatedTarget)) paused = false;
   });
+  viewport.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+  viewport.addEventListener('touchend', () => { window.setTimeout(() => { paused = false; }, 3000); }, { passive: true });
   drawDots();
   window.addEventListener('resize', () => {
     activePage = Math.min(activePage, maxPage());
@@ -938,6 +1032,40 @@ if (gameCarousel) {
 }
 
   } catch (e) { /* декор лендинга не критичен */ }
+})();
+</script>
+
+<script>
+/* ===== АНТИ-СДВИГ: страница не должна «уезжать» вбок на мобильных =====
+   overflow-x:hidden на корне всё равно оставляет возможность программного
+   горизонтального скролла (фокус, scrollIntoView, якоря, авто-скролл карусели).
+   Жёстко возвращаем scrollLeft документа в 0. */
+(function () {
+  'use strict';
+  var scroller = document.scrollingElement || document.documentElement;
+  if (!scroller) return;
+
+  function resetHorizontalShift() {
+    try {
+      if (scroller.scrollLeft !== 0) scroller.scrollLeft = 0;
+      if (document.body && document.body.scrollLeft !== 0) document.body.scrollLeft = 0;
+    } catch (e) {}
+  }
+
+  var frame = 0;
+  function schedule() {
+    if (frame) return;
+    frame = requestAnimationFrame(function () { frame = 0; resetHorizontalShift(); });
+  }
+
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  window.addEventListener('orientationchange', function () { setTimeout(resetHorizontalShift, 60); });
+  document.addEventListener('focusin', schedule);
+  document.addEventListener('touchend', schedule, { passive: true });
+  window.addEventListener('load', resetHorizontalShift);
+  resetHorizontalShift();
+  setTimeout(resetHorizontalShift, 350);
 })();
 </script>
 </body>
