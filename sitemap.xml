@@ -2,8 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bewords.ru/</loc>
-    <lastmod>2024-01-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://bewords.ru/about.html</loc>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://bewords.ru/blog/</loc>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://bewords.ru/blog/kak-vyuchit-1000-slov-za-mesyac.html</loc>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://bewords.ru/blog/skolko-slov-nuzhno-znat.html</loc>
+    <lastmod>2026-10-14</lastmod>
+  </url>
+  <url>
+    <loc>https://bewords.ru/blog/prilozheniya-dlya-grammatiki.html</loc>
+    <lastmod>2026-10-14</lastmod>
   </url>
 </urlset>
