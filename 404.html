@@ -280,69 +280,6 @@ h1{
 
 </div>
 
-<script>
-(function () {
-  'use strict';
-
-  /* ══ 1. ЗАМОРОЗКА АНИМИРОВАННОГО WEBP ══════════════════════
-     Твой /404.webp — анимированный, поэтому «жёстко крутится».
-     Берём первый кадр через canvas и подставляем как PNG.
-     Хочешь вернуть анимацию — поставь false.                    */
-  var FREEZE_WEBP = true;
-
-  var img = document.getElementById('catImage');
-  var box = document.getElementById('catBox');
-
-  function freezeWebp() {
-    if (!FREEZE_WEBP || !img || img.dataset.frozen === '1') return;
-    var w = img.naturalWidth, h = img.naturalHeight;
-    if (!w || !h) return;
-    try {
-      var c = document.createElement('canvas');
-      c.width = w; c.height = h;
-      c.getContext('2d').drawImage(img, 0, 0, w, h);
-      img.src = c.toDataURL('image/png');   // статичный кадр
-      img.dataset.frozen = '1';
-    } catch (e) {
-      /* CORS/tainted canvas — оставляем оригинал как есть */
-    }
-  }
-
-  if (img) {
-    if (img.complete && img.naturalWidth) freezeWebp();
-    else img.addEventListener('load', freezeWebp, { once: true });
-
-    img.addEventListener('error', function () {
-      if (box) box.classList.add('is-broken');  // покажем SVG-кота
-    });
-  }
-
-  /* ══ 2. ЛЕТАЮЩИЕ БУКВЫ (на мобиле меньше — меньше repaint) ══ */
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fx = document.getElementById('fx');
-
-  if (fx && !reduce) {
-    var small = window.matchMedia('(max-width: 600px)').matches;
-    var chars = 'АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЭЮЯABC'.split('');
-    var count = small ? 5 : 10;
-    var frag  = document.createDocumentFragment();
-
-    for (var i = 0; i < count; i++) {
-      var el = document.createElement('span');
-      el.className = 'letter';
-      el.textContent = chars[(Math.random() * chars.length) | 0];
-      el.style.left = (2 + Math.random() * 92).toFixed(2) + '%';
-      el.style.fontSize = ((small ? 15 : 20) + Math.random() * 20).toFixed(1) + 'px';
-      el.style.animationDuration = (16 + Math.random() * 16).toFixed(1) + 's';
-      el.style.animationDelay = (-Math.random() * 26).toFixed(1) + 's';
-      frag.appendChild(el);
-    }
-    fx.appendChild(frag);
-  }
-
-  console.log('BeWords 404 page loaded');
-})();
-</script>
 
 </body>
 </html>
