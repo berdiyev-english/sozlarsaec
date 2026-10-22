@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Краулеры ИИ-поиска: контент открыт — нам важно попадать в ответы моделей
+# AI-search crawlers: public pages are open for crawling.
 User-agent: GPTBot
 Allow: /
 
@@ -39,4 +39,4 @@ User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://bewords.ru/sitemap.xml
-Host: https://bewords.ru
+Host: bewords.ru
