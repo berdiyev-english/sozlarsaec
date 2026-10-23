@@ -1147,3 +1147,5 @@ p{text-wrap:pretty;margin:0 0 1.15em}
   .mini-quiz{padding:13px;border-radius:16px}
   .quiz-item{padding:11px 12px}
 }
+/* Иллюстрации новых тематических карточек журнала */
+#articles .hub-grid .card-thumb{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:16px;margin:0 0 14px;background:#eef9e9}
