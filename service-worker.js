@@ -1,21 +1,15 @@
 /* Bewords Service Worker - Offline Mode */
-const CACHE_NAME = 'bewords-cache-v21';
+const CACHE_NAME = 'bewords-cache-v22';
 
 // Список файлов, которые нужно сохранить СРАЗУ
 const STATIC_ASSETS = [
   './',
   './index.html',
-  './style.css',
+  './styles.css',
   './app.js',
   './grammar.js',
   './sentences-data.js',
   'app-photos/bob/loading.gif',
-  'app-photos/pets/kitten.png',
-  'app-photos/pets/puppy.png',
-  'app-photos/pets/panda.png',
-  'app-photos/pets/fox.png',
-  'app-photos/pets/penguin.png',
-  'app-photos/pets/rabbit.png',
   'app-photos/error/nophoto.jpg',
   'app-photos/motivation/m1.jpg',
   'app-photos/motivation/m2.jpg',
@@ -83,12 +77,15 @@ self.addEventListener('install', (event) => {
 });
 
 // 2. Активация (Чистим старые кеши)
+//    ⚠️ ВАЖНО: кэш озвучки 'bewords-audio-v1' (создаётся из app.js через Cache API)
+//    НЕ удаляем — в нём лежат предзагруженные mp3 слов урока. Без этого
+//    исключения каждое обновление воркера стирало бы аудио-кэш.
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
-          if (key !== CACHE_NAME) return caches.delete(key);
+          if (key !== CACHE_NAME && !key.startsWith('bewords-audio-')) return caches.delete(key);
         })
       );
     }).then(() => self.clients.claim())
