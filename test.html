@@ -1,1516 +1,1104 @@
-
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#f7fbf8" name="theme-color"/>
+<title>BeWords — английские слова и грамматика в формате игры</title>
+<meta content="BeWords помогает учить английские слова по уровням A1–C2, разбирать грамматику на русском и повторять материал в играх. Более 8 000 слов и выражений." name="description"/>
+<link href="https://bewords.ru/" rel="canonical"/>
+<meta content="website" property="og:type"/>
+<meta content="BeWords" property="og:site_name"/>
+<meta content="https://bewords.ru/" property="og:url"/>
+<meta content="BeWords — английские слова и грамматика в формате игры" property="og:title"/>
+<meta content="BeWords помогает учить английские слова по уровням A1–C2, разбирать грамматику на русском и повторять материал в играх. Более 8 000 слов и выражений." property="og:description"/>
+<meta property="og:image" content="https://bewords.ru/og-image.png">
+<meta content="ru_RU" property="og:locale"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="BeWords — английские слова и грамматика в формате игры" name="twitter:title"/>
+<meta content="BeWords помогает учить английские слова по уровням A1–C2, разбирать грамматику на русском и повторять материал в играх. Более 8 000 слов и выражений." name="twitter:description"/>
+<meta content="https://bewords.ru/app-photos/og-image.png" name="twitter:image"/>
+<link href="app-photos/icons/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="app-photos/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="app-photos/icons/favicon.ico" rel="icon" sizes="any"/>
+<link href="app-photos/icons/icon-192.png" rel="apple-touch-icon"/>
+<link href="fonts/fontawesome/css/all.min.css" rel="stylesheet"/>
+<style id="landingStyles">
+/* ===== контейнер лендинга + скрытие приложения под ним ===== */
+#landing{display:none;position:fixed;inset:0;z-index:2147483646;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;background:#f7fbf8}
+html.landing-on #landing{display:block}
+html.landing-on body{overflow:hidden!important;height:100%!important}
+html.landing-on #simple-splash{display:none!important}
+#landing .audience-chip i{font-size:11px;width:11px;flex:0 0 11px;opacity:.56;line-height:1}
 
-  <title>BeWords - Изучение английских слов</title>
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="96x96" href="app-photos/icons/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="app-photos/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="app-photos/icons/favicon-16x16.png">
-  <link rel="icon" href="app-photos/icons/favicon.ico" sizes="any">
-  
-  <!-- Apple Touch Icon -->
-  <link rel="apple-touch-icon" href="app-photos/icons/icon-192.png">
-  
-  <link rel="preload" as="image" href="app-photos/bob/loading.gif">
-  
-  <!-- Manifest -->
-  <link rel="manifest" href="manifest.json">
-  
-  <!-- Theme Color -->
-  <meta name="theme-color" content="#f2f1f1">
-  
-  <!-- Apple Meta Tags -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="BeWords">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="mobile-web-app-capable" content="yes">
-  
-  <!-- SEO для поисковиков и соцсетей -->
-  <meta name="description" content="Инновационная платформа для изучения английских слов через игры">
-  <meta property="og:title" content="BeWords - Изучение английских слов">
-  <meta property="og:description" content="Инновационная платформа для изучения английских слов через игры">
-  <meta property="og:image" content="https://bewords.ru/og-image.png">
-  <meta property="og:url" content="https://bewords.ru">
-  <meta property="og:type" content="website">
-  <link rel="canonical" href="https://bewords.ru">
-  <link rel="preload" as="style" href="styles.css?v=2026-10-05-6">
-  <link rel="preload" as="style" href="fonts/fontawesome/css/all.min.css">
-  <!-- ?v= — защита от кэша service worker'а: меняй при каждом деплое -->
-<link rel="stylesheet" href="styles.css?v=2026-10-05-6">
-  <link rel="stylesheet" href="fonts/fontawesome/css/all.min.css">
-
-  <style>
-  .app-install-banner {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(135deg, #58CC02 0%, #89E219 100%);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    z-index: 10000;
-    padding: 10px 15px;
-    animation: slideDown 0.3s ease-out;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    display: none;
-  }
-
-  .app-install-banner.show {
-    display: block;
-  }
-
-  @keyframes slideDown {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(0); }
-  }
-
-  .banner-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-  }
-
-  .banner-close {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255,255,255,0.2);
-    border: none;
-    color: white;
-    font-size: 24px;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.9;
-    transition: opacity 0.2s;
-  }
-
-  .banner-close:hover {
-    opacity: 1;
-  }
-
-  .banner-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex: 1;
-  }
-
-  .banner-icon {
-    width: 45px;
-    height: 45px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  }
-
-  .banner-text {
-    color: white;
-  }
-
-  .banner-text h4 {
-    margin: 0;
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 2px;
-  }
-
-  .banner-text p {
-    margin: 0;
-    font-size: 12px;
-    opacity: 0.95;
-  }
-
-  .banner-install-btn {
-    background: white;
-    color: #58CC02;
-    padding: 7px 18px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-    white-space: nowrap;
-    margin-right: 35px;
-  }
-
-  .banner-install-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  }
-
-  /* Сдвигаем контент вниз когда баннер показан */
-  body.banner-shown {
-    padding-top: 50px;
-  }
-
-  body.banner-shown .app-header {
-    top: 50px;
-  }
-
-  /* Адаптив для мобильных */
-  @media (max-width: 480px) {
-    .app-install-banner {
-      padding: 8px 10px;
-    }
-    
-    .banner-icon {
-      width: 38px;
-      height: 38px;
-    }
-    
-    .banner-text h4 {
-      font-size: 13px;
-    }
-    
-    .banner-text p {
-      font-size: 11px;
-    }
-    
-    .banner-install-btn {
-      padding: 6px 14px;
-      font-size: 12px;
-    }
-
-    body.banner-shown {
-      padding-top: 20px;
-    }
-
-    body.banner-shown .app-header {
-      top: 20px;
-    }
-  }
-  
-  /* Оптимизация анимаций для мобильных */
-@media (max-width: 768px) {
-    /* Включаем аппаратное ускорение */
-    .words-container {
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-    }
-    
-    /* Оптимизация скролла */
-    .main-content {
-        -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
-    }
+#landing{--ink:#18322f;--muted:#71827e;--green:#58cc02;--green-dark:#46a302;--blue:#1cb0f6;--paper:#f7fbf8;--line:#e6eeea;--navy:#102c2b;--white:#fff;--shadow:0 18px 48px rgba(24,60,49,.11);--radius:26px}
+#landing *{box-sizing:border-box}
+#landing{scroll-behavior:smooth;scroll-padding-top:88px}
+#landing{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+#landing a{color:inherit;text-decoration:none}
+#landing button{font:inherit}
+#landing .site-header{height:82px;position:sticky;top:0;z-index:50;background:rgba(250,253,250,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(224,235,229,.76)}
+#landing .nav-wrap{height:100%;max-width:1240px;margin:auto;padding:0 34px;display:flex;align-items:center;justify-content:space-between}
+#landing .brand{display:inline-flex;align-items:center;gap:10px;font-size:23px;font-weight:850;letter-spacing:-1.2px;color:#18322f;min-width:0}
+#landing .brand>span:last-child>span{color:#26a7df}
+#landing .brand-mark{width:39px;height:39px;border-radius:13px;display:grid;place-items:center;background:#eff9e9;box-shadow:inset 0 -2px 0 rgba(23,72,40,.1);flex:0 0 auto}
+#landing .brand-mark svg{width:32px;height:32px}
+#landing .main-nav{display:flex;align-items:center;gap:34px;font-size:13px;font-weight:720;color:#59706b}
+#landing .main-nav>a:not(.nav-cta){transition:color .2s}
+#landing .main-nav>a:not(.nav-cta):hover{color:#159fdb}
+#landing .nav-cta{padding:12px 17px 12px 20px;background:#fff;border:1px solid #e4eee8;border-radius:14px;color:#18322f;box-shadow:0 3px 0 #e0e9e4;transition:.2s}
+#landing .nav-cta span{color:#1cb0f6;font-size:17px;padding-left:6px}
+#landing .nav-cta:hover{transform:translateY(-2px);box-shadow:0 5px 0 #e0e9e4}
+#landing .menu-toggle{display:none}
+#landing .section-shell,#landing .section{width:100%;max-width:1240px;margin-left:auto;margin-right:auto;padding-left:34px;padding-right:34px}
+#landing .hero{min-height:675px;display:grid;grid-template-columns:48% 52%;align-items:center;position:relative;overflow:hidden;padding-top:46px;padding-bottom:74px}
+#landing .hero:before{content:"";position:absolute;z-index:-1;width:680px;height:680px;left:45%;top:-190px;border-radius:50%;background:radial-gradient(circle,rgba(193,245,159,.35),rgba(222,249,221,.1) 62%,transparent 70%)}
+#landing .hero-copy{padding:14px 0 0 14px;position:relative;z-index:2;min-width:0}
+#landing .eyebrow{display:flex;align-items:center;gap:9px;color:#598373;font-size:10px;font-weight:850;letter-spacing:1.5px}
+#landing .sparkle{font-size:15px;color:#f5ad16}
+#landing .eyebrow-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(88,204,2,.13);flex:0 0 auto}
+#landing h1,#landing h2,#landing h3,#landing p{margin-top:0}
+#landing .hero h1{font-size:clamp(58px,7.1vw,91px);line-height:.98;letter-spacing:-6px;margin:26px 0 22px;font-weight:900;color:#17332f}
+#landing .title-highlight{color:#52be10;position:relative;white-space:nowrap}
+#landing .title-highlight:after{content:"";height:9px;position:absolute;bottom:0;left:2px;right:4px;z-index:-1;background:#d9f4c8;border-radius:7px;transform:rotate(-1.5deg)}
+#landing .hero-lead{max-width:445px;color:#697e79;line-height:1.72;font-size:16px;font-weight:500;margin-bottom:27px}
+#landing .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+#landing .button{height:55px;padding:0 21px;border:0;border-radius:15px;display:inline-flex;align-items:center;justify-content:center;gap:13px;font-size:13px;font-weight:850;cursor:pointer;transition:transform .16s,box-shadow .16s,background .2s}
+#landing .button:active{transform:translateY(3px)!important;box-shadow:none!important}
+#landing .button-green{background:var(--green);color:white;box-shadow:0 5px 0 var(--green-dark),0 10px 24px rgba(88,204,2,.18)}
+#landing .button-green:hover{background:#62db08;transform:translateY(-2px);box-shadow:0 7px 0 var(--green-dark),0 13px 24px rgba(88,204,2,.22)}
+#landing .button .arrow{font-size:20px;line-height:0}
+#landing .button-light{color:#42645c;background:#fff;border:1px solid #e7efea;box-shadow:0 4px 0 #e3ebe6}
+#landing .button-light:hover{background:#fafff6;transform:translateY(-2px)}
+#landing .hero-proof{display:flex;align-items:center;gap:13px;margin-top:32px;font-size:10px;line-height:1.5;color:#80928d}
+#landing .hero-proof b{color:#49615b;font-weight:750}
+#landing .hero-visual{height:540px;position:relative;display:flex;align-items:center;justify-content:center;min-width:0;max-width:100%}
+#landing .character-halo{position:absolute;width:395px;height:395px;top:70px;left:50%;transform:translateX(-48%);border-radius:48% 52% 43% 57%/50% 44% 56% 50%;background:linear-gradient(145deg,#d9f8c7,#c9f0eb);box-shadow:inset 0 -12px 0 rgba(61,151,89,.08);animation:blob 9s ease-in-out infinite}
+#landing .character-halo:after{content:"";position:absolute;inset:19px;border-radius:inherit;border:1px dashed rgba(49,145,98,.23)}
+#landing .bob-hero{position:absolute;width:min(430px,90%);height:500px;object-fit:contain;bottom:0;left:50%;transform:translateX(-48%);filter:drop-shadow(0 12px 10px rgba(34,58,45,.11));z-index:2;animation:bobfloat 4.2s ease-in-out infinite}
+#landing .hero-orbit{position:absolute;border:1px solid rgba(89,176,106,.22);border-radius:50%;z-index:0}
+#landing .orbit-one{width:475px;height:475px;transform:rotate(-29deg) scaleY(.52)}
+#landing .orbit-two{width:530px;height:530px;transform:rotate(46deg) scaleY(.5)}
+#landing .hero-spark{position:absolute;color:#f5b825;font-size:23px;z-index:4;animation:twinkle 2.8s ease-in-out infinite}
+#landing .spark-a{top:91px;right:13%}
+#landing .spark-b{bottom:142px;left:6%;font-size:17px;animation-delay:1s}
+#landing .growth-card{position:absolute;bottom:24px;left:1%;z-index:6;width:245px;padding:15px 16px 11px;background:#fff;border-radius:18px;box-shadow:0 10px 32px rgba(27,66,53,.14);border:1px solid #e8f0eb}
+#landing .growth-head{display:flex;justify-content:space-between;align-items:center}
+#landing .mini-label{font-size:8px;font-weight:850;color:#90a19b;letter-spacing:1px;display:block;margin-bottom:5px}
+#landing .growth-head strong{font-size:22px;letter-spacing:-.6px}
+#landing .growth-head strong small{font-size:11px;color:#84958f;letter-spacing:0;font-weight:600}
+#landing .growth-pill{background:#eef9e9;color:#3ea807;padding:6px 8px;border-radius:9px;font-size:10px;font-weight:850}
+#landing .growth-chart{width:100%;height:60px;display:block;margin-top:8px}
+#landing .chart-days{display:flex;justify-content:space-between;font-size:7px;color:#a0aea9}
+#landing .hero-footnote{position:absolute;bottom:24px;left:47px;color:#8a9a94;font-size:10px;font-weight:650;display:flex;align-items:center;gap:9px}
+#landing .down-arrow{font-size:18px;color:#57b719}
+#landing .trust-strip{background:#fff;border-top:1px solid #ebf1ed;border-bottom:1px solid #ebf1ed;overflow:hidden}
+#landing .trust-inner{min-height:72px;max-width:1130px;margin:auto;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;color:#71847c;font-size:11px;font-weight:750}
+#landing .trust-inner>span{display:flex;align-items:center;gap:9px;white-space:nowrap}
+#landing .trust-inner i{font-style:normal;color:#53b416;font-size:17px}
+#landing .trust-inner .trust-dot{width:4px;height:4px;background:#d2ddd5;border-radius:50%}
+#landing .section{padding-top:108px;padding-bottom:112px}
+#landing .section-heading{text-align:center;max-width:520px;margin:0 auto 48px}
+#landing .section-heading .eyebrow{justify-content:center}
+#landing .section-heading h2,#landing .vocab-copy h2,#landing .game-intro h2,#landing .habit-copy h2,#landing .final-cta h2{font-size:clamp(38px,5vw,57px);letter-spacing:-2.6px;line-height:1.06;font-weight:880;color:#193631;margin:17px 0 14px}
+#landing .section-heading h2 span,#landing .vocab-copy h2 span,#landing .game-intro h2 span,#landing .habit-copy h2 span,#landing .final-cta h2 span{color:#4db70b}
+#landing .section-heading p,#landing .vocab-copy>p{font-size:14px;line-height:1.75;color:#7b8d86;max-width:430px;margin:0 auto}
+#landing .steps-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+#landing .step-card{min-height:335px;background:#fff;border:1px solid #e9efeb;border-radius:22px;padding:20px 22px 24px;position:relative;overflow:hidden;box-shadow:0 6px 0 rgba(30,61,48,.035);transition:transform .25s,box-shadow .25s;min-width:0}
+#landing .step-card:hover{transform:translateY(-5px);box-shadow:0 13px 28px rgba(32,70,52,.09)}
+#landing .step-card h3{font-size:17px;letter-spacing:-.4px;margin:4px 0 9px}
+#landing .step-card p{font-size:11px;color:#7c8e88;line-height:1.65;margin:0;max-width:290px}
+#landing .game-section{max-width:none;background:#123431;color:#fff;padding:92px max(34px,calc((100% - 1172px)/2)) 98px;display:grid;grid-template-columns:minmax(260px,.83fr) minmax(500px,1.17fr);gap:55px;align-items:center;position:relative;overflow:hidden}
+#landing .game-section:before{content:"";position:absolute;width:520px;height:520px;border:1px solid rgba(176,239,168,.1);border-radius:50%;left:-220px;top:-170px;box-shadow:0 0 0 38px rgba(176,239,168,.025),0 0 0 80px rgba(176,239,168,.018)}
+#landing .game-intro{position:relative;z-index:1;min-width:0}
+#landing .eyebrow-light{color:#a8c5b8}
+#landing .eyebrow-light .eyebrow-dot{background:#b6e968;box-shadow:0 0 0 4px rgba(182,233,104,.13)}
+#landing .game-intro h2{color:#fff;margin-top:22px}
+#landing .game-intro h2 span{color:#b4ec74}
+#landing .game-intro p{color:#b1c7be;font-size:14px;line-height:1.75;max-width:340px}
+#landing .text-link{font-size:12px;font-weight:850;color:#b5e982;display:inline-flex;align-items:center;gap:11px;margin-top:14px}
+#landing .text-link span{font-size:17px}
+#landing .game-showcase{position:relative;z-index:1;max-width:680px;width:100%;margin:0 auto}
+#landing .plane-frame{position:relative;border-radius:23px;overflow:hidden;background:#b2e7e2;box-shadow:0 21px 50px rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.13)}
+#landing .plane-frame>img{display:block;width:100%;aspect-ratio:640/360;object-fit:cover}
+#landing .section-vocab{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:center;padding-top:115px;padding-bottom:115px}
+#landing .vocab-copy h2{font-size:clamp(37px,4.7vw,54px);margin:20px 0}
+#landing .vocab-copy>p{margin:0;max-width:420px}
+#landing .vocab-total{display:flex;align-items:center;gap:13px;margin:25px 0 26px}
+#landing .vocab-total strong{font-size:38px;letter-spacing:-2px;color:#56be10}
+#landing .vocab-total strong span{color:#1cb0f6}
+#landing .vocab-total>span{font-size:10px;line-height:1.45;color:#83958e;font-weight:700}
+#landing .levels-card{padding:21px 23px 15px;border-radius:23px;background:#fff;border:1px solid #e5eee8;box-shadow:0 17px 48px rgba(32,70,52,.075)}
+#landing .levels-head{display:flex;justify-content:space-between;align-items:center;color:#879891;font-size:9px;font-weight:900;letter-spacing:1.1px;padding:0 0 12px;border-bottom:1px solid #f0f3f1}
+#landing .level-row{display:grid;grid-template-columns:42px 1fr auto;grid-template-rows:1fr 5px;column-gap:12px;align-items:center;padding:11px 2px 9px;border-bottom:1px solid #f3f5f3}
+#landing .level-badge{width:39px;height:39px;grid-row:1/3;border-radius:13px;display:grid;place-items:center;color:#fff;font-size:13px;font-weight:900;box-shadow:inset 0 -3px rgba(0,0,0,.12)}
+#landing .level-a1{background:#58cc02}
+#landing .level-a2{background:#1cb0f6}
+#landing .level-b1{background:#c87bff}
+#landing .level-b2{background:#ffbd00}
+#landing .level-c1{background:#ff575f}
+#landing .level-c2{background:#795cff}
+#landing .levels-foot{border-top:1px solid #eff3f0;padding:12px 2px 0;display:flex;justify-content:space-between;font-size:8px;color:#85968f}
+#landing .levels-foot span:last-child{font-weight:750}
+#landing .levels-foot b{font-size:13px;color:#22a8e6;padding-left:4px}
+#landing .habit-section{max-width:none;background:#eaf6e4;padding:79px max(34px,calc((100% - 1172px)/2));overflow:hidden}
+#landing .habit-card{max-width:1172px;margin:auto;display:grid;grid-template-columns:1fr .9fr;gap:55px;align-items:center;min-height:380px;position:relative}
+#landing .habit-copy{position:relative;z-index:1;min-width:0}
+#landing .habit-copy h2{margin:20px 0}
+#landing .habit-copy>p{max-width:395px;color:#718a7f;line-height:1.75;font-size:13px}
+#landing .habit-copy h2 span{color:#279ed1}
+#landing .habit-stats{display:flex;gap:27px;margin-top:28px}
+#landing .habit-stats>div{display:flex;flex-direction:column;gap:3px}
+#landing .habit-stats b{font-size:24px;letter-spacing:-1px}
+#landing .habit-stats b i{font-style:normal;font-size:17px}
+#landing .habit-stats small{font-size:8px;color:#7c9388;font-weight:700}
+#landing .habit-dashboard{background:white;border:1px solid #e2ede4;border-radius:23px;padding:22px 23px;box-shadow:0 17px 44px rgba(51,100,55,.1);position:relative;z-index:1;min-width:0;max-width:100%}
+#landing .dash-top{display:flex;justify-content:space-between;font-size:9px;color:#91a29b;font-weight:900;letter-spacing:1px}
+#landing .dash-menu{font-size:14px;letter-spacing:2px;color:#93a7a0}
+#landing .dash-score{display:flex;align-items:center;gap:12px;margin-top:16px}
+#landing .dash-score strong{font-size:39px;letter-spacing:-2px;color:#173831}
+#landing .dash-score span{font-size:9px;line-height:1.5;color:#82958d}
+#landing .dash-score span b{color:#4eb516}
+#landing .bar-chart{height:115px;display:flex;align-items:flex-end;gap:12px;padding:10px 0 0;border-bottom:1px solid #e8efea}
+#landing .bar-group{flex:1;display:flex;align-items:center;flex-direction:column;gap:8px;height:100%;justify-content:flex-end;min-width:0}
+#landing .bar-group i{width:70%;max-width:27px;display:block;border-radius:7px 7px 2px 2px;background:#d8f1cb;transition:height .6s}
+#landing .bar-group:nth-child(2n) i{background:#b9e99e}
+#landing .bar-group.today i{background:linear-gradient(#7cda49,#56bd17);box-shadow:0 0 0 4px #eef9e9}
+#landing .bar-group span{font-size:8px;color:#9baaa4}
+#landing .bar-group.today span{color:#45a80c;font-weight:850}
+#landing .dash-goal{display:flex;align-items:center;gap:10px;margin-top:16px;padding:12px 12px;background:#f7faf7;border-radius:14px}
+#landing .goal-icon{width:30px;height:30px;border-radius:10px;background:#e8f7dd;display:grid;place-items:center;color:#4fb316;font-weight:900;flex:0 0 auto}
+#landing .dash-goal>span:nth-child(2){display:flex;flex-direction:column;gap:4px;min-width:0}
+#landing .dash-goal>span:nth-child(2) b{font-size:9px}
+#landing .dash-goal>span:nth-child(2) small{font-size:8px;color:#92a099}
+#landing .goal-progress{margin-left:auto;position:relative;width:41px;height:41px;display:grid;place-items:center;flex:0 0 auto}
+#landing .goal-progress svg{position:absolute;inset:0;transform:rotate(-90deg);fill:none;stroke:#edf3ea;stroke-width:4}
+#landing .goal-progress .goal-arc{stroke:#58cc02;stroke-dasharray:88 113;stroke-linecap:round}
+#landing .goal-progress b{font-size:8px;color:#47a512}
+#landing .habit-decoration{position:absolute;color:#a0d47e;font-size:34px;right:-25px;top:7px;transform:rotate(18deg)}
+#landing .final-cta{position:relative;text-align:center;padding-top:105px;padding-bottom:105px;overflow:hidden}
+#landing .final-cta:before,#landing .final-cta:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:#eff8e9;z-index:-1}
+#landing .final-cta:before{left:7%;top:45px}
+#landing .final-cta:after{right:9%;bottom:44px;width:115px;height:115px;background:#eef8fc}
+#landing .cta-cat{width:52px;height:52px;margin:0 auto 13px;display:grid;place-items:center;border-radius:17px;background:#e8f8dd;font-size:25px;transform:rotate(-8deg);box-shadow:0 4px 0 #d5edc8}
+#landing .final-cta .eyebrow{justify-content:center}
+#landing .final-cta h2{margin:18px 0 12px}
+#landing .final-cta p{font-size:13px;color:#80928b;margin-bottom:24px}
+#landing .button-large{height:59px;padding:0 26px;font-size:14px}
+#landing .cta-note{display:block;color:#98a6a0;font-size:9px;margin-top:17px}
+#landing .site-footer{min-height:80px;border-top:1px solid #e7eeea;display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:1240px;margin:auto;padding:14px 34px}
+#landing .site-footer .brand{font-size:17px}
+#landing .site-footer .brand-mark{width:31px;height:31px;border-radius:10px}
+#landing .site-footer .brand-mark svg{width:25px}
+#landing .footer-motto,#landing .footer-copy{color:#94a39d;font-size:9px;font-weight:650}
+@keyframes bobfloat{0%,100%{translate:0 0}
+50%{translate:0 -8px}
+}
+@keyframes blob{0%,100%{border-radius:48% 52% 43% 57%/50% 44% 56% 50%}
+50%{border-radius:52% 48% 55% 45%/45% 54% 46% 55%}
+}
+@keyframes twinkle{0%,100%{transform:scale(.85) rotate(0);opacity:.65}
+50%{transform:scale(1.2) rotate(18deg);opacity:1}
+}
+@media (max-width:1000px){#landing .nav-wrap{padding:0 26px}
+#landing .main-nav{gap:21px}
+#landing .hero{grid-template-columns:48% 52%;padding-left:25px;padding-right:25px;min-height:620px}
+#landing .hero h1{font-size:75px}
+#landing .hero-visual{transform:scale(.91);transform-origin:center}
+#landing .section{padding-top:88px;padding-bottom:88px}
+#landing .game-section{gap:35px}
+#landing .section-vocab{gap:38px}
+#landing .trust-inner{padding-left:25px;padding-right:25px}
+#landing .trust-inner>span{font-size:10px}
+/* FIX: полоса преимуществ больше не растягивает документ вбок —
+   вместо grid с nowrap-текстом делаем аккуратный внутренний скролл */
+#landing .trust-inner{display:flex;grid-template-columns:none;width:100%;max-width:100%;min-width:0;justify-content:flex-start;gap:18px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none}
+#landing .trust-inner::-webkit-scrollbar{display:none}
+#landing .trust-inner>span{flex:0 0 auto}
+#landing .trust-inner .trust-dot{flex:0 0 4px}
+}
+@media (max-width:760px){#landing{scroll-padding-top:70px}
+#landing .site-header{height:68px}
+#landing .nav-wrap{padding:0 18px}
+#landing .brand{font-size:21px}
+#landing .brand-mark{width:35px;height:35px}
+#landing .main-nav{display:none;position:absolute;left:12px;right:12px;top:74px;padding:15px;background:#fff;border:1px solid #e5eee8;border-radius:18px;box-shadow:var(--shadow);flex-direction:column;align-items:stretch;gap:4px;max-width:calc(100% - 24px)}
+#landing .main-nav.open{display:flex}
+#landing .main-nav>a:not(.nav-cta){padding:13px 12px;border-radius:10px}
+#landing .main-nav>a:not(.nav-cta):hover{background:#f5faf2}
+#landing .nav-cta{text-align:center;margin-top:6px}
+#landing .menu-toggle{display:flex;width:40px;height:40px;flex:0 0 auto;flex-direction:column;justify-content:center;align-items:center;gap:6px;border:1px solid #e5eee8;background:white;border-radius:12px;box-shadow:0 3px 0 #e7eee9}
+#landing .menu-toggle span{height:2px;width:17px;background:#426259;border-radius:3px;transition:.2s}
+#landing .menu-toggle[aria-expanded=true] span:first-child{transform:translateY(4px) rotate(45deg)}
+#landing .menu-toggle[aria-expanded=true] span:last-child{transform:translateY(-4px) rotate(-45deg)}
+#landing .hero{display:flex;flex-direction:column;align-items:stretch;padding:44px 22px 52px;min-height:0;overflow:hidden;min-width:0}
+#landing .hero-copy{padding:0;max-width:100%}
+#landing .eyebrow{font-size:9px;letter-spacing:1.2px}
+/* FIX: заголовок гарантированно влезает в узкий экран (было 58px + nowrap) */
+#landing .hero h1{font-size:clamp(44px,12.2vw,72px);letter-spacing:-.05em;margin:20px 0 15px;line-height:.97}
+#landing .hero-lead{font-size:14px;line-height:1.66;max-width:500px;margin-bottom:21px}
+#landing .hero-actions{gap:10px}
+#landing .button{height:51px;padding:0 15px;border-radius:14px;font-size:11px;gap:9px}
+#landing .hero-proof{margin-top:24px;font-size:9px}
+#landing .hero-visual{height:385px;margin:6px 0 -3px;transform:none;max-width:100%}
+#landing .character-halo{width:min(340px,87vw);height:min(340px,87vw);top:21px}
+#landing .bob-hero{width:min(355px,91vw);height:365px;bottom:0}
+#landing .orbit-one{width:min(380px,96vw);height:min(380px,96vw)}
+#landing .orbit-two{width:min(412px,98vw);height:min(412px,98vw)}
+#landing .growth-card{width:192px;bottom:4px;left:0;padding:11px 12px 9px;border-radius:15px;max-width:calc(100% - 4px)}
+#landing .growth-head strong{font-size:18px}
+#landing .growth-chart{height:44px;margin-top:4px}
+#landing .hero-spark{font-size:18px}
+#landing .spark-a{top:24px;right:15%}
+#landing .spark-b{bottom:125px;left:4%}
+#landing .hero-footnote{left:22px;bottom:16px;font-size:9px;max-width:calc(100% - 44px);cursor:pointer}
+#landing .trust-inner{justify-content:flex-start;gap:19px;overflow-x:auto;scrollbar-width:none;min-height:61px;padding:10px 20px;width:100%;max-width:100%}
+#landing .trust-inner::-webkit-scrollbar{display:none}
+#landing .trust-inner>span{font-size:9px}
+#landing .trust-inner .trust-dot{flex:0 0 4px}
+/* FIX: мобильные вертикальные ритмы — меньше «пустого» между блоками */
+#landing .section{padding:56px 21px 58px}
+#landing .section-heading{margin-bottom:26px}
+#landing .section-heading h2,#landing .vocab-copy h2,#landing .game-intro h2,#landing .habit-copy h2,#landing .final-cta h2{font-size:clamp(32px,9.4vw,48px);letter-spacing:-1.9px}
+#landing .section-heading p{font-size:12px;max-width:330px}
+#landing .steps-grid{grid-template-columns:minmax(0,1fr);gap:11px}
+#landing .step-card{min-height:0;padding:17px 18px 18px;display:grid;grid-template-columns:110px minmax(0,1fr);grid-template-rows:26px auto auto;column-gap:13px;align-items:center;border-radius:19px}
+#landing .step-card h3{grid-column:2;grid-row:2;align-self:end;font-size:15px;margin:0 0 5px}
+#landing .step-card p{grid-column:2;grid-row:3;align-self:start;font-size:10px}
+#landing .game-section{display:block;padding:58px 21px 60px}
+#landing .game-intro h2{margin:14px 0 11px}
+#landing .game-intro p{font-size:12px;max-width:370px}
+#landing .text-link{font-size:11px;margin-top:4px}
+#landing .game-showcase{margin-top:24px}
+#landing .plane-frame{border-radius:17px}
+/* FIX: у блока «От первого hello…» был огромный верхний отступ (74px) */
+#landing .section-vocab{display:flex;flex-direction:column;align-items:stretch;gap:24px;padding-top:30px;padding-bottom:56px}
+#landing .vocab-copy h2{font-size:clamp(32px,9.4vw,47px);margin:12px 0 14px}
+#landing .vocab-copy>p{font-size:12px}
+#landing .vocab-total{margin:16px 0 18px}
+#landing .vocab-total strong{font-size:33px}
+#landing .levels-card{padding:16px 14px 12px;border-radius:19px}
+#landing .levels-head{font-size:8px}
+#landing .level-row{grid-template-columns:37px minmax(0,1fr) auto;column-gap:9px;padding:9px 0 8px}
+#landing .level-badge{width:34px;height:34px;border-radius:11px;font-size:11px}
+#landing .levels-foot{font-size:7px}
+#landing .habit-section{padding:52px 21px 56px}
+#landing .habit-card{display:flex;flex-direction:column;align-items:stretch;gap:25px;min-height:0}
+#landing .habit-copy h2{margin:14px 0}
+#landing .habit-copy>p{font-size:12px}
+#landing .habit-stats{gap:0;justify-content:space-between;margin-top:20px}
+#landing .habit-stats b{font-size:21px}
+#landing .habit-stats small{font-size:7px}
+#landing .habit-dashboard{padding:17px;border-radius:19px}
+#landing .dash-score strong{font-size:34px}
+#landing .bar-chart{height:97px;gap:8px}
+#landing .dash-goal{padding:10px}
+#landing .habit-decoration{right:3px;top:-20px;font-size:27px}
+#landing .final-cta{padding:58px 21px 60px}
+#landing .final-cta h2{margin:14px 0 10px}
+#landing .final-cta p{font-size:11px;max-width:300px;margin:0 auto 21px}
+#landing .button-large{height:54px;font-size:12px;padding:0 20px}
+#landing .cta-note{font-size:8px}
+#landing .site-footer{min-height:68px;padding:12px 18px}
+#landing .site-footer .brand{font-size:15px}
+#landing .site-footer .brand-mark{width:28px;height:28px}
+#landing .footer-motto{display:none}
+#landing .footer-copy{font-size:8px}
+}
+@media (max-width:380px){#landing .hero{padding-left:17px;padding-right:17px}
+#landing .hero h1{font-size:clamp(40px,11.6vw,50px)}
+#landing .hero-actions{flex-direction:column;align-items:stretch;max-width:245px}
+#landing .hero-visual{height:355px;margin-top:8px}
+#landing .character-halo{width:min(290px,84vw);height:min(290px,84vw)}
+#landing .bob-hero{width:min(315px,88vw);height:335px}
+#landing .growth-card{width:175px}
+#landing .hero-footnote{left:17px}
+#landing .trust-inner{gap:14px}
+#landing .step-card{grid-template-columns:95px minmax(0,1fr);column-gap:10px}
+#landing .game-section{padding-left:17px;padding-right:17px}
+#landing .section-vocab{padding-top:26px}
+#landing .section{padding:52px 17px 54px}
+}
+@media (prefers-reduced-motion:reduce){#landing *,#landing *:before,#landing *:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+#landing .brand-mark{padding:0;overflow:hidden;background:#eaf4ff;box-shadow:inset 0 0 0 1px rgba(29,70,79,.08),0 2px 5px rgba(24,60,49,.08)}
+#landing .brand-mark img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+#landing .trust-inner{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:20px;justify-items:center}
+#landing .trust-inner>span{min-height:26px;display:inline-flex;align-items:center;justify-content:center;gap:9px;line-height:1.25}
+#landing .trust-inner i{width:19px;flex:0 0 19px;display:inline-flex;align-items:center;justify-content:center;line-height:1}
+#landing .trust-inner .trust-dot{align-self:center;margin:0}
+@media (min-width:1001px){#landing .trust-inner{overflow:visible}
+}
+#landing .steps-grid{align-items:stretch}
+@media (min-width:761px){#landing .step-card{display:flex;flex-direction:column;align-items:stretch}
+#landing .step-card h3{min-height:23px}
+#landing .step-card p{flex:1}
+}
+#landing .habit-dashboard{opacity:.86;transform:translateY(12px);transition:opacity .55s ease,transform .65s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease}
+#landing .habit-dashboard.is-visible{opacity:1;transform:translateY(0)}
+#landing .habit-dashboard:hover{box-shadow:0 22px 52px rgba(51,100,55,.17)}
+#landing .bar-group i{transform:scaleY(0);transform-origin:center bottom;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+#landing .habit-dashboard.is-visible .bar-group i{transform:scaleY(1)}
+#landing .habit-dashboard.is-visible .bar-group:nth-child(1) i{transition-delay:.08s}
+#landing .habit-dashboard.is-visible .bar-group:nth-child(2) i{transition-delay:.15s}
+#landing .habit-dashboard.is-visible .bar-group:nth-child(3) i{transition-delay:.22s}
+#landing .habit-dashboard.is-visible .bar-group:nth-child(4) i{transition-delay:.29s}
+#landing .habit-dashboard.is-visible .bar-group:nth-child(5) i{transition-delay:.36s}
+#landing .habit-dashboard.is-visible .bar-group:nth-child(6) i{transition-delay:.43s}
+#landing .habit-dashboard.is-visible .bar-group:nth-child(7) i{transition-delay:.50s}
+#landing .goal-progress .goal-arc{stroke-dasharray:88 113;stroke-dashoffset:113;transition:stroke-dashoffset 1s ease .45s}
+#landing .habit-dashboard.is-visible .goal-progress .goal-arc{stroke-dashoffset:25}
+#landing .dash-score strong{display:inline-block;min-width:82px;transition:color .25s}
+#landing .habit-dashboard.is-visible .dash-score strong{animation:score-pop .45s ease .25s both}
+#landing .cta-cat{padding:0;overflow:hidden;transform:none;animation:mascot-bob 3.8s ease-in-out infinite;box-shadow:0 4px 0 #d5edc8}
+#landing .cta-cat img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+@keyframes score-pop{0%{opacity:.25;transform:translateY(7px) scale(.94)}
+100%{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes mascot-bob{0%,100%{transform:translateY(0)}
+50%{transform:translateY(-4px)}
+}
+@media (max-width:760px){#landing .trust-inner{display:flex;width:100%;max-width:100%;min-width:100%;justify-content:flex-start;justify-items:initial;gap:19px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+#landing .trust-inner>span{justify-content:flex-start}
+#landing .trust-inner .trust-dot{flex:0 0 4px}
+}
+@media (prefers-reduced-motion:reduce){#landing .habit-dashboard,#landing .bar-group i,#landing .goal-progress .goal-arc,#landing .dash-score strong,#landing .cta-cat{animation:none!important;transition:none!important;transform:none!important;opacity:1!important}
+#landing .habit-dashboard .bar-group i{transform:scaleY(1)!important}
+}
+#landing .fa-icon{display:inline-block;width:1em;height:1em;fill:currentColor;flex:0 0 auto;vertical-align:-.12em}
+#landing .sparkle .fa-icon{width:13px;height:13px}
+#landing .stat-flame{display:inline-flex;align-items:center;line-height:0;color:#f5a52a;vertical-align:middle}
+#landing .stat-flame .fa-icon{width:15px;height:15px}
+@media (max-width:760px){#landing .hero-visual{height:465px;margin:6px 0 0;max-width:100%}
+#landing .bob-hero{bottom:105px}
+#landing .growth-card{left:50%;bottom:0;width:min(245px,78vw);max-width:calc(100% - 4px);transform:translateX(-50%)}
+#landing .step-card{grid-template-columns:96px minmax(0,1fr);grid-template-rows:25px auto auto;column-gap:12px;padding:14px 15px 15px}
+#landing .step-card h3{grid-column:2;grid-row:2;align-self:end;margin:0 0 5px;font-size:14px;line-height:1.2;min-width:0}
+#landing .step-card p{grid-column:2;grid-row:3;align-self:start;font-size:10px;line-height:1.55;min-width:0;overflow-wrap:anywhere}
+}
+@media (max-width:380px){#landing .hero-visual{height:450px}
+#landing .bob-hero{height:315px;bottom:112px}
+#landing .growth-card{width:min(220px,78vw)}
+#landing .step-card{grid-template-columns:86px minmax(0,1fr);column-gap:9px}
+}
+#landing .goal-icon .fa-icon{width:16px;height:16px}
+#landing .deco-star .fa-icon{display:block;width:1em;height:1em}
+#landing .bob-intro{max-width:460px;gap:12px;margin-top:28px;color:#7d9089}
+#landing .bob-intro-copy{display:flex;flex-direction:column;gap:3px;line-height:1.4}
+#landing .bob-intro-copy b{font-size:11px;color:#41645a}
+#landing .bob-intro-copy small{font-size:9px;color:#85968f;line-height:1.45}
+#landing .level-track{position:relative}
+#landing .level-track::before{content:"";position:absolute;z-index:0;left:23px;top:32px;bottom:32px;width:4px;border-radius:5px;background:linear-gradient(180deg,#58cc02 0%,#1cb0f6 25%,#c87bff 45%,#ffbd00 65%,#ff575f 83%,#795cff 100%);opacity:.55}
+#landing .level-row{position:relative;z-index:1;grid-template-columns:46px minmax(0,1fr) auto;grid-template-rows:auto;column-gap:12px;align-items:center;padding:10px 2px;border-bottom:1px solid #f1f4f2}
+#landing .level-badge{grid-row:auto;width:42px;height:42px;border:3px solid #fff;box-shadow:0 2px 7px rgba(30,61,48,.12);font-size:12px}
+@media (max-width:760px){#landing .bob-intro{margin-top:22px;gap:10px;align-items:center}
+#landing .bob-intro-copy b{font-size:10px}
+#landing .bob-intro-copy small{font-size:8px;max-width:250px}
+#landing .step-card{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto 130px auto;row-gap:8px;column-gap:10px;padding:15px;border-radius:19px}
+#landing .step-card h3{grid-column:1/-1;grid-row:2;align-self:center;margin:0;font-size:15px;line-height:1.25;min-height:0}
+#landing .step-card p{grid-column:1/-1;grid-row:4;align-self:start;max-width:none;margin:0;font-size:10px;line-height:1.55}
+#landing .level-track::before{left:20px;top:28px;bottom:28px;width:3px}
+#landing .level-row{grid-template-columns:40px minmax(0,1fr) auto;column-gap:9px;padding:9px 1px}
+#landing .level-badge{width:38px;height:38px;font-size:10px}
+}
+@media (max-width:380px){#landing .step-card{grid-template-rows:auto auto 122px auto;padding:13px}
+#landing .level-row{grid-template-columns:36px minmax(0,1fr) auto;column-gap:8px}
+#landing .level-badge{width:35px;height:35px}
+}
+@media (max-width:380px){#landing .level-track::before{left:18.5px}
+}
+#landing .bob-intro{display:block;max-width:460px;margin-top:24px}
+#landing .bob-intro-copy{display:block}
+#landing .bob-intro-copy b{display:inline-block;font-size:12px;letter-spacing:-.15px;color:#41645a}
+#landing .plane-frame{position:relative;isolation:isolate}
+#landing .game-library{margin-top:18px}
+#landing .game-library-heading{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:0 2px 10px}
+#landing .game-library-heading>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+#landing .game-library-heading>div>span{font-size:8px;color:#b5e982;font-weight:900;letter-spacing:1.1px}
+#landing .game-library-heading>div>b{font-size:13px;color:#fff;letter-spacing:-.2px}
+#landing .library-note{font-size:8px;color:#9db9ad;white-space:nowrap}
+#landing .game-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#landing .game-tile{min-width:0;min-height:67px;display:flex;align-items:center;gap:10px;padding:10px;border:1px solid rgba(255,255,255,.1);border-radius:15px;background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.025));transition:transform .2s,border-color .2s,background .2s}
+#landing .game-tile:hover{transform:translateY(-2px);border-color:rgba(181,233,130,.45);background:rgba(255,255,255,.1)}
+@media (max-width:760px){#landing .bob-intro{margin-top:20px}
+#landing .bob-intro-copy b{font-size:10px}
+#landing .game-library{margin-top:14px}
+#landing .game-library-heading{margin-bottom:8px}
+#landing .game-library-heading>div>span{font-size:7px}
+#landing .game-library-heading>div>b{font-size:11px}
+#landing .library-note{font-size:7px}
+#landing .game-grid{gap:7px}
+#landing .game-tile{min-height:57px;padding:7px;gap:7px;border-radius:12px}
+}
+@media (max-width:380px){
+#landing .game-tile{gap:6px;padding:6px}
+}
+@media (min-width:761px) and (max-width:880px){#landing .game-section{display:block;padding-left:34px;padding-right:34px}
+#landing .game-intro,#landing .game-showcase{width:min(100%,680px);margin-left:auto;margin-right:auto}
+#landing .game-showcase{margin-top:30px}
+}
+#landing .step-photo-card{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:17px 18px 20px;min-height:100%}
+#landing .step-photo{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center;border-radius:15px;margin:0 0 14px}
+#landing .step-photo-copy{display:flex;flex:1;flex-direction:column;align-items:flex-start;min-width:0}
+#landing .step-photo-card h3{min-height:0;margin:0 0 7px;font-size:16px;line-height:1.3;letter-spacing:-.3px}
+#landing .step-photo-card p{flex:1;max-width:none;margin:0;font-size:11px;line-height:1.55}
+@media (max-width:760px){#landing .step-photo-card{display:flex;min-height:0;padding:14px 15px 16px;gap:0}
+#landing .step-photo{aspect-ratio:4/3;margin-bottom:12px;border-radius:13px}
+#landing .step-photo-card h3{font-size:15px;margin-bottom:5px}
+#landing .step-photo-card p{font-size:10px;line-height:1.55}
+}
+@media (min-width:761px){#landing .game-grid{max-width:520px;margin-left:auto;margin-right:auto}
+}
+#landing .game-cover{min-height:0;display:flex;flex-direction:column;align-items:stretch;gap:0;padding:8px;overflow:hidden}
+#landing .game-cover-photo{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:10px}
+#landing .game-cover-name{display:block;padding:8px 3px 2px;color:#fff;text-align:center;font-size:10px;font-weight:850;line-height:1.25}
+@media (max-width:760px){#landing .game-cover{min-height:0;padding:6px;border-radius:11px}
+#landing .game-cover-photo{border-radius:8px}
+#landing .game-cover-name{font-size:8px;padding:6px 2px 1px}
+}
+@media (max-width:380px){#landing .game-cover{padding:5px}
+#landing .game-cover-name{font-size:7.5px}
+}
+#landing .levels-card.is-animated{animation:levels-card-arrive .58s cubic-bezier(.2,.75,.25,1) both}
+#landing .levels-card.is-animated .level-track::before{transform-origin:top;animation:levels-route-draw .95s cubic-bezier(.2,.7,.25,1) both}
+#landing .levels-card.is-animated .level-row{animation:level-row-arrive .46s cubic-bezier(.2,.7,.25,1) both;animation-delay:calc(var(--row-index,0)*85ms)}
+@keyframes levels-card-arrive{from{opacity:.7;transform:translateY(15px) scale(.99)}
+to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes levels-route-draw{from{transform:scaleY(0);opacity:.2}
+to{transform:scaleY(1);opacity:.55}
+}
+@keyframes level-row-arrive{from{opacity:0;transform:translateY(9px)}
+to{opacity:1;transform:translateY(0)}
+}
+#landing .level-track-horizontal{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:start;gap:0;margin:15px 0 12px}
+#landing .level-track-horizontal::before{left:calc(100%/12);right:calc(100%/12);top:16px;bottom:auto;width:auto;height:3px;border-radius:4px;opacity:.55}
+#landing .level-track-horizontal .level-row{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:5px;min-width:0;padding:0 0 2px;border:0;grid-template-columns:none;grid-template-rows:none}
+#landing .level-track-horizontal .level-badge{position:relative;z-index:1;width:33px;height:33px;border:2px solid #fff;border-radius:11px;font-size:9px}
+#landing .catalog-overview{display:flex;flex-direction:column;gap:8px;padding-top:12px;border-top:1px solid #edf2ee}
+#landing .catalog-row{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:start;gap:7px}
+#landing .catalog-label{padding-top:4px;color:#84988f;font-size:7px;font-weight:900;letter-spacing:.65px}
+#landing .catalog-chips{display:flex;flex-wrap:wrap;gap:5px;min-width:0}
+#landing .catalog-chip{display:inline-flex;align-items:baseline;gap:3px;padding:4px 6px;border:1px solid #edf2ee;border-radius:8px;background:#f7faf8;color:#536b62;font-size:7px;font-weight:760;line-height:1.15}
+#landing .catalog-chip-soon{color:#85928d;background:#fafafa}
+#landing .levels-card.is-animated .level-track-horizontal::before{transform-origin:left;animation:levels-route-horizontal .95s cubic-bezier(.2,.7,.25,1) both}
+@keyframes levels-route-horizontal{from{transform:scaleX(0);opacity:.2}
+to{transform:scaleX(1);opacity:.55}
+}
+@media (max-width:760px){#landing .level-track-horizontal{margin:13px 0 10px}
+#landing .level-track-horizontal .level-badge{width:30px;height:30px;border-radius:10px;font-size:8px}
+#landing .catalog-overview{gap:7px;padding-top:10px}
+#landing .catalog-row{grid-template-columns:61px minmax(0,1fr);gap:6px}
+#landing .catalog-chip{padding:4px 5px;font-size:6.7px}
+}
+#landing .game-library{max-width:520px;margin:18px auto 0}
+#landing .game-library-heading{align-items:center}
+#landing .game-carousel-viewport{position:relative;width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;scrollbar-width:none}
+#landing .game-carousel-viewport::-webkit-scrollbar{display:none}
+#landing .game-carousel-track.game-grid{position:relative;display:flex;grid-template-columns:none;gap:10px;width:100%;max-width:none;margin:0}
+#landing .game-carousel-track .game-cover{flex:0 0 calc(50% - 5px);min-width:0;scroll-snap-align:start;scroll-snap-stop:always;transform:none}
+#landing .game-carousel-dots{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:9px;min-height:8px}
+#landing .game-carousel-dot{width:6px;height:6px;padding:0;border:0;border-radius:99px;background:rgba(255,255,255,.28);cursor:pointer;transition:width .2s,background .2s}
+#landing .game-carousel-dot[aria-current="true"]{width:17px;background:#b5e982}
+@media (max-width:760px){#landing .game-library{max-width:none;margin-top:14px}
+#landing .game-library-heading{gap:8px}
+#landing .game-carousel-track.game-grid{gap:8px}
+#landing .game-carousel-track .game-cover{flex-basis:82%}
+}
+@media (prefers-reduced-motion:reduce){#landing .game-carousel-viewport{scroll-behavior:auto}
+#landing .game-carousel-dot{transition:none}
+}
+#landing .level-track-horizontal::after{content:"";position:absolute;right:4%;top:11px;width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:7px solid #795cff;z-index:0}
+#landing .levels-head{justify-content:flex-start}
+#landing .catalog-overview{gap:0}
+#landing .catalog-row{padding:8px 0;border-bottom:1px solid #edf2ee}
+#landing .catalog-row:last-child{border-bottom:0;padding-bottom:0}
+#landing .catalog-label{padding-top:5px}
+#landing .catalog-chips{gap:5px 6px}
+#landing .catalog-chip{padding:5px 8px;background:#f6f9f7;border-color:#eef2ef;font-size:7.5px}
+#landing .catalog-chip-soon{opacity:.7}
+#landing .levels-card.is-animated .catalog-row{animation:level-row-arrive .46s cubic-bezier(.2,.7,.25,1) both;animation-delay:calc(var(--row-index,6)*85ms)}
+#landing .game-carousel-viewport{scrollbar-width:none}
+#landing .game-carousel-dots{margin-top:10px}
+#landing .game-carousel-dot{width:7px;height:7px;background:rgba(255,255,255,.32)}
+#landing .game-carousel-dot[aria-current="page"]{width:18px;background:#b5e982}
+#landing .game-carousel-dot:focus-visible{outline:2px solid #b5e982;outline-offset:3px}
+#landing .hero-visual .bob-intro{position:absolute;top:8px;left:50%;z-index:8;display:block;width:max-content;max-width:calc(100% - 20px);margin:0;padding:0;transform:translateX(-50%);text-align:center;white-space:nowrap;color:#41645a;pointer-events:none}
+#landing .hero-visual .bob-intro-copy{display:block;line-height:1.3}
+#landing .hero-visual .bob-intro-copy b{display:block;font-size:13px;letter-spacing:-.1px;color:#41645a;text-shadow:0 1px 0 rgba(255,255,255,.8)}
+@media (max-width:760px){#landing .hero-visual .bob-intro{top:1px}
+#landing .hero-visual .bob-intro-copy b{font-size:11px}
+}
+@media (max-width:380px){#landing .hero-visual .bob-intro-copy b{font-size:10px}
+}
+#landing .levels-card{width:100%;max-width:640px;justify-self:stretch;align-self:center;padding:21px 22px 16px}
+#landing .levels-head{min-height:31px;justify-content:flex-start;align-items:center;padding:0 0 11px;font-size:8px;line-height:1.2}
+#landing .level-track-horizontal{position:relative;width:100%;margin:17px 0 14px}
+#landing .level-track-horizontal::before{top:17px}
+#landing .level-track-horizontal::after{top:12px;right:3.5%}
+#landing .level-track-horizontal .level-row{align-items:center;justify-content:flex-start;padding:0;border:0}
+#landing .level-track-horizontal .level-badge{width:35px;height:35px;border-radius:12px;font-size:9px}
+#landing .catalog-overview{display:flex;flex-direction:column;gap:0;padding-top:0}
+#landing .catalog-row{grid-template-columns:82px minmax(0,1fr);align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #edf2ee}
+#landing .catalog-row:last-child{border-bottom:0;padding-bottom:2px}
+#landing .catalog-label{padding:0;font-size:7.5px;line-height:1.3;letter-spacing:.55px;white-space:nowrap}
+#landing .catalog-chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0}
+#landing .catalog-chip{flex:0 1 auto;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:5px 8px;border-radius:999px;font-size:7.5px;line-height:1.2}
+#landing .levels-foot{margin-top:10px;padding-top:10px;gap:8px;align-items:center;line-height:1.35}
+@media (max-width:760px){#landing .levels-card{max-width:none;padding:16px 14px 12px}
+#landing .levels-head{min-height:28px;padding-bottom:9px}
+#landing .level-track-horizontal{margin:14px 0 11px}
+#landing .level-track-horizontal::before{top:15px}
+#landing .level-track-horizontal::after{top:10px;right:3%}
+#landing .level-track-horizontal .level-badge{width:30px;height:30px;border-radius:10px;font-size:8px}
+#landing .catalog-row{grid-template-columns:60px minmax(0,1fr);gap:7px;padding:8px 0}
+#landing .catalog-label{font-size:6.5px;letter-spacing:.4px}
+#landing .catalog-chips{gap:5px}
+#landing .catalog-chip{padding:4px 6px;font-size:6.8px;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+#landing .levels-foot{margin-top:8px;padding-top:8px;font-size:6.5px}
+}
+#landing .levels-head{font-size:9px;letter-spacing:.75px}
+#landing .catalog-label{font-size:8px}
+#landing .catalog-chip{font-size:8px;padding:6px 9px}
+@media (max-width:760px){#landing .levels-head{font-size:8px}
+#landing .catalog-label{font-size:7px}
+#landing .catalog-chip{font-size:7.2px;padding:5px 7px}
+}
+#landing h1,#landing h2,#landing h3{text-wrap:balance}
+#landing p{text-wrap:pretty}
+#landing .hero-copy{max-width:590px}
+#landing .hero-lead{max-width:48ch;line-height:1.68}
+#landing .hero-actions{align-items:center;gap:12px}
+#landing .hero-actions .button{min-width:154px}
+#landing .section-heading{width:min(100%,620px);margin-left:auto;margin-right:auto}
+#landing .section-heading h2,#landing .vocab-copy h2,#landing .game-intro h2,#landing .habit-copy h2,#landing .final-cta h2{line-height:1.08;letter-spacing:-.045em}
+#landing .section-heading p{max-width:54ch;line-height:1.7}
+#landing .step-photo-card h3{min-height:2.6em;line-height:1.3;text-wrap:balance}
+#landing .step-photo-card p{line-height:1.62}
+#landing .game-intro{max-width:440px}
+#landing .game-intro p{max-width:40ch;line-height:1.7}
+#landing .game-showcase{min-width:0;align-self:center}
+#landing .vocab-copy{min-width:0}
+#landing .vocab-copy>p{max-width:46ch;line-height:1.7;margin-left:0;margin-right:0}
+#landing .habit-card{grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:clamp(32px,4.5vw,55px)}
+#landing .habit-copy>p{max-width:46ch;line-height:1.7}
+#landing .habit-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;max-width:440px}
+#landing .habit-stats>div{min-width:0}
+#landing .habit-stats small{line-height:1.35}
+#landing .final-cta p{width:min(100%,52ch);margin-left:auto;margin-right:auto;line-height:1.7}
+#landing .step-photo-card .step-photo-copy{min-width:0}
+@media (min-width:1001px){#landing .bob-hero{left:57%;transform:translateX(-48%)}
+#landing .hero-visual .bob-intro{left:57%}
+#landing .growth-card{left:0;width:226px;bottom:18px}
+}
+@media (min-width:761px) and (max-width:1000px){#landing .bob-hero{left:64%;transform:translateX(-48%)}
+#landing .hero-visual .bob-intro{left:64%}
+#landing .growth-card{left:0;width:205px;bottom:15px;padding:13px 13px 10px}
+}
+@media (max-width:760px){#landing .hero-actions .button{min-width:0}
+#landing .hero-visual .bob-intro{left:50%}
+#landing .bob-hero{left:50%;height:335px;bottom:105px;transform:translateX(-50%)}
+#landing .growth-card{left:50%;bottom:0;width:min(245px,78vw);transform:translateX(-50%)}
+#landing .section-heading p{max-width:54ch;line-height:1.65}
+#landing .step-photo-card h3{min-height:2.5em}
+#landing .step-photo-card p{font-size:10.5px;line-height:1.6}
+#landing .game-intro p,#landing .vocab-copy>p,#landing .habit-copy>p,#landing .final-cta p{line-height:1.65}
+#landing .habit-stats{gap:8px;max-width:none}
+#landing .habit-stats small{font-size:7.5px;line-height:1.3}
+}
+@media (max-width:380px){#landing .hero-visual .bob-intro{left:50%}
+#landing .bob-hero{height:315px;bottom:112px}
+#landing .growth-card{width:min(220px,78vw)}
+#landing .step-photo-card h3{min-height:2.5em}
+#landing .habit-stats{gap:5px}
+}
+#landing .step-photo-copy{align-items:center;text-align:center}
+#landing .step-photo-card h3{width:100%;min-height:0;margin:0 0 6px;text-align:center}
+#landing .step-photo-card p{width:100%;max-width:none;flex:0 0 auto;margin:0;text-align:center;line-height:1.6}
+@media (max-width:760px){#landing .step-photo-card h3{min-height:0;margin-bottom:6px}
+#landing .step-photo-card p{line-height:1.55}
+#landing .hero-visual .bob-intro{top:12px}
+}
+@media (max-width:380px){#landing .hero-visual .bob-intro{top:12px}
+}
+#landing .hero-copy>.eyebrow{min-height:15px;line-height:1}
+#landing .hero-copy>.eyebrow .sparkle{display:inline-flex;flex:0 0 15px;width:15px;height:15px;align-items:center;justify-content:center;line-height:0}
+#landing .hero-copy>.eyebrow .sparkle .fa-icon{display:block;vertical-align:0}
+#landing .section-how .section-heading{width:min(100%,620px);margin-left:0;margin-right:auto;text-align:left}
+#landing .section-how .section-heading .eyebrow{justify-content:flex-start}
+#landing .section-how .section-heading p{margin-left:0;margin-right:0}
+@media (max-width:760px){#landing .hero-actions{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:380px;margin-left:auto;margin-right:auto;gap:11px}
+#landing .hero-actions .button{width:100%;min-width:0}
+#landing .hero-visual .bob-intro{top:12px}
+#landing .character-halo{top:44px}
+}
+#landing .audience-cue{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:6px;margin-top:13px;max-width:520px}
+#landing .audience-chip{display:inline-flex;align-items:center;gap:5px;min-height:25px;padding:4px 7px;border:1px solid #e5eee8;border-radius:999px;background:rgba(255,255,255,.82);color:#5b7168;font-size:8.5px;font-weight:750;line-height:1.2;white-space:nowrap;max-width:100%}
+#landing .audience-chip img{display:block;width:11px;height:11px;flex:0 0 11px;opacity:.56}
+@media (max-width:760px){#landing .audience-cue{justify-content:center;gap:5px;margin-top:12px;max-width:none}
+#landing .audience-chip{min-height:24px;padding:4px 7px;font-size:8px}
+}
+@media (max-width:380px){#landing .audience-cue{column-gap:5px;row-gap:5px}
+#landing .audience-chip{padding:4px 6px;font-size:7.7px}
+}
+@media (max-width:760px){#landing .game-carousel-track .game-cover{flex-basis:min(70%,320px)}
 }
 
-/* Плавность анимаций на всех устройствах */
-* {
-    -webkit-tap-highlight-color: transparent;
+/* ===== «УЗНАТЬ БОЛЬШЕ» → плавный показ Боба ===== */
+#landing .hero-footnote{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+#landing .hero-footnote:focus-visible{outline:2px solid #58cc02;outline-offset:4px;border-radius:8px}
+#landing .hero-visual{scroll-margin-top:84px}
+@media (max-width:760px){#landing .hero-visual{scroll-margin-top:74px}
+#landing .hero-footnote{cursor:pointer}
 }
 
-html {
-    scroll-behavior: smooth;
+/* ===== ОТОБРАЖЕНИЕ КАК САМОСТОЯТЕЛЬНОЙ СТРАНИЦЫ ===== */
+html{scroll-behavior:smooth;scroll-padding-top:88px;overflow-x:hidden}
+body{margin:0;background:#f7fbf8;color:#18322f;font-family:Inter,ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+#landing{display:block;position:static;inset:auto;z-index:auto;overflow:visible}
+@media (max-width:760px){html{scroll-padding-top:70px}}
+
+/* =====================================================================
+   ФИКС МОБИЛЬНОГО БАГА: «ЭКРАН УХОДИТ В СТОРОНУ»
+   (1) trust-полоса с width:max-content растягивала документ,
+   (2) grid-колонки и nowrap-элементы вылезали за вьюпорт,
+   (3) overflow-x:hidden на корне всё равно позволяет программный scrollLeft
+       (фокус / scrollIntoView / якоря) — страница сдвигалась и не возвращалась.
+   ===================================================================== */
+html{overflow-x:hidden;overscroll-behavior-x:none;max-width:100%}
+/* clip (а не hidden) на body: режет лишнее по ширине и НЕ создаёт
+   скролл-контейнер, поэтому position:sticky у шапки продолжает работать */
+body{max-width:100%;overflow-x:clip;overscroll-behavior-x:none}
+#landing,#landing main,#landing .site-header,#landing .site-footer,#landing .section,#landing .section-shell,#landing .trust-strip,#landing .game-section,#landing .habit-section,#landing .habit-card,#landing .steps-grid,#landing .section-vocab,#landing .game-showcase,#landing .game-library{max-width:100%}
+#landing img,#landing svg,#landing video,#landing canvas{max-width:100%}
+#landing .hero-copy,#landing .hero-visual,#landing .game-intro,#landing .game-showcase,#landing .vocab-copy,#landing .levels-card,#landing .habit-copy,#landing .habit-dashboard,#landing .step-card,#landing .trust-inner,#landing .game-carousel-track,#landing .game-carousel-viewport,#landing .catalog-chips,#landing .levels-foot{min-width:0}
+#landing p,#landing h1,#landing h2,#landing h3,#landing li,#landing span,#landing b,#landing small{overflow-wrap:break-word}
+#landing .game-carousel-viewport,#landing .trust-inner{overscroll-behavior-x:contain;touch-action:pan-x pan-y}
+@media (max-width:1000px){#landing .trust-inner{justify-content:flex-start}}
+@supports not (overflow-x:clip){
+  #landing .habit-section,#landing .trust-strip,#landing .game-section,#landing .final-cta,#landing .hero{overflow:hidden}
 }
-
-/* Предотвращение дерганий при скролле */
-body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-  /* Скрываем на десктопе */
-  @media (min-width: 1024px) {
-    .app-install-banner {
-      display: none !important;
-    }
-  } 
-    /* Header */
-    .info-btn, .theme-toggle { display: none !important; }
-    .settings-btn {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      width: 40px; height: 40px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: all 0.2s ease; color: var(--text-primary);
-    }
-    .settings-btn:hover { background: var(--accent-primary); color: #fff; transform: translateY(-2px); }
-
-    /* Keep bulk header visible */
-    .words-header {
-      position: sticky;
-      top: 64px; /* смещение под фиксированную шапку, подстройте под ваш header */
-      z-index: 5;
-      background: var(--bg-primary);
-    }
-
-    /* Buttons text in word cards */
-    .action-text-btn {
-      border: 1px solid var(--border-color);
-      background: var(--bg-secondary);
-      padding: 6px 10px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      color: var(--text-primary);
-    }
-    .action-text-btn.add { border-color: #10b981; color: #10b981; background: #ecfdf5; }
-    .action-text-btn.remove { border-color: #ef4444; color: #ef4444; background: #fee2e2; }
-    .action-text-btn:hover { filter: brightness(0.98); }
-
-    #simple-splash {
-  position: fixed;
-  inset: 0;
-  background: #EBF5FF; /* Тот же цвет что и нативный splash */
-  z-index: 999999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* НЕТ transition на opacity — уход будет через класс */
-}
-
-#splash-text {
-  font-family: 'Nunito', sans-serif;
-  font-size: 48px;
-  font-weight: 900;
-  color: #58CC02;
-  text-shadow: 0 4px 0 #46A302;
-  /* СРАЗУ ВИДЕН, без анимации появления */
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-/* Класс для ухода */
-#simple-splash.fade-out {
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-}
-
-  </style>
-  <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=105128338', 'ym');
-
-    ym(105128338, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/105128338" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+  
+.habit-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0 8px}.habit-flow>div{display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid rgba(255,255,255,.22);border-radius:16px;background:rgba(255,255,255,.08)}.habit-flow>div>span{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;background:#dff4d4;color:#1b593f;font-size:11px;font-weight:900}.habit-flow b{font-size:13px;line-height:1.35}.habit-flow-note{margin:8px 0 0;font-size:12px;opacity:.8}@media(max-width:640px){.habit-flow{grid-template-columns:1fr}.habit-flow>div{display:grid;grid-template-columns:29px 1fr;align-items:center;padding:10px}}
+</style>
+<link href="about-extra.css" rel="stylesheet"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"BeWords","url":"https://bewords.ru/","logo":"https://bewords.ru/app-photos/icons/icon-512.png","email":"support@bewords.ru","description":"BeWords помогает учить английские слова по уровням A1–C2, разбирать грамматику на русском и повторять материал в играх. Более 8 000 слов и выражений.","sameAs":["https://bewords.ru/","https://t.me/bewords_app"],"contactPoint":{"@type":"ContactPoint","email":"support@bewords.ru","contactType":"customer support","availableLanguage":"Russian"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"BeWords","url":"https://bewords.ru/","inLanguage":"ru-RU","publisher":{"@type":"Organization","name":"BeWords","url":"https://bewords.ru/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"BeWords","operatingSystem":"Web, iOS, Android","applicationCategory":"EducationalApplication","url":"https://bewords.ru/","inLanguage":"ru-RU","offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"},"featureList":["Более 8 000 английских слов и выражений","Слова по уровням A1–C2 и темам","Объяснения грамматики на русском и практика перевода предложений","Повторение слов, дневная цель, серии занятий и игры с Бобом","Подборки слов для ЕГЭ и ОГЭ"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Сколько стоит BeWords?","acceptedAnswer":{"@type":"Answer","text":"Сейчас приложением можно пользоваться бесплатно, без банковской карты. Условия могут измениться — проверяй актуальную информацию на сайте."}},{"@type":"Question","name":"Как учить грамматику в BeWords?","acceptedAnswer":{"@type":"Answer","text":"Правила объясняются на русском. После объяснения можно потренироваться переводить предложения."}},{"@type":"Question","name":"Есть ли слова для ЕГЭ и ОГЭ?","acceptedAnswer":{"@type":"Answer","text":"Да. В приложении есть отдельные подборки английских слов для ЕГЭ и ОГЭ. Для подготовки также полезно решать пробные задания."}},{"@type":"Question","name":"Что помогает заниматься регулярно?","acceptedAnswer":{"@type":"Answer","text":"В BeWords есть дневная цель, серия занятий, игры и Боб. По нашей оценке, эти механики близки к Duolingo, хотя Duolingo может вовлекать чуть сильнее. Это впечатление редакции, а не измерение."}},{"@type":"Question","name":"Можно ли заниматься без интернета?","acceptedAnswer":{"@type":"Answer","text":"BeWords поддерживает работу офлайн. Для отдельных функций и синхронизации прогресса может понадобиться интернет."}}]}</script>
 </head>
 <body>
-<!-- Элегантный Splash Screen (Только текст после натива) -->
-<div id="simple-splash">
-  <h1 id="splash-text">BeWords</h1>
-</div>
-  
-<div class="app-container" style="visibility:hidden">
-    <header class="app-header">
-    <div class="header-content">
-      <div class="logo-title">
-        <a href="/" class="logo-link" onclick="location.reload(); return false;">
-          <img src="app-photos/icons/apple-touch-icon.png" alt="BeWords" class="app-logo">
-        </a>
-        <h1 class="app-title">BeWords</h1>
-      </div>
-      <div class="header-actions">
-        <button class="support-btn" id="supportBtn" data-testid="support-btn" title="Поддержать проект">
-          <i class="fas fa-gift" style="color: #f59e0b; font-size: 1.1rem;"></i>
-        </button>
-        <button class="settings-btn" id="settingsBtn" data-testid="settings-btn" title="Настройки">
-          <i class="fas fa-cog"></i>
-        </button>
-<button id="profileBtn" 
-  class="btn btn-primary" 
-  style="border-radius: 50%; width: 40px; height: 40px; padding: 0;">
-  <i class="fas fa-user"></i>
-</button>
-      </div>
-    </div>
-  </header>
-
-  <main class="main-content">
-    <!-- Levels + Categories -->
-    <section id="levels" class="content-section active">
-      <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
-        <h2>Слова по уровням</h2>
-      </div>
-
-      <div class="levels-grid" id="levelsGrid">
-        <div class="level-card" data-level="A1" data-testid="level-card-A1">
-          <div class="level-badge beginner">A1</div>
-          <div class="level-info">
-          <h3>Первые шаги</h3>
-        <p>База для начинающих</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card" data-level="A2" data-testid="level-card-A2">
-          <div class="level-badge elementary">A2</div>
-          <div class="level-info">
-          <h3>Фундамент</h3>
-        <p>Слова для простых бесед</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card" data-level="B1" data-testid="level-card-B1">
-          <div class="level-badge intermediate">B1</div>
-          <div class="level-info">
-          <h3>Уверенный уровень</h3>
-        <p>Словарный запас для жизни</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card" data-level="B2" data-testid="level-card-B2">
-          <div class="level-badge upper-intermediate">B2</div>
-          <div class="level-info">
-             <h3>Свободное общение</h3>
-          <p>Понимаем фильмы и статьи</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card" data-level="C1" data-testid="level-card-C1">
-          <div class="level-badge advanced">C1</div>
-          <div class="level-info">
-            <h3>Мастерство</h3>
-        <p>Сложные термины и нюансы</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card" data-level="C2" data-testid="level-card-C2">
-          <div class="level-badge proficiency">C2</div>
-          <div class="level-info">
-            <h3>Как носитель</h3>
-        <p>Высший пилотаж</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- Categories -->
-      <div class="section-header" style="margin-top:1rem;">
-        <h2>Категории</h2>
-      </div>
-      <div class="levels-grid" id="categoriesGrid">
-        <div class="level-card" data-category="SLANG" data-testid="category-card-slang">
-  <div class="level-badge elementary">Slang</div>
-  <div class="level-info">
-    <h3>Сленг</h3>
-    <p>Разговорные и уличные выражения</p>
-  </div>
-  <div class="chevron">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="9 18 15 12 9 6"></polyline>
-    </svg>
-  </div>
-</div>
-
-        <div class="level-card" data-category="IRREGULARS" data-testid="category-card-irregulars">
-          <div class="level-badge advanced">Irregular Verbs</div>
-          <div class="level-info">
-            <h3>Неправильные глаголы</h3>
-            <p>Исключения из правил</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card" data-category="PREPOSITIONS" data-testid="category-card-prepositions">
-          <div class="level-badge intermediate">Prepositions</div>
-          <div class="level-info">
-            <h3>Предлоги</h3>
-            <p>Частые предлоги</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card" data-category="PHRASAL_VERBS" data-testid="category-card-phrasal">
-          <div class="level-badge beginner">Phrasal Verbs</div>
-          <div class="level-info">
-            <h3>Фразовые глаголы</h3>
-            <p>Частые фразовые глаголы</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card" data-category="IDIOMS" data-testid="category-card-idioms">
-          <div class="level-badge proficiency">Idioms</div>
-          <div class="level-info">
-            <h3>Идиомы</h3>
-            <p>Разговорные выражения</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card" data-category="PROVERBS" data-testid="category-card-proverbs">
-          <div class="level-badge upper-intermediate">Proverbs</div>
-          <div class="level-info">
-            <h3>Пословицы и поговорки</h3>
-            <p>Устойчивые выражения</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Exams -->
-      <div class="section-header" style="margin-top:1rem;">
-        <h2>Экзамены</h2>
-      </div>
-      <div class="levels-grid" id="examsGrid">
-        <div class="level-card" data-category="EGE" data-testid="category-card-ege">
-          <div class="level-badge elementary">ЕГЭ</div>
-          <div class="level-info">
-            <h3>ЕГЭ</h3>
-            <p>Подготовка к ЕГЭ</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card" data-category="OGE" data-testid="category-card-oge">
-          <div class="level-badge beginner">ОГЭ</div>
-          <div class="level-info">
-            <h3>ОГЭ</h3>
-            <p>Подготовка к ОГЭ</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card" data-category="IELTS" data-testid="category-card-ielts">
-          <div class="level-badge upper-intermediate">IELTS</div>
-          <div class="level-info">
-            <h3>IELTS</h3>
-            <p>Academic / General</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card" data-category="TOEFL" data-testid="category-card-toefl">
-          <div class="level-badge advanced">TOEFL</div>
-          <div class="level-info">
-            <h3>TOEFL</h3>
-            <p>Подготовка к TOEFL</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Professions -->
-      <div class="section-header" style="margin-top:1rem;">
-        <h2>Профессии</h2>
-      </div>
-      <div class="levels-grid" id="professionsGrid">
-        <div class="level-card" data-category="MEDICAL" data-testid="category-card-medical">
-          <div class="level-badge elementary">Medical</div>
-          <div class="level-info">
-            <h3>Медицина</h3>
-            <p>Врачи, болезни, тело</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <!-- Карточки "Скоро" получили дополнительный класс coming-soon -->
-        <div class="level-card coming-soon" data-category="IT" data-testid="category-card-it">
-          <div class="level-badge proficiency">IT</div>
-          <div class="level-info">
-            <h3>IT & Tech</h3>
-            <p>Разработка, компьютеры</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card coming-soon" data-category="BUSINESS" data-testid="category-card-business">
-          <div class="level-badge upper-intermediate">Business</div>
-          <div class="level-info">
-            <h3>Бизнес</h3>
-            <p>Переговоры, финансы</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div class="level-card coming-soon" data-category="LEGAL" data-testid="category-card-legal">
-          <div class="level-badge advanced">Legal</div>
-          <div class="level-info">
-            <h3>Юридический</h3>
-            <p>Законы, право, суды</p>
-          </div>
-          <div class="chevron">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- Words List (levels or categories) -->
-      <div id="wordsContainer" class="words-container hidden">
-        <div class="words-header">
-          <button class="back-btn" id="backToLevels" data-testid="back-to-levels">
-            <i class="fas fa-arrow-left"></i>
-            Назад
-          </button>
-          <h3 id="currentLevelTitle">Слова</h3>
-          <div class="level-bulk-actions">
-            <button id="bulkToggleBtn" class="action-text-btn add" data-testid="bulk-toggle-btn" title="Учить все">
-              Учить все
-            </button>
-          </div>
-        </div>
-        <div id="wordsList" class="words-list"></div>
-      </div>
-    </section>
-
-<!-- Learning -->
-<section id="learning" class="content-section">
-  <!-- ШАПКА С КНОПКАМИ -->
-  <div class="learning-top-bar">
-    <div class="learning-stats-left">
-      <div class="stat-pill" title="Слов в изучении">
-        <i class="fas fa-layer-group"></i>
-        <span id="learningCount">0</span>
-      </div>
-      <div class="stat-pill" title="Ударный темп">
-        <span id="completedLessonsCount">0</span>
-      </div>
-    </div>
-    <div class="learning-actions-right">
-    <button id="sectionSwitcherBtn" class="share-btn section-switcher-btn" title="Секции" onclick="app.showSectionSwitcher()">
-        <i class="fa-solid fa-rectangle-list"></i>
-    </button>
-    <button id="gamesToggleBtn" class="share-btn" title="Игры">
-        <i class="fas fa-gamepad"></i>
-    </button>
-    <button id="shareFromLearningBtn" class="share-btn" title="Поделиться словами">
-        <i class="fas fa-share-alt"></i>
-    </button>
-     </div>
-  </div>
-
-  <!-- === ДОРОЖКА=== -->
-  <div class="path-wrapper" id="pathWrapper">
-    <div id="map-container" class="map-container">
-      <!-- SVG-декорации (кусты, цветы, грибы) -->
-      <svg style="width:0; height:0; position:absolute;" aria-hidden="true">
-        <defs>
-          <g id="tuft">
-            <path d="M 10 20 Q 5 10 0 5 Q 8 10 10 20 Z" fill="#79c232"/>
-            <path d="M 10 20 Q 12 5 15 0 Q 18 5 20 20 Z" fill="#89d146"/>
-            <path d="M 20 20 Q 25 10 30 5 Q 22 10 20 20 Z" fill="#79c232"/>
-          </g>
-          <g id="bush">
-            <circle cx="15" cy="30" r="16" fill="#6abf2a"/>
-            <circle cx="35" cy="30" r="16" fill="#6abf2a"/>
-            <circle cx="25" cy="18" r="20" fill="#75c234"/>
-            <circle cx="20" cy="18" r="8" fill="#8ded3f" opacity="0.4"/>
-          </g>
-          <g id="daisy">
-            <circle cx="12" cy="7" r="5" fill="white"/>
-            <circle cx="17" cy="12" r="5" fill="white"/>
-            <circle cx="12" cy="17" r="5" fill="white"/>
-            <circle cx="7" cy="12" r="5" fill="white"/>
-            <circle cx="12" cy="12" r="5" fill="#ffc800"/>
-          </g>
-          <g id="flower-pink">
-            <circle cx="12" cy="6" r="5" fill="#ff85c2"/>
-            <circle cx="18" cy="12" r="5" fill="#ff85c2"/>
-            <circle cx="12" cy="18" r="5" fill="#ff85c2"/>
-            <circle cx="6" cy="12" r="5" fill="#ff85c2"/>
-            <circle cx="12" cy="12" r="5.5" fill="#fff"/>
-            <circle cx="12" cy="12" r="3" fill="#ff6aaf"/>
-          </g>
-          <g id="sunflower">
-            <ellipse cx="12" cy="4" rx="3" ry="5" fill="#ffd000"/>
-            <ellipse cx="20" cy="7" rx="3" ry="5" fill="#ffd000" transform="rotate(45 20 7)"/>
-            <ellipse cx="22" cy="14" rx="3" ry="5" fill="#ffd000" transform="rotate(90 22 14)"/>
-            <ellipse cx="19" cy="21" rx="3" ry="5" fill="#ffd000" transform="rotate(135 19 21)"/>
-            <ellipse cx="12" cy="24" rx="3" ry="5" fill="#ffd000" transform="rotate(180 12 24)"/>
-            <ellipse cx="5" cy="21" rx="3" ry="5" fill="#ffd000" transform="rotate(225 5 21)"/>
-            <ellipse cx="2" cy="14" rx="3" ry="5" fill="#ffd000" transform="rotate(270 2 14)"/>
-            <ellipse cx="5" cy="7" rx="3" ry="5" fill="#ffd000" transform="rotate(315 5 7)"/>
-            <circle cx="12" cy="14" r="7" fill="#8B4513"/>
-            <circle cx="12" cy="14" r="4.5" fill="#6B3410"/>
-          </g>
-          <g id="flower-purple">
-            <circle cx="12" cy="5" r="4.5" fill="#b66cff"/>
-            <circle cx="19" cy="12" r="4.5" fill="#b66cff"/>
-            <circle cx="12" cy="19" r="4.5" fill="#b66cff"/>
-            <circle cx="5" cy="12" r="4.5" fill="#b66cff"/>
-            <circle cx="15" cy="7" r="4.5" fill="#b66cff"/>
-            <circle cx="9" cy="7" r="4.5" fill="#b66cff"/>
-            <circle cx="12" cy="12" r="5" fill="#ffd000"/>
-          </g>
-          <g id="mushroom">
-            <rect x="8" y="14" width="8" height="8" rx="2" fill="#f5ede0"/>
-            <ellipse cx="12" cy="14" rx="11" ry="8" fill="#e83a3a"/>
-            <circle cx="8" cy="12" r="2.5" fill="white"/>
-            <circle cx="14" cy="10" r="2" fill="white"/>
-            <circle cx="17" cy="14" r="1.5" fill="white"/>
-          </g>
-        </defs>
-      </svg>
-    </div>
-  </div>
-
-  <!-- КОНТЕЙНЕР АКТИВНОЙ ТРЕНИРОВКИ (СКРЫТ ПО УМОЛЧАНИЮ) -->
-  <div id="activeTrainingContainer" class="active-training-container hidden">
-    <div id="trainingContent"></div>
-  </div>
-
-  <!-- СТАРЫЙ контейнер для quiz/flashcards -->
-  <div id="learningWordsList" class="learning-words-list" style="display:none;"></div>
-</section>
-<!-- Training -->
-<section id="trainer" class="content-section">
-  <div id="trainerContainer" class="trainer-container"></div>
-</section>
-
-   <!-- New Words Section -->
-  <section id="new-words" class="content-section">
-    
-<!-- Modern Boblingo-style Translator Widget -->
-<div id="translatorWidget" class="translator-card-bob">
-    
-    <!-- Шапка -->
-    <div class="header-container">
-        <div class="header-text">
-            <div class="header-title">Bewords - Переводчик</div>
-        </div>
-    </div>
-
-    <!-- Переключатель языков -->
-    <div class="lang-switcher">
-        <button class="lang-btn" id="trRuBtn" type="button">🇷🇺 Русский</button>
-        <button class="swap-btn" id="trSwapBtn" type="button" title="Поменять местами">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 4l4 4-4 4"></path>
-                <path d="M3 8h18"></path>
-                <path d="M7 20l-4-4 4-4"></path>
-                <path d="M21 16H3"></path>
-            </svg>
-        </button>
-        <button class="lang-btn" id="trEnBtn" type="button">🇬🇧 Англ</button>
-    </div>
-
-    <!-- Поле ввода текста -->
-    <div class="input-area">
-        <textarea class="text-input" id="trInputText" placeholder="Переводи слова и фразы , и добавляй их на изучение"></textarea>
-    </div>
-
-    <!-- Кнопка перевода -->
-    <button class="btn-bob" id="trTranslateBtn" type="button">Перевести</button>
-
-    <!-- === НОВЫЕ БЛОКИ ДЛЯ ОТОБРАЖЕНИЯ РЕЗУЛЬТАТА === -->
-    
-    <!-- Загрузка -->
-    <div class="translator-loading" id="trLoading">
-        <div class="tr-spinner"></div>
-        <p>Боб ищет лучший перевод...</p>
-    </div>
-
-    <!-- Ошибка -->
-    <div class="translator-error" id="trError" style="display: none;"></div>
-
-    <!-- Результаты перевода: содержимое целиком рисует скрипт переводчика (render → .tr-main/.tr-group) -->
-    <div class="translator-results" id="trResults" style="display: none;"></div>
-
-</div>
-
-    <!-- 2. Заголовок и Современный переключатель (Segmented Control) -->
-    <div class="section-header">
-      <h2>Добавить слова</h2>
-    </div>
-    
-    <div class="segmented-control">
-      <button class="segment-btn active" id="uploadTabSingle" data-tab="single">
-        <i class="fas fa-pen"></i> Вручную
-      </button>
-      <button class="segment-btn" id="uploadTabBulk" data-tab="bulk">
-        <i class="fas fa-list"></i> Списком
-      </button>
-      <button class="segment-btn" id="uploadTabShare" data-tab="share">
-        <i class="fas fa-gift"></i> От друга
-      </button>
-    </div>
-
-    <!-- 3. Вкладка: ВРУЧНУЮ -->
-    <div id="singleAddForm" class="add-word-form">
-      <div class="form-group">
-        <label for="newWord">Английское слово</label>
-        <input type="text" id="newWord" placeholder="Например: apple" autocomplete="off">
-      </div>
-      <div class="form-group">
-        <label for="newTranslation">Перевод</label>
-        <input type="text" id="newTranslation" placeholder="Например: яблоко" autocomplete="off">
-      </div>
-      
-      <!-- Мягкая подсказка вместо красной рамки -->
-      <div class="form-hint">
-        <i class="fas fa-lightbulb"></i>
-        <span>Слово сразу попадёт в ваш словарь и будет доступно для изучения.</span>
-      </div>
-
-      <button class="btn btn-primary add-word-btn" id="addWordBtn">
-        <i class="fas fa-plus"></i> Добавить слово
-      </button>
-    </div>
-
-    <!-- 4. Вкладка: СПИСКОМ -->
-    <div id="bulkAddForm" class="add-word-form" style="display: none;">
-      <div class="form-group">
-        <label for="bulkTextarea">Список слов</label>
-        <textarea id="bulkTextarea" rows="6" placeholder="Например : &#10;&#10;apple : яблоко&#10;run : бег , бегать&#10;cat : кот"></textarea>
-      </div>
-      
-      <div class="form-hint">
-        <i class="fas fa-info-circle"></i>
-        <span>Каждое слово с новой строки. Разделяйте слово и перевод двоеточием (:) или точкой с запятой (;).</span>
-      </div>
-
-      <button class="btn btn-primary add-word-btn" id="bulkAddBtn">
-        <i class="fas fa-download"></i> Добавить список
-      </button>
-    </div>
-
-    <!-- 5. Вкладка: ОТ ДРУГА 🎁 (Сделана максимально понятной) -->
-    <div id="shareAddForm" class="add-word-form" style="display: none;">
-      <div class="form-group">
-        <label for="shareCodeInput">Код от друга</label>
-        <input type="text" id="shareCodeInput" placeholder="Например: A8F-9K2 или SHARE-..." style="text-transform: uppercase; letter-spacing: 1px; font-family: monospace;">
-      </div>
-      
-      <div class="form-hint">
-        <i class="fas fa-users"></i>
-        <span>Вставьте короткий код, который вам прислали, чтобы мгновенно получить готовую подборку слов в свой словарь.</span>
-      </div>
-
-      <button class="btn btn-primary add-word-btn" id="checkShareCodeBtn">
-        <i class="fas fa-check-circle"></i> Проверить и получить
-      </button>
-    </div>
-
-    <!-- 6. Список добавленных слов + Умное пустое состояние -->
-    <div id="customWordsList" class="words-list" style="margin-top: 2rem;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800;">Добавленные слова</h3>
-        <button id="shareWordsBtn" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">
-          <i class="fas fa-share-alt"></i> Cлова другу
-        </button>
-      </div>
-      
-      <div id="customWords">
-        <!-- Этот блок покажется, если слов нет. JS сам подставит сюда слова, когда они появятся -->
-        <div class="empty-state-wrapper">
-          <div class="empty-state">
-            <i class="fas fa-book-open" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
-            <h3>Словарь пуст</h3>
-            <p>Добавьте свои первые слова или получите их от друга, чтобы начать обучение</p>
-            <button class="btn btn-primary" onclick="document.getElementById('newWord').focus(); window.scrollTo({top: 0, behavior: 'smooth'});">
-              <i class="fas fa-plus"></i> Добавить первое слово
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </section>
-  
-    <!-- Progress -->
-    <section id="progress" class="content-section">
-      <div id="progressContent" class="progress-content"></div>
-    </section>
-
-    <section id="chat" class="content-section">
-    <div class="chat-screen">
-        <!-- ШАПКА ЧАТА (заменяет app-header) -->
-        <div class="chat-header">
-            <div class="header-avatar">
-                <img src="app-photos/bob/Bob_happy.png" alt="Боб">
-            </div>
-            <div class="header-info">
-                <div class="header-name">Боб</div>
-                <div class="header-status" id="chat-header-status">В сети</div>
-            </div>
-            <button class="chat-drawer-btn" id="chatDrawerBtn" title="Мои чаты">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-
-        <!-- СООБЩЕНИЯ -->
-        <div class="chat-messages" id="chat-messages"></div>
-
-        <!-- ВВОД -->
-        <div class="chat-input-area">
-            <div class="input-wrapper">
-                <input type="text" id="chat-input" class="chat-input" placeholder="Напиши Бобу..." autocomplete="off">
-            </div>
-            <button class="send-btn disabled" id="chat-send-btn">
-                <i class="fas fa-arrow-up"></i>
-            </button>
-        </div>
-
-        <!-- ШТОРКА СО СПИСКОМ ЧАТОВ -->
-        <div class="chat-drawer" id="chatDrawer">
-            <div class="chat-drawer-header">
-                <h3><i class="fas fa-comments"></i> Мои чаты</h3>
-                <button class="chat-drawer-close" id="chatDrawerClose">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="chat-drawer-search">
-                <i class="fas fa-search"></i>
-                <input type="text" id="chatSearchInput" placeholder="Поиск по чатам..." autocomplete="off">
-            </div>
-            <button class="chat-new-btn" id="chatNewBtn">
-                <i class="fas fa-plus"></i> Новый чат
-            </button>
-            <div class="chat-drawer-list" id="chatDrawerList"></div>
-        </div>
-        <div class="chat-drawer-overlay" id="chatDrawerOverlay"></div>
-    </div>
-</section>
-
-    <!-- Games -->
-    <section id="games" class="content-section">
-      <div class="section-header">
-        <h2>Игры</h2>
-        <!-- Кнопка закрытия (возврат в Изучаю) -->
-        <button onclick="app.switchSection('learning')" style="background: none; border: none; font-size: 1.8rem; color: var(--text-secondary); cursor: pointer; padding: 0 10px;">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-    <p class="mode-help">
-    Играйте в обычные игры и учите английский с Bewords !
-    </p>
-
-      <div class="games-grid">
-  <!-- Старые игры -->
-  <div class="game-card">
-    <img src="app-photos/games/bird.jpg" alt="flyingbob" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
-    <div class="game-info">
-      <h3>Летающий Боб</h3>
-      <button class="btn btn-primary" id="flyingStartBtn">Старт</button>
-    </div>
-  </div>
-
-  <div class="game-card">
-    <img src="app-photos/games/2048.jpg" alt="2048" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
-    <div class="game-info">
-      <h3>Собери 2048</h3>
-      <button class="btn btn-primary" id="game2048StartBtn">Старт</button>
-    </div>
-  </div>
-
-  <div class="game-card">
-    <img src="app-photos/games/match3.jpg" alt="shoot" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
-    <div class="game-info">
-      <h3>Взрыв шаров</h3>
-      <button class="btn btn-primary" id="shootStartBtn">Старт</button>
-    </div>
-  </div>
-
-   <div class="game-card">
-    <img src="app-photos/games/blast.jpg" alt="Blast" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
-    <div class="game-info">
-      <h3>Мастер блоков</h3>
-      <button class="btn btn-primary" id="blastStartBtn">Старт</button>
-    </div>
-  </div>
-
-  <!-- НОВЫЕ ИГРЫ -->
-  <div class="game-card">
-    <img src="app-photos/games/checkers.jpg" alt="Checkers" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
-    <div class="game-info">
-      <h3>Шашки с Бобом</h3>
-      <button class="btn btn-primary" id="checkersStartBtn">Старт</button>
-    </div>
-  </div>
-
-  <div class="game-card">
-    <img src="app-photos/games/chess.jpg" alt="Chess" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
-    <div class="game-info">
-      <h3>Шахматы с Бобом</h3>
-      <button class="btn btn-primary" id="chessStartBtn">Старт</button>
-    </div>
-  </div>
-
-  <div class="game-card">
-    <img src="app-photos/games/cosmos.jpg" alt="Cosmos" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
-    <div class="game-info">
-      <h3>Соедини линии</h3>
-      <button class="btn btn-primary" id="cosmosStartBtn">Старт</button>
-    </div>
-  </div>
-
-  <div class="game-card">
-    <img src="app-photos/games/brain.jpg" alt="Brain" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
-    <div class="game-info">
-      <h3>Сломай мозг</h3>
-      <button class="btn btn-primary" id="brainStartBtn">Старт</button>
-    </div>
-  </div>
-
-  <div class="game-card">
-    <img src="app-photos/games/merge.jpg" alt="Merge" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
-    <div class="game-info">
-      <h3> Фруктовое слияние</h3>
-      <button class="btn btn-primary" id="mergeStartBtn">Старт</button>
-    </div>
-  </div>
-
-  <div class="game-card">
-    <img src="app-photos/games/tile.jpg" alt="Tile" class="game-cover" onerror="this.src='app-photos/error/nophoto.jpg'">
-    <div class="game-info">
-      <h3>Собери 3 в ряд</h3>
-      <button class="btn btn-primary" id="tileStartBtn">Старт</button>
-    </div>
-  </div>
-
-</div>
-
-    </section>
-
-    <!-- Grammar Section -->
-    <section id="grammar" class="content-section">
-      
-      <!-- Сюда JS будет рендерить темы -->
-      <div id="grammarList" class="grammar-topics-grid"></div>
-      
-      <!-- Сюда JS будет рендерить открытый урок -->
-      <div id="grammarDetail" class="hidden"></div>
-    </section>
-  </main>
-
-<nav class="bottom-nav" id="bottomNav">
-  <button class="nav-item active" type="button" data-section="learning">
-    <i class="fas fa-book-reader"></i><span>Учить</span>
-  </button>
-  <button class="nav-item" type="button" data-section="grammar">
-    <i class="fas fa-graduation-cap"></i><span>Курс</span>
-  </button>
-  <button class="nav-item" type="button" data-section="levels">
-    <i class="fas fa-plus"></i><span>Словарь</span>
-  </button> 
-    <!-- НОВЫЙ ПУНКТ: Чат с Бобом -->
-    <!--  <button class="nav-item" data-section="chat">
-        <i class="fas fa-comment-dots"></i>
-        <span>Чат</span> 
-    </button> -->
-  <button class="nav-item" type="button" data-section="new-words">
-    <i class="fas fa-upload"></i><span>Загрузка</span>
-  </button>
-  <button class="nav-item" type="button" data-section="progress">
-    <i class="fas fa-chart-line"></i><span>Отчет</span>
-  </button>
+<div id="landing">
+<header class="site-header">
+<div class="nav-wrap">
+<a aria-label="BeWords — на главную" class="brand" href="#ld-top">
+<span class="brand-mark"><img alt="" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" src="app-photos/icons/apple-touch-icon.png"/></span>
+<span>Be<span>Words</span></span>
+</a>
+<button aria-expanded="false" aria-label="Открыть меню" class="menu-toggle"><span></span><span></span></button>
+<nav aria-label="Главная навигация" class="main-nav">
+<a href="#ld-how">Как это работает</a><a href="#ld-vocab">Словарь</a><a href="#ld-games">Игры</a><a href="blog/">Журнал</a>
+<a class="nav-cta" href="https://bewords.ru/learn.html">Начать бесплатно <span>↗</span></a>
 </nav>
 </div>
-
-<audio id="audioPlayer" preload="none"></audio>
-<script src="supabase.js"></script>
-<script src="words_data.js"></script>
-<script src="sentences-data.js"></script>
-<script src="grammar.js"></script> 
-<!-- pako нужен app.js (сжатие кодов «поделиться словами») — подключаем до app.js.
-     Если CDN недоступен (офлайн в нативе), app.js ловит ошибку и использует base64-фолбэк. -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
-<script src="app.js?v=2026-10-05-6"></script>
-<!-- <script src="auth_no_sync.js"></script> -->
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js').then(reg => {
-        
-        // Если воркер обновился
-        reg.onupdatefound = () => {
-          const installingWorker = reg.installing;
-          installingWorker.onstatechange = () => {
-            if (installingWorker.state === 'installed') {
-              if (navigator.serviceWorker.controller) {
-                // Новая версия контента доступна!
-                showUpdateNotification();
-              }
-            }
-          };
-        };
-      });
+</header>
+<main id="ld-top">
+<section class="hero section-shell">
+<div class="hero-copy">
+<div class="eyebrow">СЛОВА · ГРАММАТИКА · ПРАКТИКА</div>
+<h1>Играй.<br/><span class="title-highlight">Запоминай.</span><br/>Говори.</h1>
+<p class="hero-lead">В BeWords можно учить слова по уровням, разбирать грамматику на русском и тренировать перевод предложений. Квизы, игры и Боб помогают возвращаться к занятиям.</p>
+<div class="hero-actions">
+<a class="button button-green" href="https://bewords.ru/learn.html">Начать учиться <span class="arrow">↗</span></a>
+<a class="button button-light" data-reveal-bob="" href="#ld-how">Узнать больше <span class="arrow">↓</span></a>
+</div>
+<div aria-label="BeWords подходит для экзаменов, работы, путешествий и занятий для себя" class="audience-cue">
+<span class="audience-chip"><i aria-hidden="true" class="fa-solid fa-book-open"></i>ЕГЭ/ОГЭ</span>
+<span class="audience-chip"><i aria-hidden="true" class="fa-solid fa-chart-line"></i>Работа</span>
+<span class="audience-chip"><i aria-hidden="true" class="fa-solid fa-plane"></i>Путешествия</span>
+<span class="audience-chip"><i aria-hidden="true" class="fa-solid fa-lightbulb"></i>Для себя</span>
+</div>
+</div>
+<div aria-label="Кот Боб и растущий словарный запас" class="hero-visual">
+<div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+<div class="hero-proof bob-intro"><span class="bob-intro-copy">Боб — главный герой BeWords</span></div>
+<div aria-hidden="true" class="hero-spark spark-a"><svg class="fa-icon" viewbox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div><div aria-hidden="true" class="hero-spark spark-b"><svg class="fa-icon" viewbox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div>
+<div class="character-halo"></div>
+<img alt="Боб — главный герой BeWords" class="bob-hero" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" src="app-photos/bob/Bob_happy.png"/>
+<div class="growth-card">
+<div class="growth-head"><div><span class="mini-label">СЛОВАРЬ ПО УРОВНЯМ</span><strong>A1–C2 <small>уровни</small></strong></div><span class="growth-pill">8 000+ слов</span></div>
+<svg aria-label="График роста словарного запаса" class="growth-chart" role="img" viewbox="0 0 320 90"><defs><lineargradient id="ld-chartFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#58cc02" stop-opacity=".25"></stop><stop offset="1" stop-color="#58cc02" stop-opacity="0"></stop></lineargradient></defs><path d="M0 75 C25 72 31 64 54 66 S88 51 109 56 S140 43 160 47 S196 32 215 37 S245 21 266 27 S294 13 320 9 V90 H0Z" fill="url(#ld-chartFill)"></path><path d="M0 75 C25 72 31 64 54 66 S88 51 109 56 S140 43 160 47 S196 32 215 37 S245 21 266 27 S294 13 320 9" fill="none" stroke="#47b80a" stroke-linecap="round" stroke-width="4"></path><circle cx="320" cy="9" fill="#fff" r="5" stroke="#47b80a" stroke-width="3"></circle></svg>
+<div class="chart-days"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
+</div>
+</div>
+<div aria-label="Показать кота Боба и как устроен BeWords" class="hero-footnote" data-reveal-bob="" role="button" tabindex="0"><span class="down-arrow">↓</span> Листай — покажем, как устроено</div>
+</section>
+<section aria-label="Преимущества BeWords" class="trust-strip"><div class="trust-inner"><span><i aria-hidden="true"><svg aria-hidden="true" class="fa-icon" viewbox="0 0 576 512"><path d="M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5l0-377.4c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.3 18.1 56.1C6.8 60.5 0 71.7 0 83.8L0 454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 105.5 448 144 448c33.9 0 79 14 105.6 23.5zm76.8 0C353 462 398.1 448 432 448c38.5 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5l0-370.3c0-12.1-6.8-23.3-18.1-27.6C529.7 45.3 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11L304 456c0 11.4 11.7 19.3 22.4 15.5z"></path></svg></i> 8 000+ слов и выражений</span><b class="trust-dot"></b><span><i aria-hidden="true"><svg aria-hidden="true" class="fa-icon" viewbox="0 0 512 512"><path d="M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160 352 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l111.5 0c0 0 0 0 0 0l.4 0c17.7 0 32-14.3 32-32l0-112c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 35.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1L16 432c0 17.7 14.3 32 32 32s32-14.3 32-32l0-35.1 17.6 17.5c0 0 0 0 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.8c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352l34.4 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L48.4 288c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z"></path></svg></i> Умные повторения</span><b class="trust-dot"></b><span><i aria-hidden="true"><svg aria-hidden="true" class="fa-icon" viewbox="0 0 640 512"><path d="M192 64C86 64 0 150 0 256S86 448 192 448l256 0c106 0 192-86 192-192s-86-192-192-192L192 64zM496 168a40 40 0 1 1 0 80 40 40 0 1 1 0-80zM392 304a40 40 0 1 1 80 0 40 40 0 1 1 -80 0zM168 200c0-13.3 10.7-24 24-24s24 10.7 24 24l0 32 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-32 0 0 32c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-32-32 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l32 0 0-32z"></path></svg></i> Игры с котом Бобом</span><b class="trust-dot"></b><span><i aria-hidden="true"><svg aria-hidden="true" class="fa-icon" viewbox="0 0 512 512"><path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64L0 400c0 44.2 35.8 80 80 80l400 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 416c-8.8 0-16-7.2-16-16L64 64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"></path></svg></i> От A1 до C2</span></div></section>
+<section class="section section-how" id="ld-how">
+<div class="section-heading"><div class="eyebrow"><span class="eyebrow-dot"></span> ДЛЯ НОВИЧКОВ И ПРОДВИНУТЫХ</div><h2>Выбирай, что учить дальше.</h2><p>Начни со слов по уровню или выбери правило. После объяснения можно потренироваться на переводе предложений и в играх.</p></div>
+<div class="steps-grid">
+<article class="step-card step-lime step-photo-card"><img alt="Боб выбирает между лексикой по уровням, грамматикой и личной подборкой" class="step-photo" loading="lazy" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" src="app-photos/landing/how-all-in-one.webp"/><div class="step-photo-copy"><h3>Слова по уровням и темам</h3><p>Выбирай подборки A1–C2, темы или слова для своей цели.</p></div></article>
+<article class="step-card step-blue step-photo-card"><img alt="Боб составляет английское предложение из слов" class="step-photo" loading="lazy" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" src="app-photos/landing/how-translate.webp"/><div class="step-photo-copy"><h3>Грамматика на русском</h3><p>Разбирай правило и закрепляй его переводом предложений.</p></div></article>
+<article class="step-card step-purple step-photo-card"><img alt="Питомец получает корм за повторение слов" class="step-photo" loading="lazy" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" src="app-photos/landing/how-pet-review.webp"/><div class="step-photo-copy"><h3>Игры и повторение</h3><p>Квизы, игры и Боб помогают возвращаться к словам и правилам.</p></div></article>
+</div>
+</section>
+<section class="section section-vocab" id="ld-vocab">
+<div class="vocab-copy"><div class="eyebrow"><span class="eyebrow-dot"></span> ТВОЙ АНГЛИЙСКИЙ — ТВОЙ УРОВЕНЬ</div><h2>Слова по уровню и теме.</h2><div class="vocab-total"><strong>8 000<span>+</span></strong><span>актуальных слов<br/>и выражений</span></div><a class="button button-green" href="https://bewords.ru/learn.html">Подобрать слова <span class="arrow">↗</span></a></div>
+<div class="levels-card"><div class="levels-head"><span>СЛОВАРЬ ДЛЯ ЛЮБОГО УРОВНЯ</span></div>
+<div aria-label="Связанный путь от уровня A1 до C2" class="level-track level-track-horizontal" role="list">
+<div class="level-row" role="listitem"><span class="level-badge level-a1">A1</span></div>
+<div class="level-row" role="listitem"><span class="level-badge level-a2">A2</span></div>
+<div class="level-row" role="listitem"><span class="level-badge level-b1">B1</span></div>
+<div class="level-row" role="listitem"><span class="level-badge level-b2">B2</span></div>
+<div class="level-row" role="listitem"><span class="level-badge level-c1">C1</span></div>
+<div class="level-row" role="listitem"><span class="level-badge level-c2">C2</span></div>
+</div>
+<div class="catalog-overview">
+<div class="catalog-row"><span class="catalog-label">ТЕМЫ</span><div class="catalog-chips"><span class="catalog-chip">Сленг</span><span class="catalog-chip">Неправильные глаголы</span><span class="catalog-chip">Предлоги</span><span class="catalog-chip">Фразовые глаголы</span><span class="catalog-chip">Идиомы</span><span class="catalog-chip">Пословицы и поговорки</span></div></div>
+<div class="catalog-row"><span class="catalog-label">ПРОФЕССИИ</span><div class="catalog-chips"><span class="catalog-chip">Медицина</span><span class="catalog-chip">IT &amp; Tech</span><span class="catalog-chip">Бизнес</span><span class="catalog-chip">Юридический</span></div></div>
+<div class="catalog-row"><span class="catalog-label">ЭКЗАМЕНЫ</span><div class="catalog-chips"><span class="catalog-chip">ЕГЭ</span><span class="catalog-chip">ОГЭ</span></div></div>
+</div>
+<div class="levels-foot"><span>И твои слова — тоже</span><span>Добавляй свои подборки <b>＋</b></span></div></div>
+</section>
+<section class="section habit-section"><div class="habit-card"><div class="habit-copy"><div class="eyebrow eyebrow-light"><span class="eyebrow-dot"></span> МАЛЕНЬКИЕ ШАГИ = БОЛЬШОЙ РОСТ</div><h2>Твой прогресс<br/>видно <span>сразу.</span></h2><p>Счётчик слов, серия дней и ежедневная цель помогают замечать путь, который ты уже прошёл.</p><div class="habit-stats"><div><b>15</b><small>ответов — цель дня</small></div><div><b>7 <i class="stat-flame"><svg aria-hidden="true" class="fa-icon" viewbox="0 0 448 512"><path d="M159.3 5.4c7.8-7.3 19.9-7.2 27.7 .1c27.6 25.9 53.5 53.8 77.7 84c11-14.4 23.5-30.1 37-42.9c7.9-7.4 20.1-7.4 28 .1c34.6 33 63.9 76.6 84.5 118c20.3 40.8 33.8 82.5 33.8 111.9C448 404.2 348.2 512 224 512C98.4 512 0 404.1 0 276.5c0-38.4 17.8-85.3 45.4-131.7C73.3 97.7 112.7 48.6 159.3 5.4zM225.7 416c25.3 0 47.7-7 68.8-21c42.1-29.4 53.4-88.2 28.1-134.4c-4.5-9-16-9.6-22.5-2l-25.2 29.3c-6.6 7.6-18.5 7.4-24.7-.5c-16.5-21-46-58.5-62.8-79.8c-6.3-8-18.3-8.1-24.7-.1c-33.8 42.5-50.8 69.3-50.8 99.4C112 375.4 162.6 416 225.7 416z"></path></svg></i></b><small>дней подряд</small></div><div><b>+12</b><small>слов за сегодня</small></div></div></div><div class="habit-dashboard"><div class="dash-top"><span>ТВОЯ НЕДЕЛЯ</span><span class="dash-menu">•••</span></div><div class="dash-score"><strong>84%</strong><span>слов вспомнил<br/>с первого раза <b>↗</b></span></div><div class="bar-chart"><div class="bar-group"><i style="height:30%"></i><span>пн</span></div><div class="bar-group"><i style="height:46%"></i><span>вт</span></div><div class="bar-group"><i style="height:39%"></i><span>ср</span></div><div class="bar-group"><i style="height:63%"></i><span>чт</span></div><div class="bar-group"><i style="height:52%"></i><span>пт</span></div><div class="bar-group"><i style="height:82%"></i><span>сб</span></div><div class="bar-group today"><i style="height:100%"></i><span>вс</span></div></div><div class="dash-goal"><span class="goal-icon"><svg aria-hidden="true" class="fa-icon" viewbox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"></path></svg></span><span><b>Цель на сегодня</b><small>Ты уже на финишной прямой!</small></span><div class="goal-progress"><svg viewbox="0 0 44 44"><circle cx="22" cy="22" r="18"></circle><circle class="goal-arc" cx="22" cy="22" r="18"></circle></svg><b>12/15</b></div></div></div><div aria-hidden="true" class="habit-decoration deco-star"><svg aria-hidden="true" class="fa-icon" viewbox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div></div></section>
+<section class="game-section section" id="ld-games">
+<div class="game-intro"><div class="eyebrow eyebrow-light">ПРАКТИКА В ИГРОВОМ ФОРМАТЕ</div><h2>Повторяй английский в играх.</h2><p>Играй в популярные игры и учи английский. Повторяй слова в 2048, Block Master, Bubble Shooter и шахматах с Бобом.</p><a class="text-link" href="#ld-start">Заглянуть внутрь <span>↗</span></a></div>
+<div class="game-showcase">
+<div class="plane-frame"><img alt="Flying Bob — аркадная игра с котом на самолёте" height="360" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" src="app-photos/landing/flying-bob.webp" width="640"/></div>
+<div class="game-library" data-game-carousel="">
+<div class="game-library-heading"><div><span>ИГРОВАЯ КОЛЛЕКЦИЯ</span><b>Выбирай, во что играть</b></div><span class="library-note">И это ещё не всё</span></div>
+<div aria-label="Примеры игр BeWords" class="game-carousel-viewport" role="region" tabindex="0"><div class="game-grid game-carousel-track">
+<article aria-label="Игра 1 из 4: Block Master" aria-roledescription="слайд" class="game-tile game-cover" role="group"><img alt="Боб играет в Block Master" class="game-cover-photo" loading="lazy" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" src="app-photos/games/blast.jpg"/><span class="game-cover-name">Block Master</span></article>
+<article aria-label="Игра 2 из 4: 2048 Vocab" aria-roledescription="слайд" class="game-tile game-cover" role="group"><img alt="Боб играет в BeWords 2048" class="game-cover-photo" loading="lazy" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" src="app-photos/games/2048.jpg"/><span class="game-cover-name">2048 Vocab</span></article>
+<article aria-label="Игра 3 из 4: Bubble Shooter" aria-roledescription="слайд" class="game-tile game-cover" role="group"><img alt="Боб играет в Bubble Shooter" class="game-cover-photo" loading="lazy" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" src="app-photos/games/match3.jpg"/><span class="game-cover-name">Bubble Shooter</span></article>
+<article aria-label="Игра 4 из 4: шахматы с Бобом" aria-roledescription="слайд" class="game-tile game-cover" role="group"><img alt="Боб играет в шахматы" class="game-cover-photo" loading="lazy" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" src="app-photos/games/chess.jpg"/><span class="game-cover-name">Шахматы с Бобом</span></article>
+</div></div><div aria-label="Позиция карусели" class="game-carousel-dots"></div>
+</div></div>
+</section>
+<section aria-labelledby="ld-blog-title" class="section blog-section" id="ld-blog">
+<div class="section-heading">
+<div class="eyebrow"><span class="eyebrow-dot"></span> ЖУРНАЛ BEWORDS</div>
+<h2 id="ld-blog-title">Короткие разборы для учёбы.</h2>
+<p>Читайте о словах, грамматике, экзаменах и выборе приложений — простыми словами и с примерами.</p>
+</div>
+<div class="blog-grid">
+<a class="blog-card" href="blog/how-many-english-words-do-you-need.html">
+<span class="blog-card-tag">Словарный запас</span>
+<h3>Сколько слов нужно знать в английском, чтобы заговорить</h3>
+<p>Узнай, почему нет одного числа для всех и как выбирать слова под свою цель.</p>
+<span class="blog-card-more">Читать <span>→</span></span>
+<span class="blog-card-meta">6 минут · обновлено 22.10.2026</span>
+</a>
+<a class="blog-card" href="blog/english-grammar-apps.html">
+<span class="blog-card-tag">Приложения</span>
+<h3>5 приложений для английского: что выбрать для грамматики</h3>
+<p>Сравниваем форматы и функции приложений без мест в рейтинге. Условия могут меняться.</p>
+<span class="blog-card-more">Читать <span>→</span></span>
+<span class="blog-card-meta">6 минут · обновлено 22.10.2026</span>
+</a>
+<a class="blog-card" href="blog/">
+<span class="blog-card-tag">Все статьи</span>
+<h3>Журнал BeWords</h3>
+<p>Простые статьи о словах, грамматике, экзаменах и способах учиться.</p>
+<span class="blog-card-more">Открыть журнал <span>→</span></span>
+<span class="blog-card-meta">Все статьи</span>
+</a>
+</div>
+<div class="blog-more-row"><a class="button button-light" href="blog/">Все ответы и разборы <span class="arrow">↗</span></a></div>
+</section>
+<section aria-labelledby="ld-faq-title" class="faq-section" id="ld-faq">
+<div class="faq-shell">
+<div class="section-heading">
+<div class="eyebrow"><span class="eyebrow-dot"></span> ЧАСТЫЕ ВОПРОСЫ</div>
+<h2 id="ld-faq-title">Коротко о BeWords.</h2>
+<p>Ответы о словаре, грамматике и регулярных занятиях.</p>
+</div>
+<div class="faq-list"><details><summary>Сколько стоит BeWords?</summary><div class="faq-body"><p>Сейчас приложением можно пользоваться бесплатно, без банковской карты. Условия могут измениться — проверяй актуальную информацию на сайте.</p></div></details><details><summary>Как учить грамматику в BeWords?</summary><div class="faq-body"><p>Правила объясняются на русском. После объяснения можно потренироваться переводить предложения.</p></div></details><details><summary>Есть ли слова для ЕГЭ и ОГЭ?</summary><div class="faq-body"><p>Да. В приложении есть отдельные подборки английских слов для ЕГЭ и ОГЭ. Для подготовки также полезно решать пробные задания.</p></div></details><details><summary>Что помогает заниматься регулярно?</summary><div class="faq-body"><p>В BeWords есть дневная цель, серия занятий, игры и Боб. По нашей оценке, эти механики близки к Duolingo, хотя Duolingo может вовлекать чуть сильнее. Это впечатление редакции, а не измерение.</p></div></details><details><summary>Можно ли заниматься без интернета?</summary><div class="faq-body"><p>BeWords поддерживает работу офлайн. Для отдельных функций и синхронизации прогресса может понадобиться интернет.</p></div></details></div>
+<div class="faq-foot"><a class="button button-green" href="blog/">Задать свой вопрос в журнале <span class="arrow">↗</span></a></div>
+</div>
+</section>
+<section class="final-cta section" id="ld-start"><div class="cta-cat"><img alt="Кот Боб" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" src="app-photos/icons/apple-touch-icon.png"/></div><div class="eyebrow"><span class="eyebrow-dot"></span> БОБ УЖЕ НА СТАРТЕ</div><h2>Выбери тему и начни практиковаться.</h2><p>Слова по уровням, грамматика с переводом и игры — в BeWords. Начни с того, что нужно тебе сегодня.</p><a class="button button-green button-large" href="https://bewords.ru/learn.html">Начать заниматься в BeWords ↗</a><small class="cta-note">Занимайся в удобном темпе.</small></section>
+</main>
+<footer class="site-footer">
+<div class="footer-top">
+<div class="footer-about">
+<a class="brand" href="#ld-top"><span class="brand-mark"><img alt="" onerror="this.onerror=null;this.src='app-photos/error/nophoto.jpg'" src="app-photos/icons/apple-touch-icon.png"/></span><span>Be<span>Words</span></span></a>
+<p>Слова по уровням A1–C2, грамматика на русском, перевод предложений и игры. Более 8 000 слов и выражений.</p>
+</div>
+<div class="footer-col">
+<h3>Приложение</h3>
+<ul>
+<li><a href="#ld-how">Как это работает</a></li>
+<li><a href="#ld-vocab">Словарь и уровни</a></li>
+<li><a href="#ld-games">Игры</a></li>
+<li><a href="https://bewords.ru/learn.html">Открыть приложение</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h3>Журнал</h3>
+<ul>
+<li><a href="blog/">Все статьи</a></li>
+<li><a href="blog/how-many-english-words-do-you-need.html">Сколько слов нужно знать</a></li>
+<li><a href="blog/english-grammar-apps.html">Приложения для грамматики</a></li>
+<li><a href="#ld-faq">Частые вопросы</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h3>Контакты</h3>
+<ul>
+<li><a href="/cdn-cgi/l/email-protection#1d6e686d6d726f695d7f786a726f796e336f68"><span class="__cf_email__" data-cfemail="75060005051a0701351710021a0711065b0700">[email&#160;protected]</span></a></li>
+<li><a href="https://t.me/bewords_app" rel="noopener">Телеграм: @bewords_app</a></li>
+<li><a href="https://bewords.ru/sitemap.xml">Карта сайта</a></li>
+<li><a href="https://bewords.ru/">bewords.ru</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<span class="footer-motto">Игра начинается со слова.</span>
+<span class="footer-copy">© 2026 BeWords · bewords.ru</span>
+</div>
+</footer>
+</div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* Кнопки «Начать учиться» ведут в приложение (learn.html — гейт лендинга
+   пропустит пользователя сразу в app). Заодно запоминаем, что лендинг уже видели. */
+(function () {
+  document.querySelectorAll('#landing a[href="learn.html"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      try { localStorage.setItem('beWordsLandingSeen', '1'); } catch (e) {}
     });
-  }
-
-  function showUpdateNotification() {
-    const toast = document.createElement('div');
-    toast.className = 'toast info';
-    toast.style.cssText = 'position:fixed; bottom:calc(80px + env(safe-area-inset-bottom, 0px)); left:50%; transform:translateX(-50%); z-index:2147483000; cursor:pointer; max-width:90%;';
-    toast.innerHTML = '<span>Доступно обновление! Нажмите, чтобы применить. 🔄</span>';
-    
-    toast.onclick = () => {
-      window.location.reload(); // Перезагрузка применит новый SW
-    };
-    
-    document.body.appendChild(toast);
-  }
-</script>
-<script>
-(function(){
-  let src = 'ru', tgt = 'en', bound = !1;
-
-  function $id(id){ return document.getElementById(id); }
-
-function setLang(from, to){
-  src = from;
-  tgt = to;
-
-  const ruBtn = $id('trRuBtn');
-  const enBtn = $id('trEnBtn');
-  if (!ruBtn || !enBtn) return;
-
-  // from = язык источника:
-  // если from === 'ru' → переводим ИЗ русского В английский:
-  //   левая кнопка: Русский (активна), правая: Английский
-  // если from === 'en' → переводим ИЗ английского В русский:
-  //   левая кнопка: Английский, правая: Русский (активна)
-  if (from === 'ru') {
-    ruBtn.textContent = '🇷🇺 Русский';
-    enBtn.textContent = '🇬🇧 Английский';
-    ruBtn.classList.add('active');
-    enBtn.classList.remove('active');
-  } else {
-    ruBtn.textContent = '🇬🇧 Английский';
-    enBtn.textContent = '🇷🇺 Русский';
-    enBtn.classList.add('active');
-    ruBtn.classList.remove('active');
-  }
-}
-
-  async function translate(){
-    const input = $id('trInputText');
-    if (!input) return;
-    const text = (input.value || '').trim();
-    if (!text) return void showErr('Пожалуйста, введите текст для перевода');
-
-    const load = $id('trLoading'),
-          err  = $id('trError'),
-          res  = $id('trResults');
-
-    err && err.classList.remove('active');
-    res && res.classList.remove('active');
-    load && load.classList.add('active');
-
-    try {
-      const list = await fetchAll(text);
-      render(text, list);
-    } catch (e) {
-      console.error(e);
-      showErr('Произошла ошибка при переводе. Попробуйте ещё раз.');
-    } finally {
-      load && load.classList.remove('active');
-    }
-  }
-
-  async function fetchAll(text){
-    const out = [], seen = new Set;
-    try {
-      const u = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${src}&tl=${tgt}&dt=t&dt=bd&q=${encodeURIComponent(text)}`;
-      const r = await fetch(u);
-      const d = await r.json();
-      if (Array.isArray(d[0])) {
-        let m = '';
-        d[0].forEach(i => { i[0] && (m += i[0]); });
-        if (m && !seen.has(m.toLowerCase())) {
-          out.push({ text:m, type:'основной', source:'Google', confidence:100 });
-          seen.add(m.toLowerCase());
-        }
-      }
-      if (Array.isArray(d[1])) {
-        d[1].forEach(g => {
-          const pos = g[0];
-          Array.isArray(g[1]) && g[1].forEach((w,i) => {
-            if (w && !seen.has(w.toLowerCase())) {
-              out.push({
-                text: w,
-                type: pos || 'альтернативный',
-                source: 'Google Dict',
-                confidence: Math.max(50, 90 - i*5)
-              });
-              seen.add(w.toLowerCase());
-            }
-          });
-        });
-      }
-    } catch(e){}
-
-    try {
-      const u = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|${tgt}`;
-      const r = await fetch(u);
-      const d = await r.json();
-      const t = d?.responseData?.translatedText;
-      if (t && !seen.has(t.toLowerCase())) {
-        out.push({ text:t, type:'альтернативный', source:'MyMemory', confidence:85 });
-        seen.add(t.toLowerCase());
-      }
-    } catch(e){}
-
-    return out.sort((a,b) => b.confidence - a.confidence);
-  }
-
-  function esc(s=''){
-    return String(s)
-      .replace(/&/g,'&amp;')
-      .replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;');
-  }
-
-  function showErr(m){
-    const el = $id('trError');
-    if (!el) return;
-    el.textContent = m;
-    el.classList.add('active');
-    setTimeout(() => el.classList.remove('active'), 2200);
-  }
-
-  function render(original, list){
-    const res = $id('trResults');
-    if (!res) return;
-
-    const main = list[0];
-    const groups = {};
-    list.forEach((t,i) => {
-      (groups[t.type] || (groups[t.type] = [])).push({ ...t, index:i+1 });
-    });
-
-    const enMain = src === 'en' ? original : (tgt === 'en' ? main?.text : '');
-    const ruMain = src === 'ru' ? original : (tgt === 'ru' ? main?.text : '');
-
-    let html = '';
-
-    if (main) {
-      html += `
-        <div class="tr-main">
-          <div class="tr-src">
-            ${esc(original)}
-            <button class="tr-copy-btn" data-copy="${encodeURIComponent(original)}" title="Скопировать исходный текст">
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-          <div class="tr-res">
-            <span class="tr-res-text">${esc(main.text)}</span>
-            <button class="tr-copy-btn" data-copy="${encodeURIComponent(main.text)}" title="Скопировать перевод">
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-          ${enMain ? `
-            <div class="tr-add">
-              <button class="tr-chip-btn"
-                      data-en="${encodeURIComponent(enMain)}"
-                      data-ru="${encodeURIComponent(ruMain || '')}"
-                      data-src="${src}"
-                      data-tgt="${tgt}">
-                ➕ В изучение
-              </button>
-            </div>` : ''
-          }
-        </div>
-      `;
-    }
-
-    Object.entries(groups).forEach(([type, items]) => {
-      html += `
-        <div class="tr-group">
-          <div class="tr-head">
-            <span>${esc(type[0].toUpperCase() + type.slice(1))}</span>
-            <span style="color:var(--text-secondary);font-size:13px;">${items.length} вариан.</span>
-          </div>
-          <div class="tr-list">
-            ${items.map(it => {
-              const en = tgt === 'en' ? it.text : (src === 'en' ? original : '');
-              const ru = tgt === 'ru' ? it.text : (src === 'ru' ? original : '');
-              return `
-                <div class="tr-item">
-                  <div class="tr-num">${it.index}</div>
-                  <div style="flex:1;min-width:0;">
-                    <div class="tr-text">
-                      ${esc(it.text)}
-                      <button class="tr-copy-btn"
-                              data-copy="${encodeURIComponent(it.text)}"
-                              title="Скопировать этот вариант">
-                        <i class="fas fa-copy"></i>
-                      </button>
-                    </div>
-                    <div class="tr-meta">${esc(it.source)} • ${it.confidence}%</div>
-                  </div>
-                  ${en ? `
-                    <button class="tr-chip-btn"
-                            data-en="${encodeURIComponent(en)}"
-                            data-ru="${encodeURIComponent(ru || '')}"
-                            data-src="${src}"
-                            data-tgt="${tgt}">
-                      ➕
-                    </button>` : ''
-                  }
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
-      `;
-    });
-
-    if (!html) {
-      html = '<div class="empty-state"><p>Переводы не найдены</p></div>';
-    } else {
-      html = `
-        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px;">
-          Нажмите на значок <i class="fas fa-copy"></i>, чтобы скопировать текст.
-        </div>
-      ` + html;
-    }
-
-    res.innerHTML = html;
-    res.classList.add('active');
-  }
-
-  function onClick(e){
-    const t = e.target.closest('#trRuBtn, #trEnBtn, #trSwapBtn, #trTranslateBtn, .tr-chip-btn, .tr-copy-btn');
-    if (!t) return;
-
-    if (t.id === 'trRuBtn') {
-      e.preventDefault();
-      setLang('ru','en');
-    } else if (t.id === 'trEnBtn') {
-      e.preventDefault();
-      setLang('en','ru');
-    } else if (t.id === 'trSwapBtn') {
-      e.preventDefault();
-      setLang(src === 'ru' ? 'en' : 'ru', tgt === 'en' ? 'ru' : 'en');
-    } else if (t.id === 'trTranslateBtn') {
-      e.preventDefault();
-      translate();
-    } else if (t.classList.contains('tr-chip-btn') && t.dataset.en) {
-      e.preventDefault();
-      const en = decodeURIComponent(t.dataset.en || '');
-      const ru = decodeURIComponent(t.dataset.ru || '');
-      if (en && typeof window.onAddToStudy === 'function') {
-        window.onAddToStudy({
-          term: en,
-          meta: {
-            ru,
-            sourceLang: t.dataset.src,
-            targetLang: t.dataset.tgt,
-            originalText: ($id('trInputText')?.value || '').trim()
-          }
-        });
-        t.classList.add('added');
-        t.textContent = '✓ Добавлено';
-      }
-    } else if (t.classList.contains('tr-copy-btn') && t.dataset.copy) {
-      e.preventDefault();
-      const txt = decodeURIComponent(t.dataset.copy || '');
-      if (!txt) return;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(txt).then(() => {
-          t.classList.add('copied');
-          t.innerHTML = '✓';
-          setTimeout(() => {
-            t.classList.remove('copied');
-            t.innerHTML = '<i class="fas fa-copy"></i>';
-          }, 1500);
-        }).catch(() => {});
-      }
-    }
-  }
-
-  function onKey(e){
-    if (e.key === 'Enter' && e.target?.id === 'trInputText') {
-      translate();
-    }
-  }
-
-  function bindOnce(){
-    if (bound) return;
-    bound = !0;
-    document.addEventListener('click', onClick, !0);
-    document.addEventListener('keypress', onKey, !0);
-    setLang('ru','en');
-  }
-
-  window.initBewordsTranslator = bindOnce;
-  document.addEventListener('DOMContentLoaded', bindOnce);
+  });
 })();
 </script>
 <script>
-  document.addEventListener('contextmenu', event => event.preventDefault());
-  document.onkeydown = function(e) {
-    if(e.keyCode == 123) { return false; } // F12
-    if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){ return false; } // Ctrl+Shift+I
-    if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){ return false; } // Ctrl+Shift+J
-    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){ return false; } // Ctrl+U
+/* ===== «УЗНАТЬ БОЛЬШЕ» → СНАЧАЛА ПОКАЗЫВАЕМ БОБА, ПОТОМ СЛЕДУЮЩИЙ БЛОК =====
+   На мобильных hero-колонка высокая и Боб уходит ниже сгиба: первый тап
+   мягко долистывает до подписи Боба и самого кота,
+   второй — уходит дальше, к блоку «Как это работает». */
+(function () {
+  'use strict';
+  var root = document.getElementById('landing');
+  if (!root) return;
+
+  var heroVisual = root.querySelector('.hero-visual');
+  var triggers = root.querySelectorAll('[data-reveal-bob]');
+  if (!heroVisual || !triggers.length) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function headerOffset() {
+    var header = root.querySelector('.site-header');
+    return (header ? header.offsetHeight : 68) + 10;
   }
-</script>
-<script>
-  /* Сплэш-экран (#loading-layer) из проекта удалён — разметки под него нет.
-     Оставляем только показ приложения: .app-container стартует с visibility:hidden,
-     а textual-сплэш #simple-splash закрывает экран и убирается отдельным скриптом ниже.
-     (Мёртвый код сплэша сохранён в DEAD_splash_screen.txt) */
-  (function () {
-    var appContainer = document.querySelector('.app-container');
-    if (appContainer) appContainer.style.visibility = 'visible';
-  })();
-</script>
+  function introEl() {
+    return heroVisual.querySelector('.bob-intro') || heroVisual;
+  }
+  /* Боб уже показан, если его подпись видна под шапкой */
+  function bobIsRevealed() {
+    var top = introEl().getBoundingClientRect().top;
+    return top >= headerOffset() - 40 && top < window.innerHeight * 0.6;
+  }
+  function revealBob() {
+    var y = window.pageYOffset + introEl().getBoundingClientRect().top - headerOffset();
+    window.scrollTo({ top: Math.max(0, y), behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
 
-<!-- === МОДАЛКА ЭКСПОРТА (выбор слов) === -->
-<div id="exportModal" class="words-popup-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:100000; justify-content:center; align-items:center;">
-  
-  <div class="words-popup" style="background: var(--bg-primary, #fff) !important; padding:20px; border-radius:16px; width:90%; max-width:420px; max-height:80vh; overflow-y:auto; box-shadow: 0 20px 60px rgba(0,0,0,0.4);">
-    
-    <!-- Шапка модалки (БРОНЕБОЙНАЯ ВЕРСИЯ) -->
-    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:15px; border-bottom:1px solid var(--border-color, #ccc); padding-bottom:10px;">
-      
-      <div style="flex: 1;">
-        <h3 style="margin:0 0 5px 0; color: var(--text-primary, #000) !important;">📤 Поделиться словами с другом</h3>
-        <p style="font-size:0.9rem; color: var(--text-secondary, #666) !important; margin:0;">
-          Выберите до 15 слов • Лимит: <span id="shareCounter" style="color: var(--primary-color, #58cc02) !important; font-weight:bold;">0</span>/15
-        </p>
-      </div>
-
-      <button id="closeExportModal" class="btn btn-secondary" style="width:36px; height:36px; padding:0; display:flex; align-items:center; justify-content:center; border-radius:8px; background: var(--bg-secondary, #eee) !important; color: var(--text-primary, #000) !important; border: none;">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    
-    <!-- ИСПРАВЛЕНИЕ 2: Список слов теперь имеет фон var(--bg-secondary) -->
-    <div id="exportWordsList" style="margin:15px 0; border:1px solid var(--border-color); background:var(--bg-secondary); padding:10px; border-radius:8px; max-height:280px; overflow-y:auto;">
-      <!-- Сюда JS вставит чекбоксы -->
-    </div>
-    
-    <!-- Низ модалки с кнопками -->
-    <div style="padding-top:15px; border-top:1px solid var(--border-color);">
-      <button id="generateShareCodeBtn" class="btn btn-primary" disabled style="width:100%; padding:12px; border-radius:8px; font-weight:bold;">
-        <i class="fas fa-link"></i> Создать код
-      </button>
-      
-      <div id="shareResult" style="display:none; margin-top:15px;">
-        <!-- ИСПРАВЛЕНИЕ 3: Поле вывода кода тоже подстраивается под тему -->
-        <input type="text" id="shareCodeOutput" readonly style="width:100%; padding:12px; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-primary); color:var(--text-primary); font-size:0.85rem; font-family:monospace; margin-bottom:10px;">
-        <button id="copyShareCodeBtn" class="btn btn-success" style="width:100%; padding:12px; border-radius:8px; font-weight:bold;">
-          <i class="fas fa-copy"></i> Скопировать код
-        </button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const splash = document.getElementById('simple-splash');
-  if (!splash) return;
-  
-  // Предзагружаем аудио заранее
-  const introAudio = new Audio('au/ui/intro.mp3');
-  introAudio.volume = 0.65;
-  introAudio.preload = 'auto';
-  
-  // Нативный splash сам уходит (MainActivity)
-  // Через 1.5 сек после старта WebView убираем HTML splash
-  setTimeout(() => {
-    // Запускаем звук в момент начала анимации ухода
-    introAudio.play().catch(e => {
-      console.warn('Не удалось воспроизвести звук:', e);
+  triggers.forEach(function (trigger) {
+    trigger.addEventListener('click', function (event) {
+      if (bobIsRevealed()) return;           /* второй тап — обычный переход по якорю */
+      var visualBox = heroVisual.getBoundingClientRect();
+      /* если Боб и так полностью на экране — не мешаем штатной навигации */
+      if (visualBox.top >= headerOffset() - 40 && visualBox.bottom <= window.innerHeight + 4) return;
+      event.preventDefault();
+      revealBob();
     });
-    
-    splash.classList.add('fade-out');
-    setTimeout(() => splash.remove(), 300);
-  }, 500);
-});
+    trigger.addEventListener('keydown', function (event) {
+      if (event.key !== 'Enter' && event.key !== ' ' && event.key !== 'Spacebar') return;
+      if (trigger.tagName === 'A') return;    /* у ссылки Enter сработает штатно */
+      event.preventDefault();
+      if (!bobIsRevealed()) revealBob();
+    });
+  });
+})();
 </script>
+<script>
+/* ===== АНИМАЦИИ И ИНТЕРАКТИВ ЛЕНДИНГА ===== */
+(function () {
+  'use strict';
+  var root = document.getElementById('landing');
+  if (!root) return;
 
+  try {
 
-</body>
+const menuButton = root.querySelector('.menu-toggle');
+const nav = root.querySelector('.main-nav');
+if (menuButton && nav) {
+  menuButton.addEventListener('click', () => {
+    const open = menuButton.getAttribute('aria-expanded') === 'true';
+    menuButton.setAttribute('aria-expanded', String(!open));
+    nav.classList.toggle('open', !open);
+  });
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+    menuButton.setAttribute('aria-expanded', 'false');
+    nav.classList.remove('open');
+  }));
+  document.addEventListener('click', (event) => {
+    if (!nav.contains(event.target) && !menuButton.contains(event.target)) {
+      menuButton.setAttribute('aria-expanded', 'false');
+      nav.classList.remove('open');
+    }
+  });
+}
 
+// Reveal the habit card when it enters view without inventing user statistics.
+const habitDashboard = root.querySelector('.habit-dashboard');
+if ('IntersectionObserver' in window && habitDashboard) {
+  const dashboardObserver = new IntersectionObserver(entries => {
+    if (entries.some(entry => entry.isIntersecting)) {
+      habitDashboard.classList.add('is-visible');
+      dashboardObserver.disconnect();
+    }
+  }, { threshold: .32 });
+  dashboardObserver.observe(habitDashboard);
+} else if (habitDashboard) {
+  habitDashboard.classList.add('is-visible');
+}
+
+// Reveal the CEFR path when it enters view.
+const levelsCard = root.querySelector('.levels-card');
+if (levelsCard && 'IntersectionObserver' in window) {
+  const levelRows = [...levelsCard.querySelectorAll('.level-row')];
+  const catalogRows = [...levelsCard.querySelectorAll('.catalog-row')];
+  levelRows.forEach((row, index) => row.style.setProperty('--row-index', index));
+  catalogRows.forEach((row, index) => row.style.setProperty('--row-index', index + levelRows.length));
+  const levelsObserver = new IntersectionObserver(entries => {
+    if (entries.some(entry => entry.isIntersecting)) {
+      levelsCard.classList.add('is-animated');
+      levelsObserver.disconnect();
+    }
+  }, { threshold: .2 });
+  levelsObserver.observe(levelsCard);
+}
+
+// Swipeable game-cover carousel.
+const gameCarousel = root.querySelector('[data-game-carousel]');
+if (gameCarousel) {
+  const viewport = gameCarousel.querySelector('.game-carousel-viewport');
+  const track = gameCarousel.querySelector('.game-carousel-track');
+  const slides = [...track.querySelectorAll('.game-cover')];
+  const dotsWrap = gameCarousel.querySelector('.game-carousel-dots');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let activePage = 0;
+  let visible = false;
+  let paused = false;
+  let scrollFrame = 0;
+
+  const stepWidth = () => {
+    const gap = parseFloat(getComputedStyle(track).gap) || 0;
+    return (slides[0]?.getBoundingClientRect().width || 1) + gap;
+  };
+  const maxPage = () => Math.max(0, Math.round((viewport.scrollWidth - viewport.clientWidth) / stepWidth()));
+
+  function updateCarouselUI() {
+    [...dotsWrap.children].forEach((dot, index) => {
+      if (index === activePage) dot.setAttribute('aria-current', 'page');
+      else dot.removeAttribute('aria-current');
+    });
+  }
+  function drawDots() {
+    dotsWrap.replaceChildren();
+    for (let index = 0; index <= maxPage(); index++) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'game-carousel-dot';
+      dot.setAttribute('aria-label', `Показать позицию карусели ${index + 1}`);
+      dot.addEventListener('click', () => goTo(index));
+      dotsWrap.append(dot);
+    }
+    updateCarouselUI();
+  }
+  function goTo(index) {
+    const pages = maxPage() + 1;
+    if (pages <= 1) { updateCarouselUI(); return; }
+    activePage = ((index % pages) + pages) % pages;
+    const maxScroll = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+    const left = Math.min(slides[activePage]?.offsetLeft || 0, maxScroll);
+    viewport.scrollTo({ left, behavior: reduceMotion ? 'auto' : 'smooth' });
+    updateCarouselUI();
+  }
+  viewport.addEventListener('scroll', () => {
+    cancelAnimationFrame(scrollFrame);
+    scrollFrame = requestAnimationFrame(() => {
+      activePage = Math.min(maxPage(), Math.round(viewport.scrollLeft / stepWidth()));
+      updateCarouselUI();
+    });
+  }, { passive: true });
+  gameCarousel.addEventListener('mouseenter', () => { paused = true; });
+  gameCarousel.addEventListener('mouseleave', () => { paused = false; });
+  gameCarousel.addEventListener('focusin', () => { paused = true; });
+  gameCarousel.addEventListener('focusout', event => {
+    if (!gameCarousel.contains(event.relatedTarget)) paused = false;
+  });
+  viewport.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+  viewport.addEventListener('touchend', () => { window.setTimeout(() => { paused = false; }, 3000); }, { passive: true });
+  drawDots();
+  window.addEventListener('resize', () => {
+    activePage = Math.min(activePage, maxPage());
+    drawDots();
+    const maxScroll = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+    viewport.scrollTo({ left: Math.min(slides[activePage]?.offsetLeft || 0, maxScroll), behavior: 'auto' });
+  });
+  if ('IntersectionObserver' in window) {
+    const carouselObserver = new IntersectionObserver(entries => {
+      visible = entries.some(entry => entry.isIntersecting);
+    }, { threshold: .2 });
+    carouselObserver.observe(gameCarousel);
+  } else {
+    visible = true;
+  }
+  if (!reduceMotion) {
+    window.setInterval(() => {
+      if (visible && !paused && !document.hidden) goTo(activePage + 1);
+    }, 5200);
+  }
+}
+
+  } catch (e) { /* декор лендинга не критичен */ }
+})();
+</script>
+<script>
+/* ===== АНТИ-СДВИГ: страница не должна «уезжать» вбок на мобильных =====
+   overflow-x:hidden на корне всё равно оставляет возможность программного
+   горизонтального скролла (фокус, scrollIntoView, якоря, авто-скролл карусели).
+   Жёстко возвращаем scrollLeft документа в 0. */
+(function () {
+  'use strict';
+  var scroller = document.scrollingElement || document.documentElement;
+  if (!scroller) return;
+
+  function resetHorizontalShift() {
+    try {
+      if (scroller.scrollLeft !== 0) scroller.scrollLeft = 0;
+      if (document.body && document.body.scrollLeft !== 0) document.body.scrollLeft = 0;
+    } catch (e) {}
+  }
+
+  var frame = 0;
+  function schedule() {
+    if (frame) return;
+    frame = requestAnimationFrame(function () { frame = 0; resetHorizontalShift(); });
+  }
+
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  window.addEventListener('orientationchange', function () { setTimeout(resetHorizontalShift, 60); });
+  document.addEventListener('focusin', schedule);
+  document.addEventListener('touchend', schedule, { passive: true });
+  window.addEventListener('load', resetHorizontalShift);
+  resetHorizontalShift();
+  setTimeout(resetHorizontalShift, 350);
+})();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4ea74aabc0ef38d',t:'MTc5MjY5MjU5NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5e6e678a876e078',t:'MTc5NTMzOTY2Nw=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a5e6e678a876e078',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
