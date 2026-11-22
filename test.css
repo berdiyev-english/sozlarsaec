@@ -1,4 +1,6 @@
 
+
+
 /* ========== ЛОКАЛЬНЫЕ ШРИФТЫ (офлайн) ========== */
 /* --- Nunito --- */
 @font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400; font-display: swap;
@@ -2645,6 +2647,18 @@ body {
 @keyframes lampGlow { 0%, 100% { opacity: 1; } 50% { opacity: .78; } }
 .grammar-lamp:hover { transform: scale(1.1); box-shadow: 0 4px 20px rgba(255, 215, 0, 0.5); }
 
+/* Строка «заголовок упражнения + лампочка подсказки»
+   (режим «Универсальный», упражнение «Собери предложение») */
+.ex-lamp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.ex-lamp-row h3 { margin: 0; flex: 1 1 auto; min-width: 0; }
+.ex-lamp-row .grammar-lamp { flex: 0 0 auto; width: 34px; height: 34px; font-size: 1rem; }
+
 .russian-sentence-box {
   background: var(--bg-secondary);
   border: 3px solid var(--border-color);
@@ -5272,8 +5286,10 @@ FIX: Сундук — нормальная надпись и монеты пос
 
 /* --- Контент --- */
 .gt-content{flex:1;padding:24px;display:flex;flex-direction:column;gap:20px;overflow-y:auto;background:#fff}
-.gt-task-title{font-size:22px;font-weight:800;color:#3c3c3c}
-.gt-original{font-size:22px;font-weight:700;color:#4b4b4b}
+/* Заголовок задания — маленькая вторичная подписка,
+   а предложение для перевода — крупный главный контент */
+.gt-task-title{font-size:15px;font-weight:800;color:#8f8f8f;letter-spacing:.3px}
+.gt-original{font-size:clamp(21px,5.5vw,26px);font-weight:800;color:#3c3c3c;line-height:1.35}
 
 /* --- Зона ответа --- */
 .gt-answer-area{min-height:90px;background:#f7f9fa;border:2px solid transparent;border-radius:20px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;padding:16px;transition:all .3s ease}
@@ -5340,7 +5356,8 @@ FIX: Сундук — нормальная надпись и монеты пос
 /* --- Адаптив --- */
 @media (max-width:480px){
     .gt-content{padding:20px 16px}
-    .gt-task-title,.gt-original{font-size:20px}
+    .gt-task-title{font-size:13px}
+    .gt-original{font-size:20px}
     .gt-word-chip{font-size:16px;padding:10px 14px}
     .gt-header{padding:16px}
 }
@@ -5843,6 +5860,250 @@ body.training-fullscreen .toast-container { z-index: 10000000 !important; }
 #dict1SelectedSlot, #dict2Slots { margin-bottom: 22px !important; }
 #dict1PlayBtn, #dict2PlayBtn, #dict3PlayBtn { margin: 4px auto 18px !important; }
 #dict3Input { margin-bottom: 18px !important; }
+
+/* ==========================================================================
+   🧩 ЕДИНЫЕ СТИЛИ УПРАЖНЕНИЙ УРОКА
+   («Собери предложение», «Запомните порядок слов», «Что ты услышал?»)
+   Приводим к общему виду с остальными упражнениями:
+   Quiz, Аудирование (выбор), Совмести перевод, Говори
+   ========================================================================== */
+
+/* --- Общие заголовок и подзаголовок упражнения --- */
+.ex-title {
+    color: var(--text-primary);
+    font-weight: 900;
+    font-size: 1.2rem;
+    line-height: 1.25;
+    margin: 0 0 8px;
+    text-align: center;
+}
+.ex-subtitle {
+    color: var(--text-secondary);
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+/* --- Круглая кнопка «прослушать» (как в «Аудирование (Выбор)») --- */
+.ex-play-btn {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1cb0f6, #0099db);
+    border: none;
+    color: #fff;
+    font-size: 2.5rem;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #0077b6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.ex-play-btn:active { transform: translateY(3px); box-shadow: 0 3px 0 #0077b6; }
+.ex-play-btn:disabled { cursor: default; }
+
+/* --- Упражнение «Собери предложение» --- */
+.sent-ru {
+    /* 💡 Главное в упражнении — САМО предложение для перевода:
+       делаем его крупнее и заметнее заголовка задания */
+    font-size: clamp(1.3rem, 5vw, 1.55rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.45;
+    margin-bottom: 22px;
+}
+/* 📱 На телефонах общее правило #exerciseContainer p { font-size:.9rem !important }
+       уменьшало предложение до нечитаемого — перебиваем более специфичным
+       правилом, чтобы перевод всегда был крупным */
+#exerciseContainer p.sent-ru {
+    font-size: clamp(1.3rem, 5vw, 1.55rem) !important;
+    margin-bottom: 20px !important;
+}
+.sent-answer-area {
+    min-height: 92px;
+    background: var(--bg-tertiary);
+    border: 2px dashed var(--border-color);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    gap: 8px;
+    transition: border-color 0.25s, background 0.25s;
+}
+.sent-answer-area.success { background: rgba(88, 204, 2, 0.08); border-color: #58cc02; border-style: solid; }
+.sent-answer-area.error   { background: rgba(255, 75, 75, 0.08); border-color: #ff4b4b; border-style: solid; }
+.sent-placeholder {
+    color: var(--text-muted, var(--text-secondary));
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+.sent-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+/* Подсветка слов после автопроверки: верные — зелёные, не на месте — красные */
+.sent-chip-ok {
+    border-color: #58cc02 !important;
+    box-shadow: 0 4px 0 #58a700 !important;
+    background: rgba(88, 204, 2, 0.12) !important;
+}
+.sent-chip-bad {
+    border-color: #ff4b4b !important;
+    box-shadow: 0 4px 0 #d93a3a !important;
+    background: rgba(255, 75, 75, 0.12) !important;
+    animation: gtShake 0.35s;
+}
+
+/* --- Упражнение «Запомните порядок слов» (Аудирование · Порядок) --- */
+.dict2-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.dict2-slot {
+    min-width: 96px;
+    padding: 14px 12px;
+    border: 3px dashed var(--border-color);
+    border-radius: 16px;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-weight: 800;
+    font-size: 1rem;
+    text-align: center;
+    transition: all 0.2s;
+}
+.dict2-options { display: flex; flex-direction: column; gap: 14px; }
+.dict2-btn {
+    padding: 16px;
+    border: 3px solid var(--border-color);
+    border-radius: 16px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+}
+.dict2-btn:hover:not(:disabled) { border-color: var(--info-color); }
+.dict2-btn:disabled { cursor: default; }
+
+/* --- Упражнение «Что ты услышал?» (Аудирование · Написание) --- */
+.dict3-choice { display: flex; flex-direction: column; gap: 14px; margin: 22px 0; }
+.dict3-opt {
+    padding: 18px 20px;
+    border: 3px solid var(--border-color);
+    border-radius: 16px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 3px 0 var(--border-color);
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.dict3-opt:hover { border-color: var(--info-color); }
+.dict3-opt.correct {
+    border-color: #58cc02;
+    background: rgba(88, 204, 2, 0.1);
+    box-shadow: 0 0 0 4px rgba(88, 204, 2, 0.15);
+}
+.dict3-opt.wrong {
+    border-color: #ff4b4b;
+    background: rgba(255, 75, 75, 0.1);
+    box-shadow: 0 0 0 4px rgba(255, 75, 75, 0.15);
+}
+.dict3-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    border: 3px solid var(--border-color);
+    border-radius: 16px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    outline: none;
+    margin-bottom: 16px;
+    transition: border-color 0.2s, background 0.2s;
+}
+.dict3-input:focus   { border-color: var(--info-color); }
+.dict3-input.almost  { border-color: #fb923c; background: rgba(251, 146, 60, 0.08); }
+.dict3-input.wrong   { border-color: #ff4b4b; background: rgba(255, 75, 75, 0.08); }
+.dict3-input.correct { border-color: #58cc02; background: rgba(88, 204, 2, 0.08); }
+.dict3-trans {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+    color: var(--text-secondary);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+.dict3-warn { color: #ff4b4b; font-weight: 800; margin-top: 8px; }
+
+/* --- Вспомогательные кнопки упражнений --- */
+.ex-check-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    background: #58cc02;
+    box-shadow: 0 4px 0 #58a700;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+.ex-check-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #58a700; }
+.ex-ghost-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 14px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.ex-mode-switch {
+    margin-top: 14px;
+    padding: 8px 18px;
+    border: 2px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.ex-link-btn {
+    background: none;
+    border: none;
+    color: var(--info-color);
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    padding: 10px;
+}
+
 
 /* ===== КАРУСЕЛЬ УРОВНЕЙ ГРАММАТИКИ ===== */
 .grammar-carousel-header { text-align: center; padding: 5px 5px 6px; }
@@ -7678,7 +7939,7 @@ body.chat-active .main-content {
     background: var(--bg-primary, #131f24) !important;
 }
 [data-theme="dark"] .gt-task-title {
-    color: var(--text-primary, #f9fafb) !important;
+    color: var(--text-muted, #9ca3af) !important;
 }
 [data-theme="dark"] .gt-original {
     color: var(--text-primary, #d1d5db) !important;
@@ -8966,15 +9227,13 @@ body.tour-spotlight-active .node.active .node-btn {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
 }
 
-/* Шапка */
+/* Шапка: только крестик закрытия (слева сверху) */
 .full-cal-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
 }
 
 .full-cal-close {
@@ -8999,63 +9258,111 @@ body.tour-spotlight-active .node.active .node-btn {
     background: rgba(255, 75, 75, 0.08);
 }
 
-.full-cal-title-row {
+/* Герой: большое пламя + крупная цифра темпа + подпись */
+.full-cal-hero {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
-    flex: 1;
+    text-align: center;
 }
 
-.full-cal-title {
-    margin: 0;
-    font-size: 1.3rem;
-    font-weight: 900;
-    color: var(--text-primary);
-}
-
-.full-cal-streak-num {
-    font-size: 1.8rem;
-    font-weight: 900;
-    color: #ff6b35;
+.full-cal-hero-flame {
+    font-size: 84px;
     line-height: 1;
+    animation: fullCalFlamePulse 2.2s ease-in-out infinite;
 }
 
-/* Статы */
+.full-cal-hero-flame i {
+    background: linear-gradient(180deg, #ffc800 0%, #ff9600 45%, #ff6b35 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 8px 16px rgba(255, 107, 53, 0.35));
+}
+
+@keyframes fullCalFlamePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.07); }
+}
+
+.full-cal-hero-num {
+    margin-top: -2px;    /* цифра идёт сразу под пламенем, не обрезая его */
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1;
+    color: #ff9600;
+}
+
+.full-cal-hero-label {
+    margin-top: 6px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text-secondary);
+    letter-spacing: 0.2px;
+}
+
+/* Статы — единая полоса с разделителями: ЗАМОРОЗОК | ВСЕГО ДНЕЙ | BECOINS */
 .full-cal-stats {
     display: flex;
-    gap: 10px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 18px;
+    overflow: hidden;
 }
 
 .full-cal-stat {
     flex: 1;
-    background: var(--bg-secondary);
-    border: 2px solid var(--border-color);
-    border-radius: 16px;
-    padding: 14px 8px;
+    min-width: 0;
+    padding: 14px 6px;
     text-align: center;
 }
 
-.full-cal-stat-num {
-    font-size: 1.6rem;
-    font-weight: 900;
-    color: #ff6b35;
-    line-height: 1;
+.full-cal-stat + .full-cal-stat {
+    border-left: 2px solid var(--border-color);
 }
+
+.full-cal-stat-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--text-primary);
+}
+
+.full-cal-stat-num.stat-freeze { color: #0ea5e9; }   /* лёд */
+.full-cal-stat-num.stat-days   { color: #ff6b35; }   /* темп */
+.full-cal-stat-num.stat-coins  { color: #f59e0b; }   /* золото */
+
+/* Кубик льда рядом с числом заморозок (фирменный «замороженный огонь») */
+.full-cal-stat-cube {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+}
+.full-cal-stat-cube i { font-size: 13px; }
 
 .full-cal-stat-label {
     font-size: 0.72rem;
     font-weight: 700;
     color: var(--text-secondary);
-    margin-top: 4px;
+    margin-top: 6px;
     text-transform: uppercase;
     letter-spacing: 0.3px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Блок заморозок */
+.full-cal-stat-label i { font-size: 0.7rem; }
+
+/* Баннер покупки заморозки: «Защити свой темп!» */
 .full-cal-freeze-box {
     display: flex;
     align-items: center;
@@ -9091,22 +9398,25 @@ body.tour-spotlight-active .node.active .node-btn {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    min-width: 0;
 }
 
 .full-cal-freeze-label {
-    font-size: 0.78rem;
-    font-weight: 700;
+    font-size: 0.95rem;
+    font-weight: 900;
     color: #0369a1;
 }
 
-[data-theme="dark"] .full-cal-freeze-label {
-    color: #7dd3fc;
+.full-cal-freeze-sub {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #0369a1;
+    opacity: 0.75;
 }
 
-.full-cal-freeze-count {
-    font-size: 1.15rem;
-    font-weight: 900;
-    color: var(--text-primary);
+[data-theme="dark"] .full-cal-freeze-label,
+[data-theme="dark"] .full-cal-freeze-sub {
+    color: #7dd3fc;
 }
 
 .full-cal-buy-btn {
@@ -9133,7 +9443,6 @@ body.tour-spotlight-active .node.active .node-btn {
     box-shadow: 0 0 0 #d97706;
 }
 
-.full-cal-stat-label i { font-size: 0.7rem; }
 .full-cal-buy-btn.disabled {
     background: var(--bg-tertiary);
     color: var(--text-muted);
@@ -9156,9 +9465,11 @@ body.tour-spotlight-active .node.active .node-btn {
 
 /* Адаптив */
 @media (max-width: 380px) {
-    .full-cal-stats { gap: 6px; }
+    .full-cal-hero-flame { font-size: 68px; }
+    .full-cal-hero-num { font-size: 2.4rem; }
     .full-cal-stat { padding: 10px 4px; }
-    .full-cal-stat-num { font-size: 1.3rem; }
+    .full-cal-stat-num { font-size: 1.25rem; }
+    .full-cal-stat-cube { width: 22px; height: 22px; }
     .full-cal-freeze-box { flex-wrap: wrap; }
     .full-cal-buy-btn { width: 100%; justify-content: center; }
 }
@@ -9468,3 +9779,73 @@ body:not(.training-fullscreen) .app-header {
     }
 }
 
+
+/* ==========================================================================
+   ГРАММАТИКА: ПОЛНОЭКРАННЫЙ РЕЖИМ УРОВНЯ + ШАПКА «← НАЗАД + ИМЯ УРОВНЯ»
+   (шапка уровня — над поиском, поиск — под ней)
+   ========================================================================== */
+
+/* Постоянная шапка уровня (живёт в #grammar перед #grammarSearchWrapper).
+   display управляется из grammar.js: 'flex' — уровень открыт, 'none' — карусель/урок */
+.grammar-level-header {
+  position: sticky;
+  top: 0;
+  z-index: 21;               /* выше поиска (у него z-index: 20) */
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 2px 12px;
+  background: var(--bg-primary);
+}
+
+/* ----- Полноэкранный режим уровня грамматики (body.grammar-fullscreen) -----
+   Ставится в renderLevel()/renderLesson(), снимается в renderRoot()
+   и при уходе из секции (switchSection).
+   ⚠️ Работает ТОЛЬКО на телефонах (<768px): на планшетах и ПК уровень
+   открывается как раньше — в «окне» приложения с шапкой и меню.
+   Логика «шапка уровня ← + имя, под ней поиск» действует на всех устройствах. */
+@media (max-width: 767px) {
+    /* фон body — чтобы за пределами main не просвечивал градиент */
+    body.grammar-fullscreen { background: var(--bg-primary) !important; }
+
+    /* прячем хром приложения (шапку, нижнее меню, баннеры) */
+    body.grammar-fullscreen .app-header,
+    body.grammar-fullscreen .bottom-nav,
+    body.grammar-fullscreen #appInstallBanner,
+    body.grammar-fullscreen #floating-active-arrow { display: none !important; }
+
+    /* Нижнее меню скрыто — убираем зарезервированные под него 140–150px снизу */
+    body.grammar-fullscreen #grammar {
+        padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px)) !important;
+    }
+    body.grammar-fullscreen .main-content { padding-bottom: 0 !important; }
+
+    /* Отступ под нативный статус-бар: липкие шапки накрывают его своим padding'ом */
+    body.grammar-fullscreen .grammar-level-header {
+        padding-top: calc(10px + env(safe-area-inset-top, 0px));
+    }
+    body.grammar-fullscreen .grammar-detail-header {
+        padding-top: calc(15px + env(safe-area-inset-top, 0px));
+    }
+}
+
+
+/* Lesson exercise polish: consistent card, spacing, and touch-friendly answers */
+#exerciseContainer .ex-wrap {
+  width: min(100%, 620px); box-sizing: border-box; padding: clamp(16px, 3.5vw, 28px);
+  margin: 0 auto 18px; border-radius: 24px;
+  background: var(--bg-secondary, #fff); border: 1px solid var(--border-color, #e5e7eb);
+  box-shadow: 0 8px 24px rgba(30, 50, 70, .08);
+}
+#exerciseContainer .lesson-meta-row { margin-bottom: 14px; }
+#exerciseContainer .ex-quiz-media { margin: 0 auto 18px; max-width: 420px; }
+#exerciseContainer .ex-quiz-wordrow { margin: 6px 0 10px; }
+#exerciseContainer .ex-quiz-prompt { margin-bottom: 18px; }
+#exerciseContainer .ex-quiz-options { gap: 10px; }
+#exerciseContainer .quiz-option-btn { min-height: 56px; padding: 14px 18px; border-width: 2px; border-radius: 15px; font-size: clamp(1rem, 3.8vw, 1.1rem); line-height: 1.35; }
+#exerciseContainer .ex-title { font-size: clamp(1.05rem, 4vw, 1.2rem); margin-bottom: 10px; }
+@media (max-width: 520px) {
+  #exerciseContainer .ex-wrap { padding: 16px 12px 20px; border-radius: 18px; }
+  #exerciseContainer .ex-quiz-media { margin-bottom: 14px; }
+  #exerciseContainer .quiz-option-btn { text-align: center; }
+}
